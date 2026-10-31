@@ -1,7 +1,7 @@
 # DRAFT — AI-drafted (ai_pair), not reviewed. Level, badges and contested state are proposals for the founder.
 # Source rule: every fact below comes from the cached PubMed record data/cache/pubmed/<pmid>.xml (abstract only).
 # No abstract on this card states the case definition used, so every study is recorded as role `context`
-# with `case_definition: none` until the full texts are checked.
+# with `case_definition: unverified` until the full texts are checked.
 slug: neuroinflammation
 name: Neuroinflammation (brain inflammation / glial activation)
 core_claim:
@@ -55,13 +55,17 @@ studies:
     title: "Neuroinflammation in Patients with Chronic Fatigue Syndrome/Myalgic Encephalomyelitis: An ¹¹C-(R)-PK11195 PET Study."
     year: 2014
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 9
     n_controls: 10
     measures_pem: false
     preregistered: null  # not stated in abstract
     role: context
+    direction: higher
+    group: null
     finding: >-
       A study of n=9 patients and 10 healthy controls found that binding of the PET tracer
       11C-(R)-PK11195, which marks a protein expressed by activated microglia or astrocytes, was 45%-199%
@@ -71,13 +75,17 @@ studies:
     title: "No Signs of Neuroinflammation in Women With Chronic Fatigue Syndrome or Q Fever Fatigue Syndrome Using the TSPO Ligand [11C]-PK11195."
     year: 2022
     cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"; a separate Q fever fatigue syndrome group (n=10) is not counted here
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 9  # CFS group only
     n_controls: 9
     measures_pem: false
     preregistered: null  # abstract lists EudraCT 2014-004448-37, but does not say it was registered before data collection
     role: context  # would be `contradicts` against pmid:24665088 if a recognised case definition is confirmed
+    direction: no_difference
+    group: null
     finding: >-
       A study of n=9 women with CFS and 9 healthy women, alongside 10 women with Q fever fatigue syndrome,
       found no statistically significant difference in 11C-PK11195 binding potential between patients and
@@ -86,13 +94,17 @@ studies:
     title: "Evidence of widespread metabolite abnormalities in Myalgic encephalomyelitis/chronic fatigue syndrome: assessment with whole-brain magnetic resonance spectroscopy."
     year: 2020
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 15
     n_controls: 15
     measures_pem: false
     preregistered: null  # not stated in abstract
     role: context
+    direction: higher
+    group: null
     finding: >-
       A study of n=15 women with ME/CFS and 15 age- and gender-matched healthy controls using whole-brain MR
       spectroscopy found metabolite differences in several regions, most notably a higher choline/creatine
@@ -103,13 +115,17 @@ studies:
     title: "Evidence of White Matter Neuroinflammation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Diffusion-Based Neuroinflammation Imaging Study."
     year: 2026
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 67
     n_controls: 67
     measures_pem: false
     preregistered: null  # not stated in abstract
     role: context
+    direction: mixed
+    group: null
     finding: >-
       A study of n=67 patients and 67 matched healthy controls using a diffusion MRI neuroinflammation
       imaging model found widespread white matter differences, including a lower hindered water ratio and
@@ -119,13 +135,17 @@ studies:
     title: "Neurochemical abnormalities in chronic fatigue syndrome: a pilot magnetic resonance spectroscopy study at 7 Tesla."
     year: 2022
     cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 22
     n_controls: 13
     measures_pem: false
     preregistered: null  # not stated in abstract
     role: context
+    direction: lower
+    group: null
     finding: >-
       A study of n=22 patients and 13 healthy controls using 7 Tesla MR spectroscopy of the anterior
       cingulate cortex found lower myo-inositol in patients, which the authors write would be consistent with
@@ -135,13 +155,17 @@ studies:
     title: "Proton magnetic resonance spectroscopy of basal ganglia in chronic fatigue syndrome."
     year: 2003
     cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 8
     n_controls: null  # TODO: verify — not stated in abstract (described only as age- and sex-matched healthy controls)
     measures_pem: false
     preregistered: null  # not stated in abstract
     role: context
+    direction: higher
+    group: null
     finding: >-
       A study of n=8 patients compared with age- and sex-matched healthy controls found a higher signal from
       choline-containing compounds in the left basal ganglia, which the authors suggest may reflect higher

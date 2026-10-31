@@ -678,3 +678,174 @@ def test_cli_via_python_dash_m_subprocess(tmp_path):
 def test_repository_cards_and_drafts_validate():
     count, issues = cards.validate_paths([REPO_ROOT / "cards", REPO_ROOT / "drafts"])
     assert issues == [], "\n".join(map(str, issues))
+
+
+# --- format v2: case definition provenance, direction, group ------------------
+
+
+def add_study(data: dict, **overrides) -> int:
+    """Append a copy of the first fictional study with the overrides applied; returns its index."""
+    new = {**copy.deepcopy(study(data, "pmid:00000001")), "id": "pmid:00000009", "title": "Fictional added study"}
+    new.update(overrides)
+    data["studies"].append(new)
+    return len(data["studies"]) - 1
+
+
+def paths(issues: list[Issue]) -> set[str]:
+    return {i.path for i in issues}
+
+
+def test_v2_unverified_study_as_context_is_valid(tmp_path):
+    data = base()
+    add_study(
+        data,
+        case_definition="unverified",
+        case_definition_source=None,
+        case_definition_quote=None,
+        role="context",
+    )
+    assert check(tmp_path, data) == []
+
+
+@pytest.mark.parametrize("role", ["supports", "contradicts"])
+def test_v9_unverified_cannot_support_or_contradict(tmp_path, role):
+    data = base()
+    i = add_study(
+        data, case_definition="unverified", case_definition_source=None, case_definition_quote=None, role=role
+    )
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V9"}
+    assert paths(issues) == {f"studies[{i}].case_definition"}
+
+
+def test_v13_recognised_definition_without_quote(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "Fukuda"
+    study(data, "pmid:00000001")["case_definition_quote"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert paths(issues) == {"studies[0].case_definition_quote"}
+
+
+def test_v13_recognised_definition_without_source(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "Fukuda"
+    study(data, "pmid:00000001")["case_definition_source"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert paths(issues) == {"studies[0].case_definition_source"}
+
+
+@pytest.mark.parametrize("definition", ["CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "Oxford"])
+def test_v13_every_recognised_definition_needs_a_quote(tmp_path, definition):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = definition
+    study(data, "pmid:00000001")["case_definition_quote"] = None
+    assert rules(check(tmp_path, data)) == {"V13"}
+
+
+def test_v13_none_without_source(tmp_path):
+    data = base()
+    study(data, "pmid:00000004")["case_definition"] = "none"
+    study(data, "pmid:00000004")["case_definition_source"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert paths(issues) == {"studies[3].case_definition_source"}
+
+
+def test_v13_none_with_a_source_and_no_quote_is_valid(tmp_path):
+    data = base()
+    study(data, "pmid:00000004")["case_definition"] = "none"
+    study(data, "pmid:00000004")["case_definition_source"] = "fulltext"
+    study(data, "pmid:00000004")["case_definition_quote"] = None
+    assert check(tmp_path, data) == []
+
+
+def test_v13_unverified_with_a_quote(tmp_path):
+    data = base()
+    study(data, "pmid:00000004")["case_definition"] = "unverified"
+    study(data, "pmid:00000004")["case_definition_source"] = None
+    study(data, "pmid:00000004")["case_definition_quote"] = "A sentence that should not be here."
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert paths(issues) == {"studies[3].case_definition_quote"}
+
+
+def test_v13_unverified_with_a_source(tmp_path):
+    data = base()
+    study(data, "pmid:00000004")["case_definition"] = "unverified"
+    study(data, "pmid:00000004")["case_definition_quote"] = None
+    issues = check(tmp_path, data)  # source stays "abstract"
+    assert rules(issues) == {"V13"}
+    assert paths(issues) == {"studies[3].case_definition_source"}
+
+
+def test_v1_case_definition_source_outside_the_enum(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition_source"] = "pdf"
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"}
+    assert "studies[0].case_definition_source" in paths(issues)
+
+
+def test_v1_missing_direction(tmp_path):
+    data = base()
+    del study(data, "pmid:00000001")["direction"]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"}
+    assert paths(issues) == {"studies[0].direction"}
+
+
+def test_v1_direction_outside_the_enum(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["direction"] = "decreased"
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"}
+    assert paths(issues) == {"studies[0].direction"}
+
+
+@pytest.mark.parametrize("direction", ["lower", "higher", "no_difference", "mixed", "not_applicable"])
+def test_direction_accepts_every_enum_value_for_a_background_study(tmp_path, direction):
+    data = base()
+    study(data, "pmid:00000004")["direction"] = direction  # role early_signal
+    assert check(tmp_path, data) == []
+
+
+def test_v1_empty_group(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["group"] = ""
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"}
+    assert paths(issues) == {"studies[0].group"}
+
+
+def test_group_is_optional_and_may_be_null(tmp_path):
+    data = base()
+    assert "group" not in study(data, "pmid:00000001")  # omitted: valid
+    study(data, "pmid:00000001")["group"] = None
+    assert check(tmp_path, data) == []
+
+
+# --- Holmes 1988 is treated like Fukuda --------------------------------------
+
+
+def test_holmes1988_study_satisfies_v5_at_level_2(tmp_path):
+    data = _level_two(base())
+    for sid in ("pmid:00000001", "pmid:00000002"):
+        study(data, sid)["case_definition"] = "Holmes1988"
+    assert check(tmp_path, data) == []
+
+
+def test_holmes1988_study_satisfies_v7_like_fukuda(tmp_path):
+    data = base()
+    study(data, "pmid:00000002")["case_definition"] = "Holmes1988"
+    assert "V7" not in rules(check(tmp_path, data))
+
+
+def test_holmes1988_ranks_equal_to_fukuda_above_oxford_below_ccc():
+    rank = cards.case_definition_rank
+    assert rank("Holmes1988") == rank("Fukuda")
+    assert rank("Holmes1988") > rank("Oxford")
+    assert rank("Holmes1988") < rank("CCC") == rank("ICC") == rank("IOM2015")
+    assert rank("unverified") == rank("none") == rank("other") < rank("Oxford")
+    assert set(cards.CASE_DEFINITION_RANK) == set(cards.Study.model_fields["case_definition"].annotation.__args__)

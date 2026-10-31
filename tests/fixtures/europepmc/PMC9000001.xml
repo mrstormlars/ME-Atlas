@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture. The article, its authors and every sentence are invented for tests. -->
+<article article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group><article-title>Fictional widget signalling in a fictional cohort</article-title></title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec sec-type="intro">
+      <title>Introduction</title>
+      <p>Fictional widgets are poorly understood. Earlier fictional work used the Oxford criteria in the introduction only.</p>
+    </sec>
+    <sec sec-type="materials|methods">
+      <title>Materials and methods</title>
+      <sec>
+        <title>Participants</title>
+        <p>Forty fictional patients were recruited from a fictional clinic. All met the Fukuda criteria (Fukuda et al., 1994) for fictional fatigue syndrome. Controls were matched for age.</p>
+      </sec>
+      <sec>
+        <title>Assay</title>
+        <p>Widget signalling was measured twice, one week apart.</p>
+      </sec>
+    </sec>
+    <sec sec-type="results">
+      <title>Results</title>
+      <p>Patients showed lower widget signalling than controls.</p>
+    </sec>
+  </body>
+</article>

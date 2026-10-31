@@ -56,15 +56,27 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | `id` | `pmid:<digits>` or `doi:10.<rest>` |
 | `title`, `year` | As in the fetched record. |
 | `cohort` | `me_cfs` or `long_covid` |
-| `case_definition` | `CCC`, `ICC`, `IOM2015`, `Fukuda`, `Oxford`, `other`, `none` |
+| `case_definition` | `CCC`, `ICC`, `IOM2015`, `Fukuda`, `Holmes1988`, `Oxford`, `other`, `none`, `unverified` (see below) |
+| `case_definition_source` | `abstract`, `fulltext`, or `null` (only while `unverified`) |
+| `case_definition_quote` | The verbatim sentence from that source that states the case definition, or `null` |
 | `design` | `controlled`, `uncontrolled`, `intervention_controlled`, `other` |
 | `n_patients`, `n_controls` | Whole number, or `null` if not applicable or not stated. |
 | `measures_pem` | true if the study measures post-exertional malaise directly. |
 | `preregistered` | true, false, or `null` if unknown. |
 | `role` | `supports`, `contradicts`, `early_signal`, `context` |
+| `direction` | `lower`, `higher`, `no_difference`, `mixed`, `not_applicable`: patients compared with controls, on the card's measure. Required for every role, so a background study still shows which way it points. Use `not_applicable` when the source gives no patient-control comparison. |
 | `finding` | One neutral sentence: "A study of n=... found ...". |
+| `group` | Optional. A short label for the research group, taken from the fetched record (for example the last author and institution as PubMed gives them), or `null`/omitted. Not validated beyond being non-empty when present. Meant for the "independent group" test at level 3. |
 
-All of these are required; use `null` where the value is allowed to be unknown.
+All of these are required except `group`; use `null` where the value is allowed to be unknown.
+
+### Case definition provenance (format v2)
+
+- `unverified` means the case definition has not been checked yet (for example the abstract does not state it and the full text has not been read). Both `case_definition_source` and `case_definition_quote` must be `null`.
+- `none` means the source was checked and states no case definition. It needs a `case_definition_source` (where it was checked).
+- Every other value needs a `case_definition_source`. The named definitions (`CCC`, `ICC`, `IOM2015`, `Fukuda`, `Holmes1988`, `Oxford`) also need a non-empty `case_definition_quote`: the verbatim sentence, so a reader can check it. `other` may leave the quote `null`.
+- `Holmes1988` is the 1988 CDC definition. It is accepted like `Fukuda` (counts at every rung), is flagged on the card as "does not require PEM", and ranks equal to `Fukuda` in the comparable-quality rule.
+- To find the sentence, `uv run python -m me_atlas.europepmc casedef <pmid>...` shows candidate sentences from open-access full text. It only suggests; the person or agent drafting the card decides which definition a sentence means.
 
 ## Change log entries
 
@@ -84,16 +96,17 @@ All of these are required; use `null` where the value is allowed to be unknown.
 | V2 | `slug` equals the file name. |
 | V3 | Every source id used in any sourced text is in the card's `studies`. |
 | V4 | Every sourced text has at least one source, except `level_reason` at level 0. |
-| V5 | Level 2 or higher needs a `supports` study with design `controlled` or `intervention_controlled` and case definition CCC, ICC, IOM2015 or Fukuda. Oxford-only evidence therefore stops at level 1. |
+| V5 | Level 2 or higher needs a `supports` study with design `controlled` or `intervention_controlled` and case definition CCC, ICC, IOM2015, Fukuda or Holmes1988. Oxford-only evidence therefore stops at level 1. |
 | V6 | Level 4 or higher needs a `supports` study with design `intervention_controlled`. |
 | V7 | `explains_pem: true` needs the badge's `reason` to cite a `supports` study that has `measures_pem: true` and meets the V5 design and case-definition test. |
 | V8 | `contested` needs its `reason` to cite at least one `contradicts` study, and every rung lies between 1 and `level`. |
-| V9 | A study with `case_definition: none` cannot have role `supports` or `contradicts`. |
+| V9 | A study with `case_definition: none` or `unverified` cannot have role `supports` or `contradicts`. |
 | V10 | `core_claim` and `early_signals` contain none of: promising, breakthrough, cure, hope, proven (whole words, any case; plain plural and past forms such as "cured" and "hopeful" count). |
 | V11 | Change log: `card` exists in `cards/`, `tier` is 1-3, the date is not in the future. |
 | V12 | Study ids are unique within a card; a repeated id is reported on its second occurrence. |
+| V13 | Case definition provenance: `unverified` has `null` source and quote; every other value has a source; the named definitions (CCC, ICC, IOM2015, Fukuda, Holmes1988, Oxford) also have a quote. |
 
-The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
+The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10, V12 and V13 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
 
 What it does not check: that titles, years, sample sizes and case definitions match the PubMed record (a later task, needs the fetch script), that the level is right for the evidence, or that a founder approved a change.
 
@@ -128,24 +141,30 @@ studies:
     year: 2001
     cohort: me_cfs
     case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: Fictional participants met the Canadian Consensus Criteria.
     design: controlled
     n_patients: 40
     n_controls: 40
     measures_pem: false
     preregistered: true
     role: supports
+    direction: lower
     finding: A study of n=40 patients and 40 controls found a fictional difference in widget signalling.
   - id: pmid:00000004
     title: Fictional small uncontrolled study in a long COVID cohort
     year: 2004
     cohort: long_covid
     case_definition: other
+    case_definition_source: abstract
+    case_definition_quote: null
     design: uncontrolled
     n_patients: 12
     n_controls: null
     measures_pem: false
     preregistered: null
     role: early_signal
+    direction: mixed
     finding: A study of n=12 patients found a fictional related change.
 last_checked:
   date: 2026-10-01

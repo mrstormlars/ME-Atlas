@@ -63,12 +63,16 @@ studies:
     year: 2016
     cohort: me_cfs
     case_definition: Fukuda  # abstract: "the 1994 Centers for Disease Control and Prevention criteria"
+    case_definition_source: abstract
+    case_definition_quote: "Patients were defined according to the 1994 Centers for Disease Control and Prevention criteria."
     design: controlled
     n_patients: 39
     n_controls: 30
     measures_pem: false
     preregistered: null
     role: supports
+    direction: lower
+    group: null
     finding: >-
       A study of n=39 patients and 30 unfatigued controls found lower NK cell lysis of target
       cells in patients (17% vs 31%).
@@ -80,12 +84,16 @@ studies:
     # The cached record gives publication Jan 1994, before the Fukuda definition (pmid:7978722, Dec 15 1994),
     # so "CDC" cannot mean Fukuda here. TODO: verify which earlier CDC definition was used.
     case_definition: other
+    case_definition_source: abstract
+    case_definition_quote: "Natural killer (NK) cell activity was measured blindly in vitro with blood specimens from 50 healthy individuals and 20 patients with clinically defined chronic fatigue immune dysfunction syndrome (CFIDS) who met the criteria established by the Centers for Disease Control and Prevention (Atlanta)."
     design: controlled
     n_patients: 20
     n_controls: 50
     measures_pem: false
     preregistered: null
     role: supports
+    direction: not_applicable
+    group: null
     finding: >-
       A study of n=20 patients and 50 healthy controls found NK cell activity no higher than
       100 lytic units in any patient, and lower activity in more severely ill patient groups.
@@ -94,12 +102,16 @@ studies:
     year: 1998
     cohort: me_cfs
     case_definition: other  # TODO: verify — abstract says "CFS case definition as recommended by the Centers for Disease Control and Prevention", version not named
+    case_definition_source: abstract
+    case_definition_quote: "All 8 met criteria for the CFS case definition as recommended by the Centers for Disease Control and Prevention."
     design: controlled
     n_patients: 8
     n_controls: 8  # normal controls; the study also tested 12 unaffected family members, which the card format cannot record
     measures_pem: false
     preregistered: null
     role: supports
+    direction: lower
+    group: null
     finding: >-
       A study of n=8 affected family members, 12 unaffected family members and 8 controls found
       lower NK activity in affected members than in controls; unaffected members were in between
@@ -110,12 +122,16 @@ studies:
     year: 2017
     cohort: me_cfs
     case_definition: CCC  # abstract: "the Canada 2003 criteria"
+    case_definition_source: abstract
+    case_definition_quote: "Forty-eight patients from two independent cohorts fulfilling the Canada 2003 criteria for ME/CFS were evaluated with respect to cytotoxic lymphocyte phenotype and function."
     design: controlled
     n_patients: 48  # from two independent cohorts
     n_controls: null  # TODO: verify — not stated in abstract ("matched healthy controls")
     measures_pem: false
     preregistered: null
     role: contradicts
+    direction: no_difference
+    group: null
     finding: >-
       A study of n=48 patients from two cohorts and matched healthy controls found no
       reproducible differences in cytotoxic lymphocyte numbers, granule content, activation,
@@ -128,12 +144,16 @@ studies:
     # The cached record gives publication Aug 1994, before the Fukuda definition (pmid:7978722, Dec 15 1994),
     # so "CDC" cannot mean Fukuda here. TODO: verify which earlier CDC definition was used.
     case_definition: other
+    case_definition_source: abstract
+    case_definition_quote: "Twenty-one patients fulfilling the Centers for Disease Control criteria for CFS were compared to 21 age and sex matched controls."
     design: controlled
     n_patients: 21
     n_controls: 21
     measures_pem: false
     preregistered: null
     role: contradicts
+    direction: no_difference
+    group: null
     finding: >-
       A study of n=21 patients and 21 matched controls found NK cell activity similar in the two
       groups.
@@ -142,13 +162,17 @@ studies:
     title: "Biomarkers in chronic fatigue syndrome: evaluation of natural killer cell function and dipeptidyl peptidase IV/CD26."
     year: 2010
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 176
     n_controls: 230
     measures_pem: false
     preregistered: null
     role: context
+    direction: lower
+    group: null
     finding: >-
       A study of n=176 patients and 230 controls found lower NK cell killing in patients, which
       was a good predictor of CFS status in its ROC analysis; NK cell counts did not differ.
@@ -156,13 +180,17 @@ studies:
     title: Immunological abnormalities as potential biomarkers in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
     year: 2011
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 95
     n_controls: 50
     measures_pem: false
     preregistered: null
     role: context
+    direction: lower
+    group: null
     finding: >-
       A study of n=95 patients and 50 healthy controls found lower NK and CD8+ T cell cytotoxic
       activity in patients.
@@ -170,13 +198,17 @@ studies:
     title: Longitudinal investigation of natural killer cells and cytokines in chronic fatigue syndrome/myalgic encephalomyelitis.
     year: 2012
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 65
     n_controls: 21
     measures_pem: false
     preregistered: null
     role: context
+    direction: lower
+    group: null
     finding: >-
       A study of n=65 patients and 21 non-fatigued controls found lower NK cell cytotoxic
       activity in patients at baseline, 6 months and 12 months.
@@ -184,13 +216,17 @@ studies:
     title: "Natural killer cytotoxicity in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS): a multi-site clinical assessment of ME/CFS (MCAM) sub-study."
     year: 2023
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: 174
     n_controls: 86  # healthy controls; the study also had 10 ill controls, which the card format cannot record
     measures_pem: false
     preregistered: null
     role: context
+    direction: no_difference
+    group: null
     finding: >-
       A study of n=174 patients and 86 healthy controls, using an assay validated for samples
       shipped overnight, found no significant difference in NK cell cytotoxicity (p=0.79), with
@@ -199,13 +235,17 @@ studies:
     title: "Immune responses associated with chronic fatigue syndrome: a case-control study."
     year: 1997
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract ("rigorously defined cases")
+    case_definition: unverified  # abstract names no case definition; full text not yet checked ("rigorously defined cases")
+    case_definition_source: null
+    case_definition_quote: null
     design: controlled
     n_patients: null  # TODO: verify — not stated in abstract
     n_controls: null  # TODO: verify — not stated in abstract
     measures_pem: false
     preregistered: null
     role: context
+    direction: no_difference
+    group: null
     finding: >-
       A case-control study (sample size not stated in the abstract) found no difference in NK
       cell function between patients and controls.
@@ -214,12 +254,16 @@ studies:
     year: 2020
     cohort: me_cfs
     case_definition: Fukuda  # abstract: "The patients met the Fukuda diagnostic criteria"
+    case_definition_source: abstract
+    case_definition_quote: "The patients met the Fukuda diagnostic criteria."
     design: controlled
     n_patients: null  # TODO: verify — not stated in abstract ("five families each with 2-5 CFS patients")
     n_controls: null  # TODO: verify — not stated in abstract (family members without CFS and unrelated controls)
     measures_pem: false
     preregistered: null
     role: context
+    direction: lower
+    group: null
     finding: >-
       A study of five families with 2-5 patients each (total not stated in the abstract) found
       that patients and their family members without CFS had lower antibody-dependent NK cell
@@ -228,13 +272,17 @@ studies:
     title: "Impaired natural immunity, cognitive dysfunction, and physical symptoms in patients with chronic fatigue syndrome: preliminary evidence for a subgroup?"
     year: 2006
     cohort: me_cfs
-    case_definition: none  # TODO: verify — case definition not stated in abstract
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
     design: uncontrolled  # compares patients with low and normal NK activity; no healthy control group
     n_patients: 41
     n_controls: null  # not applicable
     measures_pem: false
     preregistered: null
     role: context
+    direction: not_applicable
+    group: null
     finding: >-
       A study of n=41 female patients found that those with low NK cell activity reported less
       vigour and more cognitive problems, and scored lower on cognitive tests, than those with

@@ -87,8 +87,9 @@ Quality factors applied at every rung: case definition, sample size, controls, p
 | --- | --- |
 | CCC, ICC, IOM 2015 | Accepted at every rung. |
 | Fukuda | Accepted, flagged on the card as "does not require PEM". |
+| Holmes 1988 (the 1988 CDC definition) | Accepted like Fukuda: flagged on the card as "does not require PEM", ranked equal to Fukuda. |
 | Oxford (only) | Flagged as broad. Evidence resting only on Oxford-defined cohorts cannot raise a hypothesis above level 1. |
-| None stated | Not accepted (see the inclusion rule). |
+| None stated, or not yet checked | Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from. |
 
 ### The two badges
 
@@ -101,7 +102,7 @@ Separate tracks for mechanism, diagnosis and treatment were rejected because the
 
 ### Contested evidence
 
-A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it. Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda, which ranks above Oxford), a control group, and at least half the sample size of the study it contradicts.
+A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it. Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts.
 
 - **Who decides:** the founder, as a tier 2 decision (see section 6), with the contradicting study linked on the card and the reason written in one or two plain sentences. AI may propose a conflict; it never sets one.
 - **How it is shown:** the bar is filled up to the highest uncontested rung; the rung or rungs under dispute are drawn as a **hatched segment**. The card lists both sides.

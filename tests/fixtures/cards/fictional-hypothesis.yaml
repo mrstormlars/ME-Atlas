@@ -39,60 +39,76 @@ studies:
     year: 2001
     cohort: me_cfs
     case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: Fictional participants met the Canadian Consensus Criteria.
     design: controlled
     n_patients: 40
     n_controls: 40
     measures_pem: false
     preregistered: true
     role: supports
+    direction: lower
     finding: A study of n=40 patients and 40 controls found a fictional difference in widget signalling.
   - id: pmid:00000002
     title: Fictional intervention trial of widget signalling with exercise testing
     year: 2002
     cohort: me_cfs
     case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: Fictional participants met the International Consensus Criteria.
     design: intervention_controlled
     n_patients: 30
     n_controls: 30
     measures_pem: true
     preregistered: false
     role: supports
+    direction: higher
     finding: A study of n=30 patients and 30 controls found a fictional change in outcome after a fictional intervention.
   - id: pmid:00000003
     title: Fictional larger controlled study with a different result
     year: 2003
     cohort: me_cfs
     case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: Fictional participants met the IOM 2015 criteria.
     design: controlled
     n_patients: 120
     n_controls: 100
     measures_pem: false
     preregistered: null
     role: contradicts
+    direction: no_difference
     finding: A study of n=120 patients and 100 controls found no fictional difference in widget signalling.
   - id: pmid:00000004
     title: Fictional small uncontrolled study in a long COVID cohort
     year: 2004
     cohort: long_covid
     case_definition: other
+    case_definition_source: abstract
+    case_definition_quote: null
     design: uncontrolled
     n_patients: 12
     n_controls: null
     measures_pem: false
     preregistered: null
     role: early_signal
+    direction: mixed
     finding: A study of n=12 patients found a fictional related change.
   - id: doi:10.0000/fictional.5
     title: Fictional background paper
     year: 2005
     cohort: me_cfs
     case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: Fictional participants met the Fukuda criteria.
     design: other
     n_patients: null
     n_controls: null
     measures_pem: false
     preregistered: null
     role: context
+    direction: not_applicable
+    group: Fictional Group, Fictional University
     finding: A fictional background paper describes the widget pathway.
 last_checked:
   date: 2026-10-01

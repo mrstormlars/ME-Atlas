@@ -2,7 +2,7 @@
 
 Cards live in ``cards/<slug>.yaml``, drafts in ``drafts/<slug>.yaml`` (same schema) and the public
 change log in ``cards/changelog.yaml``. See ``docs/card-format.md`` for the field reference and the
-plain-English rules V1-V12.
+plain-English rules V1-V13.
 
 Command line::
 
@@ -28,8 +28,23 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StringConstraints,
 
 CHANGELOG_NAME = "changelog.yaml"
 
-# Case definitions accepted at every rung (functional spec section 3). Oxford, other and none are not.
-STRICT_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda"})
+# Case definitions accepted at every rung (functional spec section 3). Oxford, other, none and unverified are not.
+STRICT_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988"})
+# Named definitions: a study that records one must also record where it was read and the quoted sentence (V13).
+RECOGNISED_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "Oxford"})
+# Rank for the comparable-quality rule (spec section 3): CCC, ICC and IOM 2015 above Fukuda and Holmes 1988
+# (equal), which are above Oxford. Not a rung criterion; nothing else is ranked.
+CASE_DEFINITION_RANK = {
+    "CCC": 3,
+    "ICC": 3,
+    "IOM2015": 3,
+    "Fukuda": 2,
+    "Holmes1988": 2,
+    "Oxford": 1,
+    "other": 0,
+    "none": 0,
+    "unverified": 0,
+}
 CONTROLLED_DESIGNS = frozenset({"controlled", "intervention_controlled"})
 
 BANNED_WORDS = ("promising", "breakthrough", "cure", "hope", "proven")
@@ -90,14 +105,18 @@ class Study(_Model):
     title: NonEmptyStr
     year: int
     cohort: Literal["me_cfs", "long_covid"]
-    case_definition: Literal["CCC", "ICC", "IOM2015", "Fukuda", "Oxford", "other", "none"]
+    case_definition: Literal["CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "Oxford", "other", "none", "unverified"]
+    case_definition_source: Literal["abstract", "fulltext"] | None
+    case_definition_quote: NonEmptyStr | None
     design: Literal["controlled", "uncontrolled", "intervention_controlled", "other"]
     n_patients: Annotated[int, Field(ge=0)] | None
     n_controls: Annotated[int, Field(ge=0)] | None
     measures_pem: bool
     preregistered: bool | None
     role: Literal["supports", "contradicts", "early_signal", "context"]
+    direction: Literal["lower", "higher", "no_difference", "mixed", "not_applicable"]
     finding: NonEmptyStr
+    group: NonEmptyStr | None = None
 
 
 class Card(_Model):
@@ -193,6 +212,11 @@ def _sourced_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
         yield f"early_signals[{i}]", t
 
 
+def case_definition_rank(case_definition: str) -> int:
+    """Rank of a case definition for the comparable-quality rule; higher is stricter."""
+    return CASE_DEFINITION_RANK[case_definition]
+
+
 def _supports_level2(study: Study) -> bool:
     return (
         study.role == "supports"
@@ -232,7 +256,8 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
             (
                 "V5",
                 "level",
-                "level 2 or higher needs a supporting controlled study (case definition CCC, ICC, IOM2015 or Fukuda)",
+                "level 2 or higher needs a supporting controlled study "
+                "(case definition CCC, ICC, IOM2015, Fukuda or Holmes1988)",
             )
         )
 
@@ -252,7 +277,7 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
                     "V7",
                     "badges.explains_pem",
                     "explains_pem: true needs a cited supporting study that measures PEM and is level-2-eligible "
-                    "(controlled design, CCC/ICC/IOM2015/Fukuda)",
+                    "(controlled design, CCC/ICC/IOM2015/Fukuda/Holmes1988)",
                 )
             )
 
@@ -269,9 +294,39 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
 
     # V9
     for i, s in enumerate(card.studies):
-        if s.case_definition == "none" and s.role in ("supports", "contradicts"):
+        if s.case_definition in ("none", "unverified") and s.role in ("supports", "contradicts"):
             found.append(
-                ("V9", f"studies[{i}].case_definition", f"a study with case_definition 'none' cannot be '{s.role}'")
+                (
+                    "V9",
+                    f"studies[{i}].case_definition",
+                    f"a study with case_definition '{s.case_definition}' cannot be '{s.role}'",
+                )
+            )
+
+    # V13
+    for i, s in enumerate(card.studies):
+        base_path = f"studies[{i}]"
+        if s.case_definition == "unverified":
+            if s.case_definition_source is not None:
+                found.append(("V13", f"{base_path}.case_definition_source", "must be null while 'unverified'"))
+            if s.case_definition_quote is not None:
+                found.append(("V13", f"{base_path}.case_definition_quote", "must be null while 'unverified'"))
+            continue
+        if s.case_definition_source is None:
+            found.append(
+                (
+                    "V13",
+                    f"{base_path}.case_definition_source",
+                    f"case_definition '{s.case_definition}' needs a source (abstract or fulltext)",
+                )
+            )
+        if s.case_definition in RECOGNISED_CASE_DEFINITIONS and s.case_definition_quote is None:
+            found.append(
+                (
+                    "V13",
+                    f"{base_path}.case_definition_quote",
+                    f"case_definition '{s.case_definition}' needs the verbatim sentence from the source",
+                )
             )
 
     # V10
