@@ -1,0 +1,13 @@
+# FICTIONAL fixture change log.
+- date: 2026-10-01
+  card: fictional-hypothesis
+  change: Added a fictional study to the card.
+  reason: A fictional new paper met the criteria.
+  sources: [pmid:00000004]
+  tier: 1
+- date: 2026-10-08
+  card: fictional-hypothesis
+  change: Marked rung 4 as contested.
+  reason: A fictional larger study found no difference.
+  sources: [pmid:00000003]
+  tier: 2

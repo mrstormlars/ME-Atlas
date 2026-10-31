@@ -1,0 +1,99 @@
+# FICTIONAL fixture. Every study, id, title and result below is invented for tests.
+slug: fictional-hypothesis
+name: Fictional hypothesis about widget signalling
+core_claim:
+  text: The fictional hypothesis proposes that widget signalling is altered in patients.
+  sources: [pmid:00000001]
+level: 4
+level_reason:
+  text: A fictional controlled study and a fictional intervention trial support the hypothesis.
+  sources: [pmid:00000001, pmid:00000002]
+contested:
+  rungs: [4]
+  reason:
+    text: A fictional larger controlled study did not find the same pattern.
+    sources: [pmid:00000003]
+badges:
+  diagnostic_marker:
+    value: true
+    reason:
+      text: A fictional marker was tested in a second fictional cohort.
+      sources: [pmid:00000001]
+  explains_pem:
+    value: true
+    reason:
+      text: A fictional two-day exercise study tracked symptoms after exertion.
+      sources: [pmid:00000002]
+subgroups:
+  - text: The fictional finding was reported in a fictional subgroup with severe illness.
+    sources: [pmid:00000001]
+working_on_it:
+  - name: Fictional Research Group
+    url: https://example.org/fictional-group
+early_signals:
+  - text: A fictional small uncontrolled study reported a related fictional change, not yet replicated.
+    sources: [pmid:00000004]
+studies:
+  - id: pmid:00000001
+    title: Fictional study of widget signalling in a controlled cohort
+    year: 2001
+    cohort: me_cfs
+    case_definition: CCC
+    design: controlled
+    n_patients: 40
+    n_controls: 40
+    measures_pem: false
+    preregistered: true
+    role: supports
+    finding: A study of n=40 patients and 40 controls found a fictional difference in widget signalling.
+  - id: pmid:00000002
+    title: Fictional intervention trial of widget signalling with exercise testing
+    year: 2002
+    cohort: me_cfs
+    case_definition: ICC
+    design: intervention_controlled
+    n_patients: 30
+    n_controls: 30
+    measures_pem: true
+    preregistered: false
+    role: supports
+    finding: A study of n=30 patients and 30 controls found a fictional change in outcome after a fictional intervention.
+  - id: pmid:00000003
+    title: Fictional larger controlled study with a different result
+    year: 2003
+    cohort: me_cfs
+    case_definition: IOM2015
+    design: controlled
+    n_patients: 120
+    n_controls: 100
+    measures_pem: false
+    preregistered: null
+    role: contradicts
+    finding: A study of n=120 patients and 100 controls found no fictional difference in widget signalling.
+  - id: pmid:00000004
+    title: Fictional small uncontrolled study in a long COVID cohort
+    year: 2004
+    cohort: long_covid
+    case_definition: other
+    design: uncontrolled
+    n_patients: 12
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: early_signal
+    finding: A study of n=12 patients found a fictional related change.
+  - id: doi:10.0000/fictional.5
+    title: Fictional background paper
+    year: 2005
+    cohort: me_cfs
+    case_definition: Fukuda
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    finding: A fictional background paper describes the widget pathway.
+last_checked:
+  date: 2026-10-01
+  by: ai_pair

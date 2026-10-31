@@ -4,13 +4,13 @@ Last updated: 2026-10-31
 
 ## Where we stand
 
-Repository set up (structure, Claude Code roles, Python tooling). No cards, no pipeline code yet.
+Repository set up (structure, Claude Code roles, Python tooling). Functional specification and front-page mockup done. Card data model done: YAML + pydantic validator in `src/me_atlas/cards.py`, reference in `docs/card-format.md`. No real cards and no pipeline code yet.
 
 ## Active priorities (max 3)
 
-1. Functional specification and front-page mockup (`docs/ME-Atlas-functional-spec.md`, `docs/mockups/front-page.html`).
-2. Define the evidence card data model and write 2–3 cards by hand to test the format.
-3. First PubMed / Europe PMC fetch script.
+1. First PubMed / Europe PMC fetch script (cached raw responses, rate limits, contact email).
+2. Write 2–3 cards by hand from fetched records to test the format.
+3. Mechanical citation check against fetched records.
 
 ## Parked
 
