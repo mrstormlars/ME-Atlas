@@ -13,9 +13,9 @@ ME Atlas is a continuously updated, evidence-graded overview of the serious hypo
 Credibility is the product. The readers are patients and carers with little energy and researchers who will check the sources. These rules come before features.
 
 1. **Never cite from memory.** Every PMID, DOI, title, author, year, sample size and case definition in `cards/` or `drafts/` must come from a record fetched from PubMed / Europe PMC (or a cached copy in `data/cache/`) — not from model knowledge. If something cannot be verified, write `TODO: verify` and say so. A hallucinated reference is the single most damaging failure this project can have.
-2. **AI drafts, humans decide.** Code and agents write to `drafts/` only. Moving content into `cards/`, setting or changing a `status_level`, and setting `last_reviewed` are editorial acts: do them only when the founder explicitly asks in chat.
+2. **AI drafts, humans decide what matters.** Publication follows the tiered review model in `docs/ME-Atlas-functional-spec.md` section 6. Code and agents write to `drafts/`; only the pipeline's tier 1 path (mechanical checks passed, drafting and review agents agree, calibration period ended by founder ruling in DECISIONS.md) may publish without a human. Setting or changing a `status_level`, badge or contested mark, adding or removing a hypothesis, and resolving parked disputes are founder decisions. In chat sessions, move content into `cards/` only when the founder explicitly asks.
 3. **No treatment advice.** Describe findings, never recommend. Early signals are labelled as unreplicated. Neutral wording: "a study of n=… found …", not "X causes ME".
-4. **Grade only against the published rubric** (currently the status scale in the plan). Do not invent criteria. Always record the case definition (e.g. Fukuda, CCC, ICC, IOM 2015, Oxford) — Oxford-only cohorts are broad and must be flagged.
+4. **Grade only against the published rubric** (the evidence ladder in `docs/ME-Atlas-functional-spec.md` section 3). Do not invent criteria. Always record the case definition (e.g. Fukuda, CCC, ICC, IOM 2015, Oxford) — Oxford-only cohorts are broad and must be flagged.
 5. **Every claim links to its source.** No unsourced sentence in a card.
 
 ## Layout

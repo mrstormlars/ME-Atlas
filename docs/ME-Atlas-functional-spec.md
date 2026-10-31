@@ -26,7 +26,7 @@ Scope is ME/CFS first. Long COVID appears as a marker on a card where the eviden
 
 ## 2. Inclusion rule for hypotheses
 
-A hypothesis is listed when it has **at least one peer-reviewed study with data from an ME/CFS cohort defined by a recognised case definition** (for example Fukuda, CCC, ICC, IOM 2015; Oxford counts but is flagged as broad).
+A hypothesis is listed when it has **at least one peer-reviewed study with data from an ME/CFS cohort defined by a recognised case definition** (see "Accepted case definitions" in section 3).
 
 The rule judges **method, not origin**. Any approach, conventional or alternative, that uses scientific method and meets the rule is admitted.
 
@@ -42,7 +42,7 @@ Hypotheses are **not mutually exclusive**. They may be links in one causal chain
 
 ## 3. Evidence ladder
 
-**Draft — pending expert review.** Not final until an external medical or research reviewer has gone through it. Grading follows only this published ladder; editors do not add criteria.
+**Draft — pending expert review.** No external medical or research reviewer is attached yet; one will be recruited once the site can be shown. Until then the ladder is applied as written and the site says it has not been expert-reviewed. Grading follows only this published ladder; editors do not add criteria.
 
 The bar for a hypothesis shows **causal evidence**, rung 0 to 5.
 
@@ -81,20 +81,29 @@ Volume is not evidence. The number of papers, citations or news items never move
 
 Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results.
 
+### Accepted case definitions
+
+| Case definition | Treatment on the ladder |
+| --- | --- |
+| CCC, ICC, IOM 2015 | Accepted at every rung. |
+| Fukuda | Accepted, flagged on the card as "does not require PEM". |
+| Oxford (only) | Flagged as broad. Evidence resting only on Oxford-defined cohorts cannot raise a hypothesis above level 1. |
+| None stated | Not accepted (see the inclusion rule). |
+
 ### The two badges
 
 Shown on every card, separate from the bar, each yes or no:
 
 1. **Diagnostic marker validated in an independent cohort.** Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition.
-2. **Explains post-exertional malaise (PEM).** Yes only when at least one study at level 2 or above examines PEM in connection with the hypothesis. (PEM is the worsening of symptoms after physical or mental effort.)
+2. **Explains post-exertional malaise (PEM).** Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis. A cohort of ME/CFS patients alone is not enough. (PEM is the worsening of symptoms after physical or mental effort.)
 
 Separate tracks for mechanism, diagnosis and treatment were rejected because they are harder to read.
 
 ### Contested evidence
 
-A level is **contested** when at least one study of comparable or higher quality (same or stricter case definition, similar or larger sample, controlled design) contradicts the finding that supports it.
+A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it. Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda, which ranks above Oxford), a control group, and at least half the sample size of the study it contradicts.
 
-- **Who decides:** the editorial team, with the contradicting study linked on the card and the reason written in one or two plain sentences. AI may suggest a conflict; it never sets one.
+- **Who decides:** the founder, as a tier 2 decision (see section 6), with the contradicting study linked on the card and the reason written in one or two plain sentences. AI may propose a conflict; it never sets one.
 - **How it is shown:** the bar is filled up to the highest uncontested rung; the rung or rungs under dispute are drawn as a **hatched segment**. The card lists both sides.
 - **How it ends:** a contested mark is removed when the conflict is resolved (for example a larger study settles it), recorded on "What changed this week".
 
@@ -107,7 +116,8 @@ A level is **contested** when at least one study of comparable or higher quality
 
 ### Hypothesis card page
 
-- **Shows:** name; core claim in plain words; level, badges and contested state, with the reason for each; key supporting studies (link, sample size, case definition, year); contradicting studies; replication status; subgroups it may apply to; who is working on it; early signals, labelled unreplicated; long COVID marker; last reviewed (date and reviewer).
+- **Shows:** name; core claim in plain words; level, badges and contested state, with the reason for each; key supporting studies (link, sample size, case definition, year); contradicting studies; replication status; subgroups it may apply to; who is working on it; early signals; a small "Also studied in long COVID" label at the top of the card when at least one long COVID study that meets the inclusion rule points to the same mechanism; last checked (date, and whether by the AI review pair or by the founder).
+- **Early signals** appear only on the card, under the fixed heading "Early signals: not yet repeated", in a fixed sentence pattern ("A study of n=… found …"). They never appear on the front page, and words such as "promising", "breakthrough" or "hope" are not used.
 - **Does not show:** advice on what a patient should do; a verdict that a hypothesis is "right" or "wrong"; any sentence without a source link.
 
 ### What changed this week
@@ -117,7 +127,7 @@ A level is **contested** when at least one study of comparable or higher quality
 
 ### Methods page
 
-- **Shows:** the evidence ladder and its draft status; the inclusion rule; the Bradford Hill mapping; the badge definitions; how contested evidence is decided; the editorial flow; the role of AI; who is on the editorial team; known limits.
+- **Shows:** the evidence ladder and its draft status; the inclusion rule; the Bradford Hill mapping; the badge definitions; how contested evidence is decided; the editorial flow and its review tiers; the role of AI and how its work is checked; who makes human decisions; a plain statement that no medical or research expert has reviewed the content yet (until one has); known limits.
 - **Does not show:** private reviewer discussions; claims about accuracy that are not measured.
 
 ### Glossary page
@@ -138,15 +148,27 @@ A level is **contested** when at least one study of comparable or higher quality
 
 ## 6. Editorial flow
 
-1. **Weekly fetch.** The pipeline fetches new papers from PubMed and Europe PMC and stores raw responses.
-2. **AI sorting and drafting.** AI classifies papers by hypothesis, extracts study data (sample size, case definition) and writes a draft card update. Each AI output keeps the source id it came from. Output goes to `drafts/` only.
-3. **Human review.** An editor checks every claim against the source, the inclusion rule and the ladder.
-4. **Decision.** Editors alone set or change a level, a badge or a contested mark, and approve moving a draft into `cards/`. Disagreement goes to the medical or research reviewer. If still unresolved, the lower level stands and the disagreement is noted.
-5. **Publication.** Approved changes are published in the weekly site update, with the card's last-reviewed date and reviewer set by the editor.
-6. **Logging.** Every published change gets an entry on "What changed this week" (date, card, change, one-line reason, source link). The change log is public and kept permanently.
-7. **Corrections.** An error found later is corrected the same way and logged as a correction.
+The pipeline runs mostly on AI, with mechanical checks in code and a human for high-impact changes and disputes.
 
-AI drafts, humans decide. No grade is published without human approval.
+1. **Weekly fetch.** The pipeline fetches new papers from PubMed and Europe PMC and stores raw responses.
+2. **Drafting agent.** One AI agent classifies papers by hypothesis, extracts study data (sample size, case definition) and writes a draft card update. Each AI output keeps the source id it came from. Output goes to `drafts/` only.
+3. **Mechanical checks (code, not AI).** Every cited id exists in a fetched record; title, year, sample size and case definition match that record; every sentence has a source link. A draft that fails is sent back to the drafting agent.
+4. **Review agent.** A second, independent AI agent checks the draft against the sources, the inclusion rule and the ladder. It sees the draft and the source records, not the drafting agent's reasoning. Where possible it runs on a different model or prompt family, so the two do not share the same blind spots.
+5. **Second round.** If the review agent rejects the draft, the drafting agent gets one revised attempt, which is checked again (steps 3–4). If they still disagree after two rounds, the change goes to the **parking lot** for the founder.
+6. **Decision by tier.**
+
+   | Tier | Change | Who decides |
+   | --- | --- | --- |
+   | 1 | Adding a study to a card, factual text, change-log entry | Published automatically when the mechanical checks pass and both agents agree |
+   | 2 | Setting or changing a level, a badge or a contested mark; adding or removing a hypothesis | The founder, yes or no, in a weekly list |
+   | 3 | Anything still disputed after two agent rounds | The founder, from the parking lot. If unresolved, the lower level stands and the disagreement is noted on the card |
+
+   **Calibration period:** for the first weeks the founder approves every change, including tier 1, to measure how often the agents are wrong. Tier 1 auto-publishing starts only when the founder rules the error rate acceptable, recorded in `docs/pm/DECISIONS.md`.
+7. **Publication.** Approved changes are published in the weekly site update. The card shows when it was last checked and whether by the AI review pair or by the founder.
+8. **Logging.** Every published change gets an entry on "What changed this week" (date, card, change, one-line reason, source link, and which tier decided it). The change log is public and kept permanently.
+9. **Corrections.** An error found later, including one reported by a reader, is corrected the same way and logged as a correction.
+
+AI drafts and checks; a human decides every level, badge, contested mark and new hypothesis. The site states openly that content is AI-reviewed and not yet expert-reviewed.
 
 ## 7. Out of scope for v1
 
@@ -161,11 +183,18 @@ AI drafts, humans decide. No grade is published without human approval.
 
 ## 8. Open questions
 
-- Who is the external medical or research reviewer, and what review process do they want?
-- Are the six rungs and their names clear to patients? Test with a few readers.
-- Exact threshold for "comparable quality" when deciding contested evidence.
-- Which recognised case definitions are accepted, and how is Oxford-only evidence capped (flag only, or limit to level 1)?
-- Does the PEM badge need a stricter rule (a study that measures PEM directly)?
-- How are "early signals" shown without becoming treatment hype?
-- Where should the long COVID marker sit on a card, and what is the minimum overlap to show it?
-- Should the site live inside MEpedia, beside it, or stand alone?
+- Recruit a medical or research reviewer once the site can be shown (planned: share on X and in ME forums and Facebook groups for feedback and volunteers).
+- Are the six rungs and their names clear to patients? Test with readers at that point.
+- When to end the calibration period and turn on tier 1 auto-publishing.
+- Whether the review agent can run on a different model family, and at what cost.
+- Collaboration with MEpedia or Science for ME. v1 stands alone and links out; contact can come later.
+
+### Resolved 2026-10-31
+
+- Case definitions and Oxford-only evidence: see "Accepted case definitions".
+- "Comparable quality" for contested evidence: see "Contested evidence".
+- PEM badge: requires a study that measures PEM directly.
+- Early signals: card only, fixed heading and sentence pattern, no hype words.
+- Long COVID marker: a label at the top of the card, shown with at least one qualifying long COVID study on the same mechanism.
+- MEpedia: v1 stands alone.
+- External reviewer: not required before launch; replaced for now by the tiered review model in section 6.
