@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ME Atlas – front page mockup (fictional data)</title>
+<style>
+  :root { --ink:#1b2430; --muted:#44505e; --bg:#f7f5f0; --card:#ffffff; --line:#c9ccd1; --fill:#1f5f8b; --empty:#e6e9ee; --warn:#7a2e00; --warnbg:#fff1d6; }
+  * { box-sizing: border-box; }
+  html { font-size: 112.5%; } /* 18px base */
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height:1.55; }
+  .banner { background:var(--warnbg); color:var(--warn); border-bottom:3px solid var(--warn); padding:.75rem 1rem; font-weight:700; text-align:center; }
+  main { position:relative; max-width:52rem; margin:0 auto; padding:1rem; }
+  h1 { font-size:1.7rem; line-height:1.2; margin:.5rem 0; }
+  h2 { font-size:1.25rem; margin:1.5rem 0 .5rem; }
+  p { margin:.5rem 0; max-width:40rem; }
+  .note { background:var(--card); border-left:5px solid var(--fill); padding:.6rem .9rem; margin:1rem 0; }
+  .draft { font-weight:700; color:var(--warn); }
+  ol.ladder { list-style:none; padding:0; margin:.5rem 0; display:grid; gap:.25rem; }
+  ol.ladder li { background:var(--card); border:1px solid var(--line); padding:.35rem .6rem; }
+  ol.ladder b { display:inline-block; min-width:1.4rem; }
+  .row { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:.75rem; margin:.75rem 0; }
+  .row h3 { font-size:1.1rem; margin:0 0 .4rem; }
+  .meta { display:flex; flex-wrap:wrap; gap:.4rem; margin:.3rem 0 .5rem; }
+  .badge { border:2px solid var(--ink); border-radius:999px; padding:.1rem .6rem; font-size:.85rem; font-weight:600; background:#fff; }
+  .tag { font-size:.85rem; color:var(--muted); padding:.1rem 0; }
+  .bar { display:grid; grid-template-columns:repeat(6,1fr); gap:3px; }
+  .seg { height:1.6rem; background:var(--empty); border:1px solid var(--line); }
+  .seg.on { background:var(--fill); border-color:var(--fill); }
+  .seg.contested { background:repeating-linear-gradient(45deg, var(--fill) 0 4px, #fff 4px 8px); border:2px solid var(--fill); }
+  .axis { display:grid; grid-template-columns:repeat(6,1fr); gap:3px; font-size:.8rem; color:var(--muted); text-align:center; margin-top:.15rem; }
+  .axis.top { margin:0 0 .15rem; }
+  .readout { font-size:.9rem; margin-top:.35rem; }
+  .legend { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin:.5rem 0; font-size:.9rem; }
+  .sw { display:inline-block; width:2rem; height:1rem; vertical-align:middle; margin-right:.3rem; border:1px solid var(--fill); }
+  .sw.on { background:var(--fill); }
+  .sw.h { background:repeating-linear-gradient(45deg, var(--fill) 0 4px, #fff 4px 8px); }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  /* glossary terms */
+  .term { font:inherit; color:inherit; background:none; border:0; border-bottom:2px dotted var(--fill); padding:.2rem 0; margin:0; min-height:44px; cursor:help; }
+  .term-wrap { white-space:normal; }
+  .term:focus-visible, a:focus-visible { outline:3px solid #b35900; outline-offset:2px; }
+  .tip { position:absolute; z-index:10; max-width:min(19rem, calc(100% - 1rem)); background:#10202e; color:#fff; padding:.6rem .8rem; border-radius:6px; font-size:.9rem; line-height:1.4; box-shadow:0 2px 8px rgba(0,0,0,.3); }
+  .tip[hidden] { display:none; }
+  footer { max-width:52rem; margin:0 auto; padding:1rem; color:var(--muted); font-size:.9rem; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="banner" role="note">MOCKUP – all data on this page is fictional. No hypothesis, study or result here is real.</div>
+
+<main id="main">
+  <h1>ME Atlas</h1>
+  <p>An evidence-graded overview of the ideas about what causes ME/CFS. It describes the state of the evidence. It gives no treatment advice.</p>
+
+  <p class="note"><strong>Hypotheses are not mutually exclusive.</strong> They may be links in one chain, or may apply to different groups of patients.</p>
+
+  <h2>How to read the chart</h2>
+  <p>Each bar shows <em>causal evidence</em> on a six-step ladder. Hypotheses are sorted by <strong>furthest along</strong> on this ladder. This is not an editorial opinion. The ladder is <span class="draft">draft – pending expert review</span>.</p>
+
+  <ol class="ladder" aria-label="The six steps of the evidence ladder">
+    <li><b>0</b> Proposed</li>
+    <li><b>1</b> First signs</li>
+    <li><b>2</b> Backed in a defined group <span class="tag">(uses a recognised <span class="term-wrap"><button type="button" class="term" data-term="casedef" aria-describedby="tip-casedef">case definition</button></span>)</span></li>
+    <li><b>3</b> Repeated by others <span class="tag">(<span class="term-wrap"><button type="button" class="term" data-term="replic" aria-describedby="tip-replic">replication</button></span> in a separate group)</span></li>
+    <li><b>4</b> Tested by intervention</li>
+    <li><b>5</b> Causal case built</li>
+  </ol>
+
+  <div class="legend" aria-label="Legend">
+    <span><span class="sw on"></span>Reached</span>
+    <span><span class="sw h"></span>Contested: a comparable study disagrees</span>
+    <span><span class="badge">Marker validated</span> <span class="badge">Explains <span class="term-wrap"><button type="button" class="term" data-term="pem" aria-describedby="tip-pem">PEM</button></span></span></span>
+  </div>
+
+  <h2>Hypotheses, furthest along first</h2>
+
+  <section class="row" aria-labelledby="ha">
+    <h3 id="ha">Hypothesis A</h3>
+    <div class="meta">
+      <span class="badge">Marker validated in an independent <span class="term-wrap"><button type="button" class="term" data-term="cohort" aria-describedby="tip-cohort">cohort</button></span></span>
+      <span class="badge">Explains PEM</span>
+    </div>
+    <div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="bar" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg contested"></i><i class="seg"></i></div>
+    <p class="readout">Level 4, Tested by intervention – <strong>contested</strong>. Solid up to level 3.</p>
+  </section>
+
+  <section class="row" aria-labelledby="hb">
+    <h3 id="hb">Hypothesis B</h3>
+    <div class="meta">
+      <span class="badge">Marker validated in an independent cohort</span>
+      <span class="tag">Long COVID: evidence overlaps</span>
+    </div>
+    <div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="bar" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg"></i><i class="seg"></i></div>
+    <p class="readout">Level 3, Repeated by others.</p>
+  </section>
+
+  <section class="row" aria-labelledby="hc">
+    <h3 id="hc">Hypothesis C</h3>
+    <div class="meta"><span class="badge">Explains PEM</span></div>
+    <div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="bar" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg"></i><i class="seg"></i></div>
+    <p class="readout">Level 3, Repeated by others.</p>
+  </section>
+
+  <section class="row" aria-labelledby="hd">
+    <h3 id="hd">Hypothesis D</h3>
+    <div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="bar" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg contested"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></div>
+    <p class="readout">Level 2, Backed in a defined group – <strong>contested</strong>. Solid up to level 1.</p>
+  </section>
+
+  <section class="row" aria-labelledby="he">
+    <h3 id="he">Hypothesis E</h3>
+    <div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="bar" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></div>
+    <p class="readout">Level 1, First signs. Unreplicated.</p>
+  </section>
+
+  <section class="row" aria-labelledby="hf">
+    <h3 id="hf">Hypothesis F</h3>
+    <div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <div class="bar" aria-hidden="true"><i class="seg on"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></div>
+    <p class="readout">Level 0, Proposed.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Fictional mockup for layout testing. Tip for testing: hover, tap or tab to the dotted words to read a short explanation. Press Escape or tap elsewhere to close it.</p>
+</footer>
+
+<div id="tip-casedef" role="tooltip" class="tip" hidden>A written checklist of symptoms used to decide who counts as having ME/CFS in a study.</div>
+<div id="tip-replic" role="tooltip" class="tip" hidden>When a different research group repeats a study and gets the same kind of result.</div>
+<div id="tip-pem" role="tooltip" class="tip" hidden>Post-exertional malaise: symptoms get worse after physical or mental effort, often a day or more later.</div>
+<div id="tip-cohort" role="tooltip" class="tip" hidden>A group of people followed or studied together.</div>
+
+<script>
+(function () {
+  var main = document.getElementById('main');
+  var pinned = null;      // button whose tip was opened by click/tap
+  var current = null;
+
+  function tipFor(btn) { return document.getElementById(btn.getAttribute('aria-describedby')); }
+
+  function show(btn) {
+    if (current && current !== btn) hideTip(current);
+    var tip = tipFor(btn);
+    tip.hidden = false;
+    var m = main.getBoundingClientRect();
+    var b = btn.getBoundingClientRect();
+    tip.style.top = (b.bottom - m.top + 6) + 'px';
+    var left = b.left - m.left;
+    var max = m.width - tip.offsetWidth - 8;
+    tip.style.left = Math.max(8, Math.min(left, max)) + 'px';
+    current = btn;
+  }
+  function hideTip(btn) { tipFor(btn).hidden = true; if (current === btn) current = null; }
+  function hideAll() { if (current) hideTip(current); pinned = null; }
+
+  // Tips live outside <main> in the markup; move them inside so they position against it.
+  document.querySelectorAll('.tip').forEach(function (t) { main.appendChild(t); });
+
+  document.querySelectorAll('.term').forEach(function (btn) {
+    btn.addEventListener('mouseenter', function () { show(btn); });
+    btn.addEventListener('mouseleave', function () { if (pinned !== btn && document.activeElement !== btn) hideTip(btn); });
+    btn.addEventListener('focus', function () { show(btn); });
+    btn.addEventListener('blur', function () { if (pinned !== btn) hideTip(btn); });
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (pinned === btn) { hideAll(); } else { pinned = btn; show(btn); }
+    });
+  });
+
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideAll(); });
+  document.addEventListener('click', function () { hideAll(); });
+})();
+</script>
+</body>
+</html>
