@@ -11,5 +11,6 @@ See [docs/ME-Atlas-v1-plan.md](docs/ME-Atlas-v1-plan.md) for the plan and [docs/
 ```bash
 cp .env.example .env   # fill in keys
 uv sync
+git config core.hooksPath .githooks   # blocks direct pushes to main
 uv run pytest
 ```

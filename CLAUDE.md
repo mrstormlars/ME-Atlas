@@ -58,7 +58,7 @@ uv run ruff format .         # format
 - **Write the contract first:** "done" as a short list of checkable clauses before any code.
 - **Keep state on disk, not in context:** decisions in DECISIONS.md, status in STATUS.md, plans in `docs/`.
 - **Restart rather than patch:** after three failed attempts at the same thing, stop and report.
-- **Git:** `main` is the published state. Work on `feat/…`, `fix/…` or `docs/…` branches; merge via PR once a GitHub remote exists. Never force-push `main`.
+- **Git:** `main` is the published state. Never push to `main` — work on `feat/…`, `fix/…`, `docs/…` or `chore/…` branches and merge via PR on GitHub (`mrstormlars/ME-Atlas`, private). The `.githooks/pre-push` hook enforces this locally (enable per clone: `git config core.hooksPath .githooks`); never bypass it with `--no-verify`.
 
 ## Language
 
