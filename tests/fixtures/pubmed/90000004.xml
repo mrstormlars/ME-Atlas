@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000004</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print"><PubDate><Year>2023</Year><Month>Jun</Month></PubDate></JournalIssue>
+          <Title>Fictional Journal of Fatigue Research</Title>
+        </Journal>
+        <ArticleTitle>Fictional trial of a made-up <i>in vitro</i> assay.</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">Invented background text.</AbstractText>
+          <AbstractText Label="METHODS" NlmCategory="METHODS">Invented methods with CO<sub>2</sub> measured in 5 fictional people.</AbstractText>
+          <AbstractText Label="RESULTS" NlmCategory="RESULTS">Invented results.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y"><LastName>Testperson</LastName><ForeName>Frank</ForeName><Initials>F</Initials></Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D016430">Clinical Trial</PublicationType>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi" ValidYN="Y">10.9999/fictional.0004</ELocationID>
+      </Article>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez"><Year>2023</Year><Month>6</Month><Day>1</Day></PubMedPubDate>
+      </History>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">90000004</ArticleId>
+        <ArticleId IdType="doi">10.9999/fictional.0004</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

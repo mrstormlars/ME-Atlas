@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000005</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print"><PubDate><MedlineDate>2019 Jan-Feb</MedlineDate></PubDate></JournalIssue>
+          <Title>Fictional Journal of Fatigue Research</Title>
+        </Journal>
+        <ArticleTitle>Fictional issue-spanning report.</ArticleTitle>
+        <Abstract>
+          <AbstractText>Invented abstract.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez"><Year>2019</Year><Month>1</Month><Day>10</Day></PubMedPubDate>
+      </History>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">90000005</ArticleId>
+        <ArticleId IdType="doi">10.9999/fictional.0005</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

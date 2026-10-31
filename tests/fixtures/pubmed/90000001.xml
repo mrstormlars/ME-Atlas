@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000001</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0000-0000</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>12</Volume>
+            <Issue>3</Issue>
+            <PubDate><Year>2021</Year><Month>Mar</Month></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Fatigue Research</Title>
+          <ISOAbbreviation>Fict J Fatigue Res</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Fictional study of a made-up marker in a made-up cohort.</ArticleTitle>
+        <Abstract>
+          <AbstractText>This fictional abstract describes an invented comparison of 10 invented patients with 10 invented controls.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y"><LastName>Testperson</LastName><ForeName>Alice Beta</ForeName><Initials>AB</Initials></Author>
+          <Author ValidYN="Y"><LastName>Exempel</LastName><ForeName>Carl</ForeName><Initials>C</Initials></Author>
+          <Author ValidYN="Y"><CollectiveName>Fictional Fatigue Study Group</CollectiveName></Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D064888">Observational Study</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi" ValidYN="Y">10.9999/fictional.0001</ELocationID>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D000001" MajorTopicYN="N">Fictional Heading One</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D000002" MajorTopicYN="N">Fictional Heading Two</DescriptorName><QualifierName UI="Q000000" MajorTopicYN="N">fictional qualifier</QualifierName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="received"><Year>2020</Year><Month>10</Month><Day>1</Day></PubMedPubDate>
+        <PubMedPubDate PubStatus="pubmed"><Year>2021</Year><Month>2</Month><Day>14</Day><Hour>6</Hour><Minute>0</Minute></PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez"><Year>2021</Year><Month>2</Month><Day>13</Day><Hour>20</Hour><Minute>5</Minute></PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">90000001</ArticleId>
+        <ArticleId IdType="doi">10.9999/fictional.0001</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

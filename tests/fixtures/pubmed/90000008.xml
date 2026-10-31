@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000008</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print"><PubDate><Year>2019</Year></PubDate></JournalIssue>
+          <Title>Fictional Journal of Fatigue Research</Title>
+        </Journal>
+        <ArticleTitle>Fictional retraction notice for a made-up study.</ArticleTitle>
+        <PublicationTypeList>
+          <PublicationType UI="D016441">Retraction of Publication</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="RetractionOf"><RefSource>Fict J Fatigue Res. 2018;1:1</RefSource><PMID Version="1">90000006</PMID></CommentsCorrections>
+      </CommentsCorrectionsList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez"><Year>2019</Year><Month>3</Month><Day>1</Day></PubMedPubDate>
+      </History>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">90000008</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
