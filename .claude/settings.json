@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv sync*)",
+      "Bash(uv run pytest*)",
+      "Bash(uv run ruff *)",
+      "Bash(uv run python *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git checkout -b *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "WebFetch(domain:eutils.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:pubmed.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:www.ebi.ac.uk)",
+      "WebFetch(domain:europepmc.org)",
+      "WebFetch(domain:doi.org)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(git push --force*)"
+    ]
+  }
+}

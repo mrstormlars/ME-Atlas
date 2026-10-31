@@ -1,0 +1,28 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Generated
+build/
+data/cache/
+
+# Claude Code
+.claude/settings.local.json
+.claude/worktrees/
+
+# OS / IDE
+.vscode/*
+!.vscode/settings.json
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
