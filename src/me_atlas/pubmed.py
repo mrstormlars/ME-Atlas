@@ -24,7 +24,6 @@ import re
 import sys
 import time
 import xml.etree.ElementTree as ET
-from collections import deque
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -33,6 +32,7 @@ import httpx
 from pydantic import BaseModel, ConfigDict
 
 from me_atlas.cards import StudyId
+from me_atlas.http import RateLimiter, get_with_retries, load_dotenv
 
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 TOOL_NAME = "me-atlas"
@@ -211,35 +211,6 @@ def parse_xml(xml: str | bytes) -> PubMedRecord:
 # ---------------------------------------------------------------------------
 
 
-class RateLimiter:
-    """Allows at most ``max_per_second`` request starts in any ``window`` seconds.
-
-    ``clock`` and ``sleep`` are injectable so tests run without real waiting.
-    """
-
-    def __init__(
-        self,
-        max_per_second: int,
-        clock: Callable[[], float] = time.monotonic,
-        sleep: Callable[[float], None] = time.sleep,
-        window: float = 1.0,
-    ):
-        self._max = max_per_second
-        self._clock = clock
-        self._sleep = sleep
-        self._window = window
-        self._starts: deque[float] = deque(maxlen=max_per_second)
-
-    def wait(self) -> None:
-        """Block until a request may start, then record its start."""
-        while True:
-            now = self._clock()
-            if len(self._starts) < self._max or now - self._starts[0] >= self._window:
-                break
-            self._sleep(self._starts[0] + self._window - now)
-        self._starts.append(now)
-
-
 @dataclass
 class SearchResult:
     count: int
@@ -286,29 +257,17 @@ class PubMedClient:
 
     def _get(self, endpoint: str, extra: Mapping[str, str | int]) -> httpx.Response:
         """GET with rate limiting; retries 429, 5xx and transport errors with exponential backoff."""
-        url = f"{self.base_url}/{endpoint}"
-        params = self._params(extra)
-        attempts = self.max_retries + 1
-        last = "no attempt made"
-        for attempt in range(attempts):
-            self._limiter.wait()
-            retry_after = 0.0
-            try:
-                response = self._http.get(url, params=params)
-            except httpx.TransportError as exc:
-                last = f"{type(exc).__name__}: {exc}"
-            else:
-                if response.status_code == 429 or response.status_code >= 500:
-                    last = f"HTTP {response.status_code}"
-                    header = response.headers.get("Retry-After", "")
-                    retry_after = min(float(header), 60.0) if header.isdigit() else 0.0
-                elif response.status_code >= 400:
-                    raise PubMedError(f"{endpoint} failed: HTTP {response.status_code} (not retried)")
-                else:
-                    return response
-            if attempt < attempts - 1:
-                self._sleep(max(self.backoff * 2**attempt, retry_after))
-        raise PubMedError(f"{endpoint} failed after {attempts} attempts; last error: {last}")
+        return get_with_retries(
+            self._http,
+            f"{self.base_url}/{endpoint}",
+            params=self._params(extra),
+            limiter=self._limiter,
+            sleep=self._sleep,
+            max_retries=self.max_retries,
+            backoff=self.backoff,
+            label=endpoint,
+            error=PubMedError,
+        )
 
     def search(self, term: str, *, mindate: dt.date | None = None, maxdate: dt.date | None = None) -> SearchResult:
         """ESearch with the history server. Dates filter on the entry date (EDAT)."""
@@ -550,20 +509,6 @@ def run_fetch(
 # ---------------------------------------------------------------------------
 # Command line
 # ---------------------------------------------------------------------------
-
-
-def load_dotenv(path: Path = Path(".env")) -> dict[str, str]:
-    """Read simple KEY=VALUE lines from a .env file (no dependency on python-dotenv)."""
-    values: dict[str, str] = {}
-    if not path.is_file():
-        return values
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        values[key.strip()] = value.strip().strip("'\"")
-    return values
 
 
 def _date(text: str) -> dt.date:

@@ -1,0 +1,176 @@
+# DRAFT — AI-drafted (ai_pair), not reviewed. Level, badges and contested state are proposals for the founder.
+# Source rule: every fact below comes from the cached PubMed record data/cache/pubmed/<pmid>.xml (abstract only).
+# No abstract on this card states the case definition used, so every study is recorded as role `context`
+# with `case_definition: unverified` until the full texts are checked.
+slug: neuroinflammation
+name: Neuroinflammation (brain inflammation / glial activation)
+core_claim:
+  text: >-
+    The hypothesis proposes that inflammation in the brain, including activation of microglia or
+    astrocytes, is present in ME/CFS and is linked to its symptoms.
+  sources: [pmid:24665088, pmid:30617782]
+level: 1
+level_reason:
+  text: >-
+    Small controlled imaging studies point towards brain inflammation: a PET study of 9 patients found
+    higher binding of a marker of activated microglia or astrocytes, an MR spectroscopy study of 15 patients
+    found higher brain temperature in several regions and a higher choline/creatine ratio in the left
+    anterior cingulate, and a diffusion MRI study of 67 patients reported white matter changes it interprets
+    as inflammation. A second PET study of 9 patients with the same tracer found no statistically significant
+    difference from controls. No abstract states the case definition used, so no study can yet count as
+    support for level 2 under the ladder, and the conflict between the two PET studies cannot yet be graded.
+  sources: [pmid:24665088, pmid:30617782, pmid:41834684, pmid:34815320]
+contested: null  # Not proposable: the two PET studies (pmid:24665088 vs pmid:34815320) conflict, but neither states a case definition, so neither can be `supports`/`contradicts` (V9) and V8 cannot be met.
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        One study proposed diffusion imaging indices as possible markers of neuroinflammation, but no
+        abstract reports a marker tested in a second, independent patient group.
+      sources: [pmid:41834684]
+  explains_pem:
+    value: false
+    reason:
+      text: None of the abstracts reports a direct measure of post-exertional malaise.
+      sources: [pmid:24665088, pmid:34815320, pmid:30617782, pmid:41834684, pmid:34609538, pmid:12598734]
+subgroups: []
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=9 patients and 10 healthy controls found 45%-199% higher binding of a PET tracer for
+      activated microglia or astrocytes in several brain areas. A later study of n=9 patients and 9 healthy
+      controls using the same tracer found no statistically significant difference.
+    sources: [pmid:24665088, pmid:34815320]
+  - text: >-
+      A study of n=15 women with ME/CFS and 15 matched healthy controls found higher MR spectroscopy-derived
+      brain temperature in several regions, not explained by body temperature or blood flow.
+    sources: [pmid:30617782]
+  - text: >-
+      A study of n=67 patients and 67 matched healthy controls found widespread white matter differences on
+      a diffusion MRI model that the authors interpret as neuroinflammation.
+    sources: [pmid:41834684]
+studies:
+  - id: pmid:24665088
+    title: "Neuroinflammation in Patients with Chronic Fatigue Syndrome/Myalgic Encephalomyelitis: An ¹¹C-(R)-PK11195 PET Study."
+    year: 2014
+    cohort: me_cfs
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 9
+    n_controls: 10
+    measures_pem: false
+    preregistered: null  # not stated in abstract
+    role: context
+    direction: higher
+    group: null
+    finding: >-
+      A study of n=9 patients and 10 healthy controls found that binding of the PET tracer
+      11C-(R)-PK11195, which marks a protein expressed by activated microglia or astrocytes, was 45%-199%
+      higher in the cingulate cortex, hippocampus, amygdala, thalamus, midbrain and pons of patients, and that
+      binding in some of these areas correlated with cognitive impairment, pain and depression scores.
+  - id: pmid:34815320
+    title: "No Signs of Neuroinflammation in Women With Chronic Fatigue Syndrome or Q Fever Fatigue Syndrome Using the TSPO Ligand [11C]-PK11195."
+    year: 2022
+    cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"; a separate Q fever fatigue syndrome group (n=10) is not counted here
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 9  # CFS group only
+    n_controls: 9
+    measures_pem: false
+    preregistered: null  # abstract lists EudraCT 2014-004448-37, but does not say it was registered before data collection
+    role: context  # would be `contradicts` against pmid:24665088 if a recognised case definition is confirmed
+    direction: no_difference
+    group: null
+    finding: >-
+      A study of n=9 women with CFS and 9 healthy women, alongside 10 women with Q fever fatigue syndrome,
+      found no statistically significant difference in 11C-PK11195 binding potential between patients and
+      controls, and a negative correlation between binding and symptom severity in the CFS group.
+  - id: pmid:30617782
+    title: "Evidence of widespread metabolite abnormalities in Myalgic encephalomyelitis/chronic fatigue syndrome: assessment with whole-brain magnetic resonance spectroscopy."
+    year: 2020
+    cohort: me_cfs
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 15
+    n_controls: 15
+    measures_pem: false
+    preregistered: null  # not stated in abstract
+    role: context
+    direction: higher
+    group: null
+    finding: >-
+      A study of n=15 women with ME/CFS and 15 age- and gender-matched healthy controls using whole-brain MR
+      spectroscopy found metabolite differences in several regions, most notably a higher choline/creatine
+      ratio in the left anterior cingulate, and higher brain temperature in the right insula, putamen, frontal
+      cortex, thalamus and cerebellum; the authors write that the findings may indicate neuroinflammation.
+  - id: pmid:41834684
+    # A published correction exists (pmid:42227214, no abstract in the cache); its content is unknown. TODO: verify whether it changes any number below.
+    title: "Evidence of White Matter Neuroinflammation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Diffusion-Based Neuroinflammation Imaging Study."
+    year: 2026
+    cohort: me_cfs
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 67
+    n_controls: 67
+    measures_pem: false
+    preregistered: null  # not stated in abstract
+    role: context
+    direction: mixed
+    group: null
+    finding: >-
+      A study of n=67 patients and 67 matched healthy controls using a diffusion MRI neuroinflammation
+      imaging model found widespread white matter differences, including a lower hindered water ratio and
+      restricted fraction and a higher fibre fraction, which the authors interpret as white matter
+      neuroinflammation; conventional diffusion tensor imaging showed minimal group differences.
+  - id: pmid:34609538
+    title: "Neurochemical abnormalities in chronic fatigue syndrome: a pilot magnetic resonance spectroscopy study at 7 Tesla."
+    year: 2022
+    cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 22
+    n_controls: 13
+    measures_pem: false
+    preregistered: null  # not stated in abstract
+    role: context
+    direction: lower
+    group: null
+    finding: >-
+      A study of n=22 patients and 13 healthy controls using 7 Tesla MR spectroscopy of the anterior
+      cingulate cortex found lower myo-inositol in patients, which the authors write would be consistent with
+      glial dysfunction; lower glutathione and total creatine did not remain significant when
+      N-acetylaspartate was used as the reference.
+  - id: pmid:12598734
+    title: "Proton magnetic resonance spectroscopy of basal ganglia in chronic fatigue syndrome."
+    year: 2003
+    cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"
+    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 8
+    n_controls: null  # TODO: verify — not stated in abstract (described only as age- and sex-matched healthy controls)
+    measures_pem: false
+    preregistered: null  # not stated in abstract
+    role: context
+    direction: higher
+    group: null
+    finding: >-
+      A study of n=8 patients compared with age- and sex-matched healthy controls found a higher signal from
+      choline-containing compounds in the left basal ganglia, which the authors suggest may reflect higher
+      cell membrane turnover due to gliosis or altered intramembrane signalling, in the absence of regional
+      structural or inflammatory pathology.
+last_checked:
+  date: 2026-10-31
+  by: ai_pair
