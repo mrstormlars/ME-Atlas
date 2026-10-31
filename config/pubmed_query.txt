@@ -1,0 +1,32 @@
+# PubMed search for the ME Atlas fetch script (src/me_atlas/pubmed.py).
+# Lines starting with # are ignored; the rest is joined into one query. Change it in a PR.
+#
+# Block 1: ME/CFS by MeSH heading or by title/abstract terms.
+# Block 2: long COVID, but only when the record also mentions ME/CFS (anywhere in the record: title,
+#   abstract, keywords, MeSH). Long COVID alone is far larger and out of v1 scope.
+# The MeSH headings must be checked against live PubMed on the first live run (docs/fetch.md).
+(
+  "Fatigue Syndrome, Chronic"[MeSH Terms]
+  OR "myalgic encephalomyelitis"[Title/Abstract]
+  OR "chronic fatigue syndrome"[Title/Abstract]
+  OR "ME/CFS"[Title/Abstract]
+  OR "systemic exertion intolerance disease"[Title/Abstract]
+)
+OR
+(
+  (
+    "Post-Acute COVID-19 Syndrome"[MeSH Terms]
+    OR "long COVID"[Title/Abstract]
+    OR "post-COVID"[Title/Abstract]
+    OR "post-acute sequelae of SARS-CoV-2"[Title/Abstract]
+    OR "PASC"[Title/Abstract]
+  )
+  AND
+  (
+    "Fatigue Syndrome, Chronic"[MeSH Terms]
+    OR "myalgic encephalomyelitis"[All Fields]
+    OR "chronic fatigue syndrome"[All Fields]
+    OR "ME/CFS"[All Fields]
+    OR "systemic exertion intolerance disease"[All Fields]
+  )
+)

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000007</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print"><PubDate><Year>2018</Year></PubDate></JournalIssue>
+          <Title>Fictional Journal of Fatigue Research</Title>
+        </Journal>
+        <ArticleTitle>Fictional study retracted, marked only by a retraction link.</ArticleTitle>
+        <Abstract>
+          <AbstractText>Invented abstract. This record has no Retracted Publication type, only a RetractionIn link.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="RetractionIn"><RefSource>Fict J Fatigue Res. 2019;1:2</RefSource><PMID Version="1">90000008</PMID></CommentsCorrections>
+      </CommentsCorrectionsList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez"><Year>2018</Year><Month>4</Month><Day>6</Day></PubMedPubDate>
+      </History>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">90000007</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
