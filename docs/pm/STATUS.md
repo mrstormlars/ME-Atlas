@@ -8,8 +8,9 @@ Repository set up (structure, Claude Code roles, Python tooling). No cards, no p
 
 ## Active priorities (max 3)
 
-1. Define the evidence card data model and write 2–3 cards by hand to test the format.
-2. First PubMed / Europe PMC fetch script.
+1. Functional specification and front-page mockup (`docs/ME-Atlas-functional-spec.md`, `docs/mockups/front-page.html`).
+2. Define the evidence card data model and write 2–3 cards by hand to test the format.
+3. First PubMed / Europe PMC fetch script.
 
 ## Parked
 

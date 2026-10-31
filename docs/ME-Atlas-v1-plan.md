@@ -70,6 +70,8 @@ Draft status scale (to be refined with expert input):
 | 4 | Mechanism shown: causal link demonstrated, e.g. by intervention |
 | 5 | Confirmed: treatment based on it works in a robust trial |
 
+*The current version of this scale is in `docs/ME-Atlas-functional-spec.md`.*
+
 Quality factors that move a finding up or down: case definition used, sample size, proper controls, preregistration and conflicting results.
 
 ## AI pipeline
