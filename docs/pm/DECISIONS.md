@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Static site generator
+
+- The site is plain static HTML written by `uv run python -m me_atlas.site build` with Jinja2 (already a dependency): one CSS file, one small JavaScript file for the glossary explanations, no external fonts, scripts or styles, every page works from `file://`. Output goes to `build/` (gitignored). Why: no server, database or build tooling to maintain; readers on poor connections and the founder can open the files directly.
+- Drafts are built only with `--drafts`, and then every page carries the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. Without the flag only `cards/` is read, so a draft cannot reach a page by accident. "What changed" never shows drafts. The build runs the card validator first and writes nothing if any input fails. Why: CLAUDE.md rule 2; only the editorial team moves content into `cards/`.
+- Glossary: one file, `content/glossary.yaml` (term, aliases, explanation of at most 200 characters, none of the banned words). The generator marks the first occurrence on each page of every glossary term or alias in sourced text and study findings (whole word, case-sensitive, longest match wins, never in study titles, links or headings); template labels are marked through one macro. No change to the card format. Founder ruling: option a. Why: card authors do not mark terms by hand and the explanation stays in one place.
+- Replication status has no card field of its own; the page shows it through the level name and the level reason. Why: the format backlog stays closed until a card needs a field.
+- Plan: `docs/plan-site-generator.md`. Reference: `docs/site.md`.
+
 ## 2026-11-01 — Mechanical citation check
 
 - The citation check is its own offline command, `uv run python -m me_atlas.citations check`, not part of `cards validate`. It reads only the cache and never makes a request. Why: the cache is gitignored, so it cannot run on GitHub as the validator can; it runs locally and later in the weekly pipeline.

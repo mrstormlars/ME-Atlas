@@ -1,0 +1,23 @@
+{# One macro marks a glossary term in template text. The explanation comes from content/glossary.yaml. #}
+{% macro gloss(key, text=None) %}{{ page.term(key, text) }}{% endmacro %}
+
+{# The six-segment bar. Filled up to the level; contested rungs are hatched. Decorative: the text carries the meaning. #}
+{% macro bar(card) %}
+<div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+<div class="bar" aria-hidden="true">{% for i in range(6) %}<i class="seg{% if i in card.hatched_rungs %} contested{% elif i <= card.level %} on{% endif %}"></i>{% endfor %}</div>
+{% endmacro %}
+
+{% macro level_line(card) %}Level {{ card.level }} of 5, {{ rung_names[card.level] }}{% endmacro %}
+
+{% macro contested_rungs(card) %}{% if card.hatched_rungs|length == 1 %}rung {{ card.hatched_rungs[0] }}{% else %}rungs {{ card.hatched_rungs|join(", ") }}{% endif %}{% endmacro %}
+
+{# Case definition in plain words, with its flag. #}
+{% macro case_definition(study) %}
+{% set label, term, flag = case_labels[study.case_definition] %}
+<span class="casedef">{% if term %}{{ gloss(term, label) }}{% else %}{{ label }}{% endif %}</span>
+{% if flag == "no_pem" %}
+<span class="flag">does not require {{ gloss("PEM") }}</span>
+{% elif flag == "broad" %}
+<span class="flag">broad</span>
+{% endif %}
+{% endmacro %}

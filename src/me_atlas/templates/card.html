@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% from "_macros.html" import gloss, bar, level_line, contested_rungs, case_definition with context %}
+{% block content %}
+{% macro study_entry(s) %}
+<article class="study" id="{{ study_anchor(s.id) }}">
+  <h4 class="study-title"><a href="{{ study_url(s.id) }}" rel="noopener noreferrer">{{ s.title }}</a></h4>
+  <p class="study-meta">{{ s.year }} · {{ s.id }}{% if s.id in page.refs %} · cited as [{{ page.refs[s.id] }}]{% endif %}</p>
+  <dl class="facts">
+    <dt>Patients</dt><dd>{{ s.n_patients if s.n_patients is not none else "not stated" }}</dd>
+    <dt>Controls</dt><dd>{% if s.n_controls is not none %}{{ s.n_controls }}{% elif s.design == "uncontrolled" %}none (uncontrolled study){% else %}not stated{% endif %}</dd>
+    <dt>Case definition</dt><dd>{{ case_definition(s) }}</dd>
+    <dt>Design</dt><dd>{{ design_labels[s.design] }}</dd>
+    <dt>Direction</dt><dd>{{ direction_labels[s.direction] }}</dd>
+  </dl>
+  <p class="finding">{{ page.finding(s) }}</p>
+</article>
+{% endmacro %}
+{% macro study_group(heading, studies, empty, note=None) %}
+<h3>{{ heading }}</h3>
+{% if note and studies %}
+<p class="tag">{{ note }}</p>
+{% endif %}
+{% for s in studies %}
+{{ study_entry(s) }}
+{% else %}
+<p class="empty">{{ empty }}</p>
+{% endfor %}
+{% endmacro %}
+<p class="crumb"><a href="{{ root }}index.html">Front page</a></p>
+<h1>{{ card.name }}</h1>
+{% if card.long_covid %}
+<p class="tag lc-label">Also studied in long COVID</p>
+{% endif %}
+
+<h2>Core claim</h2>
+<p>{{ page.sourced(card.core_claim) }}</p>
+
+<h2>Level</h2>
+<p class="level-line"><strong>{{ level_line(card) }}</strong></p>
+{{ bar(card) }}
+<p>{{ page.sourced(card.level_reason) }}</p>
+
+{% if card.contested %}
+<h2 id="contested">Contested at {{ contested_rungs(card) }}</h2>
+<p>{{ page.sourced(card.contested.reason) }}</p>
+{% else %}
+<h2 id="contested">Not contested</h2>
+{% endif %}
+
+<h2>Badges</h2>
+<ul class="badges">
+  <li>
+    <p><span class="badge">Marker validated in an independent {{ gloss("cohort") }}: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</span></p>
+{% if card.badges.diagnostic_marker.reason %}
+    <p>{{ page.sourced(card.badges.diagnostic_marker.reason) }}</p>
+{% else %}
+    <p class="empty">Reason not yet written.</p>
+{% endif %}
+  </li>
+  <li>
+    <p><span class="badge">Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</span></p>
+{% if card.badges.explains_pem.reason %}
+    <p>{{ page.sourced(card.badges.explains_pem.reason) }}</p>
+{% else %}
+    <p class="empty">Reason not yet written.</p>
+{% endif %}
+  </li>
+</ul>
+
+<h2>Studies</h2>
+{{ study_group("Studies that support it", groups.supports, "No study on this card is listed as supporting it.") }}
+{{ study_group("Studies that contradict it", groups.contradicts, "No study on this card is listed as contradicting it.") }}
+{{ study_group("Other studies", groups.other, "No other studies are listed.", "Shown for context. These studies do not count for or against the level, because their case definition is not confirmed or they measure something else.") }}
+
+<h2>Subgroups it may apply to</h2>
+{% for item in card.subgroups %}
+<p>{{ page.sourced(item) }}</p>
+{% else %}
+<p class="empty">None listed.</p>
+{% endfor %}
+
+<h2>Who is working on it</h2>
+{% if card.working_on_it %}
+<ul>
+{% for w in card.working_on_it %}
+  <li><a href="{{ w.url }}" rel="noopener noreferrer">{{ w.name }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="empty">None listed.</p>
+{% endif %}
+
+{% if card.early_signals %}
+<h2>Early signals: not yet repeated</h2>
+{% for item in card.early_signals %}
+<p>{{ page.sourced(item) }}</p>
+{% endfor %}
+{% endif %}
+
+<p class="last-checked">Last checked {{ card.last_checked.date.isoformat() }} by {{ by_labels[card.last_checked.by] }}.</p>
+{% endblock %}

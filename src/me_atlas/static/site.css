@@ -1,0 +1,169 @@
+/* ME Atlas. One file, no external resources. Colour tokens are checked for contrast by tests/test_site.py. */
+:root {
+  --ink: #1b2430;
+  --muted: #44505e;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --line: #c9ccd1;
+  --fill: #1f5f8b;
+  --empty: #e6e9ee;
+  --link: #14507a;
+  --warn: #7a2e00;
+  --warnbg: #fff1d6;
+  --focus: #8a4300;
+  --tip-bg: #10202e;
+  --tip-ink: #ffffff;
+}
+* { box-sizing: border-box; }
+html { font-size: 112.5%; } /* 18px base */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:focus-visible, .term:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.banner {
+  background: var(--warnbg);
+  color: var(--warn);
+  border-bottom: 3px solid var(--warn);
+  padding: .75rem 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+.skip { position: absolute; left: -999rem; top: 0; background: var(--card); padding: .75rem 1rem; z-index: 20; }
+.skip:focus { left: 0; }
+
+.site-header { max-width: 52rem; margin: 0 auto; padding: .5rem 1rem 0; }
+.brand { margin: 0; font-size: 1.3rem; font-weight: 700; }
+.brand a { text-decoration: none; color: var(--ink); display: inline-block; min-height: 44px; padding: .4rem 0; }
+.site-header nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.site-header nav a { display: inline-block; min-height: 44px; padding: .55rem 0; }
+.site-header nav a[aria-current="page"] { font-weight: 700; text-decoration-thickness: 3px; }
+
+main { position: relative; max-width: 52rem; margin: 0 auto; padding: 1rem; }
+h1 { font-size: 1.7rem; line-height: 1.2; margin: .5rem 0; }
+h2 { font-size: 1.25rem; margin: 1.75rem 0 .5rem; }
+h3 { font-size: 1.1rem; margin: 1.25rem 0 .4rem; }
+h4 { font-size: 1rem; margin: 0 0 .25rem; }
+p { margin: .5rem 0; max-width: 42rem; }
+.lead { font-size: 1.1rem; }
+.empty { color: var(--muted); }
+.crumb { margin: 0; }
+.crumb a { display: inline-block; min-height: 44px; padding: .55rem 0; }
+
+.note { background: var(--card); border-left: 5px solid var(--fill); padding: .6rem .9rem; margin: 1rem 0; }
+.draft { font-weight: 700; color: var(--warn); }
+.tag { font-size: .9rem; color: var(--muted); }
+
+/* ladder, legend, chart */
+ol.ladder { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .25rem; }
+ol.ladder li { background: var(--card); border: 1px solid var(--line); padding: .35rem .6rem; }
+ol.ladder b { display: inline-block; min-width: 1.4rem; }
+.row { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .75rem; margin: .75rem 0; }
+.row h3 { margin: 0 0 .4rem; }
+.row h3 a { display: inline-block; min-height: 44px; padding: .4rem 0; }
+.meta { display: flex; flex-wrap: wrap; gap: .4rem; margin: .3rem 0 .5rem; align-items: center; }
+.badge { display: inline-block; border: 2px solid var(--ink); border-radius: 999px; padding: .1rem .6rem; font-size: .9rem; font-weight: 600; background: var(--card); }
+.bar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
+.seg { height: 1.6rem; background: var(--empty); border: 1px solid var(--line); }
+.seg.on { background: var(--fill); border-color: var(--fill); }
+.seg.contested {
+  background: repeating-linear-gradient(45deg, var(--fill) 0 4px, var(--card) 4px 8px);
+  border: 2px solid var(--fill);
+}
+.axis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; font-size: .85rem; color: var(--muted); text-align: center; margin-top: .15rem; }
+.axis.top { margin: 0 0 .15rem; }
+.readout { font-size: .95rem; margin-top: .4rem; }
+.legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; margin: .75rem 0; font-size: .95rem; }
+.sw { display: inline-block; width: 2rem; height: 1rem; vertical-align: middle; margin-right: .3rem; border: 1px solid var(--fill); }
+.sw.on { background: var(--fill); }
+.sw.h { background: repeating-linear-gradient(45deg, var(--fill) 0 4px, var(--card) 4px 8px); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; background: var(--card); margin: .75rem 0; font-size: .95rem; }
+caption { text-align: left; font-weight: 700; padding: .4rem 0; }
+th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+thead th { background: var(--empty); }
+
+/* card page */
+.level-line { font-size: 1.1rem; }
+.badges { list-style: none; padding: 0; }
+.badges li { margin: .5rem 0; }
+.study { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .75rem; margin: .75rem 0; }
+.study:target { outline: 3px solid var(--focus); outline-offset: 2px; }
+.study-title { font-size: 1rem; }
+.study-meta { color: var(--muted); font-size: .9rem; margin: 0 0 .4rem; }
+dl.facts { display: grid; grid-template-columns: max-content 1fr; gap: .15rem .9rem; margin: .4rem 0; font-size: .95rem; }
+dl.facts dt { font-weight: 700; }
+dl.facts dd { margin: 0; }
+.flag { display: inline-block; border: 1px solid var(--ink); border-radius: 4px; padding: 0 .4rem; font-size: .85rem; margin-left: .25rem; }
+.finding { margin-bottom: 0; }
+.refs { white-space: normal; }
+a.ref { position: relative; display: inline-block; margin: 0 .35rem; font-size: .9rem; }
+.last-checked { color: var(--muted); margin-top: 2rem; }
+.change { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .5rem .75rem; margin: .75rem 0; }
+.change h2 { margin: .25rem 0; font-size: 1.1rem; }
+dl.glossary .entry { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .5rem .75rem; margin: .75rem 0; }
+dl.glossary dt { font-weight: 700; font-size: 1.1rem; }
+dl.glossary dd { margin: 0; }
+
+/* glossary terms: dotted underline, a focusable button described by its explanation */
+.term-wrap { white-space: normal; }
+.term {
+  position: relative;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 2px dotted var(--fill);
+  padding: 0;
+  margin: 0;
+  cursor: help;
+}
+/* The 44 px tap area is invisible and does not change the line height. */
+.term::before,
+a.ref::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+.tip {
+  background: var(--tip-bg);
+  color: var(--tip-ink);
+  padding: .6rem .8rem;
+  border-radius: 6px;
+  font-size: .95rem;
+  line-height: 1.4;
+  margin: .5rem 0;
+}
+/* Without JavaScript the explanations are listed at the end of the page. With it, they open next to the word. */
+.js .tips-title { display: none; }
+.js .tip { position: absolute; z-index: 10; max-width: min(19rem, calc(100% - 1rem)); margin: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, .3); }
+.js .tip[hidden] { display: none; }
+
+footer { max-width: 52rem; margin: 0 auto; padding: 1rem; color: var(--muted); font-size: .95rem; }
+footer p { max-width: 42rem; }
+
+/* narrow screens: tables become stacked lists so nothing scrolls sideways */
+@media (max-width: 40em) {
+  table, thead, tbody, tr, th, td, caption { display: block; width: 100%; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  tr { border: 1px solid var(--line); margin: 0 0 .75rem; }
+  th, td { border: 0; border-bottom: 1px solid var(--line); }
+  td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
+  dl.facts { grid-template-columns: 1fr; }
+  dl.facts dd { margin-bottom: .3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
