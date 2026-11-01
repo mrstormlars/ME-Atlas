@@ -4,40 +4,49 @@
 {% macro study_entry(s) %}
 <article class="study" id="{{ study_anchor(s.id) }}">
   <h4 class="study-title"><a href="{{ study_url(s.id) }}" rel="noopener noreferrer">{{ s.title }}</a></h4>
-  <p class="study-meta">{{ s.year }} · {{ s.id }}{% if s.id in page.refs %} · cited as [{{ page.refs[s.id] }}]{% endif %}</p>
-  <dl class="facts">
-    <dt>Patients</dt><dd>{{ s.n_patients if s.n_patients is not none else "not stated" }}</dd>
-    <dt>Controls</dt><dd>{% if s.n_controls is not none %}{{ s.n_controls }}{% elif s.design == "uncontrolled" %}none (uncontrolled study){% else %}not stated{% endif %}</dd>
-    <dt>Case definition</dt><dd>{{ case_definition(s) }}</dd>
-    <dt>Design</dt><dd>{{ design_labels[s.design] }}</dd>
-    <dt>Direction</dt><dd>{{ direction_labels[s.direction] }}</dd>
-  </dl>
+  <p class="study-meta">{{ s.year }} · {{ s.id }} · <span class="sizes"><span class="n-patients">{% if s.n_patients is not none %}{{ s.n_patients }} patients{% else %}patients: not stated{% endif %}</span>, <span class="n-controls">{% if s.n_controls is not none %}{{ s.n_controls }} controls{% elif s.design == "uncontrolled" %}controls: none (uncontrolled study){% else %}controls: not stated{% endif %}</span></span> · {{ case_definition(s) }} · {{ design_labels[s.design] }} · {{ direction_labels[s.direction] }}{% if s.id in page.refs %} · cited as [{{ page.refs[s.id] }}]{% endif %}</p>
   <p class="finding">{{ page.finding(s) }}</p>
 </article>
 {% endmacro %}
 {% macro study_group(heading, studies, empty, note=None) %}
 <h3>{{ heading }}</h3>
-{% if note and studies %}
-<p class="tag">{{ note }}</p>
+{% if studies %}
+{% if note %}
+<p class="small">{{ note }}</p>
 {% endif %}
+<div class="panel studies">
 {% for s in studies %}
 {{ study_entry(s) }}
+{% endfor %}
+</div>
 {% else %}
 <p class="empty">{{ empty }}</p>
-{% endfor %}
+{% endif %}
 {% endmacro %}
 <p class="crumb"><a href="{{ root }}index.html">Front page</a></p>
 <h1>{{ card.name }}</h1>
-{% if card.long_covid %}
-<p class="tag lc-label">Also studied in long COVID</p>
+
+<div class="panel summary-panel">
+  {{ bar(card) }}
+  <p class="level-line"><strong>{{ level_line(card) }}</strong></p>
+  <div class="chips">
+{% if card.contested %}
+    <span class="chip chip-contested">Contested at {{ contested_rungs(card) }}</span>
+{% else %}
+    <span class="chip off">Not contested</span>
 {% endif %}
+    <span class="chip {{ 'badge' if card.badges.diagnostic_marker.value else 'off' }}">Marker validated: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</span>
+    <span class="chip {{ 'badge' if card.badges.explains_pem.value else 'off' }}">Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</span>
+{% if card.long_covid %}
+    <span class="chip tag lc-label">Also studied in long COVID</span>
+{% endif %}
+  </div>
+</div>
 
 <h2>Core claim</h2>
 <p>{{ page.sourced(card.core_claim) }}</p>
 
-<h2>Level</h2>
-<p class="level-line"><strong>{{ level_line(card) }}</strong></p>
-{{ bar(card) }}
+<h2>Why this level</h2>
 <p>{{ page.sourced(card.level_reason) }}</p>
 
 {% if card.contested %}
@@ -50,7 +59,7 @@
 <h2>Badges</h2>
 <ul class="badges">
   <li>
-    <p><span class="badge">Marker validated in an independent {{ gloss("cohort") }}: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</span></p>
+    <p><strong>Marker validated in an independent {{ gloss("cohort") }}: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</strong></p>
 {% if card.badges.diagnostic_marker.reason %}
     <p>{{ page.sourced(card.badges.diagnostic_marker.reason) }}</p>
 {% else %}
@@ -58,7 +67,7 @@
 {% endif %}
   </li>
   <li>
-    <p><span class="badge">Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</span></p>
+    <p><strong>Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</strong></p>
 {% if card.badges.explains_pem.reason %}
     <p>{{ page.sourced(card.badges.explains_pem.reason) }}</p>
 {% else %}

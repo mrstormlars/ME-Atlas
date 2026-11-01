@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Site layout revised at founder request
+
+- Site layout revised at founder request; ladder key under the chart; table behind a disclosure; secondary text minimum 16 px. The front page now opens with a short heading and one lead sentence, then the chart in one panel, the legend, the ladder key (rung names and meanings copied from spec section 3) and the table inside a closed "Show the chart as a table" disclosure. Calmer type: smaller headings, a 46 rem column, one compact header bar.
+- Spec section 5 "Text size" amended: body text at least 18 px equivalent; secondary text (keys, labels, study details) at least 16 px; layout holds at 200%. Why: the founder found the first view too text-heavy and large-typed; 16 px for secondary text keeps it readable while letting the main text lead.
+
 ## 2026-11-01 — Static site generator
 
 - The site is plain static HTML written by `uv run python -m me_atlas.site build` with Jinja2 (already a dependency): one CSS file, one small JavaScript file for the glossary explanations, no external fonts, scripts or styles, every page works from `file://`. Output goes to `build/` (gitignored). Why: no server, database or build tooling to maintain; readers on poor connections and the founder can open the files directly.

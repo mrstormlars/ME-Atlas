@@ -44,6 +44,17 @@ RUNG_NAMES = (
     "Causal case built",
 )
 
+# What each rung means, copied word for word from the "What it means" column of spec section 3. A test compares them.
+RUNG_MEANINGS = (
+    "An idea with a reasoned argument, but no direct patient data yet.",
+    "One or more small or uncontrolled studies point towards it.",
+    "A controlled study in patients with a strict, recognised case definition supports it.",
+    "An independent group has reproduced the finding in a separate cohort.",
+    "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association.",
+    "Several independent lines of evidence, including experimental evidence, together meet most of the "
+    "Bradford Hill criteria, with no unresolved major contradiction.",
+)
+
 # Case definitions in plain words: label, glossary term for the label (or None), flag key (see _macros.html).
 CASE_DEFINITION_LABELS: dict[str, tuple[str, str | None, str | None]] = {
     "CCC": ("Canadian Consensus Criteria (CCC)", "Canadian Consensus Criteria", None),
@@ -322,6 +333,7 @@ def build(
         "draft_banner": DRAFT_BANNER,
         "built": today.isoformat(),
         "rung_names": RUNG_NAMES,
+        "rung_meanings": RUNG_MEANINGS,
         "solid_to": solid_to,
         "study_url": study_url,
         "study_anchor": study_anchor,

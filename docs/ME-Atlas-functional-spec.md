@@ -142,7 +142,7 @@ A level is **contested** when at least one study of comparable or higher quality
 - **One glossary file** is the single source for all explanations. It renders the glossary page and every in-page explanation. No explanation is written inline.
 - **Explanation behaviour.** The explanation appears on mouse hover, on tap or click, and on keyboard focus. Terms are focusable controls described by their explanation. Escape, or tapping elsewhere, closes a tapped explanation. Hover is never the only way to read it.
 - **Contrast.** Text and chart marks meet WCAG 2.2 AA contrast at least (4.5:1 for body text). Meaning is never carried by colour alone: levels have text labels, contested segments use a hatch pattern, badges use words.
-- **Text size.** Body text at least 18 px equivalent; layout holds when the user enlarges text to 200%.
+- **Text size.** Body text at least 18 px equivalent; secondary text (keys, labels, study details) at least 16 px; layout holds when the user enlarges text to 200%.
 - **Phone.** Works at 375 px width with no horizontal scrolling; tap targets at least 44 px.
 - **No mouse.** Everything reachable and operable by keyboard, with a visible focus outline and a logical order; the chart has a text equivalent (a list or table with each hypothesis, level and badges).
 - **Calm.** No animation needed to understand anything; respect reduced-motion settings; no pop-ups.

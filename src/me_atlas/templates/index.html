@@ -1,79 +1,90 @@
 {% extends "base.html" %}
 {% from "_macros.html" import gloss, bar, level_line, contested_rungs with context %}
 {% block content %}
-<h1>ME Atlas</h1>
-<p class="lead">An evidence-graded overview of the ideas about what causes {{ gloss("ME/CFS") }}, with {{ gloss("long COVID") }} marked where the evidence overlaps. It describes the state of the evidence and gives no treatment advice.</p>
+<h1>Causes of ME/CFS: where the evidence stands</h1>
+<p class="lead">Each bar shows how far the evidence for one proposed cause of {{ gloss("ME/CFS") }} has come, from an idea to a causal case. The site gives no treatment advice.</p>
 
-<p class="note"><strong>{{ gloss("hypotheses", "Hypotheses") }} are not mutually exclusive.</strong> They may be links in one chain, or may apply to different groups of patients.</p>
-
-<h2>How to read the chart</h2>
-<p>Each bar shows <em>causal evidence</em> on a six-step {{ gloss("evidence ladder", "ladder") }}. Hypotheses are sorted by <strong>furthest along</strong> on this ladder. This is not an editorial opinion. The ladder is <span class="draft">Draft — pending expert review</span>.</p>
-
-<ol class="ladder" aria-label="The six steps of the evidence ladder">
-  <li><b>0</b> {{ rung_names[0] }}</li>
-  <li><b>1</b> {{ rung_names[1] }}</li>
-  <li><b>2</b> {{ rung_names[2] }} <span class="tag">(uses a recognised {{ gloss("case definition") }})</span></li>
-  <li><b>3</b> {{ rung_names[3] }} <span class="tag">({{ gloss("replication") }} in a separate group)</span></li>
-  <li><b>4</b> {{ rung_names[4] }}</li>
-  <li><b>5</b> {{ rung_names[5] }}</li>
-</ol>
+{% if not cards %}
+<p class="empty">No hypotheses published yet.</p>
+{% else %}
+<div class="panel chart">
+  <div class="chart-head" aria-hidden="true">
+    <span class="chart-head-label">Rung</span>
+    <div class="axis"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+  </div>
+{% for card in cards %}
+  <section class="row" id="row-{{ card.slug }}" aria-labelledby="h-{{ card.slug }}">
+    <div class="row-name">
+      <h3 id="h-{{ card.slug }}"><a href="hypotheses/{{ card.slug }}.html">{{ card.name }}</a></h3>
+{% if card.badges.diagnostic_marker.value or card.badges.explains_pem.value or card.long_covid %}
+      <div class="chips">
+{% if card.badges.diagnostic_marker.value %}
+        <span class="chip badge">Marker validated in an independent cohort</span>
+{% endif %}
+{% if card.badges.explains_pem.value %}
+        <span class="chip badge">Explains PEM</span>
+{% endif %}
+{% if card.long_covid %}
+        <span class="chip tag lc-label">Also studied in long COVID</span>
+{% endif %}
+      </div>
+{% endif %}
+    </div>
+    <div class="row-bar">
+      {{ bar(card) }}
+      <p class="readout">{{ level_line(card) }}{% if card.contested %} – <strong>contested</strong> at {{ contested_rungs(card) }}. Solid up to rung {{ solid_to(card) }}{% endif %}.</p>
+    </div>
+  </section>
+{% endfor %}
+</div>
 
 <div class="legend" aria-label="Legend">
   <span><span class="sw on"></span>Reached</span>
   <span><span class="sw h"></span>{{ gloss("contested", "Contested") }}: a comparable study disagrees</span>
-  <span><span class="badge">Marker validated</span> <span class="badge">Explains {{ gloss("PEM") }}</span></span>
+  <span><span class="chip badge">Marker validated</span> <span class="chip badge">Explains {{ gloss("PEM") }}</span></span>
+  <span><span class="chip tag">Also studied in {{ gloss("long COVID") }}</span></span>
 </div>
+{% endif %}
 
-<h2>Hypotheses, furthest along first</h2>
-{% if not cards %}
-<p class="empty">No hypotheses published yet.</p>
-{% else %}
-{% for card in cards %}
-<section class="row" id="row-{{ card.slug }}" aria-labelledby="h-{{ card.slug }}">
-  <h3 id="h-{{ card.slug }}"><a href="hypotheses/{{ card.slug }}.html">{{ card.name }}</a></h3>
-{% if card.badges.diagnostic_marker.value or card.badges.explains_pem.value or card.long_covid %}
-  <div class="meta">
-{% if card.badges.diagnostic_marker.value %}
-    <span class="badge">Marker validated in an independent cohort</span>
-{% endif %}
-{% if card.badges.explains_pem.value %}
-    <span class="badge">Explains PEM</span>
-{% endif %}
-{% if card.long_covid %}
-    <span class="tag lc-label">Also studied in long COVID</span>
-{% endif %}
-  </div>
-{% endif %}
-  {{ bar(card) }}
-  <p class="readout">{{ level_line(card) }}{% if card.contested %} – <strong>contested</strong> at {{ contested_rungs(card) }}. Solid up to rung {{ solid_to(card) }}{% endif %}.</p>
+<section class="key" aria-labelledby="key-title">
+  <h2 id="key-title">How to read the ladder</h2>
+  <ol class="ladder" aria-label="The six steps of the evidence ladder">
+{% for i in range(6) %}
+    <li><b class="rung-no">{{ i }}</b> <span class="rung-name">{{ rung_names[i] }}</span> <span class="rung-meaning">{{ page.mark(rung_meanings[i]) }}</span></li>
+{% endfor %}
+  </ol>
+  <p class="small">Each bar shows <em>causal evidence</em> on this six-step {{ gloss("evidence ladder", "ladder") }}. Hypotheses are sorted by <strong>furthest along</strong>, not by an editorial opinion. The ladder is a draft, pending expert review.</p>
+  <p class="small"><strong>{{ gloss("hypotheses", "Hypotheses") }} are not mutually exclusive.</strong> They may be links in one chain, or may apply to different groups of patients.</p>
 </section>
-{% endfor %}
 
-<h2>The same information as a table</h2>
-<table class="summary">
-  <caption>Hypotheses, furthest along first</caption>
-  <thead>
-    <tr>
-      <th scope="col">Hypothesis</th>
-      <th scope="col">Level</th>
-      <th scope="col">Contested</th>
-      <th scope="col">Marker validated in an independent cohort</th>
-      <th scope="col">Explains PEM</th>
-      <th scope="col">Also studied in long COVID</th>
-    </tr>
-  </thead>
-  <tbody>
+{% if cards %}
+<details class="table-toggle">
+  <summary>Show the chart as a table</summary>
+  <table class="summary">
+    <caption>Hypotheses, furthest along first</caption>
+    <thead>
+      <tr>
+        <th scope="col">Hypothesis</th>
+        <th scope="col">Level</th>
+        <th scope="col">Contested</th>
+        <th scope="col">Marker validated in an independent cohort</th>
+        <th scope="col">Explains PEM</th>
+        <th scope="col">Also studied in long COVID</th>
+      </tr>
+    </thead>
+    <tbody>
 {% for card in cards %}
-    <tr>
-      <th scope="row"><a href="hypotheses/{{ card.slug }}.html">{{ card.name }}</a></th>
-      <td data-label="Level">{{ card.level }}: {{ rung_names[card.level] }}</td>
-      <td data-label="Contested">{% if card.contested %}Yes, at {{ contested_rungs(card) }}{% else %}No{% endif %}</td>
-      <td data-label="Marker validated in an independent cohort">{{ "Yes" if card.badges.diagnostic_marker.value else "No" }}</td>
-      <td data-label="Explains PEM">{{ "Yes" if card.badges.explains_pem.value else "No" }}</td>
-      <td data-label="Also studied in long COVID">{{ "Yes" if card.long_covid else "No" }}</td>
-    </tr>
+      <tr>
+        <th scope="row"><a href="hypotheses/{{ card.slug }}.html">{{ card.name }}</a></th>
+        <td data-label="Level">{{ card.level }}: {{ rung_names[card.level] }}</td>
+        <td data-label="Contested">{% if card.contested %}Yes, at {{ contested_rungs(card) }}{% else %}No{% endif %}</td>
+        <td data-label="Marker validated in an independent cohort">{{ "Yes" if card.badges.diagnostic_marker.value else "No" }}</td>
+        <td data-label="Explains PEM">{{ "Yes" if card.badges.explains_pem.value else "No" }}</td>
+        <td data-label="Also studied in long COVID">{{ "Yes" if card.long_covid else "No" }}</td>
+      </tr>
 {% endfor %}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</details>
 {% endif %}
 {% endblock %}

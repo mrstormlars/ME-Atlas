@@ -429,14 +429,13 @@ def test_studies_are_grouped_by_role(proj):
     def ids_after(heading: str) -> list[str]:
         out_ids: list[str] = []
         collecting = False
-        for n in doc.find("main").children:
-            if isinstance(n, Node):
-                if n.tag == "h3":
-                    collecting = norm(n.text()) == heading
-                elif n.tag == "h2":
-                    collecting = False
-                elif collecting and n.tag == "article":
-                    out_ids.append(n.get("id"))
+        for n in doc.find("main").walk():  # the studies of a group sit in a panel after its heading
+            if n.tag == "h3":
+                collecting = norm(n.text()) == heading
+            elif n.tag == "h2":
+                collecting = False
+            elif collecting and n.tag == "article":
+                out_ids.append(n.get("id"))
         return out_ids
 
     assert ids_after("Studies that support it") == ["study-pmid:00000001", "study-pmid:00000002"]
@@ -454,19 +453,25 @@ def test_empty_study_group_says_so(proj):
 
 
 def facts(entry: Node) -> dict[str, str]:
-    dl = entry.find("dl")
-    return {norm(dt_.text()): norm(dd.text()) for dt_, dd in zip(dl.find_all("dt"), dl.find_all("dd"), strict=True)}
+    """The sample sizes in a study's metadata line (they were a definition list before the layout revision)."""
+    return {
+        "Patients": norm(entry.find(cls="n-patients").text()),
+        "Controls": norm(entry.find(cls="n-controls").text()),
+    }
 
 
 def test_missing_sample_sizes_show_not_stated(proj):
     out = built(proj, make_card("sizes", "Fictional sizes", 2))
     doc = page(out, "hypotheses/sizes.html")
     uncontrolled = facts(doc.find("article", id="study-pmid:00000004"))
-    assert (uncontrolled["Patients"], uncontrolled["Controls"]) == ("12", "none (uncontrolled study)")
+    assert (uncontrolled["Patients"], uncontrolled["Controls"]) == (
+        "12 patients",
+        "controls: none (uncontrolled study)",
+    )
     background = facts(doc.find("article", id="study-doi:10.0000/fictional.5"))
-    assert (background["Patients"], background["Controls"]) == ("not stated", "not stated")
+    assert (background["Patients"], background["Controls"]) == ("patients: not stated", "controls: not stated")
     controlled = facts(doc.find("article", id="study-pmid:00000001"))
-    assert (controlled["Patients"], controlled["Controls"]) == ("40", "40")
+    assert (controlled["Patients"], controlled["Controls"]) == ("40 patients", "40 controls")
 
 
 def test_controls_row_depends_on_design_and_whether_the_number_is_given(proj):
@@ -480,11 +485,13 @@ def test_controls_row_depends_on_design_and_whether_the_number_is_given(proj):
     def controls(study_id: str) -> str:
         return facts(doc.find("article", id=f"study-{study_id}"))["Controls"]
 
-    assert controls("pmid:00000301") == "none (uncontrolled study)"
-    assert controls("pmid:00000302") == "3"  # a stated number always wins
-    assert controls("pmid:00000303") == "not stated"  # a controlled study without a number is unknown, not zero
-    assert controls("pmid:00000304") == "not stated"
-    assert controls("doi:10.0000/fictional.5") == "not stated"  # design "other"
+    assert controls("pmid:00000301") == "controls: none (uncontrolled study)"
+    assert controls("pmid:00000302") == "3 controls"  # a stated number always wins
+    assert (
+        controls("pmid:00000303") == "controls: not stated"
+    )  # a controlled study without a number is unknown, not zero
+    assert controls("pmid:00000304") == "controls: not stated"
+    assert controls("doi:10.0000/fictional.5") == "controls: not stated"  # design "other"
 
 
 def test_study_shows_year_design_and_direction(proj):
@@ -1325,3 +1332,116 @@ def test_the_stylesheet_meets_the_basic_accessibility_rules():
     assert ":focus-visible" in css and "outline:" in css
     assert "min-height: 44px" in css
     assert "overflow-x" not in css  # nothing scrolls sideways
+
+
+# --- layout revision: ladder key, table behind a disclosure, one h1, minimum text size -----
+
+SPEC = REPO_ROOT / "docs" / "ME-Atlas-functional-spec.md"
+MIN_SECONDARY_PX = 16  # spec section 5: secondary text at least 16 px; the base is 18 px (html is 112.5%)
+BASE_PX = 18
+
+
+def spec_rungs() -> list[tuple[int, str, str]]:
+    rows = re.findall(r"(?m)^\| ([0-5]) \| ([^|]+?) \| ([^|]+?) \|$", SPEC.read_text(encoding="utf-8"))
+    return [(int(n), name, meaning) for n, name, meaning in rows]
+
+
+def font_sizes_below_minimum(css: str) -> list[str]:
+    """Rules with a font-size under 16 px, except the hidden .sr rule. Units other than rem, px and % also fail."""
+    offenders = []
+    for selectors, body in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        names = [n.strip() for n in selectors.split(",")]
+        if names == [".sr"]:
+            continue
+        for value in re.findall(r"(?<![\w-])font-size\s*:\s*([^;}]+)", body):
+            value = value.strip()
+            m = re.fullmatch(r"([\d.]+)(rem|px|%)", value)
+            px = None
+            if m:
+                number = float(m.group(1))
+                px = {"rem": number * BASE_PX, "px": number, "%": number / 100 * BASE_PX}[m.group(2)]
+            if px is None or px < MIN_SECONDARY_PX:
+                offenders.append(f"{selectors.strip()}: {value}")
+    return offenders
+
+
+def test_the_spec_table_has_six_rungs():
+    assert [n for n, _, _ in spec_rungs()] == [0, 1, 2, 3, 4, 5]
+
+
+def test_front_page_ladder_key_comes_after_the_chart(proj):
+    out = built(proj, make_card("one", "Fictional one", 2), make_card("two", "Fictional two", 3))
+    order = list(page(out, "index.html").walk())
+    last_row = max(i for i, n in enumerate(order) if n.tag == "section" and "row" in n.classes)
+    key = next(i for i, n in enumerate(order) if n.tag == "section" and "key" in n.classes)
+    legend = next(i for i, n in enumerate(order) if "legend" in n.classes)
+    assert last_row < legend < key
+
+
+def test_ladder_key_has_all_six_rung_names_and_meanings_from_the_spec(proj):
+    out = built(proj, make_card("one", "Fictional one", 2))
+    key = page(out, "index.html").find("section", "key")
+    items = [norm(li.text()) for li in key.find("ol").find_all("li")]
+    spec = spec_rungs()
+    assert len(items) == 6
+    for item, (number, name, meaning) in zip(items, spec, strict=True):
+        assert item == f"{number} {name} {meaning}"
+    assert tuple(name for _, name, _ in spec) == site.RUNG_NAMES
+    assert tuple(meaning for _, _, meaning in spec) == site.RUNG_MEANINGS
+
+
+def test_ladder_key_carries_the_draft_notice_and_the_two_standing_sentences(proj):
+    out = built(proj, make_card("one", "Fictional one", 2))
+    text = norm(page(out, "index.html").find("section", "key").text())
+    assert "The ladder is a draft, pending expert review." in text
+    assert "Hypotheses are not mutually exclusive." in text
+    assert "furthest along, not by an editorial opinion" in text
+
+
+def test_ladder_key_is_there_even_when_no_hypothesis_is_published(proj):
+    out = built(proj)
+    assert page(out, "index.html").find("section", "key") is not None
+    assert page(out, "index.html").find("details") is None  # nothing to show as a table
+
+
+def test_the_table_is_closed_by_default_inside_a_details_element_with_a_summary(proj):
+    out = built(proj, make_card("one", "Fictional one", 2))
+    doc = page(out, "index.html")
+    details = doc.find_all("details")
+    assert len(details) == 1
+    assert "open" not in details[0].attrs  # an `open` attribute would show the table at first glance
+    summary = details[0].find("summary")
+    assert norm(summary.text()) == "Show the chart as a table"
+    tables = doc.find_all("table")
+    assert len(tables) == 1
+    assert details[0] in tables[0].ancestors()
+    assert list(details[0].children).index(summary) < list(details[0].children).index(tables[0])
+
+
+def test_every_page_has_exactly_one_h1(proj):
+    data = make_card("one", "Fictional one", 3, contested_rungs=[3])
+    out = built(proj, data, make_card("two", "Fictional two", 2))
+    pages = html_files(out)
+    assert len(pages) >= 6  # front page, two cards, changes, methods, glossary
+    for path in pages:
+        assert len(page(out, path.relative_to(out).as_posix()).find_all("h1")) == 1, path.name
+    (proj.root / "empty").mkdir()
+    empty = Site(proj.root / "empty")  # a site with no cards has the same rule
+    empty.build()
+    for path in html_files(empty.out):
+        assert len(page(empty.out, path.relative_to(empty.out).as_posix()).find_all("h1")) == 1, path.name
+
+
+def test_no_font_size_in_the_stylesheet_is_below_16_px_except_the_hidden_sr_rule():
+    css = CSS.read_text(encoding="utf-8")
+    assert font_sizes_below_minimum(css) == []
+    assert re.search(r"\.sr\s*\{", css)  # the exception exists and is the only one
+
+
+def test_the_font_size_check_flags_small_sizes_and_unknown_units():
+    assert font_sizes_below_minimum("p { font-size: .85rem; }") == ["p: .85rem"]
+    assert font_sizes_below_minimum(".tag { font-size: 15px; }") == [".tag: 15px"]
+    assert font_sizes_below_minimum("@media (max-width: 40em) { .a, .b { font-size: 0.8rem } }") == [".a, .b: 0.8rem"]
+    assert font_sizes_below_minimum("h1 { font-size: smaller; }") == ["h1: smaller"]  # cannot be checked, so it fails
+    assert font_sizes_below_minimum(".sr { font-size: 0; }") == []
+    assert font_sizes_below_minimum("p { font-size: .889rem; } html { font-size: 112.5%; }") == []

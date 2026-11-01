@@ -16,14 +16,16 @@
 {% endif %}
 <a class="skip" href="#main">Skip to main content</a>
 <header class="site-header">
-  <p class="brand"><a href="{{ root }}index.html">ME Atlas</a></p>
-  <nav aria-label="Main">
-    <ul>
+  <div class="inner">
+    <p class="brand"><a href="{{ root }}index.html">ME Atlas</a></p>
+    <nav aria-label="Main">
+      <ul>
 {% for href, label in [("index.html", "Front page"), ("changes.html", "What changed"), ("methods.html", "Methods"), ("glossary.html", "Glossary")] %}
-      <li><a href="{{ root }}{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a></li>
+        <li><a href="{{ root }}{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a></li>
 {% endfor %}
-    </ul>
-  </nav>
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <main id="main">
@@ -40,8 +42,10 @@
 </main>
 
 <footer>
-  <p>No medical or research expert has reviewed this content yet. It is checked by AI tools and by the founder. See <a href="{{ root }}methods.html">Methods</a>.</p>
-  <p>This site describes the state of the evidence. It gives no treatment advice. Built {{ built }}.</p>
+  <div class="inner">
+    <p>No medical or research expert has reviewed this content yet. It is checked by AI tools and by the founder. See <a href="{{ root }}methods.html">Methods</a>.</p>
+    <p>This site describes the state of the evidence. It gives no treatment advice. Built {{ built }}.</p>
+  </div>
 </footer>
 </body>
 </html>

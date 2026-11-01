@@ -2,8 +2,11 @@
 {% macro gloss(key, text=None) %}{{ page.term(key, text) }}{% endmacro %}
 
 {# The six-segment bar. Filled up to the level; contested rungs are hatched. Decorative: the text carries the meaning. #}
-{% macro bar(card) %}
-<div class="axis top" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+{# With axis, the rung numbers are repeated above the bar; the front page shows them once for the whole chart on wide screens. #}
+{% macro bar(card, axis=True) %}
+{% if axis %}
+<div class="axis" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+{% endif %}
 <div class="bar" aria-hidden="true">{% for i in range(6) %}<i class="seg{% if i in card.hatched_rungs %} contested{% elif i <= card.level %} on{% endif %}"></i>{% endfor %}</div>
 {% endmacro %}
 
