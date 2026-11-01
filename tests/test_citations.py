@@ -1,0 +1,554 @@
+"""Tests for the mechanical citation check.
+
+Fictional PMIDs (9000000x), titles starting "Fictional" and fictional PMCIDs. The cache is built in tmp_path;
+no network, no LLM.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+import httpx
+import pytest
+import yaml
+
+from me_atlas import citations, europepmc, pubmed
+from me_atlas.citations import normalise_quote, normalise_title, number_pattern
+
+PMID = "90000001"
+TITLE = "Fictional study of a made-up marker in a made-up cohort."
+ABSTRACT = (
+    "BACKGROUND: Fictional background text.\n"
+    "METHODS: Forty-eight fictional patients, 48 in total, who met the Fukuda criteria – as published – "
+    "were compared with 1,234 fictional controls."
+)
+QUOTE = "Forty-eight fictional patients, 48 in total, who met the Fukuda criteria"
+FULLTEXT_ONLY_SENTENCE = "All fictional participants fulfilled the Canadian Consensus Criteria."
+PMCID = "PMC9000001"
+
+
+# --- building a fictional cache and fictional cards -------------------------
+
+
+def add_record(
+    root: Path,
+    pmid: str = PMID,
+    *,
+    title: str | None = TITLE,
+    year: int | None = 2021,
+    abstract: str | None = ABSTRACT,
+    retracted: bool = False,
+) -> None:
+    """Write a fictional PubMed record to <root>/pubmed/<pmid>.xml."""
+    pub_date = f"<PubDate><Year>{year}</Year></PubDate>" if year is not None else "<PubDate></PubDate>"
+    paragraphs = ""
+    if abstract is not None:
+        for part in abstract.split("\n"):
+            label, _, body = part.partition(": ")
+            paragraphs += f'<AbstractText Label="{label}">{escape(body)}</AbstractText>'
+    types = "<PublicationType>Retracted Publication</PublicationType>" if retracted else ""
+    xml = (
+        f'<PubmedArticleSet><PubmedArticle><MedlineCitation><PMID Version="1">{pmid}</PMID><Article>'
+        f"<Journal><JournalIssue>{pub_date}</JournalIssue><Title>Fictional Journal</Title></Journal>"
+        f"<ArticleTitle>{escape(title or '')}</ArticleTitle>"
+        f"<Abstract>{paragraphs}</Abstract>"
+        f"<PublicationTypeList><PublicationType>Journal Article</PublicationType>{types}</PublicationTypeList>"
+        "</Article></MedlineCitation></PubmedArticle></PubmedArticleSet>"
+    )
+    if abstract is None:
+        xml = xml.replace("<Abstract></Abstract>", "")
+    folder = root / "pubmed"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{pmid}.xml").write_text(xml, encoding="utf-8")
+
+
+def add_fulltext(
+    root: Path,
+    pmid: str = PMID,
+    pmcid: str = PMCID,
+    paragraphs: tuple[str, ...] = (FULLTEXT_ONLY_SENTENCE, "Fictional enrolment: 77 fictional patients."),
+    *,
+    open_access: bool = True,
+) -> None:
+    """Write a fictional Europe PMC lookup and (if open access) its full text."""
+    folder = root / "europepmc"
+    folder.mkdir(parents=True, exist_ok=True)
+    hit = {"id": pmid, "source": "MED", "pmid": pmid, "pmcid": pmcid, "isOpenAccess": "Y" if open_access else "N"}
+    (folder / f"{pmid}.json").write_text(json.dumps({"hitCount": 1, "resultList": {"result": [hit]}}), encoding="utf-8")
+    if open_access:
+        body = "".join(f"<p>{escape(p)}</p>" for p in paragraphs)
+        (folder / f"{pmcid}.xml").write_text(
+            "<article><front><article-meta><title-group><article-title>Fictional article"
+            f"</article-title></title-group></article-meta></front><body><sec><title>Methods</title>{body}</sec>"
+            "</body><back><ref-list><ref><mixed-citation>Fictional reference with 999 patients."
+            "</mixed-citation></ref></ref-list></back></article>",
+            encoding="utf-8",
+        )
+
+
+def make_study(pmid: str = PMID, **over: object) -> dict:
+    study: dict = {
+        "id": f"pmid:{pmid}",
+        "title": TITLE,
+        "year": 2021,
+        "cohort": "me_cfs",
+        "case_definition": "Fukuda",
+        "case_definition_source": "abstract",
+        "case_definition_quote": QUOTE,
+        "design": "controlled",
+        "n_patients": 48,
+        "n_controls": 1234,
+        "measures_pem": False,
+        "preregistered": None,
+        "role": "context",
+        "direction": "not_applicable",
+        "finding": "A study of n=48 patients found a fictional result.",
+    }
+    study.update(over)
+    return study
+
+
+def write_card(directory: Path, studies: list[dict], slug: str = "fictional-card") -> Path:
+    """Write a fictional draft that passes the card validator (level 0, every sentence sourced)."""
+    directory.mkdir(parents=True, exist_ok=True)
+    first = studies[0]["id"]
+    sourced = {"text": "A fictional sentence.", "sources": [first]}
+    card = {
+        "slug": slug,
+        "name": "Fictional card",
+        "core_claim": sourced,
+        "level": 0,
+        "level_reason": {"text": "Fictional: nothing yet.", "sources": []},
+        "contested": None,
+        "badges": {
+            "diagnostic_marker": {"value": False, "reason": None},
+            "explains_pem": {"value": False, "reason": None},
+        },
+        "subgroups": [],
+        "working_on_it": [],
+        "early_signals": [],
+        "studies": studies,
+        "last_checked": {"date": "2026-11-01", "by": "ai_pair"},
+    }
+    path = directory / f"{slug}.yaml"
+    path.write_text(yaml.safe_dump(card, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    return path
+
+
+@pytest.fixture
+def cache(tmp_path: Path) -> Path:
+    root = tmp_path / "cache"
+    add_record(root)
+    return root
+
+
+def run(tmp_path: Path, cache_root: Path, studies: list[dict], capsys) -> tuple[int, list[str]]:
+    """Check one fictional card and return (exit code, printed lines)."""
+    card = write_card(tmp_path / "drafts", studies)
+    code = citations.main(["check", str(card), "--cache-dir", str(cache_root)])
+    return code, capsys.readouterr().out.splitlines()
+
+
+def issue_lines(lines: list[str], code: str) -> list[str]:
+    return [line for line in lines if f": {code} " in line]
+
+
+def check(tmp_path: Path, cache_root: Path, study: dict) -> list[citations.CitationIssue]:
+    card = write_card(tmp_path / "drafts", [study])
+    return citations.check_paths([card], cache_root)[1]
+
+
+# --- a fully passing study --------------------------------------------------
+
+
+def test_a_matching_study_has_no_issues(tmp_path, cache):
+    assert check(tmp_path, cache, make_study()) == []
+
+
+# --- C1 ----------------------------------------------------------------------
+
+
+def test_c1_study_with_no_cached_record_is_an_error_naming_the_fetch_command(tmp_path, cache, capsys):
+    code, lines = run(tmp_path, cache, [make_study("90000002", id="pmid:90000002")], capsys)
+    c1 = issue_lines(lines, "C1")
+    assert code == 1 and len(c1) == 1
+    assert "ERROR" in c1[0] and "pmid:90000002" in c1[0] and "fictional-card.yaml" in c1[0]
+    assert "pubmed fetch --ids 90000002" in c1[0]
+
+
+def test_c1_unreadable_cached_record_is_an_error(tmp_path, cache):
+    (cache / "pubmed" / f"{PMID}.xml").write_text("<PubmedArticleSet><oops", encoding="utf-8")
+    issues = check(tmp_path, cache, make_study())
+    assert [(i.code, i.level) for i in issues] == [("C1", "ERROR")]
+    assert "unreadable" in issues[0].message and f"pubmed fetch --ids {PMID} --refresh" in issues[0].message
+
+
+# --- C2 ----------------------------------------------------------------------
+
+
+def test_c2_title_differing_by_one_word_is_an_error(tmp_path, cache, capsys):
+    code, lines = run(
+        tmp_path, cache, [make_study(title="Fictional study of a made-up biomarker in a made-up cohort.")], capsys
+    )
+    c2 = issue_lines(lines, "C2")
+    assert code == 1 and len(c2) == 1 and "ERROR" in c2[0] and f"pmid:{PMID}" in c2[0]
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "FICTIONAL STUDY OF A MADE-UP MARKER IN A MADE-UP COHORT.",  # case
+        "  Fictional   study of a made-up\nmarker in a made-up cohort.  ",  # whitespace
+        "Fictional study of a made-up marker in a made-up cohort",  # trailing period missing on the card
+        "[Fictional study of a made-up marker in a made-up cohort].",  # translation brackets
+    ],
+)
+def test_c2_case_whitespace_trailing_period_and_brackets_do_not_matter(tmp_path, cache, title):
+    assert [i for i in check(tmp_path, cache, make_study(title=title)) if i.code == "C2"] == []
+
+
+def test_c2_brackets_on_the_record_side_are_removed_too(tmp_path, cache):
+    add_record(cache, title="[Fictional Studie in English].")
+    assert (
+        check(
+            tmp_path,
+            cache,
+            make_study(
+                title="Fictional studie in English",
+                n_patients=None,
+                n_controls=None,
+                case_definition_quote=None,
+                case_definition="unverified",
+                case_definition_source=None,
+            ),
+        )
+        == []
+    )
+
+
+def test_c2_nothing_else_is_tolerated():
+    base = "fictional study"
+    assert normalise_title("Fictional study.") == base
+    assert normalise_title("Fictional study..") != base  # only ONE trailing period
+    assert normalise_title("Fictional, study") != base
+    assert normalise_title("Fictional-study") != base
+    assert normalise_title("Fictional study [sic]") != base  # inner brackets are kept
+    # outer brackets are removed only when no other bracket is inside them
+    assert normalise_title("[Fictional study]") == base
+    assert normalise_title("[Fictional] and [study]") == "[fictional] and [study]"
+    assert normalise_title("[Fictional [sic] study].") == "[fictional [sic] study]"
+
+
+# --- C3 ----------------------------------------------------------------------
+
+
+def test_c3_year_off_by_one_is_an_error(tmp_path, cache, capsys):
+    code, lines = run(tmp_path, cache, [make_study(year=2022)], capsys)
+    c3 = issue_lines(lines, "C3")
+    assert code == 1 and len(c3) == 1 and "ERROR" in c3[0] and "2022" in c3[0] and "2021" in c3[0]
+
+
+def test_c3_record_without_a_year_is_an_error(tmp_path, cache):
+    add_record(cache, year=None)
+    issues = [i for i in check(tmp_path, cache, make_study()) if i.code == "C3"]
+    assert [(i.level, "no year" in i.message) for i in issues] == [("ERROR", True)]
+
+
+# --- C4 ----------------------------------------------------------------------
+
+
+def test_c4_retracted_record_is_an_error(tmp_path, cache, capsys):
+    add_record(cache, retracted=True)
+    code, lines = run(tmp_path, cache, [make_study()], capsys)
+    c4 = issue_lines(lines, "C4")
+    assert code == 1 and len(c4) == 1 and "ERROR" in c4[0] and f"pmid:{PMID}" in c4[0]
+
+
+# --- C5 ----------------------------------------------------------------------
+
+
+def test_c5_quote_with_one_changed_word_is_an_error(tmp_path, cache, capsys):
+    changed = QUOTE.replace("fictional", "imagined")
+    code, lines = run(tmp_path, cache, [make_study(case_definition_quote=changed)], capsys)
+    c5 = issue_lines(lines, "C5")
+    assert code == 1 and len(c5) == 1 and "ERROR" in c5[0] and "abstract" in c5[0]
+
+
+@pytest.mark.parametrize(
+    "quote",
+    [
+        "Forty-eight   fictional\npatients, 48 in total,  who met the Fukuda criteria",  # whitespace
+        "Forty‐eight fictional patients, 48 in total, who met the Fukuda criteria",  # hyphen U+2010
+        "Forty–eight fictional patients, 48 in total, who met the Fukuda criteria",  # en dash
+        "Forty—eight fictional patients, 48 in total, who met the Fukuda criteria",  # em dash
+        "Forty−eight fictional patients, 48 in total, who met the Fukuda criteria",  # minus sign
+        "who met the Fukuda criteria - as published -",  # ASCII hyphen for the abstract's en dashes
+    ],
+)
+def test_c5_whitespace_and_dash_style_do_not_matter(tmp_path, cache, quote):
+    assert [i for i in check(tmp_path, cache, make_study(case_definition_quote=quote)) if i.code == "C5"] == []
+
+
+def test_c5_curly_and_straight_quotes_do_not_matter(tmp_path, cache):
+    add_record(cache, abstract="METHODS: Patients met the “Fukuda” criteria and the clinician’s review.")
+    quote = 'Patients met the "Fukuda" criteria and the clinician\'s review.'
+    assert [i for i in check(tmp_path, cache, make_study(case_definition_quote=quote)) if i.code == "C5"] == []
+    # and the other way round: straight in the record, curly on the card
+    add_record(cache, abstract='METHODS: Patients met the "Fukuda" criteria and the clinician\'s review.')
+    curly = "Patients met the “Fukuda” criteria and the clinician’s review."
+    assert [i for i in check(tmp_path, cache, make_study(case_definition_quote=curly)) if i.code == "C5"] == []
+
+
+def test_c5_nothing_else_is_tolerated():
+    assert normalise_quote("Fukuda criteria") != normalise_quote("fukuda criteria")  # case matters
+    assert normalise_quote("met criteria.") != normalise_quote("met criteria")  # punctuation matters
+    assert normalise_quote("a b") == "a b"
+
+
+def test_c5_quote_only_in_the_full_text_fails_when_the_source_is_the_abstract(tmp_path, cache):
+    add_fulltext(cache)
+    study = make_study(case_definition="CCC", case_definition_quote=FULLTEXT_ONLY_SENTENCE)
+    issues = [i for i in check(tmp_path, cache, study) if i.code == "C5"]
+    assert [i.level for i in issues] == ["ERROR"] and "abstract" in issues[0].message
+
+
+def test_c5_the_same_quote_passes_when_the_source_is_the_full_text(tmp_path, cache):
+    add_fulltext(cache)
+    study = make_study(
+        case_definition="CCC", case_definition_source="fulltext", case_definition_quote=FULLTEXT_ONLY_SENTENCE
+    )
+    assert [i for i in check(tmp_path, cache, study) if i.code == "C5"] == []
+
+
+def test_c5_fulltext_source_with_one_changed_word_is_an_error(tmp_path, cache):
+    add_fulltext(cache)
+    study = make_study(
+        case_definition="CCC",
+        case_definition_source="fulltext",
+        case_definition_quote=FULLTEXT_ONLY_SENTENCE.replace("fulfilled", "failed"),
+    )
+    issues = [i for i in check(tmp_path, cache, study) if i.code == "C5"]
+    assert [i.level for i in issues] == ["ERROR"] and "full text" in issues[0].message
+
+
+def test_c5_fulltext_source_with_no_cached_full_text_names_the_fetch_command(tmp_path, cache, capsys):
+    study = make_study(case_definition_source="fulltext")
+    code, lines = run(tmp_path, cache, [study], capsys)
+    c5 = issue_lines(lines, "C5")
+    assert code == 1 and len(c5) == 1 and "ERROR" in c5[0]
+    assert f"europepmc fulltext {PMID}" in c5[0]
+
+
+def test_c5_fulltext_source_when_europe_pmc_has_no_open_text_is_an_error(tmp_path, cache):
+    add_fulltext(cache, open_access=False)
+    issues = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
+    assert [i.level for i in issues] == ["ERROR"] and "not open access" in issues[0].message
+
+
+def test_c5_fulltext_source_with_unreadable_full_text_is_an_error(tmp_path, cache):
+    add_fulltext(cache)
+    (cache / "europepmc" / f"{PMCID}.xml").write_text("<article><oops", encoding="utf-8")
+    issues = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
+    assert [i.level for i in issues] == ["ERROR"] and "unreadable" in issues[0].message
+
+
+def test_c5_abstract_source_with_no_abstract_is_an_error(tmp_path, cache):
+    add_record(cache, abstract=None)
+    issues = [i for i in check(tmp_path, cache, make_study()) if i.code == "C5"]
+    assert [i.level for i in issues] == ["ERROR"] and "no abstract" in issues[0].message
+
+
+@pytest.mark.parametrize("case_definition", ["unverified", "none", "other"])
+def test_c5_studies_without_a_quote_skip_the_check(tmp_path, cache, case_definition):
+    study = make_study(case_definition=case_definition, case_definition_source=None, case_definition_quote=None)
+    assert [i for i in check(tmp_path, cache, study) if i.code == "C5"] == []
+
+
+# --- C6 ----------------------------------------------------------------------
+
+
+def test_c6_numbers_present_as_digits_give_no_warning(tmp_path, cache):
+    assert [i for i in check(tmp_path, cache, make_study(n_patients=48, n_controls=1234)) if i.code == "C6"] == []
+
+
+@pytest.mark.parametrize("form", ["1,234", "1 234", "1 234", "1234"])
+def test_c6_thousands_forms_match_the_plain_number(tmp_path, cache, form):
+    add_record(cache, abstract=f"RESULTS: There were {form} fictional controls.")
+    study = make_study(
+        n_patients=None,
+        n_controls=1234,
+        case_definition_quote=None,
+        case_definition="unverified",
+        case_definition_source=None,
+    )
+    assert check(tmp_path, cache, study) == []
+
+
+def test_c6_missing_number_is_a_warning_and_the_exit_code_stays_zero(tmp_path, cache, capsys):
+    code, lines = run(tmp_path, cache, [make_study(n_patients=51)], capsys)
+    c6 = issue_lines(lines, "C6")
+    assert code == 0 and len(c6) == 1 and "WARNING" in c6[0] and "n_patients 51" in c6[0]
+    assert lines[-1].startswith("OK") and "0 error(s), 1 warning(s)" in lines[-1]
+
+
+def test_c6_a_number_inside_a_longer_number_does_not_count(tmp_path, cache):
+    add_record(cache, abstract="RESULTS: There were 148 fictional patients, 3.48 units and 1,048 visits and 48.5 days.")
+    study = make_study(
+        n_patients=48,
+        n_controls=None,
+        case_definition_quote=None,
+        case_definition="unverified",
+        case_definition_source=None,
+    )
+    issues = check(tmp_path, cache, study)
+    assert [(i.code, i.level) for i in issues] == [("C6", "WARNING")]
+
+
+def test_c6_the_cached_full_text_counts_but_the_reference_list_does_not(tmp_path, cache):
+    add_fulltext(cache)  # the full text says 77 in the body and 999 only in its reference list
+    study = make_study(n_patients=77, n_controls=999)
+    c6 = [i for i in check(tmp_path, cache, study) if i.code == "C6"]
+    assert [("n_controls 999" in i.message) for i in c6] == [True]
+
+
+def test_c6_null_sizes_are_not_checked(tmp_path, cache):
+    study = make_study(n_patients=None, n_controls=None)
+    assert [i for i in check(tmp_path, cache, study) if i.code == "C6"] == []
+
+
+def test_number_pattern_directly():
+    assert number_pattern(48).search("n = 48.")
+    assert number_pattern(48).search("48, 52 and 60")
+    assert not number_pattern(48).search("148")
+    assert not number_pattern(48).search("480")
+    assert not number_pattern(48).search("p = .48")
+    assert not number_pattern(48).search("0.48")
+    assert number_pattern(48).search("a,48")  # a comma after a non-digit is not part of a number
+    assert number_pattern(1234).search("1,234") and number_pattern(1234).search("1 234")
+    assert not number_pattern(234).search("1,234")  # part of a longer number
+
+
+# --- C7 ----------------------------------------------------------------------
+
+
+def test_c7_doi_only_study_id_is_an_error(tmp_path, cache, capsys):
+    doi_study = make_study(id="doi:10.9999/fictional.0001")
+    code, lines = run(tmp_path, cache, [doi_study], capsys)
+    c7 = issue_lines(lines, "C7")
+    assert code == 1 and len(c7) == 1 and "ERROR" in c7[0] and "doi:10.9999/fictional.0001" in c7[0]
+    assert "PMID" in c7[0]
+    assert len(lines) == 2, "only C7 and the summary: no other check runs on a DOI-only id"
+
+
+# --- the command line --------------------------------------------------------
+
+
+def test_cli_passing_card_exits_zero(tmp_path, cache, capsys):
+    code, lines = run(tmp_path, cache, [make_study()], capsys)
+    assert code == 0
+    assert lines == ["OK: 1 file(s) checked, 0 error(s), 0 warning(s)"]
+
+
+def test_cli_reports_every_issue_of_every_file_in_one_run(tmp_path, cache, capsys):
+    add_record(cache, "90000002", title="Fictional second study.", year=2020, retracted=True)
+    first = write_card(
+        tmp_path / "drafts",
+        [
+            make_study(year=2000, n_patients=51),  # C3 + C6
+            make_study(
+                "90000002",
+                title="Fictional other title.",
+                year=2020,
+                case_definition_quote="Not in it.",
+                n_patients=None,
+                n_controls=None,
+            ),  # C2 + C4 + C5
+            make_study("90000003"),  # C1
+        ],
+        slug="fictional-one",
+    )
+    second = write_card(tmp_path / "drafts", [make_study(id="doi:10.9999/fictional.0002")], slug="fictional-two")
+    code = citations.main(["check", str(first), str(second), "--cache-dir", str(cache)])
+    lines = capsys.readouterr().out.splitlines()
+    assert code == 1
+    found = sorted(line.split(": ")[2].split(" ")[0] for line in lines[:-1])
+    assert found == ["C1", "C2", "C3", "C4", "C5", "C6", "C7"]
+    assert lines[-1] == "FAILED: 2 file(s) checked, 6 error(s), 1 warning(s)"
+    for line in lines[:-1]:
+        assert line.startswith(("drafts", str(tmp_path))) or "fictional-" in line  # file named on every line
+
+
+def test_cli_checks_a_directory_and_skips_the_change_log(tmp_path, cache, capsys):
+    write_card(tmp_path / "drafts", [make_study()])
+    (tmp_path / "drafts" / "changelog.yaml").write_text("- not: a card\n", encoding="utf-8")
+    assert citations.main(["check", str(tmp_path / "drafts"), "--cache-dir", str(cache)]) == 0
+    assert capsys.readouterr().out.strip() == "OK: 1 file(s) checked, 0 error(s), 0 warning(s)"
+
+
+def test_cli_default_paths_are_cards_and_drafts(tmp_path, cache, capsys, monkeypatch):
+    write_card(tmp_path / "cards", [make_study()], slug="fictional-a")
+    write_card(tmp_path / "drafts", [make_study(year=1999)], slug="fictional-b")
+    monkeypatch.chdir(tmp_path)
+    assert citations.main(["check", "--cache-dir", str(cache)]) == 1
+    out = capsys.readouterr().out
+    assert "fictional-b.yaml" in out and "2 file(s) checked" in out
+
+
+def test_cli_a_card_that_does_not_load_is_an_error_not_a_crash(tmp_path, cache, capsys):
+    broken = tmp_path / "drafts" / "fictional-broken.yaml"
+    broken.parent.mkdir()
+    broken.write_text("slug: fictional-broken\nname: [unclosed\n", encoding="utf-8")
+    invalid = tmp_path / "drafts" / "fictional-invalid.yaml"
+    invalid.write_text("slug: fictional-invalid\n", encoding="utf-8")
+    good = write_card(tmp_path / "drafts", [make_study(year=1999)], slug="fictional-good")
+    code = citations.main(
+        ["check", str(broken), str(invalid), str(good), str(tmp_path / "nope.yaml"), "--cache-dir", str(cache)]
+    )
+    out = capsys.readouterr().out
+    assert code == 1
+    assert out.count("LOAD ERROR") >= 3
+    assert "fictional-broken.yaml" in out and "fictional-invalid.yaml" in out and "nope.yaml" in out
+    assert "C3 ERROR" in out, "the loadable card is still checked in the same run"
+
+
+def test_cli_cache_dir_defaults_to_data_cache():
+    assert Path("data/cache") == citations.DEFAULT_CACHE_ROOT
+
+
+# --- offline -----------------------------------------------------------------
+
+
+def test_the_check_never_builds_an_http_client_or_makes_a_request(tmp_path, cache, capsys, monkeypatch):
+    def boom(*args, **kwargs):
+        raise AssertionError("the citation check must not touch the network")
+
+    monkeypatch.setattr(httpx.Client, "__init__", boom)
+    monkeypatch.setattr(httpx.Client, "send", boom)
+    monkeypatch.setattr(httpx, "get", boom)
+    monkeypatch.setattr(pubmed.PubMedClient, "__init__", boom)
+    monkeypatch.setattr(europepmc.EuropePmcClient, "__init__", boom)
+
+    add_fulltext(cache)
+    studies = [
+        make_study(),  # all checks, nothing to fetch
+        make_study("90000002", id="pmid:90000002"),  # missing record: reported, not fetched
+        make_study(case_definition_source="fulltext", case_definition_quote=FULLTEXT_ONLY_SENTENCE, id=f"pmid:{PMID}"),
+    ]
+    studies[2]["id"] = "pmid:90000003"  # a different id: no lookup cached, full text is not fetched
+    code, lines = run(tmp_path, cache, studies, capsys)
+    assert code == 1
+    assert issue_lines(lines, "C1")
+
+
+# --- plain text of a full-text article -----------------------------------------
+
+
+def test_article_text_joins_blocks_with_a_space_but_not_inline_markup():
+    xml = (
+        "<article><front><article-title>Fictional title</article-title></front><body>"
+        "<p>CO<sub>2</sub> was <italic>not</italic> measured.</p><p>Second paragraph.</p>"
+        "<p>Cited<xref>1</xref>.</p></body><back><ref-list><ref>Fictional 12345</ref></ref-list></back></article>"
+    )
+    assert europepmc.article_text(xml) == ("Fictional title CO2 was not measured. Second paragraph. Cited1.")

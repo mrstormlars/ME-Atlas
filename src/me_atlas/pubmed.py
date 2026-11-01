@@ -5,10 +5,12 @@ Command line::
     uv run python -m me_atlas.pubmed fetch --since 2026-01-01 [--until 2026-10-31] [--refresh]
     uv run python -m me_atlas.pubmed fetch --weekly      # last 14 days by entry date
     uv run python -m me_atlas.pubmed fetch --backfill    # the whole literature, no lower date
+    uv run python -m me_atlas.pubmed fetch --ids 12345678 23456789 [--refresh]   # exactly these records
 
-Every run searches PubMed with the query in ``config/pubmed_query.txt``, also asks which hits are
-retracted, downloads the records not yet cached into ``data/cache/pubmed/<pmid>.xml`` and writes a
-manifest to ``data/cache/runs/<timestamp>.json``. See ``docs/fetch.md``.
+Every run except ``--ids`` searches PubMed with the query in ``config/pubmed_query.txt``, also asks which
+hits are retracted, downloads the records not yet cached into ``data/cache/pubmed/<pmid>.xml`` and writes
+a manifest to ``data/cache/runs/<timestamp>.json``. ``--ids`` downloads only the given PMIDs (no search,
+no retraction query), so a card can cite a paper the search query does not find. See ``docs/fetch.md``.
 
 Environment (or ``.env``): ``CONTACT_EMAIL`` (required, sent to NCBI) and ``NCBI_API_KEY`` (optional,
 raises the rate limit from 3 to 10 requests per second).
@@ -506,9 +508,70 @@ def run_fetch(
     return manifest, cache.write_manifest(manifest, timestamp)
 
 
+def run_fetch_ids(
+    client: PubMedClient,
+    pmids: Sequence[str],
+    cache: RawCache,
+    *,
+    refresh: bool = False,
+    now: Callable[[], dt.datetime] = lambda: dt.datetime.now(dt.UTC),
+) -> tuple[dict[str, object], Path]:
+    """Download exactly these PMIDs (cached ones are skipped unless ``refresh``) and write the manifest.
+
+    No search and no retraction query: the ids come from a person, for example a paper a card cites that
+    the search query does not find.
+    """
+    started = now()
+    requested = list(dict.fromkeys(pmids))
+    already_cached = {p for p in requested if cache.has(p)}
+    to_fetch = set(requested) if refresh else set(requested) - already_cached
+
+    fetched: set[str] = set()
+    unparsable: list[str] = []
+    for article in client.fetch_articles(_pmid_sort(to_fetch)):
+        pmid = _text(article.find("MedlineCitation/PMID"))
+        if not pmid.isdigit() or pmid not in to_fetch:
+            continue
+        cache.write(pmid, article)
+        fetched.add(pmid)
+        try:
+            parse_article(article)
+        except ParseError:
+            unparsable.append(pmid)
+    missing = to_fetch - fetched
+
+    manifest: dict[str, object] = {
+        "timestamp": started.isoformat(),
+        "mode": "ids",
+        "ids": requested,
+        "refresh": refresh,
+        "counts": {
+            "requested": len(to_fetch),
+            "fetched": len(fetched),
+            "new": len(fetched - already_cached),
+            "skipped_cached": len(set(requested) - to_fetch),
+            "missing": len(missing),
+            "unparsable": len(unparsable),
+        },
+        "new_pmids": _pmid_sort(fetched - already_cached),
+        "missing_pmids": _pmid_sort(missing),
+        "unparsable_pmids": _pmid_sort(unparsable),
+        "warnings": [],
+    }
+    timestamp = started.astimezone(dt.UTC).strftime("%Y%m%dT%H%M%SZ")
+    return manifest, cache.write_manifest(manifest, timestamp)
+
+
 # ---------------------------------------------------------------------------
 # Command line
 # ---------------------------------------------------------------------------
+
+
+def _pmid_arg(text: str) -> str:
+    value = text.removeprefix("pmid:")
+    if not value.isdigit():
+        raise argparse.ArgumentTypeError(f"not a PMID (digits, optionally 'pmid:' first): {text!r}")
+    return value
 
 
 def _date(text: str) -> dt.date:
@@ -521,11 +584,18 @@ def _date(text: str) -> dt.date:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m me_atlas.pubmed", description="PubMed fetch tools.")
     sub = parser.add_subparsers(dest="command", required=True)
-    fetch = sub.add_parser("fetch", help="search PubMed, cache new records, write a run manifest")
+    fetch = sub.add_parser("fetch", help="search PubMed (or fetch given ids), cache new records, write a run manifest")
     mode = fetch.add_mutually_exclusive_group(required=True)
     mode.add_argument("--since", type=_date, metavar="YYYY-MM-DD", help="fetch records entered on or after this date")
     mode.add_argument("--weekly", action="store_true", help=f"shorthand for the last {WEEKLY_DAYS} days")
     mode.add_argument("--backfill", action="store_true", help="fetch the whole literature (no lower date)")
+    mode.add_argument(
+        "--ids",
+        nargs="+",
+        type=_pmid_arg,
+        metavar="PMID",
+        help="fetch exactly these records (no search, no retraction query)",
+    )
     fetch.add_argument(
         "--until", type=_date, metavar="YYYY-MM-DD", help="with --since: last entry date (default today)"
     )
@@ -561,6 +631,9 @@ def main(
             file=sys.stderr,
         )
         return 2
+
+    if args.ids:
+        return _main_ids(args, email, env, transport, clock, sleep, now)
 
     today = today or dt.date.today()
     if args.weekly:
@@ -599,6 +672,35 @@ def main(
             print(f"warning: {key}: {', '.join(manifest[key])}", file=sys.stderr)  # type: ignore[arg-type]
     for warning in manifest["warnings"]:  # type: ignore[attr-defined]
         print(f"warning: PubMed says {warning}", file=sys.stderr)
+    print(f"manifest: {path}")
+    return 0
+
+
+def _main_ids(
+    args: argparse.Namespace,
+    email: str,
+    env: Mapping[str, str],
+    transport: httpx.BaseTransport | None,
+    clock: Callable[[], float],
+    sleep: Callable[[float], None],
+    now: Callable[[], dt.datetime],
+) -> int:
+    client = PubMedClient(
+        email, (env.get("NCBI_API_KEY") or "").strip() or None, transport=transport, clock=clock, sleep=sleep
+    )
+    try:
+        manifest, path = run_fetch_ids(client, args.ids, RawCache(args.cache_dir), refresh=args.refresh, now=now)
+    except PubMedError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        client.close()
+    counts = manifest["counts"]
+    assert isinstance(counts, dict)
+    print(f"fetched {counts['fetched']} ({counts['new']} new), skipped {counts['skipped_cached']} cached")
+    for key in ("missing_pmids", "unparsable_pmids"):
+        if manifest[key]:
+            print(f"warning: {key}: {', '.join(manifest[key])}", file=sys.stderr)  # type: ignore[arg-type]
     print(f"manifest: {path}")
     return 0
 

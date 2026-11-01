@@ -16,7 +16,10 @@ uv run python -m me_atlas.pubmed fetch --backfill            # the whole literat
 uv run python -m me_atlas.pubmed fetch --weekly              # records entered in the last 14 days
 uv run python -m me_atlas.pubmed fetch --since 2026-01-01 [--until 2026-06-30]
 uv run python -m me_atlas.pubmed fetch --weekly --refresh    # download again even if cached
+uv run python -m me_atlas.pubmed fetch --ids 12345678 23456789   # exactly these records
 ```
+
+`--ids` takes one or more PMIDs (digits, or `pmid:<digits>`) and cannot be combined with `--since`, `--weekly`, `--backfill` or `--until`. It downloads exactly those records by EFetch, skipping any already cached unless `--refresh` is given. It runs **no search and no retraction query**, and does not read the query file. Use it for a paper a card cites that the search query does not find (for example a long COVID paper that does not mention ME/CFS), and to fix an error from the citation check (`docs/citation-check.md`). The manifest records `mode: "ids"` and the `ids` asked for, with counts and `new_pmids`, `missing_pmids` and `unparsable_pmids`.
 
 Dates are PubMed *entry dates* (the day a record entered PubMed), not publication dates. Weekly runs overlap by a week on purpose: a missed week is caught, and cached records are skipped.
 

@@ -207,6 +207,17 @@ def get_fulltext(client: EuropePmcClient, cache: EuropePmcCache, pmid: str, *, r
     return FullText(lookup, xml_path, requests)
 
 
+def read_cached_lookup(cache: EuropePmcCache, pmid: str) -> Lookup | None:
+    """The cached lookup for a PMID, or None if none is cached. Never makes a request.
+
+    Raises EuropePmcError if the cached file cannot be read.
+    """
+    path = cache.lookup_path(pmid)
+    if not path.is_file():
+        return None
+    return parse_lookup(pmid, path.read_bytes())
+
+
 # ---------------------------------------------------------------------------
 # Full text parsing and the case-definition finder
 # ---------------------------------------------------------------------------
@@ -228,6 +239,64 @@ def _parse_article(content: bytes | str) -> ET.Element:
 
 def _text(elem: ET.Element | None) -> str:
     return " ".join("".join(elem.itertext()).split()) if elem is not None else ""
+
+
+# Markup that runs on inside a line of text: no space is put between it and the text around it.
+_INLINE_TAGS = frozenset(
+    {
+        "italic",
+        "bold",
+        "sup",
+        "sub",
+        "sc",
+        "underline",
+        "monospace",
+        "roman",
+        "sans-serif",
+        "overline",
+        "strike",
+        "xref",
+        "ext-link",
+        "uri",
+        "named-content",
+        "styled-content",
+        "inline-formula",
+        "email",
+        "i",
+        "b",
+        "em",
+        "strong",
+        "tt",
+    }
+)
+
+
+def _flow_text(elem: ET.Element, out: list[str]) -> None:
+    if elem.tag == "ref-list":
+        return
+    block = elem.tag not in _INLINE_TAGS
+    if block:
+        out.append(" ")
+    if elem.text:
+        out.append(elem.text)
+    for child in elem:
+        _flow_text(child, out)
+        if child.tail:
+            out.append(child.tail)
+    if block:
+        out.append(" ")
+
+
+def article_text(xml: bytes | str) -> str:
+    """The plain text of a JATS full-text article (front matter and body), whitespace collapsed.
+
+    Block elements (paragraphs, titles, table cells) are separated by a space; inline markup such as
+    ``<italic>`` or ``<sub>`` is not, so "CO<sub>2</sub>" reads "CO2". The reference list is left out.
+    """
+    root = _parse_article(xml)
+    out: list[str] = []
+    _flow_text(root, out)
+    return " ".join("".join(out).split())
 
 
 _METHODS_TITLE_RE = re.compile(
