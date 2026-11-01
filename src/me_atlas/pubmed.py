@@ -498,6 +498,7 @@ def run_fetch(
             "unparsable": len(unparsable),
         },
         "new_pmids": _pmid_sort(new_pmids),
+        "window_pmids": _pmid_sort(window_pmids),
         "retracted_pmids": _pmid_sort(retracted_pmids),
         "newly_flagged_retracted_pmids": _pmid_sort(newly_flagged),
         "missing_pmids": _pmid_sort(missing),

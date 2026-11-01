@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture. The article and every sentence are invented for tests. -->
+<article article-type="research-article">
+  <front><article-meta><title-group><article-title>Fictional replication of widget signalling in a larger cohort.</article-title></title-group></article-meta></front>
+  <body>
+    <sec sec-type="methods">
+      <title>Methods</title>
+      <p>All fictional participants met the Fukuda criteria. Controls were matched for age.</p>
+    </sec>
+    <sec sec-type="results">
+      <title>Results</title>
+      <p>FULLTEXT-TAIL-MARKER widget signalling was lower in patients.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref><mixed-citation>REFERENCE-LIST-MARKER Fictional reference.</mixed-citation></ref>
+    </ref-list>
+  </back>
+</article>

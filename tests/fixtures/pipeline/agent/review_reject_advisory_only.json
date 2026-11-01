@@ -1,0 +1,12 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "verdict": "reject",
+  "findings": [
+    {
+      "operation": null,
+      "severity": "advisory",
+      "problem": "Wording preference only."
+    }
+  ]
+}

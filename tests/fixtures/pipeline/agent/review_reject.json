@@ -1,0 +1,13 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "verdict": "reject",
+  "findings": [
+    {
+      "operation": 1,
+      "severity": "must_fix",
+      "problem": "The paragraph says the finding was repeated, but the sources do not show a separate cohort.",
+      "fix": "Say that a second study found the same."
+    }
+  ]
+}

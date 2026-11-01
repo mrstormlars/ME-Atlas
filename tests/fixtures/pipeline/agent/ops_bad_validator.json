@@ -1,0 +1,19 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "operations": [
+    {
+      "op": "propose",
+      "target": "level",
+      "value": 5,
+      "reason": [
+        {
+          "text": "A fictional claim.",
+          "sources": [
+            "pmid:90000100"
+          ]
+        }
+      ]
+    }
+  ]
+}

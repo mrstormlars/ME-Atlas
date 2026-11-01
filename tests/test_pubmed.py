@@ -635,6 +635,7 @@ def test_manifest_contents(tmp_path):
         "unparsable": 0,
     }
     assert m["new_pmids"] == ["90000001", "90000002", "90000003", "90000006"]
+    assert m["window_pmids"] and m["window_pmids"] == sorted(m["window_pmids"], key=int)
     assert m["retracted_pmids"] == ["90000006"]
     assert m["missing_pmids"] == [] and m["unparsable_pmids"] == [] and m["warnings"] == []
 

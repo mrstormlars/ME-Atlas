@@ -1,0 +1,76 @@
+# FICTIONAL fixture for the pipeline tests. Every study, id and result below is invented.
+slug: fictional-pipeline-card
+name: Fictional widget signalling hypothesis
+core_claim:
+  text: >-
+    The fictional hypothesis proposes that widget signalling is lower in patients
+    than in controls.
+  sources: [pmid:90000100]
+level: 2
+level_reason:
+  text: >-
+    A fictional controlled study that met the Canadian Consensus Criteria found lower widget
+    signalling in 20 patients than in 20 controls.
+  sources: [pmid:90000100]
+contested:
+  rungs: [2]
+  reason:
+    - text: A fictional study of 100 patients found no difference in widget signalling.
+      sources: [pmid:90000104]
+    # a comment between two paragraphs
+    - text: >-
+        The fictional study of 100 patients used the Fukuda criteria, which are accepted at every
+        rung.
+      sources: [pmid:90000104]
+badges:
+  diagnostic_marker:
+    value: false
+    reason: null
+  explains_pem:
+    value: false
+    # a comment inside a badge
+    reason:
+      - text: The fictional controlled study did not measure post-exertional malaise.
+        sources: [pmid:90000100]
+subgroups: []
+working_on_it: []
+early_signals:
+  - text: A fictional small study reported a related change, not yet replicated.
+    sources: [pmid:90000100]
+studies:
+  # --- supports ---
+  - id: pmid:90000100
+    title: Fictional controlled study of widget signalling.
+    year: 2020
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: Participants met the Canadian Consensus Criteria.
+    design: controlled
+    n_patients: 20
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Fictional Group, Fictional University
+    finding: A study of n=20 patients and 20 controls found lower widget signalling in patients.
+  # --- contradicts ---
+  - id: pmid:90000104
+    title: Fictional larger study with no difference.
+    year: 2021
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: Participants met the Fukuda criteria.
+    design: controlled
+    n_patients: 100
+    n_controls: 100
+    measures_pem: false
+    preregistered: null
+    role: contradicts
+    direction: no_difference
+    finding: A study of n=100 patients and 100 controls found no difference in widget signalling.
+last_checked:
+  date: 2026-10-01
+  by: ai_pair

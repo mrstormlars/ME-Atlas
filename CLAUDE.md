@@ -47,7 +47,7 @@ uv run ruff format .         # format
 - Python 3.12+, managed with `uv`. Prefer the standard library and existing deps; a new dependency is justified in the commit message.
 - **Tests never touch the network or an LLM.** Mock HTTP and model calls; use recorded responses in `tests/fixtures/`.
 - **External APIs:** respect rate limits (NCBI: 3 req/s, 10 with an API key), send a contact email, cache raw responses in `data/cache/`.
-- **LLM calls go through one module** with model ids and token budgets in config — never inline in pipeline logic. Every LLM output that ends up in a draft keeps the source id it was derived from.
+- **AI steps run as Claude Code subagents** defined in `.claude/agents/`, with the model in each agent's frontmatter and the prompt in the repo — never inline in pipeline logic. Every AI output that ends up in a draft keeps the source id it was derived from. No direct API calls (no `anthropic` calls, no API key) while the project runs on the subscription; Python does the rest as `me_atlas.pipeline` subcommands.
 - **Secrets** live in `.env` (see `.env.example`), never in code or git.
 - **Simple over clever:** v1 is a static site with no database, no accounts, no money handling.
 - **Diff scope:** change what the task needs, nothing "while I was in there".
