@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Rulings from the first two draft cards
+
+- Comparable quality uses the number of patients in the measurement that bears on the finding, not the whole study. Why: stricter and more honest when only part of a study measured the outcome. Added to spec section 3.
+- A rung that rests on more than one study is contested when a study of comparable quality contradicts any study the rung needs. Why: the rubric compared single studies only. Added to spec section 3.
+- Early signals come only from studies with a confirmed recognised case definition. Why: the inclusion rule says that without one we cannot tell whether the patients had ME/CFS. Added to spec section 4.
+- NK card: the Miami group (20520837) counts as independent of the 39-patient Australian study (27099524) for level 3; their author lists and cohorts are separate, and the indirect co-authorship link is stated on the card. The ADCC study (33777500) stays background, since it measures a different kind of NK killing.
+- Neuroinflammation card: a diagnosis "consistent with the Canadian Consensus Criteria, confirmed by two clinicians" (41834684) counts as CCC; the verbatim quote is shown on the card.
+- Proposed levels accepted as draft levels: reduced NK cell function level 3, contested at rung 3; neuroinflammation level 2, not contested. Both stay in `drafts/` until publication.
+
 ## 2026-10-31 — Card format v2, Holmes 1988, Europe PMC on demand
 
 - Card format v2 (rule V13 added): `case_definition` gains `unverified` (not yet checked) and `Holmes1988`; `none` now means the source was checked and states no case definition. New study fields `case_definition_source` (abstract, fulltext or null) and `case_definition_quote` (the verbatim sentence), `direction` (lower, higher, no_difference, mixed, not_applicable; required for every role) and optional `group` (research group label). `unverified` cannot support or contradict, like `none`. Why: the first two draft cards could not say "not checked yet", which way a background study points, or which group did a study. Reference: `docs/card-format.md`. Plan: `docs/plan-fulltext-and-format-v2.md`.
