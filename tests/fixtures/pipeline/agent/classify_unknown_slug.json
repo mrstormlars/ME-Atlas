@@ -1,0 +1,20 @@
+{
+  "papers": [
+    {
+      "pmid": "90000101",
+      "cards": [
+        "no-such-card"
+      ],
+      "article_type": "original",
+      "new_hypothesis": null,
+      "reason": "x"
+    },
+    {
+      "pmid": "90000102",
+      "cards": [],
+      "article_type": "review",
+      "new_hypothesis": null,
+      "reason": "x"
+    }
+  ]
+}

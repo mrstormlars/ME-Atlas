@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture. The paper, its journal and every sentence are invented for tests. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000100</PMID>
+      <Article PubModel="Print">
+        <Journal><JournalIssue CitedMedium="Print"><PubDate><Year>2020</Year></PubDate></JournalIssue><Title>Fictional Journal of Widget Research</Title></Journal>
+        <ArticleTitle>Fictional controlled study of widget signalling.</ArticleTitle>
+        <Abstract><AbstractText>Participants met the Canadian Consensus Criteria. 20 patients and 20 controls were compared.</AbstractText></Abstract>
+        <PublicationTypeList><PublicationType>Journal Article</PublicationType></PublicationTypeList>
+      </Article>
+    </MedlineCitation>
+    <PubmedData><History><PubMedPubDate PubStatus="entrez"><Year>2020</Year><Month>5</Month><Day>1</Day></PubMedPubDate></History></PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

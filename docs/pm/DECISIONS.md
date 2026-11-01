@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Weekly pipeline: AI as Claude Code subagents
+
+- AI steps (classify, draft, review) run as Claude Code subagents on the founder's subscription, started by `/ukentlig`. Model choice lives in each agent's frontmatter in `.claude/agents/` (`paper-classifier`: haiku, `card-drafter`: sonnet, `card-reviewer`: opus), prompts are files in the repo. No direct API calls, no API key, while the project runs on the subscription. This replaces the CLAUDE.md rule "LLM calls go through one module with model ids and token budgets in config"; every AI output still keeps its source ids. Why: the founder runs the pipeline in a session he already pays for; the review step stays on a different model from the drafter (spec section 6, step 4).
+- The drafter writes operations (`add_study`, `add_paragraph`, `replace_paragraph`, `propose`), not whole cards. Code validates and applies them as text splices, so lines the drafter did not name stay byte-identical. `propose` (level, contested mark, badge) is always tier 2: it reaches a draft only as a proposal in the weekly pull request, marked for the founder. Why: CLAUDE.md rule 2.
+- The weekly list is a pull request on branch `pipeline/<date>`; the founder approves by merging. Nothing is published and the calibration period continues. The pipeline updates existing cards only; a paper that suggests a new hypothesis is listed in the report and no card is drafted.
+- The mechanical checks gate review: citation errors already on the card are reported as pre-existing and do not block a new paper. Two rounds at most, then the parking lot. `pr --no-pr` stops after the local commit (no push). Reference: `docs/pipeline.md`. Plan: `docs/plan-weekly-pipeline.md`. Lessons from the first five cards: `docs/drafting-checklist.md`.
+
 ## 2026-11-01 — Cards four and five (autoimmunity; gut microbiome)
 
 - Autoimmunity (autoantibodies and B cells): draft level 3, not contested. The 151-patient placebo-controlled CCC rituximab trial (pmid:30934066), larger and stricter than the 30-patient trial (pmid:22039471) that met rung 4 as written, settles rung 4: it is not reached. General reading of spec section 3 "a larger study settles it": when a larger study of the same or stricter case definition with a control group contradicts the only study on a rung, the rung is not reached rather than contested. Rung 3 rests on Azcue 2026 (beta-2 antibodies only, same commercial test). Germain 2025 (pmid:40141440) may contest rungs 2-3 once its full text is cached and verified; to be decided then.

@@ -1,0 +1,18 @@
+{
+  "papers": [
+    {
+      "pmid": "90000101",
+      "cards": "fictional-pipeline-card",
+      "article_type": "paper",
+      "new_hypothesis": null,
+      "reason": "x"
+    },
+    {
+      "pmid": "90000102",
+      "cards": [],
+      "article_type": "other",
+      "new_hypothesis": null,
+      "reason": "x"
+    }
+  ]
+}

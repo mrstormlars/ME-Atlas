@@ -1,0 +1,12 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "verdict": "accept",
+  "findings": [
+    {
+      "operation": 0,
+      "severity": "advisory",
+      "problem": "The sentence could be shorter."
+    }
+  ]
+}

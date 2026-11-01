@@ -1,0 +1,13 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "verdict": "accept",
+  "findings": [
+    {
+      "operation": 0,
+      "severity": "must_fix",
+      "problem": "The finding text contains a TODO note.",
+      "fix": "Remove it."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "operations": [
+    {
+      "op": "add_study",
+      "study": {
+        "id": "pmid:90000101",
+        "title": "Fictional replication of widget signalling in a larger cohort.",
+        "year": 2026,
+        "cohort": "me_cfs",
+        "case_definition": "Fukuda",
+        "case_definition_source": "abstract",
+        "case_definition_quote": "Participants met the Fukuda criteria.",
+        "design": "controlled",
+        "n_patients": 60,
+        "n_controls": 55,
+        "measures_pem": false,
+        "preregistered": null,
+        "role": "supports",
+        "direction": "lower",
+        "finding": "A study of n=60 patients and 55 controls found lower widget signalling in patients."
+      }
+    },
+    {
+      "op": "add_paragraph",
+      "field": "level_reason",
+      "text": "A second fictional controlled study of 60 patients and 55 controls, using the Fukuda criteria, also found lower widget signalling.",
+      "sources": [
+        "pmid:90000101"
+      ]
+    }
+  ]
+}

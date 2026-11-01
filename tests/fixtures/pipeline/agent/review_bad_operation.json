@@ -1,0 +1,13 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "verdict": "reject",
+  "findings": [
+    {
+      "operation": 7,
+      "severity": "must_fix",
+      "problem": "x",
+      "fix": "y"
+    }
+  ]
+}

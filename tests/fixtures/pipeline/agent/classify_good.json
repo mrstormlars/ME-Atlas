@@ -1,0 +1,22 @@
+{
+  "papers": [
+    {
+      "pmid": "90000101",
+      "cards": [
+        "fictional-pipeline-card"
+      ],
+      "article_type": "original",
+      "new_hypothesis": null,
+      "reason": "A fictional controlled study of widget signalling."
+    },
+    {
+      "pmid": "90000102",
+      "cards": [
+        "fictional-pipeline-card"
+      ],
+      "article_type": "review",
+      "new_hypothesis": "A fictional gizmo pathway hypothesis",
+      "reason": "A fictional review; it also mentions a gizmo pathway."
+    }
+  ]
+}

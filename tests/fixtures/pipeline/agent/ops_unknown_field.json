@@ -1,0 +1,14 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "operations": [
+    {
+      "op": "add_paragraph",
+      "field": "level",
+      "text": "x",
+      "sources": [
+        "pmid:90000100"
+      ]
+    }
+  ]
+}

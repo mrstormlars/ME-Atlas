@@ -52,7 +52,7 @@ Both are under `data/cache/`, which is gitignored and reproducible.
 - `data/cache/pubmed/<pmid>.xml`: the raw `<PubmedArticle>` XML for one record.
 - `data/cache/runs/<timestamp>.json` (UTC, e.g. `20261031T120000Z.json`): the manifest. This is what the next pipeline step reads.
 
-Manifest fields: `query`, `query_file`, `window` (mode, since, until; the date type is always the entry date), `retraction_query`, `refresh`, `counts` (window hits, retraction hits, requested, fetched, new, skipped as cached, missing, unparsable), `new_pmids`, `retracted_pmids` (every hit of the retraction query, on every run), `newly_flagged_retracted_pmids` (cached copies that turned out to be retracted), `missing_pmids` (asked for but not returned by PubMed), `unparsable_pmids` (cached, but could not be parsed; look at them) and `warnings`.
+Manifest fields: `query`, `query_file`, `window` (mode, since, until; the date type is always the entry date), `retraction_query`, `refresh`, `counts` (window hits, retraction hits, requested, fetched, new, skipped as cached, missing, unparsable), `new_pmids`, `window_pmids` (every hit of the window search, cached or not; the weekly pipeline selects from these), `retracted_pmids` (every hit of the retraction query, on every run), `newly_flagged_retracted_pmids` (cached copies that turned out to be retracted), `missing_pmids` (asked for but not returned by PubMed), `unparsable_pmids` (cached, but could not be parsed; look at them) and `warnings`.
 
 ## The parsed record
 

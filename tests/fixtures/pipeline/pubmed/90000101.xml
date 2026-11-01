@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture. The paper, its journal and every sentence are invented for tests. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000101</PMID>
+      <Article PubModel="Print">
+        <Journal><JournalIssue CitedMedium="Print"><PubDate><Year>2026</Year></PubDate></JournalIssue><Title>Fictional Journal of Widget Research</Title></Journal>
+        <ArticleTitle>Fictional replication of widget signalling in a larger cohort.</ArticleTitle>
+        <Abstract><AbstractText>Participants met the Fukuda criteria. A total of 60 patients and 55 controls were compared. Widget signalling was lower in patients.</AbstractText></Abstract>
+        <PublicationTypeList><PublicationType>Journal Article</PublicationType></PublicationTypeList>
+      </Article>
+    </MedlineCitation>
+    <PubmedData><History><PubMedPubDate PubStatus="entrez"><Year>2026</Year><Month>10</Month><Day>20</Day></PubMedPubDate></History></PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
