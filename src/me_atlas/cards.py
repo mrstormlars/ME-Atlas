@@ -24,22 +24,23 @@ from pathlib import Path
 from typing import Annotated, Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StringConstraints, ValidationError
+from pydantic import BaseModel, ConfigDict, Discriminator, Field, StrictInt, StringConstraints, Tag, ValidationError
 
 CHANGELOG_NAME = "changelog.yaml"
 
 # Case definitions accepted at every rung (functional spec section 3). Oxford, other, none and unverified are not.
-STRICT_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988"})
+STRICT_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "CDC_unspecified"})
 # Named definitions: a study that records one must also record where it was read and the quoted sentence (V13).
-RECOGNISED_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "Oxford"})
-# Rank for the comparable-quality rule (spec section 3): CCC, ICC and IOM 2015 above Fukuda and Holmes 1988
-# (equal), which are above Oxford. Not a rung criterion; nothing else is ranked.
+RECOGNISED_CASE_DEFINITIONS = frozenset({"CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "CDC_unspecified", "Oxford"})
+# Rank for the comparable-quality rule (spec section 3): CCC, ICC and IOM 2015 above Fukuda, Holmes 1988 and
+# "CDC criteria, version not stated" (all equal), which are above Oxford. Not a rung criterion; nothing else is ranked.
 CASE_DEFINITION_RANK = {
     "CCC": 3,
     "ICC": 3,
     "IOM2015": 3,
     "Fukuda": 2,
     "Holmes1988": 2,
+    "CDC_unspecified": 2,
     "Oxford": 1,
     "other": 0,
     "none": 0,
@@ -75,14 +76,43 @@ class SourcedText(_Model):
     sources: list[StudyId]
 
 
+def _reason_form(value: object) -> str | None:
+    """Which form a reason is written in: one sourced text (a mapping) or a list of them (paragraphs)."""
+    if isinstance(value, (dict, SourcedText)):
+        return _SINGLE_TAG
+    if isinstance(value, list):
+        return _PARAGRAPHS_TAG
+    return None
+
+
+_SINGLE_TAG = "sourced_text"
+_PARAGRAPHS_TAG = "paragraphs"
+# One sourced text, or a non-empty list of them (paragraphs, each with its own sources).
+Reason = Annotated[
+    Annotated[SourcedText, Tag(_SINGLE_TAG)]
+    | Annotated[Annotated[list[SourcedText], Field(min_length=1)], Tag(_PARAGRAPHS_TAG)],
+    Discriminator(_reason_form),
+]
+
+
+def paragraphs(reason: SourcedText | list[SourcedText]) -> list[SourcedText]:
+    """The paragraphs of a reason: a single sourced text is one paragraph."""
+    return list(reason) if isinstance(reason, list) else [reason]
+
+
+def reason_sources(reason: SourcedText | list[SourcedText] | None) -> list[str]:
+    """Every source id cited anywhere in a reason, paragraph by paragraph, in order."""
+    return [src for p in paragraphs(reason) for src in p.sources] if reason is not None else []
+
+
 class Contested(_Model):
     rungs: Annotated[list[StrictInt], Field(min_length=1)]
-    reason: SourcedText
+    reason: Reason
 
 
 class Badge(_Model):
     value: bool
-    reason: SourcedText | None
+    reason: Reason | None
 
 
 class Badges(_Model):
@@ -105,7 +135,9 @@ class Study(_Model):
     title: NonEmptyStr
     year: int
     cohort: Literal["me_cfs", "long_covid"]
-    case_definition: Literal["CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "Oxford", "other", "none", "unverified"]
+    case_definition: Literal[
+        "CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "CDC_unspecified", "Oxford", "other", "none", "unverified"
+    ]
     case_definition_source: Literal["abstract", "fulltext"] | None
     case_definition_quote: NonEmptyStr | None
     design: Literal["controlled", "uncontrolled", "intervention_controlled", "other"]
@@ -124,7 +156,7 @@ class Card(_Model):
     name: NonEmptyStr
     core_claim: SourcedText
     level: Annotated[int, Field(strict=True, ge=0, le=5)]
-    level_reason: SourcedText
+    level_reason: Reason
     contested: Contested | None
     badges: Badges
     subgroups: list[SourcedText]
@@ -189,7 +221,11 @@ def _format_loc(loc: Sequence[str | int]) -> str:
 
 
 def _schema_issues(exc: ValidationError, file: str) -> list[Issue]:
-    return [Issue("V1", file, _format_loc(err["loc"]), err["msg"]) for err in exc.errors()]
+    # The form tags of a reason are internal: paths read "level_reason[1].sources", not "level_reason.paragraphs.1...".
+    hidden = {_SINGLE_TAG, _PARAGRAPHS_TAG}
+    return [
+        Issue("V1", file, _format_loc([p for p in err["loc"] if p not in hidden]), err["msg"]) for err in exc.errors()
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -197,15 +233,24 @@ def _schema_issues(exc: ValidationError, file: str) -> list[Issue]:
 # ---------------------------------------------------------------------------
 
 
+def _paragraphs_at(path: str, reason: SourcedText | list[SourcedText]) -> Iterator[tuple[str, SourcedText]]:
+    """A single sourced text keeps its path; paragraphs get an index, so errors point at the right one."""
+    if isinstance(reason, list):
+        for i, p in enumerate(reason):
+            yield f"{path}[{i}]", p
+    else:
+        yield path, reason
+
+
 def _sourced_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
     yield "core_claim", card.core_claim
-    yield "level_reason", card.level_reason
+    yield from _paragraphs_at("level_reason", card.level_reason)
     if card.contested:
-        yield "contested.reason", card.contested.reason
+        yield from _paragraphs_at("contested.reason", card.contested.reason)
     for name in ("diagnostic_marker", "explains_pem"):
         reason = getattr(card.badges, name).reason
         if reason is not None:
-            yield f"badges.{name}.reason", reason
+            yield from _paragraphs_at(f"badges.{name}.reason", reason)
     for i, t in enumerate(card.subgroups):
         yield f"subgroups[{i}]", t
     for i, t in enumerate(card.early_signals):
@@ -247,7 +292,7 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
             if src not in by_id:
                 found.append(("V3", f"{path}.sources[{i}]", f"source '{src}' is not in this card's studies"))
         # V4
-        if not text.sources and not (path == "level_reason" and card.level == 0):
+        if not text.sources and not (path.split("[")[0] == "level_reason" and card.level == 0):
             found.append(("V4", f"{path}.sources", "needs at least one source"))
 
     # V5
@@ -257,7 +302,7 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
                 "V5",
                 "level",
                 "level 2 or higher needs a supporting controlled study "
-                "(case definition CCC, ICC, IOM2015, Fukuda or Holmes1988)",
+                "(case definition CCC, ICC, IOM2015, Fukuda, Holmes1988 or CDC_unspecified)",
             )
         )
 
@@ -270,20 +315,20 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
     # V7
     pem = card.badges.explains_pem
     if pem.value:
-        cited = [by_id[x] for x in (pem.reason.sources if pem.reason else []) if x in by_id]
+        cited = [by_id[x] for x in reason_sources(pem.reason) if x in by_id]
         if not any(_supports_level2(s) and s.measures_pem for s in cited):
             found.append(
                 (
                     "V7",
                     "badges.explains_pem",
                     "explains_pem: true needs a cited supporting study that measures PEM and is level-2-eligible "
-                    "(controlled design, CCC/ICC/IOM2015/Fukuda/Holmes1988)",
+                    "(controlled design, CCC/ICC/IOM2015/Fukuda/Holmes1988/CDC_unspecified)",
                 )
             )
 
     # V8
     if card.contested:
-        cited_ids = card.contested.reason.sources
+        cited_ids = reason_sources(card.contested.reason)
         if not any(x in by_id and by_id[x].role == "contradicts" for x in cited_ids):
             found.append(("V8", "contested.reason", "must cite at least one study with role 'contradicts'"))
         for i, rung in enumerate(card.contested.rungs):

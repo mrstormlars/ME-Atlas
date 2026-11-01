@@ -736,7 +736,7 @@ def test_v13_recognised_definition_without_source(tmp_path):
     assert paths(issues) == {"studies[0].case_definition_source"}
 
 
-@pytest.mark.parametrize("definition", ["CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "Oxford"])
+@pytest.mark.parametrize("definition", ["CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "CDC_unspecified", "Oxford"])
 def test_v13_every_recognised_definition_needs_a_quote(tmp_path, definition):
     data = base()
     study(data, "pmid:00000001")["case_definition"] = definition
@@ -849,3 +849,172 @@ def test_holmes1988_ranks_equal_to_fukuda_above_oxford_below_ccc():
     assert rank("Holmes1988") < rank("CCC") == rank("ICC") == rank("IOM2015")
     assert rank("unverified") == rank("none") == rank("other") < rank("Oxford")
     assert set(cards.CASE_DEFINITION_RANK) == set(cards.Study.model_fields["case_definition"].annotation.__args__)
+
+
+# --- "CDC criteria, version not stated" is treated like Fukuda and Holmes 1988 -----
+
+
+def test_cdc_unspecified_without_a_quote_fails_v13(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "CDC_unspecified"
+    study(data, "pmid:00000001")["case_definition_quote"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert {i.path for i in issues} == {"studies[0].case_definition_quote"}
+
+
+def test_cdc_unspecified_without_a_source_fails_v13(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "CDC_unspecified"
+    study(data, "pmid:00000001")["case_definition_source"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert {i.path for i in issues} == {"studies[0].case_definition_source"}
+
+
+def test_cdc_unspecified_with_source_and_quote_is_valid(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "CDC_unspecified"
+    study(data, "pmid:00000001")["case_definition_quote"] = "Fictional participants met the CDC criteria."
+    assert check(tmp_path, data) == []
+
+
+def test_cdc_unspecified_study_satisfies_v5_at_level_2(tmp_path):
+    data = _level_two(base())
+    for sid in ("pmid:00000001", "pmid:00000002"):
+        study(data, sid)["case_definition"] = "CDC_unspecified"
+    assert check(tmp_path, data) == []
+
+
+def test_other_definition_alone_still_fails_v5_at_level_2(tmp_path):
+    data = _level_two(base())
+    for sid in ("pmid:00000001", "pmid:00000002"):
+        study(data, sid)["case_definition"] = "other"
+        study(data, sid)["case_definition_quote"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V5"}
+
+
+def test_cdc_unspecified_study_satisfies_v7_like_fukuda(tmp_path):
+    data = base()
+    study(data, "pmid:00000002")["case_definition"] = "CDC_unspecified"
+    assert "V7" not in rules(check(tmp_path, data))
+
+
+def test_cdc_unspecified_ranks_equal_to_fukuda_and_holmes():
+    rank = cards.case_definition_rank
+    assert rank("CDC_unspecified") == rank("Fukuda") == rank("Holmes1988")
+    assert rank("Oxford") < rank("CDC_unspecified") < rank("CCC")
+    assert "CDC_unspecified" in cards.STRICT_CASE_DEFINITIONS
+    assert "CDC_unspecified" in cards.RECOGNISED_CASE_DEFINITIONS
+
+
+# --- paragraphs: level_reason, contested.reason and badges.*.reason may be lists ---------------
+
+
+def para(text: str, *sources: str) -> dict:
+    return {"text": text, "sources": list(sources)}
+
+
+def test_paragraph_list_form_validates_and_loads(tmp_path):
+    data = base()
+    data["level_reason"] = [para("First fictional paragraph.", "pmid:00000001"), para("Second.", "pmid:00000002")]
+    data["badges"]["explains_pem"]["reason"] = [para("Fictional PEM paragraph.", "pmid:00000002")]
+    data["badges"]["diagnostic_marker"]["reason"] = [para("Fictional marker paragraph.", "pmid:00000001")]
+    data["contested"]["reason"] = [para("Fictional dispute paragraph.", "pmid:00000003")]
+    assert check(tmp_path, data) == []
+    card = cards.load_card(write_card(tmp_path / "again", data))
+    assert [p.text for p in cards.paragraphs(card.level_reason)] == ["First fictional paragraph.", "Second."]
+    assert cards.reason_sources(card.level_reason) == ["pmid:00000001", "pmid:00000002"]
+
+
+def test_single_form_still_validates_and_is_one_paragraph():
+    card = cards.load_card(VALID_CARD)
+    assert len(cards.paragraphs(card.level_reason)) == 1
+    assert cards.reason_sources(None) == []
+
+
+@pytest.mark.parametrize(
+    ("where", "expected_path"),
+    [
+        (("level_reason",), "level_reason"),
+        (("contested", "reason"), "contested.reason"),
+        (("badges", "explains_pem", "reason"), "badges.explains_pem.reason"),
+    ],
+)
+def test_empty_paragraph_list_fails_v1(tmp_path, where, expected_path):
+    data = base()
+    node = data
+    for part in where[:-1]:
+        node = node[part]
+    node[where[-1]] = []
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"}
+    assert expected_path in {i.path for i in issues}
+
+
+def test_paragraph_schema_errors_name_the_paragraph(tmp_path):
+    data = base()
+    data["level_reason"] = [para("Fine.", "pmid:00000001"), {"text": "", "sources": ["pmid:00000001"]}]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"}
+    assert {i.path for i in issues} == {"level_reason[1].text"}
+
+
+def test_a_bare_string_reason_still_fails_v1(tmp_path):
+    data = base()
+    data["level_reason"] = "A bare string."
+    assert rules(check(tmp_path, data)) == {"V1"}
+
+
+def test_paragraph_without_sources_fails_v4(tmp_path):
+    data = base()
+    data["level_reason"] = [para("Sourced.", "pmid:00000001"), para("Not sourced.")]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V4"}
+    assert [i.path for i in issues] == ["level_reason[1].sources"]
+
+
+def test_unsourced_paragraphs_in_level_reason_pass_at_level_0(tmp_path):
+    data = _level_zero()
+    data["level_reason"] = [para("Fictional reasoning only."), para("More fictional reasoning.")]
+    assert check(tmp_path, data) == []
+
+
+def test_level_0_exception_does_not_cover_paragraphs_of_other_reasons(tmp_path):
+    data = _level_zero()
+    data["level_reason"] = [para("Fictional reasoning only.")]
+    data["badges"]["diagnostic_marker"] = {"value": False, "reason": [para("Unsourced.")]}
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V4"}
+    assert [i.path for i in issues] == ["badges.diagnostic_marker.reason[0].sources"]
+
+
+def test_paragraph_citing_an_unknown_id_fails_v3(tmp_path):
+    data = base()
+    data["level_reason"] = [para("Sourced.", "pmid:00000001"), para("Unknown.", "pmid:00000001", "pmid:09999999")]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V3"}
+    assert [i.path for i in issues] == ["level_reason[1].sources[1]"]
+
+
+def test_contradicting_study_only_in_the_second_paragraph_passes_v8(tmp_path):
+    data = base()
+    data["contested"]["reason"] = [para("A supporting study.", "pmid:00000001"), para("A conflict.", "pmid:00000003")]
+    assert check(tmp_path, data) == []
+
+
+def test_no_contradicting_study_in_any_paragraph_fails_v8(tmp_path):
+    data = base()
+    data["contested"]["reason"] = [para("One.", "pmid:00000001"), para("Two.", "pmid:00000002")]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V8"}
+    assert [i.path for i in issues] == ["contested.reason"]
+
+
+def test_v7_reads_the_union_of_badge_paragraphs(tmp_path):
+    data = base()
+    data["badges"]["explains_pem"]["reason"] = [para("Context.", "pmid:00000001"), para("PEM.", "pmid:00000002")]
+    assert check(tmp_path, data) == []
+    data["badges"]["explains_pem"]["reason"] = [para("Context.", "pmid:00000001")]  # no PEM study cited
+    assert rules(check(tmp_path, data)) == {"V7"}

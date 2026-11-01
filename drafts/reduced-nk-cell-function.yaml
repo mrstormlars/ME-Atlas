@@ -11,39 +11,60 @@ core_claim:
   sources: [pmid:27099524, pmid:20520837, pmid:33777500]
 level: 3
 level_reason:
-  text: >-
-    Controlled studies using the Fukuda definition, which does not require post-exertional
-    malaise, found lower NK cell killing in patients than in controls. Three come from one
-    Australian research group: one of 39 patients and 30 controls, and two of 95 and 65
-    patients, the second drawn from the first's cohort. One of 176 patients and 230 controls
-    comes from a group in Miami with no authors shared with the 39-patient study; its last
-    author co-authored the 95-patient study with the Australian group, an indirect link. The
-    card is at level 3 because an independent group found the same result in a
-    separate cohort. Against this, a study meeting the Canadian Consensus Criteria (48 patients
-    and 52 controls in the whole study; NK killing measured in 39 patients and 44 controls)
-    found no difference (see the contested note), as did a study of 21 patients and 21 controls using a CDC definition whose
-    version is not named, a multi-site study of 174 patients and 86 controls whose patients were
-    diagnosed by expert clinicians without a named case definition, and a case-control study of
-    unstated size whose abstract names no case definition. Two small studies using a CDC
-    definition whose version is not named found lower NK activity in 8 patients from one family
-    than in 8 controls, and no patient above 100 lytic units among 20 patients, without a direct
-    comparison with that study's 50 controls.
-  sources: [pmid:27099524, pmid:21619669, pmid:22571715, pmid:20520837, pmid:28694809, pmid:7983659, pmid:37013608, pmid:8985207, pmid:9683556, pmid:8148445]
+  - text: >-
+      Controlled studies using the Fukuda definition, which does not require post-exertional
+      malaise, found lower NK cell killing in patients than in controls. Three come from one
+      Australian research group: one of 39 patients and 30 controls, and two of 95 and 65
+      patients, the second drawn from the first's cohort.
+    sources: [pmid:27099524, pmid:21619669, pmid:22571715, pmid:20520837]
+  - text: >-
+      A fourth Fukuda study, of 176 patients and 230 controls, comes from a group in Miami with no
+      authors shared with the Australian group's 39-patient study; its last author co-authored the
+      95-patient study with the Australian group, an indirect link. The card is at level 3 because
+      an independent group found the same result in a separate cohort.
+    sources: [pmid:20520837, pmid:27099524, pmid:21619669]
+  - text: >-
+      Against these findings, a study meeting the Canadian Consensus Criteria (48 patients and 52
+      controls in the whole study; NK killing measured in 39 patients and 44 controls) found no
+      difference (see the contested note), as did a study of 21 patients and 21 controls using a
+      CDC definition whose version is not named, a multi-site study of 174 patients and 86
+      controls whose patients were diagnosed by expert clinicians without a named case
+      definition, and a case-control study of unstated size whose abstract names no case
+      definition.
+    sources: [pmid:28694809, pmid:7983659, pmid:37013608, pmid:8985207]
+  - text: >-
+      Two small studies using a CDC definition whose version is not named found lower NK activity
+      in 8 patients from one family than in 8 controls, and no patient above 100 lytic units among
+      20 patients, without a direct comparison with that study's 50 controls.
+    sources: [pmid:9683556, pmid:8148445]
 contested:
   rungs: [3]
   reason:
-    text: >-
-      A study meeting the Canadian Consensus Criteria (stricter than Fukuda), with 48 patients and
-      52 matched healthy controls in the whole study, measured NK killing in 39 patients and 44
-      controls in two cohorts analysed separately (24 vs 28 and 15 vs 16) and found no difference.
-      With 39 patients in that measurement, it is of comparable quality to the Australian group's
-      Fukuda studies of 39 and 65 patients, but not to its 95-patient study or to the Miami study
-      of 176 patients. Rung 3 is contested because the 39-patient study is one of the two
-      independent studies it needs; rung 2 still rests on the Miami study, which no comparable
-      study contradicts. A multi-site study of 174 patients and 86 controls also found no
-      difference, but its patients were diagnosed by expert clinicians without a named case
-      definition.
-    sources: [pmid:28694809, pmid:27099524, pmid:21619669, pmid:22571715, pmid:20520837, pmid:37013608]
+    - text: >-
+        A study meeting the Canadian Consensus Criteria (stricter than Fukuda), with 48 patients and
+        52 matched healthy controls in the whole study, measured NK killing in 39 patients and 44
+        controls in two cohorts analysed separately (24 vs 28 and 15 vs 16) and found no difference.
+      sources: [pmid:28694809]
+    - text: >-
+        With 39 patients in that measurement, the Canadian Consensus Criteria study is of comparable
+        quality to the Australian group's Fukuda studies of 39 and 65 patients, but not to its
+        95-patient study or to the Miami study of 176 patients.
+      sources: [pmid:28694809, pmid:27099524, pmid:22571715, pmid:21619669, pmid:20520837]
+    - text: >-
+        Rung 3 rests on the Australian group's 39-patient study and the Miami study as findings
+        from independent groups; it is contested because a study of comparable quality contradicts
+        the first. Rung 2 still rests on the Miami study, which no comparable study contradicts.
+      sources: [pmid:27099524, pmid:20520837, pmid:28694809]
+    - text: >-
+        A study of 21 patients and 21 matched controls using a CDC definition whose version is not
+        named, ranked equal to Fukuda, also found no difference in NK cell activity. With 21
+        patients it is of comparable quality to the Australian group's 39-patient study; its
+        abstract does not say how many patients had NK activity measured.
+      sources: [pmid:7983659, pmid:27099524]
+    - text: >-
+        A multi-site study of 174 patients and 86 controls also found no difference, but its
+        patients were diagnosed by expert clinicians without a named case definition.
+      sources: [pmid:37013608]
 badges:
   diagnostic_marker:
     value: false
@@ -58,7 +79,33 @@ badges:
       sources: [pmid:20520837, pmid:28694809, pmid:37013608, pmid:33777500]
   explains_pem:
     value: false
-    reason: null  # no study found that measures PEM directly and links it to NK cell function
+    # Checked: every abstract on this card, and the open full texts of 27099524 (PMC4821384), 20520837 (PMC2876037),
+    # 21619669 (PMC3120691), 22571715 (PMC3464733), 28694809 (PMC5483846) and 37013608 (PMC10069115), for exercise,
+    # exertion, malaise, PEM and exercise-test terms. The only hits are background text, reference titles, and
+    # PMC3464733 Table 1 ("Weakness >24 hours after exercise", 93.8% of patients, 9.5% of controls), from the
+    # participants' questionnaire ("Clinical data were collected through self-administered questionnaires").
+    reason:
+      - text: >-
+          The four Fukuda studies that support the hypothesis report no direct measure of
+          post-exertional malaise, such as an exercise test repeated on two consecutive days, in
+          their abstracts or open full texts. The 65-patient study lists, among its participants'
+          symptoms, the share reporting weakness more than 24 hours after exercise; this is a
+          self-reported symptom, not a test.
+        sources: [pmid:27099524, pmid:20520837, pmid:21619669, pmid:22571715]
+      - text: >-
+          The two small supporting studies using a CDC definition whose version is not named report
+          no direct measure of post-exertional malaise in their abstracts; no open full text was
+          available.
+        sources: [pmid:8148445, pmid:9683556]
+      - text: >-
+          The two studies with a recognised case definition that found no difference, of 48 patients
+          (NK killing measured in 39) and 21 patients, report no direct measure of post-exertional malaise in their abstracts, nor
+          does the open full text of the first.
+        sources: [pmid:28694809, pmid:7983659]
+      - text: >-
+          The studies shown for context report no direct measure of post-exertional malaise in their
+          abstracts; the multi-site study's abstract names it only as a feature of the illness.
+        sources: [pmid:37013608, pmid:8985207, pmid:33777500, pmid:16731230]
 subgroups:
   - text: >-
       Two small studies suggest lower NK cell activity may go with more severe illness: one of
@@ -154,10 +201,12 @@ studies:
     title: Decreased natural killer cell activity is associated with severity of chronic fatigue immune dysfunction syndrome.
     year: 1994
     cohort: me_cfs
-    # Abstract says "criteria established by the Centers for Disease Control and Prevention (Atlanta)".
-    # The cached record gives publication Jan 1994, before the Fukuda definition (pmid:7978722, Dec 15 1994),
-    # so "CDC" cannot mean Fukuda here. No open full text. TODO: verify which earlier CDC definition was used.
-    case_definition: other
+    # Abstract says "criteria established by the Centers for Disease Control and Prevention (Atlanta)"; the source
+    # does not name the version, so CDC_unspecified (founder ruling 2026-11-01). No open full text.
+    # Context only, not recorded as the value: the cached record gives publication Jan 1994, before the Fukuda
+    # definition (pmid:7978722, Dec 15 1994); the earlier CDC definition on record here is Holmes et al.
+    # (pmid:2829679, Mar 1988).
+    case_definition: CDC_unspecified
     case_definition_source: abstract
     case_definition_quote: "Natural killer (NK) cell activity was measured blindly in vitro with blood specimens from 50 healthy individuals and 20 patients with clinically defined chronic fatigue immune dysfunction syndrome (CFIDS) who met the criteria established by the Centers for Disease Control and Prevention (Atlanta)."
     design: controlled
@@ -175,7 +224,10 @@ studies:
     title: Dysfunction of natural killer activity in a family with chronic fatigue syndrome.
     year: 1998
     cohort: me_cfs
-    case_definition: other  # TODO: verify — abstract says "CFS case definition as recommended by the Centers for Disease Control and Prevention", version not named; no open full text
+    # Abstract says "CFS case definition as recommended by the Centers for Disease Control and Prevention"; the source
+    # does not name the version, so CDC_unspecified (founder ruling 2026-11-01). No open full text. Published Jul 1998,
+    # after both the 1988 (pmid:2829679) and 1994 (pmid:7978722) definitions, so either could be meant.
+    case_definition: CDC_unspecified
     case_definition_source: abstract
     case_definition_quote: "All 8 met criteria for the CFS case definition as recommended by the Centers for Disease Control and Prevention."
     design: controlled
@@ -219,10 +271,15 @@ studies:
     title: Chronic fatigue syndrome--a controlled cross sectional study.
     year: 1994
     cohort: me_cfs
-    # Abstract says "the Centers for Disease Control criteria for CFS".
-    # The cached record gives publication Aug 1994, before the Fukuda definition (pmid:7978722, Dec 15 1994),
-    # so "CDC" cannot mean Fukuda here. No open full text. TODO: verify which earlier CDC definition was used.
-    case_definition: other
+    # Abstract says "the Centers for Disease Control criteria for CFS"; the source does not name the version, so
+    # CDC_unspecified (founder ruling 2026-11-01). No open full text.
+    # Context only, not recorded as the value: the cached record gives publication Aug 1994, before the Fukuda
+    # definition (pmid:7978722, Dec 15 1994); the earlier CDC definition on record here is Holmes et al.
+    # (pmid:2829679, Mar 1988).
+    # Contested rule: ranks equal to Fukuda; 21 patients is at least half of the 39-patient study (pmid:27099524)
+    # but less than half of the 65, 95 and 176-patient studies. Abstract does not say whether all 21 had NK activity
+    # measured. TODO: verify the measurement n (no open full text).
+    case_definition: CDC_unspecified
     case_definition_source: abstract
     case_definition_quote: "Twenty-one patients fulfilling the Centers for Disease Control criteria for CFS were compared to 21 age and sex matched controls."
     design: controlled

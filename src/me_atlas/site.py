@@ -48,7 +48,7 @@ RUNG_NAMES = (
 RUNG_MEANINGS = (
     "An idea with a reasoned argument, but no direct patient data yet.",
     "One or more small or uncontrolled studies point towards it.",
-    "A controlled study in patients with a strict, recognised case definition supports it.",
+    "A controlled study in patients with a recognised case definition supports it.",
     "An independent group has reproduced the finding in a separate cohort.",
     "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association.",
     "Several independent lines of evidence, including experimental evidence, together meet most of the "
@@ -62,6 +62,7 @@ CASE_DEFINITION_LABELS: dict[str, tuple[str, str | None, str | None]] = {
     "IOM2015": ("IOM 2015 criteria", "IOM 2015 criteria", None),
     "Fukuda": ("Fukuda criteria", "Fukuda criteria", "no_pem"),
     "Holmes1988": ("Holmes 1988 criteria", "Holmes 1988 criteria", "no_pem"),
+    "CDC_unspecified": ("CDC criteria (version not stated)", "CDC", "no_pem"),
     "Oxford": ("Oxford criteria", "Oxford criteria", "broad"),
     "unverified": ("case definition not yet checked", None, None),
     "none": ("no case definition stated", None, None),
@@ -127,12 +128,12 @@ def split_studies(card: Card) -> dict[str, list[Study]]:
 
 def sourced_texts_in_page_order(card: Card) -> list[SourcedText]:
     """The sourced texts in the order the card page renders them; reference numbers follow this order."""
-    out = [card.core_claim, card.level_reason]
+    out = [card.core_claim, *cardlib.paragraphs(card.level_reason)]
     if card.contested:
-        out.append(card.contested.reason)
+        out += cardlib.paragraphs(card.contested.reason)
     for badge in (card.badges.diagnostic_marker, card.badges.explains_pem):
         if badge.reason is not None:
-            out.append(badge.reason)
+            out += cardlib.paragraphs(badge.reason)
     out += card.subgroups
     out += card.early_signals
     return out
@@ -337,6 +338,7 @@ def build(
         "solid_to": solid_to,
         "study_url": study_url,
         "study_anchor": study_anchor,
+        "paragraphs": cardlib.paragraphs,
         "case_labels": CASE_DEFINITION_LABELS,
         "design_labels": DESIGN_LABELS,
         "direction_labels": DIRECTION_LABELS,

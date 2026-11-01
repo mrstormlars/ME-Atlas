@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Rulings from the site review
+
+- Level 2 needs a controlled study with a **recognised** case definition (the accepted table in spec section 3), not a "strict" one. Fukuda and Holmes 1988 count, flagged "does not require PEM". Why: the spec contradicted itself (Fukuda accepted at every rung, but level 2 said "strict"); this keeps the rule the cards were graded by.
+- A study that cites "CDC criteria" without naming the version is accepted like Fukuda and Holmes 1988: flagged "does not require PEM", ranked equal to Fukuda. New card format value for it. Why: both CDC versions are accepted on the same terms, so the unnamed version is not weaker evidence than either.
+- `last_checked.by` stays `ai_pair` on both drafts for now.
+- Long sourced texts may be split into paragraphs, each with its own sources, so a reader can see which sentence rests on which study. Why: the NK level reason ended with 11 references in one block.
+- NK card: the 21-patient CDC study (pmid:7983659) that found no difference is named in the contested reason as a second comparable contradiction of the 39-patient study. Rung 2 is not contested (it rests on the Miami study); levels unchanged. Why: under the CDC ruling it ranks equal to Fukuda and 21 is at least half of 39; the abstract does not say how many patients were measured, which the card states.
+
 ## 2026-11-01 — Site layout revised at founder request
 
 - Site layout revised at founder request; ladder key under the chart; table behind a disclosure; secondary text minimum 16 px. The front page now opens with a short heading and one lead sentence, then the chart in one panel, the legend, the ladder key (rung names and meanings copied from spec section 3) and the table inside a closed "Show the chart as a table" disclosure. Calmer type: smaller headings, a 46 rem column, one compact header bar.
