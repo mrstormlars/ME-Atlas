@@ -8,15 +8,9 @@ Repository set up (structure, Claude Code roles, Python tooling). Functional spe
 
 ## Active priorities (max 3)
 
-1. Founder decisions raised by the site review (below), then the draft card text they need.
+1. Founder's choice of the next step (for example a third hypothesis card, or the weekly pipeline).
 
-## Open founder decisions (from the site review, 2026-11-01)
-
-- Spec section 3 says level 2 needs a "strict, recognised" case definition, while Fukuda is accepted at every rung and the NK draft is at level 3 on Fukuda studies. Proposed: "recognised case definition".
-- Studies citing "CDC criteria" without naming the version (three on the NK draft) render as "other definition". Proposed: a format value for it, treated like Fukuda and Holmes 1988 and flagged "does not require PEM".
-- Draft text missing: a reason for the NK "Explains PEM: no" badge; a "not contested" reason on the neuroinflammation card.
-- `last_checked.by` on both drafts says `ai_pair`, but the AI review pair is not running and the founder accepted the levels.
-- Sources per sentence: the NK level reason ends with 11 references in one block (also in the format backlog below).
+Done 2026-11-01: rulings from the site review (level 2 needs a recognised case definition; `CDC_unspecified` accepted like Fukuda; reasons may be split into paragraphs with their own sources; `last_checked.by` stays `ai_pair`). Both drafts updated: CDC studies re-labelled, long reasons split per source, NK "Explains PEM" reason added, neuroinflammation states why the PET study does not contest level 2, and pmid:7983659 named in the NK contested reason. Levels unchanged.
 
 ## Parked
 
@@ -30,4 +24,3 @@ Repository set up (structure, Claude Code roles, Python tooling). Functional spe
 - Cohort overlap between papers (matters for the independence test).
 - Which study or finding a `contradicts` study contradicts.
 - Validator check that early-signal sources have a confirmed recognised case definition.
-- Sources per sentence or clause in long sourced texts.

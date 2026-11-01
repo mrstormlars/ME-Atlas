@@ -50,7 +50,7 @@ The bar for a hypothesis shows **causal evidence**, rung 0 to 5.
 | --- | --- | --- |
 | 0 | Proposed | An idea with a reasoned argument, but no direct patient data yet. |
 | 1 | First signs | One or more small or uncontrolled studies point towards it. |
-| 2 | Backed in a defined group | A controlled study in patients with a strict, recognised case definition supports it. |
+| 2 | Backed in a defined group | A controlled study in patients with a recognised case definition supports it. |
 | 3 | Repeated by others | An independent group has reproduced the finding in a separate cohort. |
 | 4 | Tested by intervention | Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association. |
 | 5 | Causal case built | Several independent lines of evidence, including experimental evidence, together meet most of the Bradford Hill criteria, with no unresolved major contradiction. |
@@ -88,6 +88,7 @@ Quality factors applied at every rung: case definition, sample size, controls, p
 | CCC, ICC, IOM 2015 | Accepted at every rung. |
 | Fukuda | Accepted, flagged on the card as "does not require PEM". |
 | Holmes 1988 (the 1988 CDC definition) | Accepted like Fukuda: flagged on the card as "does not require PEM", ranked equal to Fukuda. |
+| CDC criteria, version not stated | Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as "does not require PEM", ranked equal to Fukuda. The card quotes the sentence that names the CDC criteria. |
 | Oxford (only) | Flagged as broad. Evidence resting only on Oxford-defined cohorts cannot raise a hypothesis above level 1. |
 | None stated, or not yet checked | Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from. |
 

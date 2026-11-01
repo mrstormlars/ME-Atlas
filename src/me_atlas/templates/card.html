@@ -47,11 +47,15 @@
 <p>{{ page.sourced(card.core_claim) }}</p>
 
 <h2>Why this level</h2>
-<p>{{ page.sourced(card.level_reason) }}</p>
+{% for item in paragraphs(card.level_reason) %}
+<p>{{ page.sourced(item) }}</p>
+{% endfor %}
 
 {% if card.contested %}
 <h2 id="contested">Contested at {{ contested_rungs(card) }}</h2>
-<p>{{ page.sourced(card.contested.reason) }}</p>
+{% for item in paragraphs(card.contested.reason) %}
+<p>{{ page.sourced(item) }}</p>
+{% endfor %}
 {% else %}
 <h2 id="contested">Not contested</h2>
 {% endif %}
@@ -61,7 +65,9 @@
   <li>
     <p><strong>Marker validated in an independent {{ gloss("cohort") }}: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</strong></p>
 {% if card.badges.diagnostic_marker.reason %}
-    <p>{{ page.sourced(card.badges.diagnostic_marker.reason) }}</p>
+{% for item in paragraphs(card.badges.diagnostic_marker.reason) %}
+    <p>{{ page.sourced(item) }}</p>
+{% endfor %}
 {% else %}
     <p class="empty">Reason not yet written.</p>
 {% endif %}
@@ -69,7 +75,9 @@
   <li>
     <p><strong>Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</strong></p>
 {% if card.badges.explains_pem.reason %}
-    <p>{{ page.sourced(card.badges.explains_pem.reason) }}</p>
+{% for item in paragraphs(card.badges.explains_pem.reason) %}
+    <p>{{ page.sourced(item) }}</p>
+{% endfor %}
 {% else %}
     <p class="empty">Reason not yet written.</p>
 {% endif %}

@@ -507,6 +507,7 @@ def test_study_shows_year_design_and_direction(proj):
     [
         ("Fukuda", "Fukuda criteria", "does not require PEM"),
         ("Holmes1988", "Holmes 1988 criteria", "does not require PEM"),
+        ("CDC_unspecified", "CDC criteria (version not stated)", "does not require PEM"),
         ("Oxford", "Oxford criteria", "broad"),
         ("unverified", "case definition not yet checked", None),
         ("none", "no case definition stated", None),
@@ -1078,6 +1079,18 @@ def test_methods_page_follows_the_spec_tables(proj):
     )
 
 
+def test_methods_page_ladder_and_case_definition_rows_match_the_spec(proj):
+    doc = page(built(proj), "methods.html")
+    ladder, cases = doc.find_all("table", "plain")[0], doc.find_all("table", "plain")[2]
+    meanings = [norm(r.find_all("td")[-1].text()) for r in ladder.find_all("tr")[1:]]
+    assert tuple(meanings) == site.RUNG_MEANINGS
+    spec_text = SPEC.read_text(encoding="utf-8")
+    spec_row = re.search(r"(?m)^\| (CDC criteria, version not stated) \| ([^|]+?) \|$", spec_text)
+    assert spec_row is not None
+    rows = {norm(r.find("th").text()): norm(r.find("td").text()) for r in cases.find_all("tr")[1:]}
+    assert rows["CDC criteria, version not stated"] == spec_row.group(2)
+
+
 # --- every page -----
 
 
@@ -1445,3 +1458,86 @@ def test_the_font_size_check_flags_small_sizes_and_unknown_units():
     assert font_sizes_below_minimum("h1 { font-size: smaller; }") == ["h1: smaller"]  # cannot be checked, so it fails
     assert font_sizes_below_minimum(".sr { font-size: 0; }") == []
     assert font_sizes_below_minimum("p { font-size: .889rem; } html { font-size: 112.5%; }") == []
+
+
+# --- paragraphs in level_reason, contested.reason and badges.*.reason -----
+
+
+def section_paragraphs(doc: Node, heading: str) -> list[Node]:
+    """The <p> elements between the h2 whose text starts with ``heading`` and the next h2."""
+    main = doc.find("main")
+    siblings = main.children
+    start = next(
+        i
+        for i, n in enumerate(siblings)
+        if isinstance(n, Node) and n.tag == "h2" and norm(n.text()).startswith(heading)
+    )
+    out = []
+    for n in siblings[start + 1 :]:
+        if isinstance(n, Node):
+            if n.tag == "h2":
+                break
+            if n.tag == "p":
+                out.append(n)
+    return out
+
+
+def ref_labels(p: Node) -> list[str]:
+    return [norm(a.text()) for a in p.find_all("a", "ref")]
+
+
+def test_paragraphs_render_as_separate_p_elements_with_their_own_references(proj):
+    data = make_card("paras", "Fictional paras", 2)
+    data["core_claim"]["sources"] = ["pmid:00000001"]
+    data["level_reason"] = [
+        {"text": "First fictional paragraph.", "sources": ["pmid:00000002"]},
+        {"text": "Second fictional paragraph.", "sources": ["pmid:00000003", "pmid:00000001"]},
+    ]
+    doc = page(built(proj, data), "hypotheses/paras.html")
+    ps = section_paragraphs(doc, "Why this level")
+    assert [norm(p.text(frozenset({"refs"}))) for p in ps] == [
+        "First fictional paragraph.",
+        "Second fictional paragraph.",
+    ]
+    # Numbering follows page order: core claim cites 00000001 -> [1], then 00000002 -> [2], 00000003 -> [3].
+    assert ref_labels(ps[0]) == ["[2]"]
+    assert ref_labels(ps[1]) == ["[1]", "[3]"]
+    hrefs = [a.get("href") for a in ps[1].find_all("a", "ref")]
+    assert hrefs == ["#study-pmid:00000001", "#study-pmid:00000003"]
+
+
+def test_paragraphs_in_contested_and_badge_reasons_render_one_p_each(proj):
+    data = make_card("paras2", "Fictional paras two", 4, contested_rungs=[4])
+    data["contested"]["reason"] = [
+        {"text": "Dispute one.", "sources": ["pmid:00000001"]},
+        {"text": "Dispute two.", "sources": ["pmid:00000003"]},
+    ]
+    data["badges"]["explains_pem"]["reason"] = [
+        {"text": "Pem one.", "sources": ["pmid:00000002"]},
+        {"text": "Pem two.", "sources": ["pmid:00000002"]},
+    ]
+    doc = page(built(proj, data), "hypotheses/paras2.html")
+    assert [norm(p.text(frozenset({"refs"}))) for p in section_paragraphs(doc, "Contested at")] == [
+        "Dispute one.",
+        "Dispute two.",
+    ]
+    badges = doc.find("ul", "badges").find_all("li")[1]
+    assert [norm(p.text(frozenset({"refs"}))) for p in badges.find_all("p")[1:]] == ["Pem one.", "Pem two."]
+
+
+def test_single_object_reason_still_renders_one_p_with_its_references(proj):
+    doc = page(built(proj, make_card("single", "Fictional single", 2)), "hypotheses/single.html")
+    ps = section_paragraphs(doc, "Why this level")
+    assert len(ps) == 1
+    assert ref_labels(ps[0]) == ["[1]", "[2]"]  # level_reason cites 00000001 and 00000002
+
+
+def test_sourced_texts_in_page_order_flattens_paragraphs():
+    data = base()
+    data["level_reason"] = [
+        {"text": "One.", "sources": ["pmid:00000001"]},
+        {"text": "Two.", "sources": ["pmid:00000002"]},
+    ]
+    card = cardlib.Card.model_validate(data)
+    texts = site.sourced_texts_in_page_order(card)
+    assert [t.text for t in texts[1:3]] == ["One.", "Two."]

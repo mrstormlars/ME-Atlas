@@ -12,25 +12,40 @@ core_claim:
   sources: [pmid:24665088, pmid:30617782]
 level: 2
 level_reason:
-  text: >-
-    A controlled diffusion MRI study of 67 patients, with a diagnosis consistent with the Canadian Consensus
-    Criteria confirmed by two clinicians, and 67 healthy controls found widespread white matter differences
-    that the authors interpret as neuroinflammation; this is the study the level rests on, and no
-    other study on this card repeats this measure. The authors call their method an indirect measure of
-    neuroinflammation, and a published correction changed their reading of one marker from cellular
-    infiltration to cell shape change or a chronic depletion of microglia.
-    Smaller imaging studies whose case definition is not yet verified point the same way: a PET study of 9
-    patients found higher binding of a marker of activated microglia or astrocytes, and an MR spectroscopy
-    study of 15 patients found higher brain temperature in several regions and a higher choline/creatine
-    ratio in the left anterior cingulate. A PET study of 9 patients diagnosed by the Fukuda criteria, using
-    the same tracer, found no statistically significant difference from 9 healthy controls. A 7 Tesla MR
-    spectroscopy study of 22 Fukuda-defined patients found lower myo-inositol, which the authors write would
-    be consistent with glial dysfunction.
-  sources: [pmid:41834684, pmid:24665088, pmid:30617782, pmid:34815320, pmid:34609538]
+  - text: >-
+      A controlled diffusion MRI study of 67 patients, with a diagnosis consistent with the Canadian Consensus
+      Criteria confirmed by two clinicians, and 67 healthy controls found widespread white matter differences
+      that the authors interpret as neuroinflammation; this is the study the level rests on, and no
+      other study on this card repeats this measure. The authors call their method an indirect measure of
+      neuroinflammation, and a published correction changed their reading of one marker from cellular
+      infiltration to cell shape change or a chronic depletion of microglia.
+    sources: [pmid:41834684]
+  - text: >-
+      Smaller imaging studies whose case definition is not yet verified point the same way: a PET study of 9
+      patients found higher binding of a marker of activated microglia or astrocytes, and an MR spectroscopy
+      study of 15 patients found higher brain temperature in several regions and a higher choline/creatine
+      ratio in the left anterior cingulate.
+    sources: [pmid:24665088, pmid:30617782]
+  - text: >-
+      A PET study of 9 patients diagnosed by the Fukuda criteria, using the same tracer as the earlier PET
+      study of 9 patients, found no statistically significant difference from 9 healthy controls.
+    sources: [pmid:34815320, pmid:24665088]
+  - text: >-
+      This Fukuda PET study does not contest level 2. It is not of comparable quality to the 67-patient
+      diffusion MRI study the level rests on: the Fukuda definition ranks below the Canadian Consensus
+      Criteria, and its 9 patients are fewer than half of 67. It also measures something different (PET
+      tracer binding, not diffusion MRI), so it does not contradict the finding the level rests on. The
+      earlier PET study, whose finding it did not repeat, does not count towards level 2, because its case
+      definition is not yet verified.
+    sources: [pmid:34815320, pmid:41834684, pmid:24665088]
+  - text: >-
+      A 7 Tesla MR spectroscopy study of 22 Fukuda-defined patients found lower myo-inositol, which the authors
+      write would be consistent with glial dysfunction.
+    sources: [pmid:34609538]
 # contested: not proposed. pmid:34815320 (Fukuda, 9 vs 9) is a failed repeat of the PET finding in pmid:24665088,
 # but the comparable-quality test needs the case definition of 24665088, which is still unverified. Against the
-# level 2 support (pmid:41834684, CCC, 67 vs 67) it is not of comparable quality: Fukuda ranks below CCC, 9 is less
-# than half of 67, and it measures a different marker. Founder accepted "not contested" on 2026-11-01; revisit if
+# level 2 support (pmid:41834684, CCC, 67 vs 67) it is not of comparable quality: Fukuda ranks below CCC and 9 is less
+# than half of 67. It also measures a different marker, so it does not contradict that finding. Founder accepted "not contested" on 2026-11-01; revisit if
 # the case definition of 24665088 is confirmed.
 contested: null
 badges:
@@ -45,10 +60,14 @@ badges:
   explains_pem:
     value: false
     reason:
-      text: >-
-        None of the abstracts, nor the three open full texts checked, reports a direct measure of
-        post-exertional malaise.
-      sources: [pmid:24665088, pmid:34815320, pmid:30617782, pmid:41834684, pmid:34609538, pmid:12598734]
+      - text: >-
+          The three studies with an open full text report no direct measure of post-exertional
+          malaise, in their abstracts or in the full texts checked.
+        sources: [pmid:34815320, pmid:41834684, pmid:34609538]
+      - text: >-
+          The other three studies report no direct measure of post-exertional malaise in their
+          abstracts; no open full text was available.
+        sources: [pmid:24665088, pmid:30617782, pmid:12598734]
 subgroups: []
 working_on_it: []
 # Empty by founder ruling (2026-11-01): early signals come only from studies with a confirmed recognised case
