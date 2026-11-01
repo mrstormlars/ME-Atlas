@@ -1,0 +1,180 @@
+# ME Atlas glossary: the only source of explanations on the site (functional spec section 5).
+# Each entry: term, optional aliases (other spellings that are marked the same way), explanation.
+# Rules: explanation at most 200 characters; terms and aliases unique (exact spelling); none of the words
+# promising, breakthrough, cure, hope, proven. Matching is whole-word and case-sensitive, so list a capitalised
+# or plural spelling as an alias when it is needed.
+# Explanations describe concepts. They say nothing about what causes ME/CFS or what any study found.
+# Status: first draft, pending a check by the card-reviewer and the founder.
+
+- term: ME/CFS
+  aliases: [CFS, CFS/ME, myalgic encephalomyelitis, chronic fatigue syndrome]
+  explanation: Myalgic encephalomyelitis / chronic fatigue syndrome. Severe fatigue that is worse after effort, with unrefreshing sleep. Older papers say CFS or ME; the names came with different case definitions.
+
+- term: long COVID
+  aliases: [Long COVID]
+  explanation: Health problems that continue or start after a COVID-19 infection and last at least three months. Some of its symptoms overlap with those of ME/CFS.
+
+- term: hypotheses
+  aliases: [hypothesis, Hypotheses, Hypothesis]
+  explanation: A hypothesis is a proposed explanation that has not been settled. Here, an idea about what causes ME/CFS.
+
+- term: evidence ladder
+  aliases: [ladder]
+  explanation: The six-step scale this site uses to show how much evidence supports a hypothesis, from "Proposed" to "Causal case built". It is a draft.
+
+- term: case definition
+  aliases: [case definitions, Case definition]
+  explanation: A written set of rules (symptoms, how long they have lasted, and illnesses that must be ruled out) used to decide who counts as having ME/CFS in a study.
+
+- term: Canadian Consensus Criteria
+  aliases: [CCC, Canada 2003 criteria]
+  explanation: A 2003 case definition for ME/CFS. It requires six months of fatigue, worsening after effort, problems with thinking and, in most cases, sleep problems and pain, plus symptoms in other body systems.
+
+- term: International Consensus Criteria
+  aliases: [ICC]
+  explanation: A 2011 case definition for myalgic encephalomyelitis. It requires a marked worsening after effort and symptoms in several body systems, and has no six-month waiting period.
+
+- term: IOM 2015 criteria
+  aliases: [IOM 2015, IOM2015]
+  explanation: A 2015 case definition from the US Institute of Medicine. It requires six months of reduced activity with fatigue, worsening after effort and unrefreshing sleep, plus thinking or standing problems.
+
+- term: Fukuda criteria
+  aliases: [Fukuda, Fukuda definition, Fukuda-defined]
+  explanation: A 1994 case definition led by the US CDC. It needs six months of unexplained, disabling fatigue and four of eight listed symptoms. Worsening after effort is one of the eight, but not required.
+
+- term: Holmes 1988 criteria
+  aliases: [Holmes 1988]
+  explanation: The first US CDC case definition for chronic fatigue syndrome (1988). It needs six months of fatigue that halves activity, plus many listed symptoms. Worsening after effort is not required.
+
+- term: Oxford criteria
+  aliases: [Oxford definition]
+  explanation: A 1991 UK case definition that requires six months of disabling fatigue and no other specific symptom. It is broad, so a group chosen this way may include people who do not have ME/CFS.
+
+- term: CDC
+  aliases: [Centers for Disease Control and Prevention]
+  explanation: The Centers for Disease Control and Prevention, the US national public health agency. Its researchers led the 1988 (Holmes) and 1994 (Fukuda) case definitions for chronic fatigue syndrome.
+
+- term: PEM
+  aliases: [post-exertional malaise]
+  explanation: Post-exertional malaise. Symptoms get worse after physical or mental effort that was manageable before. It often starts hours to a day or more later and can last days or longer.
+
+- term: cohort
+  aliases: [cohorts]
+  explanation: A group of people followed or studied together.
+
+- term: replication
+  aliases: [replicate, replicated, replicates]
+  explanation: Repeating a study, ideally by a different research group with new patients, to see whether the same result appears. A failed replication is a repeat that does not find it.
+
+- term: contested
+  aliases: [Contested]
+  explanation: Marked when a study of comparable or higher quality contradicts the finding behind a rung. The founder decides. The disputed rung is drawn hatched on the bar.
+
+- term: control group
+  aliases: [controls, healthy controls, controlled study]
+  explanation: People who are compared with the patients, usually healthy people, to see whether a difference is linked to the illness. A study with such a group is called controlled.
+
+- term: preregistered
+  aliases: [preregistration, pre-registered]
+  explanation: The plan for a study was filed publicly before it began, saying what would be measured and how it would be analysed. This makes it harder to change the question afterwards.
+
+- term: sample size
+  aliases: [sample sizes]
+  explanation: How many people were in a study. Small studies are more likely to miss a real difference, or to find one by chance.
+
+- term: peer-reviewed
+  explanation: Checked by independent experts in the field before a scientific journal publishes it.
+
+- term: Bradford Hill criteria
+  aliases: [Bradford Hill]
+  explanation: Nine considerations from 1965 for judging whether a link between two things is likely to be causal, such as strength, consistency and whether the cause comes first.
+
+- term: diagnostic marker
+  explanation: A measurable sign, such as a blood value or a scan result, that could help tell people with an illness from people without it.
+
+- term: biomarker
+  aliases: [biomarkers]
+  explanation: A measurable sign in the body, such as a blood value or a scan result. Some are tested as diagnostic markers, to tell people with an illness from people without it.
+
+- term: NK cell
+  aliases: [NK, NK cells, natural killer cell, natural killer cells, natural killer (NK) cell, natural killer (NK) cells]
+  explanation: Natural killer cell. A type of white blood cell that can kill virus-infected and abnormal cells.
+
+- term: CD8+ T cell
+  aliases: [CD8+ T cells]
+  explanation: A type of white blood cell that can recognise and kill infected cells.
+
+- term: cytotoxicity
+  aliases: [cytotoxic]
+  explanation: The ability of immune cells to damage or kill other cells. In a laboratory test it is measured by how many target cells are killed.
+
+- term: lysis
+  explanation: The breaking apart of a cell. In NK cell tests, the share of target cells broken apart shows how well the NK cells kill.
+
+- term: lytic unit
+  aliases: [lytic units]
+  explanation: A unit used in older studies to express how strongly immune cells kill target cells in a laboratory test. More lytic units mean stronger killing.
+
+- term: ROC analysis
+  explanation: A way of testing how well a measurement separates two groups, such as patients and controls.
+
+- term: cytokines
+  aliases: [cytokine]
+  explanation: Small proteins that cells of the immune system use to send signals to each other.
+
+- term: neuroinflammation
+  explanation: Inflammation in the brain or spinal cord, involving its own immune cells, such as microglia, and sometimes immune cells from the blood. In living people it is mostly measured indirectly.
+
+- term: microglia
+  aliases: [microglial]
+  explanation: Immune cells that live in the brain and spinal cord and respond to injury and infection.
+
+- term: astrocytes
+  aliases: [astrocyte]
+  explanation: Star-shaped support cells in the brain and spinal cord that help nerve cells work and respond to injury.
+
+- term: glial cells
+  aliases: [glial, glia]
+  explanation: The support cells of the brain and spinal cord, including microglia and astrocytes.
+
+- term: gliosis
+  explanation: A change in brain tissue in which glial cells increase in number or size, often after injury.
+
+- term: diffusion MRI
+  aliases: [diffusion-based]
+  explanation: A type of brain scan that follows how water moves through tissue, which gives clues about its structure.
+
+- term: white matter
+  explanation: The part of the brain made up of bundles of nerve fibres that connect different brain areas.
+
+- term: PET
+  aliases: [PET scan, positron emission tomography]
+  explanation: Positron emission tomography. A scan that follows a tiny amount of radioactive tracer in the body to show where it collects.
+
+- term: tracer
+  aliases: [PET tracer, radiotracer]
+  explanation: A substance given in a tiny amount that attaches to something of interest, so a scan can show where it is. Most scan tracers are radioactive; others are simply taken up by tissue.
+
+- term: binding potential
+  explanation: A scan measure of how much tracer is attached to its target in an area, compared with tracer that is not attached. Higher values usually mean more of the target.
+
+- term: MR spectroscopy
+  aliases: [magnetic resonance spectroscopy]
+  explanation: A scan that measures the amounts of certain chemicals in a part of the body, such as the brain, without surgery.
+
+- term: 7 Tesla
+  aliases: [Tesla]
+  explanation: Tesla is the unit of strength of a scanner's magnet. A 7 Tesla scanner is stronger than the 1.5 or 3 Tesla scanners used in most hospitals.
+
+- term: myo-inositol
+  explanation: A small molecule found in the brain and measured by MR spectroscopy. Some researchers read its level as a sign of the state of glial cells.
+
+- term: choline/creatine ratio
+  explanation: The relative amount of two brain chemicals, measured by MR spectroscopy. Choline is linked to cell membranes and creatine to energy use.
+
+- term: choline-containing compounds
+  explanation: Chemicals that contain choline, seen together as one signal in MR spectroscopy. They are linked to the building and breakdown of cell membranes.
+
+- term: anterior cingulate
+  aliases: [anterior cingulate cortex]
+  explanation: The front part of the cingulate cortex, a fold of the brain's outer layer on the inner side of each half of the brain. It is involved in attention, emotion and pain.

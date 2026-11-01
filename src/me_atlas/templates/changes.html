@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>What changed</h1>
+<p>Every published change to a hypothesis, newest first. Each entry says which tier decided it; see <a href="methods.html#tiers">Methods</a>.</p>
+{% for e in entries %}
+<article class="change">
+  <h2><time datetime="{{ e.date.isoformat() }}">{{ e.date.isoformat() }}</time> · <a href="hypotheses/{{ e.card }}.html">{{ names[e.card] }}</a></h2>
+  <p>{{ e.change }}</p>
+  <p><strong>Reason:</strong> {{ e.reason }}</p>
+  <p>Sources: {% for s in e.sources %}<a href="{{ study_url(s) }}" rel="noopener noreferrer">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %} · Tier {{ e.tier }}</p>
+</article>
+{% else %}
+<p class="empty">No changes have been published yet.</p>
+{% endfor %}
+{% endblock %}

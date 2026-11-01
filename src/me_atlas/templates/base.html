@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% if drafts %}
+<meta name="robots" content="noindex">
+{% endif %}
+<title>{{ title }} – ME Atlas</title>
+<link rel="stylesheet" href="{{ root }}static/site.css">
+<script src="{{ root }}static/site.js"></script>
+</head>
+<body>
+{% if drafts %}
+<div class="banner" role="note">{{ draft_banner }}</div>
+{% endif %}
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="inner">
+    <p class="brand"><a href="{{ root }}index.html">ME Atlas</a></p>
+    <nav aria-label="Main">
+      <ul>
+{% for href, label in [("index.html", "Front page"), ("changes.html", "What changed"), ("methods.html", "Methods"), ("glossary.html", "Glossary")] %}
+        <li><a href="{{ root }}{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a></li>
+{% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{% block content %}{% endblock %}
+
+{% if page.used %}
+  <div class="tips">
+    <h2 class="tips-title">Explanations of the marked words on this page</h2>
+{% for entry in page.used %}
+    <div id="tip-{{ slugs[entry.term] }}" role="tooltip" class="tip">{{ entry.explanation }}</div>
+{% endfor %}
+  </div>
+{% endif %}
+</main>
+
+<footer>
+  <div class="inner">
+    <p>No medical or research expert has reviewed this content yet. It is checked by AI tools and by the founder. See <a href="{{ root }}methods.html">Methods</a>.</p>
+    <p>This site describes the state of the evidence. It gives no treatment advice. Built {{ built }}.</p>
+  </div>
+</footer>
+</body>
+</html>

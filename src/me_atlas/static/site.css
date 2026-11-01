@@ -1,0 +1,238 @@
+/* ME Atlas. One file, no external resources. Colour tokens are checked for contrast by tests/test_site.py.
+   Spacing scale: .25 / .5 / 1 / 1.5 / 2 / 3 rem. Type: body 1rem (18px); secondary text .889rem (16px), never smaller (checked by tests). */
+:root {
+  --ink: #1b2430;
+  --muted: #44505e;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --line: #c9ccd1;
+  --fill: #1f5f8b;
+  --empty: #e6e9ee;
+  --link: #14507a;
+  --warn: #7a2e00;
+  --warnbg: #fff1d6;
+  --focus: #8a4300;
+  --tip-bg: #10202e;
+  --tip-ink: #ffffff;
+}
+* { box-sizing: border-box; }
+html { font-size: 112.5%; } /* 18px base */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:focus-visible, .term:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.banner {
+  background: var(--warnbg);
+  color: var(--warn);
+  border-bottom: 2px solid var(--warn);
+  padding: .35rem .75rem;
+  font-size: .889rem;
+  font-weight: 700;
+  text-align: center;
+}
+.skip { position: absolute; left: -999rem; top: 0; background: var(--card); padding: .75rem 1rem; z-index: 20; }
+.skip:focus { left: 0; }
+
+/* header: one compact bar, brand left, navigation right */
+.inner { max-width: 46rem; margin: 0 auto; padding: 0 1rem; }
+.site-header { background: var(--card); border-bottom: 1px solid var(--line); }
+.site-header .inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 1.5rem; }
+.brand { margin: 0; font-size: 1.1rem; font-weight: 700; }
+.brand a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--ink); }
+.site-header nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.site-header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 .1rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.site-header nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.site-header nav a[aria-current="page"] { font-weight: 600; border-bottom-color: var(--fill); }
+
+main { position: relative; max-width: 46rem; margin: 0 auto; padding: 2rem 1rem 1rem; }
+h1 { font-size: 1.6rem; font-weight: 600; line-height: 1.25; margin: 0 0 1rem; }
+h2 { font-size: 1.2rem; font-weight: 600; line-height: 1.3; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; margin: 1.5rem 0 .5rem; }
+h4 { font-size: 1rem; font-weight: 600; line-height: 1.35; margin: 0 0 .25rem; }
+p { margin: .5rem 0; max-width: 42rem; }
+.lead { margin: 0 0 1.5rem; }
+.empty { color: var(--muted); }
+.crumb { margin: 0 0 .5rem; font-size: .889rem; }
+.crumb a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* secondary text: keys, labels, study details, notes. Never below .889rem (16px). */
+.small, .tag { font-size: .889rem; color: var(--muted); }
+.small strong { color: var(--ink); }
+.note { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.5rem; margin: 1rem 0; }
+
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1.5rem; margin: 1rem 0; }
+
+/* chips: short labels next to a name */
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .25rem 0 0; align-items: center; }
+.chip { display: inline-block; border: 1px solid var(--line); border-radius: .6rem; padding: .05rem .6rem; font-size: .889rem; line-height: 1.4; background: var(--card); }
+.badge { border-color: var(--ink); font-weight: 600; }
+.chip.off, .chip.tag { color: var(--muted); }
+.chip-contested { border-color: var(--warn); background: var(--warnbg); color: var(--warn); font-weight: 600; }
+
+/* bar, axis, legend */
+.bar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
+.seg { height: 1.4rem; background: var(--empty); border: 1px solid var(--line); }
+.seg.on { background: var(--fill); border-color: var(--fill); }
+.seg.contested {
+  background: repeating-linear-gradient(45deg, var(--fill) 0 4px, var(--card) 4px 8px);
+  border: 2px solid var(--fill);
+}
+.axis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; font-size: .889rem; line-height: 1.3; color: var(--muted); text-align: center; margin: 0 0 .15rem; }
+.legend { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; align-items: center; margin: .75rem 0 0; font-size: .889rem; color: var(--muted); }
+.sw { display: inline-block; width: 2rem; height: 1rem; vertical-align: middle; margin-right: .3rem; border: 1px solid var(--fill); }
+.sw.on { background: var(--fill); }
+.sw.h { background: repeating-linear-gradient(45deg, var(--fill) 0 4px, var(--card) 4px 8px); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* front page chart: one panel, one header row of rung numbers, rows separated by thin lines */
+.chart { padding-top: 1rem; padding-bottom: 1rem; }
+.chart-head, .row { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: .25rem 1.5rem; }
+.chart-head { align-items: end; padding-bottom: .4rem; border-bottom: 1px solid var(--line); font-size: .889rem; color: var(--muted); }
+.chart-head .axis { margin: 0; }
+.row { align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; padding-bottom: .25rem; }
+.row h3 { margin: 0; }
+.row h3 a { display: inline-flex; align-items: center; min-height: 44px; }
+.row-bar { padding-top: .55rem; }
+.row .axis { display: none; }
+.readout { font-size: .889rem; margin: .4rem 0 0; }
+
+/* the ladder key */
+.key h2 { margin-top: 2rem; }
+ol.ladder { list-style: none; padding: 0; margin: .5rem 0 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; font-size: .889rem; }
+ol.ladder li { padding: .6rem 0; border-top: 1px solid var(--line); }
+.rung-no { display: inline-block; min-width: 1.2rem; }
+.rung-name { font-weight: 600; }
+.rung-meaning { display: block; color: var(--muted); }
+
+/* the table behind a disclosure, styled as a link */
+.table-toggle { margin: 1.5rem 0; }
+.table-toggle summary {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 44px;
+  list-style: none;
+  cursor: pointer;
+  font-size: .889rem;
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.table-toggle summary::-webkit-details-marker { display: none; }
+.table-toggle summary::before { content: "\25B8"; display: inline-block; text-decoration: none; }
+.table-toggle[open] summary::before { content: "\25BE"; }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; background: var(--card); margin: .5rem 0; font-size: .889rem; }
+caption { text-align: left; font-weight: 600; padding: .4rem 0; }
+th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+thead th { background: var(--empty); }
+
+/* card page */
+.level-line { margin: .75rem 0 .25rem; }
+.badges { list-style: none; padding: 0; margin: .5rem 0; }
+.badges li { margin: 1rem 0; }
+.badges li p { margin: .25rem 0; }
+.studies { padding-top: 1rem; padding-bottom: 1rem; }
+.study { padding: 1rem 0; border-top: 1px solid var(--line); }
+.study:first-child { border-top: 0; padding-top: .25rem; }
+.study:last-child { padding-bottom: .25rem; }
+.study:target { outline: 3px solid var(--focus); outline-offset: 4px; }
+.study-meta { color: var(--muted); font-size: .889rem; margin: 0 0 .5rem; }
+.flag { display: inline-block; border: 1px solid var(--ink); border-radius: 4px; padding: 0 .4rem; font-size: .889rem; margin-left: .25rem; }
+.finding { margin: 0; }
+.refs { white-space: normal; }
+a.ref { position: relative; display: inline-block; margin: 0 .35rem; font-size: .889rem; }
+.last-checked { color: var(--muted); font-size: .889rem; margin-top: 2.5rem; }
+
+/* change log and glossary: lists with thin dividers */
+.change { padding: 1rem 0; border-top: 1px solid var(--line); }
+.change:last-of-type { border-bottom: 1px solid var(--line); }
+.change h2 { margin: 0 0 .25rem; font-size: 1.05rem; }
+.change p { margin: .25rem 0; }
+dl.glossary { margin: 1rem 0; }
+dl.glossary .entry { padding: 1rem 0; border-top: 1px solid var(--line); }
+dl.glossary .entry:last-child { border-bottom: 1px solid var(--line); }
+dl.glossary dt { font-weight: 600; font-size: 1.05rem; }
+dl.glossary dd { margin: 0; }
+dl.glossary dd p { margin: .25rem 0; }
+
+/* glossary terms: dotted underline, a focusable button described by its explanation */
+.term-wrap { white-space: normal; }
+.term {
+  position: relative;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 2px dotted var(--fill);
+  padding: 0;
+  margin: 0;
+  cursor: help;
+}
+/* The 44 px tap area is invisible and does not change the line height. */
+.term::before,
+a.ref::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+.tip {
+  background: var(--tip-bg);
+  color: var(--tip-ink);
+  padding: .6rem .8rem;
+  border-radius: 6px;
+  font-size: .95rem;
+  line-height: 1.4;
+  margin: .5rem 0;
+}
+/* Without JavaScript the explanations are listed at the end of the page. With it, they open next to the word. */
+.js .tips-title { display: none; }
+.js .tip { position: absolute; z-index: 10; max-width: min(19rem, calc(100% - 1rem)); margin: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, .3); }
+.js .tip[hidden] { display: none; }
+
+footer { margin-top: 3rem; padding-bottom: 2rem; color: var(--muted); font-size: .889rem; }
+footer .inner { padding-top: 1rem; }
+footer .inner::before { content: ""; display: block; border-top: 1px solid var(--line); margin-bottom: 1rem; }
+footer p { margin: .25rem 0; }
+
+/* narrow screens: tables become stacked lists so nothing scrolls sideways; the chart stacks name above bar */
+@media (max-width: 40em) {
+  h1 { font-size: 1.4rem; }
+  main { padding-top: 1.5rem; }
+  .panel { padding: 1rem; }
+  .chart-head { display: none; }
+  .chart .row:first-of-type { padding-top: 0; }
+  .row { display: block; }
+  .row-bar { padding-top: 0; }
+  .row .axis { display: grid; }
+  ol.ladder { grid-template-columns: 1fr; }
+  table, thead, tbody, tr, th, td, caption { display: block; width: 100%; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  tr { border: 1px solid var(--line); margin: 0 0 .75rem; }
+  th, td { border: 0; border-bottom: 1px solid var(--line); }
+  td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

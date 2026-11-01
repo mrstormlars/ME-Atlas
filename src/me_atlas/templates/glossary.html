@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Glossary</h1>
+<p>Plain-language explanations of the technical words marked with a dotted underline on the other pages. The text is the same as the explanation shown there. Only words that a page uses are listed.</p>
+{% if terms %}
+<dl class="glossary">
+{% for e in terms %}
+  <div class="entry" id="term-{{ slugs[e.term] }}">
+    <dt>{{ e.term }}</dt>
+    <dd>
+      <p>{{ e.explanation }}</p>
+{% if e.aliases %}
+      <p class="tag">Also written: {{ e.aliases|join(", ") }}</p>
+{% endif %}
+      <p class="tag">Used on:
+{% for title, href in uses[e.term] %}
+        <a href="{{ root }}{{ href }}#use-{{ slugs[e.term] }}">{{ title }}</a>{% if not loop.last %}, {% endif %}
+{% endfor %}
+      </p>
+    </dd>
+  </div>
+{% endfor %}
+</dl>
+{% else %}
+<p class="empty">No page uses a glossary term yet.</p>
+{% endif %}
+{% endblock %}

@@ -23,6 +23,7 @@ Credibility is the product. The readers are patients and carers with little ener
 ```
 cards/        Approved evidence cards, one file per hypothesis — the published source of truth
 drafts/       AI-drafted card updates awaiting human review
+content/      Site text kept apart from code: the shared glossary (content/glossary.yaml)
 data/cache/   Raw API responses (gitignored, reproducible)
 src/me_atlas/ Python package: fetch → classify → extract → draft → site
 tests/        Offline tests; fixtures/ holds recorded API responses
