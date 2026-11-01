@@ -1,0 +1,483 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-01. Nothing here is published.
+# Founder rulings 2026-11-01: level 3, not contested; both badges no (see "FOUNDER RULINGS" below).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml.
+# Studies with no open full text and no case definition in the abstract (26399744, 12851722) stay `unverified` and
+# role `context`. 40141440 has an open full text (PMC11943395) but Europe PMC returned HTTP 500 on three attempts on
+# 2026-11-01; it stays `unverified` until the full text can be cached. Card-reviewer reports a sentence naming the
+# Canadian Consensus Criteria in a non-cached copy; it is not used here, and the founder has been told that the study
+# may contest rungs 2 and 3 once it is cached and verified.
+# 26399744's "25 patients treated within the KTS-2 rituximab trial" (abstract): the full text of 26132314 (PMC4488509)
+# names its open-label, one-armed maintenance study "KTS-2-2010" (NCT01156909), so the source trial is 26132314,
+# which had no placebo group. 26132314 is not on the card (see "Not on the card").
+#
+# FOUNDER RULINGS (2026-11-01)
+#   1. Level 3, contested: null. The larger, stricter placebo-controlled trial (30934066: 151 patients, CCC, no effect
+#      on any end point) settles rung 4 against the 30-patient Fukuda trial (22039471), so rung 4 is not reached.
+#      22039471 stays `supports` and 30934066 `contradicts`, so both sides stay visible.
+#   2. Rung 2 rests on 34589868 (Bynke, CCC). Rung 3 rests on 42082542 (Azcue, Fukuda) as an independent group (no
+#      shared authors) that found the same result for beta2 only. Limits stated on the card: the same commercial test
+#      (CellTrend), beta2 raised in only one of Bynke's two cohorts, M3/M4 not repeated.
+#   3. Long COVID label kept (39759581, cohort long_covid; "modified CCC" counted as CCC).
+#   4. Both badges no.
+#   Open: 40141440 (Cornell, 172 participants, no differences incl. beta-adrenergic receptors) is `unverified`. If it
+#   is cached and verified as CCC, it may contest rungs 2 and 3 (vs 34589868, 48 patients: half = 24; vs 42082542,
+#   59 patients: half = 29.5), and the founder will decide then. TODO: verify its case definition and patient n.
+#   Scope: receptor autoantibodies, B cells and antibody- or B-cell-targeting interventions; IVIG trials and other
+#   autoantibody panels left out (see below).
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, not studies: 24068616, 29635081, 32247028, 29772554, 40543860, 34140635.
+#   - Same trial programme or cohort as a study on the card: 26132314 (Fluge 2015, open-label rituximab maintenance,
+#     uncontrolled, included placebo patients from 22039471); 39042627 (six-year follow-up of 30934066 and of the
+#     open-label CycloME trial; between-arm p-values only in figures, not in text read); 27536947 and 30502905
+#     (laboratory substudies of the rituximab trials); 37835071 (interim report of the cohort in 39759581).
+#   - Uncontrolled interventions with other or unclear targets: 32411717 (cyclophosphamide, open-label); 32751659
+#     (Berlin, repeat immunoadsorption in 5 patients from 29543914, uncontrolled); 40507564
+#     (plasmapheresis and IVIG pilot); 39653042, 40934950 (apheresis, post-COVID); case reports 19566965, 39660109,
+#     42158223, 34869451.
+#   - IVIG controlled trials (2146875, 2239975, 9236484): immunoglobulin replacement/modulation, not removal of
+#     autoantibodies or B cells; not read in full. Founder may want them on this card or a separate immune card.
+#   - Correlation-only studies within patients (no control group on the antibody measure): 34441971, 32609410,
+#     37243973, 33889154; single case 37129123.
+#   - Other autoantibody targets: 36830795, 35736644 (Russian ELI-test panels, small), 38187396 (classifier, no external
+#     validation), 41050647, 41704659 (IgG effects on endothelial cells; relevant, not read in full).
+slug: autoimmunity-autoantibodies-b-cells
+name: Autoimmunity (autoantibodies and B cells)
+core_claim:
+  text: >-
+    The hypothesis proposes that in at least some people with ME/CFS the immune system attacks the
+    body itself: B cells make antibodies (autoantibodies) that bind to the body's own receptors,
+    such as the adrenergic and muscarinic receptors that respond to the nervous system's signalling
+    chemicals, and these antibodies contribute to the symptoms.
+  sources: [pmid:26399744, pmid:22039471, pmid:34589868]
+level: 3
+level_reason:
+  - text: >-
+      A study from Sweden measured antibodies against adrenergic and muscarinic receptors in the
+      blood of two cohorts of 24 patients, all meeting the Canadian Consensus Criteria, the
+      International Consensus Criteria and the 2015 IOM criteria, and of 24 matched healthy
+      controls. Antibodies against the M3 and M4 muscarinic receptors were higher than controls' in
+      both cohorts; antibodies against the β1 and β2 adrenergic receptors were higher in the
+      Gothenburg cohort only, whose samples the paper reports were collected earlier and analysed
+      separately. Levels did not correlate with disease severity. The card is at level 2 because of
+      this study.
+    sources: [pmid:34589868]
+  - text: >-
+      An earlier study from Berlin of 268 patients and 108 healthy controls, whose case definition is
+      not yet verified, found higher antibodies against the β2, M3 and M4 receptors in patients. It
+      shares two authors with the Swedish study. A study from Japan of 60 patients and 30 healthy
+      controls, also with the case definition not yet verified, found higher antibodies against the
+      M1 muscarinic receptor, using a different test.
+    sources: [pmid:26399744, pmid:12851722]
+  - text: >-
+      A study from Spain, with no authors shared with the Swedish study, measured the same kinds of
+      antibodies with a test from the same supplier in 59 patients meeting the Fukuda definition,
+      which does not require post-exertional malaise, and 36 healthy controls. Antibodies against
+      the β2 adrenergic receptor were higher in patients than in controls. Average antibody levels
+      against the M1 to M4 muscarinic receptors and the α1 and β1 adrenergic receptors did not
+      differ; the share of people above the test maker's cut-off differed for M3 and M4, and for M4
+      more controls than patients were above it. The paper's table reports identical values in
+      patients and controls for M3 and M4. The groups were not matched for sex (analyses were
+      adjusted for age and sex), the authors describe the study as exploratory, and they made no
+      correction for multiple comparisons. The card is at level 3 because this independent group
+      found higher β2 receptor antibodies in a separate cohort. The repeat is partial: both studies
+      used a test from the same supplier, the Swedish study found higher β2 antibodies in only one of
+      its two cohorts, and the higher M3 and M4 antibodies were not repeated.
+    sources: [pmid:42082542, pmid:34589868]
+  - text: >-
+      In a randomised, double-blind trial from Bergen, Norway, 30 patients meeting the Fukuda
+      definition received rituximab, a drug that removes B cells, or saline placebo, 15 in each group.
+      At the trial's predefined primary end point, fatigue three months after treatment, there was no
+      difference between groups. Lasting improvement in self-reported fatigue was seen in 10 of 15
+      patients given rituximab and 2 of 15 given placebo (p = 0.003), and fatigue scores differed
+      between groups 6 to 10 months after treatment.
+    sources: [pmid:22039471]
+  - text: >-
+      A larger randomised, double-blind trial by the same Bergen group, of 151 patients meeting the
+      Canadian Consensus Criteria (77 given rituximab, 74 placebo; infusions over 12 months, follow-up
+      24 months), found no
+      difference between groups in response rate (26.0% with rituximab, 35.1% with placebo), in
+      fatigue over 24 months or in any secondary end point. With a stricter case definition, a
+      placebo group and more patients (151 against 30), this trial settles the question against the
+      30-patient trial, so the card does not reach level 4: in the larger controlled trial, removing
+      B cells did not change the outcome.
+    sources: [pmid:30934066, pmid:22039471]
+  - text: >-
+      Rituximab removes B cells rather than the antibodies themselves. The authors of the 30-patient
+      trial suggest that improvement starting months after B cells were removed may fit a gradual
+      clearing of autoantibodies.
+    sources: [pmid:22039471, pmid:30934066]
+  - text: >-
+      In 25 patients from an open-label Bergen rituximab maintenance trial without a placebo group,
+      analysed in the Berlin study, raised β2 and M4 receptor antibodies fell, among patients who
+      achieved prolonged B-cell depletion, in those who responded but not in those who did not.
+    sources: [pmid:26399744]
+  - text: >-
+      Treatments that lower antibody levels have otherwise been studied without a placebo group, so
+      they cannot count towards level 4. In 10 patients with raised β2 receptor antibodies,
+      immunoadsorption (filtering antibodies out of the blood) lowered these antibodies in 9, and 7
+      reported improvement during treatment. In 20 patients whose ME/CFS followed COVID-19, the same
+      Berlin group reported a mean rise of 17.75 points in a physical function score after
+      immunoadsorption. In 10 women given daratumumab, a drug that targets antibody-producing plasma
+      cells, 6 improved markedly and 4 had no significant change.
+    sources: [pmid:29543914, pmid:39759581, pmid:40703261]
+  - text: >-
+      Against the antibody findings, a study from Cornell of 172 participants, whose case definition
+      is not yet verified, measured antibodies against more than 6,000 human proteins and found no
+      significant differences between patients and controls, including against β-adrenergic
+      receptors.
+    sources: [pmid:40141440]
+  - text: >-
+      Studies of B cells themselves are mixed. One study of 33 patients and 24 healthy controls found
+      more naive and transitional B cells and fewer plasmablasts in patients; a second, sharing an
+      author, found no difference in the classical B-cell groups in 38 patients and 32 controls, but
+      differences in a B-cell surface marker (CD24) and in one memory B-cell group.
+    sources: [pmid:23480187, pmid:26646713]
+# Contested: null (founder ruling 2026-11-01). Rung 4 settled by 30934066, so not reached. Rungs 2 and 3: no
+# contradicting study of comparable quality (42082542's null M3/M4 result is Fukuda, below 34589868's CCC; the
+# Stockholm cohort's null beta2 result is part of the rung-2 study, 24 patients < 29.5; 40141440 unverified, V9).
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        Receptor antibody levels have been compared with controls in separate cohorts, with mixed
+        results, but no study on this card tests a cut-off from one cohort in a second, independent
+        patient group. In the Swedish study, 25% of controls and 79% and 91% of patients had at least
+        one receptor antibody above the controls' 90th percentile. In the Spanish study, 27.5% of
+        patients and 13.9% of controls had β2 receptor antibodies above the test maker's cut-off, and
+        18.6% of patients against 58.3% of controls had M4 receptor antibodies above it. The
+        Cornell study found no differences.
+      sources: [pmid:34589868, pmid:42082542, pmid:40141440]
+  explains_pem:
+    # Checked: every abstract on the card, and the full texts of 22039471, 34589868, 42082542, 34589837, 29543914,
+    # 39759581 and 40703261 as far as read for methods and results. No study uses an exertion challenge. 22039471's
+    # fatigue score includes self-reported "Post-exertional exhaustion" (full text), not a direct measure. 39759581
+    # reports PEM improvement on questionnaires, uncontrolled.
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly, for example with an exertion
+        challenge. The Swedish study found no correlation between antibody levels and disease
+        severity. A study without a control group reported less post-exertional malaise on
+        questionnaires after immunoadsorption.
+      sources: [pmid:34589868, pmid:39759581]
+subgroups:
+  - text: >-
+      The antibody and immunoadsorption studies focus on patients whose illness began after an
+      infection and who have raised β2 receptor antibodies. In the Swedish study, 79% and 91% of
+      patients in its two cohorts, and 25% of controls, had at least one raised receptor antibody.
+    sources: [pmid:29543914, pmid:39759581, pmid:34589868]
+# From pmid:38454468 (trial protocol, Trials 2024): "Registration Number: NCT05710770 . Registered on 02 February
+# 2023." Authors at Charité-Universitätsmedizin Berlin (last author Prüss H, Department of Neurology and Experimental
+# Neurology). 66 patients to be randomised 2:1 to immunoadsorption or sham apheresis. Results not in the cache.
+working_on_it:
+  - name: "IA-PACS-CFS: sham-controlled trial of immunoadsorption (NCT05710770), Charité-Universitätsmedizin Berlin"
+    url: https://clinicaltrials.gov/study/NCT05710770
+early_signals:
+  - text: >-
+      A study of n=10 patients and 6 healthy controls found that antibody (IgG) fractions from
+      controls activated the β2 adrenergic receptor in cell-based tests, while fractions from the 5
+      patients with high β2 receptor antibodies did not. Not yet repeated.
+    sources: [pmid:34589837]
+  - text: >-
+      A study of n=10 women, without a control group, found that after the plasma-cell-targeting drug
+      daratumumab 6 had marked improvement in physical function, alongside a fall in IgG levels, and
+      4 had no significant change. Not yet repeated.
+    sources: [pmid:40703261]
+studies:
+  # --- supports ---
+  - id: pmid:34589868
+    title: Autoantibodies to beta-adrenergic and muscarinic cholinergic receptors in Myalgic Encephalomyelitis (ME) patients - A validation study in plasma and cerebrospinal fluid from two Swedish cohorts.
+    year: 2020
+    cohort: me_cfs
+    # Full text (PMC8474431): patients met CCC, ICC and IOM 2015; recorded as CCC (ranks equal to ICC and IOM 2015).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "All patients at both Stora Skondal and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM criteria (Carruthers et al., 2003; Carruthers et al., 2011; Institute of Medicine, 2015)."
+    design: controlled
+    # Two cohorts of 24 (Stockholm SK, Gothenburg GC) vs 24 plasma controls. Table 2 (Bonferroni-corrected): SK higher
+    # M3, M4; GC higher beta1, beta2, M3, M4. GC samples "were collected earlier in time than the SK-samples and where
+    # therefore shipped and analysed separately"; GC tested for beta1-3, M3, M4 only. CSF: 24 GC patients vs 6 controls,
+    # no significant differences.
+    n_patients: 48
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    # Overlaps: Heidecke H and Scheibenbogen C also on 26399744 (and Scheibenbogen on 34589837, 29543914, 39759581).
+    group: Bergquist J, Uppsala University, Sweden (Heidecke H and Scheibenbogen C also on 26399744)
+    finding: >-
+      A study of n=48 patients in two cohorts of 24 and 24 matched healthy controls found higher
+      antibodies against the M3 and M4 muscarinic receptors in both cohorts and against the β1 and β2
+      adrenergic receptors in one, with no correlation between antibody levels and disease severity.
+  - id: pmid:42082542
+    title: Involvement of autoantibodies against G protein-coupled receptors in post-COVID condition and Chronic Fatigue Syndrome.
+    year: 2026
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "For the ME/CFS group, patients had to meet the diagnostic criteria proposed by Fukuda28, which require severe fatigue disproportionate to activity lasting at least six months accompanied by at least four of the following symptoms: memory impairment, post-exertional malaise, unrefreshing sleep, arthralgia, headaches, sore throat, and/or lymph node tenderness."
+    design: controlled
+    # Abstract: "ME/CFS patients had significantly higher β2 adrenergic AAb titers than PCC and HCs (F₂,₁₈₆ = 3.15,
+    # p = 0.046)" (three-group ANCOVA adjusted for age and sex). Full text (PMC13334049), Table 1: beta2 ME/CFS 22.92
+    # (SD 43.62) vs HCs 9.57 (8.52); the row lists two post-hoc values (0.031, 0.033) under three comparison columns,
+    # so the post-hoc ME/CFS vs controls p-value is not unambiguous in Table 1. TODO: verify.
+    # Table 1 gives identical ME/CFS and HC values for M3 and M4 (9.28 (8.77) and 11.75 (17.69) in both rows), which
+    # looks like a table error; the card says the table reports identical values. TODO: verify.
+    # Text: "No significant differences were found in the titers of AAbs against muscarinic AChR or AdR α1 and β1
+    # between groups." Above the manufacturer's cut-off: beta2 27.5% ME/CFS vs 13.9% HCs; M3 18.6% vs 16.7% (chi-square
+    # ME/CFS vs HCs p = 0.006); M4 18.6% vs 58.3% (p <= 0.001). Female 94.9% ME/CFS vs 77.8% HCs (chi-square 7.77).
+    # "This study was designed as an exploratory analysis"; "no correction for multiple comparisons was applied".
+    # ELISA from CellTrend GmbH. Also 96 post-COVID condition patients (not ME/CFS-defined), not used on the card.
+    n_patients: 59
+    n_controls: 36
+    measures_pem: false
+    preregistered: null
+    role: supports  # partial replication of 34589868 (beta2 only); no shared authors with 34589868
+    direction: mixed  # beta2 higher; muscarinic, alpha1 and beta1 no difference
+    group: Gómez-Esteban JC, Biobizkaia Health Research Institute, Barakaldo, Spain
+    finding: >-
+      A study of n=59 patients, 96 people with post-COVID condition and 36 healthy controls found
+      higher antibodies against the β2 adrenergic receptor in ME/CFS than in controls; average levels
+      against the M1 to M4 muscarinic and the α1 and β1 adrenergic receptors did not differ, while the
+      share above the test maker's cut-off differed for M3 and M4, with more controls than patients
+      above it for M4.
+  - id: pmid:22039471
+    title: Benefit from B-lymphocyte depletion using the anti-CD20 antibody rituximab in chronic fatigue syndrome. A double-blind and placebo-controlled study.
+    year: 2011
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM". Full text (PMC3198463) adds: retrospectively, 2 placebo patients did not
+    # meet the Canadian criteria.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "The inclusion criteria were: a diagnosis of CFS by a neurologist, according to the Fukuda 1994 criteria [5], age 18–65 years, and written informed consent."
+    design: intervention_controlled
+    # Full text: "there was no difference in self-reported Fatigue scores between the Rituximab and Placebo groups at the
+    # predetermined primary endpoint three months after intervention"; authors: "a main reason why the primary end-point
+    # is negative" was an erroneous estimate of the response time frame. n_controls = placebo arm.
+    n_patients: 15
+    n_controls: 15
+    measures_pem: false  # fatigue score includes self-reported "Post-exertional exhaustion"; no exertion challenge
+    preregistered: null  # ClinicalTrials.gov NCT00848692; registration date relative to enrolment (June 2008) not in the record. TODO: verify
+    role: supports
+    direction: not_applicable  # treatment vs placebo, no patient-control comparison
+    group: Mella O, Haukeland University Hospital, Bergen, Norway (same group as 30934066 and 40703261; Fluge Ø and Mella O also on 26399744)
+    finding: >-
+      A placebo-controlled trial of n=30 patients found lasting improvement in self-reported fatigue
+      in 10 of 15 given rituximab and 2 of 15 given saline (p = 0.003), with no difference between
+      groups at the primary end point three months after treatment.
+  # --- contradicts ---
+  - id: pmid:30934066
+    title: "B-Lymphocyte Depletion in Patients With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Randomized, Double-Blind, Placebo-Controlled Trial."
+    year: 2019
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: "151 patients aged 18 to 65 years who had ME/CFS according to Canadian consensus criteria and had had the disease for 2 to 15 years."
+    design: intervention_controlled
+    n_patients: 77  # rituximab arm; abstract "(n = 77)"; total 151
+    n_controls: 74  # placebo arm; abstract "(n = 74)"
+    measures_pem: false
+    preregistered: null  # ClinicalTrials.gov NCT02229942; registration timing not in the record; no open full text. TODO: verify
+    role: contradicts
+    direction: not_applicable  # treatment vs placebo
+    group: Mella O, Haukeland University Hospital, Bergen, Norway (same group as 22039471)
+    finding: >-
+      A placebo-controlled trial of n=151 patients (77 given rituximab, 74 placebo) found no difference
+      between groups in response rate (26.0% against 35.1%), in fatigue over 24 months or in any
+      secondary end point; serious adverse events occurred in 20 patients given rituximab and 14
+      given placebo.
+  # --- early signals ---
+  - id: pmid:34589837
+    title: IgG stimulated β2 adrenergic receptor activation is attenuated in patients with ME/CFS.
+    year: 2020
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Diagnosis of ME/CFS was based on Canadian Criteria and exclusion of other medical or neurological diseases which may cause fatigue."
+    design: controlled
+    n_patients: 10  # 5 with high and 5 with normal beta2 receptor antibodies
+    n_controls: 6
+    measures_pem: false
+    preregistered: null
+    role: early_signal  # functional antibody test not repeated by another study on the card
+    direction: lower  # beta2 receptor activation by patients' IgG lower than by controls' IgG
+    group: Scheibenbogen C, Charité, Berlin, Germany (same group as 26399744, 29543914, 39759581)
+    finding: >-
+      A study of n=10 patients and 6 healthy controls found that IgG fractions from controls activated
+      the β2 adrenergic receptor in reporter cell lines, while IgG from the 5 patients with high β2
+      receptor antibodies had no effect; in tests on immune cells, IgG from the 5 patients with normal
+      levels had an intermediate effect.
+  - id: pmid:40703261
+    title: Plasma cell targeting with the anti-CD38 antibody daratumumab in myalgic encephalomyelitis/chronic fatigue syndrome-a clinical pilot study.
+    year: 2025
+    cohort: me_cfs
+    # A published correction exists (pmid:40901516); its content is not in the cache. TODO: verify what it corrects.
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "The inclusion criteria were ME/CFS according to Canadian consensus criteria (2003) (41) with moderate (mainly housebound) to severe (partly bedridden) disease, age 18–65 years, signed informed consent, duration of ME/CFS at least 2 years, and a defined onset, e.g., after an infection or other immunological trigger."
+    design: uncontrolled  # open-label, 12-week run-in, no control group
+    n_patients: 10
+    n_controls: null
+    measures_pem: false
+    preregistered: null  # EudraCT 2022-000281-18; timing not stated in the abstract
+    role: early_signal
+    direction: not_applicable
+    group: Mella O, Haukeland University Hospital, Bergen, Norway (same group as 22039471)
+    finding: >-
+      A study of n=10 women without a control group found that after daratumumab 6 had marked
+      improvement and 4 no significant change, with a 54% relative fall in IgG in those who improved
+      and 40% in those who did not.
+  # --- context ---
+  - id: pmid:26399744
+    title: Antibodies to β adrenergic and muscarinic cholinergic receptors in patients with Chronic Fatigue Syndrome.
+    year: 2016
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # n: Berlin cohort 268 vs 108 controls; plus pre/post samples from 25 Bergen patients "treated within the KTS-2
+    # rituximab trial" = 26132314 (open-label, KTS-2-2010 per PMC4488509), not on the card.
+    n_patients: 268
+    n_controls: 108
+    measures_pem: false
+    preregistered: null
+    role: context  # cannot support while unverified (V9)
+    direction: higher
+    group: Scheibenbogen C, Charité, Berlin, Germany (Fluge Ø and Mella O of the Bergen rituximab trials are co-authors; Heidecke H also on 34589868)
+    finding: >-
+      A study of n=268 patients and 108 healthy controls found higher antibodies against the β2, M3
+      and M4 receptors in patients and no difference for α adrenergic, dopamine, serotonin,
+      angiotensin and endothelin receptors; in 25 patients from an open-label rituximab maintenance
+      trial without a placebo group, raised β2 and M4 receptor antibodies fell, among those achieving
+      prolonged B-cell depletion, in responders but not in non-responders.
+  - id: pmid:12851722
+    title: Autoantibodies against muscarinic cholinergic receptor in chronic fatigue syndrome.
+    year: 2003
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 60
+    n_controls: 30  # healthy controls; also 33 patients with autoimmune disease
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Amino N, Osaka University, Japan (affiliation from first author)
+    finding: >-
+      A study of n=60 patients, 33 people with autoimmune disease and 30 healthy controls found a
+      higher mean antibody index against the M1 muscarinic receptor in patients than in healthy
+      controls, with a positive result in 53.3% of patients, using a radioligand test.
+  - id: pmid:40141440
+    title: An In-Depth Exploration of the Autoantibody Immune Profile in ME/CFS Using Novel Antigen Profiling Techniques.
+    year: 2025
+    cohort: me_cfs
+    # TODO: verify — abstract names no case definition; open full text PMC11943395 exists but Europe PMC returned
+    # HTTP 500. Patient/control split of the 172 participants not in the abstract, so n is null. Card-reviewer found a
+    # CCC case-definition sentence in a non-cached copy; not used until cached. Founder told it may contest rungs 2
+    # and 3 once cached and verified.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context  # would be `contradicts` once the case definition is verified (see header, decision 3)
+    direction: no_difference
+    group: Hanson MR, Cornell University, Ithaca, USA
+    finding: >-
+      A study of 172 participants measuring antibodies against 6,183 extracellular human proteins and
+      a 1,134-antibody panel found no significant differences between patients and controls,
+      including against β-adrenergic receptors.
+  - id: pmid:23480187
+    title: Altered functional B cell subset populations in patients with chronic fatigue syndrome compared to healthy controls.
+    year: 2013
+    cohort: me_cfs
+    case_definition: CCC  # "Canadian and Fukada criteria"
+    case_definition_source: abstract
+    case_definition_quote: "We undertook a detailed characterization of the proportions of the different B cell subsets in 33 patients with CFS fulfilling the Canadian and Fukada criteria for CFS and compared these with 24 age- and gender-matched healthy controls (HC)."
+    design: controlled
+    n_patients: 33
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    role: context  # B-cell subsets, not autoantibodies
+    direction: mixed  # more naive and transitional B cells, fewer plasmablasts
+    group: Bansal AS, St Helier University Hospital, Carshalton, UK (Bansal A also on 26646713)
+    finding: >-
+      A study of n=33 patients and 24 healthy controls found more naive and transitional B cells and
+      fewer plasmablasts in patients.
+  - id: pmid:26646713
+    title: "Extended B cell phenotype in patients with myalgic encephalomyelitis/chronic fatigue syndrome: a cross-sectional study."
+    year: 2016
+    cohort: me_cfs
+    case_definition: CCC  # "Canadian, Centre for Disease Control and Fukuda"
+    case_definition_source: abstract
+    case_definition_quote: "A total of 38 patients fulfilling Canadian, Centre for Disease Control and Fukuda ME/CFS criteria and 32 age- and sex-matched HC were included."
+    design: controlled
+    n_patients: 38
+    n_controls: 32
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # no difference in classical subsets; CD24 and CD21+CD38- memory subset differ
+    group: Cambridge G, University College London, UK (Bansal A also on 23480187)
+    finding: >-
+      A study of n=38 patients and 32 healthy controls found no difference in the classical B-cell
+      subsets, but higher frequency and expression of CD24 on B cells and an association of a higher
+      frequency of CD21+ CD38− memory B cells with ME/CFS.
+  - id: pmid:29543914
+    title: Immunoadsorption to remove ß2 adrenergic receptor antibodies in Chronic Fatigue Syndrome CFS/ME.
+    year: 2018
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Diagnosis of CFS/ME was based on Canadian Criteria [1] and exclusion of other medical or neurological diseases which may cause fatigue."
+    design: uncontrolled
+    n_patients: 10
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context  # uncontrolled; repeated in a second cohort by the same group (39759581), so not an early signal
+    direction: not_applicable
+    group: Scheibenbogen C, Charité, Berlin, Germany (same group as 26399744, 39759581)
+    finding: >-
+      A study of n=10 patients with post-infectious ME/CFS and raised β2 receptor antibodies, without a
+      control group, found that immunoadsorption lowered β2 antibodies in 9; 7 reported rapid
+      improvement during treatment, 3 of them lasting 6 to 12 months or more.
+  - id: pmid:39759581
+    title: "Efficacy of repeated immunoadsorption in patients with post-COVID myalgic encephalomyelitis/chronic fatigue syndrome and elevated β2-adrenergic receptor autoantibodies: a prospective cohort study."
+    year: 2025
+    # long_covid: ME/CFS that began with SARS-CoV-2 infection; turns on the long COVID label (kept by founder ruling
+    # 2026-11-01). "Modified CCC" is counted as CCC by founder ruling (2026-11-01).
+    cohort: long_covid
+    case_definition: CCC  # "modified Canadian Consensus Criteria (CCC) and a minimum of 14 h of PEM"
+    case_definition_source: fulltext
+    case_definition_quote: "The diagnosis of ME/CFS was based on the modified Canadian Consensus Criteria (CCC) and a minimum of 14 h of PEM."
+    design: uncontrolled  # pre-post study, no control group
+    n_patients: 20
+    n_controls: null
+    measures_pem: false  # PEM reported on questionnaires; no exertion challenge
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Kim L and Scheibenbogen C, Charité, Berlin, Germany (same group as 29543914)
+    finding: >-
+      A study of n=20 patients with ME/CFS after COVID-19 and raised β2 receptor antibodies, without a
+      control group, found that five immunoadsorption sessions lowered IgG by 79% and β2 receptor
+      antibodies by 77%, and that physical function scores rose by a mean of 17.75 points, with 14 of
+      20 improving by at least ten points.
+last_checked:
+  date: 2026-11-01
+  by: ai_pair

@@ -1,0 +1,495 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-01. Nothing here is published.
+# Founder rulings 2026-11-01 (below): level 3 and not contested confirmed; diagnostic marker no. Explains PEM: no
+# (AI proposal under the clarified rule, not separately ruled).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a
+# full text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml.
+# Studies without an open full text and with no case definition in the abstract (23791918, 36758521, 42351611)
+# stay `unverified` and role `context`.
+#
+# Founder rulings 2026-11-01:
+#   - Level 3 and not contested are confirmed. Rung 2 = 36758522 (Guo 2023, CCC); rung 3 = 41387992 (Cheng 2025,
+#     IOM 2015): lower stool butyrate.
+#   - Diagnostic marker: no. The validation in 36758522 used the same group and the same sites, so it is not an
+#     independent patient group.
+#   - 39592468 (synbiotic trial in post-COVID ME/CFS) removed from the card (see "Not on the card"), so no study has
+#     cohort long_covid and the long COVID label is not shown.
+#
+# TODO: verify — case definitions of 36758521 (Xiong 2023), 23791918 (Frémont 2013), 42351611 (Donchev 2026):
+#   no open full text in Europe PMC, none stated in the abstract. If 36758521 is verified
+#   it would be a further US cohort for lower butyrate (shares authors Bateman L and Vernon SD with 36758522).
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, not studies: 30572962, 35046929, 34768601, 38429822, 38605969, 39937103, 33558650 (meta-analysis),
+#     29464501, 29695180, 27275835, 29523751.
+#   - Same group, other measure or smaller: 29375937 (Mandarano 2018, Cornell, gut fungi in 17 vs 17, no significant
+#     difference; same cohort as 27338587); 40715814 (Xiong 2025, same cohort as 36758521, no open full text).
+#   - Antibodies to gut bacteria, a different measure: 36149952 (Vogl 2022, severe ME/CFS, no case definition sentence
+#     found by the finder); 39075559; 37895005 (5 household pairs). 17007934, 21967891, 25433843, 26707044 (Maes,
+#     antibodies to LPS; no open full text for the first, case definitions not checked).
+#   - Uncontrolled or not ME/CFS-defined: 19171024 (open-label probiotic, 15 Fukuda patients), 29409505 (open-label
+#     antibiotic + probiotic, 44 patients), 31871540 (probiotic pilot, Fukuda, no control group), 41515290 (open-label
+#     probiotic pilot), 40647335 (IBS with and without CFS, no healthy controls), 19567398 (D-lactic acid bacteria,
+#     case definition not checked), 40723800 (PASC and chronic fatigue, no ME/CFS case definition in abstract),
+#     42325052 (Esteban 2026, diagnosis from registry survey answers, 30 vs 31; left out to keep the card focused).
+#   - Interventions not on the microbiome itself: 38640860 (Sijunzi decoction RCT), 41806958 (qigong RCT).
+#   - Long COVID, case definition not verified: 39592468 (Ranisavljev 2024, synbiotic RCT in 26 people with
+#     post-COVID ME/CFS). Founder ruling 2026-11-01: case definition not verified, so under the inclusion rule it
+#     cannot carry the long COVID label.
+#   - Genetic: 37485509 (Mendelian randomisation, no patient cohort with a case definition).
+#   - Animal studies: 37167729, 22296294 and others.
+slug: gut-microbiome
+name: Altered gut microbiome and gut barrier
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS the community of gut bacteria is altered, and
+    that this contributes to the illness through what the bacteria make or fail to make, such as
+    butyrate, or through a gut wall that lets bacterial products into the blood.
+  sources: [pmid:36758522, pmid:27338587, pmid:37396339]
+level: 3
+level_reason:
+  - text: >-
+      A controlled study of 106 patients meeting both the 1994 CDC (Fukuda) and the Canadian Consensus
+      Criteria and 91 healthy controls from five US sites found less of two butyrate-making bacteria,
+      Faecalibacterium prausnitzii and Eubacterium rectale, fewer copies of a bacterial butyrate gene,
+      and lower butyrate and acetate in stool. The butyrate-making bacteria and the butyrate gene were
+      still lower after adjusting for irritable bowel syndrome, site and other factors, and stool
+      butyrate was lower both in patients with and in patients without irritable bowel syndrome,
+      compared with controls without it. Rung 2 rests on this study.
+    sources: [pmid:36758522]
+  - text: >-
+      A study from Jinan, China, with no authors shared with the US study, compared 40 patients meeting
+      the 2015 IOM criteria with 40 age- and sex-matched healthy controls. It also found lower butyrate
+      and acetate in stool after correcting for multiple testing. Faecalibacterium was lower before that
+      correction but not after it, so this study repeats the lower stool butyrate, not the specific
+      fall in Faecalibacterium.
+    sources: [pmid:41387992]
+  - text: >-
+      The card is at level 3 because an independent group found lower stool butyrate in a separate
+      cohort. Both studies measured patients once and compared them with controls. They show an
+      association, not that the changes in gut bacteria come before the illness or cause it; in the
+      Chinese study, patients who ate more fibre had higher stool acetate.
+    sources: [pmid:36758522, pmid:41387992]
+  - text: >-
+      Two earlier US studies also found less Faecalibacterium prausnitzii in patients: one of 48
+      patients (Fukuda) and 39 controls from Cornell University, and one of 50 patients (Fukuda and/or
+      Canadian criteria) and 50 controls from the Columbia University group that later ran the
+      106-patient study. The Cornell patients came from the practice of Dr Susan Levine, and an author
+      listed as Levine S is on all three papers; the papers do not say whether any patient took part in
+      more than one study.
+    sources: [pmid:27338587, pmid:28441964, pmid:36758522]
+  - text: >-
+      Studies disagree on gut bacterial diversity. The Cornell study and the Chinese study found lower
+      diversity. A Polish study of 25 patients (Fukuda) and 16 controls found fewer bacterial types
+      (lower richness) but no significant difference in diversity or evenness. In the 106-patient
+      study, diversity was lower in the simple comparison, but after adjustment this was tied to
+      irritable bowel syndrome rather than ME/CFS. A Bulgarian study whose
+      case definition is not yet verified found no difference in diversity within samples, but small
+      differences in overall make-up.
+    sources: [pmid:27338587, pmid:41387992, pmid:41006438, pmid:36758522, pmid:42351611]
+  - text: >-
+      Other studies report different bacteria. A study of Norwegian and Belgian patients (case
+      definition not yet verified) found more Alistipes in Norwegian patients, while the Chinese study
+      found Alistipes lower; its text says the fall did not survive correction for multiple testing,
+      while its Fig. 4 lists Alistipes among taxa that differed after correction. A study of 75 patients ill for under
+      4 years and 79 ill for over 10 years (case definition not yet verified) found clear differences
+      in gut bacteria mainly in the shorter-ill group, and reported less bacterial butyrate production
+      and lower butyrate in blood.
+    sources: [pmid:23791918, pmid:41387992, pmid:36758521]
+  - text: >-
+      Blood markers of bacterial products crossing the gut wall give mixed results. The Cornell study
+      found higher LPS (a bacterial toxin), LPS-binding protein and soluble CD14 in patients, and a
+      Spanish study of 30 patients meeting the International Consensus Criteria and 26 controls found
+      higher LPS, soluble CD14 and zonulin-1. A Columbia University study of 131 patients meeting both the
+      Fukuda and Canadian criteria and 86 controls found neither LPS-binding protein nor soluble CD14
+      significantly raised, but found more antibodies against LPS and flagellin and more FABP2, a
+      marker of damage to gut lining cells, which the Cornell study had found not significantly raised.
+      The level does not rest on these blood markers; the rungs rest on lower stool butyrate.
+    sources: [pmid:27338587, pmid:37744357, pmid:37396339, pmid:36758522, pmid:41387992]
+  - text: >-
+      No controlled trial on this card shows that changing gut bacteria changes the illness, so the card
+      does not reach level 4. In a randomised trial of 39 patients, a probiotic raised Lactobacillus and
+      Bifidobacteria in stool; the abstract reports a fall in anxiety with the probiotic (p = 0.01), but
+      the only comparable p value in the paper's Table 3 is the probiotic group's before-and-after change
+      (p = 0.011); the group-by-time interaction is not significant (p = 0.729). A pilot trial of 11 patients meeting the 2015 IOM
+      criteria found no significant change in fatigue or quality of life after faecal transplant from a
+      donor or from the patient's own stool, the placebo.
+    sources: [pmid:19338686, pmid:37516837]
+# Contested: PROPOSED NONE (founder decision). Comparable quality (spec section 3): same or stricter case definition,
+# a control group, and at least half the measured patients of the study contradicted.
+# - Rung 3 rests on 36758522 (CCC, 106) and 41387992 (IOM 2015, 40). No study on the card reports normal or higher
+#   stool butyrate; none of the other studies measured stool butyrate.
+# - Translocation markers (not the line the level rests on): 37396339 (CCC, recorded from "met both the Fukuda and
+#   the Canadian diagnostic criteria", controlled, 131 measured for sCD14 and LBP per its Fig. 4 legend) contradicts
+#   27338587 (Fukuda, 48) on LBP and sCD14: CCC ranks above Fukuda, 131 >= 24 -> comparable. It also contradicts
+#   37744357 (ICC, 30) on sCD14: CCC and ICC rank equal, 131 >= 15 -> comparable. If the founder counts the
+#   translocation markers as part of rung 2 or 3, the rung that rests on them would be contested. (37744357 did not
+#   measure LBP; 37396339 reports no patient-control LPS comparison in the primary cohorts; in the exercise cohort
+#   LPS rose after exercise in patients (P = 0.008) but not in controls.)
+# - Faecalibacterium (not the line the level rests on): 41387992 (IOM 2015, 40) found it lower before FDR correction
+#   only, against 27338587 (Fukuda, 48): IOM 2015 ranks above Fukuda, 40 >= 24 -> comparable quality. Proposed as
+#   non-confirmation, not contradiction (same direction, not significant after correction). Founder decides.
+contested: null
+badges:
+  diagnostic_marker:
+    # Guo 2023 full text: classifier of bacterial species; "external validation metagenomic dataset from ME/CFS cases
+    # (n = 50) and healthy controls (n = 50) recruited and sampled years earlier from our Chronic Fatigue Initiative
+    # (CFI) study"; "GLM: CFI-AUC = 0.734; GBM: CFI-AUC = 0.687"; Limitations: "both the primary cohort and external
+    # validation cohort were derived from individuals from the same five sites in the US" (the authors write five; the
+    # earlier paper 28441964 names four). The CFI cohort is the one
+    # in 28441964 (case definition stated). Proposed no; founder decides whether this is an independent patient group.
+    value: false
+    reason:
+      - text: >-
+          The 106-patient study tested its bacterial classifier in a second cohort of 50 patients and 50
+          controls that the same research group had collected years earlier at the same US sites; the
+          authors write that both cohorts came from the same five sites and that a wider geographic range
+          is needed. No study on this card from another research group tests the marker.
+        sources: [pmid:36758522, pmid:28441964]
+      - text: >-
+          Other studies on the card classified patients and controls within their own cohort only: the
+          Cornell study with bacteria and blood markers, the Polish study with gut bacteria, and the
+          Spanish study with blood markers of the gut wall.
+        sources: [pmid:27338587, pmid:41006438, pmid:37744357]
+  explains_pem:
+    # 26683192 full text: symptoms assessed before, after, 48 h and 72 h after a maximal exercise test; no analysis
+    # relating microbial change to symptoms in the same patients was found in the cached text. Role early_signal, not
+    # supports, so it cannot carry the badge (V7). 37396339's exercise cohort (9 vs 7) followed the same protocol and
+    # shares authors (Shukla SK, Cook DB, Vernon SD); the paper reports no symptom tracking for it.
+    value: false
+    reason:
+      - text: >-
+          No study at level 2 or above on this card links gut bacteria or the gut wall to symptoms after
+          exertion in the same patients. A study of 10 patients and 10 controls tracked symptoms for 72
+          hours after a maximal exercise test and found shifts in stool bacteria and bacterial DNA in blood
+          that differed from controls, but did not relate these to the patients' symptoms. It has not been
+          repeated.
+        sources: [pmid:26683192]
+      - text: >-
+          A Columbia University exercise cohort of 9 patients and 7 controls, recruited under the Fukuda
+          criteria only, found that LPS-binding protein and soluble CD14 rose after exercise in controls
+          (P = 0.007, P = 0.008); in patients LPS-binding protein did not rise significantly and soluble
+          CD14 rose more modestly (P = 0.021). The paper does not relate these changes to symptoms.
+        sources: [pmid:37396339]
+subgroups:
+  - text: >-
+      Irritable bowel syndrome may mark a subgroup. In a study of 50 patients and 50 controls, the
+      bacteria that best separated patients with irritable bowel syndrome from controls differed from
+      those that separated patients without it; in a later study of 106 patients from the same group,
+      lower bacterial diversity was found only in patients with irritable bowel syndrome.
+    sources: [pmid:28441964, pmid:36758522]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=10 patients and 10 matched healthy controls found that after a maximal exercise test,
+      more of the major groups of stool bacteria rose in patients than in controls by 72 hours, and
+      bacterial DNA stayed longer in patients' blood. Not yet repeated.
+    sources: [pmid:26683192]
+studies:
+  # --- supports ---
+  - id: pmid:36758522
+    # PubMed lists publication type "Comment" because the paper is commented on; it is an original study.
+    title: Deficient butyrate-producing capacity in the gut microbiome is associated with bacterial network disturbances and fatigue symptoms in ME/CFS.
+    year: 2023
+    cohort: me_cfs
+    # Full text (PMC10183837) also: "ME/CFS cases met the requirements of both the 1994 CDC1 and the 2003 Canadian
+    # consensus criteria8 for ME/CFS." Recorded CCC (met both).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "The study included stool samples from 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS, and 91 healthy control individuals recruited from 5 sites in the United States (CA, NY, NV, UT, and FL)."
+    design: controlled
+    n_patients: 106
+    n_controls: 91
+    # Full text: alpha diversity lower in univariate analysis, but "Evenness and Shannon diversities were only lower in
+    # ME/CFS with sr-IBS compared with healthy controls without sr-IBS"; adjusted regression (Table 2): Roseburia/
+    # Eubacterium fold change 0.56 (p 0.026), F. prausnitzii 0.61 (p 0.043), but gene 0.51 (p 0.028). Fecal SCFA:
+    # "the concentration of both acetate and butyrate were lower in ME/CFS"; "butyrate was lower in both ME/CFS subjects
+    # without sr-IBS and with sr-IBS compared with healthy controls". sr-IBS 35/106 cases vs 3/91 controls. "The
+    # abundance of Faecalibacterium prausnitzii was inversely associated with fatigue severity" (abstract).
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    # Overlaps: same group (Lipkin WI, Williams BL) as 28441964, whose CFI cohort is this paper's validation cohort;
+    # Levine S also on 27338587; Bateman L and Vernon SD also on 36758521; Vernon SD also on 37396339 and 26683192.
+    group: Lipkin WI and Williams BL, Center for Infection and Immunity, Columbia University, New York, USA
+    finding: >-
+      A study of n=106 patients and 91 healthy controls found less of the butyrate-making bacteria
+      Faecalibacterium prausnitzii and Eubacterium rectale, fewer copies of a bacterial butyrate gene and
+      lower stool butyrate and acetate in patients, and an inverse association between Faecalibacterium
+      prausnitzii and fatigue severity.
+  - id: pmid:41387992
+    title: Alterations in gut microbiota and associated metabolites in patients with chronic fatigue syndrome.
+    year: 2025
+    cohort: me_cfs
+    # IOM 2015 (SEID) together with a 2023 consensus guideline; recorded IOM2015. Full text PMC12700865.
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: "The inclusion criteria for the case group were based on the “Diagnostic Criteria for Systemic Exertion Intolerance Disease (SEID)” developed by the National Academy of Medicine (IOM) in 201523 and the clinical criteria in the 2023 international consensus guideline “Diagnosis and Management of Chronic Fatigue Syndrome”1."
+    design: controlled
+    n_patients: 40
+    n_controls: 40
+    # Full text: "butyrate (q = 0.044), acetate (q = 0.032), isobutyrate (q = 0.039), and isovalerate (q = 0.008) were
+    # all significantly reduced in the CFS group"; "Other genera such as Alistipes, Faecalibacterium, and
+    # Subdoligranulum also exhibited reductions before multiple-testing correction, but these did not remain
+    # significant thereafter (all q > 0.05)". Fibre: higher-fibre patients had higher acetate and isovalerate
+    # (abstract). Limitations: "the cross-sectional design precludes causal inference".
+    measures_pem: false
+    preregistered: null
+    role: supports  # independent of 36758522: no shared authors, separate Chinese cohort
+    direction: lower
+    group: Yin Y, Affiliated Hospital of Shandong University of Traditional Chinese Medicine, Jinan, China
+    finding: >-
+      A study of n=40 patients and 40 age- and sex-matched healthy controls found lower gut bacterial
+      diversity, less Firmicutes and lower stool butyrate, acetate, isobutyrate and isovalerate in
+      patients after correction for multiple testing; Faecalibacterium was lower only before that
+      correction.
+  - id: pmid:27338587
+    title: Reduced diversity and altered composition of the gut microbiome in individuals with myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2016
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM". Full text adds that most, perhaps all, also fit SEID; not used.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Subjects with ME/CFS were established patients of a ME/CFS specialist, Susan Levine, M.D. and fit the Fukuda diagnostic criteria [1]."
+    design: controlled
+    n_patients: 48
+    n_controls: 39
+    # Full text: F. prausnitzii lower (q = 0.014); "ME/CFS samples had a significant overall lower microbial
+    # diversity"; LPS median 119.43 vs 74.74 pg/mL (P < 0.0005); I-FABP "not statistically significant (P = 0.27)".
+    # Classifier: cross-validation accuracy 82.93% within this cohort (abstract).
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower  # lower diversity and Faecalibacterium; translocation markers higher (see finding)
+    # Levine S is an author here and on 28441964 and 36758522. Same Cornell group as 29375937 (not on card).
+    group: Hanson MR, Cornell University, Ithaca, USA (patients from the practice of Levine SM, New York)
+    finding: >-
+      A study of n=48 patients and 39 healthy controls found lower gut bacterial diversity, less
+      Firmicutes including Faecalibacterium prausnitzii, and higher blood LPS, LPS-binding protein and
+      soluble CD14 in patients.
+  - id: pmid:28441964
+    title: Fecal metagenomic profiles in subgroups of patients with myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2017
+    cohort: me_cfs
+    # Two sentences in the full text (PMC5405467) differ: "who met the 1994 CDC Fukuda [17] and the 2003 Canadian
+    # consensus criteria" (Study population) and "and/or" (Methods). Recorded Fukuda, the lower rank, from the "and/or"
+    # sentence. Fukuda: flag "does not require PEM" for part of the cohort.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Subjects included 50 cases and 50 controls from the Chronic Fatigue Initiative (CFI) Cohort [49] recruited at four sites across the USA who met the 1994 CDC Fukuda [17] and/or 2003 Canadian consensus criteria for ME/CFS [18]."
+    design: controlled
+    n_patients: 50
+    n_controls: 50
+    # Full text: species driving differences in the total cohort include F. prausnitzii (decreased in ME/CFS);
+    # Faecalibacterium, Roseburia, Coprococcus and Dorea lower; Clostridium higher.
+    measures_pem: false
+    preregistered: null
+    role: supports  # same group as 36758522, separate (earlier) cohort; not independent of it
+    direction: lower
+    group: Lipkin WI and Williams BL, Center for Infection and Immunity, Columbia University, New York, USA (same group as 36758522)
+    finding: >-
+      A study of n=50 patients and 50 healthy controls found less Faecalibacterium prausnitzii and other
+      differences in gut bacteria and their metabolic pathways in patients, with different bacteria
+      separating patients with and without irritable bowel syndrome from controls.
+  - id: pmid:37744357
+    title: "Increased gut permeability and bacterial translocation are associated with fibromyalgia and myalgic encephalomyelitis/chronic fatigue syndrome: implications for disease-related biomarker discovery."
+    year: 2023
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "A proof-of-concept multicenter, cross-sectional, prospective case-control cohort study was conducted in 22 FM patients who met the 2010 ACR diagnostic criteria for FM (40) and 30 ME/CFS who fulfilled the 2011 ICC definition for ME/CFS (41)."
+    design: controlled
+    n_patients: 30
+    n_controls: 26
+    measures_pem: false
+    preregistered: null
+    role: supports  # gut-wall markers; independent of 27338587 (Spain, no shared authors)
+    direction: higher
+    group: Castro-Marrero J, Vall d'Hebron Research Institute, Barcelona, Spain
+    finding: >-
+      A study of n=30 patients, 22 people with fibromyalgia and 26 healthy controls found higher blood
+      antibodies to a milk protein, zonulin-1, LPS and soluble CD14 in patients than in controls, but
+      lower than in fibromyalgia, and no difference in interleukin-1 beta.
+  - id: pmid:41006438
+    title: The gut microbial composition is different in chronic fatigue syndrome than in healthy controls.
+    year: 2025
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM". 32 patients met the criteria; 7 patients and 7 controls gave no stool, so
+    # 25 vs 16 were analysed (full text PMC12475486: "Seven patients with CFS and 7 HCs did not provide stool samples";
+    # "The remaining sample, included in the analysis, consisted of 25 patients with CFS and 16 healthy controls").
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "After undergoing the initial eligibility assessment, 180 were excluded as they did not meet the Fukuda criteria, 30 as they had an underlying psychiatric illness, and 8 with another diagnosis commonly related to fatigue (untreated hypertension) or fatigue was not the primary complaint, leaving a sample of 32 patients who met the criteria for CFS."
+    design: controlled
+    n_patients: 25
+    n_controls: 16
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower  # fewer observed OTUs; three discriminating variants more abundant in controls
+    group: Zalewski P, Nicolaus Copernicus University, Bydgoszcz, and Warsaw Medical University, Poland
+    finding: >-
+      A study of n=25 patients and 16 healthy controls found fewer observed bacterial types (OTUs, lower
+      richness) and a different make-up of gut bacteria in patients, with no significant difference in
+      diversity or evenness.
+  # --- contradicts ---
+  - id: pmid:37396339
+    title: Suppressed immune and metabolic responses to intestinal damage-associated microbial translocation in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2023
+    cohort: me_cfs
+    # Primary cohorts (Solve ME/CFS Initiative and GSK collection, per Irlbeck 2014): "met both the Fukuda and the
+    # Canadian diagnostic criteria (Fukuda et al., 1994; Carruthers, 2007)". Recorded CCC (met both); the Canadian
+    # criteria are cited as Carruthers 2007, not 2003: Carruthers BM, J Clin Pathol 2007;60:117-119, on how the Canadian
+    # consensus definition works in practice (reference list). The exercise cohort (9 vs 7) "met the Fukuda case
+    # definition".
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Individuals with ME/CFS met both the Fukuda and the Canadian diagnostic criteria (Fukuda et al., 1994; Carruthers, 2007)."
+    design: controlled
+    n_patients: 131
+    n_controls: 86
+    # Full text: "plasma levels of neither LBP nor sCD14 acute-phase responses were significantly elevated in
+    # individuals with ME/CFS"; EndoCAb (anti-LPS) IgG, IgA, IgM higher (P < 0.0001, < 0.0001, 0.008); flagellin
+    # antibodies higher; FABP2 higher (P = 0.006). Exercise cohort: LBP (P = 0.007) and sCD14 (P = 0.008) rose in
+    # controls; "lack of significant increase in LBP levels in the ME/CFS group after exercise".
+    measures_pem: false  # exercise cohort sampled 15 min after peak effort; no symptom tracking reported
+    preregistered: null
+    role: contradicts  # on LBP and sCD14 (27338587, 37744357); supports gut-lining damage (FABP2)
+    direction: mixed
+    group: Alaedini A, Columbia University, New York, USA (Vernon SD also on 36758522 and 26683192; Shukla SK and Cook DB also on 26683192)
+    finding: >-
+      A study of n=131 patients and 86 healthy controls found no significant rise in LPS-binding protein
+      or soluble CD14, but higher antibodies against LPS and flagellin and higher FABP2, a marker of gut
+      lining damage, in patients; in a separate group of 9 patients and 7 controls, LPS-binding protein
+      and soluble CD14 rose after exercise in controls (P = 0.007, P = 0.008), while in patients
+      LPS-binding protein did not rise significantly and soluble CD14 rose more modestly (P = 0.021).
+  # --- early signal ---
+  - id: pmid:26683192
+    title: Changes in Gut and Plasma Microbiome following Exercise Challenge in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
+    year: 2015
+    cohort: me_cfs
+    case_definition: Fukuda  # flag "does not require PEM"
+    case_definition_source: fulltext
+    case_definition_quote: "All patients met the ME/CFS case definition criteria established by Fukuda et al in 1994 [13]."
+    design: controlled
+    n_patients: 10
+    n_controls: 10
+    # Abstract: "6 of the 9 major bacterial phyla/genera" rose in patients; full text Results: "7 out of 9 major taxa"
+    # (p = 0.005). The card avoids the count. Stool Actinobacteria lower in patients at baseline (p = 0.007).
+    # Symptoms were assessed at each visit; no analysis relating microbial change to symptoms was found.
+    measures_pem: true  # maximal exercise test, symptoms tracked at 48 and 72 h
+    preregistered: null
+    role: early_signal
+    direction: mixed
+    group: Shukla SK, Marshfield Clinic Research Foundation, Marshfield, USA (exercise testing at University of Wisconsin-Madison)
+    finding: >-
+      A study of n=10 patients and 10 matched healthy controls found that after a maximal exercise test
+      more of the major groups of stool bacteria rose in patients than in controls by 72 hours, and that
+      bacterial DNA stayed in patients' blood longer than in controls'.
+  # --- context ---
+  - id: pmid:36758521
+    title: Multi-'omics of gut microbiome-host interactions in short- and long-term myalgic encephalomyelitis/chronic fatigue syndrome patients.
+    year: 2023
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; PMC copy is not open access
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 154  # derived: 75 short-term + 79 long-term (abstract)
+    n_controls: 79
+    measures_pem: false
+    preregistered: null
+    role: context  # cannot support while unverified (V9)
+    direction: mixed  # dysbiosis in short-term patients, largely resolved in long-term patients
+    group: Oh J, The Jackson Laboratory, Farmington, USA (Bateman L and Vernon SD also on 36758522)
+    finding: >-
+      A study of 75 patients ill for under 4 years, 79 ill for over 10 years and 79 healthy controls
+      found clear differences in gut bacteria mainly in the shorter-ill patients, and reported less
+      bacterial butyrate production and lower blood butyrate.
+  - id: pmid:23791918
+    title: High-throughput 16S rRNA gene sequencing reveals alterations of intestinal microbiota in myalgic encephalomyelitis/chronic fatigue syndrome patients.
+    year: 2013
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 43
+    n_controls: 36
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # some groups higher (Lactonifactor, Alistipes), several Firmicutes lower
+    group: De Meirleir K, R.E.D Laboratories, Zellik, Belgium (affiliation from first author)
+    finding: >-
+      A study of n=43 patients and 36 healthy controls from Belgium and Norway found more Lactonifactor
+      and Alistipes and less of several Firmicutes in Norwegian patients than Norwegian controls, with a
+      less clear separation in Belgian participants.
+  - id: pmid:42351611
+    title: Comparative Gut Microbiome Alterations in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Long COVID-19 Syndrome.
+    year: 2026
+    cohort: me_cfs  # also has a long COVID group; the card cites it for the ME/CFS comparison
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not stated in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # no difference in alpha diversity; small beta-diversity differences
+    group: Ivanov IN, Bulgaria (Maes M is a co-author)
+    finding: >-
+      A study of patients with ME/CFS, patients with long COVID and healthy controls found no significant
+      difference in diversity within samples, small differences in overall make-up of gut bacteria with
+      broad overlap, and more Sutterella and less Lachnospiraceae in both patient groups.
+  - id: pmid:37516837
+    title: "Randomized, double-blinded, placebo-controlled pilot study: efficacy of faecal microbiota transplantation on chronic fatigue syndrome."
+    year: 2023
+    cohort: me_cfs
+    # "[17]" = "Beyond Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Redefining an Illness", IOM 2015 (full text
+    # PMC10386223 reference list).
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: "In diagnosing CFS, the Institute of Medicine (IOM) criteria were applied [17]."
+    design: intervention_controlled
+    n_patients: 11  # 5 donor FMT, 6 autologous FMT (placebo)
+    n_controls: null  # no healthy controls; both arms are patients
+    measures_pem: false
+    preregistered: null  # ClinicalTrials.gov NCT04158427, registered 08/08/2019; enrolment dates not checked
+    role: context  # an intervention with no effect; there is no rung-4 claim to contradict
+    direction: not_applicable  # compares two patient arms, not patients with controls
+    group: Salonen T, Tampere University Hospital, Finland (last author Lahtinen P, Päijät-Häme Central Hospital, Lahti)
+    finding: >-
+      A randomised placebo-controlled pilot trial of n=11 patients found no significant change in fatigue
+      or quality-of-life scores at 1 and 6 months after faecal transplant from a donor or from the
+      patient's own stool.
+  - id: pmid:19338686
+    title: A randomized, double-blind, placebo-controlled pilot study of a probiotic in emotional symptoms of chronic fatigue syndrome.
+    year: 2009
+    cohort: me_cfs
+    # "[13]" = Carruthers BM et al., "Myalgic encephalomyelitis/chronic fatigue syndrome: Clinical working case
+    # definition, diagnostic and treatment protocols" (CCC 2003), full text PMC2664325 reference list. Recorded CCC
+    # from the reference number. TODO: verify — founder to confirm the reading.
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Those adult patients aged 18–65 meeting the formal diagnostic criteria for CFS, according to published guidelines, [13] were further screened for inclusion based on suitability to complete a two month trial."
+    design: intervention_controlled
+    n_patients: 35  # 39 randomised; "Thirty five CFS patients ... completed" (19 probiotic, 16 placebo, Table 2)
+    n_controls: null  # no healthy controls; both arms are patients
+    # Table 3 (repeated measures ANOVA): BAI "Probiotic Treatment Pre vs. Post" F 8.415, sig .011; "X Interaction"
+    # F .125, sig .729. BDI: "did not reach statistical significance". Funded by Yakult Honsha.
+    measures_pem: false
+    preregistered: null
+    role: context  # no significant group-by-time interaction, so it does not support rung 4
+    direction: not_applicable
+    group: Rao AV, Department of Nutritional Sciences, University of Toronto, Canada
+    finding: >-
+      A randomised placebo-controlled pilot trial of 39 patients (35 completed) found that a probiotic
+      raised Lactobacillus and Bifidobacteria in stool; anxiety scores fell, but the group-by-time
+      interaction was not significant, and depression scores did not change significantly.
+last_checked:
+  date: 2026-11-01
+  by: ai_pair

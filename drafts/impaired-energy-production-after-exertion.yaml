@@ -1,0 +1,568 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-01, revised the same day after card-reviewer and founder rulings.
+# Nothing here is published.
+# Founder rulings 2026-11-01 (DECISIONS.md, "Third card"): level 3, contested at rung 3; pmid:42212259 recorded as
+# Fukuda from its own sentence, with the companion paper's IOM 2015 wording and the PEM requirement stated on the card;
+# Explains PEM: no (spec section 3, clarified rule). Diagnostic marker: no (AI proposal, not separately ruled).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a
+# full text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml.
+# Studies without an open full text and with no case definition in the abstract (23813081, 28782878) stay
+# `unverified` and role `context`.
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews/meta-analyses, not studies: 33327624 (2-day CPET meta-analysis, 2020), 30557887 (peak VO2
+#     meta-analysis, 2019), 40372683 (methods chapter on repeated CPET, 2025).
+#   - Same cohort as a study on the card: 32568145 (Davenport 2020, 51 vs 10, same numbers and authors as
+#     23813081); 34970156 (Nelson 2021, 16 vs 10, same as 30871578, heart-rate recovery).
+#   - Uncontrolled: 32629923 (van Campen 2020, 82 women graded mild/moderate/severe; same clinic and period as
+#     34198913, so overlapping patients likely); 36916046 (Leem 2022, 29 people exposed to humidifier
+#     disinfectants, Fukuda, no control group).
+#   - Not ME/CFS: 32889791 (Lindheimer 2020, Gulf War Illness; its "ICC" is the intraclass correlation);
+#     39490617 (Gattoni 2025, 15 long COVID patients, no day-1/day-2 differences, no control group, no recognised
+#     ME/CFS case definition; it would point against the hypothesis in long COVID, so no long COVID label).
+#   - Different measure: 10209352 (Paul 1999, muscle force recovery 24 h after exercise, not oxygen use or work);
+#     36835097 (urine metabolomics after exertion, not read in full).
+#   - Single exercise tests (aerobic capacity at rest, not after exertion) are out of scope for this card.
+slug: impaired-energy-production-after-exertion
+# Name kept: it names the hypothesis, not a measurement. Text about the studies says what was measured (oxygen use,
+# work), per card-reviewer fix 10.
+name: Impaired energy production after exertion
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS the body's aerobic energy production is
+    impaired after physical exertion, and that this shows as a fall in oxygen use and work on the
+    second of two exercise tests 24 hours apart.
+  sources: [pmid:38965566, pmid:31161646, pmid:20937116]
+level: 3
+level_reason:
+  - text: >-
+      A controlled study of 84 patients meeting the Canadian Consensus Criteria and 71 sedentary
+      controls repeated a maximal exercise test after 24 hours. Unlike controls, patients did not
+      reproduce their first-day results: oxygen use and work fell at peak effort and at the
+      ventilatory threshold on the second day. The card is at level 2 because of this study.
+    sources: [pmid:38965566]
+  - text: >-
+      A study from Amsterdam, using the Fukuda definition, which does not require post-exertional
+      malaise, tested 15 women patients and 15 controls on two days. The change from the first to
+      the second day differed between groups at the anaerobic threshold, for work rate (P = 0.002)
+      and oxygen uptake (P = 0.001), and at peak, for work rate and oxygen uptake (both P < 0.001):
+      it fell in patients and rose in controls.
+    sources: [pmid:20937116]
+  - text: >-
+      Two studies from one Dutch clinic compared patients with people who have chronic fatigue but do
+      not meet ME/CFS criteria (51 and 50 women; 26 and 25 men): oxygen use and workload fell on the
+      second day in ME/CFS, while the comparison group's performance improved. They are retrospective
+      analyses of a clinical database that excluded severe ME/CFS; in the women's study,
+      fibromyalgia was more common in the ME/CFS group (49% against 14%). One author, Visser FC, is
+      also on the Amsterdam study.
+    sources: [pmid:34198913, pmid:34198946, pmid:20937116]
+  - text: >-
+      A study from Oslo, with no authors shared with the 84-patient study, tested 18 women meeting the
+      Canadian Consensus Criteria and 15 healthy women. Patients' power output at the gas exchange
+      threshold fell on the second test while controls' did not, a significant difference between
+      groups. Oxygen use at the threshold and at peak also fell in patients, but neither fall differed
+      significantly from the controls'. Blood lactate for a given power output rose in patients and
+      fell in controls.
+    sources: [pmid:31161646, pmid:38965566]
+  - text: >-
+      The card is at level 3 because independent groups found parts of the same result in separate
+      cohorts. Each has a limit, and rung 3 is contested (see the contested note).
+    sources: [pmid:38965566, pmid:20937116, pmid:34198913, pmid:34198946, pmid:31161646]
+  - text: >-
+      Against these findings, a study from New York of 58 patients and 25 sedentary controls found no
+      change in peak oxygen use or oxygen use at the ventilatory threshold on the second day in either
+      group; the paper reports that 5 patients and 6 controls did not meet maximal-effort criteria. Its
+      patients met the 1994 (Fukuda) definition modified to require post-exertional malaise. Its
+      authors suggest that falls reported elsewhere may reflect lower effort on the second day.
+    sources: [pmid:42212259]
+  - text: >-
+      The 84-patient study kept patients who met maximal-effort criteria on the first test but not on
+      the second, and its authors read such cases as emblematic of post-exertion symptom
+      exacerbation. Its own results show a fall in heart-rate reserve on the second test, which its
+      authors write suggests that maximum effort was not given; they report a similar fall in the
+      matched controls.
+    sources: [pmid:38965566]
+  - text: >-
+      A study of 16 patients and 10 controls from Adelaide found that work rate at the ventilatory
+      threshold fell more in patients on the second day, but found no difference between groups in
+      how oxygen use changed. Two other two-day studies whose case definition is not yet verified
+      found lower oxygen use and workload in 51 women on the second test only, and lower workload
+      but higher oxygen use on the second day in 10 patients.
+    sources: [pmid:30871578, pmid:23813081, pmid:28782878]
+  - text: >-
+      These tests measure the whole body's oxygen use, which depends on oxygen delivery as well as on
+      energy production in cells. The authors of the 84-patient study point to disturbed control of
+      blood flow and oxygen delivery. The Amsterdam study found oxidative phosphorylation in blood
+      cells similar to controls'. A muscle study found a lower rate of phosphocreatine recovery after
+      exercise (a measure of muscle oxidative capacity) in 22 patients than in 15 sedentary controls,
+      with no further fall two days after a maximal test in the 14 patients retested. The card does
+      not show where in the body the limit lies.
+    sources: [pmid:38965566, pmid:20937116, pmid:8618560]
+# Contested at rung 3 (founder ruling 2026-11-01). Comparable quality (spec section 3): same or stricter case
+# definition, control group, at least half the measured patients of the study contradicted.
+# - 42212259 (Fukuda as stated, controlled, 58 enrolled, 53 measured per the derivation in its study comment) vs
+#   20937116 (Fukuda, 15): same rank, 53 >= 7.5 -> comparable, contradicts.
+# - vs 38965566 (CCC, 84) and 31161646 (CCC, 18): Fukuda ranks below CCC -> not comparable. Rung 2 not contested.
+# - vs 34198913/34198946 (ICC as recorded, unconfirmed): not comparable as recorded; comparable if read as Fukuda.
+contested:
+  rungs: [3]
+  reason:
+    - text: >-
+        Rung 3 rests on independent studies that found the same result as the 84-patient study, whose
+        patients met the Canadian Consensus Criteria. The clearest, a Fukuda study of 15 women patients
+        and 15 controls from Amsterdam, is contradicted by a Fukuda study of 58 patients and 25
+        sedentary controls from New York that found no change on the second day. With the same case
+        definition, a control group and more patients (58 against 15), the New York study is of
+        comparable quality.
+      sources: [pmid:20937116, pmid:42212259, pmid:38965566]
+    - text: >-
+        The two Dutch clinic studies of women and men point the same way, but the case definition
+        recorded for them (International Consensus Criteria) is read from a reference number and not
+        confirmed, and they compare patients with people who have chronic fatigue without ME/CFS
+        rather than with healthy controls.
+      sources: [pmid:34198913, pmid:34198946]
+    - text: >-
+        The Oslo study, which meets the Canadian Consensus Criteria, found the same result only in part:
+        power output at the threshold fell more in patients than in controls, but the changes in
+        oxygen use did not differ between groups.
+      sources: [pmid:31161646]
+    - text: >-
+        Rung 2 rests on the 84-patient study and is not contested: the New York study uses the Fukuda
+        definition, which ranks below the Canadian Consensus Criteria. The New York cohort was
+        required to report post-exertional malaise, and a companion paper by the same authors, which
+        appears to describe the same cohort (57 patients and 25 controls), names the 2015 IOM
+        definition; the card records Fukuda, from the New York study's own sentence.
+      sources: [pmid:38965566, pmid:42212259, pmid:41293716]
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No study on this card tests a two-day exercise marker in a second, independent patient group.
+        A study of 51 women (case definition not yet verified) classified patients and controls with
+        95.1% accuracy within its own cohort, and a study of 16 patients proposed a cut-off for the
+        fall in work rate at the ventilatory threshold, also within its own cohort. A study of 58
+        patients concluded that its data do not support using the two-day protocol to define
+        post-exertional malaise or disability.
+      sources: [pmid:23813081, pmid:30871578, pmid:42212259]
+  explains_pem:
+    # Founder ruling 2026-11-01 under the clarified spec rule: the link must connect the mechanism to symptoms after
+    # exertion in the same patients; a measured change that is itself the hypothesised abnormality does not on its own
+    # explain PEM. 36984572 tracked symptoms after the 2-day test; its full text (PMC10059925) says "Detailed exercise
+    # test results of the 2-day CPET protocol will be reported separately" and relates recovery to no CPET measure.
+    # 30871578: Chalder Fatigue Scale completed before each session (full text Methods); group x time p = 0.005
+    # (Table 2); no analysis relating fatigue change to work-rate change in the same patients.
+    value: false
+    reason:
+      - text: >-
+          The two-day exercise tests on this card measure the state after exertion directly, but no
+          study on the card links oxygen use or work to the symptoms after exertion in the same
+          patients. The fall on the second test is itself the abnormality the hypothesis proposes, so
+          on its own it does not explain post-exertional malaise. One study of 16 patients and 10
+          controls found that fatigue scores rose more in patients before the second test and that
+          work rate at the ventilatory threshold fell more, but did not relate the two in the same
+          patients.
+        sources: [pmid:38965566, pmid:31161646, pmid:20937116, pmid:30871578]
+      - text: >-
+          The authors of the Oslo study write that the fall in peak oxygen use in their patients was,
+          in their opinion, too small to indicate any major change in exercise tolerance or to explain
+          post-exertional malaise.
+        sources: [pmid:31161646]
+      - text: >-
+          In an overlapping cohort from the 84-patient study's research group, 78 patients took on
+          average about 12.7 days to recover from the two-day test, against 2.1 days for 64 sedentary
+          controls; the paper reports the exercise test results separately and does not relate recovery
+          to oxygen use or work.
+        sources: [pmid:36984572]
+      - text: >-
+          The New York study found no fall in oxygen use on the second day. Its authors report, as a
+          preliminary result with the data to be published separately, that symptoms after the test
+          separated patients from controls on most days.
+        sources: [pmid:42212259]
+subgroups:
+  - text: >-
+      In a single study, not yet repeated, 18 patients fell into two groups during muscle exercise: 10
+      used less of a muscle energy store (phosphocreatine) than controls and produced low maximal
+      force, while 8 used it normally but became more acidic than controls and took almost four times
+      as long for muscle pH to recover.
+    sources: [pmid:21749371]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=18 patients and 12 sedentary controls found that 8 patients who exercised to levels
+      comparable with controls became more acidic in the muscle over three bouts of exercise, without
+      the fall in acidity with repeat exercise that the authors write is seen in healthy people, and
+      took almost four times as long for muscle pH to recover. Not yet repeated.
+    sources: [pmid:21749371]
+  - text: >-
+      A study of n=18 patients and 15 healthy controls found that blood lactate for a given power
+      output rose from the first to the second day's exercise test in patients and fell in controls.
+      Not yet repeated.
+    sources: [pmid:31161646]
+studies:
+  # --- supports ---
+  - id: pmid:38965566
+    title: "Cardiopulmonary and metabolic responses during a 2-day CPET in myalgic encephalomyelitis/chronic fatigue syndrome: translating reduced oxygen consumption to impairment status to treatment considerations."
+    year: 2024
+    cohort: me_cfs
+    # Full text (PMC11229500) also: "compliance with Canadian Consensus Criteria [32]"; multi-site (Ithaca College,
+    # Weill Cornell Medicine, ID Med Torrance), Cornell U54 Collaborative Research Center, data 2018-2022.
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+    design: controlled
+    n_patients: 84  # full text: "The final sample size in the analysis included 155 participants (71 CTL, 84 ME/CFS)"
+    n_controls: 71
+    # Full text: ME/CFS participants who met maximum effort criteria on test 1 but not on test 2 "were not excluded
+    # from analysis" — the point the New York study (42212259) raises. The authors' reading (full text): such patients
+    # "are emblematic of post-exertion symptom exacerbation that contributes to exertion intolerance". Results: "for
+    # CPET-2, there was a significant decline in %HRR adjusted for ME/CFS ... that fell below the threshold of 80%,
+    # suggesting that maximum effort was not given during CPET-2"; "a similar decline ... was observed in the
+    # matched-pairs CTL as well". A matched subset of 55 pairs gave similar results.
+    measures_pem: true
+    preregistered: false  # abstract: "ClinicalTrials.gov, retrospectively registered, ID# NCT04026425"
+    role: supports
+    direction: lower
+    # Overlaps: same CRC cohort as 36984572 (Moore 2023) and 35358096 (Germain 2022); Keller B also first author of
+    # 24755065; Stevens SR and Stevens J (Workwell Foundation) also on 23813081 (Stevens SR).
+    group: Hanson MR, Cornell University, Ithaca, USA (first author Keller B, Ithaca College)
+    finding: >-
+      A study of n=84 patients and 71 sedentary controls found that, unlike controls, patients did not
+      reproduce their first exercise test 24 hours later, with falls in work, oxygen use and heart rate
+      at peak effort and in oxygen use and work at the ventilatory threshold.
+  - id: pmid:31161646
+    title: Abnormal blood lactate accumulation during repeated exercise testing in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2019
+    cohort: me_cfs
+    # Abstract also: "18 female patients (18-50 years) fulfilling the Canadian Consensus Criteria for ME/CFS".
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "All included patients fulfilled the CCC for ME/CFS (Carruthers et al. 2003)."
+    design: controlled
+    n_patients: 18  # full text: "the 18 patients and 15 controls that completed both CPETs"
+    n_controls: 15
+    # Full text (Results, Fig. 5B/5D): the CPET1-to-CPET2 difference in VO2 at GET "did not differ significantly between
+    # groups"; the difference in power output at GET "was significantly different between groups". Peak VO2 fell in
+    # patients, but the change did not differ between groups. Discussion: the fall in peak VO2 was "too small, in our
+    # opinion, to indicate any major change in exercise tolerance or explain PEM". Partial replication (founder ruling).
+    measures_pem: true
+    preregistered: null
+    role: supports  # independent of 38965566: no shared authors, separate Norwegian cohort
+    direction: mixed  # power output at GET fell more in patients; oxygen-use changes did not differ between groups
+    group: Iversen PO, Department of Nutrition, University of Oslo, Norway
+    finding: >-
+      A study of n=18 women patients and 15 healthy women found that patients' power output at the gas
+      exchange threshold fell on a second exercise test 24 hours later while controls' did not, a
+      significant difference between groups; oxygen use at the threshold and at peak also fell in
+      patients, but neither fall differed significantly from the controls'; and blood lactate for a
+      given power output rose in patients and fell in controls.
+  - id: pmid:20937116
+    title: Patients with chronic fatigue syndrome performed worse than controls in a controlled repeated exercise study despite a normal oxidative phosphorylation capacity.
+    year: 2010
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM" (the full text adds that patients reported onset after an infection).
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "All patients fulfilled the criteria of Fukuda et al [1] for CFS/ME and reported the start of symptoms after an infectious disease."
+    design: controlled
+    n_patients: 15
+    n_controls: 15
+    # Full text (Results, Table 3 text), CPET2 minus CPET1, patients vs controls: at the anaerobic threshold work rate
+    # -4.40 vs +7.67 W (P = 0.002), oxygen uptake -0.87 vs +1.07 mL/kg (P = 0.001); at maximal work rate work rate
+    # -6.33 vs +11.1 W (P < 0.001), oxygen uptake -1.33 vs +0.73 mL/kg (P < 0.001). PBMC oxidative phosphorylation
+    # similar in patients and controls. (Its Discussion sentence on "willingness to perform" compares patients with
+    # controls at maximal work rate, not effort on the second test, so it is not used on the card.)
+    # The New York study (42212259) reads this paper as finding "no differences in outcomes at VT or peak work rate";
+    # the paper's own text above says otherwise.
+    # Contested: contradicted at comparable quality by 42212259 (founder ruling 2026-11-01, rung 3).
+    measures_pem: true
+    preregistered: null  # abstract gives "NL16031.040.07" (Dutch trial register); timing not stated
+    role: supports
+    direction: lower
+    group: Vermeulen RC, CFS/ME and Pain Research Center Amsterdam, The Netherlands (Visser FC is also last author of 34198913 and 34198946)
+    finding: >-
+      A study of n=15 women patients and 15 controls found lower oxygen use at the anaerobic threshold
+      and at peak exercise in patients on both days; from the first to the second day, work rate and
+      oxygen uptake fell in patients and rose in controls, a difference between groups at the threshold
+      (P = 0.002 and P = 0.001) and at peak (both P < 0.001); oxidative phosphorylation in blood cells
+      was similar to controls'.
+  - id: pmid:34198913
+    title: "Female Patients with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome or Idiopathic Chronic Fatigue: Comparison of Responses to a Two-Day Cardiopulmonary Exercise Testing Protocol."
+    year: 2021
+    cohort: me_cfs
+    # "ME criteria [1]" = ref 1, Carruthers et al. 2011, "Myalgic encephalomyelitis: International Consensus
+    # Criteria" (full text PMC8229058 reference list); ref 3 = Fukuda 1994. Recorded as ICC, read as patients meeting
+    # both. TODO: verify — the founder may read "ME criteria [1] and CFS criteria of Fukuda [3]" otherwise (founder
+    # ruling 2026-11-01 calls the ICC reading unconfirmed).
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "All patients underwent a detailed clinical history to establish the diagnosis of ME/CFS according to the ME criteria [1] and CFS criteria of Fukuda [3]."
+    design: controlled  # comparison group: patients with idiopathic chronic fatigue (ICF), not healthy controls
+    # TODO: verify — the abstract says "Fifty-one female patients with ICF ... compared to ... 50 female ME/CFS
+    # patients", but the full text (Methods and Table 1) has 51 ME/CFS and 50 ICF. Full text used here. The abstract
+    # and full text also differ on fibromyalgia (7 vs 0 in the abstract; 25/51 vs 7/50 in the full text).
+    # Caveats: retrospective analysis of a clinical database (Stichting Cardiozorg, 2010-2019); severe ME/CFS excluded;
+    # fibromyalgia 49% (25/51) vs 14% (7/50) per full text Results; patients likely overlap with 32629923 (same clinic
+    # and period, not on card); Visser FC also on 20937116.
+    n_patients: 51
+    n_controls: 50
+    measures_pem: true
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Visser FC, Stichting Cardiozorg, Hoofddorp, The Netherlands (same group as 34198946; Visser FC also on 20937116)
+    finding: >-
+      A study of n=51 women with ME/CFS and 50 women with chronic fatigue not meeting ME/CFS criteria
+      found that oxygen use and workload at peak exercise and at the ventilatory threshold fell on a
+      second test 24 hours later in ME/CFS, while the comparison group's performance improved, with no
+      significant change in its peak workload.
+  - id: pmid:34198946
+    title: "Comparing Idiopathic Chronic Fatigue and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) in Males: Response to Two-Day Cardiopulmonary Exercise Testing Protocol."
+    year: 2021
+    cohort: me_cfs
+    # "[1,3]": ref 1 = Carruthers et al. 2011, International Consensus Criteria; ref 3 = Fukuda et al. 1994 (full text
+    # PMC8230194 reference list). Recorded as ICC. TODO: verify — same reading question as 34198913.
+    # Caveats: retrospective clinical database (Stichting Cardiozorg, 2010-2019), severe ME/CFS excluded, fibromyalgia
+    # 7 ME/CFS vs 0 ICF; Visser FC also on 20937116.
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "We identified males who satisfied the criteria for ME/CFS, comparing them with male patients not fulfilling the criteria and who had been diagnosed with idiopathic chronic fatigue (ICF) [1,3]."
+    design: controlled  # comparison group: men with idiopathic chronic fatigue, not healthy controls
+    n_patients: 26
+    n_controls: 25
+    measures_pem: true
+    preregistered: null
+    role: supports  # separate patients (men) from 34198913 (women); same clinic and group
+    direction: lower
+    group: Visser FC, Stichting Cardiozorg, Hoofddorp, The Netherlands (same group as 34198913)
+    finding: >-
+      A study of n=26 men with ME/CFS and 25 men with chronic fatigue not meeting ME/CFS criteria found
+      that oxygen use and workload at peak exercise and at the ventilatory threshold fell on a second
+      test 24 hours later in ME/CFS, while the comparison group's performance improved, with no
+      significant change in its peak workload.
+  # --- contradicts ---
+  - id: pmid:42212259
+    title: Cardiopulmonary exercise test results do not change over two sequential days in patients with chronic fatigue syndrome.
+    year: 2026
+    cohort: me_cfs
+    # "the 1994 case definition" = Fukuda (the paper's introduction cites Fukuda et al., 1994), modified to require
+    # PEM, so the card's "does not require PEM" flag overstates this cohort: patients had to report PEM (VAS >= 3).
+    # The sentence reads "met both the 1994 case definition ..." with no second definition named. The companion
+    # paper 41293716 (same authors, apparently same cohort) says "met the 2015 IOM case definition". Founder ruling
+    # 2026-11-01: stays Fukuda; the card states the IOM wording and the PEM requirement (contested.reason).
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+    design: controlled
+    # n is the measurement n, DERIVED, not printed in the paper: 58 patients and 25 controls enrolled; "Five ME/CFS and
+    # six sedentary controls did not meet the American College of Sports Medicine (ACSM) criteria", and Table 2 shows
+    # those "with maximal Day 1 and Day 2 tests", so 58 - 5 = 53 and 25 - 6 = 19. Card text gives 58 and 25 and the
+    # paper's own "5 patients and 6 controls" instead. With RER >= 1.05 all but one patient were included, "with no
+    # change in the results". Symptoms were tracked after the tests; the paper reports them only as preliminary, to be
+    # published separately. Abstract conclusion: "The data do not support using the 2-day CPET protocol to define PEM
+    # or disability."
+    n_patients: 53
+    n_controls: 19
+    measures_pem: true
+    preregistered: null
+    role: contradicts
+    direction: no_difference
+    group: Natelson BH, Icahn School of Medicine at Mount Sinai, New York, USA (same group as 41293716; Natelson BH also on 8618560)
+    finding: >-
+      A study of n=58 patients and 25 sedentary controls found no significant change in peak oxygen use,
+      oxygen use at the ventilatory threshold or ventilatory efficiency from the first to the second day
+      in either group, a lower peak heart rate and higher perceived exertion in patients; the paper
+      reports that 5 patients and 6 controls did not meet maximal-effort criteria.
+  # --- early signal ---
+  - id: pmid:21749371
+    title: "Loss of capacity to recover from acidosis on repeat exercise in chronic fatigue syndrome: a case-control study."
+    year: 2012
+    cohort: me_cfs
+    case_definition: Fukuda  # "CDC 1994" = Fukuda; no open full text
+    case_definition_source: abstract
+    case_definition_quote: "A total of 18 CFS (CDC 1994) patients and 12 sedentary controls underwent assessment of maximal voluntary contraction (MVC), repeat exercise with magnetic resonance spectroscopy and cardio-respiratory fitness test to determine anaerobic threshold."
+    design: controlled
+    n_patients: 18  # the acidosis finding rests on the 8 patients with normal PCr depletion vs 12 controls
+    n_controls: 12
+    measures_pem: false  # three exercise bouts in one session; no next-day test and no symptom tracking in the abstract
+    preregistered: null
+    role: early_signal  # repeat-exercise muscle acidosis is not repeated by another study on this card
+    direction: lower
+    group: Newton JL, Newcastle University, UK (affiliation from first author)
+    finding: >-
+      A study of n=18 patients and 12 sedentary controls found lower anaerobic threshold and peak oxygen
+      use in patients, and in the 8 patients with normal phosphocreatine use, more muscle acidosis
+      across three exercise bouts and almost four times longer pH recovery than in controls.
+  # --- context ---
+  - id: pmid:30871578
+    title: Diagnostic sensitivity of 2-day cardiopulmonary exercise testing in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2019
+    cohort: me_cfs
+    # Patients were diagnosed by one of Fukuda, CCC or ICC; the paper does not say how many by each, so recorded as
+    # Fukuda, the lowest-ranked of the three. Fukuda: flag "does not require PEM" for part of the cohort.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "All participants were required to be between the ages of 18–65 years, and ME/CFS patients had to have been previously diagnosed with ME/CFS based on one of three widely accepted diagnostic criteria: (1) 1994 Centers For Disease Control and Prevention (CDC 1994—also known as the ‘Fukuda’ criteria [1]), (2) 2003 ‘Canadian’ Consensus Criteria (CCC) [3], or (3) 2011 International Consensus Criteria (ICC) [7]."
+    design: controlled
+    n_patients: 16
+    n_controls: 10
+    # Full text Table: group x time p for VO2 at VT 0.82 and at peak 0.73; work rate at VT 0.003. Neither a clean
+    # support (oxygen use) nor a clean contradiction (work rate): context, "mixed".
+    measures_pem: true
+    preregistered: null
+    role: context
+    direction: mixed
+    group: Davison K, University of South Australia, Adelaide, Australia
+    finding: >-
+      A study of n=16 patients and 10 healthy controls found that work rate at the ventilatory threshold
+      fell more from the first to the second day in patients, with no group difference in the change in
+      oxygen use, heart rate or ventilation.
+  - id: pmid:23813081
+    title: Discriminative validity of metabolic and workload measurements for identifying people with chronic fatigue syndrome.
+    year: 2013
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 51
+    n_controls: 10
+    measures_pem: true
+    preregistered: null
+    role: context  # cannot support while unverified (V9)
+    direction: lower
+    # Same 51 vs 10 women as 32568145 (Davenport 2020, not on card), which the New York study (42212259) reads as
+    # finding a day-2 fall in peak VO2 "comparable for both groups". Stevens SR also on 38965566.
+    group: Van Ness JM, University of the Pacific and Workwell Foundation, California, USA (affiliation from first author)
+    finding: >-
+      A study of n=51 women patients and 10 sedentary women found no differences on a first maximal
+      exercise test, but lower oxygen use and workload at peak and at the ventilatory or anaerobic
+      threshold in patients on a second test 24 hours later.
+  - id: pmid:28782878
+    title: "Physiological measures in participants with chronic fatigue syndrome, multiple sclerosis and healthy controls following repeated exercise: a pilot study."
+    year: 2018
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 10
+    n_controls: 10  # the 10 controls matched to the CFS group; the study also had 7 MS patients and 7 MS controls
+    measures_pem: true
+    preregistered: null
+    role: context
+    direction: mixed  # workload lower on day 2, oxygen use per kg rose
+    group: Hodges LD, Massey University, Palmerston North, New Zealand (affiliation from first author)
+    finding: >-
+      A pilot study of n=10 patients and 10 matched healthy controls found that patients' workload and
+      heart rate fell on a second exercise test 24 hours later while their oxygen use rose, against
+      rises in workload, heart rate and oxygen use in controls.
+  - id: pmid:8618560
+    title: Reduced oxidative muscle metabolism in chronic fatigue syndrome.
+    year: 1996
+    cohort: me_cfs
+    # "CDC criteria", version not named -> CDC_unspecified (founder ruling 2026-11-01). No open full text. Published
+    # 1996, after both the 1988 and 1994 CDC definitions.
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "Patients with CFS according to Centers for Disease Control (CDC) criteria (n = 22) were compared to normal sedentary subjects (n = 15)."
+    design: controlled  # for the patient-control comparison; the 2-day post-exertion retest was in patients only (n=14)
+    n_patients: 22
+    n_controls: 15
+    measures_pem: false  # muscle retested 2 days after a maximal test, but no controls retested and no symptoms tracked in the abstract
+    preregistered: null
+    # Context, not contradicts: its "no further fall after exertion" result has no control comparison, so it fails the
+    # comparable-quality test; its lower oxidative capacity is a single-occasion comparison, not after-exertion decline.
+    role: context
+    direction: mixed  # lower oxidative capacity than controls; no further fall 2 days after exertion
+    group: McCully KK, Medical College of Pennsylvania, Philadelphia, USA (affiliation from first author; Natelson BH also on 42212259)
+    finding: >-
+      A study of n=22 patients and 15 sedentary controls found a lower maximal rate of phosphocreatine
+      recovery after calf exercise, a measure of muscle oxidative capacity, in patients, and no further
+      change 2 days after a maximal treadmill test in the 14 patients retested.
+  - id: pmid:24755065
+    title: Inability of myalgic encephalomyelitis/chronic fatigue syndrome patients to reproduce VO₂peak indicates functional impairment.
+    year: 2014
+    cohort: me_cfs
+    case_definition: Fukuda  # Fukuda: flag "does not require PEM"
+    case_definition_source: fulltext
+    case_definition_quote: "Participants were 22 patients ill with ME/CFS for greater than 6 months and were diagnosed by referring physicians based on Fukuda et al. [15]."
+    design: uncontrolled
+    n_patients: 22
+    n_controls: null  # no control group
+    measures_pem: true
+    preregistered: null
+    role: context  # uncontrolled; same first author as 38965566 (Keller BA, Ithaca College), earlier cohort
+    direction: not_applicable
+    group: Keller BA, Ithaca College, Ithaca, USA
+    finding: >-
+      A study of n=22 patients without a control group found falls from the first to a second exercise
+      test 24 hours later in peak oxygen use (13.8%), peak heart rate, peak ventilation and work, and in
+      oxygen use and work at the ventilatory threshold.
+  - id: pmid:36984572
+    title: Recovery from Exercise in Persons with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
+    year: 2023
+    cohort: me_cfs
+    case_definition: CCC  # "Canadian Clinical Criteria"; full text (PMC10059925) cites ref [1] for CCC
+    case_definition_source: abstract
+    case_definition_quote: "ME/CFS subjects met the Canadian Clinical Criteria for diagnosis of ME/CFS; controls were healthy but not participating in regular physical activity."
+    design: controlled
+    # Abstract: 80 patients tested (64 controls). Full text: 92 ME/CFS and 81 controls did the protocol; 80/64 after
+    # missing symptom forms and effort criteria; one non-recovered outlier and one incomplete record removed, "resulting
+    # in a final sample size of ME n = 78, CTL n = 64" for the recovery analysis.
+    n_patients: 78
+    n_controls: 64
+    measures_pem: true  # symptoms tracked for 10 days after a two-day exercise test
+    preregistered: null
+    # Context: measures symptom recovery, not oxygen use or work, so direction is not_applicable on the card's measure.
+    # Same CRC cohort as 38965566 (overlapping participants).
+    role: context
+    direction: not_applicable
+    group: Hanson MR, Cornell University, Ithaca, USA (same group and cohort as 38965566)
+    finding: >-
+      A study of n=80 patients tested and 64 sedentary controls (78 patients analysed) found that
+      patients took on average about 12.7 days to recover from a two-day exercise test, against 2.1
+      days for controls.
+  - id: pmid:35358096
+    title: Plasma metabolomics reveals disrupted response and recovery following maximal exercise in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2022
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "A total of 105 participants, subdivided between 60 participants with ME/CFS (45 women plus 15 men) who fulfilled the Canadian consensus criteria for ME/CFS diagnosis (45) and 45 controls (30 women plus 15 men), underwent 2 successive CPETs at 3 sites."
+    design: controlled
+    n_patients: 60
+    n_controls: 45
+    measures_pem: true
+    preregistered: null
+    role: context  # metabolite pathways, not oxygen use or work; same CRC cohort as 38965566
+    direction: mixed
+    group: Hanson MR, Cornell University, Ithaca, USA (same group and cohort as 38965566)
+    finding: >-
+      A study of n=60 patients and 45 healthy controls measuring 1157 plasma metabolites around two
+      exercise tests 24 hours apart found that in patients, exertion mainly affected lipid-related and
+      energy-related pathways, differently after the first and second tests, and that over a quarter of
+      the identified pathways differed from controls in the 24-hour recovery period.
+  - id: pmid:41293716
+    title: Abnormal breathing patterns and hyperventilation are common in patients with chronic fatigue syndrome during exercise.
+    year: 2025
+    cohort: me_cfs
+    # On the card for its case-definition sentence (founder ruling 2026-11-01): same authors and apparently the same
+    # cohort as 42212259 (57 vs 25 here, 58 vs 25 there, mean age 38.6 ± 9.6 in both), but this paper names IOM 2015.
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: "The patients with ME/CFS were between the ages of 25 and 60 years and met the 2015 IOM case definition (22)."
+    design: controlled
+    n_patients: 57
+    n_controls: 25
+    measures_pem: false  # the study ran a 2-day protocol, but the abstract reports peak values without a day-2 comparison
+    preregistered: null
+    role: context
+    direction: not_applicable  # reports peak VO2 from a single test (comparable to controls), not the day-2 change
+    group: Natelson BH, Icahn School of Medicine at Mount Sinai, New York, USA (same group as 42212259)
+    finding: >-
+      A study of n=57 patients and 25 sedentary controls found peak oxygen use comparable between the
+      groups, and dysfunctional breathing and hyperventilation during exercise more common in patients.
+last_checked:
+  date: 2026-11-01
+  by: ai_pair

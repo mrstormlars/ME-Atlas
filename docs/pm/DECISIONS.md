@@ -2,6 +2,18 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Cards four and five (autoimmunity; gut microbiome)
+
+- Autoimmunity (autoantibodies and B cells): draft level 3, not contested. The 151-patient placebo-controlled CCC rituximab trial (pmid:30934066), larger and stricter than the 30-patient trial (pmid:22039471) that met rung 4 as written, settles rung 4: it is not reached. General reading of spec section 3 "a larger study settles it": when a larger study of the same or stricter case definition with a control group contradicts the only study on a rung, the rung is not reached rather than contested. Rung 3 rests on Azcue 2026 (beta-2 antibodies only, same commercial test). Germain 2025 (pmid:40141440) may contest rungs 2-3 once its full text is cached and verified; to be decided then.
+- Long COVID label: "modified CCC" counts as CCC (autoimmunity keeps the label). A study whose case definition is unverified cannot carry the label; the gut microbiome card drops its only long COVID study (pmid:39592468).
+- Gut microbiome: draft level 3, not contested, resting on lower stool butyrate in two independent cohorts (pmid:36758522 CCC; pmid:41387992 IOM 2015). Conflicting gut-wall marker results do not bear on that finding. Diagnostic marker no: the validation cohort came from the same group and sites.
+
+## 2026-11-01 — Third card (impaired energy production after exertion)
+
+- Draft level 3, contested at rung 3. The replication rests on Vermeulen 2010 (Fukuda), which the 2026 two-day study of 53 patients (Fukuda, no difference) contradicts at comparable quality, and on van Campen 2021, whose ICC reading is unconfirmed and whose comparison group has chronic fatigue without ME/CFS. Lien 2019 is a partial replication (work at the threshold, not oxygen use). Rung 2 rests on the 84-patient CCC study and is not contested.
+- pmid:42212259 is recorded as Fukuda, from its own sentence; the card states that a companion paper on what appears to be the same cohort names the 2015 IOM definition, and that PEM was required.
+- PEM badge rule clarified (spec section 3): the link must connect the mechanism to symptoms after exertion in the same patients; a measured change that is itself the hypothesised abnormality does not on its own explain PEM. This card: Explains PEM no. Why: a day-2 fall is both the PEM measure and the hypothesis, so the badge would be true by definition.
+
 ## 2026-11-01 — Rulings from the site review
 
 - Level 2 needs a controlled study with a **recognised** case definition (the accepted table in spec section 3), not a "strict" one. Fukuda and Holmes 1988 count, flagged "does not require PEM". Why: the spec contradicted itself (Fukuda accepted at every rung, but level 2 said "strict"); this keeps the rule the cards were graded by.
