@@ -1,5 +1,7 @@
-# DRAFT — AI-drafted from PubMed abstracts only (records in data/cache/pubmed/<pmid>.xml).
-# Level, contested mark and badges are proposals for the founder (tier 2); nothing here is approved.
+# DRAFT — AI-drafted from PubMed abstracts (data/cache/pubmed/<pmid>.xml) and, where open access,
+# Europe PMC full text (data/cache/europepmc/<pmcid>.xml).
+# Level 3, contested at rung 3: accepted 2026-11-01 as the draft level (DECISIONS.md). Badges are
+# AI proposals not covered by that ruling. Nothing here is published.
 slug: reduced-nk-cell-function
 name: Reduced natural killer (NK) cell function
 core_claim:
@@ -7,46 +9,56 @@ core_claim:
     The hypothesis proposes that natural killer (NK) cells, immune cells that help defend
     against viral infection, are less able to kill target cells in people with ME/CFS.
   sources: [pmid:27099524, pmid:20520837, pmid:33777500]
-level: 2
+level: 3
 level_reason:
   text: >-
-    One controlled study with a recognised case definition (Fukuda, which does not require
-    post-exertional malaise; 39 patients, 30 controls) found lower NK cell killing in ME/CFS.
-    Three other studies used a CDC case definition whose version their abstracts do not name.
-    One, of 8 patients from a single family, found lower NK activity than in 8 controls. One,
-    of 20 patients, found no patient above 100 lytic units and lower activity in more severely
-    ill patients, but its abstract gives no direct comparison with its 50 healthy controls.
-    One, of 21 patients and 21 controls, found no difference. Of the controlled studies whose
-    abstracts state no case definition, three (65 to 176 patients) found lower NK killing and
-    two (one of 174 patients, one of unstated size) found no difference. A repeat by an
-    independent group with a recognised case definition (level 3) is therefore not shown; a
-    contradicting study of comparable quality is described in the contested note.
-  sources: [pmid:27099524, pmid:9683556, pmid:8148445, pmid:7983659, pmid:20520837, pmid:21619669, pmid:22571715, pmid:37013608, pmid:8985207, pmid:28694809]
+    Controlled studies using the Fukuda definition, which does not require post-exertional
+    malaise, found lower NK cell killing in patients than in controls. Three come from one
+    Australian research group: one of 39 patients and 30 controls, and two of 95 and 65
+    patients, the second drawn from the first's cohort. One of 176 patients and 230 controls
+    comes from a group in Miami with no authors shared with the 39-patient study; its last
+    author co-authored the 95-patient study with the Australian group, an indirect link. The
+    card is at level 3 because an independent group found the same result in a
+    separate cohort. Against this, a study meeting the Canadian Consensus Criteria (48 patients
+    and 52 controls in the whole study; NK killing measured in 39 patients and 44 controls)
+    found no difference (see the contested note), as did a study of 21 patients and 21 controls using a CDC definition whose
+    version is not named, a multi-site study of 174 patients and 86 controls whose patients were
+    diagnosed by expert clinicians without a named case definition, and a case-control study of
+    unstated size whose abstract names no case definition. Two small studies using a CDC
+    definition whose version is not named found lower NK activity in 8 patients from one family
+    than in 8 controls, and no patient above 100 lytic units among 20 patients, without a direct
+    comparison with that study's 50 controls.
+  sources: [pmid:27099524, pmid:21619669, pmid:22571715, pmid:20520837, pmid:28694809, pmid:7983659, pmid:37013608, pmid:8985207, pmid:9683556, pmid:8148445]
 contested:
-  rungs: [2]
+  rungs: [3]
   reason:
     text: >-
-      A study of 48 patients meeting the Canadian Consensus Criteria (stricter than Fukuda),
-      compared with matched healthy controls, found no reproducible difference in NK cell
-      killing. This meets the comparable-quality rule against the Fukuda study at rung 2.
-      A larger multi-site study (174 patients, 86 healthy controls) also found no difference,
-      but its abstract does not state the case definition.
-    sources: [pmid:28694809, pmid:27099524, pmid:37013608]
+      A study meeting the Canadian Consensus Criteria (stricter than Fukuda), with 48 patients and
+      52 matched healthy controls in the whole study, measured NK killing in 39 patients and 44
+      controls in two cohorts analysed separately (24 vs 28 and 15 vs 16) and found no difference.
+      With 39 patients in that measurement, it is of comparable quality to the Australian group's
+      Fukuda studies of 39 and 65 patients, but not to its 95-patient study or to the Miami study
+      of 176 patients. Rung 3 is contested because the 39-patient study is one of the two
+      independent studies it needs; rung 2 still rests on the Miami study, which no comparable
+      study contradicts. A multi-site study of 174 patients and 86 controls also found no
+      difference, but its patients were diagnosed by expert clinicians without a named case
+      definition.
+    sources: [pmid:28694809, pmid:27099524, pmid:21619669, pmid:22571715, pmid:20520837, pmid:37013608]
 badges:
   diagnostic_marker:
     value: false
     reason:
       text: >-
-        No abstract reports NK cell killing tested as a diagnostic marker in a second,
-        independent patient group with a stated case definition. One study found NK killing
-        a good predictor of CFS status within its own cohort, without a stated case definition.
-        A Canadian Consensus Criteria study concluded the measures were not useful diagnostic
-        markers, a multi-site study concluded the assay was not ready for clinical use, and a
-        family study found low antibody-dependent NK killing also in relatives without the illness.
+        No study on this card reports NK cell killing validated as a diagnostic marker in a second,
+        independent patient group. A Fukuda study of 176 patients and 230 controls found NK
+        killing a good predictor of CFS status within its own cohort. A Canadian Consensus
+        Criteria study concluded the measures were not useful diagnostic markers, a multi-site
+        study concluded the assay was not ready for clinical use, and a family study found low
+        antibody-dependent NK killing also in relatives without the illness.
       sources: [pmid:20520837, pmid:28694809, pmid:37013608, pmid:33777500]
   explains_pem:
     value: false
-    reason: null  # no abstract found that measures PEM directly and links it to NK cell function
+    reason: null  # no study found that measures PEM directly and links it to NK cell function
 subgroups:
   - text: >-
       Two small studies suggest lower NK cell activity may go with more severe illness: one of
@@ -62,7 +74,8 @@ studies:
     title: Natural killer cells and single nucleotide polymorphisms of specific ion channels and receptor genes in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2016
     cohort: me_cfs
-    case_definition: Fukuda  # abstract: "the 1994 Centers for Disease Control and Prevention criteria"
+    # "1994 CDC criteria" = Fukuda. Full text (PMC4821384) confirms: the sentence cites ref 45, Fukuda et al. 1994.
+    case_definition: Fukuda
     case_definition_source: abstract
     case_definition_quote: "Patients were defined according to the 1994 Centers for Disease Control and Prevention criteria."
     design: controlled
@@ -72,17 +85,78 @@ studies:
     preregistered: null
     role: supports
     direction: lower
-    group: null
+    group: Staines D, Griffith University (National Centre for Neuroimmunology and Emerging Diseases), Gold Coast, Australia
     finding: >-
       A study of n=39 patients and 30 unfatigued controls found lower NK cell lysis of target
       cells in patients (17% vs 31%).
+  - id: pmid:20520837
+    title: "Biomarkers in chronic fatigue syndrome: evaluation of natural killer cell function and dipeptidyl peptidase IV/CD26."
+    year: 2010
+    cohort: me_cfs
+    # Full text (PMC2876037): "CDC clinical diagnostic criteria [1], [2]"; ref 1 is Fukuda et al. 1994 and ref 2 is
+    # Reeves et al. 2003 on ambiguities in the 1994 definition, so this reads as Fukuda.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1)."
+    design: controlled
+    n_patients: 176
+    n_controls: 230
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Klimas NG, University of Miami Miller School of Medicine, Miami, USA (affiliation from first author; record gives none for last author)
+    finding: >-
+      A study of n=176 patients and 230 controls found lower NK cell killing in patients, which
+      was a good predictor of CFS status in its ROC analysis; NK cell counts did not differ.
+  - id: pmid:21619669
+    title: Immunological abnormalities as potential biomarkers in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
+    year: 2011
+    cohort: me_cfs
+    # Full text (PMC3120691): grouping "based on the CDC 1994 case definition symptom criteria"; the preceding
+    # sentence cites ref 4, Fukuda et al. 1994. Note: the same paragraph says participants completed a questionnaire
+    # based on that definition, so the founder may want to weigh how the criteria were applied.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Participants for the present project were grouped into CFS/ME, or non-fatigued control groups based on the CDC 1994 case definition symptom criteria."
+    design: controlled
+    n_patients: 95
+    n_controls: 50
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Marshall-Gradisnik SM, Bond University (Population Health and Neuroimmunology Unit), Robina, Australia (affiliation from first author); Staines DR and Marshall-Gradisnik SM are also authors of pmid:27099524, and Klimas NG of pmid:20520837
+    finding: >-
+      A study of n=95 patients and 50 healthy controls found lower NK and CD8+ T cell cytotoxic
+      activity in patients.
+  - id: pmid:22571715
+    title: Longitudinal investigation of natural killer cells and cytokines in chronic fatigue syndrome/myalgic encephalomyelitis.
+    year: 2012
+    cohort: me_cfs
+    # Full text (PMC3464733): "1994 CDC criteria" = Fukuda. Participants were recruited "from an existing cohort",
+    # citing ref 25 = pmid:21619669, so the two cohorts overlap.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "The CFS/ME group met the 1994 CDC criteria for CFS/ME and the control group consisted of non-fatigued volunteers."
+    design: controlled
+    n_patients: 65
+    n_controls: 21
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Marshall-Gradisnik SM, Bond University (Population Health and Neuroimmunology Unit), Robina, Australia (affiliation from first author); same group and overlapping cohort as pmid:21619669
+    finding: >-
+      A study of n=65 patients and 21 non-fatigued controls found lower NK cell cytotoxic
+      activity in patients at baseline, 6 months and 12 months.
   - id: pmid:8148445
     title: Decreased natural killer cell activity is associated with severity of chronic fatigue immune dysfunction syndrome.
     year: 1994
     cohort: me_cfs
     # Abstract says "criteria established by the Centers for Disease Control and Prevention (Atlanta)".
     # The cached record gives publication Jan 1994, before the Fukuda definition (pmid:7978722, Dec 15 1994),
-    # so "CDC" cannot mean Fukuda here. TODO: verify which earlier CDC definition was used.
+    # so "CDC" cannot mean Fukuda here. No open full text. TODO: verify which earlier CDC definition was used.
     case_definition: other
     case_definition_source: abstract
     case_definition_quote: "Natural killer (NK) cell activity was measured blindly in vitro with blood specimens from 50 healthy individuals and 20 patients with clinically defined chronic fatigue immune dysfunction syndrome (CFIDS) who met the criteria established by the Centers for Disease Control and Prevention (Atlanta)."
@@ -93,7 +167,7 @@ studies:
     preregistered: null
     role: supports
     direction: not_applicable
-    group: null
+    group: Peter JB, Specialty Laboratories, Santa Monica, USA (affiliation from first author)
     finding: >-
       A study of n=20 patients and 50 healthy controls found NK cell activity no higher than
       100 lytic units in any patient, and lower activity in more severely ill patient groups.
@@ -101,7 +175,7 @@ studies:
     title: Dysfunction of natural killer activity in a family with chronic fatigue syndrome.
     year: 1998
     cohort: me_cfs
-    case_definition: other  # TODO: verify — abstract says "CFS case definition as recommended by the Centers for Disease Control and Prevention", version not named
+    case_definition: other  # TODO: verify — abstract says "CFS case definition as recommended by the Centers for Disease Control and Prevention", version not named; no open full text
     case_definition_source: abstract
     case_definition_quote: "All 8 met criteria for the CFS case definition as recommended by the Centers for Disease Control and Prevention."
     design: controlled
@@ -111,7 +185,7 @@ studies:
     preregistered: null
     role: supports
     direction: lower
-    group: null
+    group: Herberman RB, National Cancer Institute, Bethesda, USA (affiliation from first author)
     finding: >-
       A study of n=8 affected family members, 12 unaffected family members and 8 controls found
       lower NK activity in affected members than in controls; unaffected members were in between
@@ -121,28 +195,33 @@ studies:
     title: Unperturbed Cytotoxic Lymphocyte Phenotype and Function in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.
     year: 2017
     cohort: me_cfs
-    case_definition: CCC  # abstract: "the Canada 2003 criteria"
+    # "Canada 2003 criteria" = CCC. Full text (PMC5483846) confirms: "All 48 patients fulfilled Canada 2003 (2)
+    # criteria for ME/CFS", ref 2 = Carruthers et al. 2003.
+    case_definition: CCC
     case_definition_source: abstract
     case_definition_quote: "Forty-eight patients from two independent cohorts fulfilling the Canada 2003 criteria for ME/CFS were evaluated with respect to cytotoxic lymphocyte phenotype and function."
     design: controlled
-    n_patients: 48  # from two independent cohorts
-    n_controls: null  # TODO: verify — not stated in abstract ("matched healthy controls")
+    n_patients: 48  # from two independent cohorts (Stockholm 24, Oslo 24; full text Table 1)
+    n_controls: 52  # full text Table 1: Stockholm 28, Oslo 24 healthy controls
+    # NK killing (51Cr K562 assay, full text Figure 2 C-F): Stockholm 24 patients vs 28 controls and
+    # Oslo 15 vs 16, analysed separately (39 vs 44 in total). The format holds only whole-study n.
     measures_pem: false
     preregistered: null
     role: contradicts
     direction: no_difference
-    group: null
+    group: Bryceson YT, Karolinska Institutet, Stockholm, Sweden, and University of Bergen, Norway
     finding: >-
-      A study of n=48 patients from two cohorts and matched healthy controls found no
-      reproducible differences in cytotoxic lymphocyte numbers, granule content, activation,
-      exocytosis, target cell killing or cytokine production.
+      A study of n=48 patients from two cohorts and 52 matched healthy controls (NK killing
+      measured in 39 patients and 44 controls) found no reproducible differences in cytotoxic
+      lymphocyte numbers, granule content, activation, exocytosis, target cell killing or
+      cytokine production.
   - id: pmid:7983659
     title: Chronic fatigue syndrome--a controlled cross sectional study.
     year: 1994
     cohort: me_cfs
     # Abstract says "the Centers for Disease Control criteria for CFS".
     # The cached record gives publication Aug 1994, before the Fukuda definition (pmid:7978722, Dec 15 1994),
-    # so "CDC" cannot mean Fukuda here. TODO: verify which earlier CDC definition was used.
+    # so "CDC" cannot mean Fukuda here. No open full text. TODO: verify which earlier CDC definition was used.
     case_definition: other
     case_definition_source: abstract
     case_definition_quote: "Twenty-one patients fulfilling the Centers for Disease Control criteria for CFS were compared to 21 age and sex matched controls."
@@ -153,72 +232,22 @@ studies:
     preregistered: null
     role: contradicts
     direction: no_difference
-    group: null
+    group: Wiik A, Rigshospitalet, Copenhagen, Denmark (affiliation from first author)
     finding: >-
       A study of n=21 patients and 21 matched controls found NK cell activity similar in the two
       groups.
-  # --- context: case definition not stated in the abstract (cannot support or contradict) ---
-  - id: pmid:20520837
-    title: "Biomarkers in chronic fatigue syndrome: evaluation of natural killer cell function and dipeptidyl peptidase IV/CD26."
-    year: 2010
-    cohort: me_cfs
-    case_definition: unverified  # abstract names no case definition; full text not yet checked
-    case_definition_source: null
-    case_definition_quote: null
-    design: controlled
-    n_patients: 176
-    n_controls: 230
-    measures_pem: false
-    preregistered: null
-    role: context
-    direction: lower
-    group: null
-    finding: >-
-      A study of n=176 patients and 230 controls found lower NK cell killing in patients, which
-      was a good predictor of CFS status in its ROC analysis; NK cell counts did not differ.
-  - id: pmid:21619669
-    title: Immunological abnormalities as potential biomarkers in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
-    year: 2011
-    cohort: me_cfs
-    case_definition: unverified  # abstract names no case definition; full text not yet checked
-    case_definition_source: null
-    case_definition_quote: null
-    design: controlled
-    n_patients: 95
-    n_controls: 50
-    measures_pem: false
-    preregistered: null
-    role: context
-    direction: lower
-    group: null
-    finding: >-
-      A study of n=95 patients and 50 healthy controls found lower NK and CD8+ T cell cytotoxic
-      activity in patients.
-  - id: pmid:22571715
-    title: Longitudinal investigation of natural killer cells and cytokines in chronic fatigue syndrome/myalgic encephalomyelitis.
-    year: 2012
-    cohort: me_cfs
-    case_definition: unverified  # abstract names no case definition; full text not yet checked
-    case_definition_source: null
-    case_definition_quote: null
-    design: controlled
-    n_patients: 65
-    n_controls: 21
-    measures_pem: false
-    preregistered: null
-    role: context
-    direction: lower
-    group: null
-    finding: >-
-      A study of n=65 patients and 21 non-fatigued controls found lower NK cell cytotoxic
-      activity in patients at baseline, 6 months and 12 months.
+  # --- context: no recognised case definition found (cannot support or contradict) ---
   - id: pmid:37013608
     title: "Natural killer cytotoxicity in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS): a multi-site clinical assessment of ME/CFS (MCAM) sub-study."
     year: 2023
     cohort: me_cfs
-    case_definition: unverified  # abstract names no case definition; full text not yet checked
-    case_definition_source: null
-    case_definition_quote: null
+    # Full text (PMC10069115) checked: patients enrolled on expert clinician diagnosis; case definitions are cited
+    # only as background in the introduction. Mentions of CDC refer to the IRB and the CDC Symptom Inventory
+    # questionnaire, not a case definition. TODO: verify — the parent MCAM design paper (its ref 20, Unger et al.
+    # 2017, Am J Epidemiol) may state criteria; not in the cache.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: "The MCAM study enrolled participants from five specialty clinical sites located in the United States based on expert clinician diagnoses and used standardized assessment tools to characterize ME/CFS illness domains as previously described (sites: Mount Sinai Beth Israel, New York, New York; Institute for Neuro ImmuneMedicine, Miami and Fort Lauderdale, Florida; Bateman Horne Center, Salt Lake City, Utah; OpenMedicine Clinic, Mountain View, California; and Sierra Internal Medicine, Incline Village, Nevada) [20]."
     design: controlled
     n_patients: 174
     n_controls: 86  # healthy controls; the study also had 10 ill controls, which the card format cannot record
@@ -226,7 +255,7 @@ studies:
     preregistered: null
     role: context
     direction: no_difference
-    group: null
+    group: Unger ER, Centers for Disease Control and Prevention, Atlanta, USA (multi-site; Klimas NG is a co-author, as on pmid:20520837)
     finding: >-
       A study of n=174 patients and 86 healthy controls, using an assay validated for samples
       shipped overnight, found no significant difference in NK cell cytotoxicity (p=0.79), with
@@ -235,7 +264,7 @@ studies:
     title: "Immune responses associated with chronic fatigue syndrome: a case-control study."
     year: 1997
     cohort: me_cfs
-    case_definition: unverified  # abstract names no case definition; full text not yet checked ("rigorously defined cases")
+    case_definition: unverified  # abstract names no case definition ("rigorously defined cases"); no open full text
     case_definition_source: null
     case_definition_quote: null
     design: controlled
@@ -253,7 +282,7 @@ studies:
     title: Antibody-Dependent Cell-mediated Cytotoxicity (ADCC) in Familial Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2020
     cohort: me_cfs
-    case_definition: Fukuda  # abstract: "The patients met the Fukuda diagnostic criteria"
+    case_definition: Fukuda  # abstract: "The patients met the Fukuda diagnostic criteria"; full text (PMC7993113) not open access
     case_definition_source: abstract
     case_definition_quote: "The patients met the Fukuda diagnostic criteria."
     design: controlled
@@ -261,7 +290,7 @@ studies:
     n_controls: null  # TODO: verify — not stated in abstract (family members without CFS and unrelated controls)
     measures_pem: false
     preregistered: null
-    role: context
+    role: context  # accepted 2026-11-01: stays context (measures a different kind of NK killing, ADCC)
     direction: lower
     group: null
     finding: >-
@@ -272,7 +301,7 @@ studies:
     title: "Impaired natural immunity, cognitive dysfunction, and physical symptoms in patients with chronic fatigue syndrome: preliminary evidence for a subgroup?"
     year: 2006
     cohort: me_cfs
-    case_definition: unverified  # abstract names no case definition; full text not yet checked
+    case_definition: unverified  # abstract names no case definition; no open full text
     case_definition_source: null
     case_definition_quote: null
     design: uncontrolled  # compares patients with low and normal NK activity; no healthy control group
@@ -282,7 +311,7 @@ studies:
     preregistered: null
     role: context
     direction: not_applicable
-    group: null
+    group: Klimas N, University of Miami, USA (affiliation from first author); Fletcher MA and Klimas N are also authors of pmid:20520837
     finding: >-
       A study of n=41 female patients found that those with low NK cell activity reported less
       vigour and more cognitive problems, and scored lower on cognitive tests, than those with
