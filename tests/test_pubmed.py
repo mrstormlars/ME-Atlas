@@ -776,3 +776,85 @@ def test_run_fetch_returns_manifest_and_path(tmp_path):
 
 def test_retraction_term_wraps_the_query():
     assert retraction_term("a OR b") == '(a OR b) AND "Retracted Publication"[Publication Type]'
+
+
+# --- fetch --ids ------------------------------------------------------------
+
+
+def efetched_ids(server: FakePubMed) -> list[str]:
+    return sorted(i for p in server.of("efetch.fcgi") for i in p["id"].split(","))
+
+
+def only_manifest(tmp_path: Path) -> dict:
+    return json.loads(next((tmp_path / "cache" / "runs").glob("*.json")).read_text(encoding="utf-8"))
+
+
+def test_ids_fetches_exactly_those_ids_without_any_search(tmp_path):
+    server = FakePubMed()
+    assert run_cli(server, tmp_path, "--ids", "90000004", "90000005") == 0
+    assert [e for e, _, _ in server.requests] == ["efetch.fcgi"], "no ESearch, no retraction query"
+    assert efetched_ids(server) == ["90000004", "90000005"]
+    for pmid in ("90000004", "90000005"):
+        assert RawCache(tmp_path / "cache").read_record(pmid) == record(pmid)
+    assert not (tmp_path / "cache" / "pubmed" / "90000001.xml").exists()
+
+
+def test_ids_accepts_the_pmid_prefix_and_ignores_the_query_file(tmp_path):
+    server = FakePubMed()
+    assert run_cli(server, tmp_path, "--ids", "pmid:90000004", query=None) == 0
+    assert efetched_ids(server) == ["90000004"]
+
+
+def test_ids_skips_cached_records_and_refresh_fetches_them_again(tmp_path):
+    server = FakePubMed()
+    assert run_cli(server, tmp_path, "--ids", "90000004") == 0
+
+    server.requests.clear()
+    assert run_cli(server, tmp_path, "--ids", "90000004", "90000005") == 0
+    assert efetched_ids(server) == ["90000005"], "the cached record is not requested again"
+
+    server.requests.clear()
+    assert run_cli(server, tmp_path, "--ids", "90000004", "90000005") == 0
+    assert server.requests == [], "everything cached: no request at all"
+
+    server.requests.clear()
+    assert run_cli(server, tmp_path, "--ids", "90000004", "90000005", "--refresh") == 0
+    assert efetched_ids(server) == ["90000004", "90000005"]
+
+
+def test_ids_writes_a_manifest_with_mode_and_ids(tmp_path):
+    server = FakePubMed()
+    assert run_cli(server, tmp_path, "--ids", "90000005", "90000004", "90000005") == 0
+    m = only_manifest(tmp_path)
+    assert m["mode"] == "ids"
+    assert m["ids"] == ["90000005", "90000004"], "in the order given, without duplicates"
+    assert m["refresh"] is False
+    assert m["new_pmids"] == ["90000004", "90000005"]
+    assert m["counts"]["fetched"] == 2 and m["counts"]["skipped_cached"] == 0
+    assert "query" not in m and "retraction_query" not in m
+
+
+def test_ids_reports_a_pmid_pubmed_does_not_return(tmp_path, capsys):
+    server = FakePubMed()
+    assert run_cli(server, tmp_path, "--ids", "90000004", "90009999") == 0
+    assert only_manifest(tmp_path)["missing_pmids"] == ["90009999"]
+    assert "90009999" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "args",
+    [
+        ["--ids", "90000001", "--since", "2025-01-01"],
+        ["--ids", "90000001", "--weekly"],
+        ["--ids", "90000001", "--backfill"],
+        ["--ids", "90000001", "--until", "2025-01-01"],
+        ["--ids"],  # no ids given
+        ["--ids", "not-a-pmid"],
+    ],
+)
+def test_ids_cannot_be_combined_with_a_window_mode(tmp_path, args):
+    server = FakePubMed()
+    with pytest.raises(SystemExit) as exc:
+        run_cli(server, tmp_path, *args)
+    assert exc.value.code == 2
+    assert server.requests == []

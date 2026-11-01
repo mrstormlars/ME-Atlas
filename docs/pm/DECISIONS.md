@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-01 — Mechanical citation check
+
+- The citation check is its own offline command, `uv run python -m me_atlas.citations check`, not part of `cards validate`. It reads only the cache and never makes a request. Why: the cache is gitignored, so it cannot run on GitHub as the validator can; it runs locally and later in the weekly pipeline.
+- Seven checks per study, C1-C7: record exists, title, year, not retracted, case-definition quote verbatim in the stated source, sample size, DOI-only id. Matching is exact after a stated, narrow normalisation (NFKC, whitespace, case for titles; quotes and dashes for quotes), nothing looser. Reference: `docs/citation-check.md`. Plan: `docs/plan-citation-check.md`.
+- Sample size (C6) is a warning, not an error. Why: a correct number may be written as a word, be a sum of cohorts or belong to one measurement, so a person looks instead of the check blocking.
+- A `doi:` study id is an error for now ("cite by PMID"). Why: only PubMed records are fetched, so a DOI-only id cannot be checked; every current study has a PMID.
+- `pubmed fetch --ids <pmid>...` fetches exactly the given records (no search, no retraction query), so a card can cite a paper outside the search query. It writes a run manifest with the mode and ids.
+
 ## 2026-11-01 — Rulings from the first two draft cards
 
 - Comparable quality uses the number of patients in the measurement that bears on the finding, not the whole study. Why: stricter and more honest when only part of a study measured the outcome. Added to spec section 3.
