@@ -3,8 +3,8 @@
 {% block content %}
 {% macro study_entry(s) %}
 <article class="study" id="{{ study_anchor(s.id) }}">
-  <h4 class="study-title"><a href="{{ study_url(s.id) }}" rel="noopener noreferrer">{{ s.title }}</a></h4>
-  <p class="study-meta">{{ s.year }} · {{ s.id }} · <span class="sizes"><span class="n-patients">{% if s.n_patients is not none %}{{ s.n_patients }} patients{% else %}patients: not stated{% endif %}</span>, <span class="n-controls">{% if s.n_controls is not none %}{{ s.n_controls }} controls{% elif s.design == "uncontrolled" %}controls: none (uncontrolled study){% else %}controls: not stated{% endif %}</span></span> · {{ case_definition(s) }} · {{ design_labels[s.design] }} · {{ direction_labels[s.direction] }}{% if s.id in page.refs %} · cited as [{{ page.refs[s.id] }}]{% endif %}</p>
+  <h4 class="study-title"><a href="{{ study_url(s.id) }}"{% if lang != default_lang %} lang="en"{% endif %} rel="noopener noreferrer">{{ s.title }}</a></h4>
+  <p class="study-meta">{{ s.year }} · {{ s.id }} · <span class="sizes"><span class="n-patients">{% if s.n_patients is not none %}{{ t("study.patients", n=s.n_patients) }}{% else %}{{ t("study.patients_nr") }}{% endif %}</span>, <span class="n-controls">{% if s.n_controls is not none %}{{ t("study.controls", n=s.n_controls) }}{% elif s.design == "uncontrolled" %}{{ t("study.controls_none") }}{% else %}{{ t("study.controls_nr") }}{% endif %}</span></span> · {{ case_definition(s) }} · {{ txt("design." ~ s.design) }} · {{ txt("direction." ~ s.direction) }}{% if s.id in page.refs %} · {{ t("study.cited_as", n=page.refs[s.id]) }}{% endif %}</p>
   <p class="finding">{{ page.finding(s) }}</p>
 </article>
 {% endmacro %}
@@ -23,80 +23,83 @@
 <p class="empty">{{ empty }}</p>
 {% endif %}
 {% endmacro %}
-<p class="crumb"><a href="{{ root }}index.html">Front page</a></p>
-<h1>{{ card.name }}</h1>
+<p class="crumb"><a href="{{ lroot }}index.html">{{ txt("page.front") }}</a></p>
+<h1{% if name_in_english %} lang="en"{% endif %}>{{ card.name }}</h1>
+{% if card_note %}
+<p class="small untranslated">{{ card_note }}</p>
+{% endif %}
 
 <div class="panel summary-panel">
   {{ bar(card) }}
   <p class="level-line"><strong>{{ level_line(card) }}</strong></p>
   <div class="chips">
 {% if card.contested %}
-    <span class="chip chip-contested">Contested at {{ contested_rungs(card) }}</span>
+    <span class="chip chip-contested">{{ t("chip.contested", rungs=contested_rungs(card)) }}</span>
 {% else %}
-    <span class="chip off">Not contested</span>
+    <span class="chip off">{{ txt("chip.not_contested") }}</span>
 {% endif %}
-    <span class="chip {{ 'badge' if card.badges.diagnostic_marker.value else 'off' }}">Marker validated: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</span>
-    <span class="chip {{ 'badge' if card.badges.explains_pem.value else 'off' }}">Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</span>
+    <span class="chip {{ 'badge' if card.badges.diagnostic_marker.value else 'off' }}">{{ t("chip.marker_answer", answer=txt("answer.yes" if card.badges.diagnostic_marker.value else "answer.no")) }}</span>
+    <span class="chip {{ 'badge' if card.badges.explains_pem.value else 'off' }}">{{ t("chip.pem_answer", answer=txt("answer.yes" if card.badges.explains_pem.value else "answer.no")) }}</span>
 {% if card.long_covid %}
-    <span class="chip tag lc-label">Also studied in long COVID</span>
+    <span class="chip tag lc-label">{{ txt("chip.long_covid") }}</span>
 {% endif %}
   </div>
 </div>
 
-<h2>Core claim</h2>
+<h2>{{ txt("card.core_claim") }}</h2>
 <p>{{ page.sourced(card.core_claim) }}</p>
 
-<h2>Why this level</h2>
+<h2>{{ txt("card.why_level") }}</h2>
 {% for item in paragraphs(card.level_reason) %}
 <p>{{ page.sourced(item) }}</p>
 {% endfor %}
 
 {% if card.contested %}
-<h2 id="contested">Contested at {{ contested_rungs(card) }}</h2>
+<h2 id="contested">{{ t("chip.contested", rungs=contested_rungs(card)) }}</h2>
 {% for item in paragraphs(card.contested.reason) %}
 <p>{{ page.sourced(item) }}</p>
 {% endfor %}
 {% else %}
-<h2 id="contested">Not contested</h2>
+<h2 id="contested">{{ txt("chip.not_contested") }}</h2>
 {% endif %}
 
-<h2>Badges</h2>
+<h2>{{ txt("card.badges") }}</h2>
 <ul class="badges">
   <li>
-    <p><strong>Marker validated in an independent {{ gloss("cohort") }}: {{ "yes" if card.badges.diagnostic_marker.value else "no" }}</strong></p>
+    <p><strong>{{ t("card.badge_marker", answer=txt("answer.yes" if card.badges.diagnostic_marker.value else "answer.no")) }}</strong></p>
 {% if card.badges.diagnostic_marker.reason %}
 {% for item in paragraphs(card.badges.diagnostic_marker.reason) %}
     <p>{{ page.sourced(item) }}</p>
 {% endfor %}
 {% else %}
-    <p class="empty">Reason not yet written.</p>
+    <p class="empty">{{ txt("card.reason_missing") }}</p>
 {% endif %}
   </li>
   <li>
-    <p><strong>Explains {{ gloss("PEM") }}: {{ "yes" if card.badges.explains_pem.value else "no" }}</strong></p>
+    <p><strong>{{ t("chip.pem_answer", answer=txt("answer.yes" if card.badges.explains_pem.value else "answer.no")) }}</strong></p>
 {% if card.badges.explains_pem.reason %}
 {% for item in paragraphs(card.badges.explains_pem.reason) %}
     <p>{{ page.sourced(item) }}</p>
 {% endfor %}
 {% else %}
-    <p class="empty">Reason not yet written.</p>
+    <p class="empty">{{ txt("card.reason_missing") }}</p>
 {% endif %}
   </li>
 </ul>
 
-<h2>Studies</h2>
-{{ study_group("Studies that support it", groups.supports, "No study on this card is listed as supporting it.") }}
-{{ study_group("Studies that contradict it", groups.contradicts, "No study on this card is listed as contradicting it.") }}
-{{ study_group("Other studies", groups.other, "No other studies are listed.", "Shown for context. These studies do not count for or against the level, because their case definition is not confirmed or they measure something else.") }}
+<h2>{{ txt("card.studies") }}</h2>
+{{ study_group(txt("card.supports"), groups.supports, txt("card.supports_empty")) }}
+{{ study_group(txt("card.contradicts"), groups.contradicts, txt("card.contradicts_empty")) }}
+{{ study_group(txt("card.other"), groups.other, txt("card.other_empty"), txt("card.other_note")) }}
 
-<h2>Subgroups it may apply to</h2>
+<h2>{{ txt("card.subgroups") }}</h2>
 {% for item in card.subgroups %}
 <p>{{ page.sourced(item) }}</p>
 {% else %}
-<p class="empty">None listed.</p>
+<p class="empty">{{ txt("card.none_listed") }}</p>
 {% endfor %}
 
-<h2>Who is working on it</h2>
+<h2>{{ txt("card.working") }}</h2>
 {% if card.working_on_it %}
 <ul>
 {% for w in card.working_on_it %}
@@ -104,15 +107,15 @@
 {% endfor %}
 </ul>
 {% else %}
-<p class="empty">None listed.</p>
+<p class="empty">{{ txt("card.none_listed") }}</p>
 {% endif %}
 
 {% if card.early_signals %}
-<h2>Early signals: not yet repeated</h2>
+<h2>{{ txt("card.early") }}</h2>
 {% for item in card.early_signals %}
 <p>{{ page.sourced(item) }}</p>
 {% endfor %}
 {% endif %}
 
-<p class="last-checked">Last checked {{ card.last_checked.date.isoformat() }} by {{ by_labels[card.last_checked.by] }}.</p>
+<p class="last-checked">{{ t("card.last_checked", date=card.last_checked.date.isoformat(), by=txt("by." ~ card.last_checked.by)) }}</p>
 {% endblock %}

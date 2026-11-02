@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from me_atlas import pipeline
+from me_atlas import cards, pipeline, translations
 from me_atlas.pipeline import FullTextResult
 
 REPO = Path(__file__).resolve().parents[1]
@@ -35,6 +35,7 @@ class Env:
         self.drafts = tmp / "drafts"
         self.cards = tmp / "cards"
         self.pipeline = tmp / "pipeline"
+        self.translations = tmp / "translations"
         self.cards.mkdir()
         self.drafts.mkdir()
         shutil.copy(FIXTURES / "drafts" / f"{SLUG}.yaml", self.drafts / f"{SLUG}.yaml")
@@ -83,6 +84,8 @@ class Env:
                 str(self.cache),
                 "--spec",
                 str(SPEC),
+                "--translations-dir",
+                str(self.translations),
             ],
             fetch=fetch or self.fetch,
             fulltext=fulltext,
@@ -763,3 +766,107 @@ def test_report_shows_severity_with_must_fix_first_and_a_natural_window_sentence
     assert ready.cli("prepare", "--force", "--since", "2026-10-02") == 0
     assert ready.cli("report") == 0
     assert "from the fetch window since 2026-10-02" in (ready.run / "report.md").read_text(encoding="utf-8")
+
+
+# --- translation-plan ---------------------------------------------------------
+
+
+def write_norwegian(env: Env, *, skip: tuple[str, ...] = ()) -> dict[str, translations.TItem]:
+    """A fictional, complete Norwegian file for the draft: every item is 'NB ' plus the English text, so the numbers
+    and sources match. Items named in ``skip`` are left out."""
+    card = cards.load_card(env.drafts / f"{SLUG}.yaml")
+    items = {
+        loc: translations.TItem(
+            text="NB " + en.text,
+            source_hash=translations.text_hash(en.text),
+            sources=list(en.sources) if en.sources is not None else None,
+        )
+        for loc, en in translations.english_items(card).items()
+        if loc not in skip
+    }
+    target = env.translations / "nb" / f"{SLUG}.yaml"
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        translations.dump_sidecar(translations.TFile(slug=SLUG, items=items), list(items)), encoding="utf-8"
+    )
+    return items
+
+
+def plan_items(env: Env) -> dict[str, str]:
+    plan = load(env.run / "translation-plan.json")
+    assert [c["slug"] for c in plan["cards"]] == [SLUG]
+    return {i["item"]: i["reason"] for i in plan["cards"][0]["items"]}
+
+
+def test_translation_plan_lists_the_items_an_accepted_change_made_stale(ready: Env):
+    write_norwegian(ready)
+    accept_replacing(ready, "90000201")  # replaces contested.reason[0]
+    assert ready.cli("translation-plan") == 0
+    assert plan_items(ready) == {"contested_reason[0]": "made_stale"}
+    entry = load(ready.run / "translate" / f"{SLUG}.json")
+    assert set(entry) == {"slug", "lang", "card", "items"}  # the shape card-translator.md describes
+    assert set(entry["items"][0]) == {"item", "reason", "english", "sources", "previous_translation"}
+    assert entry["lang"] == "nb" and entry["items"][0]["english"] == "Replaced by 90000201."
+    assert entry["items"][0]["previous_translation"].startswith("NB A fictional study of 100 patients")
+    # the English text the translator and `translations apply` work from is the card as it will be after the change
+    final = cards.load_card(Path(entry["card"]))
+    assert final.contested.reason[0].text == "Replaced by 90000201."
+    assert "stale" in "\n".join(ready.out) or "made stale" in "\n".join(ready.out)
+    assert ready.draft_text() == (FIXTURES / "drafts" / f"{SLUG}.yaml").read_text(encoding="utf-8")  # drafts untouched
+
+
+def test_translation_plan_lists_items_the_change_added_as_new(accepted: Env):
+    write_norwegian(accepted)
+    assert accepted.cli("translation-plan") == 0
+    assert plan_items(accepted) == {"level_reason[1]": "new", "studies[pmid:90000101].finding": "new"}
+
+
+def test_translation_plan_keeps_an_earlier_stale_item_apart_from_the_new_ones(ready: Env):
+    write_norwegian(ready, skip=("subgroups[0]", "early_signals[0]"))
+    accept_replacing(ready, "90000201")
+    assert ready.cli("translation-plan") == 0
+    assert plan_items(ready) == {"contested_reason[0]": "made_stale", "early_signals[0]": "already_missing"}
+
+
+def test_translation_plan_does_not_plan_a_card_with_no_translation_file(ready: Env):
+    accept_replacing(ready, "90000201")
+    assert ready.cli("translation-plan") == 0
+    plan = load(ready.run / "translation-plan.json")
+    assert plan["cards"] == [] and plan["untranslated_cards"] == [SLUG]
+    assert not (ready.run / "translate").exists()
+
+
+def test_translation_plan_is_empty_when_nothing_was_accepted(ready: Env):
+    ready.apply("ops_add_study.json")
+    ready.put("review", "review_reject.json")
+    write_norwegian(ready)
+    assert ready.cli("translation-plan") == 0
+    plan = load(ready.run / "translation-plan.json")
+    assert plan["cards"] == [] and plan["untranslated_cards"] == []
+
+
+def test_translation_plan_stops_on_an_unreadable_translation_file(ready: Env, capsys):
+    write_norwegian(ready)
+    (ready.translations / "nb" / f"{SLUG}.yaml").write_text("slug: wrong-name\nitems: {}\n", encoding="utf-8")
+    accept_replacing(ready, "90000201")
+    assert ready.cli("translation-plan") == 1
+    assert "must equal the file name" in capsys.readouterr().err
+
+
+def test_report_has_a_translation_section_only_after_the_plan_was_made(ready: Env):
+    write_norwegian(ready)
+    accept_replacing(ready, "90000201")
+    assert ready.cli("report") == 0
+    assert "## Translations" not in (ready.run / "report.md").read_text(encoding="utf-8")
+    assert ready.cli("translation-plan") == 0
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    assert "## Translations (nb)" in report and "made stale by accepted changes: contested_reason[0]" in report
+
+
+def test_pr_stages_the_translations_folder_when_there_is_one(accepted: Env):
+    write_norwegian(accepted)
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    adds = [c for c in runner.calls if c[:2] == ["git", "add"]]
+    assert len(adds) == 2 and adds[1][-1] == str(accepted.translations)

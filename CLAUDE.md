@@ -63,4 +63,4 @@ uv run ruff format .         # format
 
 ## Language
 
-Speak Norwegian with the founder. Code, repository documents and site content are in English.
+Speak Norwegian with the founder. Code and repository documents are in English. Site content is written in English, which is authoritative; reviewed translations (Norwegian first) are published alongside it (`docs/translation.md`).

@@ -9,6 +9,7 @@ Command line::
     uv run python -m me_atlas.pipeline context <slug> <pmid>
     uv run python -m me_atlas.pipeline apply <slug> <ops file> [--round 1|2]
     uv run python -m me_atlas.pipeline record-review <slug> <pmid> [--round 1|2]
+    uv run python -m me_atlas.pipeline translation-plan [--lang nb]
     uv run python -m me_atlas.pipeline report
     uv run python -m me_atlas.pipeline pr [--dry-run] [--no-pr]
 
@@ -36,7 +37,7 @@ from typing import Annotated, Any, Literal
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, model_validator
 
-from me_atlas import cards, citations, europepmc, pubmed
+from me_atlas import cards, citations, europepmc, pubmed, translations
 from me_atlas.cards import CHANGELOG_NAME, NonEmptyStr, Slug, StudyId
 from me_atlas.http import load_dotenv
 from me_atlas.operations import (
@@ -129,6 +130,7 @@ class Config:
     cache_dir: Path = Path("data/cache")
     spec_path: Path = DEFAULT_SPEC
     pipeline_dir: Path = DEFAULT_PIPELINE_DIR
+    translations_dir: Path = translations.DEFAULT_DIR
 
     @property
     def ledger_path(self) -> Path:
@@ -928,6 +930,7 @@ def build_report(cfg: Config) -> str:
         lines += [f"- {_paper_line(cfg, h['pmid'])}: {h['hypothesis']} ({h['reason']})" for h in hyp]
     else:
         lines.append("None.")
+    lines += _translation_section(cfg)
     lines += ["", "## Retracted papers cited on cards", ""]
     retractions = prep["retractions_on_cards"]
     if retractions:
@@ -969,6 +972,93 @@ def build_report(cfg: Config) -> str:
     else:
         lines.append("None classified.")
     return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# translation-plan
+# ---------------------------------------------------------------------------
+
+
+def translation_plan(cfg: Config, lang: str = "nb") -> dict[str, Any]:
+    """Which translated items the accepted changes of this run made stale, and what the translator has to do.
+
+    For every card with an accepted change that already has a translation file, compares the file with the card as it
+    will be after the change (written to ``final/<slug>.yaml``) and lists the items to translate in
+    ``translate/<slug>.json``: items made stale, items the change added, and any that were already stale, missing or
+    invalid. A card with no translation file is listed but not planned: its first translation is a manual run.
+    Nothing here calls an AI.
+    """
+    texts = final_card_texts(cfg, collect_outcomes(cfg))
+    sidecars, problems = translations.load_language(cfg.translations_dir, lang)
+    if problems:
+        raise PipelineError("a translation file cannot be read:\n" + "\n".join(problems))
+    plan: dict[str, Any] = {"lang": lang, "cards": [], "untranslated_cards": []}
+    for slug, text in sorted(texts.items()):
+        final_path = cfg.f("final", f"{slug}.yaml")
+        _write_text(final_path, text)
+        sidecar = sidecars.get(slug)
+        if sidecar is None:
+            plan["untranslated_cards"].append(slug)
+            continue
+        before = translations.check_card(_load_card(_base_card(cfg, slug)), sidecar, lang)
+        after_card = _load_card(final_path)
+        after = translations.check_card(after_card, sidecar, lang)
+        english = translations.english_items(after_card)
+        items = []
+        for locator, result in after.items.items():
+            if result.status == "fresh":
+                continue
+            was = before.items.get(locator)
+            if was is None:
+                reason = "new"  # the change added this item
+            elif was.status == "fresh":
+                reason = "made_stale"
+            else:
+                reason = f"already_{result.status}"
+            previous = sidecar.items.get(locator)
+            items.append(
+                {
+                    "item": locator,
+                    "reason": reason,
+                    "english": english[locator].text,
+                    "sources": english[locator].sources,
+                    "previous_translation": previous.text if previous else None,
+                }
+            )
+        plan["cards"].append({"slug": slug, "file": str(final_path), "items": items})
+        _write_json(
+            cfg.f("translate", f"{slug}.json"), {"slug": slug, "lang": lang, "card": str(final_path), "items": items}
+        )
+    _write_json(cfg.f("translation-plan.json"), plan)
+    _log(cfg, {"event": "translation-plan", "lang": lang, "cards": len(plan["cards"])})
+    return plan
+
+
+def _translation_section(cfg: Config) -> list[str]:
+    """Report lines for the translation plan of this run, or none if the plan step was not run."""
+    path = cfg.f("translation-plan.json")
+    if not path.exists():
+        return []
+    plan = _read_json(path)
+    lines = ["", f"## Translations ({plan['lang']})", ""]
+    if not plan["cards"] and not plan["untranslated_cards"]:
+        return [*lines, "None."]
+    for entry in plan["cards"]:
+        made_stale = [i["item"] for i in entry["items"] if i["reason"] == "made_stale"]
+        added = [i["item"] for i in entry["items"] if i["reason"] == "new"]
+        other = len(entry["items"]) - len(made_stale) - len(added)
+        lines.append(
+            f"- **{entry['slug']}**: {len(entry['items'])} item(s) to translate; made stale by accepted changes: "
+            f"{', '.join(made_stale) or 'none'}; added by accepted changes: {', '.join(added) or 'none'}; "
+            f"already stale or missing: {other}."
+        )
+    if plan["untranslated_cards"]:
+        lines.append(
+            "- Not translated yet (the first translation of a card is a manual run): "
+            + ", ".join(plan["untranslated_cards"])
+            + "."
+        )
+    return lines
 
 
 # ---------------------------------------------------------------------------
@@ -1050,6 +1140,8 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
             _write_text(target, texts[slug])
     if not step(["git", "add", "--", *map(str, targets.values())]):
         return 1
+    if cfg.translations_dir.is_dir() and not step(["git", "add", "--", str(cfg.translations_dir)]):
+        return 1
     if not step(["git", "commit", "-m", message]):
         return 1
     if no_pr:
@@ -1103,6 +1195,7 @@ def _build_parser() -> argparse.ArgumentParser:
     common.add_argument("--drafts-dir", type=Path, default=Path("drafts"), help="default: %(default)s")
     common.add_argument("--cache-dir", type=Path, default=Path("data/cache"), help="default: %(default)s")
     common.add_argument("--spec", type=Path, default=DEFAULT_SPEC, help="default: %(default)s")
+    common.add_argument("--translations-dir", type=Path, default=translations.DEFAULT_DIR, help="default: %(default)s")
 
     parser = argparse.ArgumentParser(prog="python -m me_atlas.pipeline", description="The weekly pipeline.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1128,6 +1221,11 @@ def _build_parser() -> argparse.ArgumentParser:
     rev.add_argument("slug")
     rev.add_argument("pmid", type=_pmid_arg)
     rev.add_argument("--round", type=int, choices=range(1, MAX_ROUNDS + 1), default=1)
+
+    plan = sub.add_parser(
+        "translation-plan", parents=[common], help="list the translated items the accepted changes made stale"
+    )
+    plan.add_argument("--lang", default="nb", help="default: %(default)s")
 
     sub.add_parser("report", parents=[common], help="write report.md")
 
@@ -1164,7 +1262,15 @@ def main(
             run_dir = args.run_dir or args.pipeline_dir / date.isoformat()
         else:
             run_dir = args.run_dir or _latest_run(args.pipeline_dir)
-        cfg = Config(run_dir, args.cards_dir, args.drafts_dir, args.cache_dir, args.spec, args.pipeline_dir)
+        cfg = Config(
+            run_dir,
+            args.cards_dir,
+            args.drafts_dir,
+            args.cache_dir,
+            args.spec,
+            args.pipeline_dir,
+            args.translations_dir,
+        )
         return _dispatch(args, cfg, fetch, fulltext, runner, date, out)
     except PipelineError as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -1229,6 +1335,20 @@ def _dispatch(
     if args.command == "record-review":
         review = record_review(cfg, args.slug, args.pmid, args.round)
         out(f"review recorded: {review.verdict}, {len(review.findings)} finding(s)")
+        return 0
+    if args.command == "translation-plan":
+        plan = translation_plan(cfg, args.lang)
+        for entry in plan["cards"]:
+            made_stale = [i["item"] for i in entry["items"] if i["reason"] == "made_stale"]
+            out(
+                f"{entry['slug']}: {len(entry['items'])} item(s) to translate, "
+                f"{len(made_stale)} made stale by accepted changes"
+            )
+            for item in entry["items"]:
+                out(f"  {item['reason']}: {item['item']}")
+        for slug in plan["untranslated_cards"]:
+            out(f"{slug}: no translation file yet (first translation is a manual run); not planned")
+        out(f"plan: {cfg.f('translation-plan.json')}")
         return 0
     if args.command == "report":
         path = cfg.f("report.md")

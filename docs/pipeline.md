@@ -14,7 +14,7 @@ In a Claude Code session in the repository, type:
 /ukentlig --no-pr                  # everything except pushing and opening the pull request
 ```
 
-The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is done by three subagents on the subscription: no API key and no `anthropic` calls. Nothing is published. The result is a pull request; merging it puts the drafts on `main`, and moving a card into `cards/` is a separate founder decision. The calibration period (spec section 6) continues: the founder approves every change.
+The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is done by four subagents on the subscription: no API key and no `anthropic` calls. Nothing is published. The result is a pull request; merging it puts the drafts on `main`, and moving a card into `cards/` is a separate founder decision. The calibration period (spec section 6) continues: the founder approves every change.
 
 ## Stages
 
@@ -25,12 +25,13 @@ The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is
 | 3 | `context <slug> <pmid>`, then `card-drafter` agent | code, sonnet | `context/<slug>-<pmid>.md`, `ops/<slug>-<pmid>-r<N>.json` |
 | 4 | `apply <slug> <ops> [--round N]` | code | `checks/...-r<N>.json`, `applied/<slug>-<pmid>-r<N>/<slug>.yaml` and `changes.diff` |
 | 5 | `card-reviewer` agent (pipeline mode), then `record-review <slug> <pmid> [--round N]` | opus, code | `review/<slug>-<pmid>-r<N>.json` |
-| 6 | `report` | code | `report.md` |
-| 7 | `pr [--dry-run] [--no-pr]` | code | copies accepted results into `drafts/`, branch `pipeline/<date>`, commit, push, `gh pr create` with `report.md` as the description |
+| 6 | `translation-plan [--lang nb]`, then `card-translator` agent, `card-reviewer` agent (translation mode) and `translations apply` | code, sonnet, opus, code | `final/<slug>.yaml`, `translate/<slug>.json`, `translation-plan.json`, `translated/<slug>.json`, `translation-review/<slug>.json`; writes `translations/nb/<slug>.yaml` |
+| 7 | `report` | code | `report.md` |
+| 8 | `pr [--dry-run] [--no-pr]` | code | copies accepted results into `drafts/`, branch `pipeline/<date>`, commit, push, `gh pr create` with `report.md` as the description |
 
 `log.jsonl` in the run directory records each `prepare`, `apply`, `record-classification` and `record-review` call. The whole directory is gitignored (`data/pipeline/`); the founder uses it to judge the agents' error rate before ending the calibration period.
 
-By default each command after `prepare` works on the newest run in `data/pipeline/`. Options on every command: `--run-dir`, `--pipeline-dir`, `--cards-dir`, `--drafts-dir`, `--cache-dir`, `--spec`. `prepare` also takes `--date` (the name of the run directory, default today) and `--force` (start a run of the same date again).
+By default each command after `prepare` works on the newest run in `data/pipeline/`. Options on every command: `--run-dir`, `--pipeline-dir`, `--cards-dir`, `--drafts-dir`, `--cache-dir`, `--spec`, `--translations-dir`. `prepare` also takes `--date` (the name of the run directory, default today) and `--force` (start a run of the same date again).
 
 ## What `prepare` selects
 
@@ -63,6 +64,10 @@ The drafter writes a list of operations, not a card (`operations.py`). All keys 
 - Reviewer says `reject`: the drafter gets one revised attempt (round 2) with the review. Rejected again, or the second attempt cannot pass the checks: **parking lot**. The change is not applied. Never a third round.
 - `accept`: the pair goes into the pull request. If two accepted papers touch one card, `pr` applies their operations in turn to the draft and validates the combined result. If two accepted papers overwrite the same target (the same `replace_paragraph` field and index, or the same `propose` target), neither is applied and both go to the parking lot; other papers on the card are still applied.
 
+## Translations
+
+Stage 6, after the reviews and before the report, keeps the Norwegian text in step with the accepted English changes. Details, file shapes and the checks are in `docs/translation.md`. `translation-plan` takes each card with an accepted change and a file in `translations/nb/`, builds the card as it will be after the change (`final/<slug>.yaml`) and lists, in `translate/<slug>.json`, the items that need translating: `made_stale` (the English of a translated item changed), `new` (the change added the item), `already_stale`, `already_missing` or `already_invalid` (not caused by this run). A card with no translation file is listed under `untranslated_cards` and not planned: its first translation is a manual run. The translator writes `translated/<slug>.json`; the reviewer writes `translation-review/<slug>.json` without seeing the translator's reasoning; `translations apply` merges what passed the mechanical check and the review into `translations/nb/<slug>.yaml`; one second attempt for what was left out; the rest stays English on the site with a note. `pr` stages `translations/` with the drafts. A translation carries no level, badge or contested mark, so none of this is a tier decision.
+
 ## Reading the report
 
 `report.md` (also the pull request description), in this order:
@@ -76,9 +81,11 @@ The drafter writes a list of operations, not a card (`operations.py`). All keys 
 7. **Pre-existing problems on cards**: citation-check errors the card already had (they do not block a new paper).
 8. A table of every new paper and how it was classified.
 
+When stage 6 ran, a **Translations** section sits between the parking lot / new hypotheses and the retraction list: per card, the items made stale by accepted changes, the items the changes added and how many were already stale or missing, and the cards with no translation yet.
+
 ## `pr`
 
-`pr --dry-run` prints the `git` and `gh` commands and the files it would write, and runs nothing. `pr` checks that the current branch is `main`, creates `pipeline/<date>`, writes the accepted cards into `drafts/`, commits only those files, pushes and runs `gh pr create --body-file report.md`. `pr --no-pr` creates the branch and the commit and stops there. With no accepted change it does nothing. The `.githooks/pre-push` hook still forbids pushing to `main`.
+`pr --dry-run` prints the `git` and `gh` commands and the files it would write, and runs nothing. `pr` checks that the current branch is `main`, creates `pipeline/<date>`, writes the accepted cards into `drafts/`, commits only those files and the `translations/` folder when there is one, pushes and runs `gh pr create --body-file report.md`. `pr --no-pr` creates the branch and the commit and stops there. With no accepted change it does nothing. The `.githooks/pre-push` hook still forbids pushing to `main`.
 
 ## Tests
 

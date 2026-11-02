@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,34 +8,42 @@
 {% endif %}
 <title>{{ title }} – ME Atlas</title>
 <link rel="stylesheet" href="{{ root }}static/site.css">
+{% for code, url in alternates %}
+<link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
+{% endfor %}
+<script>{{ persistence_js }}</script>
 <script src="{{ root }}static/site.js"></script>
 </head>
 <body>
 {% if drafts %}
-<div class="banner" role="note">{{ draft_banner }}</div>
+<div class="banner" role="note">{{ txt("banner.draft") }}</div>
 {% endif %}
-<a class="skip" href="#main">Skip to main content</a>
+<a class="skip" href="#main">{{ txt("skip") }}</a>
 <header class="site-header">
   <div class="inner">
-    <p class="brand"><a href="{{ root }}index.html">ME Atlas</a></p>
-    <nav aria-label="Main">
+    <p class="brand"><a href="{{ lroot }}index.html">ME Atlas</a></p>
+    <nav aria-label="{{ txt("nav.aria") }}">
       <ul>
-{% for href, label in [("index.html", "Front page"), ("changes.html", "What changed"), ("methods.html", "Methods"), ("glossary.html", "Glossary")] %}
-        <li><a href="{{ root }}{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a></li>
+{% for href, label in [("index.html", txt("page.front")), ("changes.html", txt("page.changes")), ("methods.html", txt("page.methods")), ("glossary.html", txt("page.glossary"))] %}
+        <li><a href="{{ lroot }}{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a></li>
 {% endfor %}
       </ul>
     </nav>
+    <div class="lang-switch" role="group" aria-label="{{ txt("lang.aria") }}">{% for other in others %}<a href="{{ other.url }}" hreflang="{{ other.code }}" lang="{{ other.code }}" data-lang="{{ other.code }}">{{ other.name }}</a>{% if not loop.last %} {% endif %}{% endfor %}</div>
   </div>
 </header>
 
 <main id="main">
+{% if lang != default_lang %}
+<p class="note translation-notice" role="note">{{ t("translation.notice", english_url=default_url) }}</p>
+{% endif %}
 {% block content %}{% endblock %}
 
 {% if page.used %}
   <div class="tips">
-    <h2 class="tips-title">Explanations of the marked words on this page</h2>
+    <h2 class="tips-title">{{ txt("tips.title") }}</h2>
 {% for entry in page.used %}
-    <div id="tip-{{ slugs[entry.term] }}" role="tooltip" class="tip">{{ entry.explanation }}</div>
+    <div id="tip-{{ slugs[entry.key] }}" role="tooltip" class="tip">{{ entry.explanation }}</div>
 {% endfor %}
   </div>
 {% endif %}
@@ -43,8 +51,8 @@
 
 <footer>
   <div class="inner">
-    <p>No medical or research expert has reviewed this content yet. It is checked by AI tools and by the founder. See <a href="{{ root }}methods.html">Methods</a>.</p>
-    <p>This site describes the state of the evidence. It gives no treatment advice. Built {{ built }}.</p>
+    <p>{{ t("footer.review") }}</p>
+    <p>{{ t("footer.advice", built=built) }}</p>
   </div>
 </footer>
 </body>

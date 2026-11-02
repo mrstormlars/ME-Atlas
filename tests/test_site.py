@@ -12,13 +12,17 @@ import pytest
 import yaml
 
 from me_atlas import cards as cardlib
-from me_atlas import site
+from me_atlas import i18n, site
 from me_atlas.glossary import Glossary, GlossaryEntry
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_CARD = Path(__file__).parent / "fixtures" / "cards" / "fictional-hypothesis.yaml"
 FIXTURE_CHANGELOG = Path(__file__).parent / "fixtures" / "cards" / "changelog.yaml"
 REAL_GLOSSARY = REPO_ROOT / "content" / "glossary.yaml"
+I18N_DIR = REPO_ROOT / "content" / "i18n"
+EN = i18n.load_strings(I18N_DIR / "en.yaml")
+RUNG_NAMES = tuple(EN[f"rung.{i}.name"] for i in range(6))
+RUNG_MEANINGS = tuple(EN[f"rung.{i}.meaning"] for i in range(6))
 CSS = REPO_ROOT / "src" / "me_atlas" / "static" / "site.css"
 TODAY = dt.date(2026, 11, 1)
 
@@ -114,7 +118,8 @@ def page(out: Path, name: str) -> Node:
 
 
 def html_files(out: Path) -> list[Path]:
-    return sorted(out.rglob("*.html"))
+    """The English pages. The Norwegian tree (build/nb/) has its own tests."""
+    return sorted(p for p in out.rglob("*.html") if p.relative_to(out).parts[0] != "nb")
 
 
 # --- fictional input -----
@@ -197,10 +202,12 @@ class Site:
         self.glossary = make_glossary(tmp_path, extra_terms)
         self.out = tmp_path / "build"
 
-    def build(self, *, drafts: bool = False) -> site.BuildResult:
-        return site.build(self.cards, self.out, self.glossary, drafts_dir=self.drafts if drafts else None, today=TODAY)
+    def build(self, *, drafts: bool = False, **options) -> site.BuildResult:
+        return site.build(
+            self.cards, self.out, self.glossary, drafts_dir=self.drafts if drafts else None, today=TODAY, **options
+        )
 
-    def run(self, *, drafts: bool = False) -> int:
+    def run(self, *, drafts: bool = False, extra: list[str] | None = None) -> int:
         args = [
             "build",
             "--cards-dir",
@@ -212,7 +219,7 @@ class Site:
             "--out",
             str(self.out),
         ]
-        return site.main(args + (["--drafts"] if drafts else []))
+        return site.main(args + (extra or []) + (["--drafts"] if drafts else []))
 
 
 @pytest.fixture
@@ -531,7 +538,7 @@ def test_case_definition_label_and_flag(proj, case_definition, label, flag):
 
 
 def test_every_case_definition_label_is_covered():
-    assert set(site.CASE_DEFINITION_LABELS) == set(cardlib.CASE_DEFINITION_RANK)
+    assert set(site.CASE_DEFINITION_META) == set(cardlib.CASE_DEFINITION_RANK)
 
 
 def test_last_checked_names_who_checked(proj):
@@ -1065,7 +1072,7 @@ def test_methods_page_follows_the_spec_tables(proj):
     doc = page(out, "methods.html")
     ladder = doc.find_all("table", "plain")[0]
     names = [norm(r.find("th").text()) for r in ladder.find_all("tr")[1:]]
-    assert names == list(site.RUNG_NAMES)
+    assert names == list(RUNG_NAMES)
     text = norm(doc.text())
     assert 'flagged on the card as "does not require PEM"' in text
     assert "This is the planned flow; most of it is not running yet." in text
@@ -1083,7 +1090,7 @@ def test_methods_page_ladder_and_case_definition_rows_match_the_spec(proj):
     doc = page(built(proj), "methods.html")
     ladder, cases = doc.find_all("table", "plain")[0], doc.find_all("table", "plain")[2]
     meanings = [norm(r.find_all("td")[-1].text()) for r in ladder.find_all("tr")[1:]]
-    assert tuple(meanings) == site.RUNG_MEANINGS
+    assert tuple(meanings) == RUNG_MEANINGS
     spec_text = SPEC.read_text(encoding="utf-8")
     spec_row = re.search(r"(?m)^\| (CDC criteria, version not stated) \| ([^|]+?) \|$", spec_text)
     assert spec_row is not None
@@ -1399,8 +1406,8 @@ def test_ladder_key_has_all_six_rung_names_and_meanings_from_the_spec(proj):
     assert len(items) == 6
     for item, (number, name, meaning) in zip(items, spec, strict=True):
         assert item == f"{number} {name} {meaning}"
-    assert tuple(name for _, name, _ in spec) == site.RUNG_NAMES
-    assert tuple(meaning for _, _, meaning in spec) == site.RUNG_MEANINGS
+    assert tuple(name for _, name, _ in spec) == RUNG_NAMES
+    assert tuple(meaning for _, _, meaning in spec) == RUNG_MEANINGS
 
 
 def test_ladder_key_carries_the_draft_notice_and_the_two_standing_sentences(proj):
@@ -1541,3 +1548,43 @@ def test_sourced_texts_in_page_order_flattens_paragraphs():
     card = cardlib.Card.model_validate(data)
     texts = site.sourced_texts_in_page_order(card)
     assert [t.text for t in texts[1:3]] == ["One.", "Two."]
+
+
+# --- the English tree is unchanged by the translation work -----
+
+GOLDEN_DIR = Path(__file__).parent / "fixtures" / "site_en_golden"
+
+
+def golden_scenario(proj: Site) -> None:
+    """Fictional inputs whose English build was recorded (tests/fixtures/site_en_golden) before the language work."""
+    write_card(proj.cards, make_card("fictional-hypothesis", "Fictional hypothesis", 4, contested_rungs=[4]))
+    second = drop_long_covid(make_card("second-idea", "Second fictional idea", 1))
+    second["badges"]["explains_pem"] = {"value": False, "reason": None}
+    write_card(proj.cards, second)
+    every = make_card("every-definition", "Fictional every definition", 3)
+    for i, cd in enumerate(sorted(cardlib.CASE_DEFINITION_RANK)):
+        add_study(every, f"pmid:0000030{i}", cd)
+    write_card(proj.cards, every)
+    write_yaml(proj.cards / "changelog.yaml", changelog_entries())
+    write_card(proj.drafts, make_card("draft-only", "Fictional draft only idea", 0, contested_rungs=None))
+
+
+def test_the_english_tree_is_unchanged_apart_from_the_selector_hreflang_tags_and_the_script(tmp_path):
+    """The English pages of a fictional project, built by the code of before the language work, are recorded in
+    tests/fixtures/site_en_golden. Today's English pages must match them once the added lines are taken out."""
+
+    def without_additions(text: str) -> str:
+        added = ('<link rel="alternate" hreflang=', "<script>(function(){", '<div class="lang-switch"')
+        return "".join(line for line in text.splitlines(keepends=True) if not line.lstrip().startswith(added))
+
+    proj = Site(tmp_path)
+    golden_scenario(proj)
+    checked = 0
+    for name, drafts in (("plain", False), ("drafts", True)):
+        assert proj.build(drafts=drafts).errors == []
+        for recorded in sorted((GOLDEN_DIR / name).rglob("*.html")):
+            rel = recorded.relative_to(GOLDEN_DIR / name)
+            now = (proj.out / rel).read_text(encoding="utf-8")
+            assert without_additions(now) == recorded.read_text(encoding="utf-8"), f"{name}/{rel.as_posix()}"
+            checked += 1
+    assert checked == 9  # seven pages of the plain build; front page and draft card of the draft build
