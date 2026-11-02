@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-02 — Cards fourteen to sixteen
+
+- Three new hypotheses added as draft cards, each checked by `card-reviewer` and fixed: mast cell activation (level 2, not contested, long COVID label kept), persistent enterovirus infection (level 0), small fibre neuropathy (level 1). Both badges no on all three.
+- Studies whose case definition is not stated or not yet checked count at no rung, including rung 1 (spec section 3: "Not accepted"). A card can therefore stand at level 0 while citing patient data; the card says so.
+- "Previously diagnosed or meeting the X criteria" does not verify a case definition when the prior-diagnosis route names none; such studies are recorded `unverified`.
+- A null result at rung 1 is not a contested mark.
+- The long COVID label needs a study whose cohort met an ME/CFS definition; a cohort chosen by long COVID plus another condition, with a comorbid ME/CFS diagnosis in some and results not split, does not carry it.
+
 ## 2026-11-02 — Cards ten to thirteen
 
 - Four new hypotheses added as draft cards, each checked by `card-reviewer` and fixed: oxidative and nitrosative stress (level 2, not contested), tryptophan and kynurenine metabolism (level 3, contested at rung 3), brain and brainstem MRI changes (level 2, not contested), inherited genetic risk (level 2, not contested). Both badges no on all four.
