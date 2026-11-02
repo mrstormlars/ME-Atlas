@@ -1,0 +1,571 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# FOUNDER RULING (2026-11-02): level 2, contested at rung 2; diagnostic marker no; explains PEM no. Earlier AI
+# proposals (level 3, contested at rung 3) and the open founder questions on them are replaced by this ruling.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (40713801:
+# PMC12291238; 38724880: PMC11369000). `uv run python -m me_atlas.europepmc casedef` found no open full text for
+# any other study on the card (checked 2026-11-02).
+#
+# LEVEL, RUNG BY RUNG (founder ruling 2026-11-02)
+#   Rung 2: rests on 9669518 (Scott 1998, CDC_unspecified, 14 v 14, blunted ACTH and cortisol responses to CRH).
+#     Contested: 11502777 (Cleare 2001, King's College London, no authors shared with 9669518) used the same CRH test
+#     with 37 patients, a CDC definition of equal rank (CDC_unspecified) and a control group (28). It found normal ACTH
+#     responses and a cortisol response that was significant only after adjusting for ACTH, so it contradicts 9669518
+#     at comparable quality (37 >= half of 14). 11502777 is therefore `contradicts`.
+#   Rung 3: not reached. No independent study repeated the same result. 34254637 (De Bellis 2021, recorded CCC,
+#     30 v 25) measured blood ACTH and cortisol levels, a different measure that its abstract does not specify
+#     (resting or stimulated); 40713801 (Thomas 2025, CCC, 24 v 24) found no difference in morning plasma cortisol;
+#     11502777's lower 24-hour urinary cortisol is a different measure again. The earlier rung-3 contested proposal
+#     (40713801 against 34254637) is moot at level 2. TODO (still open): verify 34254637's measure.
+#   Rung 4: not reached. The only rung-4 study with a recognised case definition is 9757853 (McKenzie 1998, Holmes
+#     1988): its main measure did not change (P = .31); P = .04 was a secondary measure. 12829200 (Blockmans 2003,
+#     1994 CDC = Fukuda; placebo-controlled crossover; 80 completed) found no difference, but used a lower
+#     hydrocortisone dose (5 mg) and added 50 µg fludrocortisone, so it did not test the same treatment. The question
+#     on 9757853's role (positive secondary measure) is moot at level 2; its role is kept as `supports`. 9989716
+#     (Cleare 1999 Lancet, positive) is `unverified` ("our strict criteria") and cannot count (V9).
+#   9713562 (Scott 1998, 1 µg ACTH test, 20 v 20) is not needed for level 2. 10594524 (Hudson and Cleare 1999, same
+#     test, CDC_unspecified, 20 v 20) found no difference; the conflict is described on the card.
+#
+# OXFORD: no study on the card has a verified Oxford-only cohort. 9494707 (Young 1998, Warneford Hospital, Oxford;
+#   title says "neurasthenia") and 9989716 ("our strict criteria") have no case definition in the abstract and no open
+#   full text; both are `unverified`, not Oxford, because the card may not guess. TODO: verify both.
+# LONG COVID: no label. 38331137 and 39847575 measured cortisol in long COVID but name no ME/CFS case definition
+#   in the abstract; not on the card.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Dinan TG / Scott LV: 9669518, 9713562 (and 10403156, 10451910, 9476743, not on the card). Cohort overlap
+#     between 9669518 and 9713562 not stated. TODO: verify.
+#   - Cleare AJ: 11502777, 10594524, 9989716, 11282703. 9989716 and the 32 hydrocortisone-treated patients in
+#     11502777 come from the same London group (crossover, 28 days / 1 month each); whether the patients overlap is
+#     not stated. TODO: verify.
+#     Cleare AJ and Wessely S on 9989716 and 11282703; 11282703 (121 clinic patients) may include patients of
+#     11502777. TODO: verify.
+#   - NIH group: Demitrack M, Dale J and Straus SE on 1659582 and 9757853; McKenzie R, Sharma G and Straus SE also on
+#     11150109.
+#   - No authors shared between 9669518 and 11502777, or between either and 34254637, 40713801, 38724880.
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, meta-analyses, letters and comments: 9201649, 9629295, 24636516, 42026257, 37408028, 27557747, and
+#     the 1999 letters on 9757853 (10334276-10334279, 10349884-10349886, 10372750).
+#   - Unverified case definition and not needed for the level (no open full text): 14754825 (Roberts 2004, lower
+#     cortisol awakening response, 56 v 35), 29807037 (Roerink 2018, lower awakening response, 107 v 59; anakinra
+#     substudy), 38986244 (Vroegindeweij 2024, lower hair cortisol, 12 ME/CFS v 57), 32217231 (Herane-Vives 2020,
+#     lower salivary output, hair normal, 17 v 34), 12618533 (Gaab 2003, no difference to low- and high-dose ACTH,
+#     18 v 18), 15911907 (Di Giorgio 2005, lower ACTH, cortisol normal, 15 v 10), 9438265 (Wood 1998, slightly
+#     higher salivary cortisol, 10 v 10), 9813459, 9476743, 9476760, 15157948, 17803834, 18378875.
+#   - Same group as a study on the card, adding no new line: 10403156 (Scott 1999, CDC, cortisol no difference,
+#     15 v 11), 10451910 (Scott 1999, adrenal size in 8 selected patients), 9226729 and 9572086 (Dinan group,
+#     ACTH responses to serotonergic and opioid challenges).
+#   - 9570178 (Peterson 1998, fludrocortisone crossover, 20 completers, no effect): case definition not in the
+#     abstract, no open full text; fludrocortisone is covered by 11150109, which names its criteria.
+#   - Glucocorticoid feedback and receptor studies (26983566, 17276605, 11914448, 18573538, 29983634, 16740143,
+#     26230484, 29275786): a related but different question (sensitivity to cortisol, not its level); left for the
+#     founder to decide whether they belong on this card.
+#   - 25049069 (Hall 2014): cortisol awakening response and questionnaire PEM in 117 patients, no control group and
+#     no exertion challenge.
+slug: hpa-axis-cortisol
+name: Altered stress-hormone (HPA axis) function and low cortisol
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS the hypothalamic-pituitary-adrenal (HPA)
+    axis, the hormone system that controls the stress hormone cortisol, works below normal:
+    cortisol output is low, or the cortisol response to stimulation is blunted, and this
+    contributes to the symptoms.
+  sources: [pmid:1659582, pmid:9669518, pmid:9757853]
+level: 2
+level_reason:
+  - text: >-
+      A study from the Dinan group of 14 patients diagnosed by CDC criteria (version not stated, so
+      the definition does not require post-exertional malaise) and 14 healthy volunteers gave
+      corticotropin-releasing hormone (CRH), the brain signal that starts the HPA axis. The release
+      of ACTH, the pituitary hormone that stimulates the adrenal glands, and of cortisol was lower
+      in patients; basal ACTH and cortisol did not differ. The card is at level 2 because of this
+      study. A second study by the same group, of 20 patients and 20 healthy volunteers, found a
+      smaller rise in cortisol after a low dose (1 microgram) of ACTH; 9 of 20 patients and 2 of 20
+      volunteers failed the test at a cut-off the authors call arbitrary. No other group has
+      repeated either test with the same result.
+    sources: [pmid:9669518, pmid:9713562]
+  - text: >-
+      A study from King's College London, with no authors shared with the Dinan studies, tested 37
+      patients meeting CDC criteria (version not stated) and 28 healthy controls. Urinary free
+      cortisol over 24 hours was lower in patients (number measured not stated in the abstract).
+      The study used the same CRH test as the Dinan group. Baseline cortisol before the CRH test was
+      higher in patients. ACTH responses to CRH and to two
+      other challenge tests were normal, similar in the two groups, and the authors write that their
+      results "do not support previous findings" of reduced central responses of the HPA axis. The
+      cortisol responses to CRH and to d-fenfluramine showed a trend to be lower in patients that
+      was significant only after adjusting for ACTH responses.
+    sources: [pmid:11502777]
+  - text: >-
+      The card is not at level 3 because no independent study has repeated the same result. The
+      London study gave the same CRH test and found normal ACTH responses, with a lower cortisol
+      response only after adjustment. A study from Naples and Stanford of 30 women diagnosed
+      according to the Fukuda, Canadian and Institute of Medicine criteria and 25 healthy controls
+      found lower ACTH and cortisol levels in patients, but this is a different blood measure, and
+      the abstract does not say whether the values were resting or stimulated. A study from Uppsala
+      with patients meeting the Canadian criteria found no difference in morning plasma cortisol.
+    sources: [pmid:9669518, pmid:11502777, pmid:34254637, pmid:40713801]
+  - text: >-
+      Other studies with a recognised case definition did not find the same. A London study of 20
+      patients meeting CDC criteria and 20 matched controls used the same low-dose ACTH test as the
+      Dinan group and found no differences in baseline cortisol or cortisol responses. A study from
+      Uppsala of 24 patients meeting the Canadian, International and 2015 IOM criteria and 24 matched
+      controls found no significant difference in morning plasma cortisol, measured with mass
+      spectrometry; cortisol did not differ before correction for multiple testing either, nor in
+      women or men analysed separately. A study from Austria and Chile (Canadian and/or Fukuda
+      criteria) of women (20 with mild or moderate and 24 with severe illness, 12 controls) and men
+      (8 and 6, 17 controls) found lower cortisol only in men with mild or moderate illness; after
+      correction for multiple testing, cortisol was not among the hormones that differed between
+      groups.
+    sources: [pmid:10594524, pmid:40713801, pmid:38724880]
+  - text: >-
+      Several studies cannot count towards the level because their case definition is
+      not yet verified. They point in both directions: lower evening plasma cortisol and lower
+      urinary cortisol in 30 patients compared with 72 volunteers; lower urinary cortisol in 121
+      clinic patients compared with 64 people without the illness; a flatter rise in morning saliva
+      cortisol in women, but not men, in a population-based study of 75 people with the illness and
+      110 well controls; and no difference in saliva or urinary cortisol in 22 patients in a study
+      from Oxford.
+    sources: [pmid:1659582, pmid:11282703, pmid:18160468, pmid:9494707]
+  - text: >-
+      In a placebo-controlled trial from the US National Institutes of Health, 56 women and 14 men
+      meeting the 1988 CDC definition (which does not require post-exertional malaise) took hydrocortisone,
+      a cortisol tablet, or placebo for about 12 weeks. The trial's main measure, the share of
+      patients who improved on a wellness scale, did not differ (20 of 30 on hydrocortisone, 19 of 35
+      on placebo, P = .31). More patients on hydrocortisone improved by 5 points or more (53% against
+      29%, P = .04), a secondary measure; other self-rating scales showed no difference, and the
+      body's own cortisol response was suppressed in 12 patients on hydrocortisone and none on
+      placebo. On the trial's main measure, level 4 is not reached.
+    sources: [pmid:9757853]
+  - text: >-
+      A larger placebo-controlled crossover trial from Leuven, Belgium, of 100 patients meeting the
+      1994 CDC (Fukuda) definition, of whom 80 completed three months of 5 mg hydrocortisone with 50
+      micrograms of fludrocortisone and three months of placebo, found no difference in fatigue,
+      well-being or any other measure. It used a lower hydrocortisone dose and added
+      fludrocortisone, so it did not test the same treatment as the NIH trial.
+    sources: [pmid:12829200, pmid:9757853]
+  - text: >-
+      A crossover trial from London of 32 patients found that fatigue fell more on low-dose
+      hydrocortisone than on placebo (p = 0.009), but its case definition is not yet verified, so it
+      cannot count towards level 4. The London HPA study, from the same group, treated 32 of its
+      patients with hydrocortisone in the same kind of crossover; whether these are the same
+      patients is not stated. In the patients who improved, the cortisol response to CRH rose,
+      reversing the blunted response seen before. This is a change within the patients who
+      improved, not a comparison with controls, and it has not been repeated.
+      A trial of fludrocortisone alone in 100 patients meeting CDC criteria found no difference from
+      placebo; it was tested as a treatment for low blood pressure on standing, not for low cortisol.
+    sources: [pmid:9989716, pmid:11502777, pmid:11150109]
+# Founder ruling 2026-11-02: contested at rung 2 (11502777 against 9669518).
+contested:
+  rungs: [2]
+  reason:
+    - text: >-
+        Level 2 rests on a study of 14 patients diagnosed by CDC criteria (version not stated) and
+        14 healthy volunteers, which found lower release of ACTH and of cortisol after
+        corticotropin-releasing hormone (CRH) in patients.
+      sources: [pmid:9669518]
+    - text: >-
+        A later study from King's College London, with no authors shared with the first, gave the
+        same CRH test to 37 patients meeting CDC criteria (version not stated) and 28 healthy
+        controls. ACTH responses were similar in the two groups, and the cortisol response showed a
+        trend to be lower in patients that was significant only after adjusting for ACTH responses.
+        The authors write that their results "do not support previous findings" of reduced central
+        responses of the HPA axis.
+      sources: [pmid:11502777]
+    - text: >-
+        The London study has a case definition of equal rank, a control group and at least half as
+        many patients (37 against 14), so it is of comparable quality and contradicts the study on
+        which level 2 rests. Rung 2 is therefore contested.
+      sources: [pmid:11502777, pmid:9669518]
+    - text: >-
+        The Dinan group's low-dose ACTH study is not needed for level 2, which rests on its CRH study.
+        With the same 1 microgram ACTH test, that study found a smaller cortisol rise in 20 patients
+        than in 20 volunteers, and a London study found no difference between 20 patients and 20
+        controls; both used CDC criteria and a control group.
+      sources: [pmid:9713562, pmid:10594524]
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        One study used a cut-off on the low-dose ACTH test, which its authors call arbitrary: 9 of 20
+        patients and 2 of 20 healthy volunteers failed it. A second group using the same test in 20
+        patients and 20 controls found no difference between them, so the marker did not hold up in an independent cohort.
+      sources: [pmid:9713562, pmid:10594524]
+  explains_pem:
+    # Checked: every abstract on the card and the full texts of 40713801 and 38724880. No study tracks symptoms after
+    # an exertion challenge and links them to cortisol. 11150897 measured hormones after a treadmill test and the
+    # next day, but its abstract reports no symptom measure and its case definition is unverified.
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly and links it to cortisol.
+        One study, whose case definition is not yet verified, measured hormones after a maximal
+        treadmill test: ACTH 4 minutes after exercise was lower in patients than in sedentary
+        controls, and the next day hormone levels did not differ; the abstract reports no symptom
+        measure.
+      sources: [pmid:11150897]
+subgroups:
+  - text: >-
+      Two studies suggest sex differences, using different measures; the men's result rests on 8
+      patients. Not repeated. A population-based study, whose case definition is not yet verified,
+      found a flatter morning saliva cortisol rise in women but not men; a study from Austria and
+      Chile found lower plasma cortisol only in men with mild or moderate illness.
+    sources: [pmid:18160468, pmid:38724880]
+  - text: >-
+      In the Naples and Stanford study, the 13 patients with high levels of antibodies against the
+      pituitary or hypothalamus had lower ACTH and cortisol levels and more severe illness than
+      patients with lower or no antibodies. Not yet repeated.
+    sources: [pmid:34254637]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=30 women and 25 healthy controls found antibodies against the pituitary in 56%
+      and against the hypothalamus in 33% of patients, and in none of the controls. Not yet
+      repeated.
+    sources: [pmid:34254637]
+studies:
+  # --- supports ---
+  - id: pmid:9669518
+    title: Blunted adrenocorticotropin and cortisol responses to corticotropin-releasing hormone stimulation in chronic fatigue syndrome.
+    year: 1998
+    cohort: me_cfs
+    # CDC version not stated: flag "does not require PEM", ranked equal to Fukuda. No open full text.
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: A sample of 14 patients with CDC-diagnosed CFS were compared with 14 healthy volunteers.
+    design: controlled
+    n_patients: 14
+    n_controls: 14
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2
+    direction: lower
+    group: Dinan TG, St Bartholomew's and the Royal London School of Medicine, UK (same group as 9713562)
+    finding: >-
+      A study of n=14 patients and 14 healthy volunteers found lower release of ACTH (P < 0.005) and
+      of cortisol (P < 0.05) after corticotropin-releasing hormone in patients, with no difference in
+      basal ACTH or cortisol.
+  - id: pmid:9713562
+    title: The low dose ACTH test in chronic fatigue syndrome and in health.
+    year: 1998
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "PATIENTS AND DESIGN: Twenty subjects with CFS, diagnosed according to Centres for Disease Control and Prevention criteria, were compared with 20 healthy volunteer subjects."
+    design: controlled
+    n_patients: 20  # abstract "Twenty subjects" (C6 matches the 20 in the same sentence)
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    # Overlap with the 9669518 cohort not stated. TODO: verify.
+    group: Dinan TG, Trinity College Medical School, Dublin, Ireland (same group as 9669518)
+    finding: >-
+      A study of n=20 patients and 20 healthy volunteers found a smaller cortisol rise after 1
+      microgram of ACTH in patients (P < 0.05), with no difference in baseline or 30-minute cortisol;
+      9 patients and 2 volunteers failed the test at a cut-off of a 250 nmol/l rise, which the
+      authors call arbitrary.
+  - id: pmid:11502777
+    title: Hypothalamo-pituitary-adrenal axis dysfunction in chronic fatigue syndrome, and the effects of low-dose hydrocortisone therapy.
+    year: 2001
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: We measured ACTH and cortisol responses to human CRH, the insulin stress test, and D-fenfluramine in 37 medication-free patients with CDC-defined chronic fatigue syndrome but no comorbid psychiatric disorders and 28 healthy controls.
+    design: controlled
+    # All 37 had the CRH test; the n for the 24-h urinary cortisol comparison is not in the abstract. TODO: verify.
+    # Also contains a placebo-controlled crossover of hydrocortisone in 32 of the patients (neuroendocrine outcomes);
+    # appears to be the trial in 9989716.
+    n_patients: 37
+    n_controls: 28
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # founder ruling 2026-11-02: contradicts 9669518 on the CRH test (same rank, 37 >= 7)
+    direction: mixed  # 24-h urinary cortisol lower; ACTH response to CRH no difference; cortisol response lower only after adjustment
+    group: O'Keane V, Institute of Psychiatry and Guy's, King's and St Thomas' School of Medicine, London, UK (Cleare AJ also on 10594524, 9989716, 11282703)
+    finding: >-
+      A study of n=37 patients and 28 healthy controls found lower 24-hour urinary free cortisol in
+      patients (number measured not stated in the abstract), higher baseline cortisol before the CRH
+      test, and similar ACTH responses to three challenge tests; lower cortisol responses to CRH and
+      d-fenfluramine were a trend, significant only after adjusting for ACTH responses.
+  - id: pmid:34254637
+    title: Hypothalamic-Pituitary Autoimmunity and Related Impairment of Hormone Secretions in Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    # Patients met Fukuda, "Canadian" and IOM criteria; recorded as CCC (ranks equal to IOM 2015), as for 34589868 on
+    # the autoimmunity card. No open full text.
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls.
+    design: controlled
+    # Whether "ACTH/cortisol" was basal or stimulated, and whether all 30 were measured, is not in the abstract.
+    # TODO: verify. C6 warning expected: 30 is written as "Thirty".
+    n_patients: 30
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: supports  # lower ACTH and cortisol, a different (unspecified) blood measure; does not repeat 9669518
+    direction: lower
+    group: Montoya JG, Stanford University, USA, with co-authors at the University of Campania "Luigi Vanvitelli", Naples, Italy
+    finding: >-
+      A study of n=30 women and 25 healthy controls found lower ACTH and cortisol levels in patients,
+      and antibodies against the pituitary in 56% and the hypothalamus in 33% of patients and in
+      none of the controls.
+  - id: pmid:9757853
+    title: "Low-dose hydrocortisone for treatment of chronic fatigue syndrome: a randomized controlled trial."
+    year: 1998
+    cohort: me_cfs
+    # Holmes 1988: flag "does not require PEM".
+    case_definition: Holmes1988
+    case_definition_source: abstract
+    case_definition_quote: A total of 56 women and 14 men aged 18 to 55 years who met the 1988 Centers for Disease Control and Prevention case criteria for CFS and who withheld concomitant treatment with other medications.
+    design: intervention_controlled
+    # 70 randomised; the primary analysis reports 30 hydrocortisone and 35 placebo recipients. n_controls = placebo.
+    # Main measure did not change (P = .31); P = .04 was a secondary measure. Level 4 not reached.
+    n_patients: 30
+    n_controls: 35
+    measures_pem: false
+    preregistered: null
+    role: supports  # kept; the role question is moot at level 2 (founder ruling 2026-11-02)
+    direction: not_applicable  # treatment vs placebo
+    group: Straus SE, National Institute of Allergy and Infectious Diseases, NIH, Bethesda, USA (Demitrack M, Dale J also on 1659582)
+    finding: >-
+      A placebo-controlled trial of 56 women and 14 men found no difference in the share improving on a
+      wellness scale (20 of 30 on hydrocortisone, 19 of 35 on placebo, P = .31); 53% against 29%
+      improved by 5 points or more (P = .04, a secondary measure), and adrenal suppression occurred in 12 patients on
+      hydrocortisone and none on placebo.
+  # --- contradicts ---
+  - id: pmid:12829200
+    title: "Combination therapy with hydrocortisone and fludrocortisone does not improve symptoms in chronic fatigue syndrome: a randomized, placebo-controlled, double-blind, crossover study."
+    year: 2003
+    cohort: me_cfs
+    # 1994 CDC criteria = Fukuda: flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "METHODS: We performed a 6-month, randomized, placebo-controlled, double-blind, crossover study in 100 patients who fulfilled the 1994 Centers for Disease Control and Prevention criteria for chronic fatigue syndrome."
+    design: intervention_controlled
+    # Crossover: 80 completed both arms, each patient their own placebo control, so n_controls is null. C6 warning
+    # expected: 80 is written as "Eighty".
+    n_patients: 80
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # no effect; lower hydrocortisone dose plus fludrocortisone, not the same treatment as 9757853
+    direction: not_applicable  # treatment vs placebo
+    group: Bobbaers H, University Hospital Gasthuisberg, Leuven, Belgium
+    finding: >-
+      A placebo-controlled crossover trial of n=80 patients who completed both arms (100 enrolled)
+      found no difference between low-dose hydrocortisone with fludrocortisone and placebo in
+      fatigue, well-being or any other measure.
+  - id: pmid:10594524
+    title: The 1microg short Synacthen test in chronic fatigue syndrome.
+    year: 1999
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: We tested 20 subjects suffering from CFS according to the criteria of the Center for Diseases Control without psychiatric comorbidity and 20 matched healthy controls.
+    design: controlled
+    n_patients: 20
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # contradicts 9713562 (same test, same rank, 20 >= 10)
+    direction: no_difference
+    group: Cleare AJ, Guy's, King's and St Thomas' School of Medicine and the Institute of Psychiatry, London, UK
+    finding: >-
+      A study of n=20 patients and 20 matched healthy controls found no differences in baseline
+      cortisol or in cortisol responses to 1 microgram of ACTH (Synacthen).
+  - id: pmid:40713801
+    title: "Steroid dynamics in myalgic encephalomyelitis / chronic fatigue syndrome: a case-control study using ultra performance supercritical fluid chromatography tandem mass spectrometry."
+    year: 2025
+    cohort: me_cfs
+    # Patients met CCC, ICC and IOM 2015; recorded as CCC. Full text: "All blood samples were collected from fasted
+    # participants in the AM." Table 2, cortisol: controls mean 138.064, ME/CFS 135.157, p 0.718. Patients from the
+    # Gottfries clinic, Göteborg (2013-2018). Full text: "No significant differences in absolute (untransformed)
+    # steroid levels were obtained when comparing the two groups (ME/CFS & CTRL) using Mann-Whitney U Tests in the
+    # female cohort (Table 4 ) or male cohort (Table 5 )." 
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: All patients fulfilled the Canadian Consensus Criteria, the International Consensus Criteria and the IOM criteria (Carruthers et al., 2003; Carruthers et al., 2011; Institute of Medicine, 2015).
+    design: controlled
+    n_patients: 24
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # no difference in morning plasma cortisol (CCC); see level_reason
+    direction: no_difference
+    group: Bergquist J, ME/CFS Collaborative Research Centre, Uppsala University, Sweden
+    finding: >-
+      A study of n=24 patients and 24 age- and gender-matched controls found no difference in
+      morning plasma cortisol even before correction for multiple testing (means 138.064 in controls
+      and 135.157 in patients, p 0.718), and none in women or men analysed separately.
+  # --- context ---
+  - id: pmid:38724880
+    title: Sex and disease severity-based analysis of steroid hormones in ME/CFS.
+    year: 2024
+    cohort: me_cfs
+    # "and/or": some patients may meet Fukuda only, so recorded as Fukuda (flag "does not require PEM").
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Individuals diagnosed with ME/CFS were evaluated by a clinician based on the Canadian Consensus [19] and/or CDC-1994 (‘Fukuda’) [20] criteria."
+    design: controlled
+    # n_patients 58 and n_controls 29 are CALCULATED from the reported subgroups (females 20 + 24, males 8 + 6;
+    # controls females 12, males 17) and kept out of the text. The cortisol finding rests on 8 male mild/moderate
+    # patients against 17 male controls.
+    n_patients: 58
+    n_controls: 29
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed
+    group: Westermeier F, Universidad Bernardo O'Higgins, Santiago, Chile (co-authors in Austria and Chile)
+    finding: >-
+      A study of women (20 with mild or moderate and 24 with severe illness, 12 healthy controls) and
+      men (8 and 6, 17 healthy controls) found lower plasma cortisol in men with mild or moderate
+      illness but not in women; after correction for multiple testing, cortisol was not among the
+      hormones that differed between groups.
+  - id: pmid:9989716
+    title: "Low-dose hydrocortisone in chronic fatigue syndrome: a randomised crossover trial."
+    year: 1999
+    cohort: me_cfs
+    # Abstract: "32 patients met our strict criteria for chronic fatigue syndrome without co-morbid psychiatric
+    # disorder" (criteria not named). No open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled
+    n_patients: 32  # crossover; each patient their own placebo control
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Miell J, Guy's, King's and St Thomas' School of Medicine and the Institute of Psychiatry, London, UK (Cleare AJ, same group as 11502777; patient overlap not stated)
+    finding: >-
+      A placebo-controlled crossover trial of n=32 patients found that fatigue fell by 7.2 points on
+      low-dose hydrocortisone and 3.3 points on placebo (p = 0.009); 9 patients on hydrocortisone and
+      3 on placebo reached a predefined cut-off near the population score.
+  - id: pmid:11150109
+    title: "Fludrocortisone acetate to treat neurally mediated hypotension in chronic fatigue syndrome: a randomized controlled trial."
+    year: 2001
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: One hundred individuals aged 18 to 50 years who satisfied Centers for Disease Control and Prevention criteria for CFS and had NMH provoked during a 2-stage tilt-table test.
+    design: intervention_controlled
+    n_patients: 50  # fludrocortisone arm; 83 of 100 had adequate outcome data; analysis by intention to treat
+    n_controls: 50  # placebo arm
+    measures_pem: false
+    preregistered: null
+    role: context  # tested for neurally mediated hypotension, not for low cortisol
+    direction: not_applicable
+    group: Straus SE, with Rowe PC, Johns Hopkins Hospital, Baltimore, USA (McKenzie R, Sharma G also on 9757853)
+    finding: >-
+      A placebo-controlled trial of n=100 patients with neurally mediated hypotension found that 7 of
+      50 on fludrocortisone and 5 of 50 on placebo improved by at least 15 points on a wellness scale
+      (P = .76).
+  - id: pmid:1659582
+    title: Evidence for impaired activation of the hypothalamic-pituitary-adrenal axis in patients with chronic fatigue syndrome.
+    year: 1991
+    cohort: me_cfs
+    # Abstract: "patients meeting research case criteria for chronic fatigue syndrome" (criteria not named). No open
+    # full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 30  # "Thirty patients"; C6 warning expected
+    n_controls: 72
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Gold PW, National Institute of Mental Health, NIH, Bethesda, USA (Demitrack M, Dale J, Straus SE also on 9757853)
+    finding: >-
+      A study of n=30 patients and 72 volunteers found lower evening plasma cortisol and lower 24-hour
+      urinary free cortisol, higher evening ACTH and a smaller ACTH response to CRH in patients, with
+      no difference in cerebrospinal fluid CRH.
+  - id: pmid:11282703
+    title: Urinary free cortisol in chronic fatigue syndrome.
+    year: 2001
+    cohort: me_cfs
+    # Abstract: "well-characterized patients"; no named criteria, no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 121
+    n_controls: 64
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Wessely S, Guy's, King's and St Thomas' School of Medicine and the Institute of Psychiatry, London, UK (Cleare AJ also on 11502777)
+    finding: >-
+      A study of n=121 clinic patients and 64 comparison subjects found lower 24-hour urinary free
+      cortisol in patients, with or without psychiatric illness.
+  - id: pmid:18160468
+    title: Attenuated morning salivary cortisol concentrations in a population-based study of persons with chronic fatigue syndrome and well controls.
+    year: 2008
+    cohort: me_cfs
+    # Population-based (Georgia, USA); criteria not named in the abstract; no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 75  # "Seventy-five"; C6 warning expected
+    n_controls: 110
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # attenuated in women, similar in men
+    group: Heim C, Centers for Disease Control and Prevention, Atlanta, USA
+    finding: >-
+      A study of n=75 people with the illness and 110 well controls from the general population found
+      an attenuated morning saliva cortisol profile in women but similar profiles in men.
+  - id: pmid:9494707
+    title: Basal activity of the hypothalamic-pituitary-adrenal axis in patients with the chronic fatigue syndrome (neurasthenia).
+    year: 1998
+    cohort: me_cfs
+    # Abstract: "patients meeting criteria for CFS" (criteria not named). Oxford group; the Oxford definition is
+    # plausible but not verified, so not recorded. No open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 22
+    n_controls: null  # "appropriate controls", number not in the abstract
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Cowen PJ, University Department of Psychiatry, Warneford Hospital, Oxford, UK
+    finding: >-
+      A study of n=22 patients and a control group found no difference in salivary or urinary
+      cortisol over 24 hours.
+  - id: pmid:11150897
+    title: Hormonal responses to exercise in chronic fatigue syndrome.
+    year: 2001
+    cohort: me_cfs
+    # Criteria not named in the abstract; no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not in the abstract
+    n_controls: null
+    measures_pem: false  # hormones measured after a treadmill test and the next day; no symptom measure in the abstract
+    preregistered: null
+    role: context
+    direction: mixed
+    group: Natelson BH, New Jersey Medical School, Newark, USA
+    finding: >-
+      A study of patients and matched sedentary controls (numbers not in the abstract) found no
+      difference in basal hormones, lower ACTH 4 minutes after a maximal treadmill test in patients,
+      and no differences the next day.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

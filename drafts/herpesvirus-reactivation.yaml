@@ -1,0 +1,477 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# FOUNDER RULING (founder, 2026-11-02): level 2, contested: null; Diagnostic marker: no; Explains PEM: no.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml.
+# Studies with no open full text in Europe PMC and no case definition in the abstract stay `unverified` and role
+# `context` (V9): 2849717, 23959519, 18019402, 35102619, 28303641, 41451845, 37526404, 10913395. Europe PMC lists
+# PMC ids for 28303641, 41451845 and 37526404 but returned "no open full text" on 2026-11-02.
+#
+# Scope: markers of active (replicating) herpesvirus infection - viral DNA outside cells (cell-free plasma, saliva,
+# sputum, throat washings) and antiviral treatment trials. The card's measure is "more markers of active infection in
+# patients than in controls". Antibody levels from past infection (IgG serology) and viral DNA inside blood cells
+# (a marker of latent infection in the studies' own definitions) are not the card's measure.
+#
+# FOUNDER RULING (founder, 2026-11-02)
+#   1. Level 2, resting on the herpesvirus-only result of Rasa-Dzelzkaleja 2023 (36653846; Fukuda; 200 patients,
+#      150 controls): active double HHV-6 and HHV-7 infection only in patients (p < 0.0001).
+#   2. Rung 3 not reached. Lee 2021 (34422848) measured viral DNA load in saliva, found differences only in subgroups
+#      at a few time points, and its authors read the result as persistent rather than active infection; it does
+#      not repeat the finding. 34422848 is `context` (direction higher).
+#   3. Contested: null. A comparable contradicting study for rung 2 would need at least 100 patients; Shikova 2020
+#      (32129496) has 58. 32129496 is `context`, direction `mixed`: with contested null, V8 does not apply and no
+#      other rule needs a `contradicts` study. 28604802 was already `context` (card-reviewer).
+#   4. Level 4 not reached: no controlled antiviral trial on the card has a verified recognised case definition
+#      (V9). TODO: verify the case definitions of 2849717, 23959519 and 18019402 (no open full text).
+#   5. Badges both no: no marker tested in an independent cohort; no study measures PEM directly.
+#   6. No long COVID label: no long COVID herpesvirus study in the cache has a verified recognised case definition
+#      (38571295, 39158051: no open full text; 42797874: its full text says no standardised case definition).
+#   Author overlap: Murovska M is on 22927850, 36653846 and 32129496 (Shikova 2020 is not independent of the Riga
+#   group). Montoya JG is on 23959519 and 37526404; Klimas NG on 28303641 and 37526404; Williams MV and Ariza ME on
+#   28303641 and 41451845. Rosén A (40143349) is not on any other study on the card.
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews and meta-analyses, not studies: 33572802, 34867935, 38675914, 40284540, 41472292, 34348314, 37898798,
+#     11867001, 33114612 and others marked Review in PubMed.
+#   - Onset after infectious mononucleosis, not reactivation (task rule): 41836950, 38304441, 30261303, 31003854,
+#     31039432, 34987499 (CEBA), 9926075, 8588009, 16950834, 1846641. 20827765 (Dubbo, 10 cases vs 10 controls,
+#     no difference in EBV/HHV-6/CMV markers after acute infection): onset cohort, case definition not verified.
+#   - IgG serology of past infection, not active-infection markers: 31475007 (Blomberg 2019, CCC, no significant
+#     differences), 23145212 (Burbelo 2012, HHV-6, no difference), 34291062, 37519635, 35814774, 38256421 (re-analyses
+#     of UK Biobank and Berlin array data), 28604802's array results (its throat-wash result is on the card),
+#     24454857 (Loebel 2014: EBV-specific memory responses; lytic BZLF-1 RNA not detected in patients or controls,
+#     but the measurement n is not clear from the text).
+#   - Viral DNA in blood cells only (latent marker): 7650209, 10738137, 7968694.
+#   - Uncontrolled antiviral series: 17276366 (12 patients, not defined as CFS), 23080504 (61, retrospective chart
+#     review), 24445302 (15 adolescents, retrospective), 23155374 (6 patients); 11340544 (letter, no abstract in the
+#     record; TODO: verify if the founder wants it).
+#   - Earlier, smaller or overlapping studies by groups already on the card: 17276369 (Riga, 17 patients, case
+#     definition unverified); 10066657 (Wallace 1999, CDC criteria, PCR in blood cells and serology, no difference;
+#     not the card's measure, n not in the abstract) - listed here, not on the card.
+#   - Tissue, cell or animal studies: 36589231 (post-mortem tissue, small), 32327453 (cell lines with serum from 10
+#     patients), 31040055, 35482424, 21272632.
+#   - Enteroviruses, SARS-CoV-2 persistence, XMRV, retroviruses: out of scope (other cards).
+slug: herpesvirus-reactivation
+name: Reactivated herpesvirus infection (Epstein-Barr virus, HHV-6, HHV-7)
+core_claim:
+  text: >-
+    The hypothesis proposes that in at least some people with ME/CFS, herpesviruses that stay in the
+    body for life after a first infection, such as Epstein-Barr virus and human herpesviruses 6 and
+    7, become active again and help drive the illness.
+  sources: [pmid:22927850, pmid:32129496, pmid:23959519]
+level: 2
+level_reason:
+  - text: >-
+      A study from Riga, Latvia, of 200 patients meeting the Fukuda definition, which does not require
+      post-exertional malaise, and 150 healthy controls looked for viral DNA in cell-free blood
+      plasma, which the authors use as a marker of active infection. Active double HHV-6 and HHV-7
+      infection was found only in patients (p < 0.0001); the paper gives no counts for it. Markers of
+      active HHV-6, HHV-7 or parvovirus B19 (not a herpesvirus) infection together were found in 45%
+      of patients and 8.7% of controls. The card is at level 2 because of the herpesvirus-only result
+      of this study. No independent group has repeated it, so it is unreplicated.
+    sources: [pmid:36653846]
+  - text: >-
+      An earlier study by the same Riga group, of 108 patients meeting the 1994 CDC (Fukuda) definition
+      and 90 healthy controls, found active HHV-6, HHV-7 or parvovirus B19 infection in 70 of 108
+      patients and 12 of 90 controls. Active HHV-7 infection alone was found in 28 patients and 10
+      controls, and the paper reports HHV-6 in plasma in 16 of 108 patients. The two Riga studies may
+      share patients; the papers do not say.
+    sources: [pmid:22927850, pmid:36653846]
+  - text: >-
+      A study from Bulgaria of 58 patients meeting the Fukuda definition and 50 healthy controls, with
+      one author shared with the Riga group, found active HHV-6 infection in no patient and no
+      control, HHV-6 DNA in cell-free plasma in 1 of 58 patients and no control, and no difference in
+      HHV-6 antibodies. It did not test HHV-7. With 58 patients, fewer than half of the 200 in the
+      larger Riga study, it does not contest level 2.
+    sources: [pmid:32129496, pmid:36653846]
+  - text: >-
+      A study from London, with no authors shared with the Riga studies, measured herpesvirus DNA in
+      saliva every month for six months in 30 patients from the UK ME/CFS Biobank (16 severely, 14
+      mildly or moderately affected), meeting the Canadian Consensus Criteria and/or the Fukuda
+      definition, and 16 healthy controls in the saliva measurements (the abstract says 14 controls).
+      It found higher HHV-6B and HHV-7 DNA levels in saliva: HHV-6B was higher in the 16 severely
+      affected patients than in controls at three of six monthly time points, and HHV-7 was higher in
+      the mildly or moderately affected patients at two time points, with trends at the others.
+      Epstein-Barr virus and herpes simplex virus 1 did not differ. The authors read the viral DNA
+      as longstanding, persistent infection rather than acute or recent infection. The card does not
+      reach level 3: this study measured viral DNA load in saliva, found differences only in
+      subgroups at a few time points, and does not repeat the finding of active infection in blood.
+    sources: [pmid:34422848]
+  - text: >-
+      Placebo-controlled trials of antiviral drugs have been run, but for each the case definition is
+      not yet verified, so they cannot count towards level 4. In a trial of 24 patients selected by
+      their Epstein-Barr virus antibodies and given acyclovir and placebo in turn, similar numbers
+      improved on each (11 and 10). In a trial of 30 patients with raised HHV-6 and Epstein-Barr virus
+      antibodies, randomised 2 to 1 to valganciclovir or placebo for six months, the difference in the
+      MFI-20 fatigue score at nine months was not statistically significant; mental fatigue, a second
+      fatigue score and self-reported cognitive function changed differently between the groups over
+      time, patients on valganciclovir were more often classed as responders (7.4 times, P = 0.029),
+      and antibody levels did not differ between groups.
+    sources: [pmid:2849717, pmid:23959519]
+  - text: >-
+      A third randomised trial, of valacyclovir in a subset of patients with Epstein-Barr virus
+      markers, reported a larger rise in an activity score with valacyclovir than with placebo; its
+      abstract gives no sample size or statistical test. A non-randomised study of 192 patients the
+      authors classed as having reactivated HHV-6 or HHV-7 infection by PCR of blood white cells, given
+      valaciclovir, valganciclovir or artesunate, compared with 63 untreated patients, reported how
+      often the viruses became undetectable in blood, not whether symptoms changed.
+    sources: [pmid:18019402, pmid:35102619]
+  - text: >-
+      For Epstein-Barr virus the findings are mixed. The Bulgarian study found Epstein-Barr virus DNA
+      in cell-free plasma in 24.1% of patients and 4% of controls, and active infection by the
+      study's criteria in 12 patients and 1 control. A Berlin study of 50 patients meeting the
+      Canadian criteria and 50 healthy donors found Epstein-Barr virus DNA in throat washings in 30%
+      of patients and 42% of donors, a difference that was not significant.
+    sources: [pmid:32129496, pmid:28604802]
+  - text: >-
+      Some studies whose case definitions are not yet verified found no difference. One of 26 patients
+      and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone's blood
+      cells and found no difference in HHV-6 or HHV-7 DNA in blood cells, which this card treats as a
+      marker of latent rather than active infection. A multicentre search for viral genetic material
+      in blood, stool and saliva found no consistent differences between patients and controls other
+      than fewer anelloviruses (a family of viruses that are not herpesviruses) in patients.
+    sources: [pmid:10913395, pmid:37526404]
+# Contested: null (founder ruling 2026-11-02). Rung 2 rests on 36653846 (200 patients); a comparable contradicting
+# study would need at least 100 patients; 32129496 has 58.
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No marker on this card has been tested in a second, independent patient group with a verified
+        case definition. Antibodies against the Epstein-Barr virus dUTPase were higher in patients in
+        two studies by the same Ohio group; the later study also found higher antibodies against the
+        HHV-6 and varicella zoster virus dUTPases. Both studies have case definitions not yet
+        verified.
+      sources: [pmid:28303641, pmid:41451845]
+  explains_pem:
+    # Checked: abstracts of all studies on the card and the full texts of 22927850, 36653846, 32129496, 34422848,
+    # 40143349 and 28604802 as far as read. 22927850 links active infection to "malaise after exertion" as a
+    # reported symptom (Table 3, Fatigue Severity Scale item), not an exertion challenge. 34422848 scored
+    # post-exertional symptoms by questionnaire only.
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly, for example with an exertion
+        challenge. The 108-patient Riga study reported that malaise after exertion, recorded as a
+        symptom, was more frequent in patients with active infection than in those with latent or no
+        infection.
+      sources: [pmid:22927850]
+subgroups:
+  - text: >-
+      The antiviral trials selected patients by their antibodies to Epstein-Barr virus or HHV-6. In
+      the London saliva study, HHV-6B was higher mainly in severely affected patients.
+    sources: [pmid:2849717, pmid:23959519, pmid:34422848]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=13 patients and 10 healthy controls found that Epstein-Barr virus was shed in
+      sputum by 11 of 13 patients and 5 of 10 controls, with a higher viral load in patients; HHV-6
+      levels did not differ. Not yet repeated.
+    sources: [pmid:40143349]
+studies:
+  # --- supports (rung 2) ---
+  - id: pmid:36653846
+    title: The persistent viral infections in the development and severity of myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2023
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Two hundred patients [130 (65%) female and 70 (35%) male, mean age 38 ± 12] with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study, aiming to determine the involvement of HHV-6A/B, HHV-7, and B19V in the etiopathogenesis of ME/CFS."
+    design: controlled
+    # Full text (PMC9847171): active = viral genomic sequences in DNA from blood plasma; 90/200 (45%) vs 13/150
+    # (8.7%), p < 0.0001; latent 103/200 vs 115/150. Includes B19V (not a herpesvirus).
+    n_patients: 200
+    n_controls: 150
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Murovska M, Rīga Stradiņš University, Riga, Latvia (same group as 22927850; Murovska M also on 32129496)
+    finding: >-
+      A study of n=200 patients and 150 healthy controls found active double HHV-6 and HHV-7
+      infection only in patients (p < 0.0001, counts not given), and markers of active HHV-6, HHV-7
+      or parvovirus B19 (not a herpesvirus) infection together in 45% of patients and 8.7% of
+      controls.
+  - id: pmid:22927850
+    title: Association of active human herpesvirus-6, -7 and parvovirus b19 infection with clinical outcomes in patients with myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2012
+    cohort: me_cfs
+    # "1994 CDC definition" = Fukuda 1994. Flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "One hundred eight randomly selected patients (66 females, 42 males; mean age 37 years) with clinically diagnosed ME/CFS after rigorous examination of criteria (fatigue for at least six months and at least four of eight symptoms: postexertional malaise, impaired memory or concentration, unrefreshing sleep, muscle pain, multijoint pain, tender cervical or axillary lymph nodes, sore throat, headache) corresponding to the 1994 CDC definition and 90 practically healthy persons (55 females, 35 males; mean age 39 years) were investigated for evidence of HHV-6, HHV-7 and B19 infection/coinfection."
+    design: controlled
+    # Scope note: "active HHV-6" here is IgM with plasma DNA, or raised IgG with plasma DNA (full text, 2.3).
+    # "16 patients with plasma viremia" (3.3). Full text (PMC3426163) Table 1: single HHV-6 2/108 vs 0/90; single HHV-7 28/108 vs 10/90; single B19 11 vs 2;
+    # dual HHV-6+HHV-7 10 vs 0; dual HHV-7+B19 15 vs 0; triple 4 vs 0; latent 32 vs 53; none 6 vs 25.
+    n_patients: 108
+    n_controls: 90
+    measures_pem: false  # "malaise after exertion" as a reported symptom only
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Murovska M, Riga Stradins University, Riga, Latvia (same group as 36653846; Rasa S is an author of both)
+    finding: >-
+      A study of n=108 patients and 90 healthy controls found active HHV-6, HHV-7 or parvovirus B19
+      infection in 70 of 108 patients and 12 of 90 controls, and reported a link between active HHV-6
+      or HHV-7 infection and low-grade fever, swollen lymph nodes and malaise after exertion, recorded
+      as symptoms.
+  - id: pmid:34422848
+    title: Salivary DNA Loads for Human Herpesviruses 6 and 7 Are Correlated With Disease Phenotype in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    # "Canadian Consensus and/or CDC-1994 (Fukuda)": not every patient is stated to meet CCC, so recorded as Fukuda.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "They were required to have a confirmed medical diagnosis of ME/CFS and were re-assessed by clinical research staff to ensure compliance with the Canadian Consensus (22) and/or CDC-1994 (“Fukuda”) (1) criteria, which were the study case definitions."
+    design: controlled
+    # Abstract: 30 patients, 14 healthy controls. Full text (PMC8378328), Figure 3: "HC ( n = 16)", ME/CFS_MM n = 14,
+    # ME/CFS_SA n = 16; 46 enrolled. n_controls from the saliva measurements. HHV-6B higher in SA vs HC at months 1, 3, 5
+    # (p = 0.039, 0.030, 0.029); HHV-7 higher in MM vs HC at months 4, 5 (p = 0.023, 0.032), borderline at 1, 3 and
+    # in SA at 6. No difference for EBV or HSV-1.
+    n_patients: 30  # 16 severely, 14 mildly or moderately affected
+    n_controls: 16  # saliva measurements (Figure 3); the abstract says 14
+    measures_pem: false  # post-exertional symptoms by questionnaire only
+    preregistered: null
+    role: context  # founder ruling 2026-11-02: saliva DNA load, subgroups, persistent infection; not a repeat
+    direction: higher
+    group: Cliff JM, London School of Hygiene and Tropical Medicine, UK (UK ME/CFS Biobank)
+    finding: >-
+      A study of n=30 patients (16 severely, 14 mildly or moderately affected) and 16 healthy controls
+      in the saliva measurements (the abstract says 14 controls), sampling saliva monthly for six
+      months, found higher HHV-6B DNA levels in the 16 severely affected patients and higher HHV-7 DNA
+      levels in patients than in controls at some time points, and no difference for Epstein-Barr virus or herpes simplex
+      virus 1.
+  # --- context: verified case definitions (founder ruling 2026-11-02) ---
+  - id: pmid:32129496
+    title: Cytomegalovirus, Epstein-Barr virus, and human herpesvirus-6 infections in patients with myalgic еncephalomyelitis/chronic fatigue syndrome.
+    year: 2020
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "The patients were diagnosed with ME/CFS according to Fukuda criteria."
+    design: controlled
+    # Full text (PMC7687071): plasma HHV-6 DNA 1/58 vs 0/50 (p = 1.00); active HHV-6 and CMV in no patient or
+    # control; plasma EBV DNA 14/58 vs 2/50 (p = .0052); active EBV 12 vs 1 (p = .0027). HHV-7 not tested.
+    n_patients: 58
+    n_controls: 50
+    measures_pem: false
+    preregistered: null
+    role: context  # founder ruling 2026-11-02; contested null, so no rule needs `contradicts`
+    direction: mixed  # EBV active infection higher; HHV-6 and CMV no difference
+    group: Shikova E, National Center of Infectious and Parasitic Diseases, Sofia, Bulgaria (Murovska M of the Riga group is a co-author)
+    finding: >-
+      A study of n=58 patients and 50 healthy controls found active Epstein-Barr virus infection in 12
+      patients and 1 control, and active HHV-6 or cytomegalovirus infection in no patient or control,
+      with no difference in antibodies to the three viruses.
+  - id: pmid:28604802
+    title: Serological profiling of the EBV immune response in Chronic Fatigue Syndrome using a peptide microarray.
+    year: 2017
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Diagnosis of CFS was based on Canadian Criteria [62] and exclusion of other medical or neurological diseases which may cause fatigue."
+    design: controlled
+    # Full text (PMC5467847): throat washings from 50 patients and 50 healthy donors; EBER copies in 15 (30%) vs 21
+    # (42%), p = 0.37. The 92-patient array is IgG serology, not used here.
+    n_patients: 50
+    n_controls: 50
+    measures_pem: false
+    preregistered: null
+    role: context  # no claim on the card that rests on Epstein-Barr virus is contradicted by it (card-reviewer)
+    direction: no_difference
+    group: Scheibenbogen C, Charité, Berlin, Germany
+    finding: >-
+      A study of 92 patients and 50 healthy controls found a similar IgG response to Epstein-Barr virus
+      apart from a stronger response to an EBNA-6 repeat sequence; in throat washings from n=50
+      patients and 50 donors, Epstein-Barr virus DNA was found in 30% and 42%, not a significant
+      difference.
+  # --- early signals ---
+  - id: pmid:40143349
+    title: Prevalence of EBV, HHV6, HCMV, HAdV, SARS-CoV-2, and Autoantibodies to Type I Interferon in Sputum from Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.
+    year: 2025
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "They fulfilled the ME/CFS diagnosis according to the 2003 Canadian Consensus Criteria [16,17], including fatigue with post-exertional malaise (criteria 1), sleep disturbances (criteria 2), pain (criteria 3), neurological /cognitive manifestations (criteria 4), autonomous /neuroendocrine /immune manifestations (criteria 5), and a duration of illness for at least 6 months (criteria 6)."
+    design: controlled
+    # Full text (PMC11946815): EBV released by 11/13 vs 5/10; EBV copies/mL higher (p = 0.0256). Also 4 elderly and
+    # 2 immunosuppressed controls, not counted.
+    n_patients: 13
+    n_controls: 10
+    measures_pem: false
+    preregistered: null
+    role: early_signal
+    direction: mixed  # EBV higher; HHV-6 same level
+    group: Rosén A, Linköping University, Sweden
+    finding: >-
+      A study of n=13 patients and 10 healthy controls found Epstein-Barr virus in sputum from 11 of 13
+      patients and 5 of 10 controls, with a higher viral load in patients, and HHV-6 at the same level.
+  # --- context: controlled antiviral trials, case definition not verified ---
+  - id: pmid:2849717
+    title: Acyclovir treatment of the chronic fatigue syndrome. Lack of efficacy in a placebo-controlled trial.
+    year: 1988
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled  # double-blind, acyclovir and placebo in turn (crossover)
+    n_patients: 24  # completed; 27 enrolled, 3 withdrawn with kidney toxicity
+    n_controls: null  # crossover: patients were their own controls
+    measures_pem: false
+    preregistered: null
+    role: context  # would be `contradicts` once a recognised case definition is verified
+    direction: not_applicable
+    group: Straus SE, National Institute of Allergy and Infectious Diseases, Bethesda, USA
+    finding: >-
+      A placebo-controlled trial of n=24 patients with Epstein-Barr virus antibody patterns found that
+      similar numbers improved with acyclovir and with placebo (11 and 10), and that improvement did
+      not track changes in Epstein-Barr virus antibody titres.
+  - id: pmid:23959519
+    title: Randomized clinical trial to evaluate the efficacy and safety of valganciclovir in a subset of patients with chronic fatigue syndrome.
+    year: 2013
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled
+    n_patients: 30  # randomised 2:1 valganciclovir:placebo; arm sizes not stated in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Montoya JG, Stanford University, USA (Montoya JG also on 37526404)
+    finding: >-
+      A placebo-controlled trial of n=30 patients with raised HHV-6 and Epstein-Barr virus antibodies
+      found that the difference in the MFI-20 fatigue score at nine months was not statistically
+      significant; trajectories differed in mental fatigue, a second fatigue score and cognitive
+      function, patients on valganciclovir were more often classed as responders (7.4 times,
+      P = 0.029), and viral antibody titres did not differ between groups.
+  - id: pmid:18019402
+    title: "Valacyclovir treatment in Epstein-Barr virus subset chronic fatigue syndrome: thirty-six months follow-up."
+    year: 2007
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled  # placebo-controlled phase (Group 1), then 36-month follow-up (Group 2)
+    n_patients: null  # not stated in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Lerner AM, William Beaumont Hospital, Royal Oak, USA
+    finding: >-
+      A placebo-controlled trial of valacyclovir in patients with Epstein-Barr virus markers, of a
+      size not stated in the abstract, reported a mean rise of 1.12 points in an activity score with
+      valacyclovir and 0.42 with placebo after six months, without a statistical test in the abstract.
+  - id: pmid:35102619
+    title: A comparative study of valaciclovir, valganciclovir, and artesunate efficacy in reactivated HHV-6 and HHV-7 infections associated with chronic fatigue syndrome/myalgic encephalomyelitis.
+    year: 2022
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled  # non-randomised; untreated comparison group
+    n_patients: 192  # abstract: "From 255 patients (192 cases)"; control group n = 63
+    n_controls: 63
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Maltsev D, Bogomolets National Medical University, Kyiv, Ukraine
+    finding: >-
+      A study of n=192 treated patients the authors classed as having reactivated HHV-6 or HHV-7
+      infection by PCR of blood white cells, and 63 untreated patients, found
+      that after three months the viruses were undetectable in blood in 37% and 34% of cases with
+      valaciclovir, 48% and 45% with valganciclovir and 68% and 63% with artesunate; symptoms are not
+      reported in the abstract.
+  # --- context: observational, case definition not verified ---
+  - id: pmid:10913395
+    title: "Human herpesviruses 6 and 7 in chronic fatigue syndrome: a case-control study."
+    year: 2000
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 26
+    n_controls: 50  # PCR results for 50; 52 recruited
+    measures_pem: false
+    preregistered: null
+    role: context  # would be `contradicts` once verified
+    direction: no_difference
+    group: Pellett PE, Centers for Disease Control and Prevention, Atlanta, USA
+    finding: >-
+      A study of n=26 patients and 50 matched controls (52 recruited) isolated no HHV-6 or HHV-7 from
+      blood cells and, by PCR of lymphocytes (a marker of latent infection in this card's scope), found
+      HHV-6 DNA in 3 of 26 patients and 14 of 50 controls and HHV-7 DNA in 2 patients and 12
+      controls, with no significant differences.
+  - id: pmid:37526404
+    title: A multicenter virome analysis of blood, feces, and saliva in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2023
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; full text not open in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not stated in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Lipkin WI, Columbia University, New York, USA (Montoya JG also on 23959519; Klimas NG also on 28303641)
+    finding: >-
+      A multicentre study searching blood, stool and saliva for viral genetic material found no
+      consistent differences between patients and healthy controls other than a lower prevalence of
+      anelloviruses in patients.
+  - id: pmid:28303641
+    title: "Myalgic encephalomyelitis/chronic fatigue syndrome and gulf war illness patients exhibit increased humoral responses to the herpesviruses-encoded dUTPase: Implications in disease pathophysiology."
+    year: 2017
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; full text not open in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not stated in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Ariza ME, The Ohio State University, Columbus, USA (same group as 41451845)
+    finding: >-
+      A study comparing patients with ME/CFS, patients with Gulf War illness and controls found
+      antibodies against several herpesvirus dUTPase enzymes or the human dUTPase in 30.91-52.7% of
+      ME/CFS patients and
+      17.21% of controls, and higher antibodies against the Epstein-Barr virus dUTPase in ME/CFS than
+      in controls.
+  - id: pmid:41451845
+    title: Chronic Reactivation of Persistent Human Herpesviruses EBV, HHV-6 and VZV and Heightened Anti-dUTPase IgG Antibodies Are a Recurrent Hallmark in Post-Infectious ME/CFS and is Associated With Fatigue.
+    year: 2026
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; full text not open in Europe PMC
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 40  # 873 longitudinal serum samples
+    n_controls: 16  # 378 samples
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Ariza ME, The Ohio State University Wexner Medical Center, Columbus, USA (same group as 28303641)
+    finding: >-
+      A study of n=40 patients and 16 healthy controls, sampled repeatedly, found higher IgG
+      antibodies against the dUTPase enzymes of Epstein-Barr virus, HHV-6 and varicella zoster virus
+      in patients, and an association of Epstein-Barr virus and HHV-6 dUTPase antibodies with
+      fatigue.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair
