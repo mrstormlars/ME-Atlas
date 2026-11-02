@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>What changed</h1>
-<p>Every published change to a hypothesis, newest first. Each entry says which tier decided it; see <a href="methods.html#tiers">Methods</a>.</p>
+<h1>{{ txt("changes.h1") }}</h1>
+<p>{{ t("changes.intro") }}</p>
+{% if lang != default_lang %}
+<p class="small">{{ txt("changes.english_only") }}</p>
+{% endif %}
 {% for e in entries %}
 <article class="change">
-  <h2><time datetime="{{ e.date.isoformat() }}">{{ e.date.isoformat() }}</time> · <a href="hypotheses/{{ e.card }}.html">{{ names[e.card] }}</a></h2>
+  <h2><time datetime="{{ e.date.isoformat() }}">{{ e.date.isoformat() }}</time> · <a href="{{ lroot }}hypotheses/{{ e.card }}.html">{{ names[e.card] }}</a></h2>
   <p>{{ e.change }}</p>
-  <p><strong>Reason:</strong> {{ e.reason }}</p>
-  <p>Sources: {% for s in e.sources %}<a href="{{ study_url(s) }}" rel="noopener noreferrer">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %} · Tier {{ e.tier }}</p>
+  <p><strong>{{ txt("changes.reason") }}</strong> {{ e.reason }}</p>
+  <p>{{ txt("changes.sources") }} {% for s in e.sources %}<a href="{{ study_url(s) }}" rel="noopener noreferrer">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %} · {{ t("changes.tier", tier=e.tier) }}</p>
 </article>
 {% else %}
-<p class="empty">No changes have been published yet.</p>
+<p class="empty">{{ txt("changes.empty") }}</p>
 {% endfor %}
 {% endblock %}

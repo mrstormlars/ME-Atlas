@@ -10,17 +10,18 @@
 <div class="bar" aria-hidden="true">{% for i in range(6) %}<i class="seg{% if i in card.hatched_rungs %} contested{% elif i <= card.level %} on{% endif %}"></i>{% endfor %}</div>
 {% endmacro %}
 
-{% macro level_line(card) %}Level {{ card.level }} of 5, {{ rung_names[card.level] }}{% endmacro %}
+{% macro level_line(card) %}{{ t("level.line", level=card.level, name=rung_names[card.level]) }}{% endmacro %}
 
-{% macro contested_rungs(card) %}{% if card.hatched_rungs|length == 1 %}rung {{ card.hatched_rungs[0] }}{% else %}rungs {{ card.hatched_rungs|join(", ") }}{% endif %}{% endmacro %}
+{% macro contested_rungs(card) %}{% if card.hatched_rungs|length == 1 %}{{ t("rungs.one", rung=card.hatched_rungs[0]) }}{% else %}{{ t("rungs.many", rungs=card.hatched_rungs|join(", ")) }}{% endif %}{% endmacro %}
 
 {# Case definition in plain words, with its flag. #}
 {% macro case_definition(study) %}
-{% set label, term, flag = case_labels[study.case_definition] %}
+{% set term, flag = case_meta[study.case_definition] %}
+{% set label = txt("case." ~ study.case_definition) %}
 <span class="casedef">{% if term %}{{ gloss(term, label) }}{% else %}{{ label }}{% endif %}</span>
 {% if flag == "no_pem" %}
-<span class="flag">does not require {{ gloss("PEM") }}</span>
+<span class="flag">{{ t("flag.no_pem") }}</span>
 {% elif flag == "broad" %}
-<span class="flag">broad</span>
+<span class="flag">{{ t("flag.broad") }}</span>
 {% endif %}
 {% endmacro %}

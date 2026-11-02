@@ -139,7 +139,7 @@ A level is **contested** when at least one study of comparable or higher quality
 
 ## 5. Plain language and accessibility
 
-- **English, plain words.** Short sentences. Avoid jargon and abbreviations. Where a technical term or abbreviation is needed, it is marked visibly (dotted underline) and shows a short explanation.
+- **English, plain words; reviewed translations alongside.** The site is written in English, which is authoritative. Reviewed translations (Norwegian first) are published alongside it; each translated page says it is a translation and links to the English page, and each language has its own glossary file (the English one is the reference). Short sentences. Avoid jargon and abbreviations. Where a technical term or abbreviation is needed, it is marked visibly (dotted underline) and shows a short explanation.
 - **One glossary file** is the single source for all explanations. It renders the glossary page and every in-page explanation. No explanation is written inline.
 - **Explanation behaviour.** The explanation appears on mouse hover, on tap or click, and on keyboard focus. Terms are focusable controls described by their explanation. Escape, or tapping elsewhere, closes a tapped explanation. Hover is never the only way to read it.
 - **Contrast.** Text and chart marks meet WCAG 2.2 AA contrast at least (4.5:1 for body text). Meaning is never carried by colour alone: levels have text labels, contested segments use a hatch pattern, badges use words.

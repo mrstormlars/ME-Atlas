@@ -1,86 +1,86 @@
 {% extends "base.html" %}
 {% from "_macros.html" import gloss, bar, level_line, contested_rungs with context %}
 {% block content %}
-<h1>Causes of ME/CFS: where the evidence stands</h1>
-<p class="lead">Each bar shows how far the evidence for one proposed cause of {{ gloss("ME/CFS") }} has come, from an idea to a causal case. The site gives no treatment advice.</p>
+<h1>{{ txt("index.h1") }}</h1>
+<p class="lead">{{ t("index.lead") }}</p>
 
 {% if not cards %}
-<p class="empty">No hypotheses published yet.</p>
+<p class="empty">{{ txt("index.empty") }}</p>
 {% else %}
 <div class="panel chart">
   <div class="chart-head" aria-hidden="true">
-    <span class="chart-head-label">Rung</span>
+    <span class="chart-head-label">{{ txt("index.rung") }}</span>
     <div class="axis"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
   </div>
 {% for card in cards %}
   <section class="row" id="row-{{ card.slug }}" aria-labelledby="h-{{ card.slug }}">
     <div class="row-name">
-      <h3 id="h-{{ card.slug }}"><a href="hypotheses/{{ card.slug }}.html">{{ card.name }}</a></h3>
+      <h3 id="h-{{ card.slug }}"><a href="{{ lroot }}hypotheses/{{ card.slug }}.html">{{ card.name }}</a></h3>
 {% if card.badges.diagnostic_marker.value or card.badges.explains_pem.value or card.long_covid %}
       <div class="chips">
 {% if card.badges.diagnostic_marker.value %}
-        <span class="chip badge">Marker validated in an independent cohort</span>
+        <span class="chip badge">{{ txt("chip.marker") }}</span>
 {% endif %}
 {% if card.badges.explains_pem.value %}
-        <span class="chip badge">Explains PEM</span>
+        <span class="chip badge">{{ txt("chip.pem") }}</span>
 {% endif %}
 {% if card.long_covid %}
-        <span class="chip tag lc-label">Also studied in long COVID</span>
+        <span class="chip tag lc-label">{{ txt("chip.long_covid") }}</span>
 {% endif %}
       </div>
 {% endif %}
     </div>
     <div class="row-bar">
       {{ bar(card) }}
-      <p class="readout">{{ level_line(card) }}{% if card.contested %} – <strong>contested</strong> at {{ contested_rungs(card) }}. Solid up to rung {{ solid_to(card) }}{% endif %}.</p>
+      <p class="readout">{% if card.contested %}{{ t("readout.contested", level_line=level_line(card), rungs=contested_rungs(card), solid=solid_to(card)) }}{% else %}{{ t("readout.plain", level_line=level_line(card)) }}{% endif %}</p>
     </div>
   </section>
 {% endfor %}
 </div>
 
-<div class="legend" aria-label="Legend">
-  <span><span class="sw on"></span>Reached</span>
-  <span><span class="sw h"></span>{{ gloss("contested", "Contested") }}: a comparable study disagrees</span>
-  <span><span class="chip badge">Marker validated</span> <span class="chip badge">Explains {{ gloss("PEM") }}</span></span>
-  <span><span class="chip tag">Also studied in {{ gloss("long COVID") }}</span></span>
+<div class="legend" aria-label="{{ txt("legend.aria") }}">
+  <span><span class="sw on"></span>{{ txt("legend.reached") }}</span>
+  <span><span class="sw h"></span>{{ t("legend.contested") }}</span>
+  <span><span class="chip badge">{{ txt("legend.marker_short") }}</span> <span class="chip badge">{{ t("legend.pem") }}</span></span>
+  <span><span class="chip tag">{{ t("legend.long_covid") }}</span></span>
 </div>
 {% endif %}
 
 <section class="key" aria-labelledby="key-title">
-  <h2 id="key-title">How to read the ladder</h2>
-  <ol class="ladder" aria-label="The six steps of the evidence ladder">
+  <h2 id="key-title">{{ txt("key.title") }}</h2>
+  <ol class="ladder" aria-label="{{ txt("key.aria") }}">
 {% for i in range(6) %}
     <li><b class="rung-no">{{ i }}</b> <span class="rung-name">{{ rung_names[i] }}</span> <span class="rung-meaning">{{ page.mark(rung_meanings[i]) }}</span></li>
 {% endfor %}
   </ol>
-  <p class="small">Each bar shows <em>causal evidence</em> on this six-step {{ gloss("evidence ladder", "ladder") }}. Hypotheses are sorted by <strong>furthest along</strong>, not by an editorial opinion. The ladder is a draft, pending expert review.</p>
-  <p class="small"><strong>{{ gloss("hypotheses", "Hypotheses") }} are not mutually exclusive.</strong> They may be links in one chain, or may apply to different groups of patients.</p>
+  <p class="small">{{ t("key.note1") }}</p>
+  <p class="small">{{ t("key.note2") }}</p>
 </section>
 
 {% if cards %}
 <details class="table-toggle">
-  <summary>Show the chart as a table</summary>
+  <summary>{{ txt("table.toggle") }}</summary>
   <table class="summary">
-    <caption>Hypotheses, furthest along first</caption>
+    <caption>{{ txt("table.caption") }}</caption>
     <thead>
       <tr>
-        <th scope="col">Hypothesis</th>
-        <th scope="col">Level</th>
-        <th scope="col">Contested</th>
-        <th scope="col">Marker validated in an independent cohort</th>
-        <th scope="col">Explains PEM</th>
-        <th scope="col">Also studied in long COVID</th>
+        <th scope="col">{{ txt("table.hypothesis") }}</th>
+        <th scope="col">{{ txt("table.level") }}</th>
+        <th scope="col">{{ txt("table.contested") }}</th>
+        <th scope="col">{{ txt("chip.marker") }}</th>
+        <th scope="col">{{ txt("chip.pem") }}</th>
+        <th scope="col">{{ txt("chip.long_covid") }}</th>
       </tr>
     </thead>
     <tbody>
 {% for card in cards %}
       <tr>
-        <th scope="row"><a href="hypotheses/{{ card.slug }}.html">{{ card.name }}</a></th>
-        <td data-label="Level">{{ card.level }}: {{ rung_names[card.level] }}</td>
-        <td data-label="Contested">{% if card.contested %}Yes, at {{ contested_rungs(card) }}{% else %}No{% endif %}</td>
-        <td data-label="Marker validated in an independent cohort">{{ "Yes" if card.badges.diagnostic_marker.value else "No" }}</td>
-        <td data-label="Explains PEM">{{ "Yes" if card.badges.explains_pem.value else "No" }}</td>
-        <td data-label="Also studied in long COVID">{{ "Yes" if card.long_covid else "No" }}</td>
+        <th scope="row"><a href="{{ lroot }}hypotheses/{{ card.slug }}.html">{{ card.name }}</a></th>
+        <td data-label="{{ txt("table.level") }}">{{ card.level }}: {{ rung_names[card.level] }}</td>
+        <td data-label="{{ txt("table.contested") }}">{% if card.contested %}{{ t("table.yes_at", rungs=contested_rungs(card)) }}{% else %}{{ txt("answer.No") }}{% endif %}</td>
+        <td data-label="{{ txt("chip.marker") }}">{{ txt("answer.Yes" if card.badges.diagnostic_marker.value else "answer.No") }}</td>
+        <td data-label="{{ txt("chip.pem") }}">{{ txt("answer.Yes" if card.badges.explains_pem.value else "answer.No") }}</td>
+        <td data-label="{{ txt("chip.long_covid") }}">{{ txt("answer.Yes" if card.long_covid else "answer.No") }}</td>
       </tr>
 {% endfor %}
     </tbody>

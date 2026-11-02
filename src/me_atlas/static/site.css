@@ -58,6 +58,8 @@ a:focus-visible, .term:focus-visible, summary:focus-visible { outline: 3px solid
 }
 .site-header nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .site-header nav a[aria-current="page"] { font-weight: 600; border-bottom-color: var(--fill); }
+.lang-switch { display: flex; gap: 0 1rem; font-size: .889rem; }
+.lang-switch a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); }
 
 main { position: relative; max-width: 46rem; margin: 0 auto; padding: 2rem 1rem 1rem; }
 h1 { font-size: 1.6rem; font-weight: 600; line-height: 1.25; margin: 0 0 1rem; }
@@ -72,6 +74,7 @@ p { margin: .5rem 0; max-width: 42rem; }
 
 /* secondary text: keys, labels, study details, notes. Never below .889rem (16px). */
 .small, .tag { font-size: .889rem; color: var(--muted); }
+.untranslated { font-size: .889rem; color: var(--muted); font-style: italic; }
 .small strong { color: var(--ink); }
 .note { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.5rem; margin: 1rem 0; }
 

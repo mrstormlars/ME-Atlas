@@ -54,6 +54,13 @@ _BANNED_RE = re.compile(
     r"\b(promising|breakthroughs?|cure[sd]?|hope[sd]?|hopeful|proven)\b",
     re.IGNORECASE,
 )
+# The Norwegian (bokmål) equivalents, for the glossary, translated card text and the string files. "bevisst" (conscious)
+# is deliberately not matched; "påvist" (detected) is an ordinary finding word and is not matched either.
+BANNED_WORDS_NB = ("lovende", "gjennombrudd", "kur", "håp", "bevist")
+_BANNED_NB_RE = re.compile(
+    r"\b(lovende|gjennombrudd(?:et|ene)?|kur(?:en|er|ene|ert|ere|erte)?|håp(?:et|e|er|a)?|håpefull(?:e|t)?|bevist(?:e)?)\b",
+    re.IGNORECASE,
+)
 
 # ---------------------------------------------------------------------------
 # Models (rule V1: schema)
