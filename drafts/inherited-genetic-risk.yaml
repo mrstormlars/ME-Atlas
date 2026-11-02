@@ -1,0 +1,558 @@
+# FOUNDER RULING (2026-11-02): level 2, not contested, both badges no (rung 2: pmid:32210306). The proposals below are accepted as ruled.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# PROPOSALS FOR THE FOUNDER: level 2, not contested, diagnostic marker no, explains PEM no. These are AI proposals
+# under spec section 3; the founder decides them (tier 2).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (32210306:
+# PMC7093502; 26859813: PMC4872418; 35821115: PMC9276688; 32328064: PMC7161310; 40897283: PMC13201895; 42015188:
+# PMC13235158; 36517845: PMC9749644; 21619629: PMC3128000; 27835969: PMC5105265). `uv run python -m
+# me_atlas.europepmc casedef` found no open full text for 34403736, 35318112, 11702053, 11719632, 16049290, 11422420
+# or 15554358 (checked 2026-11-02).
+#
+# WHAT EACH RUNG CAN MEAN FOR GENETIC EVIDENCE (ladder wording only)
+#   Rung 2 "A controlled study in patients with a recognised case definition supports it": here, a variant (or a
+#     family pattern) is more common in patients than in controls. That is an association with risk, not a mechanism.
+#   Rung 3 "An independent group has reproduced the finding in a separate cohort": here, the same variant or locus in
+#     an independent cohort, from a different group. A different variant pointing the same way is not a repeat.
+#   Rung 4 "Changing the proposed factor changes the outcome in a controlled experiment": no study on the card does so.
+#
+# LEVEL, RUNG BY RUNG (proposal)
+#   Rung 2: rests on 32210306 (Lande 2020, Oslo, CCC, 426 v 4511): HLA-C*07:04 and HLA-DQB1*03:03 more common in
+#     patients, both significant after the authors' locus-wise Bonferroni correction (pc 0.001 and < 0.05). Further
+#     rung-2 studies, each from one group and not needed for the level: 32328064 (Steiner 2020, Berlin, CCC, 305 v
+#     201, PTPN22 and CTLA4), 42015188 (Sardell 2026, PrecisionLife, DecodeME cases CCC and/or IOM 2015 by survey,
+#     combinatorial signatures), 11702053 (Walsh 2001, Cambridge, CDC_unspecified, 25 v 36, CFS in relatives),
+#     26859813 (Schlauch 2016, Nevada, CCC/ICC + Fukuda, 42 v 38, TRA and other SNPs; contradicted, see below).
+#   Rung 3: not reached. No study repeats the same variant or locus in an independent cohort from a different group.
+#     - HLA-C*07:04 / DQB1*03:03: only the Oslo group has tested them. 34403736 (Hajdarevic 2021, CCC, 427 v 480) is
+#       the same group, so it is not a repeat; patient overlap with 32210306 not stated in its abstract (TODO).
+#       40897283 (KIR) full text: "ME/CFS patient DNA samples were obtained as previously described (Lande et al.,
+#       2020; Hajdarevic et al., 2021)."
+#     - TRA (rs11157573, rs17255510): 35821115 (Ueland 2022, Oslo, CCC, 409 v 810) found no association.
+#     - PTPN22 / CTLA4: no other study in the cache tested them in ME/CFS.
+#     - Combinatorial signatures: "reproducible" across three DecodeME cohorts within one study by one company;
+#       36517845 (UK Biobank) is the same company and has no case definition. Not independent.
+#     - Familial aggregation: 11702053 only; 21619629 (Utah) identified cases by an ICD-9 code (case definition
+#       `none`, checked in the full text), so it cannot count.
+#   Rung 4: not reached; no intervention study.
+#
+# CONTESTED (proposal: not contested)
+#   Rung 2 rests on 32210306 alone. Comparable quality would need CCC/ICC/IOM 2015, a control group and >= 213
+#   patients (half of 426). No study in the cache tests HLA-C*07:04 or DQB1*03:03 against it. 11422420 (Underhill
+#   2001, no HLA differences, 58 v 134) is earlier, too small and `unverified`. 35318112 (Hajdarevic 2022, no
+#   genome-wide significant locus) is `unverified` and its abstract does not report on the HLA alleles.
+#   35821115 contradicts 26859813 at comparable quality (CCC ranks equal to ICC; controls; 409 >= 21), so the TRA
+#   finding is not supported; 26859813 is not needed for rung 2, so rung 2 is not contested on this ground (same
+#   reasoning as 9713562 on the HPA card).
+#
+# OXFORD: no study on the card has an Oxford cohort.
+# LONG COVID: no label. 42015188 compares ME genes with genes reported in long COVID cohorts from other studies;
+#   it has no long COVID cohort of its own. 37915075 (long COVID, combinatorial) names no ME/CFS case definition in
+#   the abstract; not on the card.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Oslo group (Lie BA, Viken MK; Fluge Ø, Lande A, Hajdarevic R): 32210306, 34403736, 35318112, 35821115,
+#     40897283. Norwegian patient cohorts of 426, 427, 427, 409 and 418, controls from the Norwegian Bone Marrow
+#     Donor Registry (32210306, 35821115); overlap between them not stated in full except 40897283. TODO: verify.
+#   - PrecisionLife (Das S, Sardell J, Gardner S): 36517845 and 42015188. 42015188 excluded UK Biobank participants
+#     used as controls in an earlier combinatorial analysis.
+#   - London: Cleare AJ and Wessely S on 16049290; Wessely S on 11422420. Patient overlap not stated.
+#   - 35318112 and 35821115 both used UK Biobank self-reported CFS (2105 cases); 36517845 used UK Biobank Pain
+#     Questionnaire self-reported diagnosis (2382 cases). Overlap not stated.
+#   - No authors shared between the Oslo group and 32328064, 42015188, 26859813, 11702053.
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, meta-analyses, letters, comments, protocols and cohort-description papers: 33816394 (23andMe
+#     re-analysis, no abstract), 35854226, 37881452, 40443420 (DecodeME / UK Biobank cohort papers), 27317438, the
+#     genetics reviews (e.g. 28089639).
+#   - Unverified case definition, small candidate-gene studies, not needed (no open full text): 14592408 (5-HTT,
+#     78 patients), 18079067 and 16740143 (Wichita, 40 CFS v 42 non-fatigued, HTR2A and NR3C1), 21912186 (40 v 40),
+#     26116897 (50 v 121), 16762155 (TNF-857, 80 patients; 32328064 reports a lower, not higher, frequency of this
+#     allele in a subgroup), 18774769, 20227423, 21059181 (53 adolescents v a database reference, no own controls),
+#     27525900 (17 v 50), 9247678, 1683826 and 8148444 (no abstract), 19758204, 26473596.
+#   - Population or other-condition genetics without an ME/CFS case definition: 39442002, 39994562 (EHR-defined),
+#     41536999, 41683992, 16168155 and other twin-registry fatigue studies, 35354508, 40313134, 42190845.
+#   - Mendelian randomization studies (37485509, 39774380, 40427027, 40448142, 40803495, 42053855): a different
+#     question (whether a trait causes ME/CFS); left for the founder to decide whether they belong on this card.
+#     40552329 is retracted.
+#   - Rare-variant and single-family work: 41444612 (whole-genome sequencing, 31 affected people in 25 families, no
+#     control group), 37978513 and 39723997 (case reports), 41136524 (in silico binding of the Oslo HLA alleles, no
+#     new patient data).
+#   - Methylation and gene-expression studies (e.g. 30516085, 33148325): about gene activity, not inherited variation.
+#   - DecodeME genome-wide association results are cited inside 42015188 only as a preprint; no peer-reviewed record
+#     is in the cache, so the card does not cite them.
+slug: inherited-genetic-risk
+name: Inherited genetic risk
+core_claim:
+  text: >-
+    The hypothesis proposes that inherited genetic variation contributes to the risk of developing
+    ME/CFS: some gene variants are more common in people who develop the illness, and the illness
+    is more common in the relatives of people who have it.
+  sources: [pmid:32210306, pmid:11702053]
+level: 2
+level_reason:
+  - text: >-
+      A study from Oslo of 426 patients meeting the Canadian Consensus Criteria and 4511 healthy,
+      ethnically matched controls typed the HLA genes, a set of immune genes. It found two independent
+      associations, tagged by HLA-C*07:04, carried by 7.7% of patients and 3.8% of controls, and
+      HLA-DQB1*03:03, carried by 12.7% of patients and 8.7% of controls; the authors place
+      HLA-B*57:01 on one haplotype with HLA-DQB1*03:03. Both remained significant after the authors'
+      correction for the number of variants tested in each gene (P = 0.001 and P < 0.05). The card
+      is at level 2 because of this study. No other group has repeated it, and the authors write that
+      their results need verification in independent cohorts.
+    sources: [pmid:32210306]
+  - text: >-
+      On this ladder, level 2 means that a controlled study in patients with a recognised case
+      definition supports the hypothesis. Here that support is an association: two variants were more
+      common in patients than in controls. Going beyond association needs level 4, where changing the
+      proposed factor changes the outcome in a controlled experiment; no study on this card does that.
+    sources: [pmid:32210306]
+  - text: >-
+      Other controlled studies with a recognised case definition also found associations, each with
+      a different variant and none repeated by another group. A Berlin study of 305 patients meeting
+      the Canadian Consensus Criteria and 201 healthy controls found two variants linked to autoimmune
+      diseases, in the PTPN22 and CTLA4 genes, more often in patients (one-sided tests, with no
+      correction reported for the five variants tested); for PTPN22 in all patients, the confidence
+      interval of the odds ratio includes 1. A study of DecodeME participants,
+      who met the Canadian Consensus and/or 2015 Institute of Medicine criteria on survey answers,
+      compared with UK Biobank controls found combinations of variants that were more common in
+      patients; in a separate test group of 3,579 cases, people in the top 10% for the number of these
+      combinations had 1.64 times the odds of the illness of people in the bottom 10%. The patients
+      and controls came from different studies; the authors write that a cohort of patients and
+      controls genotyped as part of the same study is needed for formal confirmation, to rule out
+      technical differences between the two. A Cambridge
+      study of 25 patients assessed with CDC criteria (version not stated, so the definition does not
+      require post-exertional malaise) and 36 medical controls found higher rates of the illness in
+      the patients' first-degree relatives (parents, siblings and children) than in those of the
+      controls.
+    sources: [pmid:32328064, pmid:42015188, pmid:11702053]
+  - text: >-
+      The card is not at level 3, because no independent group has found the same variant or region
+      in a separate cohort. The HLA variants have been studied only by the Oslo group. A later Oslo
+      study of 427 patients meeting the Canadian criteria and 480 controls found signals in HLA
+      class I and class II, the latter most likely in HLA-DQB1, but it comes from the same research
+      group, so it is not an independent repeat. A 2025 Oslo study says its patient samples were
+      obtained as described in both papers.
+    sources: [pmid:32210306, pmid:34403736, pmid:40897283]
+  - text: >-
+      A pilot study from Nevada of 42 patients meeting the Carruthers criteria (Canadian or
+      International Consensus) and the Fukuda definition, and 38 healthy controls, reported 442
+      candidate variants, several in the T cell receptor alpha (TRA) region. The Oslo group tested the
+      two TRA variants singled out (rs11157573, rs17255510) in 409 patients meeting the Canadian
+      criteria and 810 controls and found no association;
+      they were not associated in 2105 people who reported a chronic fatigue syndrome diagnosis in UK
+      Biobank either. The Nevada TRA finding is therefore not supported.
+    sources: [pmid:26859813, pmid:35821115]
+  - text: >-
+      The DecodeME combinations were found again across three separate groups of DecodeME
+      participants, but within one study by one company, so this is not a repeat by an independent
+      group. An earlier study by the same company used UK Biobank participants who reported a
+      diagnosis, with no case definition, and cannot count towards the level.
+    sources: [pmid:42015188, pmid:36517845]
+  - text: >-
+      Several studies, some of them large, cannot count towards the level because their case definition is not
+      verified or no case definition was used. The largest genome-wide study from Oslo, with a
+      Norwegian group of 427 patients, a Danish group of 460 and 2105 UK Biobank cases, found no
+      variant reaching genome-wide significance; its strongest Norwegian signal, near the TPPP gene,
+      did not repeat for the top variant. A Utah study of 811 people with a chronic fatigue syndrome
+      diagnosis code in their medical records found more of the illness than expected among
+      first-, second- and third-degree relatives. A twin study of 146 female twin pairs found that
+      identical twins more often shared unexplained chronic fatigue than non-identical twins (55%
+      against 19% for the strictest definition, which used only the exclusion rules of the chronic
+      fatigue syndrome case definition).
+    sources: [pmid:35318112, pmid:21619629, pmid:11719632]
+  - text: >-
+      Smaller studies of single candidate genes point in different directions. A London study of 49
+      patients and 102 controls found the HLA-DQA1*01 variant more often in patients; the Oslo study
+      could not test this variant because its controls were not typed for it. Another London study of
+      58 patients and 134 controls found no HLA differences. Neither has a verified case definition.
+      A Brisbane study of 248 patients meeting CDC criteria and 248 controls found only a trend
+      (P = 0.07) for a cortisol-binding protein gene variant, and an Australian study of 95 patients
+      meeting the Fukuda definition and 77 controls found no variant that remained significant after
+      correction for testing many variants (lowest P = 0.059). These studies are small for genetic
+      association studies.
+    sources: [pmid:16049290, pmid:32210306, pmid:11422420, pmid:15554358, pmid:27835969]
+contested: null  # proposal; see header (rung 2 rests on 32210306, which no comparable study contradicts)
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No genetic variant on this card has been tested as a diagnostic marker in a second,
+        independent patient group. In the Oslo study, 19.2% of patients and 12.2% of controls carried
+        one or both of the two HLA variants; no other group has tested them.
+      sources: [pmid:32210306]
+  explains_pem:
+    # Checked: every abstract on the card and the full texts listed in the header. No study measures symptoms after
+    # an exertion challenge.
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly and links it to a genetic
+        variant. The Oslo HLA study compared patients carrying the two variants with patients who did
+        not, using questionnaires, without an exertion challenge.
+      sources: [pmid:32210306]
+subgroups:
+  - text: >-
+      In the Berlin study, the PTPN22 and CTLA4 variants were more common only in the 232 patients
+      whose illness began with an infection, not in the 73 whose illness did not. In the Oslo HLA
+      study, the share of patients whose illness began after an infection did not differ
+      significantly between carriers and non-carriers of the two HLA variants. Not yet repeated.
+    sources: [pmid:32328064, pmid:32210306]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=305 patients and 201 healthy controls found the PTPN22 and CTLA4 variants, linked to
+      autoimmune diseases, more often in patients whose illness began with an infection. Not yet
+      repeated.
+    sources: [pmid:32328064]
+  - text: >-
+      A study of n=418 patients and 473 healthy controls from the Oslo group found some variants of
+      the KIR genes, which code for receptors on natural killer cells, more often and others less
+      often in patients. Of 76 variants tested, one, KIR3DL2*010, less common in patients
+      (P = 0.0005), fell below the corrected threshold of 0.0007 that the authors give. Not yet
+      repeated.
+    sources: [pmid:40897283]
+studies:
+  # --- supports ---
+  - id: pmid:32210306
+    title: Human Leukocyte Antigen alleles associated with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
+    year: 2020
+    cohort: me_cfs
+    # Full text: four of the 426 met the 2010 International Consensus Criteria instead (equal rank).
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: We performed high resolution HLA -A, -B, -C, -DRB1, -DQB1 and -DPB1 genotyping by next generation sequencing in 426 adult, Norwegian ME/CFS patients, diagnosed according to the Canadian Consensus Criteria.
+    design: controlled
+    n_patients: 426
+    n_controls: 4511
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2
+    direction: higher
+    group: Lie BA and Viken MK, Department of Immunology, Oslo University Hospital, Norway (same group as 34403736, 35318112, 35821115, 40897283)
+    finding: >-
+      A study of n=426 patients and 4511 healthy controls found HLA-C*07:04 (OR 2.1) and
+      HLA-DQB1*03:03 (OR 1.5) more often in patients; 19.2% of patients and 12.2% of controls carried
+      one or both.
+  - id: pmid:34403736
+    title: Fine mapping of the major histocompatibility complex (MHC) in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) suggests involvement of both HLA class I and class II loci.
+    year: 2021
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: In the current study, we aimed to fine map the association signals in the HLA complex by genotyping five additional classical HLA loci and 5,342 SNPs in 427 Norwegian ME/CFS patients, diagnosed according to the Canadian Consensus Criteria, and 480 healthy Norwegian controls.
+    design: controlled
+    # Same group as 32210306; the abstract says "We have previously performed high resolution HLA genotyping". Patient
+    # overlap with the 426 of 32210306 not stated in the abstract; no open full text. TODO: verify.
+    n_patients: 427
+    n_controls: 480
+    measures_pem: false
+    preregistered: null
+    role: supports  # same group and probably the same patients as 32210306; not a repeat
+    direction: higher
+    group: Viken MK and Lie BA, Department of Medical Genetics, University of Oslo and Oslo University Hospital, Norway (same group as 32210306)
+    finding: >-
+      A study of n=427 patients and 480 healthy controls found two independent association signals in
+      the HLA region, one in HLA class I and one in HLA class II, the latter most likely in HLA-DQB1.
+  - id: pmid:32328064
+    title: Autoimmunity-Related Risk Variants in PTPN22 and CTLA4 Are Associated With ME/CFS With Infectious Onset.
+    year: 2020
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: Diagnosis of ME/CFS is based on Canadian Consensus Criteria (CCC) (28) and exclusion of other medical or neurological diseases that may cause fatigue.
+    design: controlled
+    # Full text Table 3, all patients: PTPN22 rs2476601 P = 0.033, OR 1.50 (0.97-2.31); CTLA4 rs3087243 P = 0.012,
+    # OR 1.34 (1.04-1.73). TNF rs1799724 risk allele lower in the 73 without infection onset (P = 0.043).
+    n_patients: 305
+    n_controls: 201
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Scheibenbogen C, Charité-Universitätsmedizin Berlin, Germany
+    finding: >-
+      A study of n=305 patients and 201 healthy controls found the PTPN22 rs2476601 and CTLA4 rs3087243
+      risk variants more often in patients (one-sided tests, no correction reported for the five
+      variants tested; PTPN22 OR 1.50, 95% CI 0.97-2.31); in subgroups, only in the 232 whose illness
+      began with an infection (P = 0.016 and P = 0.001), not in the 73 without.
+  - id: pmid:42015188
+    title: Identification of novel reproducible combinatorial genetic risk factors for myalgic encephalomyelitis in the DecodeME patient cohort and commonalities with long COVID.
+    year: 2026
+    cohort: me_cfs
+    # "and/or": each case met CCC or IOM 2015 (equal rank) by survey answers; recorded as CCC.
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: DecodeME provided genotype data for 14,767 participants who satisfied the study’s inclusion criteria based on the Canadian Consensus and/or US Institute of Medicine / National Academy of Medicine criteria for ME/CFS using survey responses, who had received a diagnosis of ME, CFS, ME/CFS or CFS/ME from a health professional, and who consented to data sharing with accredited research teams.
+    design: controlled
+    # n_patients = the test cohort (full text table: "DecodeME Batch 2 + 3 Split 2 (Test)", 3,579 cases after QC),
+    # where the OR 1.64 was measured. The number of UK Biobank test controls was not found in the text read; TODO:
+    # verify. In Table 1, 350,014 in the Test row is a SNP count, not the number of controls. Full text, limits:
+    # "formal confirmation ... will require an independent cohort of people with ME and controls that are genotyped
+    # as part of the same study." C6 warning expected.
+    n_patients: 3579
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Gardner S, PrecisionLife Ltd, Long Hanborough, UK (same company as 36517845)
+    finding: >-
+      A study of DecodeME cases and UK Biobank controls found 22,411 combinations of variants more
+      common in cases across three separate case groups; in the test group of n=3,579 cases, people
+      with the top 10% of combination counts had 1.64 times the odds of ME of those in the bottom 10%.
+  - id: pmid:11702053
+    title: A family history study of chronic fatigue syndrome.
+    year: 2001
+    cohort: me_cfs
+    # CDC version not stated: flag "does not require PEM". The sentence says cases and controls were assessed with the
+    # CDC criteria; FOUNDER CHECK: whether this counts as the cases' case definition. No open full text.
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: Twenty-five CFS cases and 36 medical control subjects were assessed for fatigue symptoms based on the Centre for Disease Control (CDC) criteria for CFS, and for lifetime psychiatric symptoms using the Schedule for Schizophrenia and Affective Disorders-Lifetime Version.
+    design: controlled
+    # Index cases and controls; the number of relatives assessed is not in the abstract. C6 warning expected
+    # ("Twenty-five").
+    n_patients: 25
+    n_controls: 36
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Paykel ES, University Department of Psychiatry, Addenbrooke's Hospital, Cambridge, UK
+    finding: >-
+      A study of n=25 patients and 36 medical controls found significantly higher rates of chronic
+      fatigue syndrome in the first-degree relatives of patients than in those of controls.
+  - id: pmid:26859813
+    title: Genome-wide association analysis identifies genetic variations in subjects with myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2016
+    cohort: me_cfs
+    # "Carruthers et al. criteria" cites refs 28 (CCC 2003) and 29 (ICC 2011), resolved in the reference list; all
+    # patients also met Fukuda. Recorded as CCC (CCC and ICC rank equal).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: All subjects identified as having ME/CFS were physician-diagnosed and met the Carruthers et al. criteria for myalgic encephalomyelitis as well as the 1994 Fukuda et al. criteria for chronic fatigue syndrome.
+    design: controlled
+    # Full text: "42 cases with a confirmed diagnosis of ME/CFS and 38 healthy controls". Not in the abstract; C6
+    # warning expected.
+    n_patients: 42
+    n_controls: 38
+    measures_pem: false
+    preregistered: null
+    role: supports  # contradicted by 35821115 on TRA; not needed for rung 2
+    direction: higher
+    group: Lombardi VC, Nevada Center for Biomedical Research, University of Nevada, Reno, USA
+    finding: >-
+      A pilot study of n=42 patients and 38 healthy controls found 442 candidate variants associated with
+      the illness after false-discovery-rate correction, including variants in the T cell receptor
+      alpha region.
+  # --- contradicts ---
+  - id: pmid:35821115
+    title: No replication of previously reported association with genetic variants in the T cell receptor alpha (TRA) locus for myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS).
+    year: 2022
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: In this study, 409 Norwegian ME/CFS patients diagnosed according to the Canadian Consensus Criteria [4] and 810 healthy, ethnically matched controls obtained from the Norwegian Bone Marrow Donor Register were included.
+    design: controlled
+    # Norwegian cohort; UK Biobank self-reported cases (2105 v 4786) are a second, undefined dataset in the same paper.
+    n_patients: 409
+    n_controls: 810
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # contradicts 26859813 on rs11157573 and rs17255510 (CCC = ICC rank, controls, 409 >= 21)
+    direction: no_difference
+    group: Viken MK and Lie BA, Department of Immunology, Oslo University Hospital, Norway (same group as 32210306)
+    finding: >-
+      A study of n=409 patients and 810 healthy controls found no association with the two previously
+      reported TRA variants or other variants in the TRA region; the two variants were not associated
+      in 2105 self-reported UK Biobank cases either.
+  # --- early signal ---
+  - id: pmid:40897283
+    title: Killer cell immunoglobulin-like receptor (KIR) alleles suggested to be associated with myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS).
+    year: 2025
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: All patients had a diagnosis of ME/CFS according to the 2003 Canadian Consensus Criteria (Carruthers et al., 2003).
+    design: controlled
+    # Full text: patient samples "obtained as previously described (Lande et al., 2020" (overlap with 32210306).
+    # Bonferroni threshold for 76 alleles given as 0.0007.
+    n_patients: 418
+    n_controls: 473
+    measures_pem: false
+    preregistered: null
+    role: early_signal
+    direction: mixed  # three alleles more frequent, two less frequent in patients
+    group: Viken MK and Lie BA, Department of Medical Genetics, University of Oslo and Oslo University Hospital, Norway (same group as 32210306)
+    finding: >-
+      A study of n=418 patients and 473 healthy controls found no difference in KIR gene content, and
+      three KIR alleles more often and two less often in patients.
+  # --- context ---
+  - id: pmid:35318112
+    title: Genetic association study in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) identifies several potential risk loci.
+    year: 2022
+    cohort: me_cfs
+    # Case definition not in the abstract; no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Norwegian discovery cohort; also a Danish replication cohort (460) and UK Biobank (2105). Control numbers are not
+    # in the abstract.
+    n_patients: 427
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # no genome-wide significant locus; suggestive TPPP signals
+    group: Viken MK and Lie BA, Oslo University Hospital and University of Oslo, Norway (same group as 32210306)
+    finding: >-
+      A study of a Norwegian discovery cohort (n=427), a Danish cohort (n=460) and UK Biobank cases
+      (n=2105) found no variant reaching genome-wide significance; the top Norwegian variant near TPPP
+      did not replicate, while other TPPP variants showed modest signals in UK Biobank.
+  - id: pmid:36517845
+    title: Genetic risk factors for ME/CFS identified using combinatorial analysis.
+    year: 2022
+    cohort: me_cfs
+    # Full text: cases had a "(self-reported) clinical diagnosis in UK Biobank's Pain Questionnaire"; no case
+    # definition named.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled
+    n_patients: 2382  # full text, after quality control
+    n_controls: 4764
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Gardner S, PrecisionLife Ltd, Long Hanborough, UK (same company as 42015188)
+    finding: >-
+      A study of UK Biobank participants reporting a diagnosis (n=2382 after quality control) and 4764
+      controls found 199 variants in 14 genes significantly associated with 91% of cases, grouped into
+      84 combinations of 3 to 5 variants.
+  - id: pmid:21619629
+    title: Evidence for a heritable predisposition to Chronic Fatigue Syndrome.
+    year: 2011
+    cohort: me_cfs
+    # Full text: "CFS patients were identified by the presence in the medical record of a CFS-specific ICD-9
+    # diagnostic code (780.71)". A diagnosis code is not a case definition, so `none`.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other  # genealogical relatedness compared with the Utah population
+    n_patients: 811  # full text; not in the abstract, C6 warning expected
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Cannon-Albright LA, University of Utah, USA
+    finding: >-
+      A study of n=811 people with a chronic fatigue syndrome diagnosis code found excess relatedness
+      among cases and a relative risk of 2.70 in first-degree, 2.34 in second-degree and 1.93 in
+      third-degree relatives.
+  - id: pmid:11719632
+    title: A twin study of chronic fatigue.
+    year: 2001
+    cohort: me_cfs
+    # Fatigue definitions built for the study; the strictest uses only the exclusion criteria of the CFS case
+    # definition. No open full text.
+    case_definition: other
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other  # classic twin study
+    n_patients: null  # 146 female-female twin pairs; number of affected twins not in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Buchwald D and Goldberg J, University of Washington, Seattle, USA
+    finding: >-
+      A study of 146 female twin pairs found idiopathic chronic fatigue shared by 55% of identical and
+      19% of non-identical twins (p = .042), with an estimated heritability of 51% (95% CI 7-96).
+  - id: pmid:16049290
+    title: Association of chronic fatigue syndrome with human leucocyte antigen class II alleles.
+    year: 2005
+    cohort: me_cfs
+    # Criteria not named in the abstract; no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 49  # "Forty nine"; C6 warning expected
+    n_controls: 102
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Mattey DL, with Cleare AJ and Wessely S; Tissue Typing Laboratory, Harefield Hospital, UK
+    finding: >-
+      A study of n=49 patients and 102 controls found HLA-DQA1*01 more often in patients (51.0% against
+      35%, OR 1.93, p = 0.008).
+  - id: pmid:11422420
+    title: Lack of association between HLA genotype and chronic fatigue syndrome.
+    year: 2001
+    cohort: me_cfs
+    # "well-characterized patient group", criteria not named; no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 58  # "Fifty-eight"; C6 warning expected
+    n_controls: 134
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Wessely S, Guy's, King's and St Thomas' School of Medicine, London, UK
+    finding: >-
+      A study of n=58 patients and 134 controls found no significant differences in HLA frequencies.
+  - id: pmid:15554358
+    title: Association between chronic fatigue syndrome and the corticosteroid-binding globulin gene ALA SER224 polymorphism.
+    year: 2004
+    cohort: me_cfs
+    # CDC version not stated: flag "does not require PEM". No open full text.
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: A total of 248 patients with CFS defined by Centers for Disease Control criteria, and 248 controls were recruited.
+    design: controlled
+    n_patients: 248
+    n_controls: 248
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference  # trend only, P = 0.07
+    group: Whitworth JA and Torpy DJ, University of Queensland, Brisbane, Australia
+    finding: >-
+      A study of n=248 patients and 248 controls found a trend, not significant, towards more
+      homozygosity for the serine224 variant of the corticosteroid-binding globulin gene in patients
+      (P = 0.07).
+  - id: pmid:27835969
+    title: A targeted genome association study examining transient receptor potential ion channels, acetylcholine receptors, and adrenergic receptors in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
+    year: 2016
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "RESULTS: The study included 172 participants, consisting of 95 Fukuda defined CFS/ME patients (45.8 ± 8.9; 69 % female) and 77 healthy controls (42.3 ± 10.3; 63 % female)."
+    design: controlled
+    n_patients: 95
+    n_controls: 77
+    measures_pem: false
+    preregistered: null
+    role: context
+    # 60 SNPs significant before correction; after correction the lowest was ADRA1A rs2322333, P = 0.059, which the
+    # full text calls "almost significant".
+    direction: no_difference
+    group: Marshall-Gradisnik S, National Centre for Neuroimmunology and Emerging Diseases, Griffith University, Gold Coast, Australia
+    finding: >-
+      A study of n=95 patients and 77 healthy controls found no variant in the targeted genes that
+      remained significant after correction for multiple testing; the lowest, in ADRA1A, had P = 0.059.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

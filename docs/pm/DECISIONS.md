@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-02 — Cards ten to thirteen
+
+- Four new hypotheses added as draft cards, each checked by `card-reviewer` and fixed: oxidative and nitrosative stress (level 2, not contested), tryptophan and kynurenine metabolism (level 3, contested at rung 3), brain and brainstem MRI changes (level 2, not contested), inherited genetic risk (level 2, not contested). Both badges no on all four.
+- Tryptophan: a ratio measured in serum and in plasma counts as the same result; a null read from a figure's significance marks may contradict when the card says so and names the figure.
+- Brain MRI: an opposite-direction result in a subgroup, in partly overlapping regions, with a different method, does not contradict the rung; a later whole-brain study that reports no result for the region either way is a non-repeat, not a contradiction.
+- Genetics: a genetic association can carry rung 2 as an association; going beyond association needs level 4.
+
 ## 2026-11-02 — Cards six to nine
 
 - Four new hypotheses added as draft cards, each checked by `card-reviewer` and fixed: orthostatic intolerance and cerebral blood flow (level 2, not contested), herpesvirus reactivation (level 2, not contested), HPA axis and cortisol (level 2, contested at rung 2), endothelial dysfunction (level 3, not contested). Both badges no on all four.
