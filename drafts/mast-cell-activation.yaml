@@ -1,0 +1,356 @@
+# FOUNDER RULING (2026-11-02): level 2, not contested, both badges no (rung 2: pmid:27362406). pmid:29223146 measured maturity markers within separated precursor cells, a different measure, so it does not contradict. The long COVID label stays through pmid:33996867 (IOM 2015 per its Table 2).
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# Level, contested mark and badges below are AI PROPOSALS for the founder, not rulings (CLAUDE.md rule 2).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (41300853:
+# PMC12651186; 42327760: PMC13278969; 33996867: PMC8116546). `uv run python -m me_atlas.europepmc casedef` found no
+# open full text for 27362406, 29223146, 10884641, 11570618 or 8568124 (checked 2026-11-02).
+#
+# THIN EVIDENCE, SAID PLAINLY: only two studies in the cache measure mast cells in ME/CFS patients against
+#   controls with a recognised case definition (27362406, 29223146), both from the same Griffith University group
+#   and both small. Everything else is a prevalence report, a case series, a mediator that is not specific to mast
+#   cells, or a study whose case definition is unverified. The card is not padded beyond these.
+#
+# KEPT APART (as asked): studies that MEASURE mast cells or their mediators against controls (27362406, 29223146,
+#   10884641; 42327760 measures MMP-9, which mast cells can release but is not specific to them) and studies that
+#   only REPORT HOW COMMON a diagnosis or a history is (41300853: MCAS diagnosis and mast cell activation by
+#   symptoms and drug response; 8568124's atopy rate). No study on the card measured tryptase or histamine in
+#   patients against a control group.
+#
+# PROPOSED LEVEL, RUNG BY RUNG
+#   1: reached (27362406, 29223146, 33996867, 41300853).
+#   2: reached. 27362406 (Nguyen 2017, Griffith University, ICC, controlled): more CD117+CD34+FcεRI-chymase- mast
+#      cells (described as naive) among blood mononuclear cells in 12 moderately severe and 6 severe patients
+#      compared with 13 healthy controls. Small; the ladder sets no minimum size, so it is graded as written.
+#   3: not reached. The only later study measuring blood mast cells (29223146, Balinas 2018) is the same group
+#      (Marshall-Gradisnik, Staines, Johnston, Smith, Nguyen on both), so it is not independent, and it found no
+#      difference. 10884641 (Woo 2000, salivary gland mast cells) is earlier, a different tissue and measure, and its
+#      case definition is unverified.
+#   4: not reached. The only controlled intervention (8568124, terfenadine, an H1 antihistamine) has an unverified
+#      case definition, blocks one mediator's receptor rather than changing mast cells, and found no benefit.
+#
+# CONTESTED: proposed null. FOUNDER QUESTION. 29223146 (ICC, 11 patients, 12 controls) is of comparable quality to
+#   27362406 by the three tests (same definition, control group, 11 >= half of 18) and its abstract reports "no
+#   significant differences in maturity MCPs, CD154, and CD2/CD25 expression between groups". The 2018 study found no
+#   difference in CD34 and FcεRI, the markers that defined the population 27362406 found increased. Proposed as NOT
+#   a contradiction because the measures differ as far as the abstracts show: 27362406 reported the
+#   CD117+CD34+FcεRI-chymase- population as a share of blood mononuclear cells, while 29223146 first separated
+#   CD117+ cells magnetically and reported the maturity markers (CD34, FcεRI) measured within the separated
+#   precursor cells; the abstracts do not give the exact denominator (compare the brain MRI ruling: different
+#   method and measure, not a contradiction). Neither full text is open. If the founder reads the 2018 maturity result as the same measure,
+#   29223146 becomes `contradicts` and the card is level 2, contested at rung 2.
+#
+# BADGES (proposed): diagnostic marker no (no mast cell marker tested in a second, independent cohort; 29223146 is the
+#   same group). Explains PEM no (no study on the card measures PEM; checked all abstracts and the three open full
+#   texts).
+#
+# LONG COVID: 33996867 (Petracek 2021, Johns Hopkins, 3 patients with ME/CFS after confirmed or probable COVID-19) is
+#   cohort long_covid and recorded IOM2015, so the label shows. FOUNDER QUESTION: the text names the Institute of
+#   Medicine criteria for patient 1 only ("he satisfied ..."); for all three it says they "met criteria for ME/CFS",
+#   ("As shown in Table 2, all three participants met criteria for ME/CFS"), and Table 2's columns are the four IOM
+#   2015 items (impairment with fatigue, PEM, unrefreshing sleep, cognitive impairment or OI), ticked for each
+#   patient; the IOM 2015 report is item 3 of the reference list. Infection was confirmed by test in patient 1 only. If that is not enough, change to `other` and the label goes.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Griffith University NCNED (Marshall-Gradisnik S, Staines D, Johnston S, Smith P, Nguyen T): 27362406 and
+#     29223146. Patient overlap between the two not stated in the abstracts. TODO: verify.
+#   - Rowe PC (Johns Hopkins): 33996867, and 41728426 (left out, below).
+#   - Klimas NG (Miami) and Theoharides TC (Tufts): 42327760. Komaroff AL: 10884641. Baraniuk JN and Clauw D:
+#     11570618. Peterson PK: 8568124. Untersmayr E (Vienna): 41300853. No authors shared across these groups.
+#
+# TODOs
+#   - 27362406: n_patients 18 is CALCULATED (12 moderately severe + 6 severe, as reported); the finding gives the split. Whether the
+#     increase was tested per subgroup or pooled is not clear from the abstract.
+#   - 10884641: number of controls and the direction of the mast cell difference are not stated in the abstract;
+#     no open full text. Case definition unverified.
+#   - 11570618 and 8568124: case definitions not in the abstract, no open full text. 8568124: arm sizes and whether
+#     the design was parallel or crossover not in the abstract.
+#   - 41300853: the 687-patient online survey (CCCFS) is self-reported; its case definition was not checked. Only
+#     the 383-patient Vienna cohort is quoted as IOM 2015.
+#
+# Not on the card (searched in the cache for mast cell, tryptase, histamine, MCAS, IgE, atopy, cromolyn and related
+# terms; read; left out):
+#   - Reviews, hypotheses, editorials and letters without new patient data: 8455468, 16282830, 17110844, 24428962,
+#     24784142, 26190965, 26198889, 30076265, 30451113, 30574737, 30884251, 33405100, 33847020, 34024217, 34559786,
+#     36043493, 36065103, 37241210 (Wirth: hypothesis), 37774781, 37951572, 39301475, 41790576, 21793823.
+#   - Animal or cell-line only (plausibility, cannot admit): 25359293 (mice), 21532369 (human mast cell line).
+#   - Single cases or treatment case series without a comparison: 41728426 (oral cromolyn in 5 patients with MCAS,
+#     retrospective; a treatment report, no mast cell measure against controls), 36981522, 38650940, 42927133.
+#   - Patient data but no mast cell measure: 12684286 (histamine bronchial challenge; mast cells not measured),
+#     9883301 and 12125506 (nasal lavage markers, no mast cell mediator), 8738520 (eosinophil cationic protein),
+#     40726775 (IgE against SARS-CoV-2 antigens).
+#   - Allergy or atopy prevalence only, no mast cell measure: 1290417, 15777523, 11894732, 26200644, 9723665,
+#     9809501, 37892261.
+#   - Search hits on other topics: 7741211, 10444033, 19619330, 26670597, 29857893, 31454848, 32256939, 35074481,
+#     37817287 ("MCAS" is an asthenia scale), 38291116, 38404605, 39805762, 39839488, 40883051, 41118678, 41132394,
+#     41282714.
+slug: mast-cell-activation
+name: Mast cell abnormalities and mast cell activation
+core_claim:
+  text: >-
+    The hypothesis proposes that mast cells, immune cells that release histamine and other
+    inflammatory substances, are abnormal in number or behaviour or are overactive in people with
+    ME/CFS, and that this contributes to their symptoms.
+  sources: [pmid:27362406, pmid:41300853]
+level: 2
+level_reason:
+  - text: >-
+      A study from Griffith University, Australia, of 12 patients with moderately severe and 6
+      with severe ME/CFS meeting the International Consensus Criteria, and 13 healthy controls, found
+      more of a type of immature mast cell (CD117+CD34+FcεRI-chymase-) among blood immune cells in
+      moderately severe and severe patients compared with healthy controls. The card is at level 2 because of this study. It is small and has not
+      been repeated by an independent group.
+    sources: [pmid:27362406]
+  - text: >-
+      The same group later studied mast cell precursors in 11 patients meeting the International
+      Consensus Criteria, 9 people with systemic mastocytosis and 12 healthy controls, using a different
+      method that first separates these cells from the blood. It found no significant differences
+      between groups in the maturity markers CD34 and FcεRI, the markers that defined the population
+      the first study found increased. Because the group is the same, this study cannot be a repeat.
+      The card treats its maturity markers, measured within the separated precursor cells, as a
+      different measure from the share of blood immune cells reported in the first study (the
+      abstracts do not give the exact denominator), so it is not counted as contradicting it.
+    sources: [pmid:29223146, pmid:27362406]
+  - text: >-
+      No other study has measured mast cells, or substances released mainly by mast cells such as
+      tryptase or histamine, in patients with a recognised case definition against a control group.
+      Higher blood MMP-9, an enzyme that mast cells and other cells can release, in 18 patients than
+      in 18 controls does not show that the patients' mast cells were the source.
+    sources: [pmid:42327760]
+  - text: >-
+      Two older studies, whose case definitions are not yet verified, cannot count. A study from Harvard
+      of lip salivary gland tissue from 11 patients and controls found that the presence of mast cells
+      was the only one of seven features that differed significantly between the groups. A study from
+      Washington, DC, of 95 patients and 109 controls found no difference in IgE, the antibody that arms
+      mast cells in allergy.
+    sources: [pmid:10884641, pmid:11570618]
+  - text: >-
+      An Austrian study of patients meeting the 2015 Institute of Medicine criteria reports how often
+      patients' records met symptom and treatment-response criteria for mast cell activation, not a
+      measurement against controls (see below). The only
+      controlled treatment trial, of the antihistamine terfenadine in 28 patients, has a case
+      definition that is not yet verified, found no benefit, and blocks one effect of histamine rather
+      than changing mast cells, so it cannot count towards level 4.
+    sources: [pmid:41300853, pmid:8568124]
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No mast cell marker has been tested in a second, independent patient group. The only later
+        study of blood mast cells came from the same group and did not test the first study's finding as
+        a marker.
+      sources: [pmid:27362406, pmid:29223146]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        No study on this card measured post-exertional malaise directly, so none links mast cells to
+        symptoms after exertion.
+      sources: [pmid:27362406, pmid:41300853]
+subgroups:
+  - text: >-
+      Severity: in the Griffith University study, two surface markers (CD40 ligand and MHC-II) on
+      mature mast cells were higher in the 6 severe patients than in the 12 moderate patients and the
+      13 controls. This rests on 6 patients and has not been repeated.
+    sources: [pmid:27362406]
+  - text: >-
+      Orthostatic intolerance: in the Austrian study, orthostatic intolerance confirmed by a tilt or
+      standing test was found more often in patients judged to have mast cell activation (70.3%
+      against 49.7%, of 233 patients with usable data). Postural tachycardia syndrome was also more
+      frequent, but the difference was not statistically significant. Mast cell activation was judged
+      from symptoms and response to medicines, not from measured mediators.
+    sources: [pmid:41300853]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=3 adolescents and young adults who met ME/CFS criteria six months after confirmed
+      or probable COVID-19 (infection confirmed by test in one of the three) found strong histories of
+      allergies in all three, and raised plasma histamine in two judged against the laboratory
+      reference range, with no control group; serum tryptase, reported for one patient, was normal.
+      Not yet repeated.
+    sources: [pmid:33996867]
+studies:
+  # --- supports ---
+  - id: pmid:27362406
+    title: Novel characterisation of mast cell phenotypes from peripheral blood mononuclear cells in chronic fatigue syndrome/myalgic encephalomyelitis patients.
+    year: 2017
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: abstract
+    case_definition_quote: CFS/ME patients were classified according to the 2011 International Consensus Criteria.
+    design: controlled
+    n_patients: 18  # CALCULATED: 12 + 6 as reported; shown in the study line as 18 patients; the finding gives the split
+    n_controls: 13
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2
+    direction: higher
+    group: Marshall-Gradisnik S, National Centre for Neuroimmunology and Emerging Diseases, Griffith University, Australia (same group as 29223146)
+    finding: >-
+      A study of n=12 moderately severe and 6 severe patients and 13 healthy controls found a
+      significant increase in CD117+CD34+FcεRI-chymase- mast cell populations among blood mononuclear
+      cells in moderately severe and severe patients compared with healthy controls, and higher CD40 ligand and MHC-II on
+      differentiated mast cells in severe patients only; HMGB1 and soluble RAGE did not differ.
+  # --- context ---
+  - id: pmid:29223146
+    title: Investigation of mast cell toll-like receptor 3 in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis and Systemic Mastocytosis using the novel application of autoMACS magnetic separation and flow cytometry.
+    year: 2018
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: abstract
+    case_definition_quote: "METHODS: A total of 11 International Consensus Criteria defined CFS/ME participants (40.42 ± 10.31), 9 World Health Organisation defined systemic mastocytosis (SM) participants (47.00 ± 10.37) and 12 healthy controls (HC) (36.36 ± 9.88) were included."
+    design: controlled
+    n_patients: 11
+    n_controls: 12  # healthy controls; a further 9 systemic mastocytosis participants are a disease comparison
+    measures_pem: false
+    preregistered: null
+    # Same group as 27362406, so not a repeat. Not `contradicts`: maturity markers within magnetically enriched
+    # precursors, not the count among all mononuclear cells (see header; founder question).
+    role: context
+    direction: no_difference
+    group: Marshall-Gradisnik S, National Centre for Neuroimmunology and Emerging Diseases, Griffith University, Australia (same group as 27362406)
+    finding: >-
+      A study of n=11 patients, 9 people with systemic mastocytosis and 12 healthy controls found no
+      significant differences between groups in the maturity markers (CD34, FcεRI), CD154 or CD2/CD25
+      of magnetically separated mast cell precursors, before or after stimulation with Poly I:C; the
+      one reported difference (lower HLA-DR+/CD154- expression) was between patients and people with
+      systemic mastocytosis.
+  - id: pmid:10884641
+    title: 'Salivary gland changes in chronic fatigue syndrome: a case-controlled preliminary histologic study.'
+    year: 2000
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 11
+    n_controls: null  # not stated in the abstract
+    measures_pem: false
+    preregistered: null
+    role: context
+    # The abstract reports a significant difference in mast cells between groups but does not state its direction
+    # in words. TODO: verify direction from the full text.
+    direction: not_applicable
+    group: Gallagher GT, Harvard School of Dental Medicine, Brigham and Women's Hospital, USA
+    finding: >-
+      A study of n=11 patients and an unstated number of controls graded seven features of lip
+      salivary gland tissue and found that only the presence of mast cells differed significantly
+      between the two groups (Fisher exact test, 0.0125).
+  - id: pmid:11570618
+    title: IgE levels are the same in chronic fatigue syndrome (CFS) and control subjects when stratified by allergy skin test results and rhinitis types.
+    year: 2001
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 95
+    n_controls: 109
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Baraniuk JN, Georgetown University, USA
+    finding: >-
+      A study of n=95 patients and 109 controls found no significant difference in serum IgE, the
+      antibody that arms mast cells in allergy, between the groups (133 against 128 IU/mL), overall
+      or within four groups defined by allergy skin tests and rhinitis.
+  - id: pmid:8568124
+    title: Double-blind placebo-controlled study of the efficacy of oral terfenadine in the treatment of chronic fatigue syndrome.
+    year: 1996
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled
+    n_patients: 28  # abstract "Twenty-eight patients completed the trial"; 30 enrolled. Arm sizes not in the abstract.
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Peterson PK, Hennepin County Medical Center, Minneapolis, USA
+    finding: >-
+      A placebo-controlled trial in which 28 of 30 enrolled patients completed two months of the
+      antihistamine terfenadine or placebo found no benefit on symptoms, physical or social
+      functioning, health perceptions or mental health; 73% had a history of atopy and 53% a positive
+      immediate skin test.
+  - id: pmid:41300853
+    title: The Clinical Relevance of Mast Cell Activation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2025
+    cohort: me_cfs
+    # Quote is for the 383-patient Vienna cohort. The 687-patient online survey (CCCFS) is self-reported; its case
+    # definition was not checked.
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: The study cohort consists of 383 patients who visited the office of a neurologist in Vienna specializing in ME/CFS between March 2019 and April 2022 and who met the IOM diagnostic criteria for ME/CFS [31].
+    design: uncontrolled
+    n_patients: 285  # 383 in the cohort; 98 excluded for inconclusive data, leaving 285 for the mast cell analysis
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Untersmayr E, Institute of Pathophysiology and Allergy Research, Medical University of Vienna, Austria
+    finding: >-
+      A study of n=285 patients with usable records from a Vienna clinic found that 72 (25.3%) had
+      symptoms of mast cell activation in two or more organ systems and reported a response to mast
+      cell-targeted medicines; orthostatic intolerance confirmed by a tilt or standing test was more
+      common in patients with mast cell activation (70.3% against 49.7%, of 233 patients with usable
+      data, p = 0.005), while postural tachycardia syndrome was more frequent without a statistically
+      significant difference (p = 0.054); mediator levels had been tested in only 12 patients. In a separate
+      online survey of 687 patients, 115 (16.7%) reported a doctor's diagnosis of mast cell activation
+      syndrome. There was no control group.
+  - id: pmid:42327760
+    title: Elevated serum levels of interleukin-11 and matrix metalloproteinase-9 in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2026
+    cohort: me_cfs
+    # Patients met both Fukuda and CCC; recorded as CCC (the stricter of the two).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: These patients met the 1996 CDC/Fukuda and 2003 Canadian Case definitions for ME/CFS and were recruited (2007–2012) at the Department of Medicine, University of Miami Miller School of Medicine.
+    design: controlled
+    n_patients: 18  # MMP-9 measurement; IL-11 was measured in a different set of 40 patients and 38 controls
+    n_controls: 18
+    measures_pem: false
+    preregistered: null
+    # Context: MMP-9 is not specific to mast cells (the paper names microglia and mast cells as sources); the mast
+    # cell link was tested only in cord-blood-derived mast cells in vitro.
+    role: context
+    direction: higher
+    group: Theoharides TC, Tufts University School of Medicine, USA; patients from Klimas NG, University of Miami
+    finding: >-
+      A study of n=18 female patients and 18 healthy controls found higher serum MMP-9 in patients
+      (126 against 17 ng/ml), and in a separate set of 40 patients and 38 controls higher serum IL-11;
+      mast cells grown in the laboratory released MMP-9 when stimulated with an Epstein-Barr virus
+      protein.
+  # --- early signal ---
+  - id: pmid:33996867
+    title: Adolescent and Young Adult ME/CFS After Confirmed or Probable COVID-19.
+    year: 2021
+    cohort: long_covid
+    # Text names the IOM criteria for patient 1 only. For all three: "As shown in Table 2, all three participants
+    # met criteria for ME/CFS"; Table 2's columns are the IOM 2015 items, and the IOM 2015 report is reference 3
+    # (founder question in the header).
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: After 6 months of illness, he satisfied the Institute of Medicine criteria for ME/CFS.
+    design: uncontrolled
+    n_patients: 3
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: early_signal
+    direction: not_applicable  # histamine judged against a reference range, no control group
+    group: Rowe PC, Johns Hopkins University School of Medicine, USA
+    finding: >-
+      A case series of n=3 adolescents and young adults who met ME/CFS criteria six months after
+      confirmed or probable COVID-19 (infection confirmed by test in one) found strong histories of
+      allergies in all three and elevated plasma histamine in two, judged against the laboratory
+      reference range; serum tryptase, reported for one patient, was normal.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

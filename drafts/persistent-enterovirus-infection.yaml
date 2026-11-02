@@ -1,0 +1,435 @@
+# FOUNDER RULING (2026-11-02): level 0, not contested, both badges no. Studies whose case definition is not stated or not yet checked do not count at any rung, including rung 1 (spec section 3). The four scanned papers listed in the TODOs may be read by a person to check their definitions.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# PROPOSALS FOR THE FOUNDER: level 0, contested null, diagnostic marker no, explains PEM no. None of these is set
+# until the founder rules (CLAUDE.md rule 2).
+#
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (42941838:
+# PMC13705469). `uv run python -m me_atlas.europepmc casedef` (2026-11-02) found no open full text for any other
+# study on the card. Europe PMC lists PMC ids for 3404526, 1850635, 14570830 and 1433120 but returned "no open full
+# text". Every study whose abstract states no case definition is `unverified` and role `context` (V9). Most of these
+# studies (1988-1996) predate or overlap the 1994 Fukuda definition and call the illness "postviral fatigue
+# syndrome", "chronic fatigue" or "chronic fatigue syndrome" without naming criteria in the abstract. TODO: verify the
+# case definitions of all `unverified` studies (no open full text).
+#
+# Scope: markers of persisting enterovirus infection in patients - enterovirus RNA, the enterovirus capsid protein
+# VP1, or culturable virus - in muscle, gut, stool or blood. The card's measure is "markers of enterovirus present
+# more often in patients than in controls". Antibody tests of past or recent infection (neutralising antibody, IgM,
+# IgG) are not the card's measure. Herpesviruses are covered by drafts/herpesvirus-reactivation.yaml.
+# `direction` is on the card's measure: "higher" when markers were found more often in patients.
+#
+# LEVEL, rung by rung (PROPOSAL)
+#   Rung 1: NOT reached as proposed. Every study that points towards the hypothesis (3404526, 1850635, 8409778,
+#     14570830, 14556267, 7775934, 7595406, 17872383) has a case definition not yet verified, and the 2026-11-01/02
+#     rulings say a study with an unverified case definition cannot count towards a rung. The only two studies with a
+#     verified recognised definition found no enterovirus: 42941838 (CCC, whole blood, 6 patients and 2 controls) and
+#     8863367 (CDC criteria, uncontrolled, 34 patients). So the proposal is level 0.
+#     FOUNDER QUESTION: level 1 ("one or more small or uncontrolled studies point towards it") could be read as not
+#     needing a verified case definition, since V5 only applies from level 2. If the founder reads it so, level 1
+#     would rest on the controlled studies above. This is the first card proposed below level 1; a ruling sets the
+#     reading for later cards.
+#   Rung 2: not reached. No controlled supporting study has a verified recognised case definition. The positive
+#     controlled studies (largest: 8409778, 158 patients; 17872383, 165 patients; 7595406, 100 patients) are all
+#     unverified.
+#   Rung 3: not reached. Even if the definitions were verified, 7775934 and 7595406 come from the same Glasgow
+#     Regional Virus Laboratory (Clements GB, Galbraith DN, Nairn C on both) and 1850635 shares Clements GB with them;
+#     3404526, 8409778 and 14570830 share Archard LC (and Lane RJ on the last two). The independent muscle studies
+#     disagree: 8777836 (Liverpool, 0 of 34) and 8863367 (Stockholm, 0 of 29) found none. Different tissues (muscle,
+#     serum, stomach) are different measures (rung-3 ruling 2026-11-02).
+#   Rung 4: not reached. No controlled study changes enterovirus infection and measures the outcome. 9143253 (live
+#     polio vaccine, 7 v 7 patients) tested vaccine safety, not removal of a persisting virus; left out (below).
+#
+# INCLUSION RULE (spec section 2): met. 42941838 (CCC) and 8863367 (CDC criteria) give peer-reviewed data from
+#   ME/CFS cohorts with a recognised case definition, although both found no enterovirus.
+#
+# CONTESTED (PROPOSAL): null. At level 0 there is no rung to contest (V8: rungs between 1 and level). If the founder
+#   chooses level 1, it still has no rung-1 contest: the only verified-definition studies with a control group
+#   (42941838, 2 controls in the measurement) are far smaller than the studies they would contradict, and V9 keeps
+#   unverified studies from contradicting.
+#
+# BADGES (PROPOSAL): diagnostic marker no (no marker tested in a second, independent cohort with a verified case
+#   definition); explains PEM no. 14570830 measured plasma lactate around a sub-anaerobic exercise test on the day of
+#   biopsy, not symptoms after exertion, and its case definition is unverified. No study on the card tracks symptoms
+#   after an exertion challenge.
+#
+# LONG COVID: no label. No enterovirus study in the cache has a long COVID cohort.
+#
+# Author and cohort overlaps:
+#   - London (Charing Cross and Westminster, later Imperial College): Archard LC on 3404526, 8409778 and 14570830;
+#     Bowles NE and Doyle D on 3404526 and 8409778; Lane RJ on 8409778 and 14570830. The
+#     abstracts do not say whether the 158 patients of 8409778 include the 96 of 3404526.
+#   - Glasgow: Behan PO on 1850635, 8148439 and 3404526 (so London and Glasgow muscle work shares an author); Gow JW
+#     and Behan WM on 1850635 and 8148439; Clements GB on 1850635, 7775934 and 7595406; McGarry F on 8148439 and
+#     7775934; Galbraith DN and Nairn C on 7775934 and 7595406. The cache gives no affiliation for Bell EJ (3404526). 8148439
+#     says itself that it did not repeat its group's earlier, smaller study (1850635); whether it includes those 60
+#     patients is not stated. 7775934 (samples 1990-1991) and 7595406 may share patients; not stated.
+#   - Independent of both: Liverpool (8777836), Stockholm (8863367), Nijmegen (7893870), Saint-Etienne (14556267),
+#     Leeds (1433120), Lomita, California (17872383), Cornell (42941838).
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, comments, editorials: 34222292, 37898798, 16254097, 8387908, 1665379, 1665380, 3320358, 3063394,
+#     17873115, 14570825, 18193653, 16935964, 1658667, 8914350, 9254324, 7570529 and others marked Review.
+#   - Antibody tests only (past or recent infection, not the card's measure): 2841461, 1847316 (243 v 243, no
+#     difference in coxsackie B IgM or IgG), 7811864, 8749620, 1656416, 6094660, 3016163, 2170962, 2538617, 19955554.
+#   - Case reports and letters: 19828908 (3 patients), 8172448 (letter, no abstract), 1630365, 6310104, 6310105,
+#     6319691, 21278394.
+#   - Uncontrolled laboratory follow-ups of positive patients, no patient-control comparison: 2161907 (strand ratio in
+#     muscle), 9049375 (phylogenetics of serum sequences), 9018051 (serial serum sequences in 8 patients).
+#   - Uncontrolled or not the card's measure: 7691895 (23 patients, VP1 serology, no controls), 2614761 (Monospot
+#     patients, no case definition, VP1 in 28 of 83 sera, no controls), 2792146 (single-fibre EMG, no virus measure),
+#     9143253 (live polio vaccine in 14 patients and 9 controls: vaccine response, not persistence; case definition
+#     unverified), 30897114 and 37526404 (whole-virome studies whose abstracts report no enterovirus-specific result),
+#     38139096 (DNA virome; enteroviruses are RNA viruses).
+#   - Cell lines and methods: 32450550 (pancreatic cell line), 15695669 (method paper; the isolate was HSV-1).
+#
+# TODO (card-reviewer): Europe PMC has scanned copies (not open text) of 3404526 (PMC1291623), 1850635
+#   (PMC1669122), 14570830 (PMC1757378) and 1433120 (PMC1293640) that a person could read to check the case
+#   definition. If 1850635 (60 v 41, controlled) names a recognised definition, the level could change.
+slug: persistent-enterovirus-infection
+name: Persistent enterovirus infection (for example coxsackie B virus in muscle, gut or blood)
+core_claim:
+  text: >-
+    The hypothesis proposes that in at least some people with ME/CFS, an enterovirus, such as a
+    coxsackie B virus, stays in the body after an infection, for example in muscle, the gut or the
+    blood, and helps drive the illness.
+  sources: [pmid:3404526, pmid:1850635, pmid:17872383]
+level: 0
+level_reason:
+  - text: >-
+      Level 0 here means that there is no patient data that counts on the evidence ladder, not that
+      no patients have been studied. Several controlled studies from 1988 to 2008 found enterovirus
+      genetic material or protein in more patients than controls, or above control levels: in muscle
+      biopsies in London and Glasgow, in serum in Glasgow, and in stomach biopsies in California. In
+      all of them the case definition is not stated in the abstract or not yet checked in the full
+      text, and the evidence ladder does not accept such studies, so none of them can count towards
+      a rung. None of these findings has been repeated by an independent group with a verified case
+      definition.
+    sources: [pmid:3404526, pmid:1850635, pmid:8409778, pmid:7775934, pmid:7595406, pmid:17872383]
+  - text: >-
+      The two studies on the card with a verified recognised case definition found no enterovirus. A
+      Swedish study of 34 patients meeting criteria of the US Centers for Disease Control, with no
+      control group, found no enterovirus in muscle biopsies from 29 patients or in stool samples, and
+      no enterovirus antibody activity in 7 paired serum and spinal fluid samples. A 2026 Cornell study of a cohort of 15 patients meeting the
+      Canadian Consensus Criteria and 5 healthy controls, using a capture and sequencing method
+      its authors describe as ultra-sensitive, found no enterovirus RNA in whole blood from 6 patients and 2 controls, or
+      after attempts to grow virus from their blood cells. The authors note that this does not rule
+      out infection in other tissues.
+    sources: [pmid:8863367, pmid:42941838]
+  - text: >-
+      Other studies, whose case definitions are not yet verified, did not find more enterovirus in
+      patients. A later and larger Glasgow muscle study of 121 patients found enterovirus RNA in 26.4%
+      of patients and 19.8% of 101 people with other muscle and nerve disorders, a difference that was
+      not significant, and noted that this did not repeat the group's earlier result. A Liverpool study
+      found no enterovirus RNA in muscle from 34 patients. A Nijmegen study of 76 patients and 76
+      matched controls found no difference in enterovirus antibody or VP1 antigen tests and enterovirus
+      in the stool of one patient only.
+    sources: [pmid:8148439, pmid:1850635, pmid:8777836, pmid:7893870]
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No enterovirus marker has been tested in a second, independent patient group with a verified
+        case definition. A Leeds study found the VP1 blood test positive in 11 of 34 patients and 7 of
+        34 people with major depression, which was not a significant difference.
+      sources: [pmid:1433120]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly. A London study measured blood
+        lactate around an exercise test below the anaerobic threshold, not symptoms after exertion, and
+        its case definition is not yet verified.
+      sources: [pmid:14570830]
+subgroups:
+  - text: >-
+      In a London muscle study, 9 of the 10 patients with enterovirus in muscle were among the 28 with an
+      abnormal lactate response to exercise. In a California study, stomach biopsies came from patients
+      with chronic abdominal complaints. Both case definitions are not yet verified. This single-study
+      finding has not been repeated.
+    sources: [pmid:14570830, pmid:17872383]
+working_on_it: []
+early_signals: []
+studies:
+  # --- context: verified recognised case definitions ---
+  - id: pmid:42941838
+    title: CATCH-EVseq, an Ultra-Sensitive Capture Assay to Monitor Human Enterovirus RNA.
+    year: 2026
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "This cross-sectional study involved five controls and 15 ME subjects diagnosed using the Canadian Consensus Criteria [23]."
+    design: controlled
+    # Full text (PMC13705469): cohort 15 patients, 5 controls; whole-blood screening "from six ME subjects and two
+    # controls"; PBMC cultures from six ME subjects and two controls. n = the whole-blood measurement.
+    n_patients: 6
+    n_controls: 2
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Hanson MR, Cornell University, Ithaca, USA
+    finding: >-
+      A study of n=6 patients and 2 healthy controls (from a cohort of 15 patients and 5 controls)
+      found no enterovirus RNA in whole blood from anyone, directly or after attempts to grow virus
+      from blood cells or plasma vesicles; this is a descriptive result (0 of 6 against 0 of 2) with
+      no statistical test.
+  - id: pmid:8863367
+    title: No findings of enteroviruses in Swedish patients with chronic fatigue syndrome.
+    year: 1996
+    cohort: me_cfs
+    # CDC criteria, version not stated: flag "does not require PEM".
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "Altogether 34 patients with the chronic fatigue syndrome, according to criteria of the Centers for Disease Control, USA, were studied evenly over the seasons for the possible presence of a chronic enterovirus infection."
+    design: uncontrolled
+    # 34 patients in all; muscle PCR in 29, stool in 11 (+14 routine samples), serum/CSF pairs in 7.
+    n_patients: 29
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Ehrnst A, Karolinska Institutet, Huddinge University Hospital, Stockholm, Sweden
+    finding: >-
+      A study of n=29 patients with muscle biopsies (34 patients in all), with no control group, found
+      no enterovirus in muscle biopsies from 29 patients or in stool samples, and no enterovirus
+      antibody activity in 7 paired serum and spinal fluid samples.
+  # --- context: case definition not yet verified, pointing towards the hypothesis ---
+  - id: pmid:3404526
+    title: "Postviral fatigue syndrome: persistence of enterovirus RNA in muscle and elevated creatine kinase."
+    year: 1988
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Control muscle n not stated in the abstract.
+    n_patients: 96
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Archard LC, Charing Cross and Westminster Medical School, London, UK (co-author Behan PO is also an author of the Glasgow studies 1850635 and 8148439)
+    finding: >-
+      A study of n=96 patients found enterovirus RNA in muscle biopsies from 20 patients, with signals
+      more than three standard deviations above the mean of normal control muscle; the abstract does
+      not give the number of controls.
+  - id: pmid:1850635
+    title: Enteroviral RNA sequences detected by polymerase chain reaction in muscle of patients with postviral fatigue syndrome.
+    year: 1991
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 60
+    n_controls: 41
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Behan PO, Department of Neurology, University of Glasgow, UK
+    finding: >-
+      A study of n=60 patients and 41 controls without fatigue undergoing routine surgery found
+      enterovirus RNA in muscle in 32 of 60 patients and 6 of 41 controls (odds ratio 6.7).
+  - id: pmid:8409778
+    title: Persistence of enterovirus RNA in muscle biopsy samples suggests that some cases of chronic fatigue syndrome result from a previous, inflammatory viral myopathy.
+    year: 1993
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 158
+    n_controls: 152
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Archard LC, Charing Cross and Westminster Medical School, London, UK (same group as 3404526)
+    finding: >-
+      A study of n=158 patients and 152 control muscle samples found enterovirus RNA in muscle from 41
+      of 158 patients and 2 of 152 controls.
+  - id: pmid:14570830
+    title: "Enterovirus related metabolic myopathy: a postviral fatigue syndrome."
+    year: 2003
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 48
+    n_controls: 29
+    # Sub-anaerobic threshold exercise test with plasma lactate on the day of biopsy; symptoms after exertion
+    # not tracked (abstract).
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Archard LC, Imperial College, London, UK (Lane RJ and Archard LC also on 8409778)
+    finding: >-
+      A study of n=48 patients and 29 controls with normal muscles found enterovirus RNA in muscle from
+      10 patients (20.8%) and no controls; 9 of the 10 were among the 28 patients with an abnormal
+      lactate response to exercise.
+  - id: pmid:14556267
+    title: Detection of enterovirus in human skeletal muscle from patients with chronic inflammatory muscle disease or fibromyalgia and healthy subjects.
+    year: 2003
+    cohort: me_cfs
+    # The patient group is "fibromyalgia/chronic fatigue syndrome" together; how many had CFS is not stated.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 30
+    n_controls: 29
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Pozzetto B, Faculté de Médecine Jacques Lisfranc, Saint-Etienne, France
+    finding: >-
+      A study of n=30 patients with fibromyalgia or chronic fatigue syndrome, counted together, and 29
+      healthy subjects found enterovirus RNA in muscle from 4 patients and no healthy subject, and VP1
+      protein in no one; the abstract reports no statistical test.
+  - id: pmid:7775934
+    title: "Detection of enterovirus-specific RNA in serum: the relationship to chronic fatigue."
+    year: 1995
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Also 82 acutely ill comparison individuals (22 positive); n_controls = healthy group.
+    n_patients: 88
+    n_controls: 126
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Galbraith DN, Regional Virus Laboratory, Ruchill Hospital, Glasgow, UK
+    finding: >-
+      A study of n=88 patients with chronic fatigue and 126 healthy individuals found enterovirus RNA in
+      serum from 36 of 88 patients, 3 of 126 healthy individuals and 22 of 82 acutely ill comparison
+      individuals.
+  - id: pmid:7595406
+    title: Comparison of coxsackie B neutralisation and enteroviral PCR in chronic fatigue patients.
+    year: 1995
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 100
+    n_controls: 100
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Clements GB, Regional Virus Laboratory, Ruchill Hospital, Glasgow, UK (same laboratory as 7775934)
+    finding: >-
+      A study of n=100 patients with chronic fatigue and 100 healthy comparison individuals found
+      enterovirus RNA in serum in 42% of patients and 9% of the comparison group, while coxsackie B
+      neutralising antibodies did not separate the groups (34% and 41%).
+  - id: pmid:17872383
+    title: Chronic fatigue syndrome is associated with chronic enterovirus infection of the stomach.
+    year: 2008
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # VP1 staining: 165 patients, 34 control biopsies. RNA: 9/24 patient vs 1/21 control paraffin samples.
+    n_patients: 165
+    n_controls: 34
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Chia AY, EV Med Research, Lomita, California, USA
+    finding: >-
+      A study of n=165 patients and 34 control stomach biopsies found the enterovirus protein VP1 in
+      135 of 165 patient biopsies and 7 of 34 controls, and enterovirus RNA in 9 of 24 patient and 1 of
+      21 control samples tested.
+  # --- context: case definition not yet verified, not pointing towards the hypothesis ---
+  - id: pmid:8148439
+    title: Studies on enterovirus in patients with chronic fatigue syndrome.
+    year: 1994
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 121
+    n_controls: 101
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Behan PO, Department of Neurology, University of Glasgow, UK (same group as 1850635)
+    finding: >-
+      A study of n=121 patients and 101 people with other neuromuscular disorders found enterovirus RNA
+      in muscle in 26.4% of patients and 19.8% of the comparison group, a difference that was not
+      significant.
+  - id: pmid:8777836
+    title: Investigation by polymerase chain reaction of enteroviral infection in patients with chronic fatigue syndrome.
+    year: 1996
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: uncontrolled
+    n_patients: 34
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Edwards RH, Department of Medicine, University of Liverpool, UK
+    finding: >-
+      A study of n=34 patients found no detectable enterovirus RNA in any muscle sample.
+  - id: pmid:7893870
+    title: Enteroviruses and the chronic fatigue syndrome.
+    year: 1994
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Abstract: "76 patients with disabling unexplained fatigue and 76 matched controls" for serology and VP1;
+    # the number of stool samples tested by PCR is not stated.
+    n_patients: 76
+    n_controls: 76
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Galama JM, University Hospital Nijmegen, The Netherlands
+    finding: >-
+      A study of n=76 patients and 76 matched controls found no difference in enterovirus antibody or
+      VP1 antigen tests, no enterovirus grown from any stool culture, and enterovirus by PCR in the
+      stool of one patient only, not found again three months later.
+  - id: pmid:1433120
+    title: Monospot and VP1 tests in chronic fatigue syndrome and major depression.
+    year: 1992
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 34
+    n_controls: 34
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Main J, St James University Hospital, Leeds, UK
+    finding: >-
+      A study of n=34 patients and 34 people with major depression found the VP1 test positive in 11
+      patients and 7 people with depression, which was not a significant difference.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

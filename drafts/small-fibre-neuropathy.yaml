@@ -1,0 +1,285 @@
+# FOUNDER RULING (2026-11-02): level 1, not contested, both badges no, no long COVID label. Prior-diagnosis-or-Fukuda studies are unverified.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02, revised after card-reviewer and founder ruling. Nothing here is published.
+# FOUNDER RULINGS (2026-11-02):
+#   1. Bilbao case definition: "prior diagnosis or meet the Fukuda criteria" does not verify a case definition,
+#      because the prior-diagnosis route names none. 37968647 and 39888240 are `unverified` and `context`; their
+#      sentences are kept in comments. 42286686 and 42082542 name Fukuda for their own participants with no
+#      prior-diagnosis route and are recorded as Fukuda (42082542 corrected by the coordinator, 2026-11-02).
+#      42082542's null skin-conductance result is shown in level_reason; a null at rung 1 is not a contested mark.
+#   2. Level 1, not contested. Rung 1 rests on the Boston study (41576003, ICC or IOM 2015), whose untested means
+#      point the same way. Rung 2 is not reached: no controlled ME/CFS-against-control result has a verified
+#      definition.
+#   3. No long COVID label. 38630952 is removed (see "Not on the card"); no `long_covid` study remains.
+#   4. Diagnostic marker no; explains PEM no.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract) or, where `case_definition_source: fulltext` or a comment names a full
+# text, from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (37968647: PMC10648633;
+# 39888240: PMC11783232; 42286686: PMC13267502; 41576003: PMC12829881; 42082542: PMC13334049). 33577778 has no
+# open full text (`europepmc casedef`, checked 2026-11-02).
+#
+# FEW STUDIES: six original studies on the card, below the brief's 8. The card is not padded; see "Not on the
+# card" for what was read and left out.
+#
+# LEVEL, RUNG BY RUNG (founder ruling 2026-11-02)
+#   Rung 1: rests on 41576003 (Novak 2026, Boston; ICC or IOM 2015; 170 ME/CFS, 73 historical controls): SFN on
+#     skin biopsy in 52.6% of ME/CFS patients with results and 0.0% of controls with results; lower mean calf
+#     epidermal nerve fibre density. Only four-group tests are reported (with long COVID and hEDS), no test of
+#     ME/CFS against controls.
+#   Rung 2: not reached. Two Bilbao controlled studies (37968647, 39888240) have an unverified case definition
+#     and cannot count (V9); 42082542 (Fukuda, 59 v 36) found no difference in skin conductance. 41576003 reports no ME/CFS-against-control test. 33577778 is unverified.
+#   Rung 3 and above: not reached.
+# CONTESTED: null.
+# OXFORD: no study on the card uses an Oxford cohort.
+# LONG COVID: no label (founder ruling 3). The post-COVID groups in the Bilbao studies (NICE guideline) and the
+#   Long COVID group in 41576003 (no ME/CFS definition) are not used.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Bilbao (Gómez-Esteban JC, Azcue N, Del Pino R, Tijero-Merino B; Biocruces Bizkaia / Cruces University
+#     Hospital): 37968647, 39888240, 42286686, 42082542. All four name the same ethics approval (CEIm-E PI2020210).
+#     Whether the ME/CFS patients overlap is not stated; likely. TODO: verify.
+#   - Boston (Systrom DM, Felsenstein D on both 33577778 and 41576003; Oaklander AL on 33577778; Novak P on
+#     41576003). 41576003 cites the iCPET findings of its reference 18 in ME/CFS; whether its 66 ME/CFS patients with
+#     iCPET overlap the 160 of 33577778 is not stated. TODO: verify.
+#   - No authors shared between the Bilbao and Boston studies.
+#
+# Not on the card (searched in the cache, read, left out):
+#   - 38630952 (McAlpine 2024, Yale, 16 patients, retrospective IVIG chart review): the cohort was chosen by long
+#     COVID plus small fibre neuropathy, not by an ME/CFS definition, and the results are not split by ME/CFS
+#     status (founder ruling 3).
+#   - Reviews: 31635218, 32171889, 32659478, 33409721, 35955708, 38396973, 41790576, 37707639, 40944962.
+#   - No recognised case definition (CFS self-reported or not defined): 36288118 (IC/BPS skin biopsy; CFS by
+#     self-report and records), 32719824 (two case reports, SCN9A), 38291116 (Novak 2024, questionnaire-against-test
+#     correlations; no ME/CFS small fibre result in the abstract).
+#   - Different question: 37240059 (Gottschalk 2023, serum BH4; SFN subgroup of 12 from chart records, SFN not
+#     compared with controls), 41699921 (quantitative sensory testing in post-COVID condition, no ME/CFS definition),
+#     40426965 (exercise heart rate in post-COVID), 32238857 and 32289826 (pain processing), 8410086 (muscle
+#     electromyography), 11269790 (venous innervation), 29780660 (cardiac sympathetic innervation).
+#   - Case reports and protocols: 14567934, 36611414, 38650940, 42601095.
+slug: small-fibre-neuropathy
+name: Small nerve fibre damage (small fibre neuropathy)
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS the small nerve fibres of the skin and other
+    tissues, which carry pain and temperature signals and control sweating and blood vessels, are
+    damaged or work abnormally. Researchers look for this with skin biopsies, corneal confocal
+    microscopy of the nerves in the eye's surface, heat and cold evoked potentials, and sweat-function
+    tests.
+  sources: [pmid:37968647, pmid:39888240, pmid:41576003]
+level: 1
+level_reason:
+  - text: >-
+      A study from Boston of 170 patients meeting the International Consensus Criteria or the 2015 IOM
+      criteria found small fibre neuropathy on skin biopsy in 52.6% of the ME/CFS patients with biopsy
+      results and 0.0% of the healthy controls with results; the paper has 54 missing values across its
+      groups and does not give the number per group. Mean calf nerve fibre density was 8.79 fibres/mm
+      in patients and 10.15 in controls; the paper reports one test across all four groups and no test
+      of ME/CFS against controls. For skin conductance, a measure of sweat-gland nerve function, the
+      Boston study reports a lower mean in patients (75.76 against 82.96 µS) but no test against
+      controls. The patients were referred to a dysautonomia centre, which the authors say may not be
+      representative, and the controls came from another university's research database. The card is
+      at level 1 because of this study.
+    sources: [pmid:41576003]
+  - text: >-
+      A study from Bilbao, Spain, of 59 patients meeting the Fukuda definition (which does not require
+      post-exertional malaise) and 36 healthy controls, mainly about autoantibodies, found no
+      significant difference in skin conductance of the palms or soles. This null result does not make
+      the card contested, because level 1 rests on the Boston study's means, which were not tested
+      against controls.
+    sources: [pmid:42082542]
+  - text: >-
+      The card is not at level 2 because no controlled comparison of ME/CFS patients with controls on
+      small fibre damage has both a verified case definition and a result that points to damage. Two
+      controlled studies from Bilbao included patients with a prior ME/CFS diagnosis or meeting the
+      Fukuda definition; because a prior diagnosis does not name a definition, these cannot count
+      towards the level. A Boston study of 160 patients, in which 31% of skin biopsies were consistent
+      with small fibre neuropathy, cannot count either because its case definition is not yet verified.
+    sources: [pmid:37968647, pmid:39888240, pmid:33577778]
+  - text: >-
+      In the Bilbao studies, 30 patients and 30 matched healthy controls had more tortuous (winding)
+      corneal nerve fibres in patients, while corneal nerve fibre density, branch density and length did
+      not differ; the authors write that inconsistent corneal results across studies "might suggest that
+      SFN is not an inherent characteristic of these diseases". An earlier study of 50 patients and 50
+      controls found later brain responses to heat stimuli in patients; the later study used the same
+      heat test and found no significant difference in response time, but a lower heat response
+      amplitude in patients than in controls (p = 0.028), which the earlier study did not report for
+      ME/CFS against controls. Skin conductance did not differ between patients and controls in three
+      Bilbao studies. The patients in these studies may overlap.
+    sources: [pmid:39888240, pmid:37968647, pmid:42082542]
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No marker of small fibre damage has been tested in a second, independent patient group with a
+        verified case definition. In one study whose case definition is not verified, corneal nerve
+        tortuosity separated 30 patients from 30 healthy controls with an area under the curve of 0.690.
+      sources: [pmid:39888240]
+  explains_pem:
+    # Checked: every abstract on the card and the five open full texts. No study tracks symptoms after an exertion
+    # challenge and links them to small fibre damage. 33577778 (unverified) found that denervation did not correlate
+    # with exertional measures on invasive exercise testing, which is not a PEM measure.
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly and links it to small fibre
+        damage. In one study, whose case definition is not yet verified, the severity of nerve fibre
+        loss in skin biopsies did not correlate with measures from an exercise test.
+      sources: [pmid:33577778]
+subgroups: []
+working_on_it: []
+early_signals: []
+studies:
+  # --- supports ---
+  - id: pmid:41576003
+    title: Shared autonomic phenotype of long COVID and myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2026
+    cohort: me_cfs
+    # ICC or the National Academy of Medicine (IOM 2015) criteria; both rank at the top. Recorded as ICC, named first.
+    # 143 Long COVID patients ("the exact diagnostic criteria were still evolving") not ME/CFS-defined, not used.
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "The diagnosis of ME/CFS was based on myalgic encephalomyelitis international consensus criteria (ME-ICC) [26] or newer National Academy of Medicine diagnostic criteria [27]."
+    design: controlled  # historical healthy controls "from our autonomic research database at the University of Massachusetts"
+    # n: calf ENFD (Table 3, "Missing" 0): control 10.15 (2.25), ME/CFS 8.79 (3.55) fibres/mm, Kruskal-Wallis across
+    # four groups p < 0.001; thigh 13.44 vs 12.78, p = 0.033. Pairwise tests (Dunn) are reported only between
+    # patient groups. Table 4: "SFN, any from biopsy" 0.0% control, 52.6% ME/CFS, chi-square across four groups
+    # p < 0.001, 54 missing values across groups (per-group number not stated). The abstract gives 53%; one results
+    # sentence gives "63%/67%" for Long COVID/ME/CFS, which does not match Table 4. ESC 82.96 vs 75.76 uS, four-group
+    # p = 0.004, 79 missing. Limitations: "We are a referral center for dysautonomia, so we may not see a
+    # representative group of patients."
+    n_patients: 170
+    n_controls: 73
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 1 (founder ruling 2026-11-02)
+    direction: lower  # epidermal nerve fibre density
+    group: Novak P and Systrom DM, Brigham and Women's Faulkner Hospital, Boston, USA
+    finding: >-
+      A study of n=170 patients and 73 historical healthy controls found small fibre neuropathy on skin
+      biopsy in 52.6% of the patients with biopsy results and 0.0% of the controls with results, and a
+      lower mean calf nerve fibre density in patients, in tests across four groups with no test of
+      ME/CFS against controls.
+  # --- context ---
+  - id: pmid:39888240
+    title: "Small fiber neuropathy in the post-COVID condition and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Clinical significance and diagnostic challenges."
+    year: 2025
+    cohort: me_cfs
+    # Unverified by founder ruling 2026-11-02 (prior-diagnosis route names no definition). Full-text sentence:
+    # "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the
+    # Fukuda et al. criteria [3] at the time of evaluation." Also: "all ME/CFS patients included in the study
+    # reported post-exertional malaise." 30 post-COVID condition patients (NICE guideline) not used.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Table 2 (ANCOVA, age and sex covariates): tortuosity PCC 1.12 (0.02), ME/CFS 1.13 (0.01), HC 1.11 (0.01),
+    # F = 6.80, Bonferroni ME/CFS vs HC p = 0.003. CNFD 30.73 vs 32.37, CNFL 17.28 vs 18.11, F not significant.
+    # Heat N latency 0.63 (0.18) vs 0.54 (0.15), F = 2.47, no mark; heat N amplitude -9.03 vs -13.60, ME/CFS vs HC
+    # p = 0.028 (text: "ME/CFS patients exhibited lower N amplitude in CHEPs compared to HC"). Sudoscan hands 64.75 vs
+    # 71.41, feet 72.28 vs 70.33, not significant. ROC ME/CFS vs HC tortuosity AUC = 0.690, p = 0.032.
+    n_patients: 30
+    n_controls: 30
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # tortuosity higher; density, length, heat latency and skin conductance no difference
+    group: Gómez-Esteban JC and Del Pino R, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 37968647, 42286686, 42082542)
+    finding: >-
+      A study of n=30 patients with a prior ME/CFS diagnosis or meeting the Fukuda definition and 30
+      matched healthy controls found more tortuous corneal nerve fibres in patients (p = 0.003), no
+      difference in corneal nerve fibre density or length, a smaller amplitude but no significant
+      difference in latency of heat evoked potentials, and no difference in skin conductance.
+  - id: pmid:37968647
+    title: Dysautonomia and small fiber neuropathy in post-COVID condition and Chronic Fatigue Syndrome.
+    year: 2023
+    cohort: me_cfs
+    # Unverified by founder ruling 2026-11-02. Full-text sentence: "Patients diagnosed of ME/CFS should be
+    # previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time." 87 post-COVID patients
+    # (NICE guideline) not used.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Table 3 (n = 50 per group in the header; the number tested per measure is not stated): heat N latency
+    # HC 0.5 (0.1) s, ME/CFS 0.7 (0.1) s, H = 23.6, Bonferroni ME/CFS vs HC < 0.001; text "686 ± 16" vs "552 ± 13"
+    # (ms). Heat P latency 0.8 vs 0.7, ME/CFS vs HC 0.001. Heat N amplitude: H = 7.3, one Bonferroni value (0.026)
+    # whose comparison column is not clear from the table; the text does not report an amplitude difference for
+    # ME/CFS. Cold evoked potentials: no difference. Text: "No significant differences were found between groups
+    # in ESC on the Sudoscan." Pathological palm ESC 34% ME/CFS, 18% HC.
+    n_patients: 50
+    n_controls: 50
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # heat evoked latency longer; cold evoked potentials and skin conductance no difference
+    group: Gómez-Esteban JC and Tijero-Merino B, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 39888240, 42286686, 42082542)
+    finding: >-
+      A study of n=50 patients with a prior ME/CFS diagnosis or meeting the Fukuda definition and 50
+      healthy controls found longer latency of brain responses to heat stimuli in patients (p < 0.001),
+      with no difference in responses to cold stimuli or in skin conductance.
+  - id: pmid:42082542
+    title: Involvement of autoantibodies against G protein-coupled receptors in post-COVID condition and Chronic Fatigue Syndrome.
+    year: 2026
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM". Unlike 37968647 and 39888240, the sentence has no prior-diagnosis route.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "For the ME/CFS group, patients had to meet the diagnostic criteria proposed by Fukuda28, which require severe fatigue disproportionate to activity lasting at least six months accompanied by at least four of the following symptoms: memory impairment, post-exertional malaise, unrefreshing sleep, arthralgia, headaches, sore throat, and/or lymph node tenderness."
+    design: controlled
+    # Full text Table 1: palms ESC PCC 71.42 (16.40), ME/CFS 66.23 (16.21), HC 72.68 (10.38), F = 2.29; soles 74.77,
+    # 70.53, 70.65, F = 0.67; no significance mark on either.
+    n_patients: 59
+    n_controls: 36
+    measures_pem: false
+    preregistered: null
+    role: context  # main question is autoantibodies; skin conductance is a secondary measure
+    direction: no_difference
+    group: Gómez-Esteban JC, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 37968647, 39888240, 42286686)
+    finding: >-
+      A study of n=59 patients with ME/CFS and 36 healthy controls, mainly about autoantibodies, found
+      no significant difference in skin conductance of the palms or soles.
+  - id: pmid:42286686
+    title: "Two-timepoint multidomain follow-up of post-COVID condition and ME/CFS: overlapping autonomic, small-fiber, and cognitive changes."
+    year: 2026
+    cohort: me_cfs
+    # The sentence names Fukuda for the participants (checked 2026-11-02); flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "ME/CFS participants had received a clinical diagnosis of ME/CFS according to Fukuda criteria [36] before inclusion in the present study."
+    design: uncontrolled  # compared with 21 post-COVID condition patients; no healthy control group
+    n_patients: 17
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Gómez-Esteban JC and Del Pino R, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 37968647, 39888240, 42082542)
+    finding: >-
+      A study of n=17 patients and 21 people with post-COVID condition, without a healthy control
+      group, tested twice a median of 31 months apart, found that heat evoked potential scores improved
+      (shorter latencies) over time in both groups; the authors write that this may partly reflect
+      regression to the mean.
+  - id: pmid:33577778
+    title: Insights From Invasive Cardiopulmonary Exercise Testing of Patients With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    # Abstract: "160 patients meeting ME/CFS criteria"; the definition is not named. No open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled  # 36 controls for the exercise test; the abstract does not say whether controls had biopsies
+    n_patients: 160
+    n_controls: 36
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable  # biopsies compared with predicted values, not with controls
+    group: Systrom DM, Brigham and Women's Hospital, Boston, USA (Felsenstein D also on 41576003)
+    finding: >-
+      A study of n=160 patients with skin biopsies found that 31% of biopsies were consistent with small
+      fibre neuropathy (epidermal innervation at or below 5.0% of predicted), and that the severity of
+      nerve fibre loss did not correlate with exercise test measures.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair
