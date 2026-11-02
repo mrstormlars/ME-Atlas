@@ -1,0 +1,226 @@
+# ME Atlas-ordliste, norsk (bokmål). Oversettelse av content/glossary.yaml, som er fasit. Se docs/translation.md.
+# Hver oppføring: en (det engelske begrepet), term, valgfrie aliases (andre skrivemåter som markeres likt), explanation.
+# Regler: forklaring på høyst 200 tegn; begreper og alias unike; ingen forbudte ord (engelske eller norske former).
+# Markering er hele ord og skiller mellom store og små bokstaver.
+# Forklaringene sier det samme som de engelske, og ikke noe mer.
+# Status: første utkast, venter på kontroll av card-reviewer og grunnleggeren.
+
+- en: ME/CFS
+  term: ME/CFS
+  aliases: [myalgisk encefalomyelitt, kronisk utmattelsessyndrom]
+  explanation: Myalgisk encefalomyelitt / kronisk utmattelsessyndrom. Alvorlig utmattelse som blir verre etter anstrengelse, og søvn som ikke gir hvile. Eldre artikler sier CFS eller ME, med ulike kasusdefinisjoner.
+
+- en: long COVID
+  term: langvarig covid
+  aliases: [Langvarig covid]
+  explanation: Helseplager som fortsetter eller begynner etter en covid-19-infeksjon og varer minst tre måneder. Noen av symptomene overlapper med symptomene ved ME/CFS.
+
+- en: hypotheses
+  term: hypoteser
+  aliases: [hypotese, hypotesen, hypotesene, Hypoteser, Hypotese, Hypotesene]
+  explanation: En hypotese er en foreslått forklaring som ikke er avklart. Her en idé om hva som forårsaker ME/CFS.
+
+- en: evidence ladder
+  term: evidensstige
+  aliases: [evidensstigen, stigen]
+  explanation: Skalaen med seks trinn som dette nettstedet bruker for å vise hvor mye evidens som støtter en hypotese, fra «Foreslått» til «Årsakssammenheng underbygd». Den er et utkast.
+
+- en: case definition
+  term: kasusdefinisjon
+  aliases: [kasusdefinisjoner, kasusdefinisjonen, Kasusdefinisjon]
+  explanation: Et skrevet sett med regler (symptomer, hvor lenge de har vart, og sykdommer som må utelukkes) som avgjør hvem som regnes som å ha ME/CFS i en studie.
+
+- en: Canadian Consensus Criteria
+  term: Canadian Consensus Criteria
+  aliases: [CCC, Canada-kriteriene]
+  explanation: "Kasusdefinisjon for ME/CFS fra 2003: seks måneder med utmattelse, forverring etter anstrengelse, tankeproblemer og som regel søvnproblemer og smerte, pluss symptomer i andre organsystemer."
+
+- en: International Consensus Criteria
+  term: International Consensus Criteria
+  aliases: [ICC]
+  explanation: Kasusdefinisjon for myalgisk encefalomyelitt fra 2011. Krever tydelig forverring etter anstrengelse og symptomer i flere organsystemer, og har ingen ventetid på seks måneder.
+
+- en: IOM 2015 criteria
+  term: IOM 2015-kriteriene
+  aliases: [IOM 2015]
+  explanation: "Kasusdefinisjon fra amerikanske Institute of Medicine (2015): seks måneder med nedsatt aktivitet og utmattelse, forverring etter anstrengelse, søvn som ikke gir hvile, pluss tanke- eller ståproblemer."
+
+- en: Fukuda criteria
+  term: Fukuda-kriteriene
+  aliases: [Fukuda]
+  explanation: "Kasusdefinisjon fra 1994, ledet av USAs CDC: seks måneder med uforklart, invalidiserende utmattelse og fire av åtte oppgitte symptomer. Forverring etter anstrengelse er ett av dem, men kreves ikke."
+
+- en: Holmes 1988 criteria
+  term: Holmes 1988-kriteriene
+  aliases: [Holmes 1988]
+  explanation: "CDCs første kasusdefinisjon for kronisk utmattelsessyndrom (1988): seks måneder med utmattelse som halverer aktiviteten, og mange oppgitte symptomer. Forverring etter anstrengelse kreves ikke."
+
+- en: Oxford criteria
+  term: Oxford-kriteriene
+  aliases: [Oxford-definisjonen]
+  explanation: En britisk kasusdefinisjon fra 1991. Krever seks måneder med invalidiserende utmattelse og ingen andre bestemte symptomer. Den er bred, så en gruppe valgt slik kan omfatte folk som ikke har ME/CFS.
+
+- en: CDC
+  term: CDC
+  explanation: Centers for Disease Control and Prevention, USAs nasjonale folkehelsemyndighet. Forskere derfra ledet kasusdefinisjonene for kronisk utmattelsessyndrom fra 1988 (Holmes) og 1994 (Fukuda).
+
+- en: PEM
+  term: PEM
+  aliases: [anstrengelsesutløst symptomforverring]
+  explanation: Post-exertional malaise. Symptomene blir verre etter fysisk eller mental anstrengelse man klarte før. Forverringen kommer ofte timer til et døgn eller mer senere og kan vare i dager eller lenger.
+
+- en: cohort
+  term: kohort
+  aliases: [kohorter, kohorten]
+  explanation: En gruppe mennesker som følges eller undersøkes sammen.
+
+- en: replication
+  term: replikasjon
+  aliases: [replikasjoner, replikere, replikert]
+  explanation: Å gjenta en studie, helst ved en annen forskergruppe med nye pasienter, for å se om det samme resultatet viser seg. En mislykket replikasjon er en gjentakelse som ikke finner det.
+
+- en: contested
+  term: omstridt
+  aliases: [Omstridt]
+  explanation: Settes når en studie av sammenlignbar eller høyere kvalitet motsier funnet bak et trinn. Grunnleggeren avgjør. Det omstridte trinnet vises skravert på stolpen.
+
+- en: control group
+  term: kontrollgruppe
+  aliases: [kontrollgruppen, kontroller, friske kontroller, kontrollert studie]
+  explanation: Personer som sammenlignes med pasientene, som regel friske personer, for å se om en forskjell henger sammen med sykdommen. En studie med en slik gruppe kalles kontrollert.
+
+- en: preregistered
+  term: forhåndsregistrert
+  aliases: [forhåndsregistrering]
+  explanation: Planen for en studie ble lagt ut offentlig før den startet, med hva som skulle måles og hvordan det skulle analyseres. Det gjør det vanskeligere å endre spørsmålet i ettertid.
+
+- en: sample size
+  term: utvalgsstørrelse
+  aliases: [utvalgsstørrelser, utvalgsstørrelsen]
+  explanation: Hvor mange personer som var med i en studie. Små studier går lettere glipp av en reell forskjell, eller finner en ved en tilfeldighet.
+
+- en: peer-reviewed
+  term: fagfellevurdert
+  aliases: [fagfellevurderte]
+  explanation: Kontrollert av uavhengige eksperter på fagfeltet før et vitenskapelig tidsskrift publiserer det.
+
+- en: Bradford Hill criteria
+  term: Bradford Hills kriterier
+  aliases: [Bradford Hill]
+  explanation: Ni hensyn fra 1965 for å vurdere om en sammenheng mellom to ting trolig er en årsakssammenheng, for eksempel styrke, konsistens og om årsaken kommer først.
+
+- en: diagnostic marker
+  term: diagnostisk markør
+  aliases: [diagnostiske markører]
+  explanation: Et målbart tegn, for eksempel en blodverdi eller et skanningsresultat, som kan hjelpe til å skille personer med en sykdom fra personer uten den.
+
+- en: biomarker
+  term: biomarkør
+  aliases: [biomarkører]
+  explanation: Et målbart tegn i kroppen, for eksempel en blodverdi eller et skanningsresultat. Noen testes som diagnostiske markører, for å skille personer med en sykdom fra personer uten den.
+
+- en: NK cell
+  term: NK-celle
+  aliases: [NK, NK-celler, NK-cellene, naturlig drepecelle, naturlige drepeceller]
+  explanation: Naturlig drepecelle. En type hvit blodcelle som kan drepe virusinfiserte og unormale celler.
+
+- en: CD8+ T cell
+  term: CD8+ T-celle
+  aliases: [CD8+ T-celler]
+  explanation: En type hvit blodcelle som kan gjenkjenne og drepe infiserte celler.
+
+- en: cytotoxicity
+  term: cytotoksisitet
+  aliases: [cytotoksisk, cytotoksiske]
+  explanation: Immuncellenes evne til å skade eller drepe andre celler. I en laboratorietest måles den ved hvor mange målceller som blir drept.
+
+- en: lysis
+  term: lysis
+  explanation: At en celle brytes i stykker. I tester av NK-celler viser andelen målceller som brytes i stykker, hvor godt NK-cellene dreper.
+
+- en: lytic unit
+  term: lytisk enhet
+  aliases: [lytiske enheter]
+  explanation: En enhet som brukes i eldre studier for å uttrykke hvor kraftig immunceller dreper målceller i en laboratorietest. Flere lytiske enheter betyr kraftigere dreping.
+
+- en: ROC analysis
+  term: ROC-analyse
+  explanation: En måte å teste hvor godt en måling skiller to grupper, for eksempel pasienter og kontroller.
+
+- en: cytokines
+  term: cytokiner
+  aliases: [cytokin]
+  explanation: Små proteiner som immunsystemets celler bruker til å sende signaler til hverandre.
+
+- en: neuroinflammation
+  term: nevroinflammasjon
+  explanation: Betennelse i hjernen eller ryggmargen, med hjernens egne immunceller, som mikroglia, og noen ganger immunceller fra blodet. Hos levende mennesker måles den for det meste indirekte.
+
+- en: microglia
+  term: mikroglia
+  aliases: [mikrogliaceller]
+  explanation: Immunceller som holder til i hjernen og ryggmargen og reagerer på skade og infeksjon.
+
+- en: astrocytes
+  term: astrocytter
+  aliases: [astrocytt]
+  explanation: Stjerneformede støtteceller i hjernen og ryggmargen som hjelper nervecellene å fungere og reagerer på skade.
+
+- en: glial cells
+  term: gliaceller
+  aliases: [gliacelle, glia]
+  explanation: Støttecellene i hjernen og ryggmargen, blant annet mikroglia og astrocytter.
+
+- en: gliosis
+  term: gliose
+  explanation: En forandring i hjernevev der gliacellene blir flere eller større, ofte etter skade.
+
+- en: diffusion MRI
+  term: diffusjons-MR
+  aliases: [diffusjonsbasert]
+  explanation: En type hjerneskanning som følger hvordan vann beveger seg gjennom vev, noe som gir holdepunkter om hvordan vevet er bygd opp.
+
+- en: white matter
+  term: hvit substans
+  explanation: Den delen av hjernen som består av bunter av nervefibre som forbinder ulike områder i hjernen.
+
+- en: PET
+  term: PET
+  aliases: [PET-skanning, positronemisjonstomografi]
+  explanation: Positronemisjonstomografi. En skanning som følger en svært liten mengde radioaktivt sporstoff i kroppen for å vise hvor det samler seg.
+
+- en: tracer
+  term: sporstoff
+  aliases: [sporstoffet, PET-sporstoff, radioaktivt sporstoff]
+  explanation: Et stoff som gis i en svært liten mengde og fester seg til noe man vil se på, slik at en skanning kan vise hvor det er. De fleste sporstoffer er radioaktive; andre tas bare opp av vevet.
+
+- en: binding potential
+  term: bindingspotensial
+  explanation: Et skanningsmål på hvor mye sporstoff som er bundet til målet sitt i et område, sammenlignet med sporstoff som ikke er bundet. Høyere verdier betyr som regel mer av målet.
+
+- en: MR spectroscopy
+  term: MR-spektroskopi
+  aliases: [magnetisk resonansspektroskopi]
+  explanation: En skanning som måler mengden av visse kjemiske stoffer i en del av kroppen, for eksempel hjernen, uten operasjon.
+
+- en: 7 Tesla
+  term: 7 tesla
+  aliases: [tesla]
+  explanation: Tesla er enheten for styrken på magneten i en skanner. En skanner på 7 tesla er sterkere enn skannerne på 1,5 eller 3 tesla som brukes på de fleste sykehus.
+
+- en: myo-inositol
+  term: myo-inositol
+  explanation: Et lite molekyl som finnes i hjernen og måles med MR-spektroskopi. Noen forskere tolker nivået som et tegn på tilstanden til gliacellene.
+
+- en: choline/creatine ratio
+  term: kolin/kreatin-forhold
+  aliases: [kolin/kreatin-forholdet]
+  explanation: Den relative mengden av to stoffer i hjernen, målt med MR-spektroskopi. Kolin henger sammen med cellemembraner og kreatin med energibruk.
+
+- en: choline-containing compounds
+  term: kolinholdige forbindelser
+  explanation: Kjemiske stoffer som inneholder kolin, og som sees samlet som ett signal i MR-spektroskopi. De henger sammen med oppbygging og nedbrytning av cellemembraner.
+
+- en: anterior cingulate
+  term: fremre cingulære cortex
+  explanation: Den fremre delen av cingulære cortex, en fold i hjernens ytre lag på innsiden av hver hjernehalvdel. Den er med i oppmerksomhet, følelser og smerte.

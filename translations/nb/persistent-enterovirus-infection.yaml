@@ -1,0 +1,134 @@
+slug: persistent-enterovirus-infection
+items:
+  name:
+    text: Vedvarende enterovirusinfeksjon (for eksempel coxsackie B-virus i muskel, tarm eller blod)
+    source_hash: 434855616a8e0941aa8b0cb01c440b0d4309d669d0c0fb39961dac39ccb80117
+  core_claim:
+    text: Hypotesen er at et enterovirus, for eksempel et coxsackie B-virus, hos i hvert fall noen personer med ME/CFS blir
+      værende i kroppen etter en infeksjon, for eksempel i muskel, tarm eller blod, og er med på å drive sykdommen.
+    sources:
+    - pmid:3404526
+    - pmid:1850635
+    - pmid:17872383
+    source_hash: 8662e663f5ec3f67116feffb6646df01df1c162d3b4aedb42eb8bc67bcb06432
+  level_reason[0]:
+    text: 'Nivå 0 betyr her at det ikke finnes pasientdata som teller på evidensstigen, ikke at ingen pasienter er studert.
+      Flere kontrollerte studier fra 1988 til 2008 fant arvestoff eller protein fra enterovirus hos flere pasienter enn kontroller,
+      eller over nivået hos kontroller: i muskelbiopsier i London og Glasgow, i serum i Glasgow og i magebiopsier i California.
+      I alle er kasusdefinisjonen ikke oppgitt i sammendraget eller ennå ikke sjekket i fulltekst, og evidensstigen godtar
+      ikke slike studier, så ingen av dem kan telle mot et trinn. Ingen av disse funnene er gjentatt av en uavhengig gruppe
+      med en bekreftet kasusdefinisjon.'
+    sources:
+    - pmid:3404526
+    - pmid:1850635
+    - pmid:8409778
+    - pmid:7775934
+    - pmid:7595406
+    - pmid:17872383
+    source_hash: 2cb253cb5c47068239b02bf51c8ba5c115098056ba2ceeaf4f8a6261e31fc6ba
+  level_reason[1]:
+    text: De to studiene på kortet med en bekreftet, anerkjent kasusdefinisjon fant ikke enterovirus. En svensk studie av
+      34 pasienter som oppfylte kriteriene til de amerikanske Centers for Disease Control, uten kontrollgruppe, fant ikke
+      enterovirus i muskelbiopsier fra 29 pasienter eller i avføringsprøver, og ingen enterovirus-antistoffaktivitet i 7 parede
+      serum- og spinalvæskeprøver. En studie fra Cornell i 2026 av en kohort på 15 pasienter som oppfylte Canadian Consensus
+      Criteria og 5 friske kontroller, med en fangst- og sekvenseringsmetode som forfatterne beskriver som ultrasensitiv,
+      fant ikke enterovirus-RNA i fullblod fra 6 pasienter og 2 kontroller, heller ikke etter forsøk på å dyrke virus fra
+      blodcellene deres. Forfatterne påpeker at dette ikke utelukker infeksjon i andre vev.
+    sources:
+    - pmid:8863367
+    - pmid:42941838
+    source_hash: 22e6d0e3db30fb112d3b8f0258733a26f0f9976cd1ece7aae4712e77910d135f
+  level_reason[2]:
+    text: Andre studier, der kasusdefinisjonene ikke er bekreftet ennå, fant ikke mer enterovirus hos pasienter. En senere
+      og større muskelstudie fra Glasgow av 121 pasienter fant enterovirus-RNA hos 26,4% av pasientene og 19,8% av 101 personer
+      med andre muskel- og nervesykdommer, en forskjell som ikke var signifikant, og understreket at dette ikke gjentok gruppens
+      tidligere resultat. En studie fra Liverpool fant ikke enterovirus-RNA i muskel fra 34 pasienter. En studie fra Nijmegen
+      av 76 pasienter og 76 matchede kontroller fant ingen forskjell i tester for enterovirus-antistoff eller VP1-antigen,
+      og enterovirus i avføringen hos bare én pasient.
+    sources:
+    - pmid:8148439
+    - pmid:1850635
+    - pmid:8777836
+    - pmid:7893870
+    source_hash: 00d96f81b1f2493c5d5ffe51cdf4f2bec842e2ed1aea5f4ebfd2d2b34f380255
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen enterovirusmarkør er testet i en andre, uavhengig pasientgruppe med en bekreftet kasusdefinisjon. En studie
+      fra Leeds fant at VP1-blodprøven var positiv hos 11 av 34 pasienter og 7 av 34 personer med alvorlig depresjon, noe
+      som ikke var en signifikant forskjell.
+    sources:
+    - pmid:1433120
+    source_hash: 969caae7ea8551ec7cbeba7ab4079b4574588f338d9bf559525ed3c847c1694c
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet måler PEM direkte. En studie fra London målte laktat i blodet rundt en treningstest
+      under den anaerobe terskelen, ikke symptomer etter anstrengelse, og kasusdefinisjonen er ikke bekreftet ennå.
+    sources:
+    - pmid:14570830
+    source_hash: 099572ca54a49b8538f9a99cf806758c1793efcee1f5fd4ac52927e9396013d4
+  subgroups[0]:
+    text: I en muskelstudie fra London var 9 av de 10 pasientene med enterovirus i muskel blant de 28 med et unormalt laktatsvar
+      på trening. I en studie fra California kom magebiopsiene fra pasienter med kroniske magebesvær. Begge kasusdefinisjonene
+      er ikke bekreftet ennå. Dette funnet fra én enkelt studie er ikke gjentatt.
+    sources:
+    - pmid:14570830
+    - pmid:17872383
+    source_hash: 79c30c695d1912098ae1a19f66b1c1e1163e0fc90a2455aaa4b9f217eb0a476d
+  studies[pmid:42941838].finding:
+    text: En studie med n=6 pasienter og 2 friske kontroller (fra en kohort på 15 pasienter og 5 kontroller) fant ikke enterovirus-RNA
+      i fullblod hos noen, verken direkte eller etter forsøk på å dyrke virus fra blodceller eller plasmavesikler; dette er
+      et beskrivende resultat (0 av 6 mot 0 av 2) uten statistisk test.
+    source_hash: 2660d399cb347be57b50275f9882976ebf4f95f10d231558d348c6cc0ff258d6
+  studies[pmid:8863367].finding:
+    text: En studie med n=29 pasienter med muskelbiopsier (34 pasienter i alt), uten kontrollgruppe, fant ikke enterovirus
+      i muskelbiopsier fra 29 pasienter eller i avføringsprøver, og ingen enterovirus-antistoffaktivitet i 7 parede serum-
+      og spinalvæskeprøver.
+    source_hash: 7f5747bff2cb402fae393bd3de7f44c2e34d0669ee90044c51d4bdc1542b0234
+  studies[pmid:3404526].finding:
+    text: En studie med n=96 pasienter fant enterovirus-RNA i muskelbiopsier fra 20 pasienter, med signaler mer enn tre standardavvik
+      over gjennomsnittet for normal kontrollmuskel; sammendraget oppgir ikke antallet kontroller.
+    source_hash: 61b495eefbc7fcad6911c815f2bfbe0fbb7e634f9e2d664d0c0c1e7695604136
+  studies[pmid:1850635].finding:
+    text: En studie med n=60 pasienter og 41 kontroller uten utmattelse som ble operert rutinemessig fant enterovirus-RNA
+      i muskel hos 32 av 60 pasienter og 6 av 41 kontroller (odds ratio 6,7).
+    source_hash: e41a8d237104eb2efda3b931fac46f2b71441fcd4ec54b6f939aeae363eccdbb
+  studies[pmid:8409778].finding:
+    text: En studie med n=158 pasienter og 152 kontrollmuskelprøver fant enterovirus-RNA i muskel fra 41 av 158 pasienter
+      og 2 av 152 kontroller.
+    source_hash: 580ff663456bb62d6e995a23b00a8289ed60664de80074e38ec44418b53e70df
+  studies[pmid:14570830].finding:
+    text: En studie med n=48 pasienter og 29 kontroller med normale muskler fant enterovirus-RNA i muskel fra 10 pasienter
+      (20,8%) og ingen kontroller; 9 av de 10 var blant de 28 pasientene med et unormalt laktatsvar på trening.
+    source_hash: 91f954ae4a098e0aa1131e163826303dbdf1e052e91c5540d3eef4a1ee10624c
+  studies[pmid:14556267].finding:
+    text: En studie med n=30 pasienter med fibromyalgi eller kronisk utmattelsessyndrom, regnet samlet, og 29 friske personer
+      fant enterovirus-RNA i muskel hos 4 pasienter og ingen friske, og VP1-protein hos ingen; sammendraget oppgir ingen statistisk
+      test.
+    source_hash: 6714602e1f508a1c5c287b657fd2f55ba8a01632147987c6c51d1b9c31d2187c
+  studies[pmid:7775934].finding:
+    text: En studie med n=88 pasienter med kronisk utmattelse og 126 friske personer fant enterovirus-RNA i serum hos 36 av
+      88 pasienter, 3 av 126 friske personer og 22 av 82 akutt syke sammenligningspersoner.
+    source_hash: 061d47ce20d975696e1a94cd0a5fd570bd4f4e54def07175d2bbf710510e5a71
+  studies[pmid:7595406].finding:
+    text: En studie med n=100 pasienter med kronisk utmattelse og 100 friske sammenligningspersoner fant enterovirus-RNA i
+      serum hos 42% av pasientene og 9% av sammenligningsgruppen, mens nøytraliserende antistoffer mot coxsackie B ikke skilte
+      gruppene (34% og 41%).
+    source_hash: 3b1563f32d408dfa5e94123a668fdfb4aa0f8f9bdc51601d10dd99317869b815
+  studies[pmid:17872383].finding:
+    text: En studie med n=165 pasienter og 34 kontrollbiopsier fra magesekk fant enterovirusproteinet VP1 i 135 av 165 pasientbiopsier
+      og 7 av 34 kontroller, og enterovirus-RNA i 9 av 24 pasientprøver og 1 av 21 kontrollprøver som ble testet.
+    source_hash: 2dcd7db13612bcdc5e577ea97d1a9e5e5c33e0747852613a23f6faa2171c65f4
+  studies[pmid:8148439].finding:
+    text: En studie med n=121 pasienter og 101 personer med andre nevromuskulære sykdommer fant enterovirus-RNA i muskel hos
+      26,4% av pasientene og 19,8% av sammenligningsgruppen, en forskjell som ikke var signifikant.
+    source_hash: 9a48c2c357cf3e398ec3770c061b3e35ef0ea0154649253877d9a2dd4eaa200d
+  studies[pmid:8777836].finding:
+    text: En studie med n=34 pasienter fant ikke påvisbart enterovirus-RNA i noen muskelprøve.
+    source_hash: 31fe648b87a3c42cbe932e349b681c4b7cf813059676a0ba64fd0fd9b1ba9532
+  studies[pmid:7893870].finding:
+    text: En studie med n=76 pasienter og 76 matchede kontroller fant ingen forskjell i tester for enterovirus-antistoff eller
+      VP1-antigen, ikke noe enterovirus dyrket fra noen avføringskultur, og enterovirus med PCR i avføringen hos bare én pasient,
+      ikke funnet igjen tre måneder senere.
+    source_hash: abd950c77501532f45e60b3006d3382900f33a652a736c9ab8dc25a202bef97b
+  studies[pmid:1433120].finding:
+    text: En studie med n=34 pasienter og 34 personer med alvorlig depresjon fant VP1-testen positiv hos 11 pasienter og 7
+      personer med depresjon, noe som ikke var en signifikant forskjell.
+    source_hash: ca56194b50651605c11d9b0f3d39ff25a6be6f634fc1d0ed3fe5160cd09fefaf

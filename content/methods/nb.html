@@ -1,0 +1,123 @@
+{# Methods page, Norwegian (bokmål). Translation of content/methods/en.html, which is authoritative; see docs/translation.md. #}
+{% from "_macros.html" import gloss with context %}
+<h1>Metode</h1>
+
+<p class="note"><strong>Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått dette innholdet ennå.</strong> Det er kontrollert av KI-verktøy og av grunnleggeren. En ekstern medisinsk eller forskningsfaglig fagperson skal rekrutteres til å gjennomgå innholdet når nettstedet kan vises fram. Fram til da brukes vurderingsreglene nedenfor slik de står, og de er et utkast.</p>
+
+<h2>Hva dette nettstedet er</h2>
+<p>ME Atlas gir en oversikt over seriøse {{ gloss("hypotheses") }} om hva som forårsaker ME/CFS, og viser hvor mye evidens som står bak hver av dem. Nettstedet beskriver status for evidensen. Det gir ikke behandlingsråd, og det sier ikke at en idé er riktig eller feil. Langvarig covid er markert på en hypotese der evidensen overlapper. Det er ikke en egen del av nettstedet.</p>
+
+<h2>Hvilke hypoteser som er med</h2>
+<p>En hypotese tas med når minst én {{ gloss("peer-reviewed") }} studie har data fra en gruppe med ME/CFS som er avgrenset med en anerkjent {{ gloss("case definition") }}. Regelen vurderer metoden, ikke hvor en idé kommer fra. Dette er holdt utenfor:</p>
+<ul>
+  <li>ideer som ennå ikke har fagfellevurderte pasientdata;</li>
+  <li>studier bare av friske personer, dyr eller celler (de kan gi bakgrunn på et kort, men kan ikke alene få en hypotese tatt med);</li>
+  <li>studier uten oppgitt kasusdefinisjon kan ikke få en hypotese tatt med eller telle med i nivået, fordi vi ikke kan vite om pasientene hadde ME/CFS; et kort kan vise dem som andre studier, som bakgrunn;</li>
+  <li>påstander som bare bygger på meninger, enkelthistorier, pasientundersøkelser uten klinisk sammenligning, eller materiale som ikke er fagfellevurdert;</li>
+  <li>behandlingsprodukter og kommersielle påstander. Nettstedet viser hypoteser om årsaker, ikke behandlinger.</li>
+</ul>
+<p>Hypotesene utelukker ikke hverandre. De kan være ledd i én og samme kjede, eller gjelde ulike grupper av pasienter.</p>
+
+<h2 id="ladder">Evidensstigen</h2>
+<p><strong>Utkast — venter på gjennomgang av eksperter.</strong> Stolpen for en hypotese viser evidens for årsakssammenheng, fra trinn 0 til trinn 5. Vurderingen følger bare denne publiserte stigen; redaksjonen legger ikke til kriterier.</p>
+<table class="plain">
+  <caption>De seks trinnene</caption>
+  <thead><tr><th scope="col">Nivå</th><th scope="col">Navn</th><th scope="col">Hva det betyr</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Nivå">0</td><th scope="row">Foreslått</th><td data-label="Hva det betyr">En idé med et begrunnet argument, men ennå ingen direkte pasientdata.</td></tr>
+    <tr><td data-label="Nivå">1</td><th scope="row">Første tegn</th><td data-label="Hva det betyr">En eller flere små eller ukontrollerte studier peker mot den.</td></tr>
+    <tr><td data-label="Nivå">2</td><th scope="row">Støttet i en definert gruppe</th><td data-label="Hva det betyr">En kontrollert studie hos pasienter med en anerkjent kasusdefinisjon støtter den.</td></tr>
+    <tr><td data-label="Nivå">3</td><th scope="row">Gjentatt av andre</th><td data-label="Hva det betyr">En uavhengig gruppe har gjentatt funnet i en annen {{ gloss("cohort") }}.</td></tr>
+    <tr><td data-label="Nivå">4</td><th scope="row">Testet med intervensjon</th><td data-label="Hva det betyr">Når den foreslåtte faktoren endres, endres utfallet i et kontrollert eksperiment, slik at sammenhengen er mer enn en samvariasjon.</td></tr>
+    <tr><td data-label="Nivå">5</td><th scope="row">Årsakssammenheng underbygd</th><td data-label="Hva det betyr">Flere uavhengige typer evidens, blant dem eksperimentell evidens, oppfyller til sammen de fleste av {{ gloss("Bradford Hill criteria") }}, uten noen uløst stor motsigelse.</td></tr>
+  </tbody>
+</table>
+<p>En behandling som virker, er én type eksperimentell evidens og kan telle med mot nivå 4. Den bekrefter ikke alene den grunnleggende årsaken: en behandling kan hjelpe uten å virke på årsaken. Nivå 5 krever hele årsakssammenhengen, ikke et behandlingsresultat.</p>
+
+<h3>Hva som flytter en hypotese opp eller ned</h3>
+<p>Opp: en ny studie som oppfyller kriteriene for neste trinn; en uavhengig {{ gloss("replication") }}; en bedre definert kohort; et større utvalg; et kontrollert design med en sammenligningsgruppe; en {{ gloss("preregistered") }} protokoll.</p>
+<p>Ned eller holdt tilbake: mislykkede replikasjoner; et funn som bare bygger på en bred kasusdefinisjon (kohorter definert bare med Oxford-kriteriene) eller et svært lite utvalg; ingen kontrollgruppe; ingen forhåndsregistrering; resultater som strider mot like sterke studier (se «Omstridt evidens» nedenfor). En studie som er trukket tilbake, fjernes fra evidensen, og nivået vurderes på nytt.</p>
+<p>Mengde er ikke evidens. Antall artikler, siteringer eller nyhetssaker flytter aldri en hypotese. Kvalitetsfaktorer som brukes på hvert trinn: kasusdefinisjon, utvalgsstørrelse, kontroller, forhåndsregistrering, motstridende resultater.</p>
+
+<h3>Hvordan stigen svarer til Bradford Hills kriterier</h3>
+<table class="plain">
+  <caption>Hvor hvert kriterium teller</caption>
+  <thead><tr><th scope="col">Kriterium</th><th scope="col">Hvor det teller</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Styrken på sammenhengen</th><td data-label="Hvor det teller">Nivå 2–3</td></tr>
+    <tr><th scope="row">Konsistens (gjentatt av ulike grupper)</th><td data-label="Hvor det teller">Nivå 3</td></tr>
+    <tr><th scope="row">Spesifisitet</th><td data-label="Hvor det teller">Nivå 2–5 (vektlegges, men kreves ikke)</td></tr>
+    <tr><th scope="row">Tidsrekkefølge (årsaken kommer før virkningen)</th><td data-label="Hvor det teller">Nivå 4–5</td></tr>
+    <tr><th scope="row">Biologisk gradient (dose–respons)</th><td data-label="Hvor det teller">Nivå 4–5</td></tr>
+    <tr><th scope="row">Plausibilitet (en troverdig mekanisme)</th><td data-label="Hvor det teller">Fra nivå 0 og oppover</td></tr>
+    <tr><th scope="row">Koherens (passer med annen kunnskap)</th><td data-label="Hvor det teller">Nivå 1–5</td></tr>
+    <tr><th scope="row">Eksperiment (faktoren endres, og utfallet endres)</th><td data-label="Hvor det teller">Nivå 4</td></tr>
+    <tr><th scope="row">Analogi</th><td data-label="Hvor det teller">Bare nivå 0–1; aldri nok til å heve et nivå</td></tr>
+  </tbody>
+</table>
+
+<h2 id="case-definitions">Godtatte kasusdefinisjoner</h2>
+<p>For hver studie på et kort står det hvilken kasusdefinisjon som ble brukt for å avgjøre hvem som regnes som pasient.</p>
+<table class="plain">
+  <caption>Hvordan hver kasusdefinisjon behandles</caption>
+  <thead><tr><th scope="col">Kasusdefinisjon</th><th scope="col">Behandling på stigen</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">{{ gloss("Canadian Consensus Criteria", "CCC") }}, {{ gloss("International Consensus Criteria", "ICC") }}, {{ gloss("IOM 2015 criteria", "IOM 2015") }}</th><td data-label="Behandling på stigen">Godtatt på alle trinn.</td></tr>
+    <tr><th scope="row">{{ gloss("Fukuda criteria", "Fukuda") }}</th><td data-label="Behandling på stigen">Godtatt, merket på kortet med «krever ikke PEM».</td></tr>
+    <tr><th scope="row">{{ gloss("Holmes 1988 criteria", "Holmes 1988") }} (CDC-definisjonen fra 1988)</th><td data-label="Behandling på stigen">Godtatt som Fukuda: merket på kortet med «krever ikke PEM», rangert likt med Fukuda.</td></tr>
+    <tr><th scope="row">{{ gloss("CDC", "CDC-kriteriene") }}, versjon ikke oppgitt</th><td data-label="Behandling på stigen">Godtatt som Fukuda og Holmes 1988, siden ingen av CDC-versjonene krever PEM: merket på kortet med «krever ikke PEM», rangert likt med Fukuda. Kortet siterer setningen som nevner CDC-kriteriene.</td></tr>
+    <tr><th scope="row">{{ gloss("Oxford criteria", "Oxford") }} (alene)</th><td data-label="Behandling på stigen">Merket som bred. Evidens som bare bygger på kohorter definert med Oxford-kriteriene, kan ikke løfte en hypotese over nivå 1.</td></tr>
+    <tr><th scope="row">Ingen oppgitt, eller ikke kontrollert ennå</th><td data-label="Behandling på stigen">Ikke godtatt. Et kort viser hvilket av de to tilfellene som gjelder, og for en navngitt definisjon setningen den ble lest ut fra.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="badges">De to merkene</h2>
+<p>Vises på hvert kort, atskilt fra stolpen, hvert med ja eller nei.</p>
+<ol>
+  <li><strong>Diagnostisk markør validert i en uavhengig kohort.</strong> Ja bare når en målbar markør knyttet til hypotesen er testet i en annen, uavhengig pasientgruppe, med en oppgitt kasusdefinisjon.</li>
+  <li><strong>Forklarer anstrengelsesutløst symptomforverring ({{ gloss("PEM") }}).</strong> Ja bare når minst én studie på nivå 2 eller høyere måler PEM direkte (for eksempel en gjentatt arbeidstest to dager på rad, eller en kontrollert belastningstest der symptomene følges etterpå) og knytter PEM til hypotesen. Koblingen må forbinde den foreslåtte mekanismen med symptomene etter anstrengelsen hos de samme pasientene; en målt endring som selv er det antatte avviket (for eksempel et fall i oksygenopptaket ved den andre testen), forklarer ikke alene PEM. En kohort med ME/CFS-pasienter er ikke nok i seg selv.</li>
+</ol>
+
+<h2 id="contested">Omstridt evidens</h2>
+<p>Et nivå er omstridt når minst én studie av sammenlignbar eller høyere kvalitet motsier funnet som støtter det. Sammenlignbar kvalitet betyr alle tre: samme eller en strengere kasusdefinisjon (CCC, ICC og IOM 2015 rangeres over Fukuda og Holmes 1988, som rangeres likt og over Oxford), en kontrollgruppe, og minst halvparten av utvalgsstørrelsen i studien den motsier. Utvalgsstørrelse betyr her antall pasienter i den målingen som gjelder funnet, ikke hele studien når bare en del av den ble målt. Et trinn som bygger på mer enn én studie, er omstridt når en studie av sammenlignbar kvalitet motsier en av studiene trinnet trenger.</p>
+<ul>
+  <li><strong>Hvem som avgjør:</strong> grunnleggeren, med studien som motsier lenket på kortet og begrunnelsen skrevet i vanlige setninger, delt i korte avsnitt med egne kilder når den trenger mer enn to. KI kan foreslå en konflikt; den setter aldri en.</li>
+  <li><strong>Hvordan det vises:</strong> stolpen er fylt opp til det høyeste trinnet som ikke er omstridt; trinnet eller trinnene som er omstridt, vises som et skravert felt. Kortet viser begge sider.</li>
+  <li><strong>Hvordan det avsluttes:</strong> merket for omstridt fjernes når konflikten er løst (for eksempel når en større studie avgjør den). Fjerningen føres på <a href="changes.html">Hva som er endret</a>.</li>
+</ul>
+
+<h2 id="editorial-flow">Hvordan innhold kommer på nettstedet</h2>
+<p class="note"><strong>Dette er den planlagte flyten; det meste av den er ikke i drift ennå.</strong> Så langt hentes artikler med skript som kjøres for hånd, kortene skrives med hjelp fra KI i økter under tilsyn og kontrolleres av en egen KI-gjennomgåer og av kode som sammenligner titler, årstall og sitater av kasusdefinisjonen med oppføringene i PubMed og Europe PMC, og hvert nivå er satt av grunnleggeren. Ingenting publiseres automatisk.</p>
+<h3>Planlagt flyt</h3>
+<p>Flyten er planlagt å gå mest med KI, med mekaniske kontroller i kode og et menneske for endringer med stor betydning og for uenigheter.</p>
+<ol>
+  <li><strong>Ukentlig henting.</strong> Nye artikler skal hentes fra PubMed og Europe PMC, og de rå svarene lagres.</li>
+  <li><strong>Utkastagent.</strong> En KI-agent skal sortere artikler etter hypotese, hente ut studiedata (utvalgsstørrelse, kasusdefinisjon) og skrive et utkast til oppdatering av kortet. Hvert KI-resultat skal beholde id-en til kilden det kom fra. Resultatet er bare et utkast.</li>
+  <li><strong>Mekaniske kontroller (kode, ikke KI).</strong> Hver id som siteres, må finnes i en hentet oppføring; tittel, årstall og sitatet av kasusdefinisjonen sammenlignes med den oppføringen; utvalgsstørrelser kontrolleres og gir en advarsel; hver tekstblokk må vise til en kilde. Et utkast som ikke består, sendes tilbake til utkastagenten.</li>
+  <li><strong>Gjennomgangsagent.</strong> En annen, uavhengig KI-agent skal kontrollere utkastet mot kildene, regelen for hva som tas med, og stigen. Den skal se utkastet og kildeoppføringene, ikke utkastagentens resonnement.</li>
+  <li><strong>Andre runde.</strong> Hvis gjennomgangsagenten avviser utkastet, får utkastagenten ett nytt forsøk, som kontrolleres på nytt. Hvis de fortsatt er uenige etter to runder, går endringen til grunnleggeren.</li>
+  <li><strong>Avgjørelse etter beslutningsnivå</strong> (nedenfor).</li>
+  <li><strong>Publisering.</strong> Godkjente endringer skal publiseres i en ukentlig oppdatering av nettstedet. Kortet viser når det sist ble kontrollert, og om det var de to KI-agentene eller grunnleggeren som kontrollerte.</li>
+  <li><strong>Logg.</strong> Hver publisert endring får en oppføring på <a href="changes.html">Hva som er endret</a>, med dato, kort, begrunnelse, kilde og beslutningsnivået som avgjorde den. Loggen er offentlig og blir bevart for alltid.</li>
+  <li><strong>Rettelser.</strong> En feil som blir funnet senere, også en som en leser melder fra om, skal rettes på samme måte og føres i loggen som en rettelse.</li>
+</ol>
+<table class="plain" id="tiers">
+  <caption>Hvem som avgjør hva</caption>
+  <thead><tr><th scope="col">Beslutningsnivå</th><th scope="col">Endring</th><th scope="col">Hvem som avgjør</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Beslutningsnivå">1</td><td data-label="Endring">Legge til en studie på et kort, faktatekst, oppføring i endringsloggen</td><td data-label="Hvem som avgjør">Planlagt: publiseres automatisk når de mekaniske kontrollene består og begge agentene er enige. Ikke slått på ennå; grunnleggeren godkjenner hver endring.</td></tr>
+    <tr><td data-label="Beslutningsnivå">2</td><td data-label="Endring">Sette eller endre et nivå, et merke eller et merke for omstridt; legge til eller fjerne en hypotese</td><td data-label="Hvem som avgjør">Grunnleggeren, ja eller nei, i en ukentlig liste</td></tr>
+    <tr><td data-label="Beslutningsnivå">3</td><td data-label="Endring">Alt det fortsatt er uenighet om etter to runder med agentene</td><td data-label="Hvem som avgjør">Grunnleggeren. Hvis det ikke blir løst, står det lavere nivået, og uenigheten noteres på kortet</td></tr>
+  </tbody>
+</table>
+<p>Fram til grunnleggeren avgjør at agentenes feilrate er akseptabel, godkjenner grunnleggeren hver endring, også på beslutningsnivå 1. Den perioden har ikke startet, fordi flyten ikke er i drift ennå.</p>
+
+<h2>Rollen til KI, og hvem som avgjør</h2>
+<p>KI skriver utkast og kontrollerer. Et menneske avgjør hvert nivå, hvert merke, hvert merke for omstridt og hver ny hypotese. Innholdet er kontrollert av KI og av grunnleggeren og er ikke gjennomgått av en medisinsk eller forskningsfaglig ekspert.</p>
+
+<h2>Kjente begrensninger</h2>
+<ul>
+  <li>Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått innholdet eller stigen ennå.</li>
+  <li>De seks trinnene og navnene deres er ikke testet på lesere.</li>
+  <li>Kortene er bare så fullstendige som søkene som er gjort så langt. Et ukentlig søk er planlagt, men er ikke i drift ennå.</li>
+</ul>

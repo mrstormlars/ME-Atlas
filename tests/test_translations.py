@@ -240,6 +240,17 @@ def test_the_number_sequence_must_match(english, norwegian):
     assert tr.numbers(english, "en") != tr.numbers(norwegian, "nb")
 
 
+def test_a_decimal_without_a_leading_zero_is_read_as_zero_point():
+    assert tr.numbers("P = .76", "en") == tr.numbers("P = 0,76", "nb") == ["0.76"]
+    assert tr.numbers("P = .76", "en") == tr.numbers("P = ,76", "nb")
+    assert tr.numbers(".5", "en") == tr.numbers("0,5", "nb") == ["0.5"]
+
+
+def test_a_sentence_ending_period_and_a_norwegian_list_are_not_decimals():
+    assert tr.numbers("end. 5 patients", "en") == ["5"]
+    assert tr.numbers("1, 2 og 3", "nb") == ["1", "2", "3"]
+
+
 def test_the_same_numbers_in_other_words_pass(tmp_path):
     data = card_data()
     data["studies"][0]["finding"] = "A study of n=40 patients and 40 controls found a fictional difference."

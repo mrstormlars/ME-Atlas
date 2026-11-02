@@ -1,0 +1,250 @@
+slug: hpa-axis-cortisol
+items:
+  name:
+    text: Endret funksjon i stresshormonsystemet (HPA-aksen) og lavt kortisol
+    source_hash: 522bc7f0663f0165e4a395ae68c9d24ca4cedc51a03e858e7837f5337aeeffb5
+  core_claim:
+    text: 'Hypotesen går ut på at hypotalamus-hypofyse-binyre-aksen (HPA-aksen), hormonsystemet som styrer stresshormonet
+      kortisol, hos personer med ME/CFS fungerer under det normale: kortisolproduksjonen er lav, eller kortisolresponsen på
+      stimulering er svekket, og dette bidrar til symptomene.'
+    sources:
+    - pmid:1659582
+    - pmid:9669518
+    - pmid:9757853
+    source_hash: 64beed09b84709fe28b74d16eb24a2ec23caa8f146aee9c84548ad3ba0a5c36e
+  level_reason[0]:
+    text: En studie fra Dinan-gruppen med 14 pasienter diagnostisert etter CDC-kriteriene (versjon ikke oppgitt, så definisjonen
+      krever ikke PEM) og 14 friske frivillige ga kortikotropinfrigjørende hormon (CRH), hjernens signal som setter i gang
+      HPA-aksen. Frigjøringen av ACTH, hypofysehormonet som stimulerer binyrene, og av kortisol var lavere hos pasientene;
+      basalt ACTH og kortisol skilte seg ikke. Kortet er på nivå 2 på grunn av denne studien. En annen studie fra samme gruppe,
+      med 20 pasienter og 20 friske frivillige, fant en mindre økning i kortisol etter en lav dose (1 mikrogram) ACTH; 9 av
+      20 pasienter og 2 av 20 frivillige besto ikke testen ved en grense som forfatterne kaller vilkårlig. Ingen annen gruppe
+      har gjentatt noen av testene med samme resultat.
+    sources:
+    - pmid:9669518
+    - pmid:9713562
+    source_hash: caf7cabb6dd2435f6a5aac68169f512cba609b5e26db09dfdae38c5e683116c8
+  level_reason[1]:
+    text: En studie fra King's College London, uten felles forfattere med Dinan-studiene, testet 37 pasienter som oppfylte
+      CDC-kriteriene (versjon ikke oppgitt) og 28 friske kontroller. Fritt kortisol i urin over 24 timer var lavere hos pasientene
+      (antall målt er ikke oppgitt i sammendraget). Studien brukte den samme CRH-testen som Dinan-gruppen. Kortisol i utgangspunktet
+      før CRH-testen var høyere hos pasientene. ACTH-responsene på CRH og på to andre provokasjonstester var normale, like
+      i de to gruppene, og forfatterne skriver at resultatene deres "do not support previous findings" om reduserte sentrale
+      responser i HPA-aksen. Kortisolresponsene på CRH og på d-fenfluramin viste en tendens til å være lavere hos pasientene,
+      som bare var signifikant etter justering for ACTH-responsene.
+    sources:
+    - pmid:11502777
+    source_hash: e00eaf835b406d5a847237211241b524ec1419bc4c621a7552fc4a460e690b59
+  level_reason[2]:
+    text: Kortet er ikke på nivå 3 fordi ingen uavhengig studie har gjentatt det samme resultatet. Studien fra London ga den
+      samme CRH-testen og fant normale ACTH-responser, med en lavere kortisolrespons bare etter justering. En studie fra Napoli
+      og Stanford med 30 kvinner diagnostisert etter Fukuda-, Canada- og Institute of Medicine-kriteriene og 25 friske kontroller
+      fant lavere ACTH- og kortisolnivåer hos pasientene, men dette er et annet blodmål, og sammendraget sier ikke om verdiene
+      var i hvile eller stimulerte. En studie fra Uppsala med pasienter som oppfylte Canada-kriteriene fant ingen forskjell
+      i kortisol i plasma om morgenen.
+    sources:
+    - pmid:9669518
+    - pmid:11502777
+    - pmid:34254637
+    - pmid:40713801
+    source_hash: 76360dbc1ef1425d3c1f1e3731c16de47e1a0908069ff5701dfd4b14e5fe7b72
+  level_reason[3]:
+    text: Andre studier med en anerkjent kasusdefinisjon fant ikke det samme. En studie fra London med 20 pasienter som oppfylte
+      CDC-kriteriene og 20 matchede kontroller brukte den samme ACTH-testen med lav dose som Dinan-gruppen og fant ingen forskjeller
+      i kortisol i utgangspunktet eller i kortisolresponsene. En studie fra Uppsala med 24 pasienter som oppfylte Canada-kriteriene,
+      International Consensus Criteria og IOM 2015-kriteriene og 24 matchede kontroller fant ingen signifikant forskjell i
+      kortisol i plasma om morgenen, målt med massespektrometri; kortisol skilte seg heller ikke før korreksjon for multippel
+      testing, og heller ikke hos kvinner eller menn analysert hver for seg. En studie fra Østerrike og Chile (Canada- og/eller
+      Fukuda-kriteriene) av kvinner (20 med lett eller moderat og 24 med alvorlig sykdom, 12 kontroller) og menn (8 og 6,
+      17 kontroller) fant lavere kortisol bare hos menn med lett eller moderat sykdom; etter korreksjon for multippel testing
+      var ikke kortisol blant hormonene som skilte seg mellom gruppene.
+    sources:
+    - pmid:10594524
+    - pmid:40713801
+    - pmid:38724880
+    source_hash: ab271f989502e381437fd013f63bd0ca2050551e7a2feb521968c4214cfca4ff
+  level_reason[4]:
+    text: 'Flere studier kan ikke telle mot nivået fordi kasusdefinisjonen deres ennå ikke er kontrollert. De peker i begge
+      retninger: lavere kortisol i plasma om kvelden og lavere kortisol i urin hos 30 pasienter sammenlignet med 72 frivillige;
+      lavere kortisol i urin hos 121 klinikkpasienter sammenlignet med 64 personer uten sykdommen; en flatere økning i kortisol
+      i spytt om morgenen hos kvinner, men ikke menn, i en befolkningsbasert studie av 75 personer med sykdommen og 110 friske
+      kontroller; og ingen forskjell i kortisol i spytt eller urin hos 22 pasienter i en studie fra Oxford.'
+    sources:
+    - pmid:1659582
+    - pmid:11282703
+    - pmid:18160468
+    - pmid:9494707
+    source_hash: eb193da85dfae3f99bef5da1358e5149d39a9d88e7b6fded7af1abf78f9d2059
+  level_reason[5]:
+    text: I en placebokontrollert studie fra US National Institutes of Health tok 56 kvinner og 14 menn som oppfylte CDC-definisjonen
+      fra 1988 (som ikke krever PEM) hydrokortison, en kortisoltablett, eller placebo i omtrent 12 uker. Studiens hovedmål,
+      andelen pasienter som ble bedre på en velværeskala, skilte seg ikke (20 av 30 på hydrokortison, 19 av 35 på placebo,
+      P = 0,31). Flere pasienter på hydrokortison ble bedre med 5 poeng eller mer (53% mot 29%, P = 0,04), et sekundært mål;
+      andre selvvurderingsskalaer viste ingen forskjell, og kroppens egen kortisolrespons ble undertrykt hos 12 pasienter
+      på hydrokortison og ingen på placebo. På studiens hovedmål nås ikke nivå 4.
+    sources:
+    - pmid:9757853
+    source_hash: 2ed42b7bc07fef9adf198206440b71e32df59dbd8c2dbd609110aa81137f7345
+  level_reason[6]:
+    text: En større placebokontrollert crossover-studie fra Leuven i Belgia, med 100 pasienter som oppfylte CDC-definisjonen
+      fra 1994 (Fukuda), der 80 fullførte tre måneder med 5 mg hydrokortison sammen med 50 mikrogram fludrokortison og tre
+      måneder med placebo, fant ingen forskjell i utmattelse, velvære eller noe annet mål. Den brukte en lavere hydrokortisondose
+      og la til fludrokortison, så den testet ikke den samme behandlingen som NIH-studien.
+    sources:
+    - pmid:12829200
+    - pmid:9757853
+    source_hash: 7dbb3e6755c7754d2b1985b7da1c2f8492425c1ea0e57bbf1d94b0df450a6b3a
+  level_reason[7]:
+    text: En crossover-studie fra London med 32 pasienter fant at utmattelsen sank mer på hydrokortison i lav dose enn på
+      placebo (p = 0,009), men kasusdefinisjonen er ennå ikke kontrollert, så den kan ikke telle mot nivå 4. HPA-studien fra
+      London, fra samme gruppe, behandlet 32 av pasientene sine med hydrokortison i samme type crossover; det er ikke oppgitt
+      om dette er de samme pasientene. Hos pasientene som ble bedre, økte kortisolresponsen på CRH, og den svekkede responsen
+      som var sett tidligere, snudde. Dette er en endring hos pasientene som ble bedre, ikke en sammenligning med kontroller,
+      og den er ikke gjentatt. En studie av fludrokortison alene hos 100 pasienter som oppfylte CDC-kriteriene fant ingen
+      forskjell fra placebo; den ble testet som behandling av lavt blodtrykk ved stående, ikke av lavt kortisol.
+    sources:
+    - pmid:9989716
+    - pmid:11502777
+    - pmid:11150109
+    source_hash: 129f5b2022d6d120db57688a4f6abd434a72fa3b3d74d01b716fdcf661679acc
+  contested_reason[0]:
+    text: Nivå 2 bygger på en studie av 14 pasienter diagnostisert etter CDC-kriteriene (versjon ikke oppgitt) og 14 friske
+      frivillige, som fant lavere frigjøring av ACTH og kortisol etter kortikotropinfrigjørende hormon (CRH) hos pasientene.
+    sources:
+    - pmid:9669518
+    source_hash: e7aa90f1d9cce2a98f50d0c96405b0d91153910bbc4397a7783c62302cb45069
+  contested_reason[1]:
+    text: En senere studie fra King's College London, uten felles forfattere med den første, ga den samme CRH-testen til 37
+      pasienter som oppfylte CDC-kriteriene (versjon ikke oppgitt) og 28 friske kontroller. ACTH-responsene var like i de
+      to gruppene, og kortisolresponsen viste en tendens til å være lavere hos pasientene, som bare var signifikant etter
+      justering for ACTH-responsene. Forfatterne skriver at resultatene deres "do not support previous findings" om reduserte
+      sentrale responser i HPA-aksen.
+    sources:
+    - pmid:11502777
+    source_hash: 9d33d7fb909721e729cc7d187f5a3bc9a3ba5e2c7ce91eda94c245e35019b8d7
+  contested_reason[2]:
+    text: Studien fra London har en kasusdefinisjon av samme rang, en kontrollgruppe og minst halvparten så mange pasienter
+      (37 mot 14), så den er av sammenlignbar kvalitet og motsier studien som nivå 2 bygger på. Trinn 2 er derfor omstridt.
+    sources:
+    - pmid:11502777
+    - pmid:9669518
+    source_hash: 6551f6afc142673e385b2cb707022739e6c652c9f00a1e78ea080b620a0900fd
+  contested_reason[3]:
+    text: Dinan-gruppens studie med ACTH i lav dose er ikke nødvendig for nivå 2, som bygger på CRH-studien. Med den samme
+      ACTH-testen med 1 mikrogram fant studien en mindre økning i kortisol hos 20 pasienter enn hos 20 frivillige, og en studie
+      fra London fant ingen forskjell mellom 20 pasienter og 20 kontroller; begge brukte CDC-kriteriene og en kontrollgruppe.
+    sources:
+    - pmid:9713562
+    - pmid:10594524
+    source_hash: 9bfab81229debd39f1235fdf2d858f7872b36b2d9b3d56488dc8a0f69226a5bf
+  badge_reasons.diagnostic_marker[0]:
+    text: 'En studie brukte en grense på ACTH-testen med lav dose, som forfatterne kaller vilkårlig: 9 av 20 pasienter og
+      2 av 20 friske frivillige besto den ikke. En annen gruppe som brukte den samme testen hos 20 pasienter og 20 kontroller
+      fant ingen forskjell mellom dem, så markøren holdt ikke i en uavhengig kohort.'
+    sources:
+    - pmid:9713562
+    - pmid:10594524
+    source_hash: 531f672925769c45c5ded17fbe2a342a93bf7e5fc8af24384799efe7324038f4
+  badge_reasons.explains_pem[0]:
+    text: 'Ingen studie på dette kortet måler PEM direkte og knytter den til kortisol. En studie, hvis kasusdefinisjon ennå
+      ikke er kontrollert, målte hormoner etter en maksimal tredemølletest: ACTH 4 minutter etter anstrengelsen var lavere
+      hos pasientene enn hos stillesittende kontroller, og dagen etter skilte ikke hormonnivåene seg; sammendraget oppgir
+      ikke noe symptommål.'
+    sources:
+    - pmid:11150897
+    source_hash: 1650559952808b2768be95060037f650040b8dcf5b70f2beacf0831e0a06402e
+  subgroups[0]:
+    text: To studier tyder på kjønnsforskjeller, med ulike mål; resultatet for menn bygger på 8 pasienter. Ikke gjentatt.
+      En befolkningsbasert studie, hvis kasusdefinisjon ennå ikke er kontrollert, fant en flatere økning i kortisol i spytt
+      om morgenen hos kvinner, men ikke hos menn; en studie fra Østerrike og Chile fant lavere kortisol i plasma bare hos
+      menn med lett eller moderat sykdom.
+    sources:
+    - pmid:18160468
+    - pmid:38724880
+    source_hash: 21bebf0d00ff45e4011c875e7757f7646a890646412c64a32c0c43136bbbfd33
+  subgroups[1]:
+    text: I studien fra Napoli og Stanford hadde de 13 pasientene med høye nivåer av antistoffer mot hypofysen eller hypotalamus
+      lavere ACTH- og kortisolnivåer og mer alvorlig sykdom enn pasienter med lavere nivåer eller ingen antistoffer. Ikke
+      gjentatt ennå.
+    sources:
+    - pmid:34254637
+    source_hash: 5d1e4c60d530bbc6d48983898cc70d67141b46f37d1f909500899e5dbb1a6f76
+  early_signals[0]:
+    text: En studie med n=30 kvinner og 25 friske kontroller fant antistoffer mot hypofysen hos 56% og mot hypotalamus hos
+      33% av pasientene, og hos ingen av kontrollene. Ikke gjentatt ennå.
+    sources:
+    - pmid:34254637
+    source_hash: 606b6ff5bb6a7716745f37ca685dfdb60bfef2649d8cbe86b327b0e648e06aba
+  studies[pmid:9669518].finding:
+    text: En studie med n=14 pasienter og 14 friske frivillige fant lavere frigjøring av ACTH (P < 0,005) og kortisol (P <
+      0,05) etter kortikotropinfrigjørende hormon hos pasientene, uten forskjell i basalt ACTH eller kortisol.
+    source_hash: 66449e62be37fad6952ede993e090c656ea9c6414f3456e7e80b67666e38799c
+  studies[pmid:9713562].finding:
+    text: En studie med n=20 pasienter og 20 friske frivillige fant en mindre økning i kortisol etter 1 mikrogram ACTH hos
+      pasientene (P < 0,05), uten forskjell i kortisol i utgangspunktet eller etter 30 minutter; 9 pasienter og 2 frivillige
+      besto ikke testen ved en grense på en økning på 250 nmol/l, som forfatterne kaller vilkårlig.
+    source_hash: 3f54074a6220982099604fe0b75deef787850b538fd9881dfb544e7dd7f7f784
+  studies[pmid:11502777].finding:
+    text: En studie med n=37 pasienter og 28 friske kontroller fant lavere fritt kortisol i urin over 24 timer hos pasientene
+      (antall målt er ikke oppgitt i sammendraget), høyere kortisol i utgangspunktet før CRH-testen og like ACTH-responser
+      på tre provokasjonstester; lavere kortisolresponser på CRH og d-fenfluramin var en tendens, som bare var signifikant
+      etter justering for ACTH-responsene.
+    source_hash: 912c88e76a57353a6d1b560907cec14dac35e6c73f118c4f78214e9339922bdd
+  studies[pmid:34254637].finding:
+    text: En studie med n=30 kvinner og 25 friske kontroller fant lavere ACTH- og kortisolnivåer hos pasientene, og antistoffer
+      mot hypofysen hos 56% og mot hypotalamus hos 33% av pasientene og hos ingen av kontrollene.
+    source_hash: 1535b9d628123ecb32ba0fda31f33e81b96fbcb13a920b1f8fb4bf974b0baa4f
+  studies[pmid:9757853].finding:
+    text: En placebokontrollert studie med 56 kvinner og 14 menn fant ingen forskjell i andelen som ble bedre på en velværeskala
+      (20 av 30 på hydrokortison, 19 av 35 på placebo, P = 0,31); 53% mot 29% ble bedre med 5 poeng eller mer (P = 0,04, et
+      sekundært mål), og undertrykt binyrefunksjon forekom hos 12 pasienter på hydrokortison og ingen på placebo.
+    source_hash: b1fdebf24aaf01e146d806fe9c1d8a0bbe0ef24c251e47887671101d6bbaf437
+  studies[pmid:12829200].finding:
+    text: En placebokontrollert crossover-studie med n=80 pasienter som fullførte begge armene (100 inkludert) fant ingen
+      forskjell mellom hydrokortison i lav dose sammen med fludrokortison og placebo i utmattelse, velvære eller noe annet
+      mål.
+    source_hash: 2bd05eae8ef2e59ffeac7762158055fbd24a36a8a3364219643c583e2516805c
+  studies[pmid:10594524].finding:
+    text: En studie med n=20 pasienter og 20 matchede friske kontroller fant ingen forskjeller i kortisol i utgangspunktet
+      eller i kortisolresponsene på 1 mikrogram ACTH (Synacthen).
+    source_hash: 196b43545f618d9e1e5f5566a42376ca27f41b0dbe124aec8d10772e396b3463
+  studies[pmid:40713801].finding:
+    text: En studie med n=24 pasienter og 24 kontroller matchet på alder og kjønn fant ingen forskjell i kortisol i plasma
+      om morgenen, selv før korreksjon for multippel testing (gjennomsnitt 138,064 hos kontrollene og 135,157 hos pasientene, p
+      0,718), og ingen hos kvinner eller menn analysert hver for seg.
+    source_hash: 94d8db96dc55208d5db7ed23434089146ff6e48adc68e9741bb4fcad04f3988d
+  studies[pmid:38724880].finding:
+    text: En studie av kvinner (20 med lett eller moderat og 24 med alvorlig sykdom, 12 friske kontroller) og menn (8 og 6,
+      17 friske kontroller) fant lavere kortisol i plasma hos menn med lett eller moderat sykdom, men ikke hos kvinner; etter
+      korreksjon for multippel testing var ikke kortisol blant hormonene som skilte seg mellom gruppene.
+    source_hash: ad7ce65a22d54ab1c5e391eef6d853c7728486f9310f22251873b2eb1a130e2e
+  studies[pmid:9989716].finding:
+    text: En placebokontrollert crossover-studie med n=32 pasienter fant at utmattelsen sank med 7,2 poeng på hydrokortison
+      i lav dose og 3,3 poeng på placebo (p = 0,009); 9 pasienter på hydrokortison og 3 på placebo nådde en forhåndsbestemt
+      grense nær skåren i befolkningen.
+    source_hash: f9068bc3ea08313394c449552c46329fc53f16d9b83779ad6355e72319a32ebf
+  studies[pmid:11150109].finding:
+    text: En placebokontrollert studie med n=100 pasienter med nevralt mediert hypotensjon fant at 7 av 50 på fludrokortison
+      og 5 av 50 på placebo ble bedre med minst 15 poeng på en velværeskala (P = 0,76).
+    source_hash: 2465b3b71255e1fd79ca95a5fcc76f8c7d0d6db92c51c4bea423cdc936e5d8c8
+  studies[pmid:1659582].finding:
+    text: En studie med n=30 pasienter og 72 frivillige fant lavere kortisol i plasma om kvelden og lavere fritt kortisol
+      i urin over 24 timer, høyere ACTH om kvelden og en mindre ACTH-respons på CRH hos pasientene, uten forskjell i CRH i
+      spinalvæsken.
+    source_hash: 1e93054648ab02a9c5e207483b57613b9bdc8d92ba6a5a18c0a89c3c89c5156a
+  studies[pmid:11282703].finding:
+    text: En studie med n=121 klinikkpasienter og 64 sammenligningspersoner fant lavere fritt kortisol i urin over 24 timer
+      hos pasientene, med eller uten psykisk sykdom.
+    source_hash: 34b96c1fdca38768466a568a79f3b546995f3a3b338d6de52d7b49fca623bd05
+  studies[pmid:18160468].finding:
+    text: En studie med n=75 personer med sykdommen og 110 friske kontroller fra den generelle befolkningen fant en svekket
+      profil for kortisol i spytt om morgenen hos kvinner, men like profiler hos menn.
+    source_hash: 09c4cd40917f80106f92fbd2c87652175c859eb2bf55cad3cefe90cd66187147
+  studies[pmid:9494707].finding:
+    text: En studie med n=22 pasienter og en kontrollgruppe fant ingen forskjell i kortisol i spytt eller urin over 24 timer.
+    source_hash: c6d0ffd13e734befb9310a9e428b8dd253963f64055c887f72e31826bdc3be32
+  studies[pmid:11150897].finding:
+    text: En studie av pasienter og matchede stillesittende kontroller (antall står ikke i sammendraget) fant ingen forskjell
+      i basale hormoner, lavere ACTH 4 minutter etter en maksimal tredemølletest hos pasientene, og ingen forskjeller dagen
+      etter.
+    source_hash: c6c6ad52fb492737d3ce23b488139a53848d84539772b13bfc67bd72da7fb71d

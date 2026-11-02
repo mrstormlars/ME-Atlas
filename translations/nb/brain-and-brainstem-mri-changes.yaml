@@ -1,0 +1,205 @@
+slug: brain-and-brainstem-mri-changes
+items:
+  name:
+    text: Endringer i hjerne og hjernestamme på MR
+    source_hash: 021a30544c131cb5a439d268d1a14ffdb09b6917fb85de4989c572176dffd68d
+  core_claim:
+    text: Hypotesen går ut på at ME/CFS innebærer endringer i hjernens struktur eller funksjon, særlig i hjernestammen, som
+      kan måles med MR, og at disse endringene er en del av hvordan sykdommen fungerer.
+    sources:
+    - pmid:34355438
+    - pmid:31671321
+    - pmid:29021956
+    source_hash: 2c37c23a217d07a71594b1a233f92c24947d035ead7ec9420cc91b53031e9dae
+  level_reason[0]:
+    text: En studie fra Griffith University i Australia med 18 pasienter som oppfylte International Consensus Criteria og
+      26 friske kontroller brukte diffusjons-MR, som måler hvordan vann beveger seg langs nervefibre. Den fant lavere aksial
+      og gjennomsnittlig diffusivitet i en klynge gjennom mellomhjernen og pons, og høyere diffusivitet på tvers av fibrene
+      i medulla. Kortet står på nivå 2 på grunn av denne studien. Hos de 25 pasientene i Fukuda-gruppen (en definisjon som
+      ikke krever PEM) fant den samme analysen ingen forskjell fra kontrollene. Resultatet er ikke gjentatt av en annen gruppe.
+    sources:
+    - pmid:34355438
+    source_hash: fd307b3964a3aac4991d6291b4191f06c1c4bb72e7c84ff5eeef6920c08bcb53
+  level_reason[1]:
+    text: En senere studie fra samme gruppe, med en helhjerneanalyse av diffusjon basert på voksler på en annen skanner hos
+      37 pasienter som oppfylte kriteriene Canadian eller International og 27 friske kontroller, fant lavere gjennomsnittlig,
+      aksial og radial diffusivitet i det venstre supplementære motoriske området, høyere fraksjonell anisotropi i venstre
+      cingulum og lavere aksial kurtose i corpus callosum. Den rapporterte ikke hjernestammeforskjellen, og rapporterte heller
+      ikke noe hjernestammeresultat i noen retning; forfatterne beskriver resultatene sine som i tråd med den tidligere studien.
+    sources:
+    - pmid:42539798
+    - pmid:34355438
+    source_hash: fa986c434e3da9011997b2de113970417582b9f2133085337d2585255847d197
+  level_reason[2]:
+    text: En studie fra University of the Sunshine Coast, uten felles forfattere med studien på nivå 2, sammenlignet 43 pasienter
+      med infeksjonsutløst sykdomsstart, diagnostisert i samsvar med Canadian Consensus Criteria, med 43 matchede friske kontroller.
+      Den fant høyere aksial diffusivitet hos pasientene i flere baner som går gjennom hjernestammen, blant annet lillehjernestilkene,
+      kortikospinalbanen og venstre lemniscus medialis, motsatt retning av studien på nivå 2, og ingen forskjell i gjennomsnittlig
+      diffusivitet. Hos 33 pasienter med gradvis start var aksial diffusivitet lavere bare i corpus callosum.
+    sources:
+    - pmid:40624094
+    - pmid:34355438
+    source_hash: db0808107f426bec02c3b4a031b59c34e1f47f94ea74ed1a8c4c644c57e3a410
+  level_reason[3]:
+    text: 'Andre kontrollerte studier fra samme gruppe som studien på nivå 2, med andre mål, rapporterer også forskjeller
+      i hjernestammen: svakere forbindelser mellom hjernestammeregioner under en oppgave (45 pasienter som oppfylte Fukuda-definisjonen,
+      som ikke krever PEM, og 27 kontroller), et lavere T1-vektet MR-signal i en region i hjernestammen (43 pasienter som
+      oppfylte Fukuda-definisjonen og 27 kontroller), svakere forbindelser mellom pons og lillehjernen under en oppgave (31
+      pasienter som oppfylte kriteriene Canadian eller International og 15 kontroller), og en større pons og hel hjernestamme
+      ved 7 tesla (10 pasienter og 10 kontroller). Artiklene sier ikke om de deler pasienter, og ingen av disse resultatene
+      er gjentatt av en uavhengig gruppe.'
+    sources:
+    - pmid:31671321
+    - pmid:30497131
+    - pmid:38347875
+    - pmid:36937672
+    source_hash: fa5c76f05b96f061dfc1e1b8e7c58c582ac3329ecbc7d1b300bbbd379bfd32a2
+  level_reason[4]:
+    text: 'Kortet står ikke på nivå 3 fordi ingen uavhengig gruppe har funnet det samme resultatet i en egen kohort. En studie
+      fra Newcastle i Storbritannia, uten felles forfattere, med 42 pasienter som oppfylte Fukuda-definisjonen (som ikke krever
+      PEM) og 28 friske kontroller, fant lavere volum av hvit substans i mellomhjernen og pons. Dette er et annet mål (volum,
+      ikke diffusjon), og to australske studier med samme førsteforfatter (Barnden), én av dem fra gruppen bak nivå 2, fant
+      det ikke: én med 25 pasienter som oppfylte Fukuda-definisjonen og Canadian-kriteriene og 25 kontroller fant ingen forskjell
+      i totale eller regionale hjernevolumer, og én med 43 pasienter som oppfylte Fukuda-definisjonen og 27 kontroller fant
+      ingen forskjell i regionalt volum av grå eller hvit substans.'
+    sources:
+    - pmid:29021956
+    - pmid:21560176
+    - pmid:30497131
+    source_hash: 40325fe0062a3b5d1bd00db864b2d6a476307c42afac2349789f2b355f20b4b5
+  level_reason[5]:
+    text: 'To studier fra Griffith-gruppen fant større volum i de samme delene av venstre hippocampus (subiculum head og presubiculum
+      head): 16 av 18 pasienter som oppfylte International Consensus Criteria (to skanninger kunne ikke analyseres) mot 25
+      kontroller, i samme kohort som studien på nivå 2, og 29 pasienter som oppfylte kriteriene Canadian eller International
+      mot 15 kontroller ved 7 tesla. Siden begge kommer fra samme gruppe, er dette ikke en uavhengig gjentakelse.'
+    sources:
+    - pmid:35355311
+    - pmid:34355438
+    - pmid:39804864
+    source_hash: 4c688b8699dd5f7a639f81de819b837d9800199572866d75ece08fc4682c7605
+  level_reason[6]:
+    text: Flere studier kan ikke telle mot nivået fordi kasusdefinisjonen deres ennå ikke er kontrollert. En studie fra Stanford
+      med 15 pasienter og 14 kontroller fant lavere totalt volum av hvit substans, slik Newcastle-studien også gjorde; en
+      studie fra Nijmegen med 28 pasienter og 28 kontroller i to kohorter fant lavere totalt volum av grå substans; og en
+      studie fra Melbourne med 25 ungdommer med ME/CFS og 23 kontroller fant ingen forskjell i strukturen i hvit substans.
+    sources:
+    - pmid:25353054
+    - pmid:29021956
+    - pmid:15955487
+    - pmid:37331007
+    source_hash: 5fe8da145b9336f2ac8e8551a8ca7c6b214d567cb74a30fe3ca64e2c42e6e182
+  badge_reasons.diagnostic_marker[0]:
+    text: Diffusjonsstudien som nivå 2 bygger på, antyder at målene kan bli en bildemarkør, men ingen MR-markør i hjernestammen
+      er testet i en ny, uavhengig pasientgruppe med oppgitt kasusdefinisjon.
+    sources:
+    - pmid:34355438
+    source_hash: 20db0971d3af720520972bcf8cfc2b64942653c7c73b25deaf2b5561906d2135
+  badge_reasons.explains_pem[0]:
+    text: En studie fra Georgetown med 34 pasienter som oppfylte Fukuda-definisjonen (som ikke krever PEM) og Canadian-kriteriene,
+      og 24 kontroller, skannet hjernen i hvile før og etter to anstrengelsestester på påfølgende dager. Aktiviteten i den
+      mediale prefrontale cortex økte etter anstrengelse hos pasientene, men fulltekstartikkelen rapporterer ingen signifikant
+      korrelasjon mellom hjernesignaler og utmattelse, smerte eller andre symptomer (data ikke vist), så studien knytter ikke
+      hjerneendringen til symptomer etter anstrengelse.
+    sources:
+    - pmid:34975370
+    source_hash: 439836ebb3f2e634b25c554c7b4f7438866e7ff6427bf81f76c2b1169e0f1ca0
+  badge_reasons.explains_pem[1]:
+    text: En studie med 15 kvinner med ME/CFS og 15 friske kvinner fant at endringer i hjerneaktivitet etter trening hang
+      sammen med pasientenes symptomer, men kasusdefinisjonen er ennå ikke kontrollert, så den kan ikke telle.
+    sources:
+    - pmid:28216087
+    source_hash: e1c263c3e6e897f3450511043e864b1a9f843456e689377e23cd6159c325ce35
+  subgroups[0]:
+    text: I to analyser av den samme Griffith-kohorten skilte pasienter som oppfylte International Consensus Criteria seg
+      fra kontrollene på diffusjons-MR og hippocampusvolum, mens pasientene i Fukuda-gruppen (en definisjon som ikke krever
+      PEM) ikke gjorde det. Likevel fant to andre studier fra samme gruppe forskjeller i hjernestammen i kohorter definert
+      bare med Fukuda-definisjonen. Ikke gjentatt av en annen gruppe.
+    sources:
+    - pmid:34355438
+    - pmid:35355311
+    - pmid:31671321
+    - pmid:30497131
+    source_hash: 2580a4bc7443bf446f4f21e5fa218ff301030f382fdb48826190bdc7ad1d9d1e
+  early_signals[0]:
+    text: En studie med n=10 pasienter som oppfylte kriteriene Canadian og International og 10 friske kontroller ved 7 tesla
+      fant en større pons og hel hjernestamme hos pasientene. Ikke gjentatt ennå.
+    sources:
+    - pmid:36937672
+    source_hash: a6ecfc85e1ccb7b029136b9a8faacdd0e7a473868f84c369f04944c2dab02315
+  studies[pmid:34355438].finding:
+    text: En studie med n=18 pasienter som oppfylte International Consensus Criteria og 26 friske kontroller fant lavere aksial
+      og gjennomsnittlig diffusivitet i en klynge i mellomhjernen og pons og høyere transversal diffusivitet i medulla; de
+      25 pasientene i Fukuda-gruppen viste ingen signifikante klynger.
+    source_hash: 6e8a8a453357ee519882e78340ba6fd41e4f12a0e727cbc2f541c7ee40ec19d4
+  studies[pmid:31671321].finding:
+    text: En studie med n=45 pasienter og 27 friske kontroller fant svakere konnektivitet under en oppgave mellom medulla
+      og cuneiform-kjernen i mellomhjernen, og mellom hjernestammen og hippocampus og thalamus, hos pasientene; ingen slik
+      forskjell ble funnet i hvile.
+    source_hash: 603eb18d598fb1fec9c3f581acc36e6d1bb0f32cca2bd924c220e7e6c291d482
+  studies[pmid:30497131].finding:
+    text: En studie med n=43 pasienter og 27 friske kontroller fant et lavere T1-vektet spinnekko-signal i en region i hjernestammen
+      og et høyere signal i sensorimotorisk hvit substans hos pasientene; voksel-basert morfometri fant ingen gruppeforskjell
+      i regionalt volum av grå eller hvit substans.
+    source_hash: 3afb46afb3ff53d768b79b635cc48a8f299f23d602fb9dfaf79f58944997879f
+  studies[pmid:38347875].finding:
+    text: En studie med n=31 pasienter og 15 friske kontroller ved 7 tesla fant svakere funksjonell konnektivitet mellom pontin
+      kjerne og lillehjernens vermis under en farge-ord-oppgave hos pasientene.
+    source_hash: af7388943fd8a2c2e438c5aafb105ff6be612f7e794605c0b70a28374ece658d
+  studies[pmid:36937672].finding:
+    text: En studie med n=10 pasienter og 10 friske kontroller ved 7 tesla fant større volum av pons og hel hjernestamme hos
+      pasientene.
+    source_hash: f04357604ad3ec62537cfd55ec9293df484b419854fbbe2405f4d1cf435912ae
+  studies[pmid:29021956].finding:
+    text: En studie med n=42 pasienter og 28 friske kontroller fant lavere volum av hvit substans totalt og i mellomhjernen,
+      pons og høyre tinninglapp, og større volum av grå substans, blant annet i amygdala og insula, hos pasientene.
+    source_hash: 1961c19eb630f2575922488b5fc0bb952614e45f12a880216a5f098efc0c0a20
+  studies[pmid:35355311].finding:
+    text: En studie med n=16 av 18 pasienter som oppfylte International Consensus Criteria (to skanninger kunne ikke analyseres)
+      og 25 friske kontroller fant større volum av venstre subiculum head, presubiculum head og fimbria i hippocampus hos
+      pasientene; pasientene i Fukuda-gruppen skilte seg ikke fra kontrollene.
+    source_hash: 261bc38339a38a58d767cdbf2dfa87e8e1eb6a5ee2b3a4179a81391932632d9e
+  studies[pmid:39804864].finding:
+    text: En studie med n=29 pasienter og 15 friske kontroller ved 7 tesla fant større volum av venstre subiculum head, presubiculum
+      head, molecular layer head og hele hippocampus head hos pasientene.
+    source_hash: 506533e77b84f742a3d885c500040addba21a3cc7679055fbb0eff4190695ccd
+  studies[pmid:34975370].finding:
+    text: En studie med n=34 pasienter og 24 kontroller, skannet i hvile før og etter to submaksimale anstrengelsestester
+      på påfølgende dager, fant at aktiviteten i den mediale prefrontale cortex økte etter anstrengelse hos pasientene og
+      falt hos kontrollene; fulltekstartikkelen rapporterer ingen signifikant korrelasjon mellom hjernesignaler og utmattelse,
+      smerte eller andre symptomer (data ikke vist).
+    source_hash: edba041a25c604ee958ddbdc709e344066de8d7c0d4500a7567fc7889d280880
+  studies[pmid:42539798].finding:
+    text: En studie med n=37 pasienter og 27 friske kontroller, med en helhjerneanalyse av diffusjon basert på voksler, fant
+      lavere gjennomsnittlig, aksial og radial diffusivitet i det venstre supplementære motoriske området, høyere fraksjonell
+      anisotropi i venstre cingulum og lavere aksial kurtose i corpus callosum hos pasientene; den rapporterte ikke hjernestammeforskjellen
+      som den samme gruppen fant tidligere.
+    source_hash: c5e77fcb20ba7332987b2b98ff796d1af17d19767148d909ceced9409d5dbe17
+  studies[pmid:40624094].finding:
+    text: En studie med n=43 pasienter med postinfeksiøs sykdomsstart og 43 matchede friske kontroller fant høyere aksial
+      diffusivitet hos pasientene i assosiasjons- og projeksjonsbaner, blant annet venstre nedre, midtre og venstre øvre lillehjernestilk,
+      kortikospinalbanen og venstre lemniscus medialis, uten forskjell i fraksjonell anisotropi, gjennomsnittlig eller radial
+      diffusivitet; 33 pasienter med gradvis start hadde lavere aksial diffusivitet i corpus callosum enn 33 matchede kontroller.
+    source_hash: d42fd0a71ab97ce4e51ae85c2fdd20db50525a4da483c83f501598820646f01a
+  studies[pmid:21560176].finding:
+    text: En studie med n=25 pasienter og 25 kontroller fant ingen forskjell i totalt volum av grå eller hvit substans og
+      ingen signifikante regionale forskjeller mellom gruppene; hos pasientene var volumet av hvit substans i mellomhjernen
+      lavere jo lenger utmattelsen hadde vart.
+    source_hash: 92127a1263afd17038ca93f9fb2b1ee4159229712c05ddb8ad037b9ba9e55643
+  studies[pmid:28216087].finding:
+    text: En studie med n=15 kvinner med ME/CFS og 15 friske kvinner fant at 24 timer etter 30 minutter med submaksimal sykling
+      økte hjerneaktiviteten under en utmattende kognitiv oppgave i parietale og cingulære regioner hos pasientene sammenlignet
+      med kontrollene, og endringene hang sammen med pasientenes symptomer.
+    source_hash: 85c6ff4ceb3a159c96336d1008360893c41c79ab86d94dce43014ed1944c56e9
+  studies[pmid:25353054].finding:
+    text: En studie med n=15 pasienter og 14 kontroller fant lavere volum av hvit substans i begge hemisfærer og høyere fraksjonell
+      anisotropi i høyre fasciculus arcuatus hos pasientene; blodstrømmen skilte seg ikke.
+    source_hash: ac18f94ea9e7abd5674ce1dfbfd83286f20d4d14a45426cb042f19bc017d3bb0
+  studies[pmid:15955487].finding:
+    text: En studie med n=28 pasienter og 28 matchede kontroller i to kohorter fant lavere globalt volum av grå substans hos
+      pasientene i begge kohortene.
+    source_hash: b94844dc528cd5f31492ee63f2f56316db470ca41e59671cc525e5e941059151
+  studies[pmid:37331007].finding:
+    text: En studie med n=25 ungdommer med ME/CFS og 23 friske kontroller fant ingen signifikante gruppeforskjeller i egenskaper
+      ved hvit substans på diffusjons-MR, bortsett fra én baneforskjell som ikke holdt seg etter korreksjon for intrakranielt
+      volum.
+    source_hash: 6ad52dec3be7bfc43c0a596ccb097223059b4974ee6da033bdef06166bc9a291

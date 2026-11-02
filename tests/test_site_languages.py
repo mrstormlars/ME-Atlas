@@ -429,12 +429,12 @@ def test_levels_badges_contested_marks_titles_and_numbers_come_from_the_english_
     assert norm(nb.find(cls="level-line").text()) == "Nivå 4 av 5, Testet med intervensjon"
     chips = [norm(c.text()) for c in nb.find(cls="chips").find_all(cls="chip")]
     assert chips == [
-        "Omstridt ved trinn 4",
+        "Omstridt på trinn 4",
         "Markør validert: ja",
         "Forklarer PEM: ja",
         "Også studert ved langvarig covid",
     ]
-    assert norm(nb.find("h2", id="contested").text()) == "Omstridt ved trinn 4"
+    assert norm(nb.find("h2", id="contested").text()) == "Omstridt på trinn 4"
 
     def titles(doc):
         return [norm(a.text()) for a in doc.find_all("h4", "study-title")]
@@ -457,7 +457,7 @@ def test_levels_badges_contested_marks_titles_and_numbers_come_from_the_english_
     assert "pmid:00000001" in meta and "Canadian Consensus Criteria (CCC)" in meta and "Kontrollert" in meta
     assert "Lavere hos pasienter" in meta and "sitert som [1]" in meta
     last = norm(nb.find(cls="last-checked").text())
-    assert last == "Sist kontrollert 2026-10-01 av KI-gjennomgangsparet."
+    assert last == "Sist kontrollert 2026-10-01 av de to KI-agentene."
 
 
 def test_the_case_definition_quote_is_never_shown_and_a_sidecar_cannot_put_one_there(proj_tmp):
@@ -502,7 +502,7 @@ def test_the_norwegian_front_page_has_the_same_hypotheses_in_the_same_order_with
     assert order(nb) == order(en) == ["bbb", "aaa"]  # sorted on the English names in both languages
     names = [norm(h.text()) for h in nb.find_all("h3")]
     assert names == ["Alpha fictional idea", "Æ først i alfabetet"]
-    assert norm(nb.find("h1").text()) == "Årsaker til ME/CFS: hvor bevisene står"
+    assert norm(nb.find("h1").text()) == "Årsaker til ME/CFS: status for evidensen"
     table = nb.find("table", "summary")
     assert [norm(c.text()) for c in table.find_all("th")[:6]] == [
         "Hypotese",
@@ -676,8 +676,12 @@ def test_the_norwegian_changes_page_translates_the_frame_and_says_the_entries_ar
     assert "Endringsloggen" not in norm(page(proj_tmp.out, "changes.html").text())
 
 
-def test_the_norwegian_methods_page_falls_back_to_english_with_a_note(proj_tmp):
-    out = built(proj_tmp)
+def test_the_norwegian_methods_page_falls_back_to_english_with_a_note(proj_tmp, tmp_path):
+    content = tmp_path / "content"
+    (content / "methods").mkdir(parents=True)
+    shutil.copy(REPO_ROOT / "content" / "methods" / "en.html", content / "methods" / "en.html")
+    assert proj_tmp.build(content_dir=content, i18n_dir=I18N_DIR).errors == []
+    out = proj_tmp.out
     nb = page(out, "nb/methods.html")
     text = norm(nb.text())
     assert "Metodesiden er ikke oversatt ennå. Teksten under er den engelske originalen." in text
@@ -715,7 +719,7 @@ def test_draft_builds_show_the_banner_and_noindex_in_norwegian_too(proj_tmp):
     assert proj_tmp.build(drafts=True).errors == []
     for path in nb_files(proj_tmp.out):
         doc = parse(path.read_text(encoding="utf-8"))
-        assert norm(doc.find(cls="banner").text()) == "Utkast til forhåndsvisning — ikke publisert", path
+        assert norm(doc.find(cls="banner").text()) == "Forhåndsvisning av utkast — ikke publisert", path
         assert any(m.get("name") == "robots" and m.get("content") == "noindex" for m in doc.find_all("meta")), path
 
 

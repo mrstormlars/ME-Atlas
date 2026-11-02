@@ -1,0 +1,216 @@
+slug: gut-microbiome
+items:
+  name:
+    text: Endret tarmmikrobiom og tarmbarriere
+    source_hash: 1e586df19548c8226cd1e80101f8711dbee1006cce5336f5fa7f87ca6dba638f
+  core_claim:
+    text: Hypotesen går ut på at samfunnet av tarmbakterier er endret hos personer med ME/CFS, og at dette bidrar til sykdommen
+      gjennom det bakteriene lager eller ikke lager, for eksempel butyrat, eller gjennom en tarmvegg som slipper bakterieprodukter
+      inn i blodet.
+    sources:
+    - pmid:36758522
+    - pmid:27338587
+    - pmid:37396339
+    source_hash: c60a8a453707ac03ba6ec6f625176a12ab61994d41eee460156163bbf94c25f3
+  level_reason[0]:
+    text: En kontrollert studie med 106 pasienter som oppfylte både CDC-kriteriene fra 1994 (Fukuda) og Canadian Consensus
+      Criteria og 91 friske kontroller fra fem amerikanske sentre fant mindre av to butyratproduserende bakterier, Faecalibacterium
+      prausnitzii og Eubacterium rectale, færre kopier av et bakterielt butyratgen, og lavere butyrat og acetat i avføring.
+      De butyratproduserende bakteriene og butyratgenet var fortsatt lavere etter justering for irritabel tarm-syndrom, senter
+      og andre faktorer, og butyrat i avføring var lavere både hos pasienter med og uten irritabel tarm-syndrom, sammenlignet
+      med kontroller uten det. Trinn 2 bygger på denne studien.
+    sources:
+    - pmid:36758522
+    source_hash: 858da5b2645ed4ecef2e60e944aeb5edd8586e3b0df195f8107dd2c9150c741d
+  level_reason[1]:
+    text: En studie fra Jinan i Kina, uten felles forfattere med den amerikanske studien, sammenlignet 40 pasienter som oppfylte
+      IOM 2015-kriteriene med 40 friske kontroller matchet på alder og kjønn. Den fant også lavere butyrat og acetat i avføring
+      etter korreksjon for multippel testing. Faecalibacterium var lavere før denne korreksjonen, men ikke etter den, så denne
+      studien gjentar det lavere butyratet i avføring, ikke det spesifikke fallet i Faecalibacterium.
+    sources:
+    - pmid:41387992
+    source_hash: d764993693a58fb2951a83651de82ce02be988c8863f26e10206671c0aa70e94
+  level_reason[2]:
+    text: Kortet står på nivå 3 fordi en uavhengig gruppe fant lavere butyrat i avføring i en egen kohort. Begge studiene
+      målte pasientene én gang og sammenlignet dem med kontroller. De viser en sammenheng, ikke at endringene i tarmbakteriene
+      kommer før sykdommen eller forårsaker den; i den kinesiske studien hadde pasienter som spiste mer fiber høyere acetat
+      i avføring.
+    sources:
+    - pmid:36758522
+    - pmid:41387992
+    source_hash: 95681bfea3a462d54885ecae824860728a1b7705f5ce055fe9b7e7dd8ce58dc3
+  level_reason[3]:
+    text: 'To tidligere amerikanske studier fant også mindre Faecalibacterium prausnitzii hos pasientene: én med 48 pasienter
+      (Fukuda) og 39 kontroller fra Cornell University, og én med 50 pasienter (Fukuda og/eller Canadian-kriteriene) og 50
+      kontroller fra gruppen ved Columbia University som senere gjennomførte studien med 106 pasienter. Cornell-pasientene
+      kom fra praksisen til Dr Susan Levine, og en forfatter oppført som Levine S står på alle tre artiklene; artiklene sier
+      ikke om noen pasient deltok i mer enn én studie.'
+    sources:
+    - pmid:27338587
+    - pmid:28441964
+    - pmid:36758522
+    source_hash: 16885ca52ca3ff2b58d9d61da0789760ee613a2f65723a577163497c8495fe57
+  level_reason[4]:
+    text: Studiene er uenige om mangfoldet av tarmbakterier. Cornell-studien og den kinesiske studien fant lavere mangfold.
+      En polsk studie med 25 pasienter (Fukuda) og 16 kontroller fant færre bakterietyper (lavere artsrikdom), men ingen signifikant
+      forskjell i mangfold eller jevnhet. I studien med 106 pasienter var mangfoldet lavere i den enkle sammenligningen, men
+      etter justering ble dette knyttet til irritabel tarm-syndrom heller enn til ME/CFS. En bulgarsk studie hvis kasusdefinisjon
+      ennå ikke er kontrollert, fant ingen forskjell i mangfold innen prøver, men små forskjeller i den samlede sammensetningen.
+    sources:
+    - pmid:27338587
+    - pmid:41387992
+    - pmid:41006438
+    - pmid:36758522
+    - pmid:42351611
+    source_hash: fb9926a6045dcee5a1ce538255040b420d811fe44e63eca4774e62176eb49645
+  level_reason[5]:
+    text: Andre studier rapporterer andre bakterier. En studie av norske og belgiske pasienter (kasusdefinisjon ennå ikke
+      kontrollert) fant mer Alistipes hos norske pasienter, mens den kinesiske studien fant lavere Alistipes; teksten sier
+      at fallet ikke holdt seg etter korreksjon for multippel testing, mens Fig. 4 oppfører Alistipes blant taxa som skilte seg
+      etter korreksjon. En studie med 75 pasienter som hadde vært syke i under 4 år og 79 som hadde vært syke i over 10 år
+      (kasusdefinisjon ennå ikke kontrollert) fant tydelige forskjeller i tarmbakterier hovedsakelig i gruppen som hadde vært
+      kortere syk, og rapporterte mindre bakteriell butyratproduksjon og lavere butyrat i blodet.
+    sources:
+    - pmid:23791918
+    - pmid:41387992
+    - pmid:36758521
+    source_hash: 2e2521c9a0a6b4e5ff41d52a02d8c0cab6dc0255620de90c03237065e2ad090e
+  level_reason[6]:
+    text: Blodmarkører for bakterieprodukter som krysser tarmveggen gir blandede resultater. Cornell-studien fant høyere LPS
+      (et bakterietoksin), LPS-bindende protein og løselig CD14 hos pasientene, og en spansk studie med 30 pasienter som oppfylte
+      International Consensus Criteria og 26 kontroller fant høyere LPS, løselig CD14 og zonulin-1. En studie fra Columbia
+      University med 131 pasienter som oppfylte både Fukuda- og Canadian-kriteriene og 86 kontroller fant verken LPS-bindende
+      protein eller løselig CD14 signifikant forhøyet, men fant flere antistoffer mot LPS og flagellin og mer FABP2, en markør
+      for skade på cellene i tarmveggen, som Cornell-studien ikke hadde funnet signifikant forhøyet. Nivået bygger ikke på
+      disse blodmarkørene; trinnene bygger på lavere butyrat i avføring.
+    sources:
+    - pmid:27338587
+    - pmid:37744357
+    - pmid:37396339
+    - pmid:36758522
+    - pmid:41387992
+    source_hash: 1efdc7fd1a645ed42789ea65c638daf75d7488aeb7b403fe46127a32643c33ea
+  level_reason[7]:
+    text: Ingen kontrollert studie på dette kortet viser at endring av tarmbakteriene endrer sykdommen, så kortet når ikke
+      nivå 4. I en randomisert studie med 39 pasienter økte et probiotikum Lactobacillus og Bifidobacteria i avføring; sammendraget
+      rapporterer et fall i angst med probiotikum (p = 0,01), men den eneste sammenlignbare p-verdien i artikkelens Table
+      3 er probiotikagruppens endring fra før til etter (p = 0,011); samspillet mellom gruppe og tid er ikke signifikant (p
+      = 0,729). En pilotstudie med 11 pasienter som oppfylte IOM 2015-kriteriene fant ingen signifikant endring i utmattelse
+      eller livskvalitet etter fekal transplantasjon fra en donor eller fra pasientens egen avføring, placebo.
+    sources:
+    - pmid:19338686
+    - pmid:37516837
+    source_hash: da7bc2f48c9f77bdaf7a2cce1e9960509e41d797a45ddc109bdaa7154bf742db
+  badge_reasons.diagnostic_marker[0]:
+    text: Studien med 106 pasienter testet den bakteriebaserte klassifikatoren sin i en andre kohort med 50 pasienter og 50
+      kontroller som den samme forskergruppen hadde samlet inn år tidligere ved de samme amerikanske sentrene; forfatterne
+      skriver at begge kohortene kom fra de samme fem sentrene og at det trengs et bredere geografisk spenn. Ingen studie
+      på dette kortet fra en annen forskergruppe tester markøren.
+    sources:
+    - pmid:36758522
+    - pmid:28441964
+    source_hash: e7aa373e34a1d52401c01896150a103b15191eb9364dd04e95e4cbcd94808b91
+  badge_reasons.diagnostic_marker[1]:
+    text: 'Andre studier på kortet klassifiserte pasienter og kontroller bare innenfor sin egen kohort: Cornell-studien med
+      bakterier og blodmarkører, den polske studien med tarmbakterier og den spanske studien med blodmarkører for tarmveggen.'
+    sources:
+    - pmid:27338587
+    - pmid:41006438
+    - pmid:37744357
+    source_hash: 75509dcc12243cb2303d6eb915afab56c486e1d42e53db4ab43fa0b8542d75c0
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på nivå 2 eller høyere på dette kortet knytter tarmbakterier eller tarmveggen til symptomer etter anstrengelse
+      hos de samme pasientene. En studie med 10 pasienter og 10 kontroller fulgte symptomer i 72 timer etter en maksimal anstrengelsestest
+      og fant forskyvninger i avføringsbakterier og bakterielt DNA i blodet som skilte seg fra kontrollene, men knyttet ikke
+      disse til pasientenes symptomer. Den er ikke gjentatt.
+    sources:
+    - pmid:26683192
+    source_hash: 25b0111b208fee8def392170154401d336e43578143962c6036e2c7e294ee08f
+  badge_reasons.explains_pem[1]:
+    text: En treningskohort fra Columbia University med 9 pasienter og 7 kontroller, rekruttert bare etter Fukuda-kriteriene,
+      fant at LPS-bindende protein og løselig CD14 økte etter trening hos kontrollene (P = 0,007, P = 0,008); hos pasientene
+      økte ikke LPS-bindende protein signifikant, og løselig CD14 økte mer moderat (P = 0,021). Artikkelen knytter ikke disse
+      endringene til symptomer.
+    sources:
+    - pmid:37396339
+    source_hash: 9ec81587d46f5bd4669c4a9d5a89012950eccca2de4e82502aec687384a948b7
+  subgroups[0]:
+    text: Irritabel tarm-syndrom kan markere en undergruppe. I en studie med 50 pasienter og 50 kontroller var bakteriene
+      som best skilte pasienter med irritabel tarm-syndrom fra kontrollene, andre enn de som skilte pasienter uten det; i
+      en senere studie med 106 pasienter fra samme gruppe ble lavere bakteriemangfold funnet bare hos pasienter med irritabel
+      tarm-syndrom.
+    sources:
+    - pmid:28441964
+    - pmid:36758522
+    source_hash: 81f5130aa52817cc41d603c7ea26398eb8716d5e54686c9dad5e31ed9d2bf236
+  early_signals[0]:
+    text: En studie med n=10 pasienter og 10 matchede friske kontroller fant at etter en maksimal anstrengelsestest økte flere
+      av hovedgruppene av avføringsbakterier hos pasientene enn hos kontrollene innen 72 timer, og at bakterielt DNA ble lenger
+      i pasientenes blod. Ikke gjentatt ennå.
+    sources:
+    - pmid:26683192
+    source_hash: 554f97be5e7949768650b0af46d7a7e9b59e16959e311a5e21e8546b3f2f2c3a
+  studies[pmid:36758522].finding:
+    text: En studie med n=106 pasienter og 91 friske kontroller fant mindre av de butyratproduserende bakteriene Faecalibacterium
+      prausnitzii og Eubacterium rectale, færre kopier av et bakterielt butyratgen og lavere butyrat og acetat i avføring
+      hos pasientene, og en omvendt sammenheng mellom Faecalibacterium prausnitzii og alvorlighetsgrad av utmattelse.
+    source_hash: 8abbbf779826c67778cb362c4a474bb7dc2f8e5077cb379a5d696e78ff75d19d
+  studies[pmid:41387992].finding:
+    text: En studie med n=40 pasienter og 40 friske kontroller matchet på alder og kjønn fant lavere mangfold av tarmbakterier,
+      mindre Firmicutes og lavere butyrat, acetat, isobutyrat og isovalerat i avføring hos pasientene etter korreksjon for
+      flere tester; Faecalibacterium var lavere bare før denne korreksjonen.
+    source_hash: 7b265577640b182a9f5de483f01ef4fad5eae927011380116592202663a177a0
+  studies[pmid:27338587].finding:
+    text: En studie med n=48 pasienter og 39 friske kontroller fant lavere mangfold av tarmbakterier, mindre Firmicutes, blant
+      annet Faecalibacterium prausnitzii, og høyere LPS, LPS-bindende protein og løselig CD14 i blodet hos pasientene.
+    source_hash: 06cdd746ce80a0f01ee507977d46a04f26bdda405e16a706d95459892b59a696
+  studies[pmid:28441964].finding:
+    text: En studie med n=50 pasienter og 50 friske kontroller fant mindre Faecalibacterium prausnitzii og andre forskjeller
+      i tarmbakterier og deres stoffskiftebaner hos pasientene, med ulike bakterier som skilte pasienter med og uten irritabel
+      tarm-syndrom fra kontrollene.
+    source_hash: 695db777d56f28d0093c7bd81041cfbaf47316b0bf8c31cc76f63886e07cf8d6
+  studies[pmid:37744357].finding:
+    text: En studie med n=30 pasienter, 22 personer med fibromyalgi og 26 friske kontroller fant høyere antistoffer i blodet
+      mot et melkeprotein, zonulin-1, LPS og løselig CD14 hos pasientene enn hos kontrollene, men lavere enn ved fibromyalgi,
+      og ingen forskjell i interleukin-1 beta.
+    source_hash: 3cd33be6b5056f47c97fbafe3c97ccf33c5eaf01dc0be958f7ecf0ae36435d07
+  studies[pmid:41006438].finding:
+    text: En studie med n=25 pasienter og 16 friske kontroller fant færre observerte bakterietyper (OTU-er, lavere artsrikdom)
+      og en annen sammensetning av tarmbakterier hos pasientene, uten signifikant forskjell i mangfold eller jevnhet.
+    source_hash: 65d2b6bcc49c008dd2273abce70911b1e95f272c772dcb823623ce9497be2709
+  studies[pmid:37396339].finding:
+    text: En studie med n=131 pasienter og 86 friske kontroller fant ingen signifikant økning i LPS-bindende protein eller
+      løselig CD14, men høyere antistoffer mot LPS og flagellin og høyere FABP2, en markør for skade på tarmveggens celler,
+      hos pasientene; i en egen gruppe på 9 pasienter og 7 kontroller økte LPS-bindende protein og løselig CD14 etter trening
+      hos kontrollene (P = 0,007, P = 0,008), mens hos pasientene økte ikke LPS-bindende protein signifikant og løselig CD14
+      økte mer moderat (P = 0,021).
+    source_hash: 2e9cb1d55c55b29d529dd27517f10028be6e3b942b9988b524f9cf4657902ee6
+  studies[pmid:26683192].finding:
+    text: En studie med n=10 pasienter og 10 matchede friske kontroller fant at etter en maksimal anstrengelsestest økte flere
+      av hovedgruppene av avføringsbakterier hos pasientene enn hos kontrollene innen 72 timer, og at bakterielt DNA ble lenger
+      i pasientenes blod enn i kontrollenes.
+    source_hash: 71ba9da7e01144bc687dc64177f7012a20e125febf4f0f45bf1013ad7af3ba2b
+  studies[pmid:36758521].finding:
+    text: En studie med 75 pasienter som hadde vært syke i under 4 år, 79 som hadde vært syke i over 10 år og 79 friske kontroller
+      fant tydelige forskjeller i tarmbakterier hovedsakelig hos pasientene som hadde vært kortere syke, og rapporterte mindre
+      bakteriell butyratproduksjon og lavere butyrat i blodet.
+    source_hash: 0de7cf050f22350ca0ed7314ce2c20c82edc9366554a8ce4bf2d6ad56a4e2014
+  studies[pmid:23791918].finding:
+    text: En studie med n=43 pasienter og 36 friske kontroller fra Belgia og Norge fant mer Lactonifactor og Alistipes og
+      mindre av flere Firmicutes hos norske pasienter enn hos norske kontroller, med et mindre tydelig skille hos de belgiske
+      deltakerne.
+    source_hash: 24be4d75d3703c4afa143daef5bce663af4cbcbddab03a13f743056136cc63b7
+  studies[pmid:42351611].finding:
+    text: En studie av pasienter med ME/CFS, pasienter med langvarig covid og friske kontroller fant ingen signifikant forskjell
+      i mangfold innen prøver, små forskjeller i den samlede sammensetningen av tarmbakterier med stor overlapping, og mer
+      Sutterella og mindre Lachnospiraceae i begge pasientgruppene.
+    source_hash: 1ed38a9c4995a730697a92a1f5299a7c2913533f78aba13acb8458add2448efa
+  studies[pmid:37516837].finding:
+    text: En randomisert placebokontrollert pilotstudie med n=11 pasienter fant ingen signifikant endring i skårer for utmattelse
+      eller livskvalitet 1 og 6 måneder etter fekal transplantasjon fra en donor eller fra pasientens egen avføring.
+    source_hash: 4d7bc3c1d8687c3bf08d194475c5ad657afc55d186ffe538cc2d71945364eb44
+  studies[pmid:19338686].finding:
+    text: En randomisert placebokontrollert pilotstudie med 39 pasienter (35 fullførte) fant at et probiotikum økte Lactobacillus
+      og Bifidobacteria i avføring; skårene for angst falt, men samspillet mellom gruppe og tid var ikke signifikant, og skårene
+      for depresjon endret seg ikke signifikant.
+    source_hash: ed9040a3ba38252b98588201623c13c26c5cb5b3b05b407a534e497d827b9d7b

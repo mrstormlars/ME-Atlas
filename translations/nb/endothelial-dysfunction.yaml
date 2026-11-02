@@ -1,0 +1,207 @@
+slug: endothelial-dysfunction
+items:
+  name:
+    text: Endoteldysfunksjon (nedsatt funksjon i blodkarenes indre vegg)
+    source_hash: c0a5c9e1d92cfd3acb5c01c85c51f874fa283d5f4ae8186d620166c346337562
+  core_claim:
+    text: Hypotesen går ut på at hos personer med ME/CFS fungerer ikke blodkarenes indre vegg (endotelet) som den skal, slik
+      at blodkarene utvider seg dårligere når vevet trenger mer blodstrøm.
+    sources:
+    - pmid:32154656
+    - pmid:33829023
+    source_hash: c1cef598701682207e60c289665591d12ad8df93e8a9fa3c40a06b7b4a04300f
+  level_reason[0]:
+    text: En studie fra Berlin målte hvor mye blodkarene i fingeren utvider seg etter at blodstrømmen til armen ble stoppet
+      en kort stund (reaktiv hyperemi-indeks) hos 35 pasienter som oppfylte Canadian Consensus Criteria og 20 friske personer
+      i lignende alder. Indeksen var lavere hos pasientene (1,95 mot 2,21), og 18 av 35 pasienter (51 %) og 4 av 20 kontroller
+      (20 %) lå under grenseverdien som forfatterne brukte for endoteldysfunksjon. Kortet står på nivå 2 på grunn av denne
+      studien.
+    sources:
+    - pmid:32154656
+    source_hash: bb48b9aa0eb01ed9d8f83d3b0a1cb30c1993d6b68739a3424e095d9c0ed043a0
+  level_reason[1]:
+    text: 'En senere studie fra Bergen i Norge, uten felles forfattere med Berlin-studien, testet pasienter som oppfylte Canadian
+      Consensus Criteria med to andre metoder. Økningen i hudens blodstrøm etter at blodstrømmen til armen ble stoppet en
+      kort stund (post-occlusive reactive hyperaemia), målet som ligger nærmest Berlin-indeksen, var lavere hos 39 pasienter
+      enn hos 30 friske personer. Utvidelsen av armens arterie (flow-mediated dilation) var lavere hos 35 pasienter enn hos
+      66 friske kvinner (median 5,9 % mot 7,7 %); denne kontrollgruppen besto bare av kvinner, mens 78 % av pasientene var
+      kvinner. Kortet står på nivå 3 fordi denne uavhengige gruppen fant redusert endotelfunksjon i en egen kohort. Gjentakelsen
+      er delvis: de to gruppene brukte ulike metoder, og artikkelen sier at den ikke hadde noen egen utpekt kontrollgruppe,
+      men brukte friske personer fra to andre studier av de samme forfatterne.'
+    sources:
+    - pmid:33829023
+    - pmid:32154656
+    source_hash: 6f0c3f9abfe6ed88de7cd23391550e2b74889000d28e3e583eba8f0b14fff336
+  level_reason[2]:
+    text: Bergen-gruppen fant det samme hos 39 pasienter fra RituxME-studien med rituximab, som valgte ut pasienter etter
+      Canadian Consensus Criteria, sammenlignet med de samme kontrollgruppene (flow-mediated dilation 5,1 % mot 8,2 %). Siden
+      gruppen og kontrollene er de samme, teller ikke dette som en uavhengig gjentakelse.
+    sources:
+    - pmid:36730360
+    - pmid:33829023
+    source_hash: 7427831725c30a3e788e5bb1f3439eb7a24705f7ffdb4b1ba5721e00e7c21ec4
+  level_reason[3]:
+    text: To studier av personer som fikk ME/CFS etter covid-19, begge kontrollert mot Canadian Consensus Criteria, peker
+      i samme retning. Berlin-gruppen fant en lav reaktiv hyperemi-indeks hos 5 av 14 slike pasienter og hos ingen av 15 friske
+      kontroller. En studie fra München, som registrerte ME/CFS-status etter Canadian Consensus Criteria som del av pasientrapporterte
+      mål, fant smalere små arterier i forhold til vener bak i øyet hos 62 slike pasienter enn hos 96 personer som aldri hadde
+      vært smittet av viruset.
+    sources:
+    - pmid:35317812
+    - pmid:42625188
+    source_hash: ccac5aaf69a93d63a553971d99c7916defa6a4b112bc0686fbb28897e4c60fa8
+  level_reason[4]:
+    text: Blodnivåer av endotelin-1, et stoff som lages av blodkarveggen og som trekker blodkarene sammen, var høyere hos
+      pasienter enn hos kontroller i Berlin-studien etter covid (14 pasienter og 15 kontroller, og igjen i en andre gruppe
+      på 25 pasienter og 47 kontroller) og i to studier fra én klinikk i Barcelona med International Consensus Criteria (32
+      pasienter og 29 kontroller; 31 pasienter og 31 kontroller). De to Barcelona-studiene rekrutterte i overlappende perioder,
+      så pasientene kan overlappe.
+    sources:
+    - pmid:35317812
+    - pmid:36902264
+    - pmid:38600563
+    source_hash: 7283fab8f656841105ae14ff73abbd5debe73ce91c384be3812659e1bb9d11b1
+  level_reason[5]:
+    text: Mot disse funnene fant en studie fra California med 24 pasienter og 24 stillesittende kontroller, som brukte Fukuda-definisjonen
+      med PEM som krav, ingen statistisk signifikant forskjell i reaktiv hyperemi-indeks i hvile (p = 0,07), under restitusjon
+      eller 18 timer etter en anstrengelsestest. Forfatterne brukte Fukuda-definisjonen med PEM som krav og sier at dette
+      tilsvarer International Consensus Criteria; kortet registrerer Fukuda. Fukuda rangeres under Canadian Consensus Criteria
+      på den publiserte evidensstigen, så denne studien bestrider ikke nivået. En studie fra New Zealand med International
+      Consensus Criteria fant ingen forskjell i arteriestivhet mellom pasienter og kontroller i hvile; arteriestivhet er et
+      annet mål enn utvidelsen som er testet ovenfor.
+    sources:
+    - pmid:29426834
+    - pmid:33671082
+    source_hash: ebbcf8672690c4e2dd067c1f050e6a0fdac8e5704eefafe9ca3171f603d6859c
+  level_reason[6]:
+    text: Studier av unormal blodlevring, vist her som bakgrunn, mangler en bekreftet anerkjent kasusdefinisjon. En studie
+      fra Stellenbosch i Sør-Afrika med 25 pasienter, beskrevet bare som diagnostisert for mer enn seks måneder siden, og
+      15 friske kontroller fant et større areal av mikroblodpropper i plasma, raskere koageldannelse og mer aktivert-utseende
+      blodplater hos pasientene; en proteinstudie av 15 av disse pasientene og 10 kontroller fant forskjeller i proteiner
+      knyttet til blodlevring. Disse funnene er ikke gjentatt av en uavhengig gruppe. En tidligere studie fra Dundee i Skottland,
+      hvis kasusdefinisjon ennå ikke er kontrollert, fant ingen tegn til aktivering av blodplater eller til at blodet levrer
+      seg for lett hos 17 pasienter og 16 kontroller. Disse studiene kan ikke heve nivået.
+    sources:
+    - pmid:36015078
+    - pmid:39014464
+    - pmid:16479189
+    source_hash: 62202cabdbe02d00fd9df78cc052e06a8b90a060c6d9e5f6f0263a3306b50c60
+  level_reason[7]:
+    text: 'Kortet når ikke nivå 4: ingen kontrollert studie har endret endotelfunksjon eller blodlevring og målt effekten
+      på sykdommen. I en placebokontrollert studie med 50 pasienter endret høydose vitamin D ikke arteriestivhet, flow-mediated
+      dilation eller utmattelse. I delstudien av rituximab-forsøket var det ingen forskjell mellom rituximab- og placebogruppen
+      i karmålene. Uten kontrollgruppe ble endotelfunksjonen bedre hos 5 av 6 pasienter med lave verdier (P = 0,06, ikke statistisk
+      signifikant) 12 måneder etter immunadsorpsjon, og endringer i endotelfunksjon fulgte ikke klinisk respons etter cyklofosfamid.'
+    sources:
+    - pmid:25455721
+    - pmid:36730360
+    - pmid:32154656
+    - pmid:33829023
+    source_hash: 863f9d762e8847d75c2c623a9fc6274ede5c24b52f672fdcb82f66b87848c787
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen studie på dette kortet tester en grenseverdi fra én pasientgruppe i en andre, uavhengig gruppe. Berlin-studiene
+      brukte ulike grenseverdier for reaktiv hyperemi-indeks (1,81 og 1,67) i ulike pasientgrupper, og øyestudien fra München
+      testet sin kombinerte modell innenfor én kohort.
+    sources:
+    - pmid:32154656
+    - pmid:35317812
+    - pmid:42625188
+    source_hash: 361a4ec9aca222ab2bb68ad6c83869085ab4b0b0ddccf80bff0279886e7100a4
+  badge_reasons.explains_pem[0]:
+    text: 'Ingen studie på dette kortet følger symptomer etter en anstrengelsesprøve og knytter dem til endotelfunksjon eller
+      blodlevring hos de samme pasientene. To studier målte karfunksjon etter en anstrengelsestest, uten å følge symptomer:
+      én fant ingen forskjell i reaktiv hyperemi-indeks 18 timer senere, og én fant at arteriestivheten 48 timer senere falt
+      innenfor kontrollgruppen, men ikke innenfor pasientgruppen (7 i hver ved 48 timer; gruppene ble ikke sammenlignet direkte).'
+    sources:
+    - pmid:29426834
+    - pmid:33671082
+    source_hash: c6eb48eb55bddb1a0be0f3e15eefb45aa566536aa4026093bca8716c2061c56b
+  subgroups[0]:
+    text: 'Redusert endotelfunksjon kan gjelde for en undergruppe av pasientene: i Berlin-studien lå omtrent halvparten av
+      pasientene (18 av 35) under grenseverdien, og de rapporterte mer alvorlig sykdom enn pasientene over den.'
+    sources:
+    - pmid:32154656
+    source_hash: a964c98ce7ac6ebcc540beccb3807213d10763b066097a12080298e095ea246d
+  early_signals[0]:
+    text: En studie med n=31 pasienter og 31 stillesittende friske kontroller fant høyere blodnivåer av plasminogenaktivator-inhibitor-1
+      (serpin E1), et protein som bremser nedbrytingen av blodpropper, hos pasientene enn hos kontrollene og enn hos personer
+      med langvarig covid. Ikke gjentatt ennå.
+    sources:
+    - pmid:38600563
+    source_hash: 8b1364de3081e3f4a9f41d87eada17e0de6861a278570e74ef56dd06a078f84d
+  early_signals[1]:
+    text: En studie med n=62 pasienter som fikk ME/CFS etter covid-19 og 96 personer som aldri hadde vært smittet fant et
+      lavere forhold mellom bredden på små arterier og små vener bak i øyet hos pasientene. Ikke gjentatt ennå.
+    sources:
+    - pmid:42625188
+    source_hash: 986fc1df93a3c8d061ee03e71ab7267b0073cf279f4ac06c393ce9f6edb79713
+  studies[pmid:32154656].finding:
+    text: En studie med n=35 pasienter og 20 friske kontroller fant en lavere reaktiv hyperemi-indeks hos pasientene, der
+      51 % av pasientene og 20 % av kontrollene lå under grenseverdien for endoteldysfunksjon; pasienter under den rapporterte
+      mer alvorlig sykdom.
+    source_hash: ef495ae9d7ed6a43024efa95d32976d5e49785b87e1662b3da9a5b48531e0032
+  studies[pmid:33829023].finding:
+    text: En studie med n=35 pasienter og 66 friske kvinner fant lavere flow-mediated dilation hos pasientene (median 5,9
+      % mot 7,7 %), og hos 39 pasienter og 30 friske kontroller lavere post-occlusive reactive hyperaemia; endringer over
+      12 måneder fulgte ikke klinisk respons på cyklofosfamid.
+    source_hash: 669eede49d33fe032356c9f32a7d94ba0ebb8a8abfaa8b721dbbc916590edf78
+  studies[pmid:36730360].finding:
+    text: En studie med n=39 pasienter og 66 friske kontroller fant lavere flow-mediated dilation hos pasientene (5,1 % mot
+      8,2 %), og lavere post-occlusive reactive hyperaemia enn hos 30 friske kontroller, uten forskjell mellom rituximab-
+      og placebogruppen i karmålene.
+    source_hash: 97868b000c73aa55ade5d19226800001dc88494d564d1add54a2583a3ddd4ea7
+  studies[pmid:35317812].finding:
+    text: En studie med n=14 pasienter med ME/CFS etter covid-19 og 15 friske kontroller fant en lav reaktiv hyperemi-indeks
+      hos 5 pasienter og ingen kontroller, og høyere endotelin-1 hos pasientene, som en andre gruppe på 25 pasienter og 47
+      kontroller også viste.
+    source_hash: 0f377214084b0b54e24c2982c0130e92b810c051db9182700e365b12bb46b256
+  studies[pmid:42625188].finding:
+    text: En studie med n=62 pasienter med ME/CFS etter covid-19 og 96 personer som aldri hadde vært smittet fant et lavere
+      forhold mellom bredden på små arterier og små vener i netthinnen hos pasientene, etter justering for alder, kjønn og
+      risikofaktorer for hjerte- og karsykdom.
+    source_hash: 91db07026846cf90a9acbaab942d3e82b6327b43ac62724cb9c1355d29268946
+  studies[pmid:36902264].finding:
+    text: En studie med 67 kvinnelige pasienter og 48 friske kontroller, med blodmarkører målt hos n=32 pasienter og 29 kontroller,
+      fant høyere endotelin-1 og VCAM-1 hos pasientene og ingen forskjell i ICAM-1.
+    source_hash: d808a11eece6a2ce41dc54fa70db5e58ef0dedb94a7f88a1650007fece0c8c94
+  studies[pmid:38600563].finding:
+    text: En studie med n=31 pasienter og 31 stillesittende friske kontroller fant høyere endotelin-1, VCAM-1, E-selectin
+      og plasminogenaktivator-inhibitor-1, og lavere nitritter, hos pasientene.
+    source_hash: 724c549455083c19ace4f7a4cc73f146055e3f88329261c924888e5a47500680
+  studies[pmid:29426834].finding:
+    text: En studie med n=24 pasienter og 24 stillesittende kontroller fant ingen statistisk signifikant forskjell i reaktiv
+      hyperemi-indeks i hvile (p = 0,07), under restitusjon eller 18 timer etter en anstrengelsestest.
+    source_hash: 968bd747ab146d78cf2f7dde176a9f0210c7cfd9b8e903dbb07318f03e7535cb
+  studies[pmid:33671082].finding:
+    text: En studie med n=11 pasienter og 11 matchede kontroller (20 og 16 inkludert) fant ingen forskjell i arteriestivhet
+      i hvile; 48 timer etter en maksimal anstrengelsestest hadde den falt hos de 7 kontrollene, men ikke hos de 7 pasientene
+      som ble testet da.
+    source_hash: 5ca2ee42a4d6cdeae744d77272073426d98e518469e4ac72b079353cac699ee2
+  studies[pmid:25455721].finding:
+    text: En placebokontrollert studie med n=50 pasienter fant at høydose vitamin D i seks måneder ikke endret arteriestivhet,
+      flow-mediated dilation eller utmattelse.
+    source_hash: 44fcac057457e1fb6006bb73c11ba4cfed29886a650b188f316c0d2ae003c97c
+  studies[pmid:36015078].finding:
+    text: En studie med n=25 pasienter og 15 friske kontroller fant et større areal av mikroblodpropper i plasma, raskere
+      koageldannelse i plasma og flere utflytende, aktivert-utseende blodplater hos pasientene.
+    source_hash: 2cfcd36130e434d2850cc8194fc3da718705d1813ed7a570cab3632870c5eb45
+  studies[pmid:39014464].finding:
+    text: En studie med n=15 pasienter og 10 kontroller fant 45 plasmaproteiner med ulike nivåer hos pasientene, blant annet
+      de levringsrelaterte proteinene thrombospondin-1, blodplatefaktor 4 og protein S.
+    source_hash: b27cfd4c44da6fd516eebfffe7eec545e02b8fec695411e2e1c760037b8029cc
+  studies[pmid:16479189].finding:
+    text: En studie med n=17 pasienter og 16 friske kontroller fant ingen tegn til økt aktivering av blodplater eller til
+      at blodet levrer seg for lett; ett mål på blodplateaggregasjon var lavere hos pasientene.
+    source_hash: a588f1311cfb3debbe8f45d908ba1ec02e11ab0f6065273ace48edfdb4e9a2f7
+  studies[pmid:18031285].finding:
+    text: En studie med n=41 pasienter og 30 friske kontroller fant en høyere augmentasjonsindeks, et mål på arteriestivhet,
+      og høyere C-reaktivt protein og isoprostaner hos pasientene.
+    source_hash: 9e6a80bce1b0284865b901f75375f7face0394315e42fdc445485dcdc198dbfe
+  studies[pmid:12950326].finding:
+    text: En studie med n=30 pasienter og 30 matchede friske kontroller fant samme maksimale hudblodstrøm etter acetylkolin
+      i begge grupper, men en tregere retur til utgangsnivået hos pasientene.
+    source_hash: 206e67acddfd3e07fa0453bc7a743fde026e94af54e2dcb6fba53c0cfe098c97
+  studies[pmid:37832757].finding:
+    text: En studie med n=17 pasienter, 17 personer med langvarig covid og 17 friske kontroller fant lavere flow-mediated
+      dilation hos pasientene enn hos kontrollene (6,60 % mot 11,30 %).
+    source_hash: 4255d2e991f4bd0232d171104abfa21e74c0048b1273739296eabb2c45731b30
