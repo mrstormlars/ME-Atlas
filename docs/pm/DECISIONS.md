@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-02 — Cards six to nine
+
+- Four new hypotheses added as draft cards, each checked by `card-reviewer` and fixed: orthostatic intolerance and cerebral blood flow (level 2, not contested), herpesvirus reactivation (level 2, not contested), HPA axis and cortisol (level 2, contested at rung 2), endothelial dysfunction (level 3, not contested). Both badges no on all four.
+- HPA axis: the London CRH study (pmid:11502777, 37 patients) contradicts the Dublin rung-2 finding (pmid:9669518) at comparable quality; no independent study repeats the same result, so no level 3.
+- Herpesvirus: the London saliva study (pmid:34422848) measures DNA load in saliva and is read by its authors as persistent infection, so it does not repeat the Riga finding; rung 2 rests on the herpesvirus-only result of pmid:36653846.
+- Endothelium: renamed "Endothelial dysfunction"; clotting studies stay as context because none has a verified case definition. pmid:29426834 recorded as Fukuda (the definition it applied), not ICC (its label).
+- "1994 case definition" counts as Fukuda when the reference or the CDC authorship makes it clear. A case definition named only by reference number counts when the reference list resolves it. A passive tilt test is not a direct PEM measure.
+
 ## 2026-11-01 — Weekly pipeline: AI as Claude Code subagents
 
 - AI steps (classify, draft, review) run as Claude Code subagents on the founder's subscription, started by `/ukentlig`. Model choice lives in each agent's frontmatter in `.claude/agents/` (`paper-classifier`: haiku, `card-drafter`: sonnet, `card-reviewer`: opus), prompts are files in the repo. No direct API calls, no API key, while the project runs on the subscription. This replaces the CLAUDE.md rule "LLM calls go through one module with model ids and token budgets in config"; every AI output still keeps its source ids. Why: the founder runs the pipeline in a session he already pays for; the review step stays on a different model from the drafter (spec section 6, step 4).

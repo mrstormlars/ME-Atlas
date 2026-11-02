@@ -1,0 +1,515 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# PROPOSALS FOR THE FOUNDER (tier 2, not decided): level 2; contested: null; diagnostic marker: no; explains PEM: no.
+# Alternative for the founder: level 3, contested at rung 3 (see "Level, rung by rung" below).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml.
+# Scope: measured blood flow to the brain (or its proxies: blood flow velocity, cerebral oxygenation) during standing,
+# sitting or head-up tilt; measured orthostatic intolerance (POTS, orthostatic or neurally mediated hypotension,
+# hypocapnia on standing); and treatments aimed at them. Questionnaire-only autonomic studies left out.
+#
+# Level, rung by rung (proposal)
+#   Rung 1: met (the rung-2 study below meets it).
+#   Rung 2: met by 32140630 (van Campen 2020, Fukuda, controlled, 429 patients vs 44 controls, blood flow to the brain
+#     fell 26% vs 7% at end-tilt). Also supported by 7674527 (CDC, 23 vs 14, more abnormal tilt responses) and
+#     17263876 (Fukuda, 62 vs 35, more abnormal standing tests, mainly hypocapnia).
+#   Rung 3: NOT met. No independent group with a verified, accepted case definition has repeated the reduced blood
+#     flow to the brain on tilt. The independent blood-flow studies (22180650, 25277740 New York; 12006954 Osaka) and the
+#     one that found no difference (12593133, Johns Hopkins) have no open full text and no case definition in the
+#     abstract, so they stay `unverified` and `context` (V9). 17263876 is independent but earlier than 32140630,
+#     measured a different abnormality (hypocapnia; no blood-flow measure) and found no significant difference in
+#     orthostatic tachycardia or orthostatic hypotension, so it is not a repeat of the card's finding (checklist 5).
+#     Nor does it repeat 7674527: hypotension (6.5% vs 2.9%) and tachycardia (11.3% vs 5.7%) were not significant.
+#     Alternative reading for the founder: if "the finding" is any measured orthostatic abnormality, rung 3 would rest
+#     on 7674527 (original) + 17263876 (as a broad repeat, with the limit above). 16378795 (Fukuda, 58 enrolled vs 55,
+#     controls, no difference) would contradict 7674527 at comparable quality (Fukuda = CDC_unspecified) if at least
+#     12 patients were tilted (half of 23 = 11.5); 58 is the enrolled n and the abstract does not say how many were
+#     tilted (TODO: verify). Rung 3 would then be contested. Either way the AI proposal is level 2.
+#   Rung 4: NOT met. No `supports` study with design `intervention_controlled` and an accepted case definition. The two
+#     controlled treatment trials with accepted definitions found no symptom benefit (11150109 fludrocortisone, CDC,
+#     50 vs 50; 19912315 home tilt training, Fukuda, 19 vs 19); both are `context`, since a treatment trial with no
+#     effect does not contradict a blood-flow finding. The compression-stocking trial (35056360) changed blood
+#     flow but measured no symptom outcome and names no case definition; the phenylephrine study (25277740) is
+#     unverified.
+# Contested (proposal): null. Rung 2 rests on 32140630 (429 patients): a contradicting study would need a Fukuda-or-
+#   stricter definition, controls and >= 214.5 patients in the measurement. None on the card qualifies (16378795 has 58;
+#   12593133 has 26 and is unverified). Rungs above 2 are not reached, so nothing else can be contested.
+# Long COVID label: not shown (no long COVID study on the card). See 35056336 below — founder decision.
+#
+# Author and cohort overlaps
+#   - Stichting CardioZorg, Hoofddorp (van Campen CLMC, Visser FC): 32140630, 33050553, 35056360, 33585505. Same clinic,
+#     overlapping recruitment periods likely; not independent of one another.
+#   - Rowe PC (Johns Hopkins) is an author of 32140630, 35056360 and 33585505 (CardioZorg) and of 7674527, 11150109 and
+#     12593133 (Hopkins). 7674527 is therefore not independent of 32140630. 12593133 shares DeBusk K, Calkins H, Snader
+#     S and Lucas KE with 11150109; patient overlap possible (not stated in the abstracts).
+#   - Stewart JM (New York Medical College) is last author of 25277740, an author of 22180650 and 22850676, and a
+#     co-author of Natelson's 17263876. 22180650 and 25277740 come from the same laboratory; cohort overlap not stated.
+#
+# Not on the card (searched in the cache, read, left out)
+#   - Reviews: not counted (none cited).
+#   - Same group and likely same cohort as a study on the card: 38682242 (Medow 2024; same 15 patients and 11 controls,
+#     same numbers as 25277740); 21919887 (Ocon 2012, same New York lab as 22180650, 16 CFS/POTS vs 20 controls; change
+#     in blood flow velocity did not differ — would be useful if verified; no open full text); 34667909, 38138257,
+#     39765993, 40507411, 37688420, 32545797, 36292504 (further CardioZorg analyses of the same clinical database;
+#     mostly uncontrolled or extensions of 32140630).
+#   - 35056336 (van Campen 2021, 10 long COVID patients, ME/CFS controls and 10 healthy controls, reduced blood flow to
+#     the brain on tilt in all patient groups). Its methods (full text PMC8778312) say a questionnaire was used to
+#     ascertain whether patients satisfied the CFS criteria of Fukuda et al., the ME criteria of Carruthers et al.
+#     (ICC) and the IOM criteria; Table 1 gives 10/10 long COVID patients fulfilling the CFS and the IOM criteria
+#     (typical ME 9/10). No sentence states the result for the long COVID patients. Kept off the card for now.
+#     FOUNDER QUESTION: do the methods sentence plus Table 1 verify the definition, and so carry the long COVID label?
+#   - No measured orthostatic outcome or no control comparison relevant here: 31159884 (symptom scales, POTS counts
+#     before/after exercise); 35172863 (Natelson 2022, uncontrolled lean test); 42717554 (blood volume vs lean test,
+#     within patients); 36310761 (questionnaire only); 35847821 (lean test in long COVID and ME/CFS, no blood-flow
+#     measure, case definitions not checked); 41138391 (pilot, 12 vs 10, tilt responses similar; no open full text);
+#     27696568 (Roerink 2017, POTS 5.7% in CFS vs 6.9% in fatigued non-CFS patients; no healthy controls, no open
+#     full text); 29357332 (blood flow during exercise, not upright posture).
+#   - Treatment studies left out: 9570178 (fludrocortisone crossover, 20 completers, unselected for orthostatic
+#     intolerance, case definition unverified); 12829200 (hydrocortisone plus fludrocortisone, aimed at the stress
+#     hormone axis); 35526605 (pyridostigmine during exercise testing, not orthostatic); 40761644, 41976810
+#     (uncontrolled case series); 12846081 (letter); case reports.
+slug: orthostatic-intolerance-cerebral-blood-flow
+name: Reduced blood flow to the brain on standing (orthostatic intolerance)
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS blood flow to the brain falls more than
+    normal when they sit up, stand or are tilted upright, often together with orthostatic
+    intolerance such as postural orthostatic tachycardia syndrome (POTS) or a fall in blood
+    pressure, and that this contributes to their symptoms.
+  sources: [pmid:32140630, pmid:7674527]
+level: 2
+level_reason:
+  - text: >-
+      A controlled study from a Dutch clinic (Stichting CardioZorg) measured blood flow to the brain with
+      ultrasound of the neck arteries during a 30-minute head-up tilt in 429 patients and 44 healthy
+      controls. All patients met the Fukuda definition, which does not require post-exertional
+      malaise, and 70% also met the International Consensus Criteria. At the end of the tilt,
+      blood flow to the brain had fallen by 26% in patients and 7% in controls; the fall was larger
+      than in controls in patients with POTS, with delayed orthostatic hypotension and with a
+      normal heart rate and blood pressure response. At mid-tilt, patients who reported more
+      orthostatic symptoms had a larger fall. No independent group has yet repeated this finding.
+      The card is at level 2 because of this study.
+    sources: [pmid:32140630]
+  - text: >-
+      A later study from the same clinic, which does not name its case definition, found a similar
+      fall while sitting in 100 severely ill patients (24.5%, against 0.4% in 15 healthy controls).
+      Being from the same group, it does not count as a repeat by others.
+    sources: [pmid:33050553, pmid:32140630]
+  - text: >-
+      An earlier controlled study from Johns Hopkins, of 23 patients meeting the CDC criteria (version
+      not stated, which does not require post-exertional malaise) and 14 healthy controls, found an
+      abnormal response to upright tilt in 22 of 23 patients
+      and 4 of 14 controls, including stages with the drug isoproterenol; in the first stage,
+      without drugs, 70% of patients and no controls. One of its authors is also an author of the Dutch study, so the two are
+      not independent.
+    sources: [pmid:7674527, pmid:32140630]
+  - text: >-
+      An independent study from New Jersey, of 62 patients meeting the Fukuda definition and 35
+      controls, found an abnormal standing test in 53% of patients and 20% of controls. The difference
+      lay in low carbon dioxide in the breath on standing (hypocapnia; 20.6% against 2.9%); rates of
+      orthostatic tachycardia and of a fall or rise in blood pressure did not differ significantly. It did not measure
+      blood flow to the brain, so the card does not count it as a repeat of the Dutch finding.
+    sources: [pmid:17263876, pmid:32140630]
+  - text: >-
+      Against the blood-pressure and heart-rate findings, a population-based study from Wichita, of
+      58 patients meeting the Fukuda definition and 55 healthy controls, found orthostatic
+      instability on tilt in 30% of eligible patients and 48% of controls. With 58 patients enrolled
+      (the abstract does not say how many were tilted), an equally ranked definition and a control
+      group, it contradicts the 23-patient Johns Hopkins study. Its abstract reports no measure of
+      blood flow to the brain.
+    sources: [pmid:16378795, pmid:7674527]
+  - text: >-
+      The card does not reach level 3: no independent group with a verified case definition has
+      repeated the fall in blood flow to the brain. Two studies from a New York laboratory found
+      lower blood flow velocity in the brain on tilt (in one, a fall of 22.5% in 15 patients against
+      8.7% in 11 controls), and a study from Osaka of 28 young patients and 20 controls found slower
+      recovery of brain oxygen on standing. A Johns Hopkins study of 26 patients and 23 controls
+      found no difference in blood flow velocity at any of the measured time points (supine, 1 and 5
+      minutes after tilt, 5 and 1 minutes before the end, and at termination). The case definitions of
+      all four are not yet verified, so none of them can support or contradict the card.
+    sources: [pmid:22180650, pmid:25277740, pmid:12006954, pmid:12593133]
+  - text: >-
+      The card does not reach level 4. In a placebo-controlled trial of 100 patients meeting the CDC
+      criteria who had a fall in blood pressure on tilt, 7 of 50 given fludrocortisone and 5 of 50 given placebo improved by at least 15 points on a wellness
+      scale (P = .76), and the share with a normal tilt test afterwards did not differ. In a
+      sham-controlled trial of daily tilt training at home in 38 patients meeting the Fukuda
+      definition, standing blood pressure fell 8.0 mmHg less in the training group at 4 weeks, but
+      fatigue did not differ at 4 weeks, with a trend towards less fatigue at 6 months, in this
+      feasibility study.
+    sources: [pmid:11150109, pmid:19912315]
+  - text: >-
+      Two small studies changed blood flow to the brain directly. In a randomised crossover study
+      of 16 patients from the Dutch clinic, compression stockings reduced the fall in blood flow to
+      the brain during tilt (14% with stockings, 25% without); symptoms were not an outcome and the
+      paper does not name the case definition. In the New York study of 15 patients, phenylephrine,
+      which raises blood pressure, reduced the fall in blood flow velocity on tilt (8.1%
+      against 22.5% untreated) and the slowing on a working-memory task; its case definition is not yet
+      verified. Neither can count towards level 4.
+    sources: [pmid:35056360, pmid:25277740]
+# Contested: null (proposal). See header: no contradicting study of comparable quality to 32140630 (needs >= 214.5
+# patients, Fukuda or stricter, controls). 16378795 contradicts 7674527, which the card does not need for rung 2.
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        The Dutch study set a lower limit of normal at a 13% fall in blood flow to the brain, from its
+        44 healthy controls, and found a larger fall in 82% to 100% of patients depending on their
+        heart rate and blood pressure response. The later sitting study came from the same clinic and
+        does not name its case definition. No independent patient group has tested this cut-off.
+      sources: [pmid:32140630, pmid:33050553]
+  explains_pem:
+    # 33585505: full text, "No significant relations were found between the reduction in percentage of CBF and NRS
+    # for pain, fatigue, or concentration at all time points assessed (data not shown)." ICC (with Fukuda), but
+    # `context`, measures_pem false (a passive tilt is orthostatic stress, not physical or mental effort), and no
+    # link to blood flow was found.
+    value: false
+    reason:
+      text: >-
+        No study at level 2 or above measures post-exertional malaise and links it to blood flow to
+        the brain in the same patients. A study from the Dutch clinic, of patients meeting both the
+        Fukuda definition and the International Consensus Criteria, tracked pain, fatigue and concentration scores after a tilt test in 278 patients
+        and 30 healthy controls: scores rose in patients and were still higher after 7 days, while
+        controls' did not change. The size of the fall in blood flow to the brain was not related to
+        the change in symptoms. A passive tilt is orthostatic stress rather than physical or mental
+        effort, so the card does not count it as a direct measure of post-exertional malaise.
+      sources: [pmid:33585505]
+subgroups:
+  - text: >-
+      Studies describe several patterns on standing or tilt: POTS, delayed orthostatic hypotension, a
+      fall in blood flow to the brain with a normal heart rate and blood pressure response, and low
+      carbon dioxide in the breath (hypocapnia), which in one study was found mostly without heart
+      rate or blood pressure changes.
+    sources: [pmid:32140630, pmid:17263876]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=62 patients and 35 controls found low carbon dioxide in the breath on standing
+      (orthostatic hypocapnia) in 20.6% of patients and 2.9% of controls. Not yet repeated by an
+      independent group with a verified case definition.
+    sources: [pmid:17263876]
+studies:
+  # --- supports ---
+  - id: pmid:32140630
+    title: "Cerebral blood flow is reduced in ME/CFS during head-up tilt testing even in the absence of hypotension or tachycardia: A quantitative, controlled study using Doppler echography."
+    year: 2020
+    cohort: me_cfs
+    # Fukuda: flag "does not require PEM". 70% also met ICC (same sentence; ICC per Methods: "as defined by Carruthers et al. (2011)"). Full text PMC7044650.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "All patients met the Fukuda criteria for CFS, and 70% met the criteria for ME."
+    design: controlled
+    # 247 normal HR/BP, 62 delayed orthostatic hypotension, 120 POTS. End-tilt CBF reduction 7% HC vs 26% overall
+    # (24%, 28%, 29%; all P < .0005). Lower limit of normal 13% (2 SD of HC). Full text: 510 screened, 27 excluded for
+    # heart-rate or blood-pressure lowering drugs, 54 for other reasons.
+    n_patients: 429
+    n_controls: 44
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Visser FC, Stichting CardioZorg, Hoofddorp, Netherlands (Rowe PC, Johns Hopkins, co-author; same clinic as 33050553, 35056360, 33585505)
+    finding: >-
+      A study of n=429 patients and 44 healthy controls found that blood flow to the brain fell by
+      26% at the end of a head-up tilt in patients and by 7% in controls, with a larger fall in
+      patients with POTS, delayed orthostatic hypotension or a normal heart rate and blood pressure
+      response, and that more orthostatic symptoms went with a larger fall.
+  - id: pmid:7674527
+    title: The relationship between neurally mediated hypotension and the chronic fatigue syndrome.
+    year: 1995
+    cohort: me_cfs
+    # CDC version not named; flag "does not require PEM".
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "A sample of 23 patients with chronic fatigue syndrome (five men and 18 women; mean age, 34 years), each of whom fulfilled the strict diagnostic criteria of the Centers for Disease Control and Prevention, was recruited from regional chronic fatigue support groups and from the investigators' clinical practices."
+    design: controlled
+    # Three-stage tilt (stage 2-3 with isoproterenol). Stage 1 abnormal: 70% of patients, no controls. Treatment
+    # follow-up (fludrocortisone, beta blockers, disopyramide) had no control group: 9 patients reported complete or
+    # nearly complete resolution.
+    n_patients: 23
+    n_controls: 14
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher  # abnormal tilt response more frequent in patients
+    group: Calkins H and Rowe PC, Johns Hopkins University, Baltimore, USA (Rowe PC also on 32140630, 11150109, 12593133)
+    finding: >-
+      A study of n=23 patients and 14 healthy controls found an abnormal response to upright tilt in
+      22 of 23 patients and 4 of 14 controls, and an abnormal response during the first stage without
+      drugs in 70% of patients and no controls.
+  - id: pmid:17263876
+    title: Hypocapnia is a biological marker for orthostatic intolerance in some patients with chronic fatigue syndrome.
+    year: 2007
+    cohort: me_cfs
+    # "1994 case definition for CFS" = Fukuda 1994 (named by year, not by author); flag "does not require PEM".
+    # Full text PMC1796865.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "The subjects were 75 patients (60 women and 15 men) fulfilling the 1994 case definition for CFS."
+    design: controlled
+    # 75 patients and 40 controls enrolled; analysis confined to 62 and 35 after exclusions (full text). 8-minute
+    # standing test with end-tidal CO2.
+    n_patients: 62
+    n_controls: 35
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed  # more abnormal tests and hypocapnia; tachycardia, hypotension, hypertension not significant
+    group: Natelson BH, UMDNJ-New Jersey Medical School, Newark, USA (Stewart JM co-author; no author shared with 32140630 or 7674527)
+    finding: >-
+      A study of n=62 patients and 35 controls found an abnormal standing test in 53% of patients and
+      20% of controls and orthostatic hypocapnia in 20.6% and 2.9%, while rates of orthostatic
+      tachycardia, hypotension and hypertension did not differ significantly.
+  # --- contradicts ---
+  - id: pmid:16378795
+    title: Orthostatic instability in a population-based study of chronic fatigue syndrome.
+    year: 2005
+    cohort: me_cfs
+    # "1994 chronic fatigue syndrome research case definition" = Fukuda 1994; flag "does not require PEM".
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "Fifty-eight subjects who fulfilled criteria of the 1994 chronic fatigue syndrome research case definition and 55 healthy controls participated in a 2-day inpatient evaluation."
+    design: controlled
+    # Number tilted ("eligible") not in the abstract; no open full text. TODO: verify measurement n.
+    n_patients: 58
+    n_controls: 55
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # contradicts 7674527 (more abnormal tilt responses); no blood-flow measure
+    direction: no_difference
+    group: Reeves WC, Centers for Disease Control and Prevention, Atlanta, USA
+    finding: >-
+      A population-based study of n=58 patients and 55 healthy controls found orthostatic
+      instability on head-up tilt in 30% of eligible patients, all with postural tachycardia, and 48%
+      of controls, and none on a stand-up test.
+  # --- context (treatment trials, no effect; see header) ---
+  - id: pmid:11150109
+    title: "Fludrocortisone acetate to treat neurally mediated hypotension in chronic fatigue syndrome: a randomized controlled trial."
+    year: 2001
+    cohort: me_cfs
+    # CDC version not named; flag "does not require PEM".
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "One hundred individuals aged 18 to 50 years who satisfied Centers for Disease Control and Prevention criteria for CFS and had NMH provoked during a 2-stage tilt-table test."
+    design: intervention_controlled
+    # Randomised, double-blind, 9 weeks. 83 of 100 had adequate outcome data; intention-to-treat analysis.
+    n_patients: 50  # fludrocortisone arm
+    n_controls: 50  # placebo arm
+    measures_pem: false
+    preregistered: null  # conducted 1996-1999; no registration in the record
+    role: context  # treatment aimed at neurally mediated hypotension, no symptom benefit; not a contradiction of a blood-flow finding
+    direction: not_applicable
+    group: Straus SE (last author) and Rowe PC, Johns Hopkins Hospital, Baltimore, USA (Rowe PC also on 7674527, 32140630)
+    finding: >-
+      A placebo-controlled trial of n=100 patients with neurally mediated hypotension on tilt found
+      at least a 15-point improvement in wellness in 7 of 50 given fludrocortisone and 5 of 50 given
+      placebo (P = .76), and no difference in other symptom scores or in the share with a normal
+      tilt test after treatment.
+  - id: pmid:19912315
+    title: Home orthostatic training in chronic fatigue syndrome--a randomized, placebo-controlled feasibility study.
+    year: 2010
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "Thirty-eight patients with CFS (Fukuda Criteria) were randomly allocated to daily tilt training (n = 19) or sham training (n = 19) for 6 months."
+    design: intervention_controlled
+    n_patients: 19  # tilt training arm; one withdrew from each arm
+    n_controls: 19  # sham arm
+    measures_pem: false
+    preregistered: null
+    role: context  # changed standing blood pressure, no fatigue difference at 4 weeks; not a contradiction of a blood-flow finding
+    direction: not_applicable
+    group: Newton JL, NIHR Biomedical Research Centre in Ageing, Newcastle, UK
+    finding: >-
+      A sham-controlled trial of n=38 patients found that standing blood pressure fell 8.0 mmHg less
+      after 4 weeks of home tilt training than after sham training, with no significant difference
+      in fatigue at 4 weeks and a trend towards less fatigue at 6 months.
+  # --- context ---
+  - id: pmid:33050553
+    title: Reductions in Cerebral Blood Flow Can Be Provoked by Sitting in Severe Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.
+    year: 2020
+    cohort: me_cfs
+    # Full text PMC7712289: "During the first visit, it was determined whether patients satisfied the criteria for CFS
+    # and ME, taking the exclusion criteria into account [4,5]." Names no definition; the ICC sentence is about
+    # severity scoring only.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled
+    n_patients: 100
+    n_controls: 15
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Visser FC, Stichting CardioZorg, Hoofddorp, Netherlands (same clinic as 32140630)
+    finding: >-
+      A study of n=100 severely ill patients and 15 healthy controls found that blood flow to the
+      brain fell by 24.5% on sitting in patients and 0.4% in controls; in the 10 patients without
+      orthostatic complaints in daily life the fall was 2.7%, not significantly different from
+      controls.
+  - id: pmid:22180650
+    title: Postural neurocognitive and neuronal activated cerebral blood flow deficits in young chronic fatigue syndrome patients with postural tachycardia syndrome.
+    year: 2012
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text (PMC3311460)
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 25
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Stewart JM and Ocon AJ, New York Medical College, Valhalla, USA (same laboratory as 25277740)
+    finding: >-
+      A study of n=25 patients and 20 controls found slightly lower mean blood flow velocity in the
+      brain in patients at each tilt angle, no rise in blood flow velocity with mental tasks, and
+      memory-task performance that worsened as the tilt angle increased.
+  - id: pmid:25277740
+    title: "Phenylephrine alteration of cerebral blood flow during orthostasis: effect on n-back performance in chronic fatigue syndrome."
+    year: 2014
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text (PMC4233252)
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled  # patients and controls; phenylephrine compared with untreated tilt in the same patients
+    n_patients: 15
+    n_controls: 11
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Stewart JM, New York Medical College, Valhalla, USA (same laboratory as 22180650; same numbers as 38682242)
+    finding: >-
+      A study of n=15 patients and 11 controls found that blood flow velocity in the brain fell 22.5%
+      on tilt in patients and 8.7% in controls; in patients, phenylephrine reduced the fall to 8.1%
+      and reduced the tilt-induced slowing on a memory task.
+  - id: pmid:12006954
+    title: Impaired postural cerebral hemodynamics in young patients with chronic fatigue with and without orthostatic intolerance.
+    year: 2002
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract says "chronic fatigue", names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 28
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Kajimoto Y and Tanaka H, Osaka Medical College, Japan
+    finding: >-
+      A study of n=28 young patients with chronic fatigue and 20 controls found no rapid recovery of
+      brain oxygenation at the start of standing in 15 of 16 patients with orthostatic intolerance,
+      6 of 12 without, and 2 of 20 controls.
+  - id: pmid:12593133
+    title: Cerebral and systemic hemodynamics changes during upright tilt in chronic fatigue syndrome.
+    year: 2003
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 26
+    n_controls: 23
+    measures_pem: false
+    preregistered: null
+    role: context  # would be `contradicts` once verified (see header)
+    direction: no_difference
+    group: Rowe PC, Johns Hopkins Medical Institutions, Baltimore, USA (DeBusk K, Calkins H, Snader S, Lucas KE also on 11150109)
+    finding: >-
+      A study of n=26 patients and 23 healthy controls found no difference in blood flow velocity in
+      the brain at any of the measured time points of a three-stage tilt, similar rates of neurally mediated hypotension
+      (21 and 14) and POTS (9 and 7), and lower end-tidal carbon dioxide in patients at the end of
+      the test.
+  - id: pmid:35056360
+    title: "Compression Stockings Improve Cardiac Output and Cerebral Blood Flow during Tilt Testing in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) Patients: A Randomized Crossover Trial."
+    year: 2021
+    cohort: me_cfs
+    # Full text PMC8781100: "All patients underwent an extensive history and physical examination to confirm that they
+    # satisfied the criteria for the diagnosis of CFS or ME ..." Names no definition.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: intervention_controlled  # randomised order of two tilt tests, with and without stockings
+    n_patients: 16
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Visser FC, Stichting CardioZorg, Hoofddorp, Netherlands (same clinic as 32140630)
+    finding: >-
+      A randomised crossover study of n=16 patients found a smaller fall in blood flow to the brain
+      during tilt with compression stockings than without (14% against 25%), with no difference in
+      heart rate or blood pressure.
+  - id: pmid:42746015
+    title: Postural orthostatic tachycardia syndrome in adolescents with ME/CFS - a case control study.
+    year: 2026
+    cohort: me_cfs
+    # Full text PMC13574936. Next sentence: "At least one of these definitions had to be met for the diagnosis of
+    # ME/CFS." Two of the four are paediatric definitions not in the accepted table, so recorded as `other`.
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: "ME/CFS was diagnosed using the Munich Berlin Symptom Questionnaire (19), which provides four PEM-based ME/CFS case definitions: the Canadian Consensus Criteria (20), the criteria by the Institute of Medicine (IOM) (8), and two pediatric case definitions by Jason et al. (5) and Rowe et al. (4)."
+    design: controlled
+    n_patients: 18
+    n_controls: 18
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Maier A, RWTH Aachen University and Technical University of Munich, Germany
+    finding: >-
+      A study of n=18 adolescent patients and 18 matched healthy controls found POTS on a passive
+      10-minute standing test in 7 patients and no controls.
+  - id: pmid:22850676
+    title: Orthostatic tolerance testing in a prospective cohort of adolescents with chronic fatigue syndrome and recovered controls following infectious mononucleosis.
+    year: 2012
+    cohort: me_cfs
+    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 36
+    n_controls: 43
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Taylor R and Katz BZ, Northwestern University, Chicago, USA (Stewart JM co-author)
+    finding: >-
+      A study of n=36 adolescents with chronic fatigue syndrome 6 months after glandular fever and 43
+      recovered controls found an abnormal standing test in 25% and 21%, not a significant
+      difference.
+  - id: pmid:33585505
+    title: Numeric Rating Scales Show Prolonged Post-exertional Symptoms After Orthostatic Testing of Adults With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2020
+    cohort: me_cfs
+    # Full text PMC7874746, reference list: ref 1 = Fukuda et al. 1994 (CFS); ref 3 = Carruthers et al. 2011, ME
+    # international consensus criteria (ICC). Both were required, so recorded as ICC (resolved through reference
+    # numbers, as for 17263876). Patients tilted Nov 2014 - Apr 2018 at the same clinic as 32140630; overlap likely.
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "ME/CFS was considered present if participants met both the criteria for CFS (1) and ME (3), taking the exclusion criteria into account."
+    design: controlled
+    n_patients: 278  # 174 with and 104 without fibromyalgia
+    n_controls: 30
+    # A passive tilt is orthostatic stress, not physical or mental effort (spec section 3), so not a direct PEM
+    # measure, although symptoms were tracked for 7 days.
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher  # symptom scores after tilt, patients against controls
+    group: Visser FC, Stichting CardioZorg, Hoofddorp, Netherlands (same clinic as 32140630)
+    finding: >-
+      A study of n=278 patients and 30 healthy controls found that pain, fatigue and concentration
+      scores rose after a tilt test in patients and were still raised after 7 days, were unchanged in
+      controls, and were not related to the size of the fall in blood flow to the brain.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

@@ -1,0 +1,553 @@
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# FOUNDER RULINGS (2026-11-02):
+#   1. Card renamed from endothelial-dysfunction-microclots to endothelial-dysfunction; name "Endothelial dysfunction
+#      (impaired function of the blood-vessel lining)". The core claim covers only the blood-vessel lining.
+#   2. Clotting studies (microclots, platelets: 36015078, 39014464, 16479189) stay on the card as context, with the
+#      sentence that they cannot raise the level.
+#   3. Level 3, contested: null, diagnostic marker no, explains PEM no.
+#   4. 29426834 stays recorded as Fukuda (ranks below CCC, so it does not contest).
+#
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml.
+# Studies with no open full text and no case definition in the abstract (12950326, 16479189, 18031285, 37832757) stay
+# `unverified` and role `context`.
+# `direction` is on the measure named in each finding: "lower" for endothelial function (worse), "higher" for blood
+# markers of endothelial activation or for clotting measures.
+#
+# LEVEL, rung by rung (as ruled 2026-11-02)
+#   1: reached (several studies).
+#   2: reached. 32154656 (Scherbakov, Charité Berlin, CCC, controlled, 35 vs 20): lower reactive hyperaemia index.
+#   3: reached, as a partial repeat. 33829023 (Sørland, Bergen, CCC, controlled, later, separate cohort, no shared
+#      authors with 32154656): lower flow-mediated dilation (35 vs 66) and lower post-occlusive reactive hyperaemia
+#      (39 vs 30). Partial because the methods differ (finger tonometry vs ultrasound of the arm artery and laser
+#      Doppler of the skin) and the Bergen control groups came from the authors' other studies. 36730360 (Bergen) is
+#      the same group with the same control groups, so it is not independent. The clotting studies
+#      (microclots, platelets) have no confirmed recognised case definition and are context only (ruling 2).
+#   4: not reached. No controlled study changes endothelial function or clotting and measures the outcome. The vitamin
+#      D trial (25455721) did not change vascular measures; the rituximab substudy (36730360) found no difference
+#      between arms; the immunoadsorption (32154656) and cyclophosphamide (33829023) follow-ups had no control group.
+#
+# CONTESTED (ruled null). One study contradicts: 29426834 (Moneghetti, Stanford, 24 vs 24, same
+#   EndoPAT method as 32154656, no difference). Its own sentence names "1994 CDC/Fukuda" criteria plus required PEM,
+#   then says "in labeling our patients this refers to" the 2011 ICC. Recorded as Fukuda (the definition it applied).
+#   Fukuda ranks below CCC, so it is not of comparable quality to 32154656 or 33829023 (both CCC) and does not contest.
+#   Founder ruling 2026-11-02: it stays recorded as Fukuda, so the card is not contested.
+#   33671082 (Bond, ICC, no baseline difference) measures arterial stiffness, not reactive endothelial function, so it
+#   does not bear on the rung-2/3 finding; the only arterial-stiffness study pointing the other way (18031285) is
+#   unverified.
+#
+# BADGES (ruled 2026-11-02): diagnostic marker no (no cut-off tested in a second, independent cohort); explains PEM no (no
+#   study tracks symptoms after an exertion challenge and links them to endothelial function or clotting;
+#   29426834 and 33671082 used an exercise test but did not track symptoms afterwards, as far as the full texts read).
+#
+# LONG COVID: 35317812 (Haffke, post-COVID ME/CFS, CCC "2003 Canadian Consensus Criteria") and 42625188 (Wallraven,
+#   post-COVID patients meeting CCC) are cohort long_covid with a verified recognised definition, so the label shows.
+#   Findings in their long COVID patients without ME/CFS are not used as ME/CFS findings.
+#
+# TODOs:
+#   - 25455721: arm sizes not in the abstract (50 randomised); no open full text. TODO: verify.
+#   - 29426834: the measurement n for RHI is taken as the whole study (24 vs 24); not checked per measurement.
+#   - 33829023 / 36730360: same Bergen control groups (66 women from a pre-eclampsia study for FMD; 30 PORH controls
+#     from the RituxME substudy). 15 of 33829023's 40 patients came from the earlier Bergen rituximab trials (2011,
+#     2015), not RituxME; patient overlap with 36730360 is not stated.
+#   - 36902264 / 38600563: same Barcelona unit, recruitment Oct 2019-Mar 2022 and Sep 2020-Dec 2022 overlap, so
+#     patients may overlap. Not stated in either paper as read.
+#   - 36730360's case-definition quote is the paper's sentence about the RituxME trial its patients came from (CCC
+#     per the main trial, pmid:30934066 on the autoimmunity card); its methods refer to the main article.
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, hypotheses, letters without data: 34248502, 35073915, 36557009, 38399482 (Wirth: hypothesis),
+#     37584410, 10695770, 14739476 (letter), and the long COVID microclot reviews.
+#   - 22078396 (Newton 2012, Dundee, FMD and PORH): a letter with data; no abstract and no open full text, so n,
+#     case definition and finding cannot be taken from a record. TODO: fetch if a copy becomes available.
+#   - Cell or in-vitro studies using patient plasma (plausibility only): 35074481 (NO production, 11 vs 12),
+#     35954219 (post-COVID sera on endothelial cells), 34011981 (endothelial microRNAs; CCC and/or Fukuda),
+#     41704659 (IgG on cells).
+#   - Same Dundee group, other measures or populations: 14503920 (acetylcholine response, CFS vs Gulf War),
+#     20819963 (children, arterial stiffness not different), 25455721 kept as the only trial.
+#   - Other blood or vessel measures, not endothelial function or clotting: 3093959 (blood rheology, 1986),
+#     20064266 (fibrinogen and red cell measures, 10 vs 10, no difference), 30594919 (red cell deformability),
+#     22273713 (pulse timing on tilt), 17720950 (mean platelet volume in a general blood-count study), 26615570
+#     (VEGF-A), 41406947 (proteomics incl. thrombus proteins; not read in full), 36097586 (post-COVID, no ME/CFS
+#     definition), 11085289 (Gulf War illness).
+#   - Long COVID without a recognised ME/CFS case definition: 37809592 (microclot flow cytometry), 35806214,
+#     36430175 (retinal), 38066589 (muscle capillaries). Not ME/CFS findings.
+slug: endothelial-dysfunction
+name: Endothelial dysfunction (impaired function of the blood-vessel lining)
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS the lining of the blood vessels (the
+    endothelium) does not work properly, so that blood vessels widen less well when the tissues need
+    more blood flow.
+  sources: [pmid:32154656, pmid:33829023]
+level: 3
+level_reason:
+  - text: >-
+      A study from Berlin measured how far the finger's blood vessels widen after the blood flow to
+      the arm is briefly stopped (the reactive hyperaemia index) in 35 patients meeting the Canadian
+      Consensus Criteria and 20 healthy people of similar age. The index was lower in patients (1.95
+      against 2.21), and 18 of 35 patients (51%) and 4 of 20 controls (20%) were below the cut-off the
+      authors used for endothelial dysfunction. The card is at level 2 because of this study.
+    sources: [pmid:32154656]
+  - text: >-
+      A later study from Bergen, Norway, with no authors shared with the Berlin study, tested patients
+      meeting the Canadian Consensus Criteria with two other methods. The rise in skin blood flow after
+      blood flow to the arm was briefly stopped (post-occlusive reactive hyperaemia), the measure
+      closest to the Berlin index, was lower in 39 patients than in 30 healthy people. Widening of the
+      arm artery (flow-mediated dilation) was lower in 35 patients than in 66 healthy women (median
+      5.9% against 7.7%); this control group was all women, while 78% of the patients were women. The
+      card is at level 3 because this independent group found reduced endothelial function in a
+      separate cohort. The repeat is partial: the two groups used different methods, and the paper
+      says it had no designated control group of its own, but used healthy people from two other
+      studies by the same authors.
+    sources: [pmid:33829023, pmid:32154656]
+  - text: >-
+      The Bergen group found the same in 39 patients from the RituxME rituximab trial, which selected
+      patients on the Canadian Consensus Criteria, compared with the same
+      control groups (flow-mediated dilation 5.1% against 8.2%). Because the group and the controls
+      are the same, this does not count as an independent repeat.
+    sources: [pmid:36730360, pmid:33829023]
+  - text: >-
+      Two studies of people whose ME/CFS began after COVID-19, both checked against the Canadian
+      Consensus Criteria, point the same way. The Berlin group found a low reactive hyperaemia index
+      in 5 of 14 such patients and in none of 15 healthy controls. A study from Munich, which recorded
+      ME/CFS status against the Canadian Consensus Criteria as part of patient-reported measures, found
+      narrower small arteries relative to veins at the back of the eye in 62 such patients than in 96 people
+      never infected with the virus.
+    sources: [pmid:35317812, pmid:42625188]
+  - text: >-
+      Blood levels of endothelin-1, a substance made by the vessel lining that narrows blood vessels,
+      were higher in patients than in controls in the Berlin post-COVID study (14 patients and 15
+      controls, and again in a second group of 25 patients and 47 controls) and in two studies from
+      one clinic in Barcelona using the International Consensus Criteria (32 patients and 29
+      controls; 31 patients and 31 controls). The two Barcelona studies recruited in overlapping
+      periods, so their patients may overlap.
+    sources: [pmid:35317812, pmid:36902264, pmid:38600563]
+  - text: >-
+      Against these findings, a study from California of 24 patients and 24 sedentary controls, using
+      the Fukuda definition with post-exertional malaise required, found no statistically significant
+      difference in the reactive hyperaemia index at rest (p = 0.07), during recovery or 18 hours after
+      an exercise test. The authors applied the Fukuda definition with post-exertional malaise required
+      and say this corresponds to the International Consensus Criteria; the card records Fukuda.
+      Fukuda ranks below the Canadian Consensus Criteria
+      on the published ladder, so this study does not contest the level. A study from New Zealand
+      using the International Consensus Criteria found no difference in arterial stiffness between
+      patients and controls at rest; arterial stiffness is a different measure from the widening tested
+      above.
+    sources: [pmid:29426834, pmid:33671082]
+  - text: >-
+      Studies of abnormal clotting, shown here as background, are without a confirmed recognised case
+      definition. A study from Stellenbosch, South Africa, of 25 patients described only as diagnosed
+      for more than six months and 15 healthy controls found a larger area of microclots in plasma,
+      faster clot formation and more activated-looking platelets in patients; a protein study of 15 of
+      these patients and 10 controls found differences in clotting-related proteins. These findings
+      have not been repeated by an independent group. An earlier study
+      from Dundee, Scotland, whose case definition is not yet verified, found no sign of platelet
+      activation or of blood clotting too easily in 17 patients and 16 controls. These studies cannot
+      raise the level.
+    sources: [pmid:36015078, pmid:39014464, pmid:16479189]
+  - text: >-
+      The card does not reach level 4: no controlled study has changed endothelial function or
+      clotting and measured the effect on the illness. In a placebo-controlled trial of 50 patients,
+      high-dose vitamin D did not change arterial stiffness, flow-mediated dilation or fatigue. In the
+      rituximab trial substudy, vessel measures did not differ between the rituximab and placebo
+      groups. Without a control group, endothelial function improved in 5 of 6 patients with low
+      values (P = 0.06, not statistically significant) 12 months after immunoadsorption, and changes in endothelial function did not follow
+      clinical response after cyclophosphamide.
+    sources: [pmid:25455721, pmid:36730360, pmid:32154656, pmid:33829023]
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No study on this card tests a cut-off from one patient group in a second, independent group.
+        The Berlin studies used different cut-offs for the reactive hyperaemia index (1.81 and 1.67) in
+        different patient groups, and the Munich eye study tested its combined model within one cohort.
+      sources: [pmid:32154656, pmid:35317812, pmid:42625188]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        No study on this card tracks symptoms after an exertion challenge and links them to endothelial
+        function or clotting in the same patients. Two studies measured vessel function after an
+        exercise test, without tracking symptoms: one found no difference in the reactive hyperaemia
+        index 18 hours later, and one found that arterial stiffness 48 hours later fell within the
+        control group but not within the patient group (7 each at 48 hours; the groups were not
+        compared directly).
+      sources: [pmid:29426834, pmid:33671082]
+subgroups:
+  - text: >-
+      Reduced endothelial function may apply to a subset of patients: in the Berlin study about half of
+      the patients (18 of 35) were below the cut-off, and they reported more severe disease than the
+      patients above it.
+    sources: [pmid:32154656]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=31 patients and 31 sedentary healthy controls found higher blood levels of
+      plasminogen activator inhibitor-1 (serpin E1), a protein that slows the breakdown of clots, in
+      patients than in controls and than in people with long COVID. Not yet repeated.
+    sources: [pmid:38600563]
+  - text: >-
+      A study of n=62 patients whose ME/CFS began after COVID-19 and 96 people never infected found a
+      lower ratio of small-artery to small-vein width at the back of the eye in patients. Not yet
+      repeated.
+    sources: [pmid:42625188]
+studies:
+  # --- supports ---
+  - id: pmid:32154656
+    title: Peripheral endothelial dysfunction in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2020
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Diagnosis of ME/CFS was based on Canadian Criteria1 and exclusion of other medical or neurological diseases, which may cause fatigue."
+    design: controlled
+    # Full text (PMC7261521): "RHI was significantly reduced in patients compared with healthy controls (1.95 ± 0.47
+    # vs. 2.21 ± 0.37, P < 0.05". ED (RHI <= 1.81) in 18/35 vs 4/20 (abstract). Nine patients with raised beta2
+    # antibodies had immunoadsorption; RHI improved in 5 of 6 with ED at baseline (abstract, P = 0.06), uncontrolled.
+    n_patients: 35
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Scheibenbogen C, Charité - Universitätsmedizin Berlin, Germany (same group as 35317812)
+    finding: >-
+      A study of n=35 patients and 20 healthy controls found a lower reactive hyperaemia index in
+      patients, with 51% of patients and 20% of controls below the cut-off for endothelial dysfunction;
+      patients below it reported more severe disease.
+  - id: pmid:33829023
+    title: Reduced Endothelial Function in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome-Results From Open-Label Cyclophosphamide Intervention Study.
+    year: 2021
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Inclusion criteria were age 18 to 65, a confirmed ME/CFS diagnosis according to Canadian consensus criteria (4), disease duration of minimum 2 years, disease severity from mild-moderate to severe (excluding mild and very severe ME/CFS) and signed informed consent."
+    # Substudy of an open-label trial; the comparison with healthy controls is cross-sectional (baseline).
+    design: controlled
+    # 40 patients in the trial. FMD measured in 35 vs 66 healthy women (from a pre-eclampsia study by MKS); PORH in
+    # 39 vs 30 (healthy volunteers from the RituxME substudy) — full text Table 2. Serum markers (arginine, ADMA, hs-CRP)
+    # no difference; SDMA lower in patients (full text Table 5).
+    n_patients: 35
+    n_controls: 66
+    measures_pem: false
+    preregistered: null
+    role: supports  # partial repeat of 32154656: later, separate cohort, no shared authors, different methods
+    direction: lower
+    group: Fluge Ø, Haukeland University Hospital and University of Bergen, Norway (same group as 36730360)
+    finding: >-
+      A study of n=35 patients and 66 healthy women found lower flow-mediated dilation in patients
+      (median 5.9% against 7.7%), and of 39 patients and 30 healthy controls lower post-occlusive
+      reactive hyperaemia; changes over 12 months did not follow clinical response to cyclophosphamide.
+  - id: pmid:36730360
+    title: Endothelial dysfunction in ME/CFS patients.
+    year: 2023
+    cohort: me_cfs
+    # CCC is inherited from the parent RituxME trial (pmid:30934066): the paper refers to the main article for
+    # inclusion; this is its sentence naming the trial's criteria.
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "The study did not report any significant differences in outcome measures between the rituximab and placebo groups, thus refuting the hypothesis that B-cell depletion could be beneficial for ME/CFS patients selected on Canadian consensus criteria."
+    design: controlled
+    # Full text (PMC9894436) Table 2: FMD 39 patients vs 66 healthy controls (5.1% vs 8.2%); PORH 39 vs 30
+    # (1354 vs 2208 PU). Same two control groups as 33829023. Rituximab vs placebo: no differences in vascular measures.
+    n_patients: 39
+    n_controls: 66
+    measures_pem: false
+    preregistered: null
+    role: supports  # same group and same control groups as 33829023: not independent
+    direction: lower
+    group: Fluge Ø, Haukeland University Hospital and University of Bergen, Norway (same group as 33829023)
+    finding: >-
+      A study of n=39 patients and 66 healthy controls found lower flow-mediated dilation in patients
+      (5.1% against 8.2%), and lower post-occlusive reactive hyperaemia than in 30 healthy controls,
+      with no difference between rituximab and placebo groups in vessel measures.
+  - id: pmid:35317812
+    title: Endothelial dysfunction and altered endothelial biomarkers in patients with post-COVID-19 syndrome and chronic fatigue syndrome (ME/CFS).
+    year: 2022
+    # long_covid: ME/CFS after COVID-19, CCC verified; turns on the long COVID label. PCS patients without ME/CFS
+    # (16) are not used as ME/CFS findings.
+    cohort: long_covid
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Fourteen of the patients fulfilled the diagnostic criteria for ME/CFS according to the 2003 Canadian Consensus Criteria [4, 25]."
+    design: controlled
+    # Full text (PMC8938726): RHI <= 1.67 in 5/14 ME/CFS and 0/15 HCs (no group test of RHI reported). ET-1 higher in
+    # ME/CFS than HCs (p = 0.0221, 14 vs 15); validation cohort (Table 2B): ET-1 measured in 25 ME/CFS vs 47 HCs
+    # (p = 0.0003); 26 and 50 enrolled. No association of
+    # RHI with Chalder, Bell or PEM score.
+    n_patients: 14
+    n_controls: 15
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower  # endothelial function; ET-1 higher
+    group: Sotzny F and Scheibenbogen C, Charité - Universitätsmedizin Berlin, Germany (Scherbakov N, Doehner W, Sotzny F also on 32154656)
+    finding: >-
+      A study of n=14 patients with ME/CFS after COVID-19 and 15 healthy controls found a low reactive
+      hyperaemia index in 5 patients and no controls, and higher endothelin-1 in patients, which a
+      second group of 25 patients and 47 controls also showed.
+  - id: pmid:42625188
+    title: "Microvascular remodeling and endothelial dysfunction across the post-COVID-19 spectrum: a prospective observational case-control study."
+    year: 2026
+    # long_covid: PCS patients assessed for ME/CFS with CCC; only the 62 meeting CCC are used.
+    cohort: long_covid
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "PROMs were assessed: PCS Severity (PCS Severity Score [39] and COVID-19 Yorkshire Rehabilitation Scale (C19-YRS) [40]), fatigue (Fatigue Severity Scale, FSS [41]), depression (Patient Health Questionnaire-9, PHQ-9 [42]), anxiety disorders (Generalized Anxiety Disorder-7, GAD-7 [43]), health-related quality of life (EuroQol 5-Dimensions 5-Levels questionnaire (EQ-5D-5 L [44]) and ME/CFS status using the Canadian Consensus Criteria (CCC) [45]."
+    design: controlled
+    # Full text (PMC13495223): "AVR was lower in PCS patients with ME/CFS than in both NI controls (p < 0.001) and
+    # recovered individuals (p = 0.010)." Adjusted: AVR higher in NI (Std. beta = 0.31, p < 0.001). AUC 0.79 is a
+    # within-cohort model, not external validation. Registered NCT05635552 (timing not stated).
+    n_patients: 62
+    n_controls: 96
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Schmaderer C, German Centre for Infection Research (DZIF), Partner Site Munich, Germany
+    finding: >-
+      A study of n=62 patients with ME/CFS after COVID-19 and 96 people never infected found a lower
+      ratio of retinal small-artery to small-vein width in patients, after adjustment for age, sex and
+      cardiovascular risk factors.
+  - id: pmid:36902264
+    title: "Skin Temperature Circadian Rhythms and Dysautonomia in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: The Role of Endothelin-1 in the Vascular Tone Dysregulation."
+    year: 2023
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "Patients with ME/CFS were potentially eligible if they were female, aged ≥ 18 years, with a confirmed diagnosis by a specialist of ME/CFS according to the 2011 international consensus criteria [7]."
+    design: controlled
+    # 67 women vs 48 controls in the study; Table 2 footnote: "Circulating endothelial biomarkers were measured in 32
+    # ME/CFS cases and 29 healthy controls." ET-1 1.84 vs 1.12 pg/mL (p = 0.004), VCAM-1 739 vs 494 ng/mL (p < 0.001),
+    # ICAM-1 no difference. Recruited Oct 2019-Mar 2022, Vall d'Hebron.
+    n_patients: 32
+    n_controls: 29
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Castro-Marrero J, Vall d'Hebron Research Institute, Barcelona, Spain (same unit as 38600563)
+    finding: >-
+      A study of 67 women patients and 48 healthy controls, with blood markers measured in n=32
+      patients and 29 controls, found higher endothelin-1 and VCAM-1 in patients and no difference in
+      ICAM-1.
+  - id: pmid:38600563
+    title: "Association of circulating biomarkers with illness severity measures differentiates myalgic encephalomyelitis/chronic fatigue syndrome and post-COVID-19 condition: a prospective pilot cohort study."
+    year: 2024
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "ME/CFS patients were eligible if they were aged ≥ 18 years and had a confirmed diagnosis by a specialist physician based on international consensus criteria (2011 ICC), the recommended case criteria for ME/CFS research purposes being those set out in an updated EUROMENE report [19]."
+    design: controlled
+    # Abstract: ET-1 higher (p < 0.05), VCAM-1 higher (p < 0.001), nitrites lower (p < 0.01); ME/CFS higher serpin E1
+    # (PAI-1) and E-selectin than long COVID and controls (p < 0.01). Also 23 long COVID (WHO definition), not used.
+    # Recruited Sep 2020-Dec 2022, same unit as 36902264: patients may overlap.
+    n_patients: 31
+    n_controls: 31
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Castro-Marrero J, Vall d'Hebron Research Institute, Barcelona, Spain (same unit as 36902264)
+    finding: >-
+      A study of n=31 patients and 31 sedentary healthy controls found higher endothelin-1, VCAM-1,
+      E-selectin and plasminogen activator inhibitor-1, and lower nitrites, in patients.
+  # --- contradicts ---
+  - id: pmid:29426834
+    title: Value of Circulating Cytokine Profiling During Submaximal Exercise Testing in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2018
+    cohort: me_cfs
+    # The paper continues: "Therefore, in labeling our patients this refers to the revised international consensus
+    # criteria from 2011". Recorded as Fukuda (the criteria applied, plus required PEM).
+    # Founder ruling 2026-11-02: stays Fukuda.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "When designing the study we used the 1994 Centers for Disease Control (CDC)/Fukuda international diagnostic criteria for ME/CFS, but required participants to have post exertional malaise."
+    design: controlled
+    # Full text (PMC5807550): "the reactive hyperemia index (RHI) was similar in both groups at rest (2.21 ± 0.71 vs
+    # 2.44 ± 0.67, p = 0.07)"; no difference during recovery (p = 0.14) or 18 hours post exercise (p = 0.92). EndoPAT.
+    # Exercise test with RHI afterwards, but symptoms after exertion not linked to RHI: measures_pem false.
+    n_patients: 24
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    role: contradicts
+    direction: no_difference
+    group: Montoya JG, Stanford University School of Medicine, Stanford, CA, USA
+    finding: >-
+      A study of n=24 patients and 24 sedentary controls found no statistically significant difference
+      in the reactive hyperaemia index at rest (p = 0.07), during recovery or 18 hours after an
+      exercise test.
+  # --- context ---
+  - id: pmid:33671082
+    title: Effects of Post-Exertional Malaise on Markers of Arterial Stiffness in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: "Inclusion criteria for ME/CFS participants was determined by whether they met the International Consensus Criteria [24]."
+    design: controlled
+    # Abstract: "ME/CFS (n = 11) with gender and age-matched controls (n = 11)". Full text (PMC7957494): 20 ME/CFS and
+    # 16 controls enrolled; "After exclusions, 7 ME/CFS participants and their matched controls remained in the 48 h
+    # group, and 4 ME/CFS participants and matched controls in the 72 h group." Analysed n used. Arterial stiffness (AIx75, crPWV), not reactive endothelial function.
+    # Maximal exercise test, then measures at 48 or 72 h; symptoms not tracked as far as read: measures_pem false.
+    n_patients: 11
+    n_controls: 11
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Hodges L, Massey University, Palmerston North, New Zealand
+    finding: >-
+      A study of n=11 patients and 11 matched controls (20 and 16 enrolled) found no difference in
+      arterial stiffness at rest; 48 hours after a maximal exercise test it had fallen in the 7
+      controls but not in the 7 patients tested then.
+  - id: pmid:25455721
+    title: Effect of intermittent vitamin D3 on vascular function and symptoms in chronic fatigue syndrome--a randomised controlled trial.
+    year: 2015
+    cohort: me_cfs
+    # Fukuda and Canadian named together; recorded as CCC (patients met both, per the sentence).
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: "Patients with chronic fatigue syndrome according to the Fukuda (1994) and Canadian (2003) criteria were randomised to receive 100,000 units oral vitamin D3 or matching placebo every 2 months for 6 months."
+    design: intervention_controlled
+    # Abstract: "As many as 50 participants were randomised"; arm sizes not stated, no open full text. TODO: verify.
+    # Vitamin D did not change vascular measures, so it does not test whether changing endothelial function changes
+    # the illness: role context. Registered ISRCTN59927814 (timing not stated).
+    n_patients: 50
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable  # treatment vs placebo
+    group: Khan F, University of Dundee, Scotland (same Dundee group as 12950326, 16479189, 18031285)
+    finding: >-
+      A placebo-controlled trial of n=50 patients found that high-dose vitamin D for six months did not
+      change arterial stiffness, flow-mediated dilation or fatigue.
+  - id: pmid:36015078
+    title: The Occurrence of Hyperactivated Platelets and Fibrinaloid Microclots in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
+    year: 2022
+    cohort: me_cfs
+    # Full text (PMC9413879) checked: "Participants had to have been diagnosed for longer than 6 months and were asked to
+    # complete an International Consensus Criteria (ICC) [48] based questionnaire to gain an understanding of their
+    # perspective of disease severity." The ICC questionnaire measured severity, not diagnosis; no recognised case
+    # definition is stated for inclusion. Recorded as none.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled
+    # Full text: 25 ME/CFS (20 F) vs 15 controls; microclot % area 1.37 vs 0.10 (p < 0.0001); TEG of PPP alpha angle
+    # p = 0.002, MRTG p = 0.0009; whole-blood TEG compared with a clinical standard range only; platelet spreading score
+    # 2.72 vs 1.00.
+    n_patients: 25
+    n_controls: 15
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Pretorius E, Stellenbosch University, South Africa, and Kell DB, University of Liverpool, UK (same group as 39014464)
+    finding: >-
+      A study of n=25 patients and 15 healthy controls found a larger area of microclots in plasma,
+      faster clot formation in plasma and more spread, activated-looking platelets in patients.
+  - id: pmid:39014464
+    title: Data-independent LC-MS/MS analysis of ME/CFS plasma reveals a dysregulated coagulation system, endothelial dysfunction, downregulation of complement machinery.
+    year: 2024
+    cohort: me_cfs
+    # Full text (PMC11253362): "we randomly selected a subset of ME/CFS and healthy control PPP samples from our previous
+    # study cohort"; patients recruited via the ME/CFS Foundation of South Africa and completed the ICC Symptom
+    # Questionnaire; no recognised case definition stated for inclusion. Recorded as none. Same cohort as 36015078.
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled
+    n_patients: 15
+    n_controls: 10
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # 24 proteins up, 21 down, including clotting-related proteins
+    group: Pretorius E, Stellenbosch University, South Africa, and Kell DB, University of Liverpool, UK (same group and cohort as 36015078)
+    finding: >-
+      A study of n=15 patients and 10 controls found 45 plasma proteins at different levels in
+      patients, including the clotting-related proteins thrombospondin-1, platelet factor 4 and
+      protein S.
+  - id: pmid:16479189
+    title: Is chronic fatigue syndrome associated with platelet activation?
+    year: 2006
+    cohort: me_cfs
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 17
+    n_controls: 16
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference  # one aggregation measure lower in patients (collagen slope, P = 0.029)
+    group: Belch JJ, Vascular Diseases Research Unit, University of Dundee, Scotland (same group as 12950326, 18031285, 25455721)
+    finding: >-
+      A study of n=17 patients and 16 healthy controls found no evidence of increased platelet
+      activation or of blood clotting too easily; one platelet aggregation measure was lower in
+      patients.
+  - id: pmid:18031285
+    title: Low-grade inflammation and arterial wave reflection in patients with chronic fatigue syndrome.
+    year: 2008
+    cohort: me_cfs
+    case_definition: unverified  # abstract says "well-characterized patients"; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 41
+    n_controls: 30
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher  # augmentation index (arterial stiffness)
+    group: Khan F, University of Dundee, Scotland (same group as 12950326, 16479189, 25455721)
+    finding: >-
+      A study of n=41 patients and 30 healthy controls found a higher augmentation index, a measure of
+      arterial stiffness, and higher C-reactive protein and isoprostanes in patients.
+  - id: pmid:12950326
+    title: Prolonged acetylcholine-induced vasodilatation in the peripheral microcirculation of patients with chronic fatigue syndrome.
+    year: 2003
+    cohort: me_cfs
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 30
+    n_controls: 30
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # peak response no different; recovery slower
+    group: Belch JJ, Vascular Diseases Research Unit, University of Dundee, Scotland (same group as 16479189, 18031285, 25455721)
+    finding: >-
+      A study of n=30 patients and 30 matched healthy controls found the same peak skin blood flow
+      after acetylcholine in both groups, but a slower return to baseline in patients.
+  - id: pmid:37832757
+    title: People with Long COVID and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Exhibit Similarly Impaired Vascular Function.
+    year: 2025
+    cohort: me_cfs  # the 17 long COVID patients are not used
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 17
+    n_controls: 17
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Sculthorpe NF, University of the West of Scotland, Glasgow, UK
+    finding: >-
+      A study of n=17 patients, 17 people with long COVID and 17 healthy controls found lower
+      flow-mediated dilation in patients than in controls (6.60% against 11.30%).
+last_checked:
+  date: 2026-11-02
+  by: ai_pair
