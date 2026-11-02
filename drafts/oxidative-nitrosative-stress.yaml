@@ -1,0 +1,507 @@
+# FOUNDER RULING (2026-11-02): level 2, not contested, both badges no (rung 2: pmid:16085177 and pmid:21455120). The proposals below are accepted as ruled.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# PROPOSALS FOR THE FOUNDER (not rulings): level 2, contested null, diagnostic marker no, explains PEM no.
+# Scope (per brief): blood, cell and brain measures of oxidative or nitrosative stress and antioxidant defences, and
+# the controlled antioxidant trials aimed at them. Mitochondrial energy production and exercise tests are left out
+# (another card covers them).
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (21455120:
+# PMC3539515; 23185200: PMC3506242; 40627396: PMC12280928; 34444817: PMC8399248). `uv run python -m
+# me_atlas.europepmc casedef` found no open full text for any other study on the card (checked 2026-11-02;
+# 25386668 has PMC4346380 and 22281935 has PMC3896084, but neither is open access).
+# `direction` is on the measure named in each finding: "higher" for a marker of oxidative damage or of reactive
+# oxygen species, "lower" for an antioxidant; `not_applicable` for treatment against placebo.
+#
+# LEVEL, RUNG BY RUNG (proposal)
+#   1: reached (several studies).
+#   2: reached on two controlled studies with different measures: 16085177 (Kennedy 2005, Dundee, CDC_unspecified,
+#      47 v 34 enrolled, number measured not stated): higher plasma isoprostanes; and 21455120 (Maes 2011, Antwerp,
+#      Fukuda via reference 29, 56 v 37 measured): higher plasma peroxides. Other controlled studies with an accepted
+#      definition point the same way on different measures: 23185200 (Tomic, Fukuda, MDA and protein
+#      carbonyls, 24 v 19), 27224647 (Fukuda S, Fukuda, d-ROMs, n not in abstract), 40627396 (Shankar, Fukuda
+#      recorded, lymphocyte ROS, 15 v 16).
+#   3: not reached. No independent group has repeated the same measure in a separate cohort with an accepted
+#      definition. Isoprostanes: the only other study (19422646, Glasgow, 6 v 6) has an unverified case definition
+#      and shares three authors (Kennedy G, Hill A, Belch JJ) with 16085177, so it is not independent either.
+#      MDA: 23185200 (higher) is later and smaller than 21119582 (same Novi Sad clinic, Fukuda, 40 v 40, no overall
+#      difference); same group, so not a repeat in any case, and by the "larger study settles it" ruling the MDA
+#      finding cannot carry a rung. Protein carbonyls: the earlier study (12870659, Smirnova/Pall) is not on the card
+#      (case definition not in abstract, no open full text), so 23185200 is a single study. d-ROMs (serum
+#      hydroperoxides) and the plasma peroxide assay are different tests; I did not treat them as the same measure.
+#      FOUNDER QUESTION: confirm.
+#   4: not reached (and level 3 is not reached first). No controlled trial with a verified accepted definition both
+#      lowered an oxidative-stress measure and improved the illness. 25386668 (Castro-Marrero 2015, 73 patients) did
+#      both, but its case definition is unverified, so it cannot count (V9). The larger trial of the same combination
+#      from the same unit, 34444817 (2021, Fukuda, 207 randomised, 144 analysed), did not measure oxidative stress
+#      and reported that fatigue scores changed in parallel in the two groups. 10071523 (NADH, CDC_unspecified,
+#      crossover, 26) did not measure oxidative stress. 27125909 (ubiquinol) is unverified.
+#
+# CONTESTED (proposal: null). Rung 2 rests on 16085177 (isoprostanes) and 21455120 (plasma peroxides); no study on
+#   the card measures either against them. 21119582 (Fukuda, 40 v 40) contradicts the MDA result of 23185200 (Fukuda, 24 v 19) at comparable
+#   quality (same definition, controls, 40 >= half of 24), but rung 2 does not need 23185200, so the level is not
+#   contested; the conflict is described on the card. 19906518 (brain glutathione, no difference) and 22281935
+#   (lower) are both unverified.
+#
+# BADGES (proposal): diagnostic marker no — no cut-off from one cohort was tested in a second, independent cohort;
+#   21455120 reports a non-significant ROC; 40627396's follow-up was a small case study of three people from a
+#   family cohort, studied by the same group. Explains PEM no — no study tracks symptoms after an exertion challenge
+#   and links them to oxidative stress; 16085177 correlated isoprostanes with a post-exertional malaise symptom
+#   score (low-risk subgroup only), not an exertion test.
+#
+# LONG COVID: no label. 40627396's long COVID donors were defined by the CDC post-COVID-conditions criteria, not an
+#   ME/CFS case definition, so they are not used. 36280755 and 36675440 (Maes group, long COVID) name no ME/CFS
+#   case definition in the abstract; not on the card.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Maes M / Bosmans E: 21455120, 21552194, 20010505 (Maes Clinics, Antwerp). Patient overlap not stated.
+#     TODO: verify.
+#   - Novi Sad (Brkic S, Tomic S, Maric D): 21119582 and 23185200, same clinic, both women aged 15-45 meeting the
+#     1994 CDC definition; whether 23185200's 24 patients overlap with 21119582's 40 is not stated. TODO: verify.
+#   - Vall d'Hebron, Barcelona (Castro-Marrero J, Alegre J): 25386668 and 34444817. 26212172 (not on the card) reports
+#     the same registered trial as 25386668 (NCT02063126).
+#   - Osaka (Fukuda S, Nojima J): 27224647 and 27125909. Patient overlap not stated.
+#   - 16085177 (Dundee) and 19422646 (Glasgow, last author Nimmo MA) share three authors: Kennedy G, Hill A and
+#     Belch JJ (PubMed author lists).
+#
+# TODOs:
+#   - 16085177: subgroup sizes (cardiovascular-risk group and low-risk group) not in the abstract; no open full text.
+#   - 27224647: number of patients and controls not in the abstract; no open full text. TODO: verify.
+#   - 19906518: split of the 26 participants between patients and controls not in the abstract. TODO: verify.
+#   - 25386668, 27125909, 19422646, 19906518, 22281935, 21552194, 20010505: case definition not in the abstract and no
+#     open full text. TODO: verify.
+#   - 40627396: recorded as Fukuda although the sentence also names the NAM (IOM 2015) and Canadian criteria; which
+#     definition each patient met is not stated. FOUNDER QUESTION: Fukuda (conservative) or IOM2015?
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Reviews, hypotheses and theory papers: 10790736, 17448611, 21253446, 21892413, 24669210, 24557875, 26454487,
+#     34315375, 19436827, 22837795 and others flagged Review.
+#   - Exercise-induced oxidative stress (exercise tests, other card): 15715687, 19457057, 22112145, 27580693,
+#     30665828, 32306967 (Jammes group). 19422646 is kept only for its resting isoprostane result.
+#   - Mitochondrial energy production (other card): 20937116, 29065167, 1446478 and other muscle spectroscopy studies.
+#   - Unverified case definition, same direction, not needed for the level: 10905542 and 17174731 (Richards, MDA and
+#     methaemoglobin higher, 33 v 27 and 31 v 41), 12870659 (protein carbonyls), 12531455 (Vecchiet, TBARS higher,
+#     vitamin E lower, 21 v 20), 20035260 (8-OHdG; higher only in patients with ME/CFS and depression).
+#   - 11388705 (Manuel y Keenoy 2001): compares Holmes 1988 CFS with fatigued patients who do not meet it, not with
+#     healthy controls.
+#   - 30563204 (Germain 2018, Fukuda, metabolomics 32 v 19): redox imbalance is the authors' reading of 14 metabolites,
+#     not a direct oxidative-stress measure.
+#   - Antibody responses to oxidatively modified epitopes (17159817, 18580855, 22614823, 25617880): immune measures.
+#   - Trials left out: 26212172 (same trial as 25386668), 20447621 (Alegre 2010, NADH, 77 completers, no difference
+#     in most outcomes; case definition not in the abstract), 15377055 (NADH against conventional therapy, no
+#     placebo), 35229657 (CoQ10 plus selenium, open-label, no control group), 21246855 (Tuina massage),
+#     21044831 (healthy women).
+#   - Animal and cell studies (mouse and rat fatigue models).
+slug: oxidative-nitrosative-stress
+name: Oxidative and nitrosative stress (too many reactive oxygen or nitrogen species for the body's antioxidant defences)
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS reactive oxygen or nitrogen species outweigh the
+    body's antioxidant defences, damaging fats, proteins and other molecules and contributing to the
+    illness.
+  sources: [pmid:16085177, pmid:21455120]
+level: 2
+level_reason:
+  - text: >-
+      A study from Dundee, Scotland, with 47 patients meeting the CDC criteria (version not named) and 34
+      healthy volunteers enrolled (the number measured is not stated) found higher blood levels of
+      isoprostanes, a marker of oxidative damage to fats, in patients, both in those with and in those
+      without cardiovascular risk factors. A study from Antwerp of 56 patients meeting the Fukuda
+      definition and 37 healthy controls found higher plasma peroxides in patients. The card is at level 2
+      because of these two controlled studies, which used different measures.
+    sources: [pmid:16085177, pmid:21455120]
+  - text: >-
+      Other controlled studies of patients meeting the Fukuda definition found higher oxidative-stress
+      markers, each on a different measure: malondialdehyde and protein carbonyls in 24 women against 19 in Novi Sad, Serbia; reactive oxygen
+      metabolites in serum in a study from Osaka whose abstract does not give the numbers; and reactive
+      oxygen species inside lymphocytes in 15 patients against 16 controls at Stanford, where the
+      difference was found in women but not in men. Because the measures differ, none of these is a repeat
+      of another, and each is unreplicated.
+    sources: [pmid:23185200, pmid:27224647, pmid:40627396]
+  - text: >-
+      The card does not reach level 3: no independent group has found the same result on the same measure
+      in a separate cohort with a confirmed recognised case definition. The only other isoprostane study, of
+      6 patients and 6 controls in Glasgow, also found higher levels at rest, but its case definition is not
+      yet verified. It shares three authors with the Dundee study, so it would not count as an independent
+      repeat even with a verified definition.
+    sources: [pmid:19422646, pmid:16085177]
+  - text: >-
+      Malondialdehyde results conflict. An earlier study from the same Novi Sad clinic, of 40 women meeting
+      the Fukuda definition and 40 healthy women, found no overall difference between the groups; the
+      authors report a difference only after dividing patients by malondialdehyde level, and title the
+      paper as showing elevated lipid peroxidation. It is larger than the 24-patient study that found
+      higher levels and uses the same definition, so under the rubric the malondialdehyde finding cannot
+      carry a level. The two studies share authors, and the overlap between their patients is not stated.
+      They may also have used different methods: the 24-patient study used an ELISA test for
+      malondialdehyde bound to proteins (OxiSelect MDA Adduct ELISA), and the abstract of the earlier
+      study does not give its method. The card's level does not rest on this finding.
+    sources: [pmid:21119582, pmid:23185200]
+  - text: >-
+      Measures of antioxidant defences are mixed. In studies with a recognised definition, antioxidant
+      potential in serum was lower in the Osaka study, while glutathione in lymphocytes was higher in both
+      sexes in the Stanford study (in men, in two of the three cell types tested). In studies whose case
+      definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients than in 22 controls;
+      whole-blood glutathione peroxidase activity did not differ between 40 patients and 24 controls;
+      glutathione in the brain was lower in 15 patients than in 13 healthy volunteers in one study and did
+      not differ in another of 26 people in all.
+    sources: [pmid:27224647, pmid:40627396, pmid:20010505, pmid:21552194, pmid:22281935, pmid:19906518]
+  - text: >-
+      The card does not reach level 4: no controlled trial in patients with a confirmed recognised case
+      definition has lowered an oxidative-stress measure and improved the illness. A placebo-controlled
+      trial of coenzyme Q10 plus NADH in 73 patients reported less fatigue than with placebo and lower
+      lipid peroxides in blood cells of the treated group (the abstract does not say whether against
+      placebo or against baseline), but its case definition is not yet verified. A larger
+      placebo-controlled trial of
+      the same combination from the same unit, in 207 women meeting the Fukuda definition, did not measure
+      oxidative stress and reported that fatigue scores changed in parallel in the two groups. A crossover
+      trial of NADH alone in 26 patients meeting the CDC criteria did not measure oxidative stress either.
+    sources: [pmid:25386668, pmid:34444817, pmid:10071523]
+  - text: >-
+      A placebo-controlled trial of ubiquinol, the reduced form of coenzyme Q10, in 43 patients (31
+      completed) reported improvement in several symptoms; its case definition is not yet verified.
+    sources: [pmid:27125909]
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No study on this card tests a cut-off from one patient group in a second, independent group. In the
+        Antwerp study plasma peroxides did not separate patients from controls well (area under the curve
+        62.6%, not significant), and the Stanford group's further test was a small case study of three
+        people from a family cohort, studied by the same group.
+      sources: [pmid:21455120, pmid:40627396]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        No study on this card tracks symptoms after an exertion challenge and links them to oxidative
+        stress in the same patients. The Dundee study correlated isoprostane levels with a post-exertional
+        malaise symptom score, in the low-risk subgroup only; a symptom score is not a direct measure of
+        post-exertional malaise.
+      sources: [pmid:16085177]
+subgroups:
+  - text: >-
+      Oxidative stress may differ between women and men: in the Stanford study reactive oxygen species in
+      lymphocytes were higher in women with ME/CFS than in healthy women, but not in men, while men
+      with ME/CFS showed more oxidative damage to fats inside the cells. Not yet repeated.
+    sources: [pmid:40627396]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=15 patients and 16 healthy controls found higher levels of reactive oxygen species
+      inside lymphocytes in patients, with the difference found in women but not in men. Not yet
+      repeated.
+    sources: [pmid:40627396]
+studies:
+  # --- supports ---
+  - id: pmid:16085177
+    title: Oxidative stress levels are raised in chronic fatigue syndrome and are associated with clinical symptoms.
+    year: 2005
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "Forty-seven patients (18 males, 29 females, mean age 48 [19--63] years) who fulfilled the Centres for Disease Control classification for CFS and 34 healthy volunteers (13 males, 21 females, 46 [19--63] years) were enrolled in the study."
+    design: controlled
+    # Isoprostanes higher in both patient subgroups (with cardiovascular risk factors P=0.007; without P=0.03);
+    # oxidised LDL higher only in the low-risk subgroup. Subgroup sizes not in the abstract.
+    n_patients: 47
+    n_controls: 34
+    measures_pem: false  # PEM is a symptom-score item correlated with isoprostanes, not an exertion challenge
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Belch JJ, Ninewells Hospital and Medical School, University of Dundee, Scotland
+    finding: >-
+      A study with n=47 patients and 34 healthy volunteers enrolled (number measured not stated) found
+      higher plasma isoprostanes in patients; in
+      patients without cardiovascular risk factors, isoprostane levels correlated with symptom scores.
+  - id: pmid:21455120
+    title: Increased plasma peroxides as a marker of oxidative stress in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS).
+    year: 2011
+    cohort: me_cfs
+    # "CDC criteria [29]": reference 29 in the full text is Fukuda et al. 1994, Ann Intern Med (resolved by the
+    # reference list, per the 2026-11-02 ruling).
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention (CDC) criteria [29]."
+    design: controlled
+    n_patients: 56
+    n_controls: 37
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Maes M / Bosmans E, Maes Clinics, Antwerp, Belgium (same group as 21552194, 20010505)
+    finding: >-
+      A study of n=56 patients and 37 healthy controls found higher plasma peroxides in patients; serum
+      antibodies to oxidised LDL showed only a non-significant trend.
+  - id: pmid:23185200
+    title: Lipid and protein oxidation in female patients with chronic fatigue syndrome.
+    year: 2012
+    cohort: me_cfs
+    # "1994 CDC definition" counts as Fukuda (2026-11-02 ruling).
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Patients were included in the study if they met the 1994 CDC definition: two major criteria (disabling fatigue lasting more than 6 months and exclusion of all other potential causes of fatigue) and at least four minor criteria (fever, sore throat, lymphadenopathy, muscle weakness, myalgia, headache, sleep disturbances and neuropsychological complaints)."
+    design: controlled
+    n_patients: 24
+    n_controls: 19
+    measures_pem: false
+    preregistered: null
+    role: supports  # protein carbonyl result; the MDA result is contradicted by 21119582
+    direction: higher
+    group: Tomic S / Maric D, Clinic for Infectious Diseases, Clinical Center Vojvodina, Novi Sad (same clinic and authors as 21119582)
+    finding: >-
+      A study of n=24 women and 19 healthy women found higher malondialdehyde and protein carbonyls, markers
+      of oxidative damage to fats and proteins, in patients.
+  - id: pmid:27224647
+    title: "A potential biomarker for fatigue: Oxidative stress and anti-oxidative activity."
+    year: 2016
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "We determined changes in d-ROMs, BAP, and OSI in acute and sub-acute fatigue in two healthy groups, and compared their values at rest between patients with CFS (diagnosed by Fukuda 1994 criteria) and another group of healthy controls."
+    design: controlled
+    # Numbers of patients and controls are not in the abstract; no open full text. TODO: verify.
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Kuratsune H, University of Kansai Welfare Sciences, Osaka, Japan (same group as 27125909)
+    finding: >-
+      A study comparing patients with healthy controls at rest (numbers not given in the abstract) found
+      higher reactive oxygen metabolites and lower antioxidant potential in serum in patients.
+  - id: pmid:40627396
+    title: Oxidative stress is a shared characteristic of ME/CFS and Long COVID.
+    year: 2025
+    cohort: me_cfs  # the long COVID donors (CDC post-COVID criteria, not an ME/CFS definition) are not used
+    # The sentence also names the National Academy of Medicine (IOM 2015) and Canadian criteria; which each patient
+    # met is not stated, so the least strict named definition is recorded. FOUNDER QUESTION.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "ME/CFS patients (12), including patients meeting the National Academy of Medicine (NAM) ME/CFS criteria before and after the start of the COVID-19 pandemic, were diagnosed by a physician using the National Academy of Medicine (8), Fukuda (36), and Canadian Consensus criteria (37)."
+    design: controlled
+    # Whole study 27 ME/CFS, 25 healthy controls. Total ROS (DCFDA) measured in 15 ME/CFS and 16 controls (full
+    # text, Fig. 1C caption). Higher in women (all three cell types); no difference in men (Fig. 1D).
+    n_patients: 15
+    n_controls: 16
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Davis MM, Stanford University School of Medicine, USA
+    finding: >-
+      A study of n=15 patients and 16 healthy controls (from a study of 27 patients and 25 controls) found
+      higher reactive oxygen species in lymphocytes in patients, with the difference in women but not
+      in men.
+  # --- contradicts ---
+  - id: pmid:21119582
+    title: Lipid peroxidation is elevated in female patients with chronic fatigue syndrome.
+    year: 2010
+    cohort: me_cfs
+    # "1994 Centers for Disease Control's diagnostic criteria" counts as Fukuda (2026-11-02 ruling).
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "Forty women aged 15-45 years who fulfilled the 1994 Centers for Disease Control's diagnostic criteria for chronic fatigue syndrome (CFS) with no comorbidities were recruited and were age matched to a control group of 40 healthy women."
+    design: controlled
+    # Abstract: "initial statistical analyses showed no differences between groups (P=.345)"; a difference appeared
+    # only after subdividing by MDA level. Contradicts the MDA result of 23185200 (later, smaller, same clinic).
+    # MDA method not in the abstract; 23185200 used the OxiSelect MDA Adduct ELISA (full text PMC3506242).
+    n_patients: 40
+    n_controls: 40
+    measures_pem: false
+    preregistered: null
+    role: contradicts
+    direction: no_difference
+    group: Turkulov V, Clinic for Infectious Diseases, Clinical Center Vojvodina, Novi Sad, Serbia (same clinic as 23185200)
+    finding: >-
+      A study of n=40 women and 40 healthy women found no overall difference in malondialdehyde between the
+      groups (the authors report a difference only after dividing patients by MDA level, and title the
+      paper as showing elevated lipid peroxidation); patients had lower HDL cholesterol.
+  # --- context ---
+  - id: pmid:19422646
+    title: Plasma IL-6, its soluble receptors and F2-isoprostanes at rest and during exercise in chronic fatigue syndrome.
+    year: 2010
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # Isoprostanes measured in the exercise substudy only (6 men with CFS, 6 controls); the resting group of 33 v 33
+    # gave IL-6 samples only. Kept for the resting isoprostane result.
+    n_patients: 6
+    n_controls: 6
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Nimmo MA, University of Strathclyde, Glasgow (shares authors Kennedy G, Hill A, Belch JJ with 16085177)
+    finding: >-
+      A study of n=6 male patients and 6 healthy controls found higher plasma isoprostanes in patients at
+      rest, and the difference persisted immediately and 24 hours after exercise.
+  - id: pmid:20010505
+    title: Coenzyme Q10 deficiency in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) is related to fatigue, autonomic and neurocognitive symptoms and is another risk factor explaining the early mortality in ME/CFS due to cardiovascular disorder.
+    year: 2009
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 58
+    n_controls: 22
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Maes M / Bosmans E, Maes Clinics, Antwerp, Belgium (same group as 21455120, 21552194)
+    finding: >-
+      A study of n=58 patients and 22 healthy controls found lower plasma coenzyme Q10 in patients, with
+      up to 44.8% of patients below the lowest value seen in controls.
+  - id: pmid:21552194
+    title: "Lower whole blood glutathione peroxidase (GPX) activity in depression, but not in myalgic encephalomyelitis / chronic fatigue syndrome: another pathway that may be associated with coronary artery disease and neuroprogression in depression."
+    year: 2011
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 40
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Maes M / Bosmans E, Maes Clinics (same group as 21455120, 20010505)
+    finding: >-
+      A study of n=40 patients and 24 healthy controls found no difference in whole-blood glutathione
+      peroxidase activity, an antioxidant enzyme, between patients and controls.
+  - id: pmid:22281935
+    title: Increased ventricular lactate in chronic fatigue syndrome. III. Relationships to cortical glutathione and clinical symptoms implicate oxidative stress in disorder pathophysiology.
+    year: 2012
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; PMC3896084 not open access
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # 15 CFS, 15 major depression, 13 healthy volunteers; the CFS v healthy comparison is used.
+    n_patients: 15
+    n_controls: 13
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Mathew SJ, Weill Medical College of Cornell University, New York, USA
+    finding: >-
+      A study of n=15 patients and 13 healthy volunteers found lower glutathione, an antioxidant, in the
+      brain cortex of patients; people with major depression showed the same.
+  - id: pmid:19906518
+    title: An in vivo proton neurospectroscopy study of cerebral oxidative stress in myalgic encephalomyelitis (chronic fatigue syndrome).
+    year: 2009
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    # 26 subjects in all; split between patients and matched controls not in the abstract. TODO: verify.
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Treasaden IH, Imperial College, Hammersmith Hospital, London, UK
+    finding: >-
+      A study of n=26 people in all, patients and matched healthy controls, found no difference in brain
+      glutathione between the groups.
+  - id: pmid:25386668
+    title: Does oral coenzyme Q10 plus NADH supplementation improve fatigue and biochemical parameters in chronic fatigue syndrome?
+    year: 2015
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; PMC4346380 not open access
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled
+    # 73 patients; arm sizes not in the abstract. TODO: verify. Registered NCT02063126 (timing not stated).
+    # Same trial as 26212172 (not on the card).
+    n_patients: 73
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable  # treatment vs placebo
+    group: Alegre J, Vall d'Hebron University Hospital, Barcelona, Spain (same unit as 34444817)
+    finding: >-
+      A placebo-controlled trial of n=73 patients found less fatigue after eight weeks of coenzyme Q10 plus
+      NADH than with placebo, and reported lower lipid peroxides in blood cells of the treated group (the
+      abstract does not say whether against placebo or against baseline).
+  - id: pmid:34444817
+    title: "Effect of Dietary Coenzyme Q10 Plus NADH Supplementation on Fatigue Perception and Health-Related Quality of Life in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Prospective, Randomized, Double-Blind, Placebo-Controlled Trial."
+    year: 2021
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Patients were eligible for the study if they were female, aged 18 years or older, had a confirmed diagnosis of ME/CFS according to the 1994 CDC/Fukuda case definition [4], and provided signed written informed consent."
+    design: intervention_controlled
+    # 207 randomised (104 active, 103 placebo; abstract). Full text: 144 completed (72 per group) "and were included
+    # in the overall analysis of outcome measures"; it also states ITT. Measurement n taken as 72 v 72.
+    # Full text: "FIS-40 domain scores evolved in parallel between groups"; the improvements reported in the
+    # abstract are within the active group. Between groups: sleep duration at 4 weeks (p = 0.018).
+    # Oxidative-stress markers were not measured, so the trial does not test whether lowering oxidative stress
+    # changes the illness: role context. No trial registration found in the full text.
+    n_patients: 72
+    n_controls: 72
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable  # treatment vs placebo
+    group: Alegre-Martin J, Vall d'Hebron Hospital Research Institute, Barcelona, Spain (same unit as 25386668)
+    finding: >-
+      A placebo-controlled trial of n=207 women (144 completed, 72 per group) reported that fatigue scores
+      changed in parallel in the coenzyme Q10 plus NADH and placebo groups over 12 weeks; the improvements
+      it reports in fatigue and quality of life are within the treated group.
+  - id: pmid:10071523
+    title: Therapeutic effects of oral NADH on the symptoms of patients with chronic fatigue syndrome.
+    year: 1999
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "Twenty-six eligible patients who fulfilled the Center for Disease Control and Prevention criteria for CFS completed the study."
+    design: intervention_controlled
+    # Crossover: each patient received NADH and placebo, so there is no separate control group (n_controls null).
+    # Oxidative stress not measured; the authors frame NADH as a trigger of energy production: role context.
+    n_patients: 26
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable  # treatment vs placebo
+    group: Bellanti JA, Georgetown University School of Medicine, Washington DC, USA
+    finding: >-
+      A placebo-controlled crossover trial of n=26 patients found that 8 of 26 responded favourably to NADH
+      and 2 of 26 to placebo.
+  - id: pmid:27125909
+    title: Ubiquinol-10 supplementation improves autonomic nervous function and cognitive function in chronic fatigue syndrome.
+    year: 2016
+    cohort: me_cfs
+    case_definition: unverified  # not in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled
+    # Randomised part: 43 assigned, 31 completed (17 ubiquinol, 14 placebo). An open-label part (20 patients) is not
+    # used.
+    n_patients: 17
+    n_controls: 14
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable  # treatment vs placebo
+    group: Watanabe Y, University of Kansai Welfare Sciences, Osaka, Japan (same group as 27224647)
+    finding: >-
+      A placebo-controlled trial of n=43 patients (31 completed: 17 given ubiquinol, 14 placebo) reported
+      that 12 weeks of ubiquinol improved several symptoms.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

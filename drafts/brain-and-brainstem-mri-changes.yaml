@@ -1,0 +1,540 @@
+# FOUNDER RULING (2026-11-02): level 2, not contested, both badges no. pmid:40624094 (higher axial diffusivity in some brainstem tracts, post-infectious subgroup, different method) does not contradict rung 2; pmid:42539798 is a non-repeat, not a contradiction. Both stay context.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# PROPOSALS FOR THE FOUNDER: level 2, contested null for now (see FOUNDER QUESTIONS 1 and 2), diagnostic marker no,
+# explains PEM no. All are AI proposals (tier 2, founder decisions); none is a ruling. Revised after card-reviewer
+# (2026-11-02): 42539798 changed from contradicts to context, contested set to null, 40624094 added.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (34355438:
+# PMC9291819; 42539798: PMC13424405; 36937672: PMC10017877; 38347875: PMC10859529; 29021956: PMC5633338;
+# 21560176: PMC4369126; 35355311: PMC9321967; 39804864: PMC11729965; 34975370: PMC8714840; 40624094:
+# PMC12234658; 41834684's full text PMC13093695 for the cohort statement). `europepmc casedef`
+# found no open full text for 15955487, 25353054, 37331007 or 28216087 (checked 2026-11-02).
+# Scope: structural MRI, diffusion MRI, functional MRI and brainstem volume or connectivity. PET and MR spectroscopy
+# of inflammation, white-matter diffusion read as neuroinflammation (41834684) and cerebral blood flow on standing
+# belong to drafts/neuroinflammation.yaml and drafts/orthostatic-intolerance-cerebral-blood-flow.yaml; none of their
+# studies is repeated here.
+#
+# LEVEL, RUNG BY RUNG (proposal)
+#   Rung 2: rests on 34355438 (Thapaliya 2021, ICC, 18 v 26): lower axial and mean diffusivity in a midbrain-pons
+#     cluster. Reached.
+#   Contested: null for now. Two later diffusion studies bear on rung 2; both are `context` until the founder rules.
+#   - 42539798 (Singh 2026, same Griffith group, CCC/ICC, 37 v 27, whole-brain voxel-based DTI on a different
+#     scanner: 3T Prisma, against 3T Skyra in 34355438) reported lower mean, axial and radial diffusivity in the left
+#     supplementary motor area and no brainstem cluster. It reported neither a brainstem difference nor a brainstem
+#     null, and its authors say its results align with 34355438. Comparable quality is met (equal rank, controls,
+#     37 >= 9). FOUNDER QUESTION 1: is a whole-brain analysis that does not report the brainstem cluster a
+#     contradiction, or only a non-repeat? Proposal: non-repeat (context).
+#   - 40624094 (Yu 2025, Sunshine Coast, CCC-consistent consensus diagnosis, post-infectious group 43 v 43 matched
+#     controls, TBSS) found HIGHER axial diffusivity in post-infectious patients in tracts that run through the
+#     brainstem (left inferior, middle and left superior cerebellar peduncles, corticospinal tract, left medial
+#     lemniscus), and no group difference in FA, MD or RD; the gradual-onset group (33 v 33) had lower axial
+#     diffusivity only in the corpus callosum. Comparable-quality test against 34355438: CCC ranks equal to ICC (met),
+#     control group (met), 43 >= 9 (met). Against it: the direction is opposite only in the post-infectious subgroup,
+#     the tracts overlap only partly with 34355438's frontopontine cluster, mean diffusivity did not differ, and the
+#     method differs (tract skeleton, not voxel-based). FOUNDER QUESTION 2: does 40624094 contradict rung 2? If yes,
+#     rung 2 becomes contested and 40624094 becomes `contradicts`.
+#   Rung 3: not reached. No independent group repeated the same measure with the same direction in the brainstem.
+#     29021956 (Finkelmeyer 2018, Newcastle, Fukuda, 42 v 28) is the only independent brainstem finding (lower white
+#     matter volume in midbrain and pons): a different measure from diffusivity, and published before 34355438, so it
+#     cannot be its repeat. It is itself contradicted by 21560176 (Barnden 2011, CCC, 25 v 25, no regional or total
+#     volume difference; stricter definition, controls, 25 >= 21) and not found by 30497131 (Fukuda, 43 v 27, VBM no
+#     volume differences). Larger hippocampal subfields (35355311, 39804864) were found twice, but by the same group.
+#     Lower total white matter volume: 25353054 (Zeineh 2015) and 29021956, but 25353054's case definition is
+#     unverified and 21560176 found no difference. TODO: verify 25353054's case definition (no open full text).
+#   Rung 4: not reached. No study changed a brain finding and tested the outcome in a controlled experiment.
+#
+# OXFORD: no study on the card has an Oxford-only cohort.
+# LONG COVID: no label. 36937672, 39804864 and 42539798 (and 41559785, not on the card) include long COVID patients
+#   defined by the WHO criteria, not by an ME/CFS case definition; only their ME/CFS arms are used (cohort: me_cfs).
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Barnden LR links two cohorts. Adelaide (Queen Elizabeth Hospital): 21560176 (25 v 25), also 25702943 and
+#     27114901 (same 25 v 25, not on the card). Griffith University, Gold Coast, 3 T: 30497131 (43 Fukuda v 27),
+#     31671321 (45 Fukuda v 27), 34355438 (25 Fukuda + 18 ICC v 26), 35355311 (25 Fukuda + 18 ICC v 25), also
+#     32777701, 35527811, 36352819 (not on the card). 35355311 states it: "Our recent findings with DTI parameters
+#     on the same cohort ... (Thapaliya et al., 2021)" (full text PMC9321967), so 35355311 and 34355438 share
+#     patients (TODO closed for that pair). The other papers do not say whether they share patients; 30497131 and
+#     31671321 both have 27 controls. Shan ZY is an author of 30497131 and 31671321 (not of 34355438).
+#   - Griffith University 7 T: 36937672 (10 v 10), 38347875 (31 v 15), 39804864 (29 v 15), and 41559785 (not on
+#     the card); 42539798 (3 T, 37 v 27). Thapaliya K, Marshall-Gradisnik S and Barnden L on all. Cohort overlap
+#     likely, not stated. TODO: verify. None of these is independent of 34355438.
+#   - Independent of the Griffith/Adelaide group (no shared authors): 29021956 (Newcastle), 25353054 (Stanford),
+#     15955487 (Nijmegen), 37331007 (Melbourne), 34975370 (Georgetown), 28216087 (Wisconsin / Bateman Horne).
+#   - 40624094 (Thompson Institute, University of the Sunshine Coast; Yu Q, Shan ZY): no authors shared with
+#     34355438. Shan ZY co-authored 30497131 and 31671321 (Griffith); Kwiatek RA and Del Fante P co-authored 21560176
+#     (Adelaide). Same cohort as 41834684 (drafts/neuroinflammation.yaml): 41834684's full text says its participants
+#     "were drawn from the same cohort (76 ME/CFS participants and 67 HCs) as described in Yu et al. (2025)"; both
+#     carry trial registration ACTRN12622001095752. 41834684 itself is not on this card.
+#
+# Not on the card (searched in the cache, read, left out). 89 non-review records matched the brief's search; 2 RCTs.
+#   - Reviews, meta-analyses, editorials, comments, letters and protocols: 32353033, 32868345, 32873297, 34975729,
+#     38016575, 40372688, 35203896, 33538586, 8778248, 10567041, 18757463, 36188362 (protocol), 26138726 (RCT
+#     protocol: CBT with MRI outcomes), 42383026, 42472232, 42656510.
+#   - RCTs and other treatment studies with brain-imaging outcomes (they test a treatment, not whether a brain change
+#     produces symptoms): 37862966 (RCT, post-COVID "asthenic syndrome", no ME/CFS case definition in the abstract),
+#     42780216 (Tai Chi, randomised), 18587150 (CBT, uncontrolled for treatment), 42249466 (hyperbaric oxygen,
+#     prospective cohort), 35720086, 36454926, 35911899, 38191152.
+#   - Same Griffith/Adelaide cohorts, adding no new line: 32777701 (T1w/T2w higher, 45 v 27), 35527811 (cortical
+#     thickness, 18 ICC v 26), 36352819 (salience-network connectivity), 41559785 (7 T Stroop connectivity; its
+#     brainstem result is a change within patients from before to after the task, not a comparison with controls),
+#     25702943, 27114901 (interaction regressions only; no group difference reported), 27123773 (longitudinal, 15 v 10).
+#   - Same Georgetown exercise data as 34975370: 32954325, 35053821 (midbrain nuclei re-analysis), 34214570.
+#   - Independent but case definition unverified or not needed: 22128128 (Puri 2012, lower occipital grey matter,
+#     26 v 26), 15461817 (Okada 2004, lower prefrontal grey matter, 16 v 49), 30430664 (Kimura 2019, diffusion
+#     kurtosis, 20 v 23), 20223910 (Perrin 2010, no difference, 18 v 9), 42551185 (Bedard 2026, grip-task fMRI, 15 v 19), 42819213 (amygdala, nothing
+#     survived correction), 37537279, 39431934 (adolescent hypothalamus).
+#   - White-matter hyperintensity reads (radiologists counting bright spots, 1990s): 8138812, 10567042, 9282853,
+#     11328679, 8141020 (mixed CDC/British/Australian criteria), 7551617, 11388120. Different measure; left for the
+#     founder to decide whether they belong on this card.
+#   - Many task fMRI studies of cognition, reward or emotion (15240435, 15907308, 16504053, 17079703, 26449441,
+#     26869373, 27414048, 29152994, 31102168, 33556867, 39113421, 41940184 and others): each reports a different
+#     task and region; none is a brainstem measure and none was repeated with the same task by another group.
+#   - SPECT and PET perfusion (8542261 brainstem perfusion, 10974961): blood flow, not MRI.
+slug: brain-and-brainstem-mri-changes
+name: Brain and brainstem changes on MRI
+core_claim:
+  text: >-
+    The hypothesis proposes that ME/CFS involves changes in the structure or function of the brain,
+    especially the brainstem, that can be measured with MRI, and that these changes are part of how
+    the illness works.
+  sources: [pmid:34355438, pmid:31671321, pmid:29021956]
+level: 2
+level_reason:
+  - text: >-
+      A study from Griffith University, Australia, of 18 patients meeting the International
+      Consensus Criteria and 26 healthy controls used diffusion MRI, which measures how water moves
+      along nerve fibres. It found lower axial and mean diffusivity in a cluster running through the
+      midbrain and pons, and higher diffusivity across the fibres in the medulla. The card is at
+      level 2 because of this study. In the 25 patients in the Fukuda group (a definition that does
+      not require post-exertional malaise), the same analysis found no difference from controls. The
+      result has not been repeated by another group.
+    sources: [pmid:34355438]
+  - text: >-
+      A later study from the same group, using a whole-brain voxel-based diffusion analysis on a
+      different scanner in 37 patients meeting the Canadian or International criteria and 27 healthy
+      controls, found lower mean, axial and radial diffusivity in the left supplementary motor area,
+      higher fractional anisotropy in the left cingulum and lower axial kurtosis in the corpus
+      callosum. It did not report the brainstem difference, and did not report a brainstem result
+      either way; its authors describe their results as in line with the earlier study.
+    sources: [pmid:42539798, pmid:34355438]
+  - text: >-
+      A study from the University of the Sunshine Coast, with no authors shared with the level 2
+      study, compared 43 patients with an infection-triggered onset, diagnosed as consistent with the
+      Canadian Consensus Criteria, with 43 matched healthy controls. It found higher axial
+      diffusivity in patients in several tracts that pass through the brainstem, including the
+      cerebellar peduncles, the corticospinal tract and the left medial lemniscus, the opposite
+      direction to the level 2 study, and no difference in mean diffusivity. In 33 patients with a
+      gradual onset, axial diffusivity was lower only in the corpus callosum.
+    sources: [pmid:40624094, pmid:34355438]
+  - text: >-
+      Other controlled studies from the same group as the level 2 study, using different measures,
+      also report brainstem differences: weaker connections between brainstem regions during a task
+      (45 patients meeting the Fukuda definition, which does not require post-exertional malaise, and
+      27 controls), a lower T1-weighted MRI signal in a brainstem region (43 patients meeting the
+      Fukuda definition and 27 controls), weaker connections between the pons and the cerebellum
+      during a task (31 patients meeting the Canadian or International criteria and 15 controls), and
+      a larger pons and whole brainstem at 7 Tesla (10 patients and 10 controls). The papers do not
+      say whether they share patients, and none of these results has been repeated by an
+      independent group.
+    sources: [pmid:31671321, pmid:30497131, pmid:38347875, pmid:36937672]
+  - text: >-
+      The card is not at level 3 because no independent group has found the same result in a separate
+      cohort. A study from Newcastle, UK, with no shared authors, of 42 patients meeting the Fukuda
+      definition (which does not require post-exertional malaise) and 28 healthy controls found lower
+      white matter volume in the midbrain and pons. This is a different measure (volume, not
+      diffusion), and two Australian studies with the same lead author (Barnden), one of them from the
+      group behind level 2, did not find it: one of 25 patients meeting the Fukuda definition and the
+      Canadian criteria and 25 controls found no difference in total or regional brain volumes, and
+      one of 43 patients meeting the Fukuda definition and 27 controls found no difference in
+      regional grey or white matter volume.
+    sources: [pmid:29021956, pmid:21560176, pmid:30497131]
+  - text: >-
+      Two studies from the Griffith group found larger volumes in the same parts of the left
+      hippocampus (subiculum head and presubiculum head): 16 of 18 patients meeting the International
+      Consensus Criteria (two scans could not be analysed) against 25 controls, in the same cohort as
+      the level 2 study, and 29 patients meeting the Canadian or International criteria against 15
+      controls at 7 Tesla. Because both come from the same group, this is not an independent repeat.
+    sources: [pmid:35355311, pmid:34355438, pmid:39804864]
+  - text: >-
+      Several studies cannot count towards the level because their case definition is not yet
+      verified. A study from Stanford of 15 patients and 14 controls found lower total white matter
+      volume, as did the Newcastle study; a study from Nijmegen of 28 patients and 28 controls in two
+      cohorts found lower total grey matter volume; and a study from Melbourne of 25 adolescents with
+      ME/CFS and 23 controls found no difference in white matter structure.
+    sources: [pmid:25353054, pmid:29021956, pmid:15955487, pmid:37331007]
+# Null for now, pending FOUNDER QUESTIONS 1 (42539798) and 2 (40624094) in the header.
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        The diffusion study on which level 2 rests suggests its measures could become an imaging
+        marker, but no brainstem MRI marker has been tested in a second, independent patient group
+        with a stated case definition.
+      sources: [pmid:34355438]
+  explains_pem:
+    # Checked: 34975370 (full text PMC8714840) measures PEM directly (two exercise tests on consecutive days with
+    # symptom assessments) but reports no correlation between brain signals and symptoms. 28216087 reports a link
+    # to symptoms but its case definition is unverified (no open full text), so it cannot count (V7, V9).
+    # TODO: verify 28216087's case definition; if it is a recognised one, this badge must be re-assessed.
+    value: false
+    reason:
+      - text: >-
+          A study from Georgetown of 34 patients meeting the Fukuda definition (which does not
+          require post-exertional malaise) and the Canadian criteria, and 24 controls, scanned the
+          resting brain before and after two exercise tests on consecutive days. Activity in the
+          medial prefrontal cortex rose after exercise in patients, but the full text reports no
+          significant correlation between brain signals and fatigue, pain or other symptoms (data not
+          shown), so the study does not link the brain change to symptoms after exertion.
+        sources: [pmid:34975370]
+      - text: >-
+          A study of 15 women with ME/CFS and 15 healthy women found that changes in brain activity
+          after exercise were related to patients' symptoms, but its case definition is not yet
+          verified, so it cannot count.
+        sources: [pmid:28216087]
+subgroups:
+  - text: >-
+      In two analyses of the same Griffith cohort, patients meeting the International Consensus
+      Criteria differed from controls on diffusion MRI and hippocampal volume, while the patients in
+      the Fukuda group (a definition that does not require post-exertional malaise) did not. Yet two
+      other studies from the same group found brainstem differences in cohorts defined by the Fukuda
+      definition alone. Not repeated by another group.
+    sources: [pmid:34355438, pmid:35355311, pmid:31671321, pmid:30497131]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=10 patients meeting the Canadian and International criteria and 10 healthy
+      controls at 7 Tesla found a larger pons and whole brainstem in patients. Not yet repeated.
+    sources: [pmid:36937672]
+studies:
+  # --- supports ---
+  - id: pmid:34355438
+    title: Diffusion tensor imaging reveals neuronal microstructural changes in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2021
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: After these exclusions, 25 ME/CFS patients met Fukuda criteria (Fukuda, 1994), and 18 ME/CFS patients met ICC criteria (Carruthers et al., 2011).
+    design: controlled
+    n_patients: 18  # ICC group measured against controls; 56 recruited, 43 after exclusions (25 Fukuda-only, 18 ICC)
+    n_controls: 26
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2
+    direction: mixed  # lower axial and mean diffusivity in midbrain/pons; higher transverse diffusivity in medulla
+    group: Barnden L, Griffith University, Gold Coast, Australia (same group and likely same cohort as 30497131, 31671321, 35355311)
+    finding: >-
+      A study of n=18 patients meeting the International Consensus Criteria and 26 healthy controls
+      found lower axial and mean diffusivity in a cluster in the midbrain and pons and higher
+      transverse diffusivity in the medulla; the 25 patients in the Fukuda group showed no significant
+      clusters.
+  - id: pmid:31671321
+    title: Intra brainstem connectivity is impaired in chronic fatigue syndrome.
+    year: 2019
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: Resting and task functional MRI (fMRI) were acquired for 45 ME/CFS (Fukuda criteria) and 27 healthy controls (HC).
+    design: controlled
+    n_patients: 45
+    n_controls: 27
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Bhuta S / Barnden LR, Griffith University and Gold Coast University Hospital, Australia (same group as 34355438)
+    finding: >-
+      A study of n=45 patients and 27 healthy controls found weaker connectivity during a task between
+      the medulla and the midbrain cuneiform nucleus, and between the brainstem and the hippocampus and
+      thalamus, in patients; no such difference was found at rest.
+  - id: pmid:30497131
+    title: Hyperintense sensorimotor T1 spin echo MRI is associated with brainstem abnormality in chronic fatigue syndrome.
+    year: 2018
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: We recruited 43 Chronic Fatigue Syndrome (CFS) subjects who met Fukuda criteria and 27 healthy controls and performed 3T MRI T1 and T2 weighted spin-echo (T1wSE and T2wSE) scans.
+    design: controlled
+    n_patients: 43
+    n_controls: 27
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed  # lower brainstem T1wSE signal; higher sensorimotor white matter signal; no volume difference
+    group: Bhuta S / Barnden LR, Griffith University and Gold Coast University Hospital, Australia (same group as 34355438)
+    finding: >-
+      A study of n=43 patients and 27 healthy controls found a lower T1-weighted spin-echo signal in a
+      brainstem region and a higher signal in sensorimotor white matter in patients; voxel-based
+      morphometry found no group difference in regional grey or white matter volume.
+  - id: pmid:38347875
+    title: Subcortical and default mode network connectivity is impaired in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2023
+    cohort: me_cfs
+    case_definition: CCC  # "CCC and/or ICC"
+    case_definition_source: fulltext
+    case_definition_quote: We recruited 31 ME/CFS patients (see Table 1), fulfilling the CCC and/or ICC definitions of diagnosis (Carruthers et al., 2003, 2011).
+    design: controlled
+    n_patients: 31
+    n_controls: 15
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Barnden L, Griffith University, Southport, Australia (same group as 34355438; 7 T cohort)
+    finding: >-
+      A study of n=31 patients and 15 healthy controls at 7 Tesla found weaker functional
+      connectivity between the pontine nucleus and the cerebellar vermis during a colour-word task in
+      patients.
+  - id: pmid:36937672
+    title: Brainstem volume changes in myalgic encephalomyelitis/chronic fatigue syndrome and long COVID patients.
+    year: 2023
+    cohort: me_cfs  # the 8 long COVID patients met the WHO definition, not an ME/CFS definition; not used
+    # Patients met both CCC and ICC. The abstract says "CCC or ICC criteria"; the full text sentence below says
+    # "CCC and ICC".
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: Finally, 10 ME/CFS patients fulfilling the CCC and ICC criteria (Carruthers et al., 2011), eight long COVID as defined by the WHO clinical case definition (World Health Organization [WHO], 2021) and 10 age-matched HC subjects were included in this study (see Table 1 for demographic information).
+    design: controlled
+    n_patients: 10
+    n_controls: 10
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Barnden L, Griffith University, Gold Coast, Australia (same group as 34355438; 7 T cohort)
+    finding: >-
+      A study of n=10 patients and 10 healthy controls at 7 Tesla found larger pons and whole brainstem
+      volumes in patients.
+  - id: pmid:29021956
+    title: Grey and white matter differences in Chronic Fatigue Syndrome - A voxel-based morphometry study.
+    year: 2018
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: Participants were not selected according to any criteria other than fulfilling the Fukuda diagnostic criteria of CFS (Fukuda et al., 1994).
+    design: controlled
+    n_patients: 42
+    n_controls: 28  # 30 recruited; full text: "leaving 28 of 30 healthy control participants for final analysis"
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed  # white matter lower (midbrain, pons, temporal lobe); grey matter higher
+    group: Blamire AM, Newcastle University, UK (no authors shared with the Griffith/Adelaide group)
+    finding: >-
+      A study of n=42 patients and 28 healthy controls found lower white matter volume overall and in
+      the midbrain, pons and right temporal lobe, and larger grey matter volume, including in the
+      amygdala and insula, in patients.
+  - id: pmid:35355311
+    title: Volumetric differences in hippocampal subfields and associations with clinical measures in myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2022
+    cohort: me_cfs
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: Twenty‐five ME/CFS patients meeting only the Fukuda criteria (Fukuda, 1994), 18 ME/CFS patients meeting the ICC criteria (Carruthers et al., 2011), and 25 age‐matched healthy controls were recruited (see Table 1 for demographic information) through an online Lime survey.
+    design: controlled
+    # 18 ICC patients recruited; full text: "Two ME/CFS ICC patients and one ME/CFS Fukuda patients were excluded
+    # from analysis due to inadequate segmentation", so 16 measured (correlations reported with N = 16).
+    n_patients: 16
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    # Full text: "Our recent findings with DTI parameters on the same cohort ... (Thapaliya et al., 2021)".
+    group: Barnden L, Griffith University, Gold Coast, Australia (same group and same cohort as 34355438)
+    finding: >-
+      A study of n=16 of 18 patients meeting the International Consensus Criteria (two scans could
+      not be analysed) and 25 healthy controls found larger volumes of the left subiculum head,
+      presubiculum head and fimbria of the hippocampus in patients; the patients in the Fukuda group
+      did not differ from controls.
+  - id: pmid:39804864
+    title: "Hippocampal subfield volume alterations and associations with severity measures in long COVID and ME/CFS: A 7T MRI study."
+    year: 2025
+    cohort: me_cfs  # the long COVID patients met the WHO definition, not an ME/CFS definition; not used
+    case_definition: CCC  # "CCC and/or ICC"; Table 1: 17 CCC and ICC, 12 CCC only
+    case_definition_source: fulltext
+    case_definition_quote: Ultimately, 17 long COVID as defined by the WHO clinical case definition [7], 30 ME/CFS patients fulfilling the CCC and/or ICC criteria [2, 22], and 15 age-matched HC subjects were included in this study.
+    design: controlled
+    n_patients: 29  # 30 included; one excluded for inadequate segmentation (full text)
+    n_controls: 15
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Barnden L, Griffith University, Australia (same group as 35355311; 7 T cohort)
+    finding: >-
+      A study of n=29 patients and 15 healthy controls at 7 Tesla found larger volumes of the left
+      subiculum head, presubiculum head, molecular layer head and whole hippocampal head in patients.
+  - id: pmid:34975370
+    title: Submaximal Exercise Provokes Increased Activation of the Anterior Default Mode Network During the Resting State as a Biomarker of Postexertional Malaise in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    case_definition: CCC  # patients met both Fukuda and CCC
+    case_definition_source: fulltext
+    case_definition_quote: Subjects had history and physical examinations to ensure their inclusion by meeting Fukuda (Fukuda et al., 1994) and Carruthers Canadian Consensus Criteria for CFS (Carruthers et al., 2003; Carruthers, 2007), confirmation of sedentary lifestyle for control subjects (less than 40 min of aerobic activity per week), and exclusion because of serious medical or psychiatric conditions such as psychosis.
+    design: controlled
+    # TODO: verify measurement n (31 or 34). The cached full text gives n = 34 and 24 in the Methods and Table 1;
+    # no 31 was found in it.
+    n_patients: 34
+    n_controls: 24
+    measures_pem: true  # two submaximal exercise tests on consecutive days with symptom assessments
+    preregistered: null
+    role: supports
+    direction: mixed  # medial prefrontal signal higher after exercise; overall signal higher in controls
+    group: Baraniuk JN, Georgetown University, Washington DC, USA
+    finding: >-
+      A study of n=34 patients and 24 controls, scanned at rest before and after two submaximal
+      exercise tests on consecutive days, found that activity in the medial prefrontal cortex rose
+      after exercise in patients and fell in controls; the full text reports no significant
+      correlation between brain signals and fatigue, pain or other symptoms (data not shown).
+  # --- context: later diffusion studies (FOUNDER QUESTIONS 1 and 2) ---
+  - id: pmid:42539798
+    title: Microstructural alterations in brain tissue of ME/CFS and long COVID using diffusion tensor imaging and diffusion kurtosis imaging.
+    year: 2026
+    cohort: me_cfs  # the 19 long COVID patients met the WHO definition, not an ME/CFS definition; not used
+    case_definition: CCC  # "CCC or ICC"
+    case_definition_source: fulltext
+    case_definition_quote: 37 ME/CFS participants were recruited after meeting the Canadian Consensus Criteria (CCC) (4) or International Consensus Criteria (ICC) (5) and had received a formal diagnosis of ME/CFS by a physician.
+    design: controlled
+    n_patients: 37
+    n_controls: 27
+    measures_pem: false
+    preregistered: null
+    role: context  # FOUNDER QUESTION 1: non-repeat or contradiction of 34355438?
+    direction: mixed  # differences in SMA, cingulum and corpus callosum; no brainstem result reported
+    group: Thapaliya K, Griffith University, Gold Coast, Australia (same group as 34355438)
+    finding: >-
+      A study of n=37 patients and 27 healthy controls, using a whole-brain voxel-based diffusion
+      analysis, found lower mean, axial and radial diffusivity in the left supplementary motor area,
+      higher fractional anisotropy in the left cingulum and lower axial kurtosis in the corpus
+      callosum in patients; it did not report the brainstem difference found earlier by the same
+      group.
+  - id: pmid:40624094
+    title: Distinct white matter alteration patterns in post-infectious and gradual onset chronic fatigue syndrome revealed by diffusion MRI.
+    year: 2025
+    cohort: me_cfs
+    # "CCC-consistent diagnosis by two clinicians" counts as CCC (ruling 2026-11-01, as for 41834684).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: ME/CFS patients were independently interviewed by two clinicians to confirm a CCC-consistent9 diagnosis of ME/CFS.
+    design: controlled
+    # Post-infectious comparison, as reported: "PI-ME/CFS (n = 43) and matched HCs (n = 43)". The gradual-onset
+    # comparison was 33 v 33; the two control groups overlap. 76 patients and 67 controls analysed in total.
+    n_patients: 43
+    n_controls: 43
+    measures_pem: false
+    preregistered: null  # registered (ACTRN12622001095752) with a protocol paper; whether this analysis was prespecified is not stated
+    role: context  # FOUNDER QUESTION 2: does it contradict rung 2 (34355438)?
+    direction: mixed  # axial diffusivity higher in post-infectious patients; lower in the corpus callosum in gradual-onset patients
+    group: Shan ZY, Thompson Institute, University of the Sunshine Coast, Australia (same cohort as 41834684)
+    finding: >-
+      A study of n=43 patients with a post-infectious onset and 43 matched healthy controls found
+      higher axial diffusivity in patients in association and projection tracts, including the left
+      inferior, middle and left superior cerebellar peduncles, the corticospinal tract and the left
+      medial lemniscus, with no difference in fractional anisotropy, mean or radial diffusivity; 33
+      patients with a gradual onset had lower axial diffusivity in the corpus callosum than 33
+      matched controls.
+  # --- contradicts ---
+  - id: pmid:21560176
+    title: "A brain MRI study of chronic fatigue syndrome: evidence of brainstem dysfunction and altered homeostasis."
+    year: 2011
+    cohort: me_cfs
+    # "Canadian (36)": reference 36 in the full text is Carruthers et al., the 2003 Canadian clinical working case
+    # definition, so CCC. Patients met Fukuda as well.
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: They met both the Fukuda (1) and Canadian (36) criteria for CFS.
+    design: controlled
+    n_patients: 25  # 27 recruited; 25 assessed (full text)
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # contradicts 29021956's lower white matter volume (stricter definition, controls, 25 >= 21)
+    direction: no_difference
+    group: Del Fante P / Barnden LR, The Queen Elizabeth Hospital, Adelaide, Australia
+    finding: >-
+      A study of n=25 patients and 25 controls found no difference in total grey or white matter
+      volume and no significant regional differences between groups; within patients, midbrain white
+      matter volume was lower with longer fatigue duration.
+  # --- context ---
+  - id: pmid:28216087
+    title: Neural consequences of post-exertion malaise in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2017
+    cohort: me_cfs
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 15
+    n_controls: 15
+    measures_pem: true  # symptoms and fMRI before and 24 h after submaximal cycling
+    preregistered: null
+    role: context
+    direction: higher
+    group: Vernon SD / Cook DB, University of Wisconsin-Madison and Bateman Horne Center, USA
+    finding: >-
+      A study of n=15 women with ME/CFS and 15 healthy women found that 24 hours after 30 minutes of
+      submaximal cycling, brain activity during a fatiguing cognitive task rose in parietal and
+      cingulate regions in patients compared with controls, and the changes were related to patients'
+      symptoms.
+  - id: pmid:25353054
+    title: Right arcuate fasciculus abnormality in chronic fatigue syndrome.
+    year: 2015
+    cohort: me_cfs
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 15
+    n_controls: 14
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # white matter volume lower; fractional anisotropy higher in the right arcuate fasciculus
+    group: Zeineh MM / Montoya JG, Stanford University School of Medicine, USA
+    finding: >-
+      A study of n=15 patients and 14 controls found lower white matter volume in both hemispheres and
+      higher fractional anisotropy in the right arcuate fasciculus in patients; blood flow did not
+      differ.
+  - id: pmid:15955487
+    title: Gray matter volume reduction in the chronic fatigue syndrome.
+    year: 2005
+    cohort: me_cfs
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 28  # two cohorts, 28 patients in total
+    n_controls: 28
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower
+    group: Toni I, F.C. Donders Centre for Cognitive Neuroimaging, Radboud University Nijmegen, The Netherlands
+    finding: >-
+      A study of n=28 patients and 28 matched controls in two cohorts found lower global grey matter
+      volume in patients in both cohorts.
+  - id: pmid:37331007
+    title: "What lies beneath: White matter microstructure in pediatric myalgic encephalomyelitis/chronic fatigue syndrome using diffusion MRI."
+    year: 2023
+    cohort: me_cfs
+    case_definition: unverified  # not stated in the abstract; no open full text
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 25
+    n_controls: 23
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Knight SJ, Murdoch Children's Research Institute and University of Melbourne, Australia
+    finding: >-
+      A study of n=25 adolescents with ME/CFS and 23 healthy controls found no significant group
+      differences in white matter properties on diffusion MRI, apart from one tract difference that
+      did not survive correction for intracranial volume.
+last_checked:
+  date: 2026-11-02
+  by: ai_pair

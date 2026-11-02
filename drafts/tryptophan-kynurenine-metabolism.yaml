@@ -1,0 +1,470 @@
+# FOUNDER RULING (2026-11-02): level 3, contested at rung 3, both badges no. Columbia's plasma KYNA/KYN ratio counts as the same result as Padova's serum ratio; the Uppsala null (pmid:39302151, read from its Figure 2c) contradicts it at comparable quality. The proposals below are accepted as ruled.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-02. Nothing here is published.
+# PROPOSALS FOR THE FOUNDER: level 3, contested at rung 3, diagnostic marker no, explains PEM no. Every level,
+# contested mark and badge below is an AI proposal; setting them is a founder decision (CLAUDE.md rule 2).
+# Revised 2026-11-02 after card-reviewer: contested mark added (39302151 Figure 2c), 42325052 moved to context.
+#
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract), except where `case_definition_source: fulltext` or a comment names a full
+# text, which comes from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (34423789:
+# PMC8409979; 34829952: PMC8615774; 39302151: PMC11450765; 40903540: PMC12408823; 42325052: PMC13284739;
+# 25227994: PMC4176591). The 39302151 Figure 2 images were read from the copies card-reviewer saved in the session
+# scratchpad (trpkyn_supp_dl). `uv run python -m me_atlas.europepmc casedef` found no open full text for 34090138,
+# 38015302, 15982993, 11352361 or 20384451 (checked 2026-11-02); none states a case definition in its abstract, so all
+# five are `unverified` and role `context`.
+# `direction` is on the measure named in each finding (patients compared with controls).
+#
+# LEVEL, RUNG BY RUNG (proposal)
+#   Rung 1: reached (several studies).
+#   Rung 2: reached. Anchor: 34423789 (Hoel 2021, Bergen, CCC, 83 v 35): lower serum kynurenic acid in each of three
+#     metabolic subsets. No study of comparable quality contradicts it: 34829952 (39 patients, no difference) and
+#     39302151 (38 patients, kynurenic acid not marked significant in its Figure 2b) are below half of 83.
+#     Other CCC controlled studies report differences in other metabolites, not the same one: 34829952 (Simonato
+#     2021, Padova, 39 v 40: lower kynurenine, higher 3-hydroxykynurenine, higher kynurenic acid/kynurenine and
+#     3-hydroxykynurenine/kynurenine ratios); 39302151 (Abujrais 2024, Uppsala, 38 v 24: lower 3-hydroxykynurenine
+#     and 3-hydroxyanthranilic acid, higher kynurenine/3-hydroxykynurenine ratio).
+#   Rung 3: reached (proposal), contested. 40903540 (Che 2025, Columbia University, CCC, 56 v 52; later, separate US
+#     cohort, no authors shared with 34829952) found a higher kynurenic acid to kynurenine ratio in plasma before
+#     exercise, the same ratio, tested between patients and controls at rest, that 34829952 found higher in serum.
+#     40903540 itself cites 34829952 as the same finding. FOUNDER QUESTION: serum (Simonato) against plasma (Che),
+#     and a ratio rather than a single metabolite. Is this the same result under the rung-3 rule ("an independent
+#     group finding the same result: same measure, tested between groups")? If not, level 2.
+#     No other result is repeated by an independent group: 3-hydroxykynurenine went in opposite directions
+#     (34829952 higher, 39302151 lower); kynurenic acid was lower in 34423789 but did not differ in 34829952.
+#   Rung 4: not reached. The only controlled intervention with a recognised case definition is 25227994 (The 2014,
+#     CDC criteria, 5 patients, placebo-controlled crossover of acute tryptophan depletion, a test of the serotonin
+#     side of the pathway): no significant difference in fatigue, depression or concentration. 41515290 (probiotic,
+#     open label, no placebo, no recognised case definition) is left out.
+#
+# CONTESTED (proposal: rung 3).
+#   - Rung 3 rests on 34829952 and 40903540 (kynurenic acid/kynurenine ratio). 39302151 (CCC, controlled, 38 v 24)
+#     plots the inverse ratio, kynurenine/kynurenic acid (Kyn/KA), in plasma in its Figure 2c and marks no
+#     significant difference; only Kyn/3HK and Trp/5-HT are starred (checked in the figure image). Same case
+#     definition rank, a control group, and 38 is at least half of 39 (34829952) and of 56 (40903540), so it is a
+#     comparable contradiction of studies rung 3 needs. The result comes from the figure's significance marks; the
+#     text does not state it and Table S3 was not read.
+#   - 3-hydroxykynurenine: 34829952 (higher, 39 patients) and 39302151 (lower, 38 patients) contradict each other at
+#     comparable quality. The level does not rest on this measure, so (as for the gut-wall markers on the gut
+#     microbiome card) the conflict is described in the level reason and is not proposed as a contested rung.
+#     FOUNDER QUESTION: agree?
+#   - Kynurenic acid (rung 2 anchor): see Rung 2; not contested.
+#   - Kynurenine: 34829952 lower; 38015302 (higher) and 20384451 (no difference) are unverified and cannot contest.
+#
+# BADGES (proposal): diagnostic marker no (no tryptophan-pathway marker tested with a cut-off in a second, independent
+#   cohort; the machine-learning papers 38066735 and 42450188 are left out, see below). Explains PEM no: 40903540 is
+#   the only study with an exertion challenge and symptoms tracked afterwards (cardiopulmonary exercise test; symptom
+#   questionnaires before, 24 h and 48 h after), so `measures_pem: true`. Its only tryptophan-pathway link to
+#   symptoms is a regularised canonical correlation (RCCA, Figure 3B) between post-exercise 3-methoxyanthranilate
+#   and the MFI general-fatigue score at the same time point in patients; that is not a correlation with the change
+#   in symptoms after exertion, and MFI does not measure PEM specifically. FOUNDER QUESTION: confirm no.
+#
+# CASE DEFINITIONS
+#   - 40903540: "CDC/Fukuda and Canadian consensus criteria" recorded as CCC, as 34254637 was on the HPA card.
+#   - 39302151: "Both groups" in the quote means the two patient clinics (Stockholm and Gothenburg), not patients and
+#     controls (full text, the sentences before the quote).
+#   - 42325052: diagnosis checked through a symptom survey; all cases met CCC and/or IOM except one who met CDC
+#     criteria. Recorded as CDC_unspecified, the weakest definition in the cohort (ranks equal to Fukuda). Role
+#     context: stool tryptophan and indoles reflect gut-bacterial metabolism, not the body's kynurenine pathway.
+#     FOUNDER QUESTION: survey-based classification acceptable?
+#   - 11352361 (Vassallo 2001, University of Oxford, Warneford Hospital) may have used the Oxford criteria; not
+#     verified, so `unverified`, not Oxford. No study on the card has a verified Oxford-only cohort.
+# LONG COVID: no label. 37333619 (Al-Hakeim 2023, 90 long COVID patients, WHO post-COVID criteria), 38144169
+#   (Taenzer 2023, urine, long COVID by CDC long COVID classification) and 39356444 (Mathé 2025, serum serotonin, no
+#   difference) name no ME/CFS case definition for their long COVID patients; not on the card.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - No authors are shared between any two studies on the card (author lists of all 11 records compared).
+#   - 34423789: patients from the Bergen RituxME and CycloME trials (full text); the RituxME trial is pmid:30934066 on
+#     the autoimmunity card.
+#   - 40903540: Columbia University (Lipkin WI) multi-site cohort (Bateman L, Klimas NG, Montoya JG, Peterson DL);
+#     40778181 is the preprint of the same study (left out).
+#   - 34829952 and 39302151 discuss 34090138 and 38015302 as earlier results; that is not a cohort overlap.
+#
+# TODOs
+#   - 34423789: whether the whole patient group (not only each subset) had lower kynurenic acid is not stated in the
+#     text read; the card says "each of three subsets".
+#   - 39302151: Table S3 (exact values for Kyn/KA) not read; the contested proposal rests on Figure 2c.
+#   - 38015302, 34090138, 15982993, 11352361, 20384451: case definitions and (for three) sample sizes not in the
+#     abstract, no open full text. TODO: verify.
+#   (Closed: 40903540 n: Table 1's first column set, 56 v 52, is the metabolomics set, as headed "Metabolomics &
+#   Truculture Proteomics"; confirmed by card-reviewer. 34829952: 39 of 40 patients measured, Figure 3.)
+#
+# Not on the card (searched in the cache, read, left out):
+#   - Hypothesis and modelling papers, not studies: 31357483 (Phair 2019, "The IDO Metabolic Trap Hypothesis for the
+#     Etiology of ME/CFS"), 22084603 and 23922501 (Blankfield, kynurenine pathway hypothesis), 23032646, 4010573
+#     (Maurizi 1985, raphe nucleus), 12745627. The IDO2 metabolic-trap idea comes from 31357483; no study in the cache
+#     tests it in patients with a result. 40372687 (Edgar 2025, IDO2 gene variants) is a methods chapter with no
+#     result in its abstract and no open full text.
+#   - Reviews and narrative reviews (all records typed Review in the cache search).
+#   - No recognised case definition (full text checked): 41515290 (Chojnacki 2026, probiotic, open label, 40 women
+#     with IBS and CFS against 40 healthy controls) and 40647335 (Chojnacki 2025, IBS with and without CFS); both name
+#     only Rome IV for IBS and "established diagnostic criteria" for CFS.
+#   - Machine-learning reanalyses of metabolomics data, no new cohort and no tryptophan comparison between groups in
+#     the abstract: 38066735, 42450188, 40715814 (and preprints 38979186, 40980765).
+#   - 36835097 (Glass 2023, CCC, urine after exercise, 10 v 8): reports the tryptophan subpathway among many and
+#     differences in urine-plasma correlations of kynurenate, not a between-group level; small.
+#   - 38144169 (Taenzer 2023): 8 ME/CFS patients classified with a CCC questionnaire; tryptophan results for the
+#     ME/CFS group are not reported separately in the abstract.
+#   - 12708966 (Georgiades 2003, 12 v 11, free tryptophan higher at exhaustion): unverified, during exercise only;
+#     not needed. 17945348 (chronic active EBV, not ME/CFS), 17180619 (healthy volunteers), 2193835 (fibromyalgia),
+#     9701717 (chemical intolerance), 8033924 and 2235783 (eosinophilia-myalgia case reports), animal studies
+#     (28505018, 35373377, 35598795, 42040737), 42656510 (trial protocol), 39131327 (preprint, method), 31923274
+#     (cancer-related fatigue), schizophrenia and depression studies (28258445, 29380275, 30467771, 35946099).
+#   - Serotonin-receptor challenge studies (prolactin responses) and neopterin studies: a related but different
+#     question; left out.
+slug: tryptophan-kynurenine-metabolism
+name: Disturbed tryptophan and kynurenine metabolism
+core_claim:
+  text: >-
+    The hypothesis proposes that in people with ME/CFS the body breaks down the amino acid
+    tryptophan differently, mostly along the kynurenine pathway, which turns tryptophan into
+    kynurenine and then into several other substances, and that this altered breakdown contributes
+    to the illness.
+  sources: [pmid:34423789, pmid:34829952, pmid:40903540]
+level: 3
+level_reason:
+  - text: >-
+      A study from Bergen, Norway, of 83 patients meeting the Canadian criteria and 35 healthy
+      controls found lower kynurenic acid in serum in each of three metabolic subsets of patients.
+      No study of comparable size has found otherwise; two smaller studies, of 39 and 38 patients,
+      did not find a difference in kynurenic acid. This study places the card at level 2.
+    sources: [pmid:34423789, pmid:34829952, pmid:39302151]
+  - text: >-
+      A study from Padova, Italy, measured tryptophan and its breakdown products in serum in 39 of
+      its 40 patients meeting the Canadian criteria and in 40 healthy controls. Patients had lower
+      kynurenine and higher 3-hydroxykynurenine, and the ratios of kynurenic acid to kynurenine and
+      of 3-hydroxykynurenine to kynurenine were higher. Tryptophan itself tended to be lower
+      (p = 0.05), kynurenic acid and quinolinic acid did not differ, and the ratio of kynurenine to
+      tryptophan did not differ.
+    sources: [pmid:34829952]
+  - text: >-
+      A later study from Columbia University in New York, with no authors shared with the Padova
+      study, measured blood plasma in 56 patients meeting the Canadian criteria and 52 healthy
+      controls. Before exercise, the ratio of kynurenic acid to kynurenine was higher in patients,
+      the same ratio the Padova study found higher, and the ratio of kynurenine to tryptophan was
+      lower; the Padova study found no difference in the kynurenine to tryptophan ratio. The card
+      is at level 3 because of this repeat; a study of 38 patients did not find a difference in
+      this ratio (see the contested reason). The two studies used different sample types (serum and
+      plasma), and the repeat rests on one ratio.
+    sources: [pmid:40903540, pmid:34829952, pmid:39302151]
+  - text: >-
+      A study from Uppsala, Sweden, of 38 patients meeting the Canadian, International and 2015 IOM
+      criteria and 24 healthy controls found lower 3-hydroxykynurenine and 3-hydroxyanthranilic acid
+      in plasma, the opposite direction for 3-hydroxykynurenine to the Padova study, and a higher
+      ratio of kynurenine to 3-hydroxykynurenine, the opposite of the Padova result for that ratio.
+      These results have not been repeated.
+    sources: [pmid:39302151, pmid:34829952]
+  - text: >-
+      A study of stool from 19 patients (diagnosis checked with a symptom survey) and 23 controls
+      found higher tryptophan, indole and indole acetate, substances made from tryptophan by gut
+      bacteria. This is a measure of gut-bacterial metabolism, not of the body's kynurenine
+      pathway, so it does not count towards the level.
+    sources: [pmid:42325052]
+  - text: >-
+      Several studies cannot count towards the level because their case definition is not yet
+      verified. They point in different directions: higher kynurenine with lower downstream
+      products; a lower ratio of kynurenic acid to quinolinic acid in 49 patients compared with 54
+      controls; higher free tryptophan in 23 patients compared with 42 controls; lower free
+      tryptophan in patients in a study at the University of Oxford (case definition not stated in
+      the abstract); and no difference in plasma tryptophan or kynurenine in a study from New
+      Jersey.
+    sources: [pmid:38015302, pmid:34090138, pmid:15982993, pmid:11352361, pmid:20384451]
+  - text: >-
+      Level 4 is not reached. In a placebo-controlled crossover pilot of 5 women meeting CDC criteria
+      (version not stated, so the definition does not require post-exertional malaise), acute
+      tryptophan depletion lowered the plasma ratio of tryptophan to other large neutral amino acids
+      but did not change fatigue, depression score or concentration compared with placebo. The
+      trial tested the serotonin side of tryptophan metabolism, not the kynurenine pathway. The
+      authors write that a much larger sample is needed.
+    sources: [pmid:25227994]
+# Proposal for the founder: contested at rung 3 (39302151 Figure 2c against 34829952 and 40903540).
+contested:
+  rungs: [3]
+  reason:
+    - text: >-
+        Level 3 rests on two studies that found a higher ratio of kynurenic acid to kynurenine in
+        patients: one from Padova of 39 patients and 40 healthy controls (serum), and a later one
+        from Columbia University of 56 patients and 52 healthy controls (plasma, before exercise),
+        both with patients meeting the Canadian criteria.
+      sources: [pmid:34829952, pmid:40903540]
+    - text: >-
+        A study from Uppsala of 38 patients meeting the Canadian, International and IOM criteria and
+        24 healthy controls plotted the ratio of kynurenine to kynurenic acid in plasma and marked no
+        significant difference between the groups (its Figure 2c). This is the same ratio turned the
+        other way up.
+      sources: [pmid:39302151]
+    - text: >-
+        The Uppsala study has a case definition of equal rank, a control group and at least half as
+        many patients as either study (38 against 39 and 56), so it is of comparable quality and
+        contradicts a study that level 3 needs. Rung 3 is therefore contested.
+      sources: [pmid:39302151, pmid:34829952, pmid:40903540]
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        Two independent studies found a higher ratio of kynurenic acid to kynurenine in patients; a
+        third study of comparable size did not. None tested it as a diagnostic marker with a
+        cut-off, and no tryptophan-pathway marker has been tested in a second, independent patient
+        group.
+      sources: [pmid:34829952, pmid:40903540, pmid:39302151]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        One study measured symptoms before and 24 and 48 hours after an exercise test. Its only
+        reported link between the tryptophan pathway and symptoms is a correlation, in patients,
+        between a kynurenine-pathway product measured after exercise, 3-methoxyanthranilate, and a
+        general fatigue score taken at the same time. That is not a correlation with the change in
+        symptoms after exertion, the fatigue score does not measure post-exertional malaise
+        specifically, and the result has not been repeated.
+      sources: [pmid:40903540]
+subgroups:
+  - text: >-
+      In the Padova study, the 19 patients whose illness began after an infection had lower
+      kynurenine and a lower kynurenine to tryptophan ratio than the 21 whose illness did not, a
+      comparison within patients. Not yet repeated.
+    sources: [pmid:34829952]
+  - text: >-
+      In the Bergen study, serum tryptophan was lower in one metabolic subset of patients and higher
+      in another, compared with controls. Not yet repeated.
+    sources: [pmid:34423789]
+working_on_it: []
+early_signals:
+  - text: >-
+      A study of n=83 patients and 35 controls found lower kynurenic acid in serum in each of three
+      patient subsets; two smaller studies did not find a difference. Not yet repeated.
+    sources: [pmid:34423789, pmid:34829952, pmid:39302151]
+studies:
+  # --- supports ---
+  - id: pmid:34829952
+    title: Tryptophan Metabolites, Cytokines, and Fatty Acid Binding Protein 2 in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: Our patients fulfilled the criteria of the Canadian Consensus Criteria for the diagnosis of ME/CFS, and for the majority of them, the diagnosis of ME/CFS was also made by independent colleagues.
+    design: controlled
+    # Abstract: 40 patients, 40 controls. Full text Figure 3: tryptophan metabolites measured in 39 of the 40 patients.
+    # Full text: "Considering the kynurenine/tryptophan ratio, no difference was found between ME/CFS patients and
+    # controls."
+    n_patients: 39
+    n_controls: 40
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 3 (kynurenic acid/kynurenine ratio)
+    direction: mixed  # kynurenine lower; 3-hydroxykynurenine and two ratios higher
+    group: Baritussio A, University of Padova, Italy
+    finding: >-
+      A study in which 39 of the 40 patients and 40 healthy controls were measured found lower
+      serum kynurenine (p = 0.012) and
+      serotonin, higher 3-hydroxykynurenine, and higher kynurenic acid/kynurenine and
+      3-hydroxykynurenine/kynurenine ratios in patients.
+  - id: pmid:40903540
+    title: Heightened innate immunity may trigger chronic inflammation, fatigue and post-exertional malaise in ME/CFS.
+    year: 2025
+    cohort: me_cfs
+    # "CDC/Fukuda and Canadian consensus criteria": recorded as CCC (as 34254637 on the HPA card).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: Study subjects were 56 ME/CFS cases and 52 HC recruited in New York and California, with 47 case-control pairs matched for sex, age ( ± 5 years), race/ethnicity, geography, date-of-exercise and blood sampling ( ± 12 weeks), diagnosed using the CDC/Fukuda and Canadian consensus criteria
+    design: controlled
+    # Table 1 "Metabolomics & Truculture Proteomics": 56 v 52 is the metabolomics column set (confirmed).
+    n_patients: 56
+    n_controls: 52
+    # Symptom link: RCCA correlation (Figure 3B) of post-exercise 3-methoxyanthranilate with MFI general fatigue at
+    # the same time point; not a correlation with the change in symptoms after exertion.
+    measures_pem: true  # cardiopulmonary exercise test; symptom questionnaires before, 24 h and 48 h after
+    preregistered: null
+    role: supports  # rung 3: repeats the higher kynurenic acid/kynurenine ratio of 34829952
+    direction: mixed  # before exercise: KYNA/KYN ratio higher, KYN/TRP ratio lower
+    group: Lipkin WI, Center for Infection and Immunity, Columbia University, New York, USA
+    finding: >-
+      A study of n=56 patients and 52 healthy controls found, before an exercise test, a higher
+      plasma kynurenic acid to kynurenine ratio and a lower kynurenine to tryptophan ratio in
+      patients; post-exercise 3-methoxyanthranilate was associated with a general fatigue score in
+      patients.
+  - id: pmid:34423789
+    title: A map of metabolic phenotypes in patients with myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2021
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: All patients fulfilled the Canadian consensus criteria for ME/CFS
+    design: controlled
+    n_patients: 83  # three subsets of 32, 38 and 13 patients (full text)
+    n_controls: 35
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2 anchor
+    direction: lower  # serum kynurenic acid
+    group: Tronstad KJ, Fluge Ø and Mella O, University of Bergen and Haukeland University Hospital, Norway
+    finding: >-
+      A study of n=83 patients and 35 healthy controls found lower serum kynurenic acid in each of
+      three metabolic subsets of patients compared with controls, with serum tryptophan lower in one
+      subset and higher in another.
+  - id: pmid:39302151
+    title: "Untargeted Metabolomics and Quantitative Analysis of Tryptophan Metabolites in Myalgic Encephalomyelitis Patients and Healthy Volunteers: A Comparative Study Using High-Resolution Mass Spectrometry."
+    year: 2024
+    cohort: me_cfs
+    # CCC, ICC and IOM 2015; recorded as CCC. "Both groups" = the two patient clinics (full text).
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: Both groups were diagnosed using Canadian Consensus Criteria, the International Consensus Criteria, and the Institute of Medicine (IOM) criteria.
+    design: controlled
+    n_patients: 38
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    # Proposal: contradicts 34829952 and 40903540 on the kynurenic acid/kynurenine ratio. Figure 2c plots Kyn/KA
+    # (the inverse ratio) in 38 v 24 and marks no significant difference; only Kyn/3HK and Trp/5-HT are starred.
+    # The result comes from the figure's significance marks (image checked); the text does not state it and
+    # Table S3 was not read. 3-hydroxykynurenine lower, opposite to 34829952.
+    role: contradicts  # rung 3
+    direction: mixed  # Kyn/KA no difference; 3-HK and 3-HAA lower; Kyn/3HK higher
+    group: Bergquist J, Uppsala University, Sweden
+    finding: >-
+      A study of n=38 patients and 24 healthy controls found lower plasma 3-hydroxykynurenine and
+      3-hydroxyanthranilic acid and a higher kynurenine to 3-hydroxykynurenine ratio in patients,
+      and marked no significant difference in the ratio of kynurenine to kynurenic acid (Figure 2c).
+  - id: pmid:42325052
+    title: Tryptophan Metabolism and Aryl-Hydrocarbon Receptor Agonists in the Gut Microbiome of People With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2026
+    cohort: me_cfs
+    # Survey-based: all cases met CCC and/or IOM except one who met CDC criteria; recorded as the weakest.
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: Based on symptom survey responses, all ME/CFS cases met CCC and/or IOM criteria except one which met CDC criteria.
+    design: controlled
+    # 32 cases and 35 controls enrolled; stool targeted metabolomics in 19 ME/CFS and 23 controls (Figure 3).
+    n_patients: 19
+    n_controls: 23
+    measures_pem: false
+    preregistered: null
+    role: context  # gut-bacterial metabolism, not the body's kynurenine pathway
+    direction: higher  # stool tryptophan, indole, indole acetate
+    group: Esteban DJ, Vassar College, Poughkeepsie, USA
+    finding: >-
+      A study that enrolled 32 patients and 35 controls, with stool metabolites measured in n=19
+      patients and 23 controls, found higher stool tryptophan, indole and indole acetate in patients; activation of the aryl hydrocarbon receptor by stool cultures did not
+      differ.
+  # --- intervention ---
+  - id: pmid:25227994
+    title: Tryptophan depletion in chronic fatigue syndrome, a pilot cross-over study.
+    year: 2014
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: Five female CFS-patients who met the US Center for Disease Control and Prevention criteria for CFS were recruited.
+    design: intervention_controlled
+    # Crossover: each patient had placebo and depletion; no separate control group. Registered ISRCTN07518149;
+    # whether before enrolment is not stated, so preregistered null.
+    n_patients: 5
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context  # rung 4 not reached
+    direction: not_applicable
+    group: Buitelaar JK, Radboud University Nijmegen Medical Centre, the Netherlands
+    finding: >-
+      A study of n=5 women found that acute tryptophan depletion lowered the plasma ratio of
+      tryptophan to other large neutral amino acids by 96% but did not change fatigue, depression
+      score or concentration compared with placebo; it tested the serotonin side of tryptophan
+      metabolism, not the kynurenine pathway.
+  # --- context: case definition not verified ---
+  - id: pmid:38015302
+    title: Dysregulation of the Kynurenine Pathway, Cytokine Expression Pattern, and Proteomics Profile Link to Symptomology in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
+    year: 2024
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed  # kynurenine higher; 3-HK, 3-HAA, quinolinic and picolinic acid lower
+    group: Heng B, Macquarie University, Sydney, Australia
+    finding: >-
+      A study of patients and healthy controls (numbers not stated in the abstract) found higher
+      plasma kynurenine, which correlated with symptom severity, and lower 3-hydroxykynurenine,
+      3-hydroxyanthranilic acid, quinolinic acid and picolinic acid in patients.
+  - id: pmid:34090138
+    title: Kynurenine metabolites and ratios differ between Chronic Fatigue Syndrome, Fibromyalgia, and healthy controls.
+    year: 2021
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 49
+    n_controls: 54
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower  # kynurenic acid/quinolinic acid ratio
+    group: Guzey IC, Norwegian University of Science and Technology (NTNU), Trondheim, Norway
+    finding: >-
+      A study of n=49 women with CFS, 57 with fibromyalgia and 54 healthy controls found a lower
+      plasma kynurenic acid to quinolinic acid ratio in CFS than in controls.
+  - id: pmid:15982993
+    title: Heterogeneity of serum tryptophan concentration and availability to the brain in patients with the chronic fatigue syndrome.
+    year: 2005
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 23
+    n_controls: 42
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher  # serum free and total tryptophan
+    group: Badawy AA, Cardiff and Vale NHS Trust, Cardiff, UK
+    finding: >-
+      A study of n=23 patients and 42 healthy controls found 48% higher serum free tryptophan and
+      19% higher total tryptophan in patients.
+  - id: pmid:11352361
+    title: Decreased tryptophan availability but normal post-synaptic 5-HT2c receptor sensitivity in chronic fatigue syndrome.
+    year: 2001
+    cohort: me_cfs
+    # Warneford Hospital, Oxford: may be Oxford criteria; not verified.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: lower  # plasma free tryptophan
+    group: Cowen PJ, University Department of Psychiatry, Warneford Hospital, Oxford, UK
+    finding: >-
+      A study at the University of Oxford (case definition and numbers not stated in the abstract)
+      found lower plasma free tryptophan in patients than in healthy controls.
+  - id: pmid:20384451
+    title: Sex differences in plasma prolactin response to tryptophan in chronic fatigue syndrome patients with and without comorbid fibromyalgia.
+    year: 2010
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: null  # not in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference  # plasma tryptophan and kynurenine
+    group: Natelson BH, UMDNJ-New Jersey Medical School, Newark, USA
+    finding: >-
+      A study of patients with CFS alone, CFS with fibromyalgia and healthy controls (numbers not
+      stated in the abstract) found that "Plasma tryptophan and kynurenine concentrations did not
+      differ among groups."
+last_checked:
+  date: 2026-11-02
+  by: ai_pair
