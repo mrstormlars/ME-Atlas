@@ -21,7 +21,7 @@ items:
     - pmid:32210306
     source_hash: dfabdf25ab98df256021369849cb4a445bc0a4c4cc27e28753e4d2366123eb1d
   level_reason[1]:
-    text: 'På denne stigen betyr nivå 2 at en kontrollert studie hos pasienter med en anerkjent kasusdefinisjon støtter hypotesen.
+    text: 'På denne stigen betyr nivå 2 at en kontrollert studie hos pasienter med anerkjente diagnosekriterier støtter hypotesen.
       Her er støtten en assosiasjon: to varianter var vanligere hos pasienter enn hos kontroller. For å gå videre enn assosiasjon
       kreves nivå 4, der endring av den foreslåtte faktoren endrer utfallet i et kontrollert eksperiment; ingen studie på
       dette kortet gjør det.'
@@ -29,7 +29,7 @@ items:
     - pmid:32210306
     source_hash: e222ef74296b6c0e14b27f8db82f96ef58f05b74b0219fe57db930b8872b91ef
   level_reason[2]:
-    text: Andre kontrollerte studier med en anerkjent kasusdefinisjon fant også assosiasjoner, hver med en ulik variant og
+    text: Andre kontrollerte studier med anerkjente diagnosekriterier fant også assosiasjoner, hver med en ulik variant og
       ingen gjentatt av en annen gruppe. En studie fra Berlin med 305 pasienter som oppfylte Canadian Consensus Criteria og
       201 friske kontroller fant to varianter knyttet til autoimmune sykdommer, i genene PTPN22 og CTLA4, oftere hos pasientene
       (ensidige tester, uten oppgitt korreksjon for de fem variantene som ble testet); for PTPN22 hos alle pasientene omfatter
@@ -61,20 +61,20 @@ items:
   level_reason[5]:
     text: DecodeME-kombinasjonene ble funnet igjen i tre separate grupper av DecodeME-deltakere, men innenfor én studie fra
       ett selskap, så dette er ikke en gjentakelse fra en uavhengig gruppe. En tidligere studie fra samme selskap brukte UK
-      Biobank-deltakere som oppga en diagnose, uten kasusdefinisjon, og kan ikke telle mot nivået.
+      Biobank-deltakere som oppga en diagnose, uten diagnosekriterier, og kan ikke telle mot nivået.
     sources:
     - pmid:42015188
     - pmid:36517845
     source_hash: 523bc39dba4c46e5f6994d3a7e533b94d2b53453240161651cf0130b5b251630
   level_reason[6]:
-    text: Flere studier, noen av dem store, kan ikke telle mot nivået fordi kasusdefinisjonen deres ikke er kontrollert eller
-      ingen kasusdefinisjon ble brukt. Den største genomomfattende studien fra Oslo, med en norsk gruppe på 427 pasienter,
+    text: Flere studier, noen av dem store, kan ikke telle mot nivået fordi diagnosekriteriene deres ikke er kontrollert eller
+      ingen diagnosekriterier ble brukt. Den største genomomfattende studien fra Oslo, med en norsk gruppe på 427 pasienter,
       en dansk gruppe på 460 og 2105 tilfeller fra UK Biobank, fant ingen variant som nådde genomomfattende signifikans; det
       sterkeste norske signalet, nær genet TPPP, ble ikke gjentatt for toppvarianten. En studie fra Utah av 811 personer med
       diagnosekode for kronisk utmattelsessyndrom i journalen fant mer av sykdommen enn forventet blant første-, andre- og
       tredjegradsslektninger. En tvillingstudie av 146 kvinnelige tvillingpar fant at eneggede tvillinger oftere delte uforklart
       kronisk utmattelse enn toeggede tvillinger (55% mot 19% for den strengeste definisjonen, som bare brukte utelukkelsesreglene
-      i kasusdefinisjonen for kronisk utmattelsessyndrom).
+      i diagnosekriteriene for kronisk utmattelsessyndrom).
     sources:
     - pmid:35318112
     - pmid:21619629
@@ -84,7 +84,7 @@ items:
     text: Mindre studier av enkeltkandidatgener peker i ulike retninger. En studie fra London med 49 pasienter og 102 kontroller
       fant varianten HLA-DQA1*01 oftere hos pasientene; studien fra Oslo kunne ikke teste denne varianten fordi kontrollene
       ikke var typet for den. En annen studie fra London med 58 pasienter og 134 kontroller fant ingen HLA-forskjeller. Ingen
-      av dem har en kontrollert kasusdefinisjon. En studie fra Brisbane med 248 pasienter som oppfylte CDC-kriteriene og 248
+      av dem har kontrollerte diagnosekriterier. En studie fra Brisbane med 248 pasienter som oppfylte CDC-kriteriene og 248
       kontroller fant bare en tendens (P = 0,07) for en variant i et gen for et kortisolbindende protein, og en australsk
       studie med 95 pasienter som oppfylte Fukuda-kriteriene og 77 kontroller fant ingen variant som forble signifikant etter
       korreksjon for testing av mange varianter (laveste P = 0,059). Disse studiene er små for genetiske assosiasjonsstudier.

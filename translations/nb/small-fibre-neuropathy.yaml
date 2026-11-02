@@ -34,10 +34,10 @@ items:
     source_hash: 5f9f135ae7e6e2d8e6f19b42453b62eee2b8465d512809b1623b1323b9d03731
   level_reason[2]:
     text: Kortet er ikke på nivå 2 fordi ingen kontrollert sammenligning av ME/CFS-pasienter med kontroller når det gjelder
-      skade på små fibre har både en bekreftet kasusdefinisjon og et resultat som peker mot skade. To kontrollerte studier
+      skade på små fibre har både bekreftede diagnosekriterier og et resultat som peker mot skade. To kontrollerte studier
       fra Bilbao omfattet pasienter med en tidligere ME/CFS-diagnose eller som oppfylte Fukuda-definisjonen; fordi en tidligere
       diagnose ikke navngir en definisjon, kan disse ikke telle mot nivået. En studie fra Boston av 160 pasienter, der 31%
-      av hudbiopsiene var forenlige med småfibernevropati, kan heller ikke telle fordi kasusdefinisjonen ikke er bekreftet
+      av hudbiopsiene var forenlige med småfibernevropati, kan heller ikke telle fordi diagnosekriteriene ikke er bekreftet
       ennå.
     sources:
     - pmid:37968647
@@ -59,14 +59,14 @@ items:
     - pmid:42082542
     source_hash: 54780255440cb5a47de2cdd96d36b75e7262cafba892debbacd659d67210b1cc
   badge_reasons.diagnostic_marker[0]:
-    text: Ingen markør for skade på små fibre er testet i en andre, uavhengig pasientgruppe med en bekreftet kasusdefinisjon.
-      I én studie der kasusdefinisjonen ikke er bekreftet, skilte buktede nervefibre i hornhinnen 30 pasienter fra 30 friske
+    text: Ingen markør for skade på små fibre er testet i en andre, uavhengig pasientgruppe med bekreftede diagnosekriterier.
+      I én studie der diagnosekriteriene ikke er bekreftet, skilte buktede nervefibre i hornhinnen 30 pasienter fra 30 friske
       kontroller med en AUC (arealet under ROC-grafen) på 0,690.
     sources:
     - pmid:39888240
     source_hash: 0a856b428c0e9047585ae8299f19d10b4e632de80a71215aa68a52b74b7a4a49
   badge_reasons.explains_pem[0]:
-    text: Ingen studie på dette kortet måler PEM direkte og knytter det til skade på små fibre. I én studie, der kasusdefinisjonen
+    text: Ingen studie på dette kortet måler PEM direkte og knytter det til skade på små fibre. I én studie, der diagnosekriteriene
       ikke er bekreftet ennå, korrelerte ikke alvorlighetsgraden av tap av nervefibre i hudbiopsier med mål fra en treningstest.
     sources:
     - pmid:33577778

@@ -49,7 +49,7 @@ items:
     - pmid:40713801
     source_hash: 76360dbc1ef1425d3c1f1e3731c16de47e1a0908069ff5701dfd4b14e5fe7b72
   level_reason[3]:
-    text: Andre studier med en anerkjent kasusdefinisjon fant ikke det samme. En studie fra London med 20 pasienter som oppfylte
+    text: Andre studier med anerkjente diagnosekriterier fant ikke det samme. En studie fra London med 20 pasienter som oppfylte
       CDC-kriteriene og 20 matchede kontroller brukte den samme ACTH-testen med lav dose som Dinan-gruppen og fant ingen forskjeller
       i kortisol i utgangspunktet eller i kortisolresponsene. En studie fra Uppsala med 24 pasienter som oppfylte Canada-kriteriene,
       International Consensus Criteria og IOM 2015-kriteriene og 24 matchede kontroller fant ingen signifikant forskjell i
@@ -64,7 +64,7 @@ items:
     - pmid:38724880
     source_hash: ab271f989502e381437fd013f63bd0ca2050551e7a2feb521968c4214cfca4ff
   level_reason[4]:
-    text: 'Flere studier kan ikke telle mot nivået fordi kasusdefinisjonen deres ennå ikke er kontrollert. De peker i begge
+    text: 'Flere studier kan ikke telle mot nivået fordi diagnosekriteriene deres ennå ikke er kontrollert. De peker i begge
       retninger: lavere kortisol i plasma om kvelden og lavere kortisol i urin hos 30 pasienter sammenlignet med 72 frivillige;
       lavere kortisol i urin hos 121 klinikkpasienter sammenlignet med 64 personer uten sykdommen; en flatere økning i kortisol
       i spytt om morgenen hos kvinner, men ikke menn, i en befolkningsbasert studie av 75 personer med sykdommen og 110 friske
@@ -96,7 +96,7 @@ items:
     source_hash: 7dbb3e6755c7754d2b1985b7da1c2f8492425c1ea0e57bbf1d94b0df450a6b3a
   level_reason[7]:
     text: En crossover-studie fra London med 32 pasienter fant at utmattelsen sank mer på hydrokortison i lav dose enn på
-      placebo (p = 0,009), men kasusdefinisjonen er ennå ikke kontrollert, så den kan ikke telle mot nivå 4. HPA-studien fra
+      placebo (p = 0,009), men diagnosekriteriene er ennå ikke kontrollert, så den kan ikke telle mot nivå 4. HPA-studien fra
       London, fra samme gruppe, behandlet 32 av pasientene sine med hydrokortison i samme type crossover; det er ikke oppgitt
       om dette er de samme pasientene. Hos pasientene som ble bedre, økte kortisolresponsen på CRH, og den svekkede responsen
       som var sett tidligere, snudde. Dette er en endring hos pasientene som ble bedre, ikke en sammenligning med kontroller,
@@ -123,7 +123,7 @@ items:
     - pmid:11502777
     source_hash: 9d33d7fb909721e729cc7d187f5a3bc9a3ba5e2c7ce91eda94c245e35019b8d7
   contested_reason[2]:
-    text: Studien fra London har en kasusdefinisjon av samme rang, en kontrollgruppe og minst halvparten så mange pasienter
+    text: Studien fra London har diagnosekriterier av samme rang, en kontrollgruppe og minst halvparten så mange pasienter
       (37 mot 14), så den er av sammenlignbar kvalitet og motsier studien som nivå 2 bygger på. Trinn 2 er derfor omstridt.
     sources:
     - pmid:11502777
@@ -146,7 +146,7 @@ items:
     - pmid:10594524
     source_hash: 531f672925769c45c5ded17fbe2a342a93bf7e5fc8af24384799efe7324038f4
   badge_reasons.explains_pem[0]:
-    text: 'Ingen studie på dette kortet måler PEM direkte og knytter den til kortisol. En studie, hvis kasusdefinisjon ennå
+    text: 'Ingen studie på dette kortet måler PEM direkte og knytter den til kortisol. En studie, hvis diagnosekriterier ennå
       ikke er kontrollert, målte hormoner etter en maksimal tredemølletest: ACTH 4 minutter etter anstrengelsen var lavere
       hos pasientene enn hos stillesittende kontroller, og dagen etter skilte ikke hormonnivåene seg; sammendraget oppgir
       ikke noe symptommål.'
@@ -155,7 +155,7 @@ items:
     source_hash: 1650559952808b2768be95060037f650040b8dcf5b70f2beacf0831e0a06402e
   subgroups[0]:
     text: To studier tyder på kjønnsforskjeller, med ulike mål; resultatet for menn bygger på 8 pasienter. Ikke gjentatt.
-      En befolkningsbasert studie, hvis kasusdefinisjon ennå ikke er kontrollert, fant en flatere økning i kortisol i spytt
+      En befolkningsbasert studie, hvis diagnosekriterier ennå ikke er kontrollert, fant en flatere økning i kortisol i spytt
       om morgenen hos kvinner, men ikke hos menn; en studie fra Østerrike og Chile fant lavere kortisol i plasma bare hos
       menn med lett eller moderat sykdom.
     sources:

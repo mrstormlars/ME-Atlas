@@ -54,7 +54,7 @@ items:
     text: Studiene er uenige om mangfoldet av tarmbakterier. Cornell-studien og den kinesiske studien fant lavere mangfold.
       En polsk studie med 25 pasienter (Fukuda) og 16 kontroller fant færre bakterietyper (lavere artsrikdom), men ingen signifikant
       forskjell i mangfold eller jevnhet. I studien med 106 pasienter var mangfoldet lavere i den enkle sammenligningen, men
-      etter justering ble dette knyttet til irritabel tarm-syndrom heller enn til ME/CFS. En bulgarsk studie hvis kasusdefinisjon
+      etter justering ble dette knyttet til irritabel tarm-syndrom heller enn til ME/CFS. En bulgarsk studie hvis diagnosekriterier
       ennå ikke er kontrollert, fant ingen forskjell i mangfold innen prøver, men små forskjeller i den samlede sammensetningen.
     sources:
     - pmid:27338587
@@ -64,11 +64,11 @@ items:
     - pmid:42351611
     source_hash: fb9926a6045dcee5a1ce538255040b420d811fe44e63eca4774e62176eb49645
   level_reason[5]:
-    text: Andre studier rapporterer andre bakterier. En studie av norske og belgiske pasienter (kasusdefinisjon ennå ikke
+    text: Andre studier rapporterer andre bakterier. En studie av norske og belgiske pasienter (diagnosekriterier ennå ikke
       kontrollert) fant mer Alistipes hos norske pasienter, mens den kinesiske studien fant lavere Alistipes; teksten sier
       at fallet ikke holdt seg etter korreksjon for multippel testing, mens Fig. 4 oppfører Alistipes blant taxa som skilte seg
       etter korreksjon. En studie med 75 pasienter som hadde vært syke i under 4 år og 79 som hadde vært syke i over 10 år
-      (kasusdefinisjon ennå ikke kontrollert) fant tydelige forskjeller i tarmbakterier hovedsakelig i gruppen som hadde vært
+      (diagnosekriterier ennå ikke kontrollert) fant tydelige forskjeller i tarmbakterier hovedsakelig i gruppen som hadde vært
       kortere syk, og rapporterte mindre bakteriell butyratproduksjon og lavere butyrat i blodet.
     sources:
     - pmid:23791918

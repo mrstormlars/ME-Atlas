@@ -61,8 +61,7 @@ items:
   level_reason[5]:
     text: Mot disse funnene fant en studie fra New York med 58 pasienter og 25 stillesittende kontroller ingen endring i maksimalt
       oksygenbruk eller oksygenbruk ved ventilasjonsterskelen på andre dag i noen av gruppene; artikkelen rapporterer at 5
-      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte kasusdefinisjonen fra 1994
-      (Fukuda), modifisert slik at den krever PEM. Forfatterne antyder at fall som er rapportert andre steder, kan skyldes
+      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte kriteriene fra 1994 (Fukuda), modifisert slik at de krever PEM. Forfatterne antyder at fall som er rapportert andre steder, kan skyldes
       lavere innsats på andre dag.
     sources:
     - pmid:42212259
@@ -78,7 +77,7 @@ items:
   level_reason[7]:
     text: En studie av 16 pasienter og 10 kontroller fra Adelaide fant at arbeidsraten ved ventilasjonsterskelen sank mer
       hos pasientene på andre dag, men fant ingen forskjell mellom gruppene i hvordan oksygenbruket endret seg. To andre toddagersstudier,
-      der kasusdefinisjonen ennå ikke er kontrollert, fant lavere oksygenbruk og arbeidsbelastning hos 51 kvinner bare på
+      der diagnosekriteriene ennå ikke er kontrollert, fant lavere oksygenbruk og arbeidsbelastning hos 51 kvinner bare på
       andre test, og lavere arbeidsbelastning, men høyere oksygenbruk på andre dag hos 10 pasienter.
     sources:
     - pmid:30871578
@@ -101,7 +100,7 @@ items:
     text: Trinn 3 bygger på uavhengige studier som fant det samme resultatet som studien med 84 pasienter, hvis pasienter
       oppfylte Canadian Consensus Criteria. Den tydeligste, en Fukuda-studie av 15 kvinnelige pasienter og 15 kontroller fra
       Amsterdam, blir motsagt av en Fukuda-studie av 58 pasienter og 25 stillesittende kontroller fra New York som ikke fant
-      noen endring på andre dag. Med den samme kasusdefinisjonen, en kontrollgruppe og flere pasienter (58 mot 15) er New
+      noen endring på andre dag. Med de samme diagnosekriteriene, en kontrollgruppe og flere pasienter (58 mot 15) er New
       York-studien av sammenlignbar kvalitet.
     sources:
     - pmid:20937116
@@ -109,7 +108,7 @@ items:
     - pmid:38965566
     source_hash: 1553fabbcce3721350d1d88372adb46069460b260963bd447dd03466dccd98f1
   contested_reason[1]:
-    text: De to nederlandske klinikkstudiene av kvinner og menn peker samme vei, men kasusdefinisjonen som er registrert for
+    text: De to nederlandske klinikkstudiene av kvinner og menn peker samme vei, men diagnosekriteriene som er registrert for
       dem (International Consensus Criteria) er lest ut fra et referansenummer og ikke bekreftet, og de sammenligner pasienter
       med personer som har kronisk utmattelse uten ME/CFS i stedet for med friske kontroller.
     sources:
@@ -134,7 +133,7 @@ items:
     source_hash: 2756a0cef999e76020c8af839b3abbe2adb2fc9f35cd920a05cb4e55ecf81d58
   badge_reasons.diagnostic_marker[0]:
     text: Ingen studie på dette kortet tester en toddagers treningsmarkør i en annen, uavhengig pasientgruppe. En studie av
-      51 kvinner (kasusdefinisjon ennå ikke kontrollert) klassifiserte pasienter og kontroller med 95,1% nøyaktighet innenfor
+      51 kvinner (diagnosekriterier ennå ikke kontrollert) klassifiserte pasienter og kontroller med 95,1% nøyaktighet innenfor
       sin egen kohort, og en studie av 16 pasienter foreslo en grense for fallet i arbeidsrate ved ventilasjonsterskelen,
       også innenfor sin egen kohort. En studie av 58 pasienter konkluderte med at dataene ikke støtter å bruke toddagersprotokollen
       til å definere PEM eller funksjonsnedsettelse.

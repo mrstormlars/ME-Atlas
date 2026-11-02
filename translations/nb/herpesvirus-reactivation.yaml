@@ -22,7 +22,7 @@ items:
     - pmid:36653846
     source_hash: 58885c5f9cc49ea482dcc6ecfd0de1645cb9a22dc3d90800f994bd4fa9a8023a
   level_reason[1]:
-    text: En tidligere studie fra den samme gruppen i Riga, med 108 pasienter som oppfylte CDC-kasusdefinisjonen fra 1994
+    text: En tidligere studie fra den samme gruppen i Riga, med 108 pasienter som oppfylte CDC-kriteriene fra 1994
       (Fukuda) og 90 friske kontroller, fant aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 hos 70 av 108 pasienter
       og 12 av 90 kontroller. Aktiv HHV-7-infeksjon alene ble funnet hos 28 pasienter og 10 kontroller, og artikkelen oppgir
       HHV-6 i plasma hos 16 av 108 pasienter. De to studiene fra Riga kan ha felles pasienter; artiklene sier ikke noe om
@@ -54,7 +54,7 @@ items:
     - pmid:34422848
     source_hash: b1374aefcdb3c23460eb2f4accf27f93a8f96f292f944c71390f5c53670a32cc
   level_reason[4]:
-    text: Placebokontrollerte studier av antivirale legemidler er gjennomført, men for hver av dem er kasusdefinisjonen ennå
+    text: Placebokontrollerte studier av antivirale legemidler er gjennomført, men for hver av dem er diagnosekriteriene ennå
       ikke kontrollert, så de kan ikke telle mot nivå 4. I en studie med 24 pasienter, valgt ut etter antistoffer mot Epstein-Barr-virus
       og gitt acyclovir og placebo etter tur, ble like mange bedre på hver (11 og 10). I en studie med 30 pasienter med forhøyede
       antistoffer mot HHV-6 og Epstein-Barr-virus, randomisert 2 mot 1 til valganciclovir eller placebo i seks måneder, var
@@ -85,7 +85,7 @@ items:
     - pmid:28604802
     source_hash: 11d0a8ae0e10e032dfddf3fe6be7cda2683ef9c9dbf376ccef5d319f55b757d8
   level_reason[7]:
-    text: Noen studier med kasusdefinisjoner som ennå ikke er kontrollert, fant ingen forskjell. Én av dem, med 26 pasienter
+    text: Noen studier med diagnosekriterier som ennå ikke er kontrollert, fant ingen forskjell. Én av dem, med 26 pasienter
       og 50 matchede kontroller i Atlanta (52 rekruttert), isolerte verken HHV-6 eller HHV-7 fra noens blodceller og fant
       ingen forskjell i HHV-6- eller HHV-7-DNA i blodceller, som dette kortet regner som en markør på latent, ikke aktiv,
       infeksjon. Et flersentersøk etter virusets arvemateriale i blod, avføring og spytt fant ingen konsekvente forskjeller
@@ -95,9 +95,9 @@ items:
     - pmid:37526404
     source_hash: 9c9be5ca0f245471f3664cbdcf09477f862d6dfde808e42d4acf0ce63fb5564f
   badge_reasons.diagnostic_marker[0]:
-    text: Ingen markør på dette kortet er testet i en annen, uavhengig pasientgruppe med en kontrollert kasusdefinisjon. Antistoffer
+    text: Ingen markør på dette kortet er testet i en annen, uavhengig pasientgruppe med kontrollerte diagnosekriterier. Antistoffer
       mot dUTPase fra Epstein-Barr-virus var høyere hos pasienter i to studier fra den samme gruppen i Ohio; den siste studien
-      fant også høyere antistoffer mot dUTPase fra HHV-6 og varicella zoster-virus. Begge studiene har kasusdefinisjoner som
+      fant også høyere antistoffer mot dUTPase fra HHV-6 og varicella zoster-virus. Begge studiene har diagnosekriterier som
       ennå ikke er kontrollert.
     sources:
     - pmid:28303641

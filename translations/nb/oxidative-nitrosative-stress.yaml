@@ -33,8 +33,8 @@ items:
     source_hash: 84e88bd3815d0cf0507adddaaeb07373c69fcf5eca8cadae5a05ecff80bec456
   level_reason[2]:
     text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe har funnet det samme resultatet på det samme målet i en egen kohort
-      med en bekreftet anerkjent kasusdefinisjon. Den eneste andre isoprostanstudien, av 6 pasienter og 6 kontroller i Glasgow,
-      fant også høyere nivåer i hvile, men kasusdefinisjonen er ikke kontrollert ennå. Den har tre forfattere felles med studien
+      med bekreftede anerkjente diagnosekriterier. Den eneste andre isoprostanstudien, av 6 pasienter og 6 kontroller i Glasgow,
+      fant også høyere nivåer i hvile, men diagnosekriteriene er ikke kontrollert ennå. Den har tre forfattere felles med studien
       fra Dundee, så den ville ikke regnes som en uavhengig replikasjon selv med en kontrollert definisjon.'
     sources:
     - pmid:19422646
@@ -56,7 +56,7 @@ items:
   level_reason[4]:
     text: Målene på antioksidantforsvar er blandede. I studier med en anerkjent definisjon var antioksidantpotensialet i serum
       lavere i studien fra Osaka, mens glutation i lymfocytter var høyere hos begge kjønn i studien fra Stanford (hos menn
-      i to av de tre celletypene som ble testet). I studier der kasusdefinisjonen ikke er kontrollert ennå, var koenzym Q10
+      i to av de tre celletypene som ble testet). I studier der diagnosekriteriene ikke er kontrollert ennå, var koenzym Q10
       i plasma lavere hos 58 pasienter enn hos 22 kontroller; aktiviteten til glutationperoksidase i fullblod skilte seg ikke
       mellom 40 pasienter og 24 kontroller; glutation i hjernen var lavere hos 15 pasienter enn hos 13 friske frivillige i
       én studie og skilte seg ikke i en annen med 26 personer til sammen.
@@ -69,10 +69,10 @@ items:
     - pmid:19906518
     source_hash: 8de4d463d916eb6f6cbc814ae96547f68ac55aa287780e76e553289dd25369d8
   level_reason[5]:
-    text: 'Kortet når ikke nivå 4: ingen kontrollert studie hos pasienter med en bekreftet anerkjent kasusdefinisjon har senket
+    text: 'Kortet når ikke nivå 4: ingen kontrollert studie hos pasienter med bekreftede anerkjente diagnosekriterier har senket
       et mål på oksidativt stress og bedret sykdommen. En placebokontrollert studie av koenzym Q10 pluss NADH hos 73 pasienter
       rapporterte mindre utmattelse enn med placebo og lavere lipidperoksider i blodceller i den behandlede gruppen (sammendraget
-      sier ikke om det er mot placebo eller mot utgangsnivået), men kasusdefinisjonen er ikke kontrollert ennå. En større
+      sier ikke om det er mot placebo eller mot utgangsnivået), men diagnosekriteriene er ikke kontrollert ennå. En større
       placebokontrollert studie av den samme kombinasjonen fra den samme enheten, hos 207 kvinner som oppfylte Fukuda-definisjonen,
       målte ikke oksidativt stress og rapporterte at skårene for utmattelse endret seg parallelt i de to gruppene. En crossover-studie
       av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene målte heller ikke oksidativt stress.'
@@ -83,7 +83,7 @@ items:
     source_hash: d4dfb997e63d5b7380e353ee822125e2e36fcf68520c2c67989e14cc53877a49
   level_reason[6]:
     text: En placebokontrollert studie av ubikinol, den reduserte formen av koenzym Q10, hos 43 pasienter (31 fullførte) rapporterte
-      bedring i flere symptomer; kasusdefinisjonen er ikke kontrollert ennå.
+      bedring i flere symptomer; diagnosekriteriene er ikke kontrollert ennå.
     sources:
     - pmid:27125909
     source_hash: 89d49e08e5f0851303b43c7c78297d0e5ac48db92df47c6c8635ae8aecb7675c
@@ -98,8 +98,7 @@ items:
     source_hash: a78b0e2720618a2b96fe60a7e180ca7b330a7949906f67c3884b45bd7d375cd5
   badge_reasons.explains_pem[0]:
     text: Ingen studie på dette kortet følger symptomer etter en anstrengelsesprøve og kobler dem til oksidativt stress hos
-      de samme pasientene. Studien fra Dundee satte nivåene av isoprostaner i sammenheng med en symptomskår for anstrengelsesutløst
-      symptomforverring (PEM), bare i undergruppen med lav risiko; en symptomskår er ikke et direkte mål på PEM.
+      de samme pasientene. Studien fra Dundee satte nivåene av isoprostaner i sammenheng med en symptomskår for PEM, bare i undergruppen med lav risiko; en symptomskår er ikke et direkte mål på PEM.
     sources:
     - pmid:16085177
     source_hash: 6732cef430480e5f5df8b2faa5a60b42956d008b3e5615873db9130069fc42a1

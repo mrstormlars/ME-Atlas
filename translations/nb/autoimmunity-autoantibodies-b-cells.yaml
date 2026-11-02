@@ -23,9 +23,9 @@ items:
     - pmid:34589868
     source_hash: 4afb5cade8930103144cb0ba4f7dc069d5da5f2cd8c7284b130506bfa66a666a
   level_reason[1]:
-    text: En tidligere studie fra Berlin med 268 pasienter og 108 friske kontroller, hvis kasusdefinisjon ennå ikke er kontrollert,
+    text: En tidligere studie fra Berlin med 268 pasienter og 108 friske kontroller, hvis diagnosekriterier ennå ikke er kontrollert,
       fant høyere antistoffer mot reseptorene β2, M3 og M4 hos pasientene. Den har to forfattere felles med den svenske studien.
-      En studie fra Japan med 60 pasienter og 30 friske kontroller, også med kasusdefinisjon som ennå ikke er kontrollert,
+      En studie fra Japan med 60 pasienter og 30 friske kontroller, også med diagnosekriterier som ennå ikke er kontrollert,
       fant høyere antistoffer mot den muskarine M1-reseptoren, med en annen test.
     sources:
     - pmid:26399744
@@ -59,7 +59,7 @@ items:
     text: 'En større randomisert, dobbeltblind studie fra den samme Bergen-gruppen, med 151 pasienter som oppfylte Canadian
       Consensus Criteria (77 fikk rituximab, 74 placebo; infusjoner over 12 måneder, oppfølging i 24 måneder), fant ingen
       forskjell mellom gruppene i responsrate (26,0 % med rituximab, 35,1 % med placebo), i utmattelse over 24 måneder eller
-      i noe sekundært endepunkt. Med en strengere kasusdefinisjon, en placebogruppe og flere pasienter (151 mot 30) avgjør
+      i noe sekundært endepunkt. Med strengere diagnosekriterier, en placebogruppe og flere pasienter (151 mot 30) avgjør
       denne studien spørsmålet mot studien med 30 pasienter, så kortet når ikke nivå 4: i den større kontrollerte studien
       endret ikke fjerning av B-celler utfallet.'
     sources:
@@ -93,7 +93,7 @@ items:
     - pmid:40703261
     source_hash: 397bd7d4ec0871c8fb21b91999b17a45a7595bd5b219036ee3fc4a08ddfa5a8e
   level_reason[8]:
-    text: Mot antistofffunnene målte en studie fra Cornell med 172 deltakere, hvis kasusdefinisjon ennå ikke er kontrollert,
+    text: Mot antistofffunnene målte en studie fra Cornell med 172 deltakere, hvis diagnosekriterier ennå ikke er kontrollert,
       antistoffer mot mer enn 6 000 humane proteiner og fant ingen signifikante forskjeller mellom pasienter og kontroller,
       heller ikke mot β-adrenerge reseptorer.
     sources:

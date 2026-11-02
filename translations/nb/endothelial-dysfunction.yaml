@@ -74,12 +74,12 @@ items:
     - pmid:33671082
     source_hash: ebbcf8672690c4e2dd067c1f050e6a0fdac8e5704eefafe9ca3171f603d6859c
   level_reason[6]:
-    text: Studier av unormal blodlevring, vist her som bakgrunn, mangler en bekreftet anerkjent kasusdefinisjon. En studie
+    text: Studier av unormal blodlevring, vist her som bakgrunn, mangler bekreftede anerkjente diagnosekriterier. En studie
       fra Stellenbosch i Sør-Afrika med 25 pasienter, beskrevet bare som diagnostisert for mer enn seks måneder siden, og
       15 friske kontroller fant et større areal av mikroblodpropper i plasma, raskere koageldannelse og mer aktivert-utseende
       blodplater hos pasientene; en proteinstudie av 15 av disse pasientene og 10 kontroller fant forskjeller i proteiner
       knyttet til blodlevring. Disse funnene er ikke gjentatt av en uavhengig gruppe. En tidligere studie fra Dundee i Skottland,
-      hvis kasusdefinisjon ennå ikke er kontrollert, fant ingen tegn til aktivering av blodplater eller til at blodet levrer
+      hvis diagnosekriterier ennå ikke er kontrollert, fant ingen tegn til aktivering av blodplater eller til at blodet levrer
       seg for lett hos 17 pasienter og 16 kontroller. Disse studiene kan ikke heve nivået.
     sources:
     - pmid:36015078

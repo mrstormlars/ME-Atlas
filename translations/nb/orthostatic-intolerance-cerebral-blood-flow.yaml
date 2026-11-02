@@ -14,7 +14,7 @@ items:
   level_reason[0]:
     text: En kontrollert studie fra en nederlandsk klinikk (Stichting CardioZorg) målte blodstrømmen til hjernen med ultralyd
       av halspulsårene under en tilt-test med hodet opp på 30 minutter hos 429 pasienter og 44 friske kontroller. Alle pasientene
-      oppfylte Fukuda-definisjonen, som ikke krever anstrengelsesutløst symptomforverring (PEM), og 70% oppfylte også International
+      oppfylte Fukuda-definisjonen, som ikke krever PEM, og 70% oppfylte også International
       Consensus Criteria. Ved slutten av tilt-testen hadde blodstrømmen til hjernen falt med 26% hos pasientene og 7% hos
       kontrollene; fallet var større enn hos kontrollene hos pasienter med POTS, med forsinket ortostatisk hypotensjon og
       med normal hjertefrekvens og blodtrykksrespons. Midt i tilt-testen hadde pasienter som oppga flere ortostatiske symptomer
@@ -23,7 +23,7 @@ items:
     - pmid:32140630
     source_hash: 2782d4c3f8ebb9b018c1687d3e9979eb5aafb78fef7841a72e86fc16f83eb680
   level_reason[1]:
-    text: En senere studie fra den samme klinikken, som ikke oppgir kasusdefinisjonen sin, fant et lignende fall under sitting
+    text: En senere studie fra den samme klinikken, som ikke oppgir diagnosekriteriene sine, fant et lignende fall under sitting
       hos 100 alvorlig syke pasienter (24,5%, mot 0,4% hos 15 friske kontroller). Fordi den kommer fra den samme gruppen,
       teller den ikke som en replikasjon fra andre.
     sources:
@@ -32,7 +32,7 @@ items:
     source_hash: c6e516ad120161377ec2924187f12f889084acd787e1d55eeb60a083d0096829
   level_reason[2]:
     text: En tidligere kontrollert studie fra Johns Hopkins, av 23 pasienter som oppfylte CDC-kriteriene (versjon ikke oppgitt,
-      som ikke krever anstrengelsesutløst symptomforverring (PEM)) og 14 friske kontroller, fant en unormal respons på oppreist
+      som ikke krever PEM) og 14 friske kontroller, fant en unormal respons på oppreist
       tilt hos 22 av 23 pasienter og 4 av 14 kontroller, inkludert trinn med legemidlet isoproterenol; i det første trinnet,
       uten legemidler, hos 70% av pasientene og ingen kontroller. En av forfatterne er også forfatter av den nederlandske
       studien, så de to er ikke uavhengige.
@@ -61,12 +61,12 @@ items:
     - pmid:7674527
     source_hash: 094f695c14c5a405ab51b4f26e35f03ed7f02b8e347f4cd9747a555373178f82
   level_reason[5]:
-    text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe med en kontrollert kasusdefinisjon har gjentatt fallet i blodstrømmen
+    text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe med kontrollerte diagnosekriterier har gjentatt fallet i blodstrømmen
       til hjernen. To studier fra et laboratorium i New York fant lavere blodstrømshastighet i hjernen ved tilt (i den ene
       et fall på 22,5% hos 15 pasienter mot 8,7% hos 11 kontroller), og en studie fra Osaka av 28 unge pasienter og 20 kontroller
       fant tregere gjenoppretting av oksygen i hjernen ved stående stilling. En studie fra Johns Hopkins av 26 pasienter og
       23 kontroller fant ingen forskjell i blodstrømshastighet på noe av de målte tidspunktene (liggende, 1 og 5 minutter
-      etter tilt, 5 og 1 minutter før slutten, og ved avbrudd). Kasusdefinisjonene i alle fire er ikke kontrollert ennå, så
+      etter tilt, 5 og 1 minutter før slutten, og ved avbrudd). Diagnosekriteriene i alle fire er ikke kontrollert ennå, så
       ingen av dem kan støtte eller motsi kortet.'
     sources:
     - pmid:22180650
@@ -88,9 +88,9 @@ items:
   level_reason[7]:
     text: To små studier endret blodstrømmen til hjernen direkte. I en randomisert crossover-studie av 16 pasienter fra den
       nederlandske klinikken reduserte kompresjonsstrømper fallet i blodstrømmen til hjernen under tilt (14% med strømper,
-      25% uten); symptomer var ikke et utfallsmål, og artikkelen oppgir ikke kasusdefinisjonen. I studien fra New York av
+      25% uten); symptomer var ikke et utfallsmål, og artikkelen oppgir ikke diagnosekriteriene. I studien fra New York av
       15 pasienter reduserte fenylefrin, som hever blodtrykket, fallet i blodstrømshastighet ved tilt (8,1% mot 22,5% ubehandlet)
-      og den tregere prestasjonen på en oppgave for arbeidsminne; kasusdefinisjonen er ikke kontrollert ennå. Ingen av dem
+      og den tregere prestasjonen på en oppgave for arbeidsminne; diagnosekriteriene er ikke kontrollert ennå. Ingen av dem
       kan telle med for nivå 4.
     sources:
     - pmid:35056360
@@ -99,14 +99,14 @@ items:
   badge_reasons.diagnostic_marker[0]:
     text: Den nederlandske studien satte en nedre grense for normalt ved et fall på 13% i blodstrømmen til hjernen, fra de
       44 friske kontrollene, og fant et større fall hos 82% til 100% av pasientene avhengig av hjertefrekvens og blodtrykksrespons.
-      Den senere sittestudien kom fra den samme klinikken og oppgir ikke kasusdefinisjonen sin. Ingen uavhengig pasientgruppe
+      Den senere sittestudien kom fra den samme klinikken og oppgir ikke diagnosekriteriene sine. Ingen uavhengig pasientgruppe
       har testet denne grenseverdien.
     sources:
     - pmid:32140630
     - pmid:33050553
     source_hash: ee606602d489519b85fc5c869658d581f2414a3192ddb3e4ee0404ade295bb34
   badge_reasons.explains_pem[0]:
-    text: 'Ingen studie på nivå 2 eller høyere måler anstrengelsesutløst symptomforverring (PEM) og kobler den til blodstrømmen
+    text: 'Ingen studie på nivå 2 eller høyere måler PEM og kobler den til blodstrømmen
       til hjernen hos de samme pasientene. En studie fra den nederlandske klinikken, av pasienter som oppfylte både Fukuda-definisjonen
       og International Consensus Criteria, fulgte skårer for smerte, utmattelse og konsentrasjon etter en tilt-test hos 278
       pasienter og 30 friske kontroller: skårene økte hos pasientene og var fortsatt høyere etter 7 dager, mens kontrollenes
@@ -125,8 +125,7 @@ items:
     source_hash: f7808c600d8c98e695f3387756d98db1ae8b73ded19fd1e6c96debaede13f538
   early_signals[0]:
     text: En studie av n=62 pasienter og 35 kontroller fant lavt karbondioksid i utåndingsluften ved stående stilling (ortostatisk
-      hypokapni) hos 20,6% av pasientene og 2,9% av kontrollene. Ikke gjentatt ennå av en uavhengig gruppe med en kontrollert
-      kasusdefinisjon.
+      hypokapni) hos 20,6% av pasientene og 2,9% av kontrollene. Ikke gjentatt ennå av en uavhengig gruppe med kontrollerte diagnosekriterier.
     sources:
     - pmid:17263876
     source_hash: 3460dbbd2cdadd287c06322172cff14efebc1f7a8ef9e2217a6a36070f90c7bd

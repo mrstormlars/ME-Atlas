@@ -20,7 +20,7 @@ items:
     - pmid:41834684
     source_hash: 8136e9d11fd317e1154491b03c3ae9f8b443a12faa39664173747af79ae4cff7
   level_reason[1]:
-    text: 'Mindre bildestudier med en kasusdefinisjon som ikke er kontrollert ennå, peker i samme retning: en PET-studie av
+    text: 'Mindre bildestudier med diagnosekriterier som ikke er kontrollert ennå, peker i samme retning: en PET-studie av
       9 pasienter fant høyere binding av en markør for aktiverte mikroglia eller astrocytter, og en MR-spektroskopistudie
       av 15 pasienter fant høyere temperatur i hjernen i flere områder og et høyere kolin/kreatin-forhold i venstre fremre
       cingulære cortex.'
@@ -40,7 +40,7 @@ items:
       av 67 pasienter som nivået bygger på: Fukuda-definisjonen rangeres under Canadian Consensus Criteria, og de 9 pasientene
       er færre enn halvparten av 67. Den måler også noe annet (binding av PET-sporstoff, ikke diffusjons-MR), så den motsier
       ikke funnet som nivået bygger på. Den tidligere PET-studien, hvis funn den ikke gjentok, teller ikke med for nivå 2,
-      fordi kasusdefinisjonen ikke er kontrollert ennå.'
+      fordi diagnosekriteriene ikke er kontrollert ennå.'
     sources:
     - pmid:34815320
     - pmid:41834684
@@ -59,7 +59,7 @@ items:
     - pmid:41834684
     source_hash: f6aa779cc415723c38096c3c3d8cade3c932c53cc6ccce1f194626caaa2e1648
   badge_reasons.explains_pem[0]:
-    text: De tre studiene med åpen fulltekst rapporterer ikke noe direkte mål på anstrengelsesutløst symptomforverring (PEM),
+    text: De tre studiene med åpen fulltekst rapporterer ikke noe direkte mål på PEM,
       verken i sammendragene eller i fulltekstene som er kontrollert.
     sources:
     - pmid:34815320
@@ -67,7 +67,7 @@ items:
     - pmid:34609538
     source_hash: c2b807bc0091825bdafee464e3cdc1ca7cc302317f866dac91fb3bd2711cb107
   badge_reasons.explains_pem[1]:
-    text: De tre andre studiene rapporterer ikke noe direkte mål på anstrengelsesutløst symptomforverring (PEM) i sammendragene;
+    text: De tre andre studiene rapporterer ikke noe direkte mål på PEM i sammendragene;
       ingen åpen fulltekst var tilgjengelig.
     sources:
     - pmid:24665088

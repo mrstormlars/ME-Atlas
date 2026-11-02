@@ -78,7 +78,7 @@ items:
     - pmid:39804864
     source_hash: 4c688b8699dd5f7a639f81de819b837d9800199572866d75ece08fc4682c7605
   level_reason[6]:
-    text: Flere studier kan ikke telle mot nivået fordi kasusdefinisjonen deres ennå ikke er kontrollert. En studie fra Stanford
+    text: Flere studier kan ikke telle mot nivået fordi diagnosekriteriene deres ennå ikke er kontrollert. En studie fra Stanford
       med 15 pasienter og 14 kontroller fant lavere totalt volum av hvit substans, slik Newcastle-studien også gjorde; en
       studie fra Nijmegen med 28 pasienter og 28 kontroller i to kohorter fant lavere totalt volum av grå substans; og en
       studie fra Melbourne med 25 ungdommer med ME/CFS og 23 kontroller fant ingen forskjell i strukturen i hvit substans.
@@ -90,7 +90,7 @@ items:
     source_hash: 5fe8da145b9336f2ac8e8551a8ca7c6b214d567cb74a30fe3ca64e2c42e6e182
   badge_reasons.diagnostic_marker[0]:
     text: Diffusjonsstudien som nivå 2 bygger på, antyder at målene kan bli en bildemarkør, men ingen MR-markør i hjernestammen
-      er testet i en ny, uavhengig pasientgruppe med oppgitt kasusdefinisjon.
+      er testet i en ny, uavhengig pasientgruppe med oppgitte diagnosekriterier.
     sources:
     - pmid:34355438
     source_hash: 20db0971d3af720520972bcf8cfc2b64942653c7c73b25deaf2b5561906d2135
@@ -105,7 +105,7 @@ items:
     source_hash: 439836ebb3f2e634b25c554c7b4f7438866e7ff6427bf81f76c2b1169e0f1ca0
   badge_reasons.explains_pem[1]:
     text: En studie med 15 kvinner med ME/CFS og 15 friske kvinner fant at endringer i hjerneaktivitet etter trening hang
-      sammen med pasientenes symptomer, men kasusdefinisjonen er ennå ikke kontrollert, så den kan ikke telle.
+      sammen med pasientenes symptomer, men diagnosekriteriene er ennå ikke kontrollert, så den kan ikke telle.
     sources:
     - pmid:28216087
     source_hash: e1c263c3e6e897f3450511043e864b1a9f843456e689377e23cd6159c325ce35

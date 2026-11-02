@@ -8,7 +8,7 @@
 - en: ME/CFS
   term: ME/CFS
   aliases: [myalgisk encefalomyelitt, kronisk utmattelsessyndrom]
-  explanation: Myalgisk encefalomyelitt / kronisk utmattelsessyndrom. Alvorlig utmattelse som blir verre etter anstrengelse, og søvn som ikke gir hvile. Eldre artikler sier CFS eller ME, med ulike kasusdefinisjoner.
+  explanation: Myalgisk encefalomyelitt / kronisk utmattelsessyndrom. Alvorlig utmattelse som blir verre etter anstrengelse, og søvn som ikke gir hvile. Eldre artikler sier CFS eller ME, med ulike diagnosekriterier.
 
 - en: long COVID
   term: langvarig covid
@@ -26,47 +26,46 @@
   explanation: Skalaen med seks trinn som dette nettstedet bruker for å vise hvor mye evidens som støtter en hypotese, fra «Foreslått» til «Årsakssammenheng underbygd». Den er et utkast.
 
 - en: case definition
-  term: kasusdefinisjon
-  aliases: [kasusdefinisjoner, kasusdefinisjonen, Kasusdefinisjon]
-  explanation: Et skrevet sett med regler (symptomer, hvor lenge de har vart, og sykdommer som må utelukkes) som avgjør hvem som regnes som å ha ME/CFS i en studie.
+  term: diagnosekriterier
+  aliases: [diagnosekriteriene, Diagnosekriterier]
+  explanation: Skrevne regler (symptomer, hvor lenge de har vart, og sykdommer som må utelukkes) som avgjør hvem som regnes som å ha ME/CFS i en studie.
 
 - en: Canadian Consensus Criteria
   term: Canadian Consensus Criteria
   aliases: [CCC, Canada-kriteriene]
-  explanation: "Kasusdefinisjon for ME/CFS fra 2003: seks måneder med utmattelse, forverring etter anstrengelse, tankeproblemer og som regel søvnproblemer og smerte, pluss symptomer i andre organsystemer."
+  explanation: "Diagnosekriterier for ME/CFS fra 2003: seks måneder med utmattelse, forverring etter anstrengelse, tankeproblemer og som regel søvnproblemer og smerte, pluss symptomer i andre organsystemer."
 
 - en: International Consensus Criteria
   term: International Consensus Criteria
   aliases: [ICC]
-  explanation: Kasusdefinisjon for myalgisk encefalomyelitt fra 2011. Krever tydelig forverring etter anstrengelse og symptomer i flere organsystemer, og har ingen ventetid på seks måneder.
+  explanation: Diagnosekriterier for myalgisk encefalomyelitt fra 2011. Krever tydelig forverring etter anstrengelse og symptomer i flere organsystemer, og har ingen ventetid på seks måneder.
 
 - en: IOM 2015 criteria
   term: IOM 2015-kriteriene
   aliases: [IOM 2015]
-  explanation: "Kasusdefinisjon fra amerikanske Institute of Medicine (2015): seks måneder med nedsatt aktivitet og utmattelse, forverring etter anstrengelse, søvn som ikke gir hvile, pluss tanke- eller ståproblemer."
+  explanation: "Diagnosekriterier fra USAs Institute of Medicine (2015): seks måneder med nedsatt aktivitet og utmattelse, forverring etter anstrengelse, søvn som ikke gir hvile, pluss tanke- eller ståproblemer."
 
 - en: Fukuda criteria
   term: Fukuda-kriteriene
   aliases: [Fukuda]
-  explanation: "Kasusdefinisjon fra 1994, ledet av USAs CDC: seks måneder med uforklart, invalidiserende utmattelse og fire av åtte oppgitte symptomer. Forverring etter anstrengelse er ett av dem, men kreves ikke."
+  explanation: "Diagnosekriterier fra 1994, ledet av USAs CDC: seks måneder med uforklart, invalidiserende utmattelse og fire av åtte oppgitte symptomer. Forverring etter anstrengelse er ett av dem, men kreves ikke."
 
 - en: Holmes 1988 criteria
   term: Holmes 1988-kriteriene
   aliases: [Holmes 1988]
-  explanation: "CDCs første kasusdefinisjon for kronisk utmattelsessyndrom (1988): seks måneder med utmattelse som halverer aktiviteten, og mange oppgitte symptomer. Forverring etter anstrengelse kreves ikke."
+  explanation: "CDCs første diagnosekriterier for kronisk utmattelsessyndrom (1988): seks måneder med utmattelse som halverer aktiviteten, og mange oppgitte symptomer. Forverring etter anstrengelse kreves ikke."
 
 - en: Oxford criteria
   term: Oxford-kriteriene
   aliases: [Oxford-definisjonen]
-  explanation: En britisk kasusdefinisjon fra 1991. Krever seks måneder med invalidiserende utmattelse og ingen andre bestemte symptomer. Den er bred, så en gruppe valgt slik kan omfatte folk som ikke har ME/CFS.
+  explanation: Britiske diagnosekriterier fra 1991. Krever seks måneder med invalidiserende utmattelse og ingen andre bestemte symptomer. De er brede, så en gruppe valgt slik kan omfatte folk som ikke har ME/CFS.
 
 - en: CDC
   term: CDC
-  explanation: Centers for Disease Control and Prevention, USAs nasjonale folkehelsemyndighet. Forskere derfra ledet kasusdefinisjonene for kronisk utmattelsessyndrom fra 1988 (Holmes) og 1994 (Fukuda).
+  explanation: Centers for Disease Control and Prevention, USAs nasjonale folkehelsemyndighet. Forskere derfra ledet arbeidet med diagnosekriteriene for kronisk utmattelsessyndrom fra 1988 (Holmes) og 1994 (Fukuda).
 
 - en: PEM
   term: PEM
-  aliases: [anstrengelsesutløst symptomforverring]
   explanation: Post-exertional malaise. Symptomene blir verre etter fysisk eller mental anstrengelse man klarte før. Forverringen kommer ofte timer til et døgn eller mer senere og kan vare i dager eller lenger.
 
 - en: cohort

@@ -35,8 +35,7 @@ items:
     text: Mot disse funnene fant en studie som oppfylte Canadian Consensus Criteria (48 pasienter og 52 kontroller i hele
       studien; NK-dreping målt hos 39 pasienter og 44 kontroller) ingen forskjell (se merknaden om omstridt), det samme gjorde
       en studie med 21 pasienter og 21 kontroller som brukte en CDC-definisjon der versjonen ikke er navngitt, en multisenterstudie
-      med 174 pasienter og 86 kontroller der pasientene ble diagnostisert av klinikere som er eksperter, uten en navngitt
-      kasusdefinisjon, og en kasus-kontrollstudie med ikke oppgitt størrelse der sammendraget ikke navngir noen kasusdefinisjon.
+      med 174 pasienter og 86 kontroller der pasientene ble diagnostisert av klinikere som er eksperter, uten navngitte diagnosekriterier, og en kasus-kontrollstudie med ikke oppgitt størrelse der sammendraget ikke navngir noen diagnosekriterier.
     sources:
     - pmid:28694809
     - pmid:7983659
@@ -87,7 +86,7 @@ items:
     source_hash: c8f3667061e642e5d69f7631cf6c7999915f6eefafa3e584f1e89ebbe05fd16d
   contested_reason[4]:
     text: En multisenterstudie med 174 pasienter og 86 kontroller fant også ingen forskjell, men pasientene ble diagnostisert
-      av klinikere som er eksperter, uten en navngitt kasusdefinisjon.
+      av klinikere som er eksperter, uten navngitte diagnosekriterier.
     sources:
     - pmid:37013608
     source_hash: fcc9bd52043530512c58889f59babb92abe6ee6041b602396cc0261f4e23fcf5
@@ -122,7 +121,7 @@ items:
     - pmid:9683556
     source_hash: 62e0794b67fa1868ea45d10dcc5892bbffce243cb7a1e80716bd5e039d754888
   badge_reasons.explains_pem[2]:
-    text: De to studiene med en anerkjent kasusdefinisjon som ikke fant noen forskjell, med 48 pasienter (NK-dreping målt
+    text: De to studiene med anerkjente diagnosekriterier som ikke fant noen forskjell, med 48 pasienter (NK-dreping målt
       hos 39) og 21 pasienter, rapporterer ingen direkte måling av PEM i sammendragene, og det gjør heller ikke den åpne fulltekstversjonen
       av den første.
     sources:
@@ -143,7 +142,7 @@ items:
   subgroups[0]:
     text: 'To små studier tyder på at lavere NK-celleaktivitet kan henge sammen med mer alvorlig sykdom: én med 20 pasienter
       fant lavest aktivitet i gruppen av de sykeste, og én med 41 pasienter fant flere symptomer og dårligere resultater på
-      kognitive tester hos pasienter med lav aktivitet. Ingen av sammendragene navngir en versjon av en anerkjent kasusdefinisjon.'
+      kognitive tester hos pasienter med lav aktivitet. Ingen av sammendragene navngir en versjon av anerkjente diagnosekriterier.'
     sources:
     - pmid:8148445
     - pmid:16731230
@@ -198,7 +197,7 @@ items:
       kognitive problemer, og skåret lavere på kognitive tester, enn de med normal aktivitet.
     source_hash: 190cab1e600077c94a778cf06b2675071a19b370ec22dcfea29d014df8742b3f
   studies[pmid:42927120].finding:
-    text: En kasusrapport med n=1 pasient med ME/CFS og én frisk kontroll, uten navngitt kasusdefinisjon, fant at pasientens
+    text: En kasusrapport med n=1 pasient med ME/CFS og én frisk kontroll, uten navngitte diagnosekriterier, fant at pasientens
       NK-celler viste minimal degranulering (CD107a) i blod tatt 2 dager før en andre dose rekombinant zostervaksine og mer
       degranulering 4 dager etter den. Degranulering var en markør målt med flowcytometri, ikke en drapsanalyse; forfatterne
       påpeker at noen av forskjellene, eller alle, kan skyldes normal biologisk variasjon eller variasjon i analysen. Denne

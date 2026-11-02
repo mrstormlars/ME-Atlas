@@ -60,10 +60,10 @@ items:
     - pmid:42325052
     source_hash: 72bded206d7e1e10b777e31d7e1c9b5e077387541516fec48a8fc46c40093518
   level_reason[5]:
-    text: 'Flere studier kan ikke telle mot nivået fordi kasusdefinisjonen deres ikke er bekreftet ennå. De peker i ulike
+    text: 'Flere studier kan ikke telle mot nivået fordi diagnosekriteriene deres ikke er bekreftet ennå. De peker i ulike
       retninger: høyere kynurenin med lavere produkter lenger nede i kjeden; et lavere forhold mellom kynurensyre og kinolinsyre
       hos 49 pasienter sammenlignet med 54 kontroller; høyere fritt tryptofan hos 23 pasienter sammenlignet med 42 kontroller;
-      lavere fritt tryptofan hos pasienter i en studie ved University of Oxford (kasusdefinisjon ikke oppgitt i sammendraget);
+      lavere fritt tryptofan hos pasienter i en studie ved University of Oxford (diagnosekriterier ikke oppgitt i sammendraget);
       og ingen forskjell i plasmatryptofan eller kynurenin i en studie fra New Jersey.'
     sources:
     - pmid:38015302
@@ -97,7 +97,7 @@ items:
     - pmid:39302151
     source_hash: 981757d31b2bd1cc21bef2bdc83aa36dc6fba9ee30611c6ad2e15e561d293dba
   contested_reason[2]:
-    text: Uppsala-studien har en kasusdefinisjon med lik rangering, en kontrollgruppe og minst halvparten så mange pasienter
+    text: Uppsala-studien har diagnosekriterier med lik rangering, en kontrollgruppe og minst halvparten så mange pasienter
       som begge studiene (38 mot 39 og 56), så den er av sammenlignbar kvalitet og motsier en studie som nivå 3 trenger. Trinn
       3 er derfor omstridt.
     sources:
@@ -186,7 +186,7 @@ items:
       tryptofan hos pasientene.
     source_hash: 06714e6272c8e48bbb03d7984aabf02c99b565195d430c3ace544a516fe5d9d8
   studies[pmid:11352361].finding:
-    text: En studie ved University of Oxford (kasusdefinisjon og antall er ikke oppgitt i sammendraget) fant lavere fritt
+    text: En studie ved University of Oxford (diagnosekriterier og antall er ikke oppgitt i sammendraget) fant lavere fritt
       tryptofan i plasma hos pasienter enn hos friske kontroller.
     source_hash: 00f98ea55351e472c542628d91dcd041193684e9c12caf3489eb28661f734801
   studies[pmid:20384451].finding:

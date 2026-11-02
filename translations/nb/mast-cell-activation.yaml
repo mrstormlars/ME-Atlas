@@ -32,14 +32,14 @@ items:
     source_hash: 581b80c6d05c23a1d41395955006e7137d2e0f1ec72ede917b6d472c5943da61
   level_reason[2]:
     text: Ingen andre studier har målt mastceller, eller stoffer som hovedsakelig frigjøres av mastceller, som tryptase eller
-      histamin, hos pasienter med en anerkjent kasusdefinisjon opp mot en kontrollgruppe. Høyere MMP-9 i blodet, et enzym
+      histamin, hos pasienter med anerkjente diagnosekriterier opp mot en kontrollgruppe. Høyere MMP-9 i blodet, et enzym
       som mastceller og andre celler kan frigjøre, hos 18 pasienter enn hos 18 kontroller viser ikke at pasientenes mastceller
       var kilden.
     sources:
     - pmid:42327760
     source_hash: 4f8ce5a4f2f70e779130bc91c3b60103cc334c71a64f9c66fdf52795de718d32
   level_reason[3]:
-    text: To eldre studier, hvis kasusdefinisjoner ikke er kontrollert ennå, kan ikke telle. En studie fra Harvard av vev
+    text: To eldre studier, hvis diagnosekriterier ikke er kontrollert ennå, kan ikke telle. En studie fra Harvard av vev
       fra spyttkjertler i leppen hos 11 pasienter og kontroller fant at forekomst av mastceller var det eneste av sju trekk
       som skilte seg signifikant mellom gruppene. En studie fra Washington, DC, med 95 pasienter og 109 kontroller fant ingen
       forskjell i IgE, antistoffet som gjør mastceller klare til å reagere ved allergi.
@@ -50,7 +50,7 @@ items:
   level_reason[4]:
     text: En østerriksk studie av pasienter som oppfylte IOM 2015-kriteriene rapporterer hvor ofte pasientenes journaler oppfylte
       kriterier for symptomer og behandlingsrespons ved mastcelleaktivering, ikke en måling opp mot kontroller (se under).
-      Den eneste kontrollerte behandlingsstudien, av antihistaminet terfenadin hos 28 pasienter, har en kasusdefinisjon som
+      Den eneste kontrollerte behandlingsstudien, av antihistaminet terfenadin hos 28 pasienter, har diagnosekriterier som
       ikke er kontrollert ennå, fant ingen nytte, og blokkerer én virkning av histamin i stedet for å endre mastcellene, så
       den kan ikke telle med for nivå 4.
     sources:
@@ -65,7 +65,7 @@ items:
     - pmid:29223146
     source_hash: c7c62b10be7d72304ec2f99d4ddcc0c7cbdb0201aed14142e4e34b14e7d22b77
   badge_reasons.explains_pem[0]:
-    text: Ingen studie på dette kortet målte anstrengelsesutløst symptomforverring (PEM) direkte, så ingen kobler mastceller
+    text: Ingen studie på dette kortet målte PEM direkte, så ingen kobler mastceller
       til symptomer etter anstrengelse.
     sources:
     - pmid:27362406

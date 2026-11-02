@@ -15,9 +15,9 @@ items:
     text: 'Nivå 0 betyr her at det ikke finnes pasientdata som teller på evidensstigen, ikke at ingen pasienter er studert.
       Flere kontrollerte studier fra 1988 til 2008 fant arvestoff eller protein fra enterovirus hos flere pasienter enn kontroller,
       eller over nivået hos kontroller: i muskelbiopsier i London og Glasgow, i serum i Glasgow og i magebiopsier i California.
-      I alle er kasusdefinisjonen ikke oppgitt i sammendraget eller ennå ikke sjekket i fulltekst, og evidensstigen godtar
+      I alle er diagnosekriteriene ikke oppgitt i sammendraget eller ennå ikke sjekket i fulltekst, og evidensstigen godtar
       ikke slike studier, så ingen av dem kan telle mot et trinn. Ingen av disse funnene er gjentatt av en uavhengig gruppe
-      med en bekreftet kasusdefinisjon.'
+      med bekreftede diagnosekriterier.'
     sources:
     - pmid:3404526
     - pmid:1850635
@@ -27,7 +27,7 @@ items:
     - pmid:17872383
     source_hash: 2cb253cb5c47068239b02bf51c8ba5c115098056ba2ceeaf4f8a6261e31fc6ba
   level_reason[1]:
-    text: De to studiene på kortet med en bekreftet, anerkjent kasusdefinisjon fant ikke enterovirus. En svensk studie av
+    text: De to studiene på kortet med bekreftede, anerkjente diagnosekriterier fant ikke enterovirus. En svensk studie av
       34 pasienter som oppfylte kriteriene til de amerikanske Centers for Disease Control, uten kontrollgruppe, fant ikke
       enterovirus i muskelbiopsier fra 29 pasienter eller i avføringsprøver, og ingen enterovirus-antistoffaktivitet i 7 parede
       serum- og spinalvæskeprøver. En studie fra Cornell i 2026 av en kohort på 15 pasienter som oppfylte Canadian Consensus
@@ -39,7 +39,7 @@ items:
     - pmid:42941838
     source_hash: 22e6d0e3db30fb112d3b8f0258733a26f0f9976cd1ece7aae4712e77910d135f
   level_reason[2]:
-    text: Andre studier, der kasusdefinisjonene ikke er bekreftet ennå, fant ikke mer enterovirus hos pasienter. En senere
+    text: Andre studier, der diagnosekriteriene ikke er bekreftet ennå, fant ikke mer enterovirus hos pasienter. En senere
       og større muskelstudie fra Glasgow av 121 pasienter fant enterovirus-RNA hos 26,4% av pasientene og 19,8% av 101 personer
       med andre muskel- og nervesykdommer, en forskjell som ikke var signifikant, og understreket at dette ikke gjentok gruppens
       tidligere resultat. En studie fra Liverpool fant ikke enterovirus-RNA i muskel fra 34 pasienter. En studie fra Nijmegen
@@ -52,7 +52,7 @@ items:
     - pmid:7893870
     source_hash: 00d96f81b1f2493c5d5ffe51cdf4f2bec842e2ed1aea5f4ebfd2d2b34f380255
   badge_reasons.diagnostic_marker[0]:
-    text: Ingen enterovirusmarkør er testet i en andre, uavhengig pasientgruppe med en bekreftet kasusdefinisjon. En studie
+    text: Ingen enterovirusmarkør er testet i en andre, uavhengig pasientgruppe med bekreftede diagnosekriterier. En studie
       fra Leeds fant at VP1-blodprøven var positiv hos 11 av 34 pasienter og 7 av 34 personer med alvorlig depresjon, noe
       som ikke var en signifikant forskjell.
     sources:
@@ -60,14 +60,13 @@ items:
     source_hash: 969caae7ea8551ec7cbeba7ab4079b4574588f338d9bf559525ed3c847c1694c
   badge_reasons.explains_pem[0]:
     text: Ingen studie på dette kortet måler PEM direkte. En studie fra London målte laktat i blodet rundt en treningstest
-      under den anaerobe terskelen, ikke symptomer etter anstrengelse, og kasusdefinisjonen er ikke bekreftet ennå.
+      under den anaerobe terskelen, ikke symptomer etter anstrengelse, og diagnosekriteriene er ikke bekreftet ennå.
     sources:
     - pmid:14570830
     source_hash: 099572ca54a49b8538f9a99cf806758c1793efcee1f5fd4ac52927e9396013d4
   subgroups[0]:
     text: I en muskelstudie fra London var 9 av de 10 pasientene med enterovirus i muskel blant de 28 med et unormalt laktatsvar
-      på trening. I en studie fra California kom magebiopsiene fra pasienter med kroniske magebesvær. Begge kasusdefinisjonene
-      er ikke bekreftet ennå. Dette funnet fra én enkelt studie er ikke gjentatt.
+      på trening. I en studie fra California kom magebiopsiene fra pasienter med kroniske magebesvær. Diagnosekriteriene i begge studiene er ikke bekreftet ennå. Dette funnet fra én enkelt studie er ikke gjentatt.
     sources:
     - pmid:14570830
     - pmid:17872383
