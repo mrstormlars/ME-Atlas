@@ -1,0 +1,197 @@
+slug: herpesvirus-reactivation
+items:
+  name:
+    text: Reaktivert herpesvirusinfeksjon (Epstein-Barr-virus, HHV-6, HHV-7)
+    source_hash: 69981c15f783343289485e2010fc200071a2780ac676b9c769d96bb2dffc2a6e
+  core_claim:
+    text: Hypotesen går ut på at herpesvirus som blir i kroppen livet ut etter en første infeksjon, for eksempel Epstein-Barr-virus
+      og humant herpesvirus 6 og 7, blir aktive igjen hos minst noen personer med ME/CFS og er med på å drive sykdommen.
+    sources:
+    - pmid:22927850
+    - pmid:32129496
+    - pmid:23959519
+    source_hash: 24e4c627d4815d4b3c625b586fdb195d10a3756fdc6527e15382daf75256a3f8
+  level_reason[0]:
+    text: En studie fra Riga i Latvia med 200 pasienter som oppfylte Fukuda-kriteriene, som ikke krever PEM, og 150 friske
+      kontroller lette etter virus-DNA i cellefritt blodplasma, som forfatterne bruker som markør på aktiv infeksjon. Aktiv
+      dobbeltinfeksjon med HHV-6 og HHV-7 ble bare funnet hos pasienter (p < 0,0001); artikkelen oppgir ingen antall for dette.
+      Markører på aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 (ikke et herpesvirus) til sammen ble funnet hos 45%
+      av pasientene og 8,7% av kontrollene. Kortet er på nivå 2 på grunn av resultatet for bare herpesvirus i denne studien.
+      Ingen uavhengig gruppe har gjentatt den, så den er ikke replikert.
+    sources:
+    - pmid:36653846
+    source_hash: 58885c5f9cc49ea482dcc6ecfd0de1645cb9a22dc3d90800f994bd4fa9a8023a
+  level_reason[1]:
+    text: En tidligere studie fra den samme gruppen i Riga, med 108 pasienter som oppfylte CDC-kriteriene fra 1994
+      (Fukuda) og 90 friske kontroller, fant aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 hos 70 av 108 pasienter
+      og 12 av 90 kontroller. Aktiv HHV-7-infeksjon alene ble funnet hos 28 pasienter og 10 kontroller, og artikkelen oppgir
+      HHV-6 i plasma hos 16 av 108 pasienter. De to studiene fra Riga kan ha felles pasienter; artiklene sier ikke noe om
+      det.
+    sources:
+    - pmid:22927850
+    - pmid:36653846
+    source_hash: dead2235b673dc013bbe38f9a1563539e8e7a803edfb94bf8db193ed81061db2
+  level_reason[2]:
+    text: En studie fra Bulgaria med 58 pasienter som oppfylte Fukuda-kriteriene og 50 friske kontroller, der én forfatter
+      også er med i gruppen fra Riga, fant aktiv HHV-6-infeksjon hos ingen pasient og ingen kontroll, HHV-6-DNA i cellefritt
+      plasma hos 1 av 58 pasienter og ingen kontroll, og ingen forskjell i antistoffer mot HHV-6. Den testet ikke HHV-7. Med
+      58 pasienter, færre enn halvparten av de 200 i den større studien fra Riga, bestrider den ikke nivå 2.
+    sources:
+    - pmid:32129496
+    - pmid:36653846
+    source_hash: ddfd65ad2faac4a56f672b2f11926f1fe05f4544f5427f9cd26dd0a977f2360e
+  level_reason[3]:
+    text: 'En studie fra London, uten felles forfattere med studiene fra Riga, målte herpesvirus-DNA i spytt hver måned i
+      seks måneder hos 30 pasienter fra UK ME/CFS Biobank (16 med alvorlig sykdom, 14 med lett eller moderat), som oppfylte
+      Canadian Consensus Criteria og/eller Fukuda-kriteriene, og 16 friske kontroller i spyttmålingene (sammendraget sier
+      14 kontroller). Den fant høyere nivåer av HHV-6B- og HHV-7-DNA i spytt: HHV-6B var høyere hos de 16 alvorlig rammede
+      pasientene enn hos kontrollene på tre av seks månedlige tidspunkter, og HHV-7 var høyere hos de lett eller moderat rammede
+      pasientene på to tidspunkter, med tendenser på de andre. Epstein-Barr-virus og herpes simplex-virus 1 skilte seg ikke.
+      Forfatterne tolker virus-DNA-et som langvarig, vedvarende infeksjon heller enn akutt eller nylig infeksjon. Kortet når
+      ikke nivå 3: denne studien målte mengden virus-DNA i spytt, fant forskjeller bare i undergrupper på noen få tidspunkter,
+      og gjentar ikke funnet av aktiv infeksjon i blod.'
+    sources:
+    - pmid:34422848
+    source_hash: b1374aefcdb3c23460eb2f4accf27f93a8f96f292f944c71390f5c53670a32cc
+  level_reason[4]:
+    text: Placebokontrollerte studier av antivirale legemidler er gjennomført, men for hver av dem er diagnosekriteriene ennå
+      ikke kontrollert, så de kan ikke telle mot nivå 4. I en studie med 24 pasienter, valgt ut etter antistoffer mot Epstein-Barr-virus
+      og gitt acyclovir og placebo etter tur, ble like mange bedre på hver (11 og 10). I en studie med 30 pasienter med forhøyede
+      antistoffer mot HHV-6 og Epstein-Barr-virus, randomisert 2 mot 1 til valganciclovir eller placebo i seks måneder, var
+      forskjellen i utmattelsesskåren MFI-20 etter ni måneder ikke statistisk signifikant; mental utmattelse, en annen utmattelsesskår
+      og selvrapportert kognitiv funksjon endret seg ulikt mellom gruppene over tid, pasienter på valganciclovir ble oftere
+      regnet som respondere (7,4 ganger, P = 0,029), og antistoffnivåene skilte seg ikke mellom gruppene.
+    sources:
+    - pmid:2849717
+    - pmid:23959519
+    source_hash: 8d19da550d826cfb5399ba90e907ce1b5c52e635c314c91d36424b1e19a66e15
+  level_reason[5]:
+    text: En tredje randomisert studie, av valacyclovir hos en undergruppe av pasienter med markører for Epstein-Barr-virus,
+      rapporterte en større økning i en aktivitetsskår med valacyclovir enn med placebo; sammendraget oppgir verken utvalgsstørrelse
+      eller statistisk test. En ikke-randomisert studie av 192 pasienter som forfatterne mente hadde reaktivert HHV-6- eller
+      HHV-7-infeksjon ut fra PCR på hvite blodceller, og som fikk valaciclovir, valganciclovir eller artesunat, sammenlignet
+      med 63 ubehandlede pasienter, rapporterte hvor ofte virusene ble uoppdagbare i blod, ikke om symptomene endret seg.
+    sources:
+    - pmid:18019402
+    - pmid:35102619
+    source_hash: 3cbc35b01c8dec236bc4f80a5cd9c8974f426c404aa77fba139683a5d56ffb7f
+  level_reason[6]:
+    text: For Epstein-Barr-virus er funnene blandede. Studien fra Bulgaria fant Epstein-Barr-virus-DNA i cellefritt plasma
+      hos 24,1% av pasientene og 4% av kontrollene, og aktiv infeksjon etter studiens kriterier hos 12 pasienter og 1 kontroll.
+      En studie fra Berlin med 50 pasienter som oppfylte Canada-kriteriene og 50 friske donorer fant Epstein-Barr-virus-DNA
+      i halsskyllevæske hos 30% av pasientene og 42% av donorene, en forskjell som ikke var signifikant.
+    sources:
+    - pmid:32129496
+    - pmid:28604802
+    source_hash: 11d0a8ae0e10e032dfddf3fe6be7cda2683ef9c9dbf376ccef5d319f55b757d8
+  level_reason[7]:
+    text: Noen studier med diagnosekriterier som ennå ikke er kontrollert, fant ingen forskjell. Én av dem, med 26 pasienter
+      og 50 matchede kontroller i Atlanta (52 rekruttert), isolerte verken HHV-6 eller HHV-7 fra noens blodceller og fant
+      ingen forskjell i HHV-6- eller HHV-7-DNA i blodceller, som dette kortet regner som en markør på latent, ikke aktiv,
+      infeksjon. Et flersentersøk etter virusets arvemateriale i blod, avføring og spytt fant ingen konsekvente forskjeller
+      mellom pasienter og kontroller, bortsett fra færre anellovirus (en familie av virus som ikke er herpesvirus) hos pasientene.
+    sources:
+    - pmid:10913395
+    - pmid:37526404
+    source_hash: 9c9be5ca0f245471f3664cbdcf09477f862d6dfde808e42d4acf0ce63fb5564f
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen markør på dette kortet er testet i en annen, uavhengig pasientgruppe med kontrollerte diagnosekriterier. Antistoffer
+      mot dUTPase fra Epstein-Barr-virus var høyere hos pasienter i to studier fra den samme gruppen i Ohio; den siste studien
+      fant også høyere antistoffer mot dUTPase fra HHV-6 og varicella zoster-virus. Begge studiene har diagnosekriterier som
+      ennå ikke er kontrollert.
+    sources:
+    - pmid:28303641
+    - pmid:41451845
+    source_hash: 8e60b6bc252f1e2ef827e5ffdd7aecc5af903de28a4772a6544f2367e52abc6c
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet måler PEM direkte, for eksempel med en anstrengelsestest. Studien fra Riga med 108
+      pasienter rapporterte at uvelhet etter anstrengelse, registrert som symptom, var hyppigere hos pasienter med aktiv infeksjon
+      enn hos dem med latent infeksjon eller ingen infeksjon.
+    sources:
+    - pmid:22927850
+    source_hash: e3398174be41ac4e8000826116add4293a7301115c0fd43350b7ac2916f96ac0
+  subgroups[0]:
+    text: De antivirale studiene valgte ut pasienter etter antistoffer mot Epstein-Barr-virus eller HHV-6. I studien av spytt
+      fra London var HHV-6B høyere hovedsakelig hos alvorlig rammede pasienter.
+    sources:
+    - pmid:2849717
+    - pmid:23959519
+    - pmid:34422848
+    source_hash: ba81e15587b38e46cd385c750c4c17438ba7bca098efac930317faa299e3dcdd
+  early_signals[0]:
+    text: En studie med n=13 pasienter og 10 friske kontroller fant at Epstein-Barr-virus ble skilt ut i oppspytt hos 11 av
+      13 pasienter og 5 av 10 kontroller, med høyere virusmengde hos pasientene; HHV-6-nivåene skilte seg ikke. Ikke gjentatt
+      ennå.
+    sources:
+    - pmid:40143349
+    source_hash: c27fe924f7e9d76654e8201cb852e0e817611098913b8c0fc7aff56fa3cd5c06
+  studies[pmid:36653846].finding:
+    text: En studie med n=200 pasienter og 150 friske kontroller fant aktiv dobbeltinfeksjon med HHV-6 og HHV-7 bare hos pasienter
+      (p < 0,0001, antall ikke oppgitt), og markører på aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 (ikke et herpesvirus)
+      til sammen hos 45% av pasientene og 8,7% av kontrollene.
+    source_hash: 791ea4fc538d7cd07df0ce7b2b73814c3feee292508a9d0c35fc42ce0e7d41fb
+  studies[pmid:22927850].finding:
+    text: En studie med n=108 pasienter og 90 friske kontroller fant aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19
+      hos 70 av 108 pasienter og 12 av 90 kontroller, og rapporterte en sammenheng mellom aktiv HHV-6- eller HHV-7-infeksjon
+      og lett feber, hovne lymfeknuter og uvelhet etter anstrengelse, registrert som symptomer.
+    source_hash: f0c7abf931307ba569bf1410b464d165887cd0576758747935c0873aec822aa8
+  studies[pmid:34422848].finding:
+    text: En studie med n=30 pasienter (16 med alvorlig sykdom, 14 med lett eller moderat) og 16 friske kontroller i spyttmålingene
+      (sammendraget sier 14 kontroller), med spytt tatt hver måned i seks måneder, fant høyere nivåer av HHV-6B-DNA hos de
+      16 alvorlig rammede pasientene og høyere nivåer av HHV-7-DNA hos pasientene enn hos kontrollene på noen tidspunkter,
+      og ingen forskjell for Epstein-Barr-virus eller herpes simplex-virus 1.
+    source_hash: aadf531c4ef3d6a3c1e1973aedd862e35c193ea3e68ab64d9d553b9961bdc2b4
+  studies[pmid:32129496].finding:
+    text: En studie med n=58 pasienter og 50 friske kontroller fant aktiv Epstein-Barr-virusinfeksjon hos 12 pasienter og
+      1 kontroll, og aktiv infeksjon med HHV-6 eller cytomegalovirus hos ingen pasient eller kontroll, uten forskjell i antistoffer
+      mot de tre virusene.
+    source_hash: 80e7d46446b3d65c1f9c0644bb3f7ec86c4af3a2f84f440b6841cda45ee11f30
+  studies[pmid:28604802].finding:
+    text: En studie med 92 pasienter og 50 friske kontroller fant en lignende IgG-respons mot Epstein-Barr-virus, bortsett
+      fra en sterkere respons mot en repeterende EBNA-6-sekvens; i halsskyllevæske fra n=50 pasienter og 50 donorer ble Epstein-Barr-virus-DNA
+      funnet hos 30% og 42%, ikke en signifikant forskjell.
+    source_hash: eeabf0e2af7e60c69e8da001772e597f2f2ec14c555aee671742b89954bbe085
+  studies[pmid:40143349].finding:
+    text: En studie med n=13 pasienter og 10 friske kontroller fant Epstein-Barr-virus i oppspytt fra 11 av 13 pasienter og
+      5 av 10 kontroller, med høyere virusmengde hos pasientene, og HHV-6 på samme nivå.
+    source_hash: 553d533f27bc46e18617a11e34b2364dba640e578b25b8b6fcccb8f768befc45
+  studies[pmid:2849717].finding:
+    text: En placebokontrollert studie med n=24 pasienter med antistoffmønstre mot Epstein-Barr-virus fant at like mange ble
+      bedre med acyclovir som med placebo (11 og 10), og at bedringen ikke fulgte endringer i antistofftitrene mot Epstein-Barr-virus.
+    source_hash: ccd921f474841039137d40c04a1fd6b29fec728c628bd3b6d77afc1d6e7c3f38
+  studies[pmid:23959519].finding:
+    text: En placebokontrollert studie med n=30 pasienter med forhøyede antistoffer mot HHV-6 og Epstein-Barr-virus fant at
+      forskjellen i utmattelsesskåren MFI-20 etter ni måneder ikke var statistisk signifikant; forløpene var ulike for mental
+      utmattelse, en annen utmattelsesskår og kognitiv funksjon, pasienter på valganciclovir ble oftere regnet som respondere
+      (7,4 ganger, P = 0,029), og antistofftitrene mot virusene skilte seg ikke mellom gruppene.
+    source_hash: 3b3e655e20564e1204a5a319a784e1153c61733c3062a069de0f6f164fa58916
+  studies[pmid:18019402].finding:
+    text: En placebokontrollert studie av valacyclovir hos pasienter med markører for Epstein-Barr-virus, med en størrelse
+      som ikke er oppgitt i sammendraget, rapporterte en gjennomsnittlig økning på 1,12 poeng i en aktivitetsskår med valacyclovir
+      og 0,42 med placebo etter seks måneder, uten statistisk test i sammendraget.
+    source_hash: dcbe3ac3254f2fec5e8c502e26c1f7621e0c534cca570d9e3713e905e6f60eef
+  studies[pmid:35102619].finding:
+    text: En studie med n=192 behandlede pasienter som forfatterne mente hadde reaktivert HHV-6- eller HHV-7-infeksjon ut
+      fra PCR på hvite blodceller, og 63 ubehandlede pasienter, fant at virusene etter tre måneder var uoppdagbare i blod
+      i 37% og 34% av tilfellene med valaciclovir, 48% og 45% med valganciclovir og 68% og 63% med artesunat; symptomer er
+      ikke rapportert i sammendraget.
+    source_hash: ffdbb606c6fae12ac4ac56f52537e128dc885e7a7b89b089162560968710c093
+  studies[pmid:10913395].finding:
+    text: En studie med n=26 pasienter og 50 matchede kontroller (52 rekruttert) isolerte verken HHV-6 eller HHV-7 fra blodceller
+      og fant, med PCR på lymfocytter (en markør på latent infeksjon innenfor dette kortets omfang), HHV-6-DNA hos 3 av 26
+      pasienter og 14 av 50 kontroller og HHV-7-DNA hos 2 pasienter og 12 kontroller, uten signifikante forskjeller.
+    source_hash: 2ca3b436e1addfd0cc7a239c594e28977cd8388c1eda2bcaa03063bbafe5af6e
+  studies[pmid:37526404].finding:
+    text: En flersenterstudie som lette etter virusets arvemateriale i blod, avføring og spytt, fant ingen konsekvente forskjeller
+      mellom pasienter og friske kontroller, bortsett fra en lavere forekomst av anellovirus hos pasientene.
+    source_hash: 46d98bde3950730aa4c9179b8b146bd2443941aafe65cfc96319a72d2581b196
+  studies[pmid:28303641].finding:
+    text: En studie som sammenlignet pasienter med ME/CFS, pasienter med Gulf War illness og kontroller fant antistoffer mot
+      flere herpesvirus-dUTPase-enzymer eller mot humant dUTPase hos 30,91-52,7% av pasientene med ME/CFS og 17,21% av kontrollene,
+      og høyere antistoffer mot dUTPase fra Epstein-Barr-virus ved ME/CFS enn hos kontrollene.
+    source_hash: 07430dca1637244086ba9855b3d2b9298cbe65e372cca56e8a07ec290de07368
+  studies[pmid:41451845].finding:
+    text: En studie med n=40 pasienter og 16 friske kontroller, målt gjentatte ganger, fant høyere IgG-antistoffer mot dUTPase-enzymene
+      fra Epstein-Barr-virus, HHV-6 og varicella zoster-virus hos pasientene, og en sammenheng mellom antistoffer mot dUTPase
+      fra Epstein-Barr-virus og HHV-6 og utmattelse.
+    source_hash: fdde1f562fa2008e06b316fe0211f75c545ab8f82a1d1ce829df66897aa3b585

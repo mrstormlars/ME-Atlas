@@ -166,6 +166,8 @@ _IDS = re.compile(r"pmid:\d+|doi:\S+", re.IGNORECASE)
 _EN_THOUSANDS = re.compile(r"\b\d{1,3}(?:,\d{3})+\b")
 _SPACE_THOUSANDS = re.compile(r"\b\d{1,3}(?:[   ]\d{3})+\b")
 _DECIMAL_COMMA = re.compile(r"(?<=\d),(?=\d)")
+_BARE_DECIMAL_POINT = re.compile(r"(?<!\d)\.(?=\d)")
+_BARE_DECIMAL_COMMA = re.compile(r"(?<!\d),(?=\d)")
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")
 
 
@@ -186,6 +188,9 @@ def numbers(text: str, lang: str) -> list[str]:
     text = _SPACE_THOUSANDS.sub(lambda m: re.sub(r"[   ]", "", m.group(0)), text)
     if lang != DEFAULT_LANGUAGE:
         text = _DECIMAL_COMMA.sub(".", text)
+    # A decimal with no leading zero (".76", or ",76" outside English) counts as "0.76".
+    bare = _BARE_DECIMAL_POINT if lang == DEFAULT_LANGUAGE else _BARE_DECIMAL_COMMA
+    text = bare.sub("0.", text)
     return [format(Decimal(n).normalize(), "f") for n in _NUMBER.findall(text)]
 
 

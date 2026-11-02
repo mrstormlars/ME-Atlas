@@ -1,0 +1,195 @@
+slug: tryptophan-kynurenine-metabolism
+items:
+  name:
+    text: Forstyrret metabolisme av tryptofan og kynurenin
+    source_hash: d2fe597fee678d8440fc80a4b36c52d7ea71890572de664f53eeddb8aa9871cb
+  core_claim:
+    text: Hypotesen er at kroppen hos personer med ME/CFS bryter ned aminosyren tryptofan på en annen måte, mest langs kynureninveien,
+      som gjør tryptofan om til kynurenin og deretter til flere andre stoffer, og at denne endrede nedbrytningen bidrar til
+      sykdommen.
+    sources:
+    - pmid:34423789
+    - pmid:34829952
+    - pmid:40903540
+    source_hash: 88a027b61e543f36c0513bd7225b95ff27405705a2b707bb177be68240338882
+  level_reason[0]:
+    text: En studie fra Bergen i Norge av 83 pasienter som oppfylte Canadian criteria og 35 friske kontroller fant lavere
+      kynurensyre i serum i hver av tre metabolske undergrupper av pasienter. Ingen studie av sammenlignbar størrelse har
+      funnet noe annet; to mindre studier, med 39 og 38 pasienter, fant ingen forskjell i kynurensyre. Denne studien plasserer
+      kortet på nivå 2.
+    sources:
+    - pmid:34423789
+    - pmid:34829952
+    - pmid:39302151
+    source_hash: 04e79e35e6016c3483f38ff12d85f1d4460429fbfa9175a0438fd93097e2b60b
+  level_reason[1]:
+    text: En studie fra Padova i Italia målte tryptofan og nedbrytningsproduktene i serum hos 39 av sine 40 pasienter som
+      oppfylte Canadian criteria og hos 40 friske kontroller. Pasientene hadde lavere kynurenin og høyere 3-hydroksykynurenin,
+      og forholdene mellom kynurensyre og kynurenin og mellom 3-hydroksykynurenin og kynurenin var høyere. Tryptofan i seg
+      selv hadde en tendens til å være lavere (p = 0,05), kynurensyre og kinolinsyre var ikke forskjellige, og forholdet mellom
+      kynurenin og tryptofan var ikke forskjellig.
+    sources:
+    - pmid:34829952
+    source_hash: 22e9c147e5c2dd5a981817423f4d2a4a68d3afa317aa0737ec73ea0ea4dc3e33
+  level_reason[2]:
+    text: En senere studie fra Columbia University i New York, uten forfattere felles med Padova-studien, målte blodplasma
+      hos 56 pasienter som oppfylte Canadian criteria og 52 friske kontroller. Før trening var forholdet mellom kynurensyre
+      og kynurenin høyere hos pasientene, det samme forholdet som Padova-studien fant høyere, og forholdet mellom kynurenin
+      og tryptofan var lavere; Padova-studien fant ingen forskjell i forholdet mellom kynurenin og tryptofan. Kortet er på
+      nivå 3 på grunn av denne gjentakelsen; en studie av 38 pasienter fant ingen forskjell i dette forholdet (se begrunnelsen
+      for omstridt). De to studiene brukte ulike prøvetyper (serum og plasma), og gjentakelsen hviler på ett forhold.
+    sources:
+    - pmid:40903540
+    - pmid:34829952
+    - pmid:39302151
+    source_hash: 1a1366b5b62a9a8b1ce8e141f1f943062b2551b859f11ece7f891dfbdd61518e
+  level_reason[3]:
+    text: En studie fra Uppsala i Sverige av 38 pasienter som oppfylte Canadian, International og IOM 2015-kriteriene og 24
+      friske kontroller fant lavere 3-hydroksykynurenin og 3-hydroksyantranilsyre i plasma, motsatt retning for 3-hydroksykynurenin
+      av Padova-studien, og et høyere forhold mellom kynurenin og 3-hydroksykynurenin, det motsatte av Padova-resultatet for
+      dette forholdet. Disse resultatene er ikke gjentatt.
+    sources:
+    - pmid:39302151
+    - pmid:34829952
+    source_hash: 657c79646c80df34c596a51ba608c597463c2a47b7a69ea90dae85546a084786
+  level_reason[4]:
+    text: En studie av avføring fra 19 pasienter (diagnosen kontrollert med en symptomundersøkelse) og 23 kontroller fant
+      høyere tryptofan, indol og indolacetat, stoffer som tarmbakterier lager av tryptofan. Dette er et mål på tarmbakterienes
+      metabolisme, ikke på kroppens egen kynureninvei, så det teller ikke mot nivået.
+    sources:
+    - pmid:42325052
+    source_hash: 72bded206d7e1e10b777e31d7e1c9b5e077387541516fec48a8fc46c40093518
+  level_reason[5]:
+    text: 'Flere studier kan ikke telle mot nivået fordi diagnosekriteriene deres ikke er bekreftet ennå. De peker i ulike
+      retninger: høyere kynurenin med lavere produkter lenger nede i kjeden; et lavere forhold mellom kynurensyre og kinolinsyre
+      hos 49 pasienter sammenlignet med 54 kontroller; høyere fritt tryptofan hos 23 pasienter sammenlignet med 42 kontroller;
+      lavere fritt tryptofan hos pasienter i en studie ved University of Oxford (diagnosekriterier ikke oppgitt i sammendraget);
+      og ingen forskjell i plasmatryptofan eller kynurenin i en studie fra New Jersey.'
+    sources:
+    - pmid:38015302
+    - pmid:34090138
+    - pmid:15982993
+    - pmid:11352361
+    - pmid:20384451
+    source_hash: 5465560b009833644193e81091734c55921212e61dda4ab63b2271f2ff91bd68
+  level_reason[6]:
+    text: Nivå 4 er ikke nådd. I en placebokontrollert crossover-pilotstudie av 5 kvinner som oppfylte CDC-kriteriene (versjon
+      ikke oppgitt, så definisjonen krever ikke PEM), senket akutt tryptofanuttømming plasmaforholdet mellom tryptofan og
+      andre store nøytrale aminosyrer, men endret ikke utmattelse, depresjonsskåre eller konsentrasjon sammenlignet med placebo.
+      Studien testet serotoninsiden av tryptofanmetabolismen, ikke kynureninveien. Forfatterne skriver at et mye større utvalg
+      trengs.
+    sources:
+    - pmid:25227994
+    source_hash: fabc9a5e71a59088bdd4cf07b779ebb3e80946e4e3d708516b95426e52188192
+  contested_reason[0]:
+    text: 'Nivå 3 hviler på to studier som fant et høyere forhold mellom kynurensyre og kynurenin hos pasienter: én fra Padova
+      med 39 pasienter og 40 friske kontroller (serum), og en senere fra Columbia University med 56 pasienter og 52 friske
+      kontroller (plasma, før trening), begge med pasienter som oppfylte Canadian criteria.'
+    sources:
+    - pmid:34829952
+    - pmid:40903540
+    source_hash: 76a55db142b485cd22ba23298b65073e44dc372b422ba8e071bc938d78808b0d
+  contested_reason[1]:
+    text: En studie fra Uppsala av 38 pasienter som oppfylte Canadian, International og IOM-kriteriene og 24 friske kontroller
+      plottet forholdet mellom kynurenin og kynurensyre i plasma og markerte ingen signifikant forskjell mellom gruppene (dens
+      Figure 2c). Dette er det samme forholdet snudd andre veien.
+    sources:
+    - pmid:39302151
+    source_hash: 981757d31b2bd1cc21bef2bdc83aa36dc6fba9ee30611c6ad2e15e561d293dba
+  contested_reason[2]:
+    text: Uppsala-studien har diagnosekriterier med lik rangering, en kontrollgruppe og minst halvparten så mange pasienter
+      som begge studiene (38 mot 39 og 56), så den er av sammenlignbar kvalitet og motsier en studie som nivå 3 trenger. Trinn
+      3 er derfor omstridt.
+    sources:
+    - pmid:39302151
+    - pmid:34829952
+    - pmid:40903540
+    source_hash: 998d970a6c8508b9c19dd16a9b49211746cb924f12da677a8bdf5b8394ba09c8
+  badge_reasons.diagnostic_marker[0]:
+    text: To uavhengige studier fant et høyere forhold mellom kynurensyre og kynurenin hos pasienter; en tredje studie av
+      sammenlignbar størrelse gjorde ikke det. Ingen testet det som diagnostisk markør med en grenseverdi, og ingen markør
+      i tryptofanveien er testet i en andre, uavhengig pasientgruppe.
+    sources:
+    - pmid:34829952
+    - pmid:40903540
+    - pmid:39302151
+    source_hash: 52c91c5439d00171721e66f7919126e7e9e1fec283a639bc6ecd3ec7f865734d
+  badge_reasons.explains_pem[0]:
+    text: En studie målte symptomer før og 24 og 48 timer etter en treningstest. Den eneste rapporterte koblingen mellom tryptofanveien
+      og symptomer er en korrelasjon, hos pasienter, mellom et produkt fra kynureninveien målt etter trening, 3-metoksyantranilat,
+      og en generell utmattelsesskåre tatt på samme tid. Det er ikke en korrelasjon med endringen i symptomer etter anstrengelse,
+      utmattelsesskåren måler ikke PEM spesifikt, og resultatet er ikke gjentatt.
+    sources:
+    - pmid:40903540
+    source_hash: d48a442e11688fba458d3ec4c8c196e910d1306ca404986f06a2ea5a63b2c1d4
+  subgroups[0]:
+    text: I Padova-studien hadde de 19 pasientene hvis sykdom startet etter en infeksjon lavere kynurenin og et lavere forhold
+      mellom kynurenin og tryptofan enn de 21 hvis sykdom ikke gjorde det, en sammenligning innad blant pasientene. Ikke gjentatt
+      ennå.
+    sources:
+    - pmid:34829952
+    source_hash: 44a933d4151787618b93c92be04560a71bfed51335ae1e2b2fce046f67b5652b
+  subgroups[1]:
+    text: I Bergen-studien var serumtryptofan lavere i én metabolsk undergruppe av pasienter og høyere i en annen, sammenlignet
+      med kontroller. Ikke gjentatt ennå.
+    sources:
+    - pmid:34423789
+    source_hash: 747e3f38be751778704e1943e8642e6bab873d1af97f718a9b9bb36e9564a928
+  early_signals[0]:
+    text: En studie med n=83 pasienter og 35 kontroller fant lavere kynurensyre i serum i hver av tre pasientundergrupper;
+      to mindre studier fant ingen forskjell. Ikke gjentatt ennå.
+    sources:
+    - pmid:34423789
+    - pmid:34829952
+    - pmid:39302151
+    source_hash: e39b9f022990c8fb19e9af9178960d22cc2a7c06b2fff393a0485486795ba8b7
+  studies[pmid:34829952].finding:
+    text: En studie der 39 av de 40 pasientene og 40 friske kontroller ble målt, fant lavere serumkynurenin (p = 0,012) og
+      serotonin, høyere 3-hydroksykynurenin, og høyere forholdstall kynurensyre/kynurenin og 3-hydroksykynurenin/kynurenin
+      hos pasientene.
+    source_hash: aed277b273681cd45a9d37080b29908da1dcaf0350b5a1d00a0d6492a822ffba
+  studies[pmid:40903540].finding:
+    text: En studie med n=56 pasienter og 52 friske kontroller fant, før en treningstest, et høyere forhold mellom kynurensyre
+      og kynurenin i plasma og et lavere forhold mellom kynurenin og tryptofan hos pasientene; 3-metoksyantranilat etter trening
+      var forbundet med en generell utmattelsesskåre hos pasientene.
+    source_hash: 54b008f08c1d099428b28b30156749793d3cbbd02cfec3de87d6aa77ab0f91ab
+  studies[pmid:34423789].finding:
+    text: En studie med n=83 pasienter og 35 friske kontroller fant lavere kynurensyre i serum i hver av tre metabolske undergrupper
+      av pasienter sammenlignet med kontroller, med serumtryptofan lavere i én undergruppe og høyere i en annen.
+    source_hash: 01767f1c2d7d83fec88fa24fec53bd1ed336b8e4c5f1de40435181fc5a550d8d
+  studies[pmid:39302151].finding:
+    text: En studie med n=38 pasienter og 24 friske kontroller fant lavere 3-hydroksykynurenin og 3-hydroksyantranilsyre i
+      plasma og et høyere forhold mellom kynurenin og 3-hydroksykynurenin hos pasientene, og markerte ingen signifikant forskjell
+      i forholdet mellom kynurenin og kynurensyre (Figure 2c).
+    source_hash: 8c87ca12a7ca1c150a06cd7dcff06d2f2b3b68c6e6890357803d5581e2716492
+  studies[pmid:42325052].finding:
+    text: En studie som inkluderte 32 pasienter og 35 kontroller, med avføringsmetabolitter målt hos n=19 pasienter og 23
+      kontroller, fant høyere tryptofan, indol og indolacetat i avføringen hos pasientene; aktiveringen av arylhydrokarbonreseptoren
+      med avføringskulturer var ikke forskjellig.
+    source_hash: 4beda4782c32e68d04d14933318e206e02c58af1430dd396c005f93cf26019e5
+  studies[pmid:25227994].finding:
+    text: En studie med n=5 kvinner fant at akutt tryptofanuttømming senket plasmaforholdet mellom tryptofan og andre store
+      nøytrale aminosyrer med 96%, men ikke endret utmattelse, depresjonsskåre eller konsentrasjon sammenlignet med placebo;
+      den testet serotoninsiden av tryptofanmetabolismen, ikke kynureninveien.
+    source_hash: 43bc99a1d8410db2626d59ab07798c1c1738012824b6f7f09864236b6992c18d
+  studies[pmid:38015302].finding:
+    text: En studie av pasienter og friske kontroller (antall er ikke oppgitt i sammendraget) fant høyere kynurenin i plasma,
+      som korrelerte med symptomenes alvorlighetsgrad, og lavere 3-hydroksykynurenin, 3-hydroksyantranilsyre, kinolinsyre
+      og pikolinsyre hos pasientene.
+    source_hash: 16b90dd3115b06bbe52ee3941fa66b975800579488ae8c262875d00a1458ca6b
+  studies[pmid:34090138].finding:
+    text: En studie med n=49 kvinner med CFS, 57 med fibromyalgi og 54 friske kontroller fant et lavere forhold mellom kynurensyre
+      og kinolinsyre i plasma ved CFS enn hos kontrollene.
+    source_hash: f84160d6fa1f8fac44029b77069b070e24c6159d5eb57e562122d30c26cbbee6
+  studies[pmid:15982993].finding:
+    text: En studie med n=23 pasienter og 42 friske kontroller fant 48% høyere fritt tryptofan i serum og 19% høyere totalt
+      tryptofan hos pasientene.
+    source_hash: 06714e6272c8e48bbb03d7984aabf02c99b565195d430c3ace544a516fe5d9d8
+  studies[pmid:11352361].finding:
+    text: En studie ved University of Oxford (diagnosekriterier og antall er ikke oppgitt i sammendraget) fant lavere fritt
+      tryptofan i plasma hos pasienter enn hos friske kontroller.
+    source_hash: 00f98ea55351e472c542628d91dcd041193684e9c12caf3489eb28661f734801
+  studies[pmid:20384451].finding:
+    text: En studie av pasienter med bare CFS, CFS med fibromyalgi og friske kontroller (antall er ikke oppgitt i sammendraget)
+      fant at "Plasma tryptophan and kynurenine concentrations did not differ among groups."
+    source_hash: b22893ad7402b4c67943239aea86fe68d286245d2c4255601c993492fb702e00

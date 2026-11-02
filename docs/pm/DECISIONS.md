@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-02 — Norwegian terms
+
+- Norwegian uses "diagnosekriterier" for "case definition" (not "kasusdefinisjon"). Why: patients and carers know the word.
+- "PEM" is used as the term in every language, explained in the glossary; no long Norwegian paraphrase in running text. Why: PEM is the established term among patients.
+
 ## 2026-11-02 — Norwegian version of the site
 
 - The whole site is also published in Norwegian (bokmål) with a language selector; the structure allows further languages (a string file per language). English stays authoritative: every Norwegian page says it is a translation of the English page and links to it. Why: many readers are patients with little energy who read best in their own language; credibility still comes first, so a translation is checked and never replaces the source.

@@ -1,0 +1,205 @@
+slug: reduced-nk-cell-function
+items:
+  name:
+    text: Nedsatt funksjon hos naturlige drepeceller (NK-celler)
+    source_hash: 02ed99d098e30817c53ef91bcff1236d007f4642d40acd362b0ad0ece3c774bc
+  core_claim:
+    text: Hypotesen er at naturlige drepeceller (NK-celler), immunceller som hjelper til med å forsvare mot virusinfeksjon,
+      er mindre i stand til å drepe målceller hos personer med ME/CFS.
+    sources:
+    - pmid:27099524
+    - pmid:20520837
+    - pmid:33777500
+    source_hash: 89bca88c349d8e9115383a2c331e37c761fb2a3826fa9afd3893c453d00ab670
+  level_reason[0]:
+    text: 'Kontrollerte studier som brukte Fukuda-definisjonen, som ikke krever PEM, fant lavere NK-celledreping hos pasienter
+      enn hos kontroller. Tre kommer fra én australsk forskergruppe: én med 39 pasienter og 30 kontroller, og to med henholdsvis
+      95 og 65 pasienter, den andre hentet fra den førstes kohort.'
+    sources:
+    - pmid:27099524
+    - pmid:21619669
+    - pmid:22571715
+    - pmid:20520837
+    source_hash: 14772d0f04ba215ea733ae64df6d45a34a7ce2c6b4dcd5debf702f205a66c777
+  level_reason[1]:
+    text: En fjerde Fukuda-studie, med 176 pasienter og 230 kontroller, kommer fra en gruppe i Miami uten forfattere felles
+      med den australske gruppens studie med 39 pasienter; dens siste forfatter var medforfatter på studien med 95 pasienter
+      sammen med den australske gruppen, en indirekte kobling. Kortet er på nivå 3 fordi en uavhengig gruppe fant det samme
+      resultatet i en separat kohort.
+    sources:
+    - pmid:20520837
+    - pmid:27099524
+    - pmid:21619669
+    source_hash: ff1f43d33727592e25bf8b871b37c01ec6177b177d5d598602f1f6ecbeb0cddd
+  level_reason[2]:
+    text: Mot disse funnene fant en studie som oppfylte Canadian Consensus Criteria (48 pasienter og 52 kontroller i hele
+      studien; NK-dreping målt hos 39 pasienter og 44 kontroller) ingen forskjell (se merknaden om omstridt), det samme gjorde
+      en studie med 21 pasienter og 21 kontroller som brukte en CDC-definisjon der versjonen ikke er navngitt, en multisenterstudie
+      med 174 pasienter og 86 kontroller der pasientene ble diagnostisert av klinikere som er eksperter, uten navngitte diagnosekriterier, og en kasus-kontrollstudie med ikke oppgitt størrelse der sammendraget ikke navngir noen diagnosekriterier.
+    sources:
+    - pmid:28694809
+    - pmid:7983659
+    - pmid:37013608
+    - pmid:8985207
+    source_hash: b821fa8f0bfb49dcaab93e763286443d1fd55d0915b973670757f8cd743a7789
+  level_reason[3]:
+    text: To små studier som brukte en CDC-definisjon der versjonen ikke er navngitt, fant lavere NK-aktivitet hos 8 pasienter
+      fra én familie enn hos 8 kontroller, og ingen pasient over 100 lytiske enheter blant 20 pasienter, uten direkte sammenligning
+      med den studiens 50 kontroller.
+    sources:
+    - pmid:9683556
+    - pmid:8148445
+    source_hash: d0a2bc48e45f55c19dfef5e11fb707800208ea1de411dcf1898ea2d69b570872
+  contested_reason[0]:
+    text: En studie som oppfylte Canadian Consensus Criteria (strengere enn Fukuda), med 48 pasienter og 52 matchede friske
+      kontroller i hele studien, målte NK-dreping hos 39 pasienter og 44 kontroller i to kohorter som ble analysert hver for
+      seg (24 mot 28 og 15 mot 16) og fant ingen forskjell.
+    sources:
+    - pmid:28694809
+    source_hash: f744ccbd73b672cb170e3ac2ad65400cf26a91d3612e94cd6c847cea378ef8a7
+  contested_reason[1]:
+    text: Med 39 pasienter i den målingen er studien med Canadian Consensus Criteria av sammenlignbar kvalitet med den australske
+      gruppens Fukuda-studier med 39 og 65 pasienter, men ikke med studien med 95 pasienter eller Miami-studien med 176 pasienter.
+    sources:
+    - pmid:28694809
+    - pmid:27099524
+    - pmid:22571715
+    - pmid:21619669
+    - pmid:20520837
+    source_hash: 057f954cd02793409f5c0b41f4b3f48dc04ee63b84893a77fabbb42f1a02cef1
+  contested_reason[2]:
+    text: Trinn 3 hviler på den australske gruppens studie med 39 pasienter og Miami-studien som funn fra uavhengige grupper;
+      det er omstridt fordi en studie av sammenlignbar kvalitet motsier den første. Trinn 2 hviler fortsatt på Miami-studien,
+      som ingen sammenlignbar studie motsier.
+    sources:
+    - pmid:27099524
+    - pmid:20520837
+    - pmid:28694809
+    source_hash: 546734ec80bc91d5e0bd70ac2a3059f6dffc7959ded1977fa618306ff103af38
+  contested_reason[3]:
+    text: En studie med 21 pasienter og 21 matchede kontroller som brukte en CDC-definisjon der versjonen ikke er navngitt,
+      rangert likt med Fukuda, fant også ingen forskjell i NK-celleaktivitet. Med 21 pasienter er den av sammenlignbar kvalitet
+      med den australske gruppens studie med 39 pasienter; sammendraget sier ikke hvor mange pasienter som fikk målt NK-aktivitet.
+    sources:
+    - pmid:7983659
+    - pmid:27099524
+    source_hash: c8f3667061e642e5d69f7631cf6c7999915f6eefafa3e584f1e89ebbe05fd16d
+  contested_reason[4]:
+    text: En multisenterstudie med 174 pasienter og 86 kontroller fant også ingen forskjell, men pasientene ble diagnostisert
+      av klinikere som er eksperter, uten navngitte diagnosekriterier.
+    sources:
+    - pmid:37013608
+    source_hash: fcc9bd52043530512c58889f59babb92abe6ee6041b602396cc0261f4e23fcf5
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen studie på dette kortet rapporterer NK-dreping validert som diagnostisk markør i en andre, uavhengig pasientgruppe.
+      En Fukuda-studie med 176 pasienter og 230 kontroller fant at NK-dreping var en god prediktor for CFS-status i sin egen
+      kohort. En studie med Canadian Consensus Criteria konkluderte med at målingene ikke var nyttige diagnostiske markører,
+      en multisenterstudie konkluderte med at analysen ikke var klar for klinisk bruk, og en familiestudie fant lav antistoffavhengig
+      NK-dreping også hos slektninger uten sykdommen.
+    sources:
+    - pmid:20520837
+    - pmid:28694809
+    - pmid:37013608
+    - pmid:33777500
+    source_hash: df9a453ae4b1048cee0a660e41285c38b7f89643d70b7431f70e2ff40b4bc38e
+  badge_reasons.explains_pem[0]:
+    text: De fire Fukuda-studiene som støtter hypotesen rapporterer ingen direkte måling av PEM, for eksempel en treningstest
+      gjentatt to dager på rad, i sammendragene eller de åpne fulltekstene. Studien med 65 pasienter oppgir, blant deltakernes
+      symptomer, andelen som rapporterer svakhet mer enn 24 timer etter trening; dette er et selvrapportert symptom, ikke
+      en test.
+    sources:
+    - pmid:27099524
+    - pmid:20520837
+    - pmid:21619669
+    - pmid:22571715
+    source_hash: e337c535b882c420f44e016e4ec04cca5808c815f25f18ecac486d888fe09b56
+  badge_reasons.explains_pem[1]:
+    text: De to små støttende studiene som brukte en CDC-definisjon der versjonen ikke er navngitt, rapporterer ingen direkte
+      måling av PEM i sammendragene; ingen åpen fulltekst var tilgjengelig.
+    sources:
+    - pmid:8148445
+    - pmid:9683556
+    source_hash: 62e0794b67fa1868ea45d10dcc5892bbffce243cb7a1e80716bd5e039d754888
+  badge_reasons.explains_pem[2]:
+    text: De to studiene med anerkjente diagnosekriterier som ikke fant noen forskjell, med 48 pasienter (NK-dreping målt
+      hos 39) og 21 pasienter, rapporterer ingen direkte måling av PEM i sammendragene, og det gjør heller ikke den åpne fulltekstversjonen
+      av den første.
+    sources:
+    - pmid:28694809
+    - pmid:7983659
+    source_hash: 22d6a8c080747b89c9fd6a11063ee96534ea7889aa2835578829a40965ccff56
+  badge_reasons.explains_pem[3]:
+    text: Studiene som er vist som bakgrunn rapporterer ingen direkte måling av PEM i sammendragene; sammendraget til multisenterstudien
+      nevner det bare som et trekk ved sykdommen. Den åpne fulltekstversjonen av kasusrapporten om én pasient nevner PEM bare
+      som et symptom og rapporterer symptomer ved anstrengelse fra pasientens egen beretning, ikke fra en anstrengelsestest.
+    sources:
+    - pmid:37013608
+    - pmid:8985207
+    - pmid:33777500
+    - pmid:16731230
+    - pmid:42927120
+    source_hash: aae843f115b00808f840a892fe62c0afce562496bd8f93cbdf97d0923c37f0e5
+  subgroups[0]:
+    text: 'To små studier tyder på at lavere NK-celleaktivitet kan henge sammen med mer alvorlig sykdom: én med 20 pasienter
+      fant lavest aktivitet i gruppen av de sykeste, og én med 41 pasienter fant flere symptomer og dårligere resultater på
+      kognitive tester hos pasienter med lav aktivitet. Ingen av sammendragene navngir en versjon av anerkjente diagnosekriterier.'
+    sources:
+    - pmid:8148445
+    - pmid:16731230
+    source_hash: a8adf04a85f1580d3f6247ef356194e0f99909f458d49d47d0c0bc1084259761
+  studies[pmid:27099524].finding:
+    text: En studie med n=39 pasienter og 30 kontroller uten utmattelse fant lavere NK-cellelysis av målceller hos pasienter
+      (17% mot 31%).
+    source_hash: 828b20c45fc515fbb661c0ba012a407ca47a03b65a1e4b7c9d9c2f6bc15becf5
+  studies[pmid:20520837].finding:
+    text: En studie med n=176 pasienter og 230 kontroller fant lavere NK-celledreping hos pasienter, som var en god prediktor
+      for CFS-status i ROC-analysen; antallet NK-celler var ikke forskjellig.
+    source_hash: e666b15f0e84293de0da6e12ce273e98a69ab7eabb8284d674f58d970588f7eb
+  studies[pmid:21619669].finding:
+    text: En studie med n=95 pasienter og 50 friske kontroller fant lavere cytotoksisk aktivitet hos NK-celler og CD8+ T-celler
+      hos pasientene.
+    source_hash: 98074e8795f12e4829afc8b61a1977368b7b4b8ae26f50f01c93b22970d92607
+  studies[pmid:22571715].finding:
+    text: En studie med n=65 pasienter og 21 kontroller uten utmattelse fant lavere cytotoksisk aktivitet hos NK-celler hos
+      pasientene ved start, etter 6 måneder og etter 12 måneder.
+    source_hash: 3c0c71ca28c6ab388edc8e030077fabdd62064a206bdd0ca1508972083bc024d
+  studies[pmid:8148445].finding:
+    text: En studie med n=20 pasienter og 50 friske kontroller fant NK-celleaktivitet ikke høyere enn 100 lytiske enheter
+      hos noen pasient, og lavere aktivitet i pasientgrupper med mer alvorlig sykdom.
+    source_hash: 80e09a6a2ec4c04e77312e730e041bd2fe87724dc455673d719766c27cac76f1
+  studies[pmid:9683556].finding:
+    text: En studie med n=8 berørte familiemedlemmer, 12 uberørte familiemedlemmer og 8 kontroller fant lavere NK-aktivitet
+      hos de berørte enn hos kontrollene; de uberørte lå mellom og var ikke signifikant forskjellige fra noen av gruppene.
+    source_hash: c01466cb0a22f721825a2c5db9baca9927846b6031e93e821406336247d1277c
+  studies[pmid:28694809].finding:
+    text: En studie med n=48 pasienter fra to kohorter og 52 matchede friske kontroller (NK-dreping målt hos 39 pasienter
+      og 44 kontroller) fant ingen reproduserbare forskjeller i antall cytotoksiske lymfocytter, granuleinnhold, aktivering,
+      eksocytose, drap av målceller eller cytokinproduksjon.
+    source_hash: b67567f5d688ba7b78cad5f01fa01595a77d9556eed422c83155c7e0ed0c4ead
+  studies[pmid:7983659].finding:
+    text: En studie med n=21 pasienter og 21 matchede kontroller fant NK-celleaktivitet som var lik i de to gruppene.
+    source_hash: ceeed27a0304e149e973d261e5f34ae3db6d3fb4b7db1fef2fabd4aee8d62602
+  studies[pmid:37013608].finding:
+    text: En studie med n=174 pasienter og 86 friske kontroller, med en analyse validert for prøver sendt over natten, fant
+      ingen signifikant forskjell i NK-cellenes cytotoksisitet (p=0,79), med stor variasjon i begge gruppene.
+    source_hash: 44a9e52135f34e2936d7f8aac23310e99fe449ac0b0da6291753f646041ab91a
+  studies[pmid:8985207].finding:
+    text: En kasus-kontrollstudie (utvalgsstørrelsen er ikke oppgitt i sammendraget) fant ingen forskjell i NK-cellefunksjon
+      mellom pasienter og kontroller.
+    source_hash: f4592f96df52772c6ccb9696dc3b73a21fbb1c0a4773da3833009fde111e07fe
+  studies[pmid:33777500].finding:
+    text: En studie av fem familier med 2-5 pasienter hver (totalen er ikke oppgitt i sammendraget) fant at pasientene og
+      familiemedlemmene deres uten CFS hadde lavere antistoffavhengig NK-celledreping enn ubeslektede kontroller, så den ble
+      vurdert som uegnet som biomarkør.
+    source_hash: b0f2eebd360fdd17ebdcc62188d6577e5328c29e54c25ace45e12ef0279ee7e8
+  studies[pmid:16731230].finding:
+    text: En studie med n=41 kvinnelige pasienter fant at de med lav NK-celleaktivitet rapporterte mindre livskraft og flere
+      kognitive problemer, og skåret lavere på kognitive tester, enn de med normal aktivitet.
+    source_hash: 190cab1e600077c94a778cf06b2675071a19b370ec22dcfea29d014df8742b3f
+  studies[pmid:42927120].finding:
+    text: En kasusrapport med n=1 pasient med ME/CFS og én frisk kontroll, uten navngitte diagnosekriterier, fant at pasientens
+      NK-celler viste minimal degranulering (CD107a) i blod tatt 2 dager før en andre dose rekombinant zostervaksine og mer
+      degranulering 4 dager etter den. Degranulering var en markør målt med flowcytometri, ikke en drapsanalyse; forfatterne
+      påpeker at noen av forskjellene, eller alle, kan skyldes normal biologisk variasjon eller variasjon i analysen. Denne
+      observasjonen hos én pasient er ikke replikert.
+    source_hash: 5bad57b1fcb45a7bd64b0a616441825ccd40c70dca0b85e08208b402393d4a85

@@ -1,0 +1,272 @@
+slug: impaired-energy-production-after-exertion
+items:
+  name:
+    text: Nedsatt energiproduksjon etter anstrengelse
+    source_hash: 778f7e1ee489453d1e41582f5b0bd655afefe0943b16703f8ee455a2533ba4a1
+  core_claim:
+    text: Hypotesen går ut på at kroppens aerobe energiproduksjon er nedsatt etter fysisk anstrengelse hos personer med ME/CFS,
+      og at dette viser seg som et fall i oksygenbruk og arbeid på den andre av to treningstester med 24 timers mellomrom.
+    sources:
+    - pmid:38965566
+    - pmid:31161646
+    - pmid:20937116
+    source_hash: aada688075049a5411b6db717a73e4980b30f01a350ed3cc728e1363c37200c8
+  level_reason[0]:
+    text: 'En kontrollert studie av 84 pasienter som oppfylte Canadian Consensus Criteria og 71 stillesittende kontroller
+      gjentok en maksimal treningstest etter 24 timer. I motsetning til kontrollene gjentok ikke pasientene resultatene fra
+      første dag: oksygenbruk og arbeid sank ved maksimal innsats og ved ventilasjonsterskelen på andre dag. Kortet er på
+      nivå 2 på grunn av denne studien.'
+    sources:
+    - pmid:38965566
+    source_hash: 3fabb60108089b54c0f4d089885280967bf578109df0d06a1c34ecd17bd9524c
+  level_reason[1]:
+    text: 'En studie fra Amsterdam, med Fukuda-kriteriene, som ikke krever PEM, testet 15 kvinnelige pasienter og 15 kontroller
+      på to dager. Endringen fra første til andre dag skilte seg mellom gruppene ved den anaerobe terskelen, for arbeidsrate
+      (P = 0,002) og oksygenopptak (P = 0,001), og ved maksimal innsats, for arbeidsrate og oksygenopptak (begge P < 0,001):
+      den sank hos pasientene og økte hos kontrollene.'
+    sources:
+    - pmid:20937116
+    source_hash: dd9b245df478e5f4b53fb0f53f80904a8efb0243a02685f75afe935fa1f503c2
+  level_reason[2]:
+    text: 'To studier fra én nederlandsk klinikk sammenlignet pasienter med personer som har kronisk utmattelse, men ikke
+      oppfyller kriteriene for ME/CFS (51 og 50 kvinner; 26 og 25 menn): oksygenbruk og arbeidsbelastning sank på andre dag
+      ved ME/CFS, mens sammenligningsgruppens prestasjon ble bedre. Det er retrospektive analyser av en klinisk database som
+      utelot alvorlig ME/CFS; i kvinnestudien var fibromyalgi vanligere i ME/CFS-gruppen (49% mot 14%). Én forfatter, Visser
+      FC, er også med i studien fra Amsterdam.'
+    sources:
+    - pmid:34198913
+    - pmid:34198946
+    - pmid:20937116
+    source_hash: 9f04f0474733e6fb87ddb66d1f597b63e9891a1c4a6175f82e3871fc441a8439
+  level_reason[3]:
+    text: En studie fra Oslo, uten felles forfattere med studien av 84 pasienter, testet 18 kvinner som oppfylte Canadian
+      Consensus Criteria og 15 friske kvinner. Pasientenes effekt ved gassutvekslingsterskelen sank på den andre testen mens
+      kontrollenes ikke gjorde det, en signifikant forskjell mellom gruppene. Oksygenbruk ved terskelen og ved maksimal innsats
+      sank også hos pasientene, men ingen av fallene skilte seg signifikant fra kontrollenes. Laktat i blodet for en gitt
+      effekt økte hos pasientene og sank hos kontrollene.
+    sources:
+    - pmid:31161646
+    - pmid:38965566
+    source_hash: 1c86d45b3fb28c86034e3ed7b455ff73283892c722e773704d85b5beea504f68
+  level_reason[4]:
+    text: Kortet er på nivå 3 fordi uavhengige grupper fant deler av det samme resultatet i separate kohorter. Hver har en
+      begrensning, og trinn 3 er omstridt (se merknaden om omstridt).
+    sources:
+    - pmid:38965566
+    - pmid:20937116
+    - pmid:34198913
+    - pmid:34198946
+    - pmid:31161646
+    source_hash: 2f9f16860a7c78a2d08a292d5ad0a16c3bc767179f5560b260b711ec157c2c5f
+  level_reason[5]:
+    text: Mot disse funnene fant en studie fra New York med 58 pasienter og 25 stillesittende kontroller ingen endring i maksimalt
+      oksygenbruk eller oksygenbruk ved ventilasjonsterskelen på andre dag i noen av gruppene; artikkelen rapporterer at 5
+      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte kriteriene fra 1994 (Fukuda), modifisert slik at de krever PEM. Forfatterne antyder at fall som er rapportert andre steder, kan skyldes
+      lavere innsats på andre dag.
+    sources:
+    - pmid:42212259
+    source_hash: 893c452d42ccc4f11020aa74cc767ade572a0e832a1ba232065b3fa03a730a86
+  level_reason[6]:
+    text: Studien med 84 pasienter beholdt pasienter som oppfylte kriteriene for maksimal innsats på første test, men ikke
+      på andre, og forfatterne leser slike tilfeller som kjennetegnende for forverring av symptomer etter anstrengelse. Studiens
+      egne resultater viser et fall i pulsreserve på andre test, som forfatterne skriver tyder på at maksimal innsats ikke
+      ble gitt; de rapporterer et lignende fall hos de matchede kontrollene.
+    sources:
+    - pmid:38965566
+    source_hash: 8543a7b58b4f68c82ed09623bde4974e31d9f8d2a51f4285e434e71b518f5242
+  level_reason[7]:
+    text: En studie av 16 pasienter og 10 kontroller fra Adelaide fant at arbeidsraten ved ventilasjonsterskelen sank mer
+      hos pasientene på andre dag, men fant ingen forskjell mellom gruppene i hvordan oksygenbruket endret seg. To andre toddagersstudier,
+      der diagnosekriteriene ennå ikke er kontrollert, fant lavere oksygenbruk og arbeidsbelastning hos 51 kvinner bare på
+      andre test, og lavere arbeidsbelastning, men høyere oksygenbruk på andre dag hos 10 pasienter.
+    sources:
+    - pmid:30871578
+    - pmid:23813081
+    - pmid:28782878
+    source_hash: 10288404c39d69fe360fbae8e6acb85fbd32b95d695774e647f41ad68d2d0002
+  level_reason[8]:
+    text: Disse testene måler hele kroppens oksygenbruk, som avhenger av oksygentilførsel så vel som av energiproduksjon i
+      cellene. Forfatterne av studien med 84 pasienter peker på forstyrret regulering av blodstrøm og oksygentilførsel. Studien
+      fra Amsterdam fant oksidativ fosforylering i blodceller lik kontrollenes. En muskelstudie fant en lavere hastighet for
+      gjenoppretting av fosfokreatin etter trening (et mål på muskelens oksidative kapasitet) hos 22 pasienter enn hos 15
+      stillesittende kontroller, uten ytterligere fall to dager etter en maksimal test hos de 14 pasientene som ble testet
+      på nytt. Kortet viser ikke hvor i kroppen begrensningen ligger.
+    sources:
+    - pmid:38965566
+    - pmid:20937116
+    - pmid:8618560
+    source_hash: c670d7df047329cad1d58528dcc45a1b2e01e89ac29121f121fab10f0b96e5ca
+  contested_reason[0]:
+    text: Trinn 3 bygger på uavhengige studier som fant det samme resultatet som studien med 84 pasienter, hvis pasienter
+      oppfylte Canadian Consensus Criteria. Den tydeligste, en Fukuda-studie av 15 kvinnelige pasienter og 15 kontroller fra
+      Amsterdam, blir motsagt av en Fukuda-studie av 58 pasienter og 25 stillesittende kontroller fra New York som ikke fant
+      noen endring på andre dag. Med de samme diagnosekriteriene, en kontrollgruppe og flere pasienter (58 mot 15) er New
+      York-studien av sammenlignbar kvalitet.
+    sources:
+    - pmid:20937116
+    - pmid:42212259
+    - pmid:38965566
+    source_hash: 1553fabbcce3721350d1d88372adb46069460b260963bd447dd03466dccd98f1
+  contested_reason[1]:
+    text: De to nederlandske klinikkstudiene av kvinner og menn peker samme vei, men diagnosekriteriene som er registrert for
+      dem (International Consensus Criteria) er lest ut fra et referansenummer og ikke bekreftet, og de sammenligner pasienter
+      med personer som har kronisk utmattelse uten ME/CFS i stedet for med friske kontroller.
+    sources:
+    - pmid:34198913
+    - pmid:34198946
+    source_hash: ebf42a2b06e40c4b4e8369dd0ca66844e7ccbf41390fde24f524a103a6566966
+  contested_reason[2]:
+    text: 'Studien fra Oslo, som oppfyller Canadian Consensus Criteria, fant det samme resultatet bare delvis: effekten ved
+      terskelen sank mer hos pasientene enn hos kontrollene, men endringene i oksygenbruk skilte seg ikke mellom gruppene.'
+    sources:
+    - pmid:31161646
+    source_hash: d3ba4031c3d4763ec7768d12f9fc67936957303e5619c1a1624d6e15d2d02830
+  contested_reason[3]:
+    text: 'Trinn 2 bygger på studien med 84 pasienter og er ikke omstridt: New York-studien bruker Fukuda-kriteriene, som
+      rangerer under Canadian Consensus Criteria. Kohorten i New York måtte rapportere PEM, og en følgeartikkel fra de samme
+      forfatterne, som ser ut til å beskrive den samme kohorten (57 pasienter og 25 kontroller), nevner IOM 2015-kriteriene;
+      kortet registrerer Fukuda, ut fra New York-studiens egen setning.'
+    sources:
+    - pmid:38965566
+    - pmid:42212259
+    - pmid:41293716
+    source_hash: 2756a0cef999e76020c8af839b3abbe2adb2fc9f35cd920a05cb4e55ecf81d58
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen studie på dette kortet tester en toddagers treningsmarkør i en annen, uavhengig pasientgruppe. En studie av
+      51 kvinner (diagnosekriterier ennå ikke kontrollert) klassifiserte pasienter og kontroller med 95,1% nøyaktighet innenfor
+      sin egen kohort, og en studie av 16 pasienter foreslo en grense for fallet i arbeidsrate ved ventilasjonsterskelen,
+      også innenfor sin egen kohort. En studie av 58 pasienter konkluderte med at dataene ikke støtter å bruke toddagersprotokollen
+      til å definere PEM eller funksjonsnedsettelse.
+    sources:
+    - pmid:23813081
+    - pmid:30871578
+    - pmid:42212259
+    source_hash: 03a49eaae2a946f3319e67bffdd5a0414198e380c80f68e4a060f97d674760df
+  badge_reasons.explains_pem[0]:
+    text: Toddagers treningstestene på dette kortet måler tilstanden etter anstrengelse direkte, men ingen studie på kortet
+      knytter oksygenbruk eller arbeid til symptomene etter anstrengelse hos de samme pasientene. Fallet på den andre testen
+      er selv avviket hypotesen foreslår, så det forklarer ikke PEM alene. En studie av 16 pasienter og 10 kontroller fant
+      at utmattelsesskårene økte mer hos pasientene før den andre testen og at arbeidsraten ved ventilasjonsterskelen sank
+      mer, men knyttet ikke de to sammen hos de samme pasientene.
+    sources:
+    - pmid:38965566
+    - pmid:31161646
+    - pmid:20937116
+    - pmid:30871578
+    source_hash: 2aec2af7474c0c944ee247d1a24cebd04ae6c07c638d1ac587ac0cc361aafa07
+  badge_reasons.explains_pem[1]:
+    text: Forfatterne av studien fra Oslo skriver at fallet i maksimalt oksygenbruk hos pasientene deres etter deres mening
+      var for lite til å tyde på noen stor endring i treningstoleranse eller til å forklare PEM.
+    sources:
+    - pmid:31161646
+    source_hash: 23ae43e33099ea7f3914266e58af07d737ba874aef925110f68210a7478d499a
+  badge_reasons.explains_pem[2]:
+    text: I en overlappende kohort fra forskningsgruppen bak studien med 84 pasienter brukte 78 pasienter i gjennomsnitt omtrent
+      12,7 dager på å komme seg etter toddagerstesten, mot 2,1 dager for 64 stillesittende kontroller; artikkelen rapporterer
+      treningstestresultatene separat og knytter ikke restitusjon til oksygenbruk eller arbeid.
+    sources:
+    - pmid:36984572
+    source_hash: d9d2a77fe69f4f3fc18324f5472b66ee92b39982df3789cb9f6af132ce51f681
+  badge_reasons.explains_pem[3]:
+    text: New York-studien fant ikke noe fall i oksygenbruk på andre dag. Forfatterne rapporterer, som et foreløpig resultat
+      med data som skal publiseres separat, at symptomer etter testen skilte pasientene fra kontrollene på de fleste dager.
+    sources:
+    - pmid:42212259
+    source_hash: 74aeac21cdfaa026dc17d50434399768822a1489bf974f72774679eae9b0524e
+  subgroups[0]:
+    text: 'I én enkelt studie, ennå ikke gjentatt, delte 18 pasienter seg i to grupper under muskeltrening: 10 brukte mindre
+      av et energilager i muskelen (fosfokreatin) enn kontrollene og ga lav maksimal kraft, mens 8 brukte det normalt, men
+      ble surere enn kontrollene og brukte nesten fire ganger så lang tid på å få muskel-pH tilbake.'
+    sources:
+    - pmid:21749371
+    source_hash: d29fe5945c234b7ac86b2f64a0a8e7ded784ddb016231317cd38ba5d7c8e13ad
+  early_signals[0]:
+    text: En studie med n=18 pasienter og 12 stillesittende kontroller fant at 8 pasienter som trente på nivåer som kunne
+      sammenlignes med kontrollene, ble surere i muskelen over tre treningsrunder, uten det fallet i surhet ved gjentatt trening
+      som forfatterne skriver at sees hos friske, og brukte nesten fire ganger så lang tid på å få muskel-pH tilbake. Ikke
+      gjentatt ennå.
+    sources:
+    - pmid:21749371
+    source_hash: 73fb8f77921fcb251f84ce7c8ec860df56888ae237ebf337f9482ccd4a84a882
+  early_signals[1]:
+    text: En studie med n=18 pasienter og 15 friske kontroller fant at laktat i blodet for en gitt effekt økte fra første
+      til andre dags treningstest hos pasientene og sank hos kontrollene. Ikke gjentatt ennå.
+    sources:
+    - pmid:31161646
+    source_hash: af1bb3781823f66c572621cf579e1aa0758dd54766db7a375a54fa0872984f93
+  studies[pmid:38965566].finding:
+    text: En studie med n=84 pasienter og 71 stillesittende kontroller fant at pasientene, i motsetning til kontrollene, ikke
+      gjentok sin første treningstest 24 timer senere, med fall i arbeid, oksygenbruk og puls ved maksimal innsats og i oksygenbruk
+      og arbeid ved ventilasjonsterskelen.
+    source_hash: 02699d6b93ff28c8d75de3d7172ce6deef476a7bf65f51734c3ae5672939eb60
+  studies[pmid:31161646].finding:
+    text: En studie med n=18 kvinnelige pasienter og 15 friske kvinner fant at pasientenes effekt ved gassutvekslingsterskelen
+      sank på en ny treningstest 24 timer senere mens kontrollenes ikke gjorde det, en signifikant forskjell mellom gruppene;
+      oksygenbruk ved terskelen og ved maksimal innsats sank også hos pasientene, men ingen av fallene skilte seg signifikant
+      fra kontrollenes; og laktat i blodet for en gitt effekt økte hos pasientene og sank hos kontrollene.
+    source_hash: b7460d807f502ce2f5ee8fa5b8221dab1c7fe46d7b5034d93e9b9c2d002902c8
+  studies[pmid:20937116].finding:
+    text: En studie med n=15 kvinnelige pasienter og 15 kontroller fant lavere oksygenbruk ved den anaerobe terskelen og ved
+      maksimal anstrengelse hos pasientene begge dager; fra første til andre dag sank arbeidsrate og oksygenopptak hos pasientene
+      og økte hos kontrollene, en forskjell mellom gruppene ved terskelen (P = 0,002 og P = 0,001) og ved maksimal innsats
+      (begge P < 0,001); oksidativ fosforylering i blodceller var lik kontrollenes.
+    source_hash: 43960b6fbc52e6251f7c9abe4bad5dd49f27043de622d00d93b25e53278c8e7d
+  studies[pmid:34198913].finding:
+    text: En studie med n=51 kvinner med ME/CFS og 50 kvinner med kronisk utmattelse som ikke oppfyller kriteriene for ME/CFS
+      fant at oksygenbruk og arbeidsbelastning ved maksimal anstrengelse og ved ventilasjonsterskelen sank på en ny test 24
+      timer senere ved ME/CFS, mens sammenligningsgruppens prestasjon ble bedre, uten signifikant endring i dens maksimale
+      arbeidsbelastning.
+    source_hash: b7e4ca6638d425551c2cb012ab989219e0f0da84e536c1a117d12a7df3beb85e
+  studies[pmid:34198946].finding:
+    text: En studie med n=26 menn med ME/CFS og 25 menn med kronisk utmattelse som ikke oppfyller kriteriene for ME/CFS fant
+      at oksygenbruk og arbeidsbelastning ved maksimal anstrengelse og ved ventilasjonsterskelen sank på en ny test 24 timer
+      senere ved ME/CFS, mens sammenligningsgruppens prestasjon ble bedre, uten signifikant endring i dens maksimale arbeidsbelastning.
+    source_hash: 9692d693fe26ad1b24af700aa75947facb0f91858df0c6f8db3a514681e71b79
+  studies[pmid:42212259].finding:
+    text: En studie med n=58 pasienter og 25 stillesittende kontroller fant ingen signifikant endring i maksimalt oksygenbruk,
+      oksygenbruk ved ventilasjonsterskelen eller ventilatorisk effektivitet fra første til andre dag i noen av gruppene,
+      en lavere maksimal puls og høyere opplevd anstrengelse hos pasientene; artikkelen rapporterer at 5 pasienter og 6 kontroller
+      ikke oppfylte kriteriene for maksimal innsats.
+    source_hash: 54dc044f6ba4f831748e33d0bea2b17ccb2bb69c596213ea45b25dc04b3ad81f
+  studies[pmid:21749371].finding:
+    text: En studie med n=18 pasienter og 12 stillesittende kontroller fant lavere anaerob terskel og lavere maksimalt oksygenbruk
+      hos pasientene, og hos de 8 pasientene med normalt bruk av fosfokreatin mer muskelacidose over tre treningsrunder og
+      nesten fire ganger så lang tid for å få pH tilbake som hos kontrollene.
+    source_hash: f1cf8528f04e7367d380e214319cd59c74876697c1fdcb8e1f04128175eca21c
+  studies[pmid:30871578].finding:
+    text: En studie med n=16 pasienter og 10 friske kontroller fant at arbeidsraten ved ventilasjonsterskelen sank mer fra
+      første til andre dag hos pasientene, uten forskjell mellom gruppene i endringen i oksygenbruk, puls eller ventilasjon.
+    source_hash: f715acf4690aedaaf5b26d3b5c6c147ceeb223fafc114881c0abac0b50460c68
+  studies[pmid:23813081].finding:
+    text: En studie med n=51 kvinnelige pasienter og 10 stillesittende kvinner fant ingen forskjeller på en første maksimal
+      treningstest, men lavere oksygenbruk og arbeidsbelastning ved maksimal innsats og ved ventilasjonsterskelen eller den
+      anaerobe terskelen hos pasientene på en andre test 24 timer senere.
+    source_hash: 1ab1f6fce00c4129720443cd2eb488bda2252d749fac4de4e45ae801370564c4
+  studies[pmid:28782878].finding:
+    text: En pilotstudie med n=10 pasienter og 10 matchede friske kontroller fant at pasientenes arbeidsbelastning og puls
+      sank på en ny treningstest 24 timer senere mens oksygenbruket økte, mot økninger i arbeidsbelastning, puls og oksygenbruk
+      hos kontrollene.
+    source_hash: 962c3eaaef3e6cfb4fc08ff065e09e969e54433e808352a00ec8ba7ffdf63013
+  studies[pmid:8618560].finding:
+    text: En studie med n=22 pasienter og 15 stillesittende kontroller fant en lavere maksimal hastighet for gjenoppretting
+      av fosfokreatin etter trening av leggen, et mål på muskelens oksidative kapasitet, hos pasientene, og ingen ytterligere
+      endring 2 dager etter en maksimal tredemølletest hos de 14 pasientene som ble testet på nytt.
+    source_hash: eb69a1cb28bfa37b5e1593e5618fe2391e8f5073a7cddb041366e1fecfa0b6ad
+  studies[pmid:24755065].finding:
+    text: En studie med n=22 pasienter uten kontrollgruppe fant fall fra første til en andre treningstest 24 timer senere
+      i maksimalt oksygenbruk (13,8%), maksimal puls, maksimal ventilasjon og arbeid, og i oksygenbruk og arbeid ved ventilasjonsterskelen.
+    source_hash: 8d8531a8f20653df32695fd446b35f7a8dffa2c74ec40d49d6d8ab80e07cefcc
+  studies[pmid:36984572].finding:
+    text: En studie med n=80 testede pasienter og 64 stillesittende kontroller (78 pasienter analysert) fant at pasientene
+      i gjennomsnitt brukte omtrent 12,7 dager på å komme seg etter en toddagers treningstest, mot 2,1 dager for kontrollene.
+    source_hash: 80b8b99a7999f9d1ffb77c03b5bbec5633ad3b84c66b07a29a0d22e17b9680c4
+  studies[pmid:35358096].finding:
+    text: En studie med n=60 pasienter og 45 friske kontroller som målte 1157 plasmametabolitter rundt to treningstester med
+      24 timers mellomrom, fant at anstrengelse hos pasientene hovedsakelig påvirket lipidrelaterte og energirelaterte stoffskifteveier,
+      ulikt etter første og andre test, og at over en fjerdedel av de identifiserte stoffskifteveiene skilte seg fra kontrollene
+      i restitusjonsperioden på 24 timer.
+    source_hash: c73b22e0d2763021ad54762104a11817cf66a0fd2c43debc641360d3648db35a
+  studies[pmid:41293716].finding:
+    text: En studie med n=57 pasienter og 25 stillesittende kontroller fant maksimalt oksygenbruk som kunne sammenlignes mellom
+      gruppene, og forstyrret pust og hyperventilering under trening oftere hos pasientene.
+    source_hash: 2dc947caac750f14d433c9bb884ee683db27bd5708f548881259f59d5a3ad140

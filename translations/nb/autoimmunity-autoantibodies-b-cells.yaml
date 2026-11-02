@@ -1,0 +1,216 @@
+slug: autoimmunity-autoantibodies-b-cells
+items:
+  name:
+    text: Autoimmunitet (autoantistoffer og B-celler)
+    source_hash: 48d88cfc3e0f1072ac707f19d9a5e29f2cc278e96e1f2ec1870c0d0c2921c4fa
+  core_claim:
+    text: 'Hypotesen går ut på at immunsystemet hos minst noen personer med ME/CFS angriper kroppen selv: B-celler lager antistoffer
+      (autoantistoffer) som binder seg til kroppens egne reseptorer, for eksempel de adrenerge og muskarine reseptorene som
+      reagerer på nervesystemets signalstoffer, og at disse antistoffene bidrar til symptomene.'
+    sources:
+    - pmid:26399744
+    - pmid:22039471
+    - pmid:34589868
+    source_hash: 6fac78dfd550f852ef9855b546e16bc1a423bee7e4c3a7d105bf3d3470c62725
+  level_reason[0]:
+    text: En studie fra Sverige målte antistoffer mot adrenerge og muskarine reseptorer i blodet hos to kohorter med 24 pasienter,
+      som alle oppfylte Canadian Consensus Criteria, International Consensus Criteria og IOM 2015-kriteriene, og hos 24 matchede
+      friske kontroller. Antistoffer mot de muskarine reseptorene M3 og M4 var høyere enn hos kontrollene i begge kohortene;
+      antistoffer mot de adrenerge reseptorene β1 og β2 var høyere bare i Gothenburg-kohorten, hvis prøver ifølge artikkelen
+      ble samlet inn tidligere og analysert separat. Nivåene korrelerte ikke med sykdomsalvorlighet. Kortet står på nivå 2
+      på grunn av denne studien.
+    sources:
+    - pmid:34589868
+    source_hash: 4afb5cade8930103144cb0ba4f7dc069d5da5f2cd8c7284b130506bfa66a666a
+  level_reason[1]:
+    text: En tidligere studie fra Berlin med 268 pasienter og 108 friske kontroller, hvis diagnosekriterier ennå ikke er kontrollert,
+      fant høyere antistoffer mot reseptorene β2, M3 og M4 hos pasientene. Den har to forfattere felles med den svenske studien.
+      En studie fra Japan med 60 pasienter og 30 friske kontroller, også med diagnosekriterier som ennå ikke er kontrollert,
+      fant høyere antistoffer mot den muskarine M1-reseptoren, med en annen test.
+    sources:
+    - pmid:26399744
+    - pmid:12851722
+    source_hash: 234303ca109241198554dad8ad36da7e82d37da5754a8165fcf1f72909b6637b
+  level_reason[2]:
+    text: 'En studie fra Spania, uten felles forfattere med den svenske studien, målte de samme typene antistoffer med en
+      test fra samme leverandør hos 59 pasienter som oppfylte Fukuda-definisjonen, som ikke krever PEM, og 36 friske kontroller.
+      Antistoffer mot den adrenerge β2-reseptoren var høyere hos pasientene enn hos kontrollene. Gjennomsnittlige antistoffnivåer
+      mot de muskarine reseptorene M1 til M4 og de adrenerge reseptorene α1 og β1 skilte seg ikke; andelen over testprodusentens
+      grenseverdi skilte seg for M3 og M4, og for M4 var flere kontroller enn pasienter over den. Artikkelens tabell oppgir
+      like verdier hos pasienter og kontroller for M3 og M4. Gruppene var ikke matchet for kjønn (analysene var justert for
+      alder og kjønn), forfatterne beskriver studien som eksplorativ, og de gjorde ingen korreksjon for flere sammenligninger.
+      Kortet står på nivå 3 fordi denne uavhengige gruppen fant høyere β2-reseptorantistoffer i en egen kohort. Gjentakelsen
+      er delvis: begge studiene brukte en test fra samme leverandør, den svenske studien fant høyere β2-antistoffer i bare
+      én av sine to kohorter, og de høyere M3- og M4-antistoffene ble ikke gjentatt.'
+    sources:
+    - pmid:42082542
+    - pmid:34589868
+    source_hash: 6624e4c01153ef38585a6768a23ff22fb6b48b28a53f69428e19d68b854b6936
+  level_reason[3]:
+    text: I en randomisert, dobbeltblind studie fra Bergen i Norge fikk 30 pasienter som oppfylte Fukuda-definisjonen enten
+      rituximab, et legemiddel som fjerner B-celler, eller placebo i form av saltvann, 15 i hver gruppe. Ved studiens forhåndsdefinerte
+      primære endepunkt, utmattelse tre måneder etter behandling, var det ingen forskjell mellom gruppene. Varig bedring i
+      selvrapportert utmattelse ble sett hos 10 av 15 pasienter som fikk rituximab og 2 av 15 som fikk placebo (p = 0,003),
+      og utmattelsesskårene skilte seg mellom gruppene 6 til 10 måneder etter behandling.
+    sources:
+    - pmid:22039471
+    source_hash: 7c5232e350f557df93271779300e4ae7df650608763c21ad741e51412ebd5b01
+  level_reason[4]:
+    text: 'En større randomisert, dobbeltblind studie fra den samme Bergen-gruppen, med 151 pasienter som oppfylte Canadian
+      Consensus Criteria (77 fikk rituximab, 74 placebo; infusjoner over 12 måneder, oppfølging i 24 måneder), fant ingen
+      forskjell mellom gruppene i responsrate (26,0 % med rituximab, 35,1 % med placebo), i utmattelse over 24 måneder eller
+      i noe sekundært endepunkt. Med strengere diagnosekriterier, en placebogruppe og flere pasienter (151 mot 30) avgjør
+      denne studien spørsmålet mot studien med 30 pasienter, så kortet når ikke nivå 4: i den større kontrollerte studien
+      endret ikke fjerning av B-celler utfallet.'
+    sources:
+    - pmid:30934066
+    - pmid:22039471
+    source_hash: 1a3d4da619eea4734122ec9824a3557b2207fadaa44075ac26f684341ac9c0d0
+  level_reason[5]:
+    text: Rituximab fjerner B-celler, ikke selve antistoffene. Forfatterne av studien med 30 pasienter antyder at bedring
+      som begynner måneder etter at B-cellene ble fjernet, kan passe med en gradvis fjerning av autoantistoffer.
+    sources:
+    - pmid:22039471
+    - pmid:30934066
+    source_hash: aaf661d2d7438a437f5f648c0485a469d66b7e4bb5f4c26639c0b207a513ccd0
+  level_reason[6]:
+    text: Hos 25 pasienter fra en åpen rituximab-vedlikeholdsstudie fra Bergen uten placebogruppe, analysert i Berlin-studien,
+      falt forhøyede antistoffer mot β2- og M4-reseptorene, blant pasienter som oppnådde langvarig uttømming av B-celler,
+      hos dem som responderte, men ikke hos dem som ikke gjorde det.
+    sources:
+    - pmid:26399744
+    source_hash: a3f8edfbfbbc552bd5ea2876e5a6c252c508e59e8d12755d51e57517efb80d51
+  level_reason[7]:
+    text: Behandlinger som senker antistoffnivået, er ellers studert uten placebogruppe, så de kan ikke telle mot nivå 4.
+      Hos 10 pasienter med forhøyede β2-reseptorantistoffer senket immunadsorpsjon (filtrering av antistoffer ut av blodet)
+      disse antistoffene hos 9, og 7 rapporterte bedring under behandlingen. Hos 20 pasienter med ME/CFS etter covid-19 rapporterte
+      den samme Berlin-gruppen en gjennomsnittlig økning på 17,75 poeng i en skår for fysisk funksjon etter immunadsorpsjon.
+      Hos 10 kvinner som fikk daratumumab, et legemiddel som virker på antistoffproduserende plasmaceller, ble 6 markant bedre
+      og 4 hadde ingen betydelig endring.
+    sources:
+    - pmid:29543914
+    - pmid:39759581
+    - pmid:40703261
+    source_hash: 397bd7d4ec0871c8fb21b91999b17a45a7595bd5b219036ee3fc4a08ddfa5a8e
+  level_reason[8]:
+    text: Mot antistofffunnene målte en studie fra Cornell med 172 deltakere, hvis diagnosekriterier ennå ikke er kontrollert,
+      antistoffer mot mer enn 6 000 humane proteiner og fant ingen signifikante forskjeller mellom pasienter og kontroller,
+      heller ikke mot β-adrenerge reseptorer.
+    sources:
+    - pmid:40141440
+    source_hash: 4eb2345c5e64dab58ffe910edf1867882d9e01701707b9fc3db1147738c07461
+  level_reason[9]:
+    text: Studier av selve B-cellene gir blandede resultater. Én studie med 33 pasienter og 24 friske kontroller fant flere
+      naive og transitional B-celler og færre plasmablaster hos pasientene; en annen, med en felles forfatter, fant ingen
+      forskjell i de klassiske B-cellegruppene hos 38 pasienter og 32 kontroller, men forskjeller i en overflatemarkør på
+      B-celler (CD24) og i én gruppe minne-B-celler.
+    sources:
+    - pmid:23480187
+    - pmid:26646713
+    source_hash: 58b01d77e819c2dc1c718e27e68112916587674a2261be6a3a408a1843dc7e96
+  badge_reasons.diagnostic_marker[0]:
+    text: Nivåer av reseptorantistoffer er sammenlignet med kontroller i separate kohorter, med blandede resultater, men ingen
+      studie på dette kortet tester en grenseverdi fra én kohort i en andre, uavhengig pasientgruppe. I den svenske studien
+      hadde 25 % av kontrollene og 79 % og 91 % av pasientene minst ett reseptorantistoff over kontrollenes 90-persentil.
+      I den spanske studien hadde 27,5 % av pasientene og 13,9 % av kontrollene β2-reseptorantistoffer over testprodusentens
+      grenseverdi, og 18,6 % av pasientene mot 58,3 % av kontrollene hadde M4-reseptorantistoffer over den. Cornell-studien
+      fant ingen forskjeller.
+    sources:
+    - pmid:34589868
+    - pmid:42082542
+    - pmid:40141440
+    source_hash: bea84e2bfce0dfea28740df926932d882e25a384e625d72184b313d9b3dc25c9
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet måler PEM direkte, for eksempel med en anstrengelsesprøve. Den svenske studien fant
+      ingen korrelasjon mellom antistoffnivåer og sykdomsalvorlighet. En studie uten kontrollgruppe rapporterte mindre PEM
+      i spørreskjemaer etter immunadsorpsjon.
+    sources:
+    - pmid:34589868
+    - pmid:39759581
+    source_hash: ce2a18a341d4ca946fe2e71fc25a1f0ebb62415353d35142f77b398a679b30f5
+  subgroups[0]:
+    text: Studiene av antistoffer og immunadsorpsjon retter seg mot pasienter som ble syke etter en infeksjon og som har forhøyede
+      β2-reseptorantistoffer. I den svenske studien hadde 79 % og 91 % av pasientene i de to kohortene, og 25 % av kontrollene,
+      minst ett forhøyet reseptorantistoff.
+    sources:
+    - pmid:29543914
+    - pmid:39759581
+    - pmid:34589868
+    source_hash: 3ae9c221d0d90390f96f09117647954e3738e3ad400ba6e791e572081fad6611
+  early_signals[0]:
+    text: En studie med n=10 pasienter og 6 friske kontroller fant at antistoff- (IgG-)fraksjoner fra kontroller aktiverte
+      den adrenerge β2-reseptoren i cellebaserte tester, mens fraksjoner fra de 5 pasientene med høye β2-reseptorantistoffer
+      ikke gjorde det. Ikke gjentatt ennå.
+    sources:
+    - pmid:34589837
+    source_hash: a3c647d0b236495a9be53497d8ab3a5df21727134f0566bead6a00f6c6580831
+  early_signals[1]:
+    text: En studie med n=10 kvinner, uten kontrollgruppe, fant at etter daratumumab, legemidlet som virker på plasmaceller,
+      hadde 6 markant bedring i fysisk funksjon, sammen med et fall i IgG-nivåer, og 4 hadde ingen betydelig endring. Ikke
+      gjentatt ennå.
+    sources:
+    - pmid:40703261
+    source_hash: b1b3006dea367810a99f698bb0ab3d6b9bdeebf1442d3e43b09d352bc6e98827
+  studies[pmid:34589868].finding:
+    text: En studie med n=48 pasienter i to kohorter på 24 og 24 matchede friske kontroller fant høyere antistoffer mot de
+      muskarine reseptorene M3 og M4 i begge kohortene og mot de adrenerge reseptorene β1 og β2 i én, uten korrelasjon mellom
+      antistoffnivåer og sykdomsalvorlighet.
+    source_hash: 6bb5e6ed641f3fffb2fe653fd84cd79d6192cfed641bc79680092681684dbc60
+  studies[pmid:42082542].finding:
+    text: En studie med n=59 pasienter, 96 personer med post-COVID-tilstand og 36 friske kontroller fant høyere antistoffer
+      mot den adrenerge β2-reseptoren ved ME/CFS enn hos kontrollene; gjennomsnittlige nivåer mot de muskarine reseptorene
+      M1 til M4 og de adrenerge reseptorene α1 og β1 skilte seg ikke, mens andelen over testprodusentens grenseverdi skilte
+      seg for M3 og M4, med flere kontroller enn pasienter over den for M4.
+    source_hash: 0bd23adca402effc8fc4389cf8182f6246983f60375410233d50306bb5830a05
+  studies[pmid:22039471].finding:
+    text: En placebokontrollert studie med n=30 pasienter fant varig bedring i selvrapportert utmattelse hos 10 av 15 som
+      fikk rituximab og 2 av 15 som fikk saltvann (p = 0,003), uten forskjell mellom gruppene ved det primære endepunktet
+      tre måneder etter behandling.
+    source_hash: a81574ba92db150c1e7afb0218c435568d658d491288440c51afbe2129fa4e18
+  studies[pmid:30934066].finding:
+    text: En placebokontrollert studie med n=151 pasienter (77 fikk rituximab, 74 placebo) fant ingen forskjell mellom gruppene
+      i responsrate (26,0 % mot 35,1 %), i utmattelse over 24 måneder eller i noe sekundært endepunkt; alvorlige uønskede
+      hendelser forekom hos 20 pasienter som fikk rituximab og 14 som fikk placebo.
+    source_hash: 924f5cc5616af3995491fdf8867cff62bed005f4a7d8b51e95a5ebcbd93f798e
+  studies[pmid:34589837].finding:
+    text: En studie med n=10 pasienter og 6 friske kontroller fant at IgG-fraksjoner fra kontroller aktiverte den adrenerge
+      β2-reseptoren i reportercellelinjer, mens IgG fra de 5 pasientene med høye β2-reseptorantistoffer ikke hadde noen effekt;
+      i tester på immunceller hadde IgG fra de 5 pasientene med normale nivåer en middels effekt.
+    source_hash: 740aed7db887cda1cf0c548b4f12ab9996232cfe3227f22eed4ca76a001f34dc
+  studies[pmid:40703261].finding:
+    text: En studie med n=10 kvinner uten kontrollgruppe fant at etter daratumumab ble 6 markant bedre og 4 hadde ingen betydelig
+      endring, med et relativt fall i IgG på 54 % hos dem som ble bedre og 40 % hos dem som ikke gjorde det.
+    source_hash: 21fc3b8151b35fd45fcca0524913bdc8fcbd6276ae62443a8a640163708babc6
+  studies[pmid:26399744].finding:
+    text: En studie med n=268 pasienter og 108 friske kontroller fant høyere antistoffer mot β2-, M3- og M4-reseptorene hos
+      pasientene og ingen forskjell for alfa-adrenerge, dopamin-, serotonin-, angiotensin- og endotelinreseptorer; hos 25
+      pasienter fra en åpen rituximab-vedlikeholdsstudie uten placebogruppe falt forhøyede β2- og M4-reseptorantistoffer,
+      blant dem som oppnådde langvarig uttømming av B-celler, hos responderne, men ikke hos ikke-responderne.
+    source_hash: bc0598365a0962adcb3f40bcfa45ce93e48b9cb71327cb39d6ce310a3b05e324
+  studies[pmid:12851722].finding:
+    text: En studie med n=60 pasienter, 33 personer med autoimmun sykdom og 30 friske kontroller fant en høyere gjennomsnittlig
+      antistoffindeks mot den muskarine M1-reseptoren hos pasienter enn hos friske kontroller, med positivt resultat hos 53,3
+      % av pasientene, med en radioligandtest.
+    source_hash: 6ac592248ad87e16308be628fede29f19e10ee5aa732203e1b05d2864105dd59
+  studies[pmid:40141440].finding:
+    text: En studie med 172 deltakere som målte antistoffer mot 6 183 ekstracellulære humane proteiner og et panel med 1 134
+      antistoffer fant ingen signifikante forskjeller mellom pasienter og kontroller, heller ikke mot β-adrenerge reseptorer.
+    source_hash: 10531066c57e522e152d88841588254c2124ed15bf666e3aafda9f672a252e07
+  studies[pmid:23480187].finding:
+    text: En studie med n=33 pasienter og 24 friske kontroller fant flere naive og transitional B-celler og færre plasmablaster
+      hos pasientene.
+    source_hash: c4f714cceb74bfbd5bf66715b6534dd8426ab193f0901c4e90e695b4309fa343
+  studies[pmid:26646713].finding:
+    text: En studie med n=38 pasienter og 32 friske kontroller fant ingen forskjell i de klassiske B-cellegruppene, men høyere
+      frekvens og uttrykk av CD24 på B-celler og en sammenheng mellom høyere frekvens av CD21+ CD38− minne-B-celler og ME/CFS.
+    source_hash: 97247353ce382095705cf45f0d5284185d4f02e2643f2aecd3c89f81aece96ae
+  studies[pmid:29543914].finding:
+    text: En studie med n=10 pasienter med postinfeksiøs ME/CFS og forhøyede β2-reseptorantistoffer, uten kontrollgruppe,
+      fant at immunadsorpsjon senket β2-antistoffene hos 9; 7 rapporterte rask bedring under behandlingen, 3 av dem varig
+      i 6 til 12 måneder eller mer.
+    source_hash: 6bd62a0e28268662253b50cb94511d1bccfc949ee00788ec8b93d71e88d1902b
+  studies[pmid:39759581].finding:
+    text: En studie med n=20 pasienter med ME/CFS etter covid-19 og forhøyede β2-reseptorantistoffer, uten kontrollgruppe,
+      fant at fem immunadsorpsjonsøkter senket IgG med 79 % og β2-reseptorantistoffer med 77 %, og at skårene for fysisk funksjon
+      økte med i gjennomsnitt 17,75 poeng, der 14 av 20 ble bedre med minst ti poeng.
+    source_hash: 5937da0fb730aeb21e2f289db96d40e480636b1e9fa10b622571299b4ad8d074

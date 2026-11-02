@@ -1,0 +1,142 @@
+slug: mast-cell-activation
+items:
+  name:
+    text: Avvik i mastceller og aktivering av mastceller
+    source_hash: 5d4f7a313490b0a96f3e2e854ec34c7f9ce272f177e5aeaa3d35cf938985a0bd
+  core_claim:
+    text: Hypotesen går ut på at mastceller, immunceller som frigjør histamin og andre betennelsesstoffer, er unormale i antall
+      eller oppførsel eller er overaktive hos personer med ME/CFS, og at dette bidrar til symptomene deres.
+    sources:
+    - pmid:27362406
+    - pmid:41300853
+    source_hash: b9220cf260c807442454498c8cc1eafd6c91551a600f145d825ebf27147f37d9
+  level_reason[0]:
+    text: En studie fra Griffith University i Australia med 12 pasienter med moderat alvorlig og 6 med alvorlig ME/CFS som
+      oppfylte International Consensus Criteria, og 13 friske kontroller, fant flere av en type umodne mastceller (CD117+CD34+FcεRI-chymase-)
+      blant immuncellene i blodet hos pasienter med moderat alvorlig og alvorlig sykdom sammenlignet med friske kontroller.
+      Kortet er på nivå 2 på grunn av denne studien. Den er liten og er ikke gjentatt av en uavhengig gruppe.
+    sources:
+    - pmid:27362406
+    source_hash: 9f8f1decfcc120ac29a7378ecb8c95a86da1a8c76453644f6cd020579500534c
+  level_reason[1]:
+    text: Den samme gruppen undersøkte senere forstadier til mastceller hos 11 pasienter som oppfylte International Consensus
+      Criteria, 9 personer med systemisk mastocytose og 12 friske kontroller, med en annen metode som først skiller disse
+      cellene ut fra blodet. Den fant ingen signifikante forskjeller mellom gruppene i modenhetsmarkørene CD34 og FcεRI, markørene
+      som definerte populasjonen den første studien fant økt. Fordi gruppen er den samme, kan ikke denne studien være en replikasjon.
+      Kortet regner modenhetsmarkørene, målt i de utskilte forstadiecellene, som et annet mål enn andelen av immuncellene
+      i blodet som den første studien rapporterte (sammendragene oppgir ikke den nøyaktige nevneren), så den regnes ikke som
+      en motsigelse av den.
+    sources:
+    - pmid:29223146
+    - pmid:27362406
+    source_hash: 581b80c6d05c23a1d41395955006e7137d2e0f1ec72ede917b6d472c5943da61
+  level_reason[2]:
+    text: Ingen andre studier har målt mastceller, eller stoffer som hovedsakelig frigjøres av mastceller, som tryptase eller
+      histamin, hos pasienter med anerkjente diagnosekriterier opp mot en kontrollgruppe. Høyere MMP-9 i blodet, et enzym
+      som mastceller og andre celler kan frigjøre, hos 18 pasienter enn hos 18 kontroller viser ikke at pasientenes mastceller
+      var kilden.
+    sources:
+    - pmid:42327760
+    source_hash: 4f8ce5a4f2f70e779130bc91c3b60103cc334c71a64f9c66fdf52795de718d32
+  level_reason[3]:
+    text: To eldre studier, hvis diagnosekriterier ikke er kontrollert ennå, kan ikke telle. En studie fra Harvard av vev
+      fra spyttkjertler i leppen hos 11 pasienter og kontroller fant at forekomst av mastceller var det eneste av sju trekk
+      som skilte seg signifikant mellom gruppene. En studie fra Washington, DC, med 95 pasienter og 109 kontroller fant ingen
+      forskjell i IgE, antistoffet som gjør mastceller klare til å reagere ved allergi.
+    sources:
+    - pmid:10884641
+    - pmid:11570618
+    source_hash: 78e19448f8625eb259ffc39cf669a211c44e1447b30b58cf7c356981ea4454d8
+  level_reason[4]:
+    text: En østerriksk studie av pasienter som oppfylte IOM 2015-kriteriene rapporterer hvor ofte pasientenes journaler oppfylte
+      kriterier for symptomer og behandlingsrespons ved mastcelleaktivering, ikke en måling opp mot kontroller (se under).
+      Den eneste kontrollerte behandlingsstudien, av antihistaminet terfenadin hos 28 pasienter, har diagnosekriterier som
+      ikke er kontrollert ennå, fant ingen nytte, og blokkerer én virkning av histamin i stedet for å endre mastcellene, så
+      den kan ikke telle med for nivå 4.
+    sources:
+    - pmid:41300853
+    - pmid:8568124
+    source_hash: 2b6db2d735cba19838b309631f6bfb11166682f4688b5a6ac37abb154f717565
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen mastcellemarkør er testet i en andre, uavhengig pasientgruppe. Den eneste senere studien av mastceller i blod
+      kom fra den samme gruppen og testet ikke den første studiens funn som markør.
+    sources:
+    - pmid:27362406
+    - pmid:29223146
+    source_hash: c7c62b10be7d72304ec2f99d4ddcc0c7cbdb0201aed14142e4e34b14e7d22b77
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet målte PEM direkte, så ingen kobler mastceller
+      til symptomer etter anstrengelse.
+    sources:
+    - pmid:27362406
+    - pmid:41300853
+    source_hash: f2a8f033152c5c7723785d10870e04c90668108a321f84da1be80c054030d9d3
+  subgroups[0]:
+    text: 'Alvorlighetsgrad: I studien fra Griffith University var to overflatemarkører (CD40-ligand og MHC-II) på modne mastceller
+      høyere hos de 6 alvorlig syke pasientene enn hos de 12 moderat syke pasientene og de 13 kontrollene. Dette bygger på
+      6 pasienter og er ikke gjentatt.'
+    sources:
+    - pmid:27362406
+    source_hash: 4e460ed313fee0f90f0b93e34a5366a4ac7765b5e1796b1cbb854ccab24a6a0d
+  subgroups[1]:
+    text: 'Ortostatisk intoleranse: I den østerrikske studien ble ortostatisk intoleranse, bekreftet med en tilt-test eller
+      ståtest, funnet oftere hos pasienter som ble vurdert å ha mastcelleaktivering (70,3% mot 49,7%, av 233 pasienter med
+      brukbare data). Posturalt ortostatisk takykardisyndrom var også hyppigere, men forskjellen var ikke statistisk signifikant.
+      Mastcelleaktivering ble vurdert ut fra symptomer og respons på legemidler, ikke ut fra målte mediatorer.'
+    sources:
+    - pmid:41300853
+    source_hash: 93b055d2e3ff6deae89e85c54cd65e1050d327de6675333515c885797be79033
+  early_signals[0]:
+    text: En studie av n=3 ungdommer og unge voksne som oppfylte kriterier for ME/CFS seks måneder etter bekreftet eller sannsynlig
+      covid-19 (infeksjonen var bekreftet med test hos én av de tre) fant tydelig allergihistorie hos alle tre, og forhøyet
+      plasmahistamin hos to vurdert mot laboratoriets referanseområde, uten kontrollgruppe; serumtryptase, rapportert for
+      én pasient, var normalt. Ikke gjentatt ennå.
+    sources:
+    - pmid:33996867
+    source_hash: 417fbec45b567c079548bbc087c59ac055fc1cbdbfea2dc4624ef24f63e3ebda
+  studies[pmid:27362406].finding:
+    text: En studie av n=12 pasienter med moderat alvorlig og 6 med alvorlig sykdom og 13 friske kontroller fant en signifikant
+      økning av mastcellepopulasjoner med CD117+CD34+FcεRI-chymase- blant mononukleære celler i blodet hos pasienter med moderat
+      alvorlig og alvorlig sykdom sammenlignet med friske kontroller, og høyere CD40-ligand og MHC-II på differensierte mastceller
+      bare hos alvorlig syke pasienter; HMGB1 og løselig RAGE skilte seg ikke.
+    source_hash: 7dd83aded47ca184d7abe3f2d7bfc5e3c89cb7d72c2c64f7d564fee5b4a2b439
+  studies[pmid:29223146].finding:
+    text: En studie av n=11 pasienter, 9 personer med systemisk mastocytose og 12 friske kontroller fant ingen signifikante
+      forskjeller mellom gruppene i modenhetsmarkørene (CD34, FcεRI), CD154 eller CD2/CD25 hos magnetisk utskilte forstadier
+      til mastceller, verken før eller etter stimulering med Poly I:C; den ene forskjellen som ble rapportert (lavere uttrykk
+      av HLA-DR+/CD154-) var mellom pasienter og personer med systemisk mastocytose.
+    source_hash: 804c502cba2ddc6baf49893e36d8a6edbca5fe566200c94ba5fccd7b8a0fb209
+  studies[pmid:10884641].finding:
+    text: En studie av n=11 pasienter og et ikke oppgitt antall kontroller gradererte sju trekk ved vev fra spyttkjertler
+      i leppen og fant at bare forekomst av mastceller skilte seg signifikant mellom de to gruppene (Fishers eksakte test,
+      0,0125).
+    source_hash: fc6a9745a3583d655615b37846c0e376c2d68e6cb77d1a367d99ea6094ef4425
+  studies[pmid:11570618].finding:
+    text: En studie av n=95 pasienter og 109 kontroller fant ingen signifikant forskjell mellom gruppene i IgE i serum, antistoffet
+      som gjør mastceller klare til å reagere ved allergi (133 mot 128 IU/mL), verken samlet eller innen fire grupper definert
+      ved allergihudtester og rhinitt.
+    source_hash: 1b0b05c7e0cac3dbb1feff8a4da9fa601f271b7ee394b45d8fe787332c4881ad
+  studies[pmid:8568124].finding:
+    text: En placebokontrollert studie der 28 av 30 innrullerte pasienter fullførte to måneder med antihistaminet terfenadin
+      eller placebo fant ingen nytte for symptomer, fysisk eller sosial fungering, helseoppfatning eller psykisk helse; 73%
+      hadde atopi i sykehistorien og 53% en positiv umiddelbar hudtest.
+    source_hash: 9ba923cdc35324ea0cc7695cdac09fb0abceec0ea8e8a3c35ad0c000d7efeef1
+  studies[pmid:41300853].finding:
+    text: En studie av n=285 pasienter med brukbare journaler fra en klinikk i Wien fant at 72 (25,3%) hadde symptomer på
+      mastcelleaktivering i to eller flere organsystemer og rapporterte respons på legemidler rettet mot mastceller; ortostatisk
+      intoleranse bekreftet med en tilt-test eller ståtest var vanligere hos pasienter med mastcelleaktivering (70,3% mot
+      49,7%, av 233 pasienter med brukbare data, p = 0,005), mens posturalt ortostatisk takykardisyndrom var hyppigere uten
+      statistisk signifikant forskjell (p = 0,054); nivåer av mediatorer var testet hos bare 12 pasienter. I en egen nettbasert
+      spørreundersøkelse blant 687 pasienter oppgav 115 (16,7%) at de hadde fått diagnosen mastcelleaktiveringssyndrom av
+      en lege. Det var ingen kontrollgruppe.
+    source_hash: 83b94f2812ec162f93a433918ab9a8b54f89bc367f70392c6f9f5cdfac7864a9
+  studies[pmid:42327760].finding:
+    text: En studie av n=18 kvinnelige pasienter og 18 friske kontroller fant høyere MMP-9 i serum hos pasientene (126 mot
+      17 ng/ml), og i et eget sett med 40 pasienter og 38 kontroller høyere IL-11 i serum; mastceller dyrket i laboratoriet
+      frigjorde MMP-9 når de ble stimulert med et protein fra Epstein-Barr-viruset.
+    source_hash: d8ca07e2499a4a4b1b7fb3da55f51fecd2bb6f2a62740a6ba902f15919592469
+  studies[pmid:33996867].finding:
+    text: En kasusserie av n=3 ungdommer og unge voksne som oppfylte kriterier for ME/CFS seks måneder etter bekreftet eller
+      sannsynlig covid-19 (infeksjonen var bekreftet med test hos én) fant tydelig allergihistorie hos alle tre og forhøyet
+      plasmahistamin hos to, vurdert mot laboratoriets referanseområde; serumtryptase, rapportert for én pasient, var normalt.
+    source_hash: b9fe628cf03e90011643d966beabd87fe48b27929ffa72a18c0ac2cc00bb2846

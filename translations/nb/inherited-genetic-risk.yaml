@@ -1,0 +1,202 @@
+slug: inherited-genetic-risk
+items:
+  name:
+    text: Arvelig genetisk risiko
+    source_hash: 217a4cb91b6ab5539446628e88a7ff834a74c93ec269f3402233839134e2f3e8
+  core_claim:
+    text: 'Hypotesen går ut på at arvelig genetisk variasjon bidrar til risikoen for å utvikle ME/CFS: noen genvarianter er
+      vanligere hos personer som utvikler sykdommen, og sykdommen er vanligere hos slektninger av personer som har den.'
+    sources:
+    - pmid:32210306
+    - pmid:11702053
+    source_hash: 642e78c01923f9773700c1959defa4b1ded712f4c1597aedf9927e11ffcc7ad7
+  level_reason[0]:
+    text: En studie fra Oslo med 426 pasienter som oppfylte Canadian Consensus Criteria og 4511 friske, etnisk matchede kontroller
+      typet HLA-genene, et sett immungener. Den fant to uavhengige assosiasjoner, markert ved HLA-C*07:04, båret av 7,7% av
+      pasientene og 3,8% av kontrollene, og HLA-DQB1*03:03, båret av 12,7% av pasientene og 8,7% av kontrollene; forfatterne
+      plasserer HLA-B*57:01 på én haplotype sammen med HLA-DQB1*03:03. Begge forble signifikante etter forfatternes korreksjon
+      for antallet varianter som ble testet i hvert gen (P = 0,001 og P < 0,05). Kortet er på nivå 2 på grunn av denne studien.
+      Ingen annen gruppe har gjentatt den, og forfatterne skriver at resultatene deres må verifiseres i uavhengige kohorter.
+    sources:
+    - pmid:32210306
+    source_hash: dfabdf25ab98df256021369849cb4a445bc0a4c4cc27e28753e4d2366123eb1d
+  level_reason[1]:
+    text: 'På denne stigen betyr nivå 2 at en kontrollert studie hos pasienter med anerkjente diagnosekriterier støtter hypotesen.
+      Her er støtten en assosiasjon: to varianter var vanligere hos pasienter enn hos kontroller. For å gå videre enn assosiasjon
+      kreves nivå 4, der endring av den foreslåtte faktoren endrer utfallet i et kontrollert eksperiment; ingen studie på
+      dette kortet gjør det.'
+    sources:
+    - pmid:32210306
+    source_hash: e222ef74296b6c0e14b27f8db82f96ef58f05b74b0219fe57db930b8872b91ef
+  level_reason[2]:
+    text: Andre kontrollerte studier med anerkjente diagnosekriterier fant også assosiasjoner, hver med en ulik variant og
+      ingen gjentatt av en annen gruppe. En studie fra Berlin med 305 pasienter som oppfylte Canadian Consensus Criteria og
+      201 friske kontroller fant to varianter knyttet til autoimmune sykdommer, i genene PTPN22 og CTLA4, oftere hos pasientene
+      (ensidige tester, uten oppgitt korreksjon for de fem variantene som ble testet); for PTPN22 hos alle pasientene omfatter
+      konfidensintervallet for oddsraten 1. En studie av DecodeME-deltakere, som oppfylte Canadian Consensus Criteria og/eller
+      IOM 2015-kriteriene ut fra svar i en spørreundersøkelse, sammenlignet med kontroller fra UK Biobank, fant kombinasjoner
+      av varianter som var vanligere hos pasientene; i en egen testgruppe med 3579 tilfeller hadde personer i de øverste 10%
+      for antallet av disse kombinasjonene 1,64 ganger så høye odds for sykdommen som personer i de nederste 10%. Pasientene
+      og kontrollene kom fra ulike studier; forfatterne skriver at en kohort av pasienter og kontroller som er genotypet som
+      del av samme studie, trengs for formell bekreftelse, for å utelukke tekniske forskjeller mellom de to. En studie fra
+      Cambridge med 25 pasienter vurdert etter CDC-kriteriene (versjon ikke oppgitt, så definisjonen krever ikke PEM) og 36
+      medisinske kontroller fant høyere forekomst av sykdommen hos pasientenes førstegradsslektninger (foreldre, søsken og
+      barn) enn hos kontrollenes.
+    sources:
+    - pmid:32328064
+    - pmid:42015188
+    - pmid:11702053
+    source_hash: 9f1230a93a1bfc5f5907c7aedb8bb487d1018cd80c7575ffbddda9fbe819b9b2
+  level_reason[3]:
+    text: Kortet er ikke på nivå 3, fordi ingen uavhengig gruppe har funnet den samme varianten eller regionen i en separat
+      kohort. HLA-variantene er bare studert av gruppen i Oslo. En senere studie fra Oslo med 427 pasienter som oppfylte Canada-kriteriene
+      og 480 kontroller fant signaler i HLA klasse I og klasse II, det siste mest sannsynlig i HLA-DQB1, men den kommer fra
+      samme forskergruppe, så den er ikke en uavhengig gjentakelse. En studie fra Oslo i 2025 sier at pasientprøvene ble hentet
+      inn slik det er beskrevet i begge artiklene.
+    sources:
+    - pmid:32210306
+    - pmid:34403736
+    - pmid:40897283
+    source_hash: bc3eccd450ae1f333d74e14e5caa0f66eeb883bfd6cbc330462a275692614196
+  level_reason[5]:
+    text: DecodeME-kombinasjonene ble funnet igjen i tre separate grupper av DecodeME-deltakere, men innenfor én studie fra
+      ett selskap, så dette er ikke en gjentakelse fra en uavhengig gruppe. En tidligere studie fra samme selskap brukte UK
+      Biobank-deltakere som oppga en diagnose, uten diagnosekriterier, og kan ikke telle mot nivået.
+    sources:
+    - pmid:42015188
+    - pmid:36517845
+    source_hash: 523bc39dba4c46e5f6994d3a7e533b94d2b53453240161651cf0130b5b251630
+  level_reason[6]:
+    text: Flere studier, noen av dem store, kan ikke telle mot nivået fordi diagnosekriteriene deres ikke er kontrollert eller
+      ingen diagnosekriterier ble brukt. Den største genomomfattende studien fra Oslo, med en norsk gruppe på 427 pasienter,
+      en dansk gruppe på 460 og 2105 tilfeller fra UK Biobank, fant ingen variant som nådde genomomfattende signifikans; det
+      sterkeste norske signalet, nær genet TPPP, ble ikke gjentatt for toppvarianten. En studie fra Utah av 811 personer med
+      diagnosekode for kronisk utmattelsessyndrom i journalen fant mer av sykdommen enn forventet blant første-, andre- og
+      tredjegradsslektninger. En tvillingstudie av 146 kvinnelige tvillingpar fant at eneggede tvillinger oftere delte uforklart
+      kronisk utmattelse enn toeggede tvillinger (55% mot 19% for den strengeste definisjonen, som bare brukte utelukkelsesreglene
+      i diagnosekriteriene for kronisk utmattelsessyndrom).
+    sources:
+    - pmid:35318112
+    - pmid:21619629
+    - pmid:11719632
+    source_hash: 299ea9b86ffc0899d3d6d5fbdbfc9c4bd4fd7cf29e2363ec6900db1cd47264f0
+  level_reason[7]:
+    text: Mindre studier av enkeltkandidatgener peker i ulike retninger. En studie fra London med 49 pasienter og 102 kontroller
+      fant varianten HLA-DQA1*01 oftere hos pasientene; studien fra Oslo kunne ikke teste denne varianten fordi kontrollene
+      ikke var typet for den. En annen studie fra London med 58 pasienter og 134 kontroller fant ingen HLA-forskjeller. Ingen
+      av dem har kontrollerte diagnosekriterier. En studie fra Brisbane med 248 pasienter som oppfylte CDC-kriteriene og 248
+      kontroller fant bare en tendens (P = 0,07) for en variant i et gen for et kortisolbindende protein, og en australsk
+      studie med 95 pasienter som oppfylte Fukuda-kriteriene og 77 kontroller fant ingen variant som forble signifikant etter
+      korreksjon for testing av mange varianter (laveste P = 0,059). Disse studiene er små for genetiske assosiasjonsstudier.
+    sources:
+    - pmid:16049290
+    - pmid:32210306
+    - pmid:11422420
+    - pmid:15554358
+    - pmid:27835969
+    source_hash: 3bbbcb2410271ebed81b19266aed62be44332add5321b624bcd51eefc95cebcb
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen genetisk variant på dette kortet er testet som diagnostisk markør i en annen, uavhengig pasientgruppe. I studien
+      fra Oslo bar 19,2% av pasientene og 12,2% av kontrollene én av eller begge de to HLA-variantene; ingen annen gruppe
+      har testet dem.
+    sources:
+    - pmid:32210306
+    source_hash: d0e9a9263197b089083496e4c0cdad93b0028eeacbf119a8ebd01278eb0e4930
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet måler PEM direkte og knytter den til en genvariant. HLA-studien fra Oslo sammenlignet
+      pasienter som bar de to variantene med pasienter som ikke gjorde det, ved hjelp av spørreskjemaer, uten en anstrengelsestest.
+    sources:
+    - pmid:32210306
+    source_hash: 319f3ff03de15781dda5731a6c3d90e2df517e5914cf843d6b904e9a5a2f544a
+  subgroups[0]:
+    text: I studien fra Berlin var variantene i PTPN22 og CTLA4 bare vanligere hos de 232 pasientene hvis sykdom begynte med
+      en infeksjon, ikke hos de 73 hvis sykdom ikke gjorde det. I HLA-studien fra Oslo skilte ikke andelen pasienter hvis
+      sykdom begynte etter en infeksjon seg signifikant mellom bærere og ikke-bærere av de to HLA-variantene. Ikke gjentatt
+      ennå.
+    sources:
+    - pmid:32328064
+    - pmid:32210306
+    source_hash: 4831d2385ea8bb1a5b5cf92a0584a17c570f7217bf2ee5a65aec7145a6768dc2
+  early_signals[0]:
+    text: En studie med n=305 pasienter og 201 friske kontroller fant variantene i PTPN22 og CTLA4, knyttet til autoimmune
+      sykdommer, oftere hos pasienter hvis sykdom begynte med en infeksjon. Ikke gjentatt ennå.
+    sources:
+    - pmid:32328064
+    source_hash: f8ec7a6ee65ed25a0f6f9d95bdd7c8e3639a4930e2a0812eb2f2ecab2430e7de
+  early_signals[1]:
+    text: En studie med n=418 pasienter og 473 friske kontroller fra gruppen i Oslo fant at noen varianter av KIR-genene,
+      som koder for reseptorer på naturlige drepeceller, var vanligere og andre sjeldnere hos pasientene. Av 76 testede varianter
+      falt én, KIR3DL2*010, som var sjeldnere hos pasientene (P = 0,0005), under den korrigerte terskelen på 0,0007 som forfatterne
+      oppgir. Ikke gjentatt ennå.
+    sources:
+    - pmid:40897283
+    source_hash: fa0c07f209917b99392c534dba1466827b4a05427a0b4e88c18caa7b97e19c99
+  studies[pmid:32210306].finding:
+    text: En studie med n=426 pasienter og 4511 friske kontroller fant HLA-C*07:04 (OR 2,1) og HLA-DQB1*03:03 (OR 1,5) oftere
+      hos pasientene; 19,2% av pasientene og 12,2% av kontrollene bar én av eller begge.
+    source_hash: 1f06e5e83dd92f8f29f52fe675be2fc18ece326a6074dac933b818cf1da1118e
+  studies[pmid:34403736].finding:
+    text: En studie med n=427 pasienter og 480 friske kontroller fant to uavhengige assosiasjonssignaler i HLA-regionen, ett
+      i HLA klasse I og ett i HLA klasse II, det siste mest sannsynlig i HLA-DQB1.
+    source_hash: c160405e4aa28c8c373e07f60fc6fca084e9971a22797a997d509c9ee3e70634
+  studies[pmid:32328064].finding:
+    text: En studie med n=305 pasienter og 201 friske kontroller fant risikovariantene PTPN22 rs2476601 og CTLA4 rs3087243
+      oftere hos pasientene (ensidige tester, ingen korreksjon oppgitt for de fem variantene som ble testet; PTPN22 OR 1,50,
+      95% KI 0,97-2,31); i undergrupper bare hos de 232 hvis sykdom begynte med en infeksjon (P = 0,016 og P = 0,001), ikke
+      hos de 73 uten.
+    source_hash: 27828fe580bb33972d4c1f6c6c3a21ba29685dfd3f632dc922e411270a578a9c
+  studies[pmid:42015188].finding:
+    text: En studie av DecodeME-tilfeller og kontroller fra UK Biobank fant 22411 kombinasjoner av varianter som var vanligere
+      hos tilfellene på tvers av tre separate tilfellegrupper; i testgruppen med n=3579 tilfeller hadde personer i de øverste
+      10% for antall kombinasjoner 1,64 ganger så høye odds for ME som personer i de nederste 10%.
+    source_hash: 0540c3f98589bb5170637f03265115c9b77ddc7b632fc5032c9f6ae5d4c8058b
+  studies[pmid:11702053].finding:
+    text: En studie med n=25 pasienter og 36 medisinske kontroller fant signifikant høyere forekomst av kronisk utmattelsessyndrom
+      hos pasientenes førstegradsslektninger enn hos kontrollenes.
+    source_hash: 451347c5356f846cc3278df44ea02f1bc1354f07fc478d063e6c2b708c376edc
+  studies[pmid:26859813].finding:
+    text: En pilotstudie med n=42 pasienter og 38 friske kontroller fant 442 kandidatvarianter assosiert med sykdommen etter
+      korreksjon for falsk oppdagelsesrate, blant dem varianter i regionen for T-cellereseptor alfa.
+    source_hash: cdb621a35e45143fda1f9c05f07580d7ee330b122c78c8f08eb54497b829dcac
+  studies[pmid:35821115].finding:
+    text: En studie med n=409 pasienter og 810 friske kontroller fant ingen assosiasjon med de to tidligere rapporterte TRA-variantene
+      eller andre varianter i TRA-regionen; de to variantene var heller ikke assosiert hos 2105 selvrapporterte tilfeller
+      i UK Biobank.
+    source_hash: 16a92db9cef4e07b5aca4e276c804370fd6bdbd4ca28f60a5b8206719eace193
+  studies[pmid:40897283].finding:
+    text: En studie med n=418 pasienter og 473 friske kontroller fant ingen forskjell i KIR-geninnhold, og tre KIR-alleler
+      oftere og to sjeldnere hos pasientene.
+    source_hash: 4a0ea64230e3f4620919a30fd16ecd5febe24b722b37f7410533488aebcc2a56
+  studies[pmid:35318112].finding:
+    text: En studie av en norsk oppdagelseskohort (n=427), en dansk kohort (n=460) og tilfeller fra UK Biobank (n=2105) fant
+      ingen variant som nådde genomomfattende signifikans; toppvarianten i Norge nær TPPP ble ikke replikert, mens andre TPPP-varianter
+      viste beskjedne signaler i UK Biobank.
+    source_hash: 33186e6b9386b60ab8321a78aa769789ed04277f9d378907c09c8d23ab6b37f4
+  studies[pmid:36517845].finding:
+    text: En studie av UK Biobank-deltakere som oppga en diagnose (n=2382 etter kvalitetskontroll) og 4764 kontroller fant
+      199 varianter i 14 gener som var signifikant assosiert med 91% av tilfellene, gruppert i 84 kombinasjoner av 3 til 5
+      varianter.
+    source_hash: 7676be29bc64e31d4e081e8543ea3c81d795bebc2140903469208b7dffbea596
+  studies[pmid:21619629].finding:
+    text: En studie av n=811 personer med diagnosekode for kronisk utmattelsessyndrom fant overhyppig slektskap blant tilfellene
+      og en relativ risiko på 2,70 hos førstegrads-, 2,34 hos andregrads- og 1,93 hos tredjegradsslektninger.
+    source_hash: af4bb007540d5cddcbf086826c5a5a51410133640ae63c47fa61e3b41e99ce1e
+  studies[pmid:11719632].finding:
+    text: En studie av 146 kvinnelige tvillingpar fant idiopatisk kronisk utmattelse delt av 55% av eneggede og 19% av toeggede
+      tvillinger (p = 0,042), med en estimert arvelighet på 51% (95% KI 7-96).
+    source_hash: eb3f378b3e5c49c0da1b97d35af8faed1b11ecc140f8e02574d6376bd77dd21a
+  studies[pmid:16049290].finding:
+    text: En studie med n=49 pasienter og 102 kontroller fant HLA-DQA1*01 oftere hos pasientene (51,0% mot 35%, OR 1,93, p
+      = 0,008).
+    source_hash: 93ba7bee729aa69bebb2b14a7ad03fe750de2ac71fa6e44761cf63b3440680f6
+  studies[pmid:11422420].finding:
+    text: En studie med n=58 pasienter og 134 kontroller fant ingen signifikante forskjeller i HLA-frekvenser.
+    source_hash: b32eaab4fca00898824195eb0843d75c74e50e8400388c60a73ecda5c753110b
+  studies[pmid:15554358].finding:
+    text: En studie med n=248 pasienter og 248 kontroller fant en tendens, ikke signifikant, til mer homozygositet for serine224-varianten
+      av genet for kortikosteroidbindende globulin hos pasientene (P = 0,07).
+    source_hash: e27432afaaa4a55f79d03205c11ca6dff49a348ac556bd192dda20d5ad7ebad0
+  studies[pmid:27835969].finding:
+    text: En studie med n=95 pasienter og 77 friske kontroller fant ingen variant i de utvalgte genene som forble signifikant
+      etter korreksjon for multippel testing; den laveste, i ADRA1A, hadde P = 0,059.
+    source_hash: 326e9882aa9c6a7bd0acea900c7dfcb908085bc1e3b1e62534e0ef0deb85d4a9
