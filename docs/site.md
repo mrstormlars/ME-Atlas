@@ -17,8 +17,19 @@ The site is built in every language that has a file in `content/i18n/`: English 
 - The build validates every input card (the same rules as `uv run python -m me_atlas.cards validate`), the change log and the glossary first. If anything fails it prints every problem, exits with code 1 and writes nothing (an earlier build stays as it was).
 - The output directory is emptied before each build. A directory that is not empty and not a previous build (no `.me-atlas-build` marker file) is never deleted; the build stops instead.
 - The citation check (`me_atlas.citations`) is not part of the build; it needs the local cache.
-- Without `--drafts` only `cards/` is read, and an invalid draft does not matter. With `--drafts` a draft replaces the card with the same slug, every page gets the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. Draft builds are never published.
+- Without `--drafts` only `cards/` is read, and an invalid draft does not matter. With `--drafts` a draft replaces the card with the same slug, every page gets the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. A draft build is shared only as the private preview below, never as the public site.
 - Unused glossary terms are printed as `warning:` lines. They do not fail the build.
+
+## Private preview on Azure
+
+A draft build is hosted for a few readers (founder ruling 2026-11-03) as an Azure Storage static website in the StormSolutions subscription: resource group `rg-me-atlas` (Norway East), storage account `meatlaslpr4z`, address <https://meatlaslpr4z.z1.web.core.windows.net/> (Norwegian: `/nb/`). Anyone with the link can read it; it is not listed anywhere, and every draft page carries the banner and `noindex`. It is not updated automatically. To update it after a change is merged to `main`:
+
+```bash
+uv run python -m me_atlas.site build --drafts
+az storage blob upload-batch --account-name meatlaslpr4z --auth-mode key -s build -d '$web' --pattern '[!.]*' --overwrite
+```
+
+The pattern leaves out the `.me-atlas-build` marker. Files removed from the build stay online until deleted from the `$web` container (`az storage blob delete-batch --account-name meatlaslpr4z --auth-mode key -s '$web'` empties it before an upload). Needs the Azure CLI signed in to the StormSolutions tenant.
 
 ## Pages
 
@@ -63,4 +74,4 @@ Rules (checked on every build and in `tests/test_glossary.py`): terms and aliase
 
 Body text is 18 px; secondary text (ladder key, legend, readouts, study details, chips, footer, banner) is 16 px (0.889rem) and never smaller, which a test enforces on the stylesheet (only the visually hidden `.sr` rule is exempt); the layout reflows at 200% text size and at 375 px width (tables become stacked lists); tap targets are at least 44 px (marked terms and reference links get an invisible 44 px hit area that does not change the line height); focus is outlined; reduced motion is respected; no pop-ups. Colours are CSS variables at the top of `site.css`; `tests/test_site.py` checks the text pairs against 4.5:1 and chart marks and the focus outline against 3:1. If you change a colour, run the tests. The browser check (375 px, keyboard, one glossary term by focus and click) is manual.
 
-Not built: search, filters, languages other than English and Norwegian, dark mode, hosting. The generated `build/` directory is gitignored.
+Not built: search, filters, languages other than English and Norwegian, dark mode, hosting of the public site (only the private preview above). The generated `build/` directory is gitignored.
