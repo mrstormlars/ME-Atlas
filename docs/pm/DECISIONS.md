@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-03 — Private preview on Azure
+
+- The draft build is hosted as an Azure Storage static website in the founder's StormSolutions subscription (`rg-me-atlas`, Norway East, account `meatlaslpr4z`), shared by link with a few readers who should not need an account. Why: a Claude artifact needs a claude.ai account, which is too much for a patient with little energy.
+- Published unchanged: the draft banner, the translation notice and `noindex` already on every page are enough warning (founder). It is not the public launch; the cards stay drafts, and the domain and public hosting are still open. Updated by hand after merges; commands in `docs/site.md`.
+
 ## 2026-11-02 — Norwegian terms
 
 - Norwegian uses "diagnosekriterier" for "case definition" (not "kasusdefinisjon"). Why: patients and carers know the word.
