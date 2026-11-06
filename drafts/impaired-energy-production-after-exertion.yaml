@@ -563,6 +563,33 @@ studies:
     finding: >-
       A study of n=57 patients and 25 sedentary controls found peak oxygen use comparable between the
       groups, and dysfunctional breathing and hyperventilation during exercise more common in patients.
+  # Added 2026-11-06 (founder ruling, causal map): a review cited by a link on the map, kept as context.
+  - id: pmid:37054777
+    title: "Exercise Pathophysiology in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Postacute Sequelae of SARS-CoV-2: More in Common Than Not?"
+    year: 2023
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A review of exercise pathophysiology in ME/CFS and long COVID; it notes that few studies have directly tested how the body's responses to exercise relate to post-exertional malaise. Cited on the map as the source of a proposed link, not as evidence for the level.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: The card could also be read as a perpetuating mechanism (why it does not resolve, question:what-keeps-it-going), but no source on the card or among the cached reviews states that reading, so no link expresses it.
+layer: dysfunction
+links:
+  - to: question:closest-to-symptoms
+    support: proposed
+    text: >-
+      A review of exercise pathophysiology in ME/CFS and long COVID notes that few studies have directly tested how the body's responses to exercise relate to post-exertional malaise; no study on this card relates oxygen use or work to symptoms in the same patients.
+    sources: [pmid:37054777, pmid:38965566, pmid:31161646, pmid:20937116, pmid:30871578]
 last_checked:
   date: 2026-11-01
   by: ai_pair

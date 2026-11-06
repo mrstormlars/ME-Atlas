@@ -59,21 +59,36 @@ items:
     - pmid:41834684
     source_hash: f6aa779cc415723c38096c3c3d8cade3c932c53cc6ccce1f194626caaa2e1648
   badge_reasons.explains_pem[0]:
-    text: De tre studiene med åpen fulltekst rapporterer ikke noe direkte mål på PEM,
-      verken i sammendragene eller i fulltekstene som er kontrollert.
+    text: De tre studiene med åpen fulltekst rapporterer ikke noe direkte mål på PEM, verken i sammendragene eller i fulltekstene
+      som er kontrollert.
     sources:
     - pmid:34815320
     - pmid:41834684
     - pmid:34609538
     source_hash: c2b807bc0091825bdafee464e3cdc1ca7cc302317f866dac91fb3bd2711cb107
   badge_reasons.explains_pem[1]:
-    text: De tre andre studiene rapporterer ikke noe direkte mål på PEM i sammendragene;
-      ingen åpen fulltekst var tilgjengelig.
+    text: De tre andre studiene rapporterer ikke noe direkte mål på PEM i sammendragene; ingen åpen fulltekst var tilgjengelig.
     sources:
     - pmid:24665088
     - pmid:30617782
     - pmid:12598734
     source_hash: 0f8390efaf77cfa08fd778542745626f2051bea2cb71dffa5f356c8af5a85af3
+  links[0]:
+    text: En PET-studie med n=9 pasienter og 10 friske kontroller, der diagnosekriteriene ikke er verifisert, fant at bindingen
+      av en markør for aktiverte mikroglia eller astrocytter i noen hjerneområder samvarierte med skårer for kognitiv svikt.
+      En senere PET-studie med n=9 kvinner definert etter Fukuda-kriteriene fant ingen forskjell fra kontrollene. Ikke replikert.
+    sources:
+    - pmid:24665088
+    - pmid:34815320
+    source_hash: 4ed1103839f54158da485bd71af72af6d87c9425bd3889c44dad549841c97130
+  links[1]:
+    text: En PET-studie med n=9 pasienter og 10 friske kontroller, der diagnosekriteriene ikke er verifisert, fant at bindingen
+      av en markør for aktiverte mikroglia eller astrocytter i noen hjerneområder samvarierte med smerteskårer. En senere
+      PET-studie med n=9 kvinner definert etter Fukuda-kriteriene fant ingen forskjell fra kontrollene. Ikke replikert.
+    sources:
+    - pmid:24665088
+    - pmid:34815320
+    source_hash: 24c6237ef6371572776d5e2a79af5b10c8d5b25edd96eaa51c5e1d22ea6a4cba
   studies[pmid:24665088].finding:
     text: En studie av n=9 pasienter og 10 friske kontroller fant at bindingen av PET-sporstoffet 11C-(R)-PK11195, som markerer
       et protein uttrykt av aktiverte mikroglia eller astrocytter, var 45%-199% høyere i cingulære cortex, hippocampus, amygdala,

@@ -198,6 +198,20 @@ studies:
       choline-containing compounds in the left basal ganglia, which the authors suggest may reflect higher
       cell membrane turnover due to gliosis or altered intramembrane signalling, in the absence of regional
       structural or inflammatory pathology.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links:
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: >-
+      A PET study of n=9 patients and 10 healthy controls, whose case definition is not verified, found that binding of a marker of activated microglia or astrocytes in some brain areas correlated with cognitive impairment scores; a later PET study of n=9 Fukuda-defined women found no difference from controls. Unreplicated.
+    sources: [pmid:24665088, pmid:34815320]
+  - to: symptom:pain
+    support: proposed
+    text: >-
+      A PET study of n=9 patients and 10 healthy controls, whose case definition is not verified, found that binding of a marker of activated microglia or astrocytes in some brain areas correlated with pain scores; a later PET study of n=9 Fukuda-defined women found no difference from controls. Unreplicated.
+    sources: [pmid:24665088, pmid:34815320]
 last_checked:
   date: 2026-10-31
   by: ai_pair

@@ -566,6 +566,10 @@ studies:
       A study of patients and matched sedentary controls (numbers not in the abstract) found no
       difference in basal hormones, lower ACTH 4 minutes after a maximal treadmill test in patients,
       and no differences the next day.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links: []
 last_checked:
   date: 2026-11-02
   by: ai_pair

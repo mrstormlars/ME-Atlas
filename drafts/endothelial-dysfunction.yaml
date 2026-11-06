@@ -548,6 +548,10 @@ studies:
     finding: >-
       A study of n=17 patients, 17 people with long COVID and 17 healthy controls found lower
       flow-mediated dilation in patients than in controls (6.60% against 11.30%).
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links: []
 last_checked:
   date: 2026-11-02
   by: ai_pair

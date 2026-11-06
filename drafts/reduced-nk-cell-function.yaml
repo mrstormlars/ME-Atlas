@@ -398,6 +398,10 @@ studies:
       assay; the authors note that some or all of the differences may be normal biological or
       assay variability. This single-patient observation is unreplicated.
     group: Elahi S, University of Alberta, Edmonton, Canada (affiliation from the full text)
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links: []
 last_checked:
   date: 2026-10-31
   by: ai_pair

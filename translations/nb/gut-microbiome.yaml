@@ -66,10 +66,10 @@ items:
   level_reason[5]:
     text: Andre studier rapporterer andre bakterier. En studie av norske og belgiske pasienter (diagnosekriterier ennå ikke
       kontrollert) fant mer Alistipes hos norske pasienter, mens den kinesiske studien fant lavere Alistipes; teksten sier
-      at fallet ikke holdt seg etter korreksjon for multippel testing, mens Fig. 4 oppfører Alistipes blant taxa som skilte seg
-      etter korreksjon. En studie med 75 pasienter som hadde vært syke i under 4 år og 79 som hadde vært syke i over 10 år
-      (diagnosekriterier ennå ikke kontrollert) fant tydelige forskjeller i tarmbakterier hovedsakelig i gruppen som hadde vært
-      kortere syk, og rapporterte mindre bakteriell butyratproduksjon og lavere butyrat i blodet.
+      at fallet ikke holdt seg etter korreksjon for multippel testing, mens Fig. 4 oppfører Alistipes blant taxa som skilte
+      seg etter korreksjon. En studie med 75 pasienter som hadde vært syke i under 4 år og 79 som hadde vært syke i over 10
+      år (diagnosekriterier ennå ikke kontrollert) fant tydelige forskjeller i tarmbakterier hovedsakelig i gruppen som hadde
+      vært kortere syk, og rapporterte mindre bakteriell butyratproduksjon og lavere butyrat i blodet.
     sources:
     - pmid:23791918
     - pmid:41387992
@@ -150,6 +150,32 @@ items:
     sources:
     - pmid:26683192
     source_hash: 554f97be5e7949768650b0af46d7a7e9b59e16959e311a5e21e8546b3f2f2c3a
+  links[0]:
+    text: En studie med n=106 pasienter som oppfylte både Fukuda-kriteriene og Canadian-kriteriene, og 91 friske kontroller
+      fant selvrapportert irritabel tarm-syndrom hos 35 pasienter og 3 kontroller. Lavere mangfold innenfor prøvene (jevnhet
+      og Shannon-diversitet) ble bare funnet hos pasienter med irritabel tarm-syndrom. Forskjeller i den samlede sammensetningen
+      av tarmbakterier hang ikke sammen med det, og butyrat i avføring var lavere hos pasienter både med og uten det. En tidligere
+      studie med n=50 pasienter og 50 kontroller fra samme forskergruppe fant også at tarmbakteriene var ulike hos pasienter
+      med og uten irritabel tarm-syndrom. Begge studiene kommer fra samme forskergruppe, og ingen uavhengig gruppe har gjentatt
+      dem.
+    sources:
+    - pmid:36758522
+    - pmid:28441964
+    source_hash: 067e1f11a0b38f3866af1e2945b66988d27c8340e99eb0420e84cf968e2d8a22
+  links[1]:
+    text: En oversikt fra 2025 foreslår at endringer i tarmens mikrobiom kan føre til ulike nevrokognitive svekkelser ved
+      ME/CFS gjennom tarm-hjerne-aksen. Dette ble ikke undersøkt direkte hos pasienter.
+    sources:
+    - pmid:41516296
+    source_hash: 85ccfa1482495087519114b5c355ee8d5155fd202b5ee41f601d6c6bcabaa76a
+  links[2]:
+    text: En oversikt fra 2025 foreslår at fordi tarmbakterier også omsetter tryptofan, kan dysbiose endre produksjonen av
+      stoffer fra tryptofan og fenylalanin som lages av tarmbakterier. Det kan muligens påvirke tarmen, hjernen og mikrobiota-tarm-hjerne-aksen.
+      Dette ble ikke undersøkt direkte hos pasienter. Oversikten sier ikke at dette endrer kroppens egen nedbrytning av tryptofan
+      langs kynurenin-veien, som er det det lenkede kortet handler om.
+    sources:
+    - pmid:41516296
+    source_hash: 7e23e5af1e42e21f82fee0c8e8f1ba7d46f50862d8261bc364e988d2e3f99c5e
   studies[pmid:36758522].finding:
     text: En studie med n=106 pasienter og 91 friske kontroller fant mindre av de butyratproduserende bakteriene Faecalibacterium
       prausnitzii og Eubacterium rectale, færre kopier av et bakterielt butyratgen og lavere butyrat og acetat i avføring
@@ -214,3 +240,9 @@ items:
       og Bifidobacteria i avføring; skårene for angst falt, men samspillet mellom gruppe og tid var ikke signifikant, og skårene
       for depresjon endret seg ikke signifikant.
     source_hash: ed9040a3ba38252b98588201623c13c26c5cb5b3b05b407a534e497d827b9d7b
+  studies[pmid:41516296].finding:
+    text: En oversikt over forskning på tarmens mikrobiom ved ME/CFS. Den sier at det ikke kan sies om endringer i tarmen
+      kommer før, forårsaker eller kommer etter de immunologiske eller metabolske endringene, og foreslår veier via tarm-hjerne-aksen
+      til nevrokognitive symptomer og til tryptofanprodukter som lages av tarmbakterier. Sitert på kartet som kilde til foreslåtte
+      lenker, ikke som evidens for nivået.
+    source_hash: d6909251a842e9f84cdfcfc700efd19511bba9b9ac61d66722f92fb1ba19fb3a

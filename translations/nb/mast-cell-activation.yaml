@@ -65,8 +65,7 @@ items:
     - pmid:29223146
     source_hash: c7c62b10be7d72304ec2f99d4ddcc0c7cbdb0201aed14142e4e34b14e7d22b77
   badge_reasons.explains_pem[0]:
-    text: Ingen studie på dette kortet målte PEM direkte, så ingen kobler mastceller
-      til symptomer etter anstrengelse.
+    text: Ingen studie på dette kortet målte PEM direkte, så ingen kobler mastceller til symptomer etter anstrengelse.
     sources:
     - pmid:27362406
     - pmid:41300853
@@ -94,6 +93,18 @@ items:
     sources:
     - pmid:33996867
     source_hash: 417fbec45b567c079548bbc087c59ac055fc1cbdbfea2dc4624ef24f63e3ebda
+  links[0]:
+    text: En retrospektiv studie med n=285 pasienter som oppfylte Institute of Medicine-kriteriene fra 2015, ved en klinikk
+      i Wien, fant at ortostatisk intoleranse bekreftet med tilt- eller ståtest var vanligere hos pasienter vurdert å ha mastcelleaktivering
+      enn hos de andre (70,3 % mot 49,7 %, av 233 pasienter med brukbare data). Mastcelleaktivering ble vurdert ut fra pasientjournaler
+      om symptomer og respons på legemidler, ikke ut fra målte mediatorer, og det var ingen kontrollgruppe. Symptomene som
+      ble brukt til å vurdere mastcelleaktivering, omfattet lavt blodtrykk, rask puls og besvimelse. Disse overlapper med
+      ortostatisk intoleranse, så de to endepunktene ble ikke målt uavhengig av hverandre. Ikke gjentatt ennå av en uavhengig
+      gruppe. Nettundersøkelsen i samme artikkel, om selvrapporterte diagnoser der diagnosekriteriene ikke ble kontrollert,
+      er ikke regnet med.
+    sources:
+    - pmid:41300853
+    source_hash: 0bda61ed2873ba29bf70d193913beb805b32fbb54f192fc670cad9dc89a5338e
   studies[pmid:27362406].finding:
     text: En studie av n=12 pasienter med moderat alvorlig og 6 med alvorlig sykdom og 13 friske kontroller fant en signifikant
       økning av mastcellepopulasjoner med CD117+CD34+FcεRI-chymase- blant mononukleære celler i blodet hos pasienter med moderat

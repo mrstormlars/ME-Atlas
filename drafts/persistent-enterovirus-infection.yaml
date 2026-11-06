@@ -430,6 +430,21 @@ studies:
     finding: >-
       A study of n=34 patients and 34 people with major depression found the VP1 test positive in 11
       patients and 7 people with depression, which was not a significant difference.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: A trigger reading also exists (the 1993 study says the illness may be a sequela of a previous inflammatory viral myopathy, i.e. an earlier enterovirus infection starting it); no trigger node is available to link to, so the card is placed in mechanism (why it does not resolve).
+layer: mechanism
+links:
+  - to: question:what-keeps-it-going
+    support: proposed
+    text: >-
+      The authors of a 1993 muscle study (n=158 patients with postviral fatigue syndrome, 152 control muscle samples; the title says chronic fatigue syndrome) proposed, by analogy with enteroviral myocarditis, that persisting enterovirus RNA in muscle suggests some cases result from a previous inflammatory viral myopathy. Its case definition is not yet verified. None of these findings has been repeated by an independent group with a verified case definition: independent muscle studies from Liverpool (n=34) and Stockholm (n=29, CDC criteria) found no enterovirus RNA.
+    sources: [pmid:8409778, pmid:8777836, pmid:8863367]
+  - to: impaired-energy-production-after-exertion
+    support: proposed
+    text: >-
+      A 2003 London study (n=48 patients; 29 controls who gave muscle samples only, all enterovirus negative) titled its finding an enterovirus-related metabolic myopathy: 9 of the 10 patients with enterovirus RNA in muscle were among the 28 with an abnormal blood lactate response to exercise, against 1 of the 20 with a normal response. It measured blood lactate around one exercise test, not oxygen use or work on a repeated test the next day. Its case definition is not yet verified and the finding is unreplicated.
+    sources: [pmid:14570830]
 last_checked:
   date: 2026-11-02
   by: ai_pair

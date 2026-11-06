@@ -22,11 +22,10 @@ items:
     - pmid:36653846
     source_hash: 58885c5f9cc49ea482dcc6ecfd0de1645cb9a22dc3d90800f994bd4fa9a8023a
   level_reason[1]:
-    text: En tidligere studie fra den samme gruppen i Riga, med 108 pasienter som oppfylte CDC-kriteriene fra 1994
-      (Fukuda) og 90 friske kontroller, fant aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 hos 70 av 108 pasienter
-      og 12 av 90 kontroller. Aktiv HHV-7-infeksjon alene ble funnet hos 28 pasienter og 10 kontroller, og artikkelen oppgir
-      HHV-6 i plasma hos 16 av 108 pasienter. De to studiene fra Riga kan ha felles pasienter; artiklene sier ikke noe om
-      det.
+    text: En tidligere studie fra den samme gruppen i Riga, med 108 pasienter som oppfylte CDC-kriteriene fra 1994 (Fukuda)
+      og 90 friske kontroller, fant aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 hos 70 av 108 pasienter og 12 av
+      90 kontroller. Aktiv HHV-7-infeksjon alene ble funnet hos 28 pasienter og 10 kontroller, og artikkelen oppgir HHV-6
+      i plasma hos 16 av 108 pasienter. De to studiene fra Riga kan ha felles pasienter; artiklene sier ikke noe om det.
     sources:
     - pmid:22927850
     - pmid:36653846
@@ -125,6 +124,26 @@ items:
     sources:
     - pmid:40143349
     source_hash: c27fe924f7e9d76654e8201cb852e0e817611098913b8c0fc7aff56fa3cd5c06
+  links[0]:
+    text: Blant 108 pasienter som oppfylte CDC-kriteriene fra 1994 (Fukuda), var hovne lymfeknuter, registrert som symptom,
+      hyppigere hos dem med aktiv HHV-6- eller HHV-7-infeksjon (noen også med aktiv parvovirus B19-infeksjon) enn hos dem
+      med latent infeksjon eller ingen infeksjon. Artikkelen oppgir hyppigheter uten statistisk test for denne sammenligningen.
+      Ikke replikert.
+    sources:
+    - pmid:22927850
+    source_hash: 1713df6614eee630f81ad4537ced1d4bb15ac6960e97082a84841f4344f32cc9
+  links[1]:
+    text: Blant 108 pasienter som oppfylte CDC-kriteriene fra 1994 (Fukuda), som ikke krever PEM, ble ett punkt i Fatigue
+      Severity Scale, 'Exercise brings on my fatigue', oftere bekreftet av dem med aktiv HHV-6- eller HHV-7-infeksjon enn
+      av dem med latent infeksjon eller ingen infeksjon. Artikkelen oppgir hyppigheter uten statistisk test, og det ble ikke
+      gjort noen anstrengelsestest. En studie fra London med 30 pasienter (Canadian Consensus Criteria og/eller Fukuda) som
+      målte herpesvirus-DNA i spytt hver måned, fant ingen positiv korrelasjon mellom nivåene av HHV-6B- eller HHV-7-DNA og
+      en spørreskjemascore for PEM, og en negativ korrelasjon med HHV-6B under akutte sykdomsepisoder. De to studiene målte
+      infeksjon på ulik måte (DNA i plasma og DNA i spytt). Ikke replikert.
+    sources:
+    - pmid:22927850
+    - pmid:34422848
+    source_hash: 60d54a04aa2c3c2020d4190019453229273a0479537b8fb343cbdc436a981843
   studies[pmid:36653846].finding:
     text: En studie med n=200 pasienter og 150 friske kontroller fant aktiv dobbeltinfeksjon med HHV-6 og HHV-7 bare hos pasienter
       (p < 0,0001, antall ikke oppgitt), og markører på aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 (ikke et herpesvirus)

@@ -478,6 +478,33 @@ studies:
       control group, found that five immunoadsorption sessions lowered IgG by 79% and β2 receptor
       antibodies by 77%, and that physical function scores rose by a mean of 17.75 points, with 14 of
       20 improving by at least ten points.
+  # Added 2026-11-06 (founder ruling, causal map): a review cited by a link on the map, kept as context.
+  - id: pmid:32247028
+    title: "A Unifying Hypothesis of the Pathophysiology of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS): Recognitions from the finding of autoantibodies against ß2-adrenergic receptors."
+    year: 2020
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A review by authors of antibody studies on this card proposes that antibodies against the β2 adrenergic and M3 muscarinic receptors could impair circulation and oxygen supply; cited on the map as the source of a proposed link, not as evidence for the level.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: The card could also sit in 'dysfunction' (what goes wrong in the body), since raised receptor antibodies are a measured abnormality in blood; 'mechanism' was chosen because the hypothesis answers why the illness does not resolve, and no source states a separate link that expresses the dysfunction reading.
+layer: mechanism
+links:
+  - to: orthostatic-intolerance-cerebral-blood-flow
+    support: proposed
+    text: >-
+      A review proposes that antibodies against the β2 adrenergic and M3 muscarinic receptors, which help widen blood vessels, could impair circulation and oxygen supply, and cites reports of reduced blood flow to muscle and brain in ME/CFS as fitting this idea. The review's abstract does not discuss blood flow on standing, and the idea was not tested in patients.
+    sources: [pmid:32247028]
 last_checked:
   date: 2026-11-01
   by: ai_pair

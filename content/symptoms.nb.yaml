@@ -1,0 +1,29 @@
+# Norwegian names of the symptom nodes in content/symptoms.yaml (same ids). Checked by card-reviewer (translation mode).
+- id: post-exertional-neuroimmune-exhaustion
+  name: Anstrengelsesutløst nevroimmun utmattelse (PEM)
+- id: cognitive-impairment
+  name: Nedsatt kognitiv funksjon
+- id: pain
+  name: Smerter og hodepine
+- id: sleep-disturbance
+  name: Søvnforstyrrelser og ikke-forfriskende søvn
+- id: neurosensory-and-motor-disturbances
+  name: Nevrosensoriske, perseptuelle og motoriske forstyrrelser
+- id: flu-like-symptoms
+  name: Influensalignende symptomer
+- id: susceptibility-to-infections
+  name: Økt mottakelighet for virusinfeksjoner med langvarig restitusjon
+- id: gastrointestinal-symptoms
+  name: Mage- og tarmsymptomer
+- id: genitourinary-symptoms
+  name: Urogenitale symptomer
+- id: sensitivities
+  name: Overfølsomhet for mat, medisiner, lukt eller kjemikalier
+- id: orthostatic-intolerance
+  name: Ortostatisk intoleranse og hjerte-kar-symptomer
+- id: respiratory-symptoms
+  name: Pustesymptomer
+- id: thermostatic-instability
+  name: Ustabil temperaturregulering
+- id: temperature-intolerance
+  name: Intoleranse for ekstreme temperaturer

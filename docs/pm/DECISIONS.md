@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-06 — Causal map: first mapping
+
+- All 16 cards placed (founder ruling on the agents' proposals after two rounds of `link-drafter` and `card-reviewer`, run files in `data/pipeline/2026-11-06-map/`): 11 measurable dysfunction, 4 perpetuating mechanism (autoimmunity, gut microbiome, herpesvirus reactivation, persistent enterovirus), 1 predisposition (inherited genetic risk), none in trigger. 17 links accepted: 6 at step 2 (associated), 11 at step 1 (proposed), none at step 3. A card's other possible reading is kept as a comment above `layer:` in the draft.
+- A study whose case definition is unverified may be the source of a step-1 (proposed) link, never of step 2 or 3; same for reviews. Why: like a review, it can state a hypothesis but cannot carry patient evidence under the ladder's rules.
+- A review cited by a link is added to the card as a `context` study (`design: other`, `case_definition: none`) so the citation check covers it; it never counts towards the level. Three reviews added this way (pmid:32247028, 41516296, 37054777).
+- Symptom nodes are the 14 symptom categories of the ICC 2011 (pmid:21777306, full text cached). IOM 2015 and CCC 2003 are not yet cached as verifiable records (the IOM JAMA summary pmid:25668027 has no abstract; CCC is not in PubMed), so they are not cited; nothing is cited from memory. Open questions: four editorial questions, one per layer except symptom.
+
 ## 2026-11-06 — Causal map: rubric, layer and links
 
 - The link rubric is published: five layers (predisposition, trigger, perpetuating mechanism, measurable dysfunction, symptom) and three link steps (proposed, associated, direction supported), in the functional spec section 3, "Causal map and links". A link grades "A drives B in ME/CFS patients" on its own scale; it never raises a card's level; every link has a source at every step. Why: the sixteen hypotheses sit at different depths of one possible chain, and a place on the chain is information the bar chart cannot give; the scale had to be published before it is used.

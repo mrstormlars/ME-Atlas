@@ -1,0 +1,46 @@
+# Symptom nodes of the causal map. Not hypotheses: the symptom categories of a published case definition,
+# each sourced to the document that lists it. Names follow the document's own category headings in plain words.
+# pmid:21777306 = Myalgic encephalomyelitis: International Consensus Criteria (2011), full text cached (PMC3427890).
+# IOM 2015 and CCC 2003 are not yet cached as verifiable records (see docs/map.md); nothing is cited from memory.
+- id: post-exertional-neuroimmune-exhaustion
+  name: Post-exertional neuroimmune exhaustion (PEM)
+  sources: [pmid:21777306]
+- id: cognitive-impairment
+  name: Neurocognitive impairment
+  sources: [pmid:21777306]
+- id: pain
+  name: Pain and headaches
+  sources: [pmid:21777306]
+- id: sleep-disturbance
+  name: Sleep disturbance and unrefreshing sleep
+  sources: [pmid:21777306]
+- id: neurosensory-and-motor-disturbances
+  name: Neurosensory, perceptual and motor disturbances
+  sources: [pmid:21777306]
+- id: flu-like-symptoms
+  name: Flu-like symptoms
+  sources: [pmid:21777306]
+- id: susceptibility-to-infections
+  name: Susceptibility to viral infections with prolonged recovery
+  sources: [pmid:21777306]
+- id: gastrointestinal-symptoms
+  name: Gastro-intestinal symptoms
+  sources: [pmid:21777306]
+- id: genitourinary-symptoms
+  name: Genitourinary symptoms
+  sources: [pmid:21777306]
+- id: sensitivities
+  name: Sensitivities to food, medications, odours or chemicals
+  sources: [pmid:21777306]
+- id: orthostatic-intolerance
+  name: Orthostatic intolerance and cardiovascular symptoms
+  sources: [pmid:21777306]
+- id: respiratory-symptoms
+  name: Respiratory symptoms
+  sources: [pmid:21777306]
+- id: thermostatic-instability
+  name: Loss of thermostatic stability
+  sources: [pmid:21777306]
+- id: temperature-intolerance
+  name: Intolerance of extremes of temperature
+  sources: [pmid:21777306]

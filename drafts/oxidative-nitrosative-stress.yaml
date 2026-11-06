@@ -502,6 +502,15 @@ studies:
     finding: >-
       A placebo-controlled trial of n=43 patients (31 completed: 17 given ubiquinol, 14 placebo) reported
       that 12 weeks of ubiquinol improved several symptoms.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links:
+  - to: symptom:post-exertional-neuroimmune-exhaustion
+    support: associated
+    text: >-
+      A study of 47 patients meeting the CDC criteria (version not named) and 34 healthy volunteers found that plasma isoprostane levels, a marker of oxidative damage to fats, correlated with symptom scores, including a post-exertional malaise item, in the subgroup without cardiovascular risk factors. The symptom score is not an exertion test. Not yet repeated.
+    sources: [pmid:16085177]
 last_checked:
   date: 2026-11-02
   by: ai_pair

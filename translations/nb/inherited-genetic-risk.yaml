@@ -58,6 +58,16 @@ items:
     - pmid:34403736
     - pmid:40897283
     source_hash: bc3eccd450ae1f333d74e14e5caa0f66eeb883bfd6cbc330462a275692614196
+  level_reason[4]:
+    text: En pilotstudie fra Nevada med 42 pasienter som oppfylte Carruthers-kriteriene (Canadian eller International Consensus)
+      og Fukuda-kriteriene, og 38 friske kontroller, rapporterte 442 kandidatvarianter, flere av dem i T-cellereseptor alfa-regionen
+      (TRA). Oslo-gruppen testet de to TRA-variantene som ble trukket frem (rs11157573, rs17255510) hos 409 pasienter som
+      oppfylte Canadian-kriteriene og 810 kontroller, og fant ingen sammenheng. De var heller ikke assosiert hos 2105 personer
+      som oppga en diagnose med kronisk utmattelsessyndrom i UK Biobank. Nevada-funnet for TRA er derfor ikke støttet.
+    sources:
+    - pmid:26859813
+    - pmid:35821115
+    source_hash: 0ac2d3ba01793b997333aeb05fecb9a9a779f6bc7d0c7c1da02b4bc407f8d256
   level_reason[5]:
     text: DecodeME-kombinasjonene ble funnet igjen i tre separate grupper av DecodeME-deltakere, men innenfor én studie fra
       ett selskap, så dette er ikke en gjentakelse fra en uavhengig gruppe. En tidligere studie fra samme selskap brukte UK
@@ -131,6 +141,36 @@ items:
     sources:
     - pmid:40897283
     source_hash: fa0c07f209917b99392c534dba1466827b4a05427a0b4e88c18caa7b97e19c99
+  links[0]:
+    text: En studie med n=426 pasienter som oppfylte Canadian Consensus Criteria og 4511 friske kontroller fant to HLA-genvarianter
+      oftere hos pasientene, og en studie med n=305 pasienter og 201 kontroller fant to varianter knyttet til autoimmune sykdommer
+      oftere hos pasientene. En studie med 25 pasienter vurdert etter CDC-kriteriene (versjon ikke oppgitt) og 36 medisinske
+      kontroller fant høyere forekomst av sykdommen hos pasientenes nærmeste slektninger (første grad). Når det gjelder start
+      med infeksjon, fant Berlin-studien variantene oftere bare hos de 232 pasientene som ble syke i forbindelse med en infeksjon,
+      mens andelen med infeksjon ved start i HLA-studien ikke var signifikant ulik hos bærere og ikke-bærere. Ingen av disse
+      funnene er gjentatt av en uavhengig gruppe.
+    sources:
+    - pmid:32210306
+    - pmid:32328064
+    - pmid:11702053
+    source_hash: 0c5eb0869179102ea5425a75fe25759488a69811ee02fbf77196a7a1902b01de
+  links[1]:
+    text: En studie med n=305 pasienter og 201 friske kontroller fant to genvarianter knyttet til autoimmune sykdommer (i
+      PTPN22 og CTLA4) oftere hos pasienter som ble syke i forbindelse med en infeksjon. Forfatterne skriver at autoimmunitet
+      kan spille en rolle ved ME/CFS som starter med en infeksjon. Testene var ensidige, uten korreksjon rapportert for de
+      fem variantene som ble testet, og konfidensintervallet for PTPN22 hos alle pasientene inkluderer 1. Hos de samme pasientene
+      ble B-celler talt, og det var ingen forskjell i antall B-celler mellom bærere og ikke-bærere av risikovariantene. Autoantistoffer
+      (TPO, ANA) ble målt hos noen pasienter, men ikke rapportert etter variant. Ikke gjentatt ennå.
+    sources:
+    - pmid:32328064
+    source_hash: f01f1e7355f3b6eeca80dbac4e0f0f0d283e84b6371a84ac5474c738ae666893
+  links[2]:
+    text: En studie med n=418 pasienter og 473 friske kontroller fant forskjeller i noen varianter av KIR-genene, som koder
+      for reseptorer på NK-celler. Av 76 varianter som ble testet, var det bare én, mindre vanlig hos pasientene, som passerte
+      den korrigerte terskelen forfatterne oppgir. Studien målte ikke NK-cellefunksjon. Ikke gjentatt ennå.
+    sources:
+    - pmid:40897283
+    source_hash: 82b7b856b84a65ef779df0e6e5ae15aa0db3b2941ad956875e61a58c865d7307
   studies[pmid:32210306].finding:
     text: En studie med n=426 pasienter og 4511 friske kontroller fant HLA-C*07:04 (OR 2,1) og HLA-DQB1*03:03 (OR 1,5) oftere
       hos pasientene; 19,2% av pasientene og 12,2% av kontrollene bar én av eller begge.

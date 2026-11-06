@@ -34,9 +34,10 @@ def map_link(to: str, text: str, support: str = "proposed", sources=("pmid:00000
 
 
 def map_content(root: Path, symptoms=MAP_SYMPTOMS, questions=MAP_QUESTIONS) -> Path:
-    """A copy of the real content folder (the templates need its methods text) plus fictional symptoms and questions."""
+    """The real fixed texts (the templates need them) plus fictional symptoms and questions, never the real ones."""
     folder = root / "content"
-    shutil.copytree(REPO_ROOT / "content", folder)
+    for part in ("i18n", "methods"):
+        shutil.copytree(REPO_ROOT / "content" / part, folder / part)
     if symptoms is not None:
         write_yaml(folder / "symptoms.yaml", symptoms)
     if questions is not None:

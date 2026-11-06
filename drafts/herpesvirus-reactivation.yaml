@@ -472,6 +472,21 @@ studies:
       antibodies against the dUTPase enzymes of Epstein-Barr virus, HHV-6 and varicella zoster virus
       in patients, and an association of Epstein-Barr virus and HHV-6 dUTPase antibodies with
       fatigue.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: The card could also sit in the trigger layer (reactivation as a trigger) or be read as a consequence of immune dysfunction, as pmid:34422848 says ('might be a cause or consequence of dysregulated immune function'); no source in the records given states a link from an immune card to this card, so no link is proposed for that reading.
+layer: mechanism
+links:
+  - to: symptom:flu-like-symptoms
+    support: associated
+    text: >-
+      Among 108 patients meeting the 1994 CDC (Fukuda) definition, swollen lymph nodes, recorded as a symptom, were more frequent in those with active HHV-6 or HHV-7 infection (some also with active parvovirus B19 infection) than in those with latent or no infection; the paper reports frequencies without a statistical test for this comparison. Unreplicated.
+    sources: [pmid:22927850]
+  - to: symptom:post-exertional-neuroimmune-exhaustion
+    support: associated
+    text: >-
+      Among 108 patients meeting the 1994 CDC (Fukuda) definition, which does not require post-exertional malaise, one Fatigue Severity Scale item, 'Exercise brings on my fatigue', was endorsed more often by those with active HHV-6 or HHV-7 infection than by those with latent or no infection; the paper gives frequencies without a statistical test, and no exertion challenge was done. A London study of 30 patients (Canadian Consensus Criteria and/or Fukuda) that measured herpesvirus DNA in saliva monthly found no positive correlation between HHV-6B or HHV-7 DNA levels and a questionnaire score for post-exertional malaise, and a negative correlation with HHV-6B during acute illness episodes. The two studies measured infection differently (plasma DNA and saliva DNA). Unreplicated.
+    sources: [pmid:22927850, pmid:34422848]
 last_checked:
   date: 2026-11-02
   by: ai_pair

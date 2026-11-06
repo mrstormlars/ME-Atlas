@@ -465,6 +465,11 @@ studies:
       A study of patients with CFS alone, CFS with fibromyalgia and healthy controls (numbers not
       stated in the abstract) found that "Plasma tryptophan and kynurenine concentrations did not
       differ among groups."
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: The card could also be read as a mechanism (an altered pathway that keeps the illness going); a review (pmid:41516296, section 4.3) says some researchers hypothesise insufficient kynurenine production from tryptophan in ME/CFS, but its sentences are general and name no symptom or question node, so no link expresses this reading.
+layer: dysfunction
+links: []
 last_checked:
   date: 2026-11-02
   by: ai_pair
