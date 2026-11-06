@@ -60,6 +60,8 @@ The rules apply per paragraph: every source must be in `studies` (V3) and every 
 | `early_signals` | List of sourced text. Unreplicated findings only. |
 | `studies` | List of studies (below). |
 | `last_checked` | `date` and `by` (`ai_pair` or `founder`). |
+| `layer` | Optional. Where the hypothesis sits on the causal map: `predisposition`, `trigger`, `mechanism` or `dysfunction`. A card without one is listed as "Not yet placed". A founder decision. |
+| `links` | Optional list of links out of this card (below). A founder decision. |
 
 Unknown fields are errors. `level`, the numbers in `contested.rungs` and the change-log `tier` must be whole numbers: `true` and `2.0` are rejected (V1).
 
@@ -93,6 +95,28 @@ All of these are required except `group`; use `null` where the value is allowed 
 - `CDC_unspecified` is for a study that cites "CDC criteria" without naming the version. It is treated exactly like `Fukuda` and `Holmes1988`: counts at every rung, flagged "does not require PEM", ranked equal to `Fukuda`. The quote is the sentence that names the CDC criteria.
 - To find the sentence, `uv run python -m me_atlas.europepmc casedef <pmid>...` shows candidate sentences from open-access full text. It only suggests; the person or agent drafting the card decides which definition a sentence means.
 
+## Links (causal map)
+
+Each entry of `links` is a sourced text with two more fields. The scale is in the functional spec, section 3, "Causal map and links".
+
+| Field | Meaning |
+| --- | --- |
+| `to` | A card slug, `symptom:<id>` (an entry of `content/symptoms.yaml`) or `question:<id>` (an entry of `content/open-questions.yaml`). |
+| `support` | `proposed`, `associated` or `directional`. |
+| `text` | The sentence a reader sees, in neutral wording. |
+| `sources` | Ids of studies in this card's `studies`, as for every sourced text. A source that is only evidence for a link (a review proposing it) is entered with `role: context`. |
+
+```yaml
+layer: mechanism
+links:
+  - to: endothelial-dysfunction
+    support: associated
+    text: A fictional study measured both in the same patients and found them related.
+    sources: [pmid:00000002]
+```
+
+Links live on the upstream card only. Translations of link texts are card text (locator `links[<index>]`, in card order); symptom names and question texts are translated in `content/symptoms.<lang>.yaml` and `content/open-questions.<lang>.yaml`. See `docs/map.md`.
+
 ## Change log entries
 
 `date`, `card` (slug of a file in `cards/`), `change`, `reason` (one line), `sources` (study ids) and `tier` (1, 2 or 3, see functional spec section 6).
@@ -119,7 +143,14 @@ All of these are required except `group`; use `null` where the value is allowed 
 | V10 | `core_claim` and `early_signals` contain none of: promising, breakthrough, cure, hope, proven (whole words, any case; plain plural and past forms such as "cured" and "hopeful" count). |
 | V11 | Change log: `card` exists in `cards/`, `tier` is 1-3, the date is not in the future. |
 | V12 | Study ids are unique within a card; a repeated id is reported on its second occurrence. |
+| V3, V4 (links) | Apply to every link too: each source is in the card's `studies` and there is at least one. Errors read `links[0].sources[0]`. |
 | V13 | Case definition provenance: `unverified` has `null` source and quote; every other value has a source; the named definitions (CCC, ICC, IOM2015, Fukuda, Holmes1988, CDC_unspecified, Oxford) also have a quote. |
+| M1 | `layer`, when present, is one of `predisposition`, `trigger`, `mechanism`, `dysfunction` (reported as a schema error on `layer`). |
+| M2 | Every link's `to` resolves: a card slug in the validated set (see `docs/map.md`), `symptom:<id>` in `content/symptoms.yaml`, `question:<id>` in `content/open-questions.yaml`. A malformed value such as `foo:bar`, or an entry marked `todo: verify`, is an error. |
+| M3 | A card does not link to itself. |
+| M4 | The same `to` appears at most once on a card. |
+| M5 | A link with `support` `associated` or `directional` cites at least one study that is not a review (`design` not `other`) and whose case definition is not `none`, `other`, `unverified` or `Oxford`: "needs a study in an ME/CFS cohort with a recognised case definition". `proposed` has no such condition. |
+| M6 | The content files: `content/symptoms.yaml` (`id`, `name`, non-empty `sources`, or `todo: verify` instead) and `content/open-questions.yaml` (`id`, `layer`, `text`, and exactly one of non-empty `asked_by` or `editorial: true`, or `todo: verify`). Unique ids, no unknown keys, none of the banned words. A `todo: verify` entry is valid, left out of the build and the report, and printed as a warning. |
 
 The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10, V12 and V13 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
 

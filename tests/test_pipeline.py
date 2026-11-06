@@ -821,6 +821,30 @@ def test_translation_plan_lists_items_the_change_added_as_new(accepted: Env):
     assert plan_items(accepted) == {"level_reason[1]": "new", "studies[pmid:90000101].finding": "new"}
 
 
+def test_translation_plan_lists_a_link_the_change_added_as_new(ready: Env, monkeypatch):
+    write_norwegian(ready)
+    accept_replacing(ready, "90000201")
+    original = pipeline.final_card_texts
+    link = (
+        "links:\n"
+        "  - to: symptom:fictional-fatigue\n"
+        "    support: proposed\n"
+        "    text: A fictional review proposes a link to fatigue.\n"
+        "    sources: [pmid:90000100]\n"
+    )
+
+    def with_link(cfg, outcomes):  # operations cannot add a link yet; the final text gets one
+        return {slug: text.rstrip("\n") + "\n" + link for slug, text in original(cfg, outcomes).items()}
+
+    monkeypatch.setattr(pipeline, "final_card_texts", with_link)
+    assert ready.cli("translation-plan") == 0
+    assert plan_items(ready) == {"contested_reason[0]": "made_stale", "links[0]": "new"}
+    entry = load(ready.run / "translate" / f"{SLUG}.json")
+    added = next(i for i in entry["items"] if i["item"] == "links[0]")
+    assert added["english"] == "A fictional review proposes a link to fatigue."
+    assert added["sources"] == ["pmid:90000100"] and added["previous_translation"] is None
+
+
 def test_translation_plan_keeps_an_earlier_stale_item_apart_from_the_new_ones(ready: Env):
     write_norwegian(ready, skip=("subgroups[0]", "early_signals[0]"))
     accept_replacing(ready, "90000201")

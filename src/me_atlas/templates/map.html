@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+{% macro mt(item) %}{% if item.english %}<span lang="en">{{ item.text }}</span> <span class="untranslated">{{ txt("untranslated.part") }}</span>{% else %}{{ item.text }}{% endif %}{% endmacro %}
+{% macro source_links(ids) %}{% for s in ids %}<a href="{{ study_url(s) }}" rel="noopener noreferrer">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %}{% endmacro %}
+{% macro convergence(items, count_key) %}
+{% if items %}
+<ul class="map-convergence">
+{% for c in items %}
+  <li>{% if c.href.startswith("#") %}<a href="{{ c.href }}">{{ mt(c.name) }}</a>{% else %}<a href="{{ lroot }}{{ c.href }}">{{ mt(c.name) }}</a>{% endif %} — {{ t(count_key, n=c.count) }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="empty">{{ txt("map.none") }}</p>
+{% endif %}
+{% endmacro %}
+<h1>{{ txt("map.h1") }}</h1>
+<p>{{ t("map.intro") }}</p>
+{% for section in sections %}
+
+<h2 id="layer-{{ section.key }}">{{ txt("layer." ~ section.key) }}</h2>
+{% if section.key == "unplaced" %}
+<p class="small">{{ txt("map.unplaced_note") }}</p>
+{% endif %}
+{% if section.key == "symptom" %}
+<p class="small">{{ txt("map.symptoms_intro") }}</p>
+{% endif %}
+{% for card in section.cards %}
+<article class="map-card" id="card-{{ card.slug }}">
+  <h3><a href="{{ lroot }}hypotheses/{{ card.slug }}.html"{% if card.name_in_english %} lang="en"{% endif %}>{{ card.name }}</a></h3>
+{% if card.links %}
+  <ul class="map-links">
+{% for lv in card.links %}
+    <li>{{ txt("map.to") }} <a href="{% if not lv.target_href.startswith('#') %}{{ lroot }}{% endif %}{{ lv.target_href }}">{{ mt(lv.target) }}</a>: {{ page.plain(lv.link, lv.link.text) }} — {{ txt("support." ~ lv.support) }}{% for n, href in lv.refs %} {{ page.ref_to(lroot ~ href, n) }}{% endfor %}{{ page.note(lv.link) }}</li>
+{% endfor %}
+  </ul>
+{% else %}
+  <p class="empty">{{ txt("map.no_links") }}</p>
+{% endif %}
+</article>
+{% endfor %}
+{% if section.symptoms %}
+<ul class="map-symptoms">
+{% for s in section.symptoms %}
+  <li id="symptom-{{ s.id }}"><strong>{{ mt(s.name) }}</strong> · {{ txt("map.listed_in") }} {{ source_links(s.sources) }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% for q in section.questions %}
+<div class="map-question" id="question-{{ q.id }}">
+  <p><strong>{{ txt("map.question_label") }}:</strong> {{ mt(q.text) }}</p>
+{% if q.editorial %}
+  <p class="small">{{ txt("map.editorial") }}</p>
+{% else %}
+  <p class="small">{{ txt("map.asked_in") }} {{ source_links(q.asked_by) }}</p>
+{% endif %}
+</div>
+{% endfor %}
+{% if not section.cards and not section.symptoms and not section.questions %}
+<p class="empty">{{ txt("map.layer_empty") }}</p>
+{% endif %}
+{% endfor %}
+
+<h2 id="common-mechanisms">{{ txt("map.common.h2") }}</h2>
+<p class="small">{{ txt("map.common.intro") }}</p>
+{{ convergence(common, "map.count_in") }}
+
+<h2 id="roots">{{ txt("map.roots.h2") }}</h2>
+<p class="small">{{ txt("map.roots.intro") }}</p>
+{{ convergence(roots, "map.count_out") }}
+{% endblock %}

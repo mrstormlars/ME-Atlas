@@ -6,7 +6,7 @@ plain-English rules V1-V13.
 
 Command line::
 
-    uv run python -m me_atlas.cards validate [paths...]
+    uv run python -m me_atlas.cards validate [paths...] [--content DIR] [--cards DIR]
 
 With no paths, ``cards/`` and ``drafts/`` (relative to the current directory) are validated. Every
 error in every file is reported; the exit code is non-zero if there is at least one.
@@ -112,6 +112,21 @@ def reason_sources(reason: SourcedText | list[SourcedText] | None) -> list[str]:
     return [src for p in paragraphs(reason) for src in p.sources] if reason is not None else []
 
 
+SUPPORT_LEVELS = ("proposed", "associated", "directional")
+LAYERS = ("predisposition", "trigger", "mechanism", "dysfunction")
+# Study properties that keep a link at "proposed": a review-type design, or a case definition that is not recognised
+# for the ladder (Oxford-only evidence stays at step 1; spec section 3, "Causal map and links").
+WEAK_LINK_CASE_DEFINITIONS = frozenset({"none", "other", "unverified", "Oxford"})
+
+
+class Link(SourcedText):
+    """A causal link from this card to another card, a symptom (``symptom:<id>``) or an open question
+    (``question:<id>``). Graded on its own scale, never on the card's evidence ladder."""
+
+    to: NonEmptyStr
+    support: Literal["proposed", "associated", "directional"]
+
+
 class Contested(_Model):
     rungs: Annotated[list[StrictInt], Field(min_length=1)]
     reason: Reason
@@ -171,6 +186,8 @@ class Card(_Model):
     early_signals: list[SourcedText]
     studies: list[Study]
     last_checked: LastChecked
+    layer: Literal["predisposition", "trigger", "mechanism", "dysfunction"] | None = None
+    links: list[Link] = []
 
     @property
     def long_covid(self) -> bool:
@@ -262,6 +279,8 @@ def _sourced_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
         yield f"subgroups[{i}]", t
     for i, t in enumerate(card.early_signals):
         yield f"early_signals[{i}]", t
+    for i, link in enumerate(card.links):
+        yield f"links[{i}]", link
 
 
 def case_definition_rank(case_definition: str) -> int:
@@ -381,6 +400,32 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
                 )
             )
 
+    # M3, M4 (M1 is the schema's `layer` enum; M2 needs the other cards and lives in me_atlas.map)
+    seen_to: set[str] = set()
+    for i, link in enumerate(card.links):
+        if link.to == card.slug:
+            found.append(("M3", f"links[{i}].to", f"a card cannot link to itself ('{link.to}')"))
+        if link.to in seen_to:
+            found.append(("M4", f"links[{i}].to", f"the target '{link.to}' is linked more than once on this card"))
+        seen_to.add(link.to)
+
+    # M5
+    for i, link in enumerate(card.links):
+        if link.support == "proposed":
+            continue
+        cited = [by_id[x] for x in link.sources if x in by_id]
+        if cited and not any(
+            s.design != "other" and s.case_definition not in WEAK_LINK_CASE_DEFINITIONS for s in cited
+        ):
+            found.append(
+                (
+                    "M5",
+                    f"links[{i}].support",
+                    f"support '{link.support}' needs a study in an ME/CFS cohort with a recognised case definition "
+                    "(not a review, not Oxford-only); these sources only support 'proposed'",
+                )
+            )
+
     # V10
     scanned = [("core_claim.text", card.core_claim.text)]
     scanned += [(f"early_signals[{i}].text", t.text) for i, t in enumerate(card.early_signals)]
@@ -491,24 +536,54 @@ def _yaml_files(directory: Path) -> list[Path]:
 # ---------------------------------------------------------------------------
 
 
-def validate_paths(paths: Sequence[Path], today: dt.date | None = None) -> tuple[int, list[Issue]]:
-    """Validate files and directories. Returns (number of files checked, all issues)."""
+def validate_paths(
+    paths: Sequence[Path],
+    today: dt.date | None = None,
+    *,
+    content_dir: Path | None = None,
+    cards_dir: Path | None = None,
+) -> tuple[int, list[Issue]]:
+    """Validate files and directories. Returns (number of files checked, all issues).
+
+    Besides the per-file rules this runs the causal-map rules that need more than one file: M2 (every link target
+    exists; the resolution set is the card files given plus, when a directory is given, ``cards_dir``) and M6 (the
+    content files in ``content_dir``). Defaults: ``cards/`` and ``content/`` relative to the current directory.
+    """
+    from me_atlas import map as maplib  # imported here: me_atlas.map imports this module
+
     today = today or dt.date.today()
+    content_dir = Path(content_dir) if content_dir is not None else Path("content")
+    cards_dir = Path(cards_dir) if cards_dir is not None else Path("cards")
     files: list[Path] = []
     issues: list[Issue] = []
+    any_directory = False
     for p in map(Path, paths):
         if p.is_dir():
+            any_directory = True
             files += sorted(p.glob("*.yaml"))
         elif p.is_file():
             files.append(p)
         else:
             issues.append(Issue("IO", str(p), "", "path does not exist"))
+    parsed: list[tuple[str, Card]] = []
     for f in files:
         if f.name == CHANGELOG_NAME:
             issues += validate_changelog_file(f, today)
         else:
-            issues += validate_card_file(f)
-    return len(files), issues
+            card, file_issues = _parse_card(f)
+            issues += file_issues
+            if card is not None:
+                parsed.append((str(f), card))
+    content, content_issues = maplib.load_content(content_dir)
+    issues += content_issues
+    known = {f.stem for f in files if f.name != CHANGELOG_NAME}
+    if any_directory and cards_dir.is_dir():
+        known |= {f.stem for f in _yaml_files(cards_dir)}
+    issues += maplib.check_targets(parsed, known, content)
+    content_files = [
+        f for f in (content_dir / maplib.SYMPTOMS_FILE, content_dir / maplib.QUESTIONS_FILE) if f.is_file()
+    ]
+    return len(files) + len(content_files), issues
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -516,10 +591,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     val = sub.add_parser("validate", help="validate card, draft and change-log files")
     val.add_argument("paths", nargs="*", type=Path, help="files or directories (default: cards/ and drafts/)")
+    val.add_argument("--content", type=Path, default=Path("content"), help="default: %(default)s")
+    val.add_argument("--cards", type=Path, default=Path("cards"), help="default: %(default)s")
     args = parser.parse_args(argv)
 
     paths = args.paths or [p for p in (Path("cards"), Path("drafts")) if p.is_dir()]
-    count, issues = validate_paths(paths)
+    count, issues = validate_paths(paths, content_dir=args.content, cards_dir=args.cards)
     for issue in issues:
         print(issue, file=sys.stderr)
     if issues:

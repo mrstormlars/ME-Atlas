@@ -1018,3 +1018,112 @@ def test_v7_reads_the_union_of_badge_paragraphs(tmp_path):
     assert check(tmp_path, data) == []
     data["badges"]["explains_pem"]["reason"] = [para("Context.", "pmid:00000001")]  # no PEM study cited
     assert rules(check(tmp_path, data)) == {"V7"}
+
+
+# --- causal map: layer and links (M1, M3, M4, M5) ---------------------------
+
+
+def link(to="other-fictional-card", support="proposed", sources=("pmid:00000001",), text="A fictional link."):
+    return {"to": to, "support": support, "text": text, "sources": list(sources)}
+
+
+def test_a_card_without_layer_or_links_is_valid_and_has_none():
+    card = cards.load_card(VALID_CARD)
+    assert card.layer is None and card.links == []
+
+
+def test_a_card_with_a_layer_and_a_link_is_valid(tmp_path):
+    data = base()
+    data["layer"] = "mechanism"
+    data["links"] = [link(support="associated")]
+    assert check(tmp_path, data) == []
+    card = cards.Card.model_validate(data)
+    assert card.layer == "mechanism" and card.links[0].to == "other-fictional-card"
+
+
+def test_m1_layer_outside_the_enum(tmp_path):
+    data = base()
+    data["layer"] = "symptom"  # a layer of the map, but not one a hypothesis card can have
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"} and [i.path for i in issues] == ["layer"]
+
+
+def test_m1_an_empty_layer_is_not_accepted(tmp_path):
+    data = base()
+    data["layer"] = ""
+    assert [i.path for i in check(tmp_path, data)] == ["layer"]
+
+
+def test_link_with_an_unknown_key_is_rejected(tmp_path):
+    data = base()
+    data["links"] = [{**link(), "why": "because"}]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V1"} and issues[0].path == "links[0].why"
+
+
+def test_link_with_an_unknown_support_is_rejected(tmp_path):
+    data = base()
+    data["links"] = [link(support="causal")]
+    assert [i.path for i in check(tmp_path, data)] == ["links[0].support"]
+
+
+def test_link_source_not_in_studies_fails_v3_with_the_link_path(tmp_path):
+    data = base()
+    data["links"] = [link(sources=("pmid:09999999",))]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V3"} and [i.path for i in issues] == ["links[0].sources[0]"]
+
+
+def test_link_without_sources_fails_v4(tmp_path):
+    data = base()
+    data["links"] = [link(sources=())]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V4"} and [i.path for i in issues] == ["links[0].sources"]
+
+
+def test_m3_a_link_to_the_cards_own_slug(tmp_path):
+    data = base()
+    data["links"] = [link(to="fictional-hypothesis")]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"M3"} and [i.path for i in issues] == ["links[0].to"]
+
+
+def test_m4_the_same_target_twice_on_one_card(tmp_path):
+    data = base()
+    data["links"] = [link(), link(text="Another fictional link."), link(to="third-fictional-card")]
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"M4"} and [i.path for i in issues] == ["links[1].to"]
+
+
+@pytest.mark.parametrize("support", ["associated", "directional"])
+def test_m5_a_review_only_source_cannot_carry_more_than_proposed(tmp_path, support):
+    data = base()
+    data["links"] = [link(support=support, sources=("doi:10.0000/fictional.5",))]  # design: other
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"M5"} and issues[0].path == "links[0].support"
+    assert "recognised case definition" in issues[0].message
+
+
+def test_m5_a_study_without_a_recognised_case_definition_is_not_enough(tmp_path):
+    data = base()
+    data["links"] = [link(support="associated", sources=("pmid:00000004",))]  # case_definition: other
+    assert rules(check(tmp_path, data)) == {"M5"}
+
+
+def test_m5_an_oxford_only_source_is_not_enough(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "Oxford"
+    data["links"] = [link(support="associated", sources=("pmid:00000001",))]
+    assert rules(check(tmp_path, data)) == {"M5"}
+
+
+def test_m5_proposed_may_rest_on_a_review_only(tmp_path):
+    data = base()
+    data["links"] = [link(support="proposed", sources=("doi:10.0000/fictional.5",))]
+    assert check(tmp_path, data) == []
+
+
+def test_m5_one_qualifying_study_among_weak_ones_is_enough(tmp_path):
+    data = base()
+    data["links"] = [link(support="directional", sources=("doi:10.0000/fictional.5", "pmid:00000002"))]
+    assert check(tmp_path, data) == []

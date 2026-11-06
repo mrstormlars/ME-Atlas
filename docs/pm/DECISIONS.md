@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-06 — Causal map: rubric, layer and links
+
+- The link rubric is published: five layers (predisposition, trigger, perpetuating mechanism, measurable dysfunction, symptom) and three link steps (proposed, associated, direction supported), in the functional spec section 3, "Causal map and links". A link grades "A drives B in ME/CFS patients" on its own scale; it never raises a card's level; every link has a source at every step. Why: the sixteen hypotheses sit at different depths of one possible chain, and a place on the chain is information the bar chart cannot give; the scale had to be published before it is used.
+- Setting a card's `layer` and adding or changing a link are founder decisions, like levels, badges and contested marks (CLAUDE.md rule 2). Agents draft (`link-drafter`), `card-reviewer` checks (map mode), the founder rules.
+- Refinements for the first implementation (D1-D4): (D1) `layer` is optional until the cards are placed; a card without one is listed as "Not yet placed"; (D2) symptom names and open-question texts are translated in per-language content files like the glossary, link texts through the card sidecars; (D3) the two English content files are optional, absent means no symptom and question nodes; (D4) `links[].to` is a card slug, `symptom:<id>` or `question:<id>`.
+- Convergence is counted, not judged: "candidate common mechanisms" and "candidate roots" are lists with counts. The map page is lists only; the drawn map is a later plan. Plan: `docs/plan-causal-map.md`; reference: `docs/map.md`.
+
 ## 2026-11-03 — Private preview on Azure
 
 - The draft build is hosted as an Azure Storage static website in the founder's StormSolutions subscription (`rg-me-atlas`, Norway East, account `meatlaslpr4z`), shared by link with a few readers who should not need an account. Why: a Claude artifact needs a claude.ai account, which is too much for a patient with little energy.
