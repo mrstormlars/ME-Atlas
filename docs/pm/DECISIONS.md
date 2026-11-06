@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-06 — Causal map: second pass with review full texts
+
+- Six new step-1 (proposed) links accepted by the founder after `link-drafter` on all 16 cards with the three cached review full texts as plain text with numbered paragraphs, and two `card-reviewer` rounds (run files in `data/pipeline/2026-11-06-map-pass2/`, list in `decisions.md` there): gut microbiome to neuroinflammation and to oxidative and nitrosative stress; small fibre neuropathy to the orthostatic intolerance symptom (observations in POTS, said in the text); HPA axis and cortisol to sleep disturbance, to neurocognitive impairment and to the open question "What keeps the illness going". Why: the first pass could not read the full texts; these links are stated in them.
+- The reviews cited are added as `context` studies, per the earlier ruling: pmid:31330791 on gut microbiome and HPA axis, pmid:41516296 on HPA axis, pmid:37054777 on small fibre neuropathy. No level changes.
+- Rejected on review: links to impaired energy production after exertion from endothelial dysfunction and from oxidative stress (the reviews speak of oxygen delivery or cellular mitochondria, not the card's two-day exercise test finding), and HPA axis to gut microbiome (the review has the gut upstream). Layer notes from the reviews are kept in the run files only, except the HPA axis note, which goes with its link to the open question.
+- Plan for the drawn map written: `docs/plan-drawn-map.md` (defaults for the founder to confirm at the bottom).
+
 ## 2026-11-06 — Causal map: first mapping
 
 - All 16 cards placed (founder ruling on the agents' proposals after two rounds of `link-drafter` and `card-reviewer`, run files in `data/pipeline/2026-11-06-map/`): 11 measurable dysfunction, 4 perpetuating mechanism (autoimmunity, gut microbiome, herpesvirus reactivation, persistent enterovirus), 1 predisposition (inherited genetic risk), none in trigger. 17 links accepted: 6 at step 2 (associated), 11 at step 1 (proposed), none at step 3. A card's other possible reading is kept as a comment above `layer:` in the draft.

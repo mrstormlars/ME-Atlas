@@ -280,11 +280,34 @@ studies:
       A study of n=160 patients with skin biopsies found that 31% of biopsies were consistent with small
       fibre neuropathy (epidermal innervation at or below 5.0% of predicted), and that the severity of
       nerve fibre loss did not correlate with exercise test measures.
+  # Added 2026-11-06 (founder ruling, causal map second pass): a review cited by a link on the map, kept as context.
+  - id: pmid:37054777
+    title: "Exercise Pathophysiology in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Postacute Sequelae of SARS-CoV-2: More in Common Than Not?"
+    year: 2023
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A review of exercise pathophysiology in ME/CFS and long COVID that also discusses small fibre neuropathy and blood pooling on standing in POTS. Cited on the map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: A mechanism reading also exists, in which small fibre damage is one form of dysautonomia upstream of vascular changes such as shunting of blood past the muscle capillaries (pmid:37054777, pmid:33577778); no card or open question covers peripheral oxygen extraction or shunting, so that link waits for such a card or question.
+# Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 layer: dysfunction
-links: []
+links:
+  - to: symptom:orthostatic-intolerance
+    support: proposed
+    text: >-
+      A 2023 review states that small nerve fibre damage can reduce the tightening of veins, as seen with abnormal pooling of blood in the legs on standing in postural orthostatic tachycardia syndrome (POTS). The observations it cites are in POTS; no study on this card measured both in ME/CFS patients.
+    sources: [pmid:37054777]
 last_checked:
   date: 2026-11-02
   by: ai_pair

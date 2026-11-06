@@ -566,10 +566,61 @@ studies:
       A study of patients and matched sedentary controls (numbers not in the abstract) found no
       difference in basal hormones, lower ACTH 4 minutes after a maximal treadmill test in patients,
       and no differences the next day.
+  # Added 2026-11-06 (founder ruling, causal map second pass): a review cited by a link on the map, kept as context.
+  - id: pmid:41516296
+    title: "Gut Microbiome and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS): Insights into Disease Mechanisms."
+    year: 2025
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A review of gut microbiome research in ME/CFS that also summarises other proposed mechanisms, including abnormal HPA-axis hormone levels. Cited on the map as the source of proposed links, not as evidence for the level.
+  # Added 2026-11-06 (founder ruling, causal map second pass): a review cited by a link on the map, kept as context.
+  - id: pmid:31330791
+    title: "Pathological Mechanisms Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
+    year: 2019
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A 2019 review of proposed disease mechanisms in ME/CFS; it states that the causal links between the affected systems are unknown and cannot be discerned from clinical correlation alone. Cited on the map as the source of proposed links, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
+# Other reading: pmid:31330791 P23 (a perturbed regulatory loop) and P24 (a shift to an alternative resting steady state) give a reason to read the card as mechanism ('why it does not resolve'); expressed as the link to question:what-keeps-it-going.
 layer: dysfunction
-links: []
+links:
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: >-
+      A 2025 review states that abnormal HPA-axis hormone levels in ME/CFS have been associated with worse sleep difficulties, citing one earlier paper; the review did not test this itself.
+    sources: [pmid:41516296]
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: >-
+      The same 2025 review states that abnormal HPA-axis hormone levels in ME/CFS have been associated with worse concentration difficulties, citing one earlier paper; the review did not test this itself.
+    sources: [pmid:41516296]
+  - to: question:what-keeps-it-going
+    support: proposed
+    text: >-
+      A 2019 review suggests that HPA-axis dysregulation, including the low cortisol suggested by earlier studies, could add a disturbed regulatory loop that may help keep the body in an altered steady state; it states that the causal links between systems are unknown.
+    sources: [pmid:31330791]
 last_checked:
   date: 2026-11-02
   by: ai_pair
