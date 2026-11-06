@@ -61,8 +61,9 @@ items:
   level_reason[5]:
     text: Mot disse funnene fant en studie fra New York med 58 pasienter og 25 stillesittende kontroller ingen endring i maksimalt
       oksygenbruk eller oksygenbruk ved ventilasjonsterskelen på andre dag i noen av gruppene; artikkelen rapporterer at 5
-      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte kriteriene fra 1994 (Fukuda), modifisert slik at de krever PEM. Forfatterne antyder at fall som er rapportert andre steder, kan skyldes
-      lavere innsats på andre dag.
+      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte kriteriene fra 1994 (Fukuda),
+      modifisert slik at de krever PEM. Forfatterne antyder at fall som er rapportert andre steder, kan skyldes lavere innsats
+      på andre dag.
     sources:
     - pmid:42212259
     source_hash: 893c452d42ccc4f11020aa74cc767ade572a0e832a1ba232065b3fa03a730a86
@@ -108,8 +109,8 @@ items:
     - pmid:38965566
     source_hash: 1553fabbcce3721350d1d88372adb46069460b260963bd447dd03466dccd98f1
   contested_reason[1]:
-    text: De to nederlandske klinikkstudiene av kvinner og menn peker samme vei, men diagnosekriteriene som er registrert for
-      dem (International Consensus Criteria) er lest ut fra et referansenummer og ikke bekreftet, og de sammenligner pasienter
+    text: De to nederlandske klinikkstudiene av kvinner og menn peker samme vei, men diagnosekriteriene som er registrert
+      for dem (International Consensus Criteria) er lest ut fra et referansenummer og ikke bekreftet, og de sammenligner pasienter
       med personer som har kronisk utmattelse uten ME/CFS i stedet for med friske kontroller.
     sources:
     - pmid:34198913
@@ -194,6 +195,17 @@ items:
     sources:
     - pmid:31161646
     source_hash: af1bb3781823f66c572621cf579e1aa0758dd54766db7a375a54fa0872984f93
+  links[0]:
+    text: En oversikt over patofysiologien ved trening ved ME/CFS og langvarig covid peker på at få studier direkte har testet
+      hvordan kroppens reaksjoner på trening henger sammen med PEM. Ingen studie på dette kortet setter oksygenbruk eller
+      arbeid i sammenheng med symptomer hos de samme pasientene.
+    sources:
+    - pmid:37054777
+    - pmid:38965566
+    - pmid:31161646
+    - pmid:20937116
+    - pmid:30871578
+    source_hash: 8c552bcff8883191bb72881c0008e17c90844ccd7c5e014879633dbd8c0688c9
   studies[pmid:38965566].finding:
     text: En studie med n=84 pasienter og 71 stillesittende kontroller fant at pasientene, i motsetning til kontrollene, ikke
       gjentok sin første treningstest 24 timer senere, med fall i arbeid, oksygenbruk og puls ved maksimal innsats og i oksygenbruk
@@ -270,3 +282,8 @@ items:
     text: En studie med n=57 pasienter og 25 stillesittende kontroller fant maksimalt oksygenbruk som kunne sammenlignes mellom
       gruppene, og forstyrret pust og hyperventilering under trening oftere hos pasientene.
     source_hash: 2dc947caac750f14d433c9bb884ee683db27bd5708f548881259f59d5a3ad140
+  studies[pmid:37054777].finding:
+    text: En oversikt over patofysiologien ved trening ved ME/CFS og langvarig covid. Den peker på at få studier direkte har
+      testet hvordan kroppens reaksjoner på trening henger sammen med PEM. Sitert på kartet som kilde til en foreslått lenke,
+      ikke som evidens for nivået.
+    source_hash: f230b1a641c49e6949457d764f79c3d0d5652bd00c9712e997a2266b23cd7b51

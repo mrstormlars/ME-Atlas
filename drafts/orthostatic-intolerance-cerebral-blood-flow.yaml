@@ -510,6 +510,16 @@ studies:
       A study of n=278 patients and 30 healthy controls found that pain, fatigue and concentration
       scores rose after a tilt test in patients and were still raised after 7 days, were unchanged in
       controls, and were not related to the size of the fall in blood flow to the brain.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: The card could also be read as a mechanism (why the illness does not resolve), but no source on the card or among the cached reviews states that reading, so no link expresses it; the fall in blood flow to the brain is placed as a measured abnormality (what goes wrong in the body).
+layer: dysfunction
+links:
+  - to: symptom:orthostatic-intolerance
+    support: associated
+    text: >-
+      In a controlled study of 429 patients meeting the Fukuda definition and 44 healthy controls, patients who answered a symptom questionnaire during head-up tilt (the questionnaire was added partway through the study, and the paper does not report how many patients answered it) and reported more orthostatic symptoms had a larger fall in blood flow to the brain at mid-tilt. A later study from the same clinic, of 278 patients, found no relation between the fall in blood flow to the brain and pain, fatigue or concentration scores after the tilt. The first finding has not been repeated by an independent group.
+    sources: [pmid:32140630, pmid:33585505]
 last_checked:
   date: 2026-11-02
   by: ai_pair

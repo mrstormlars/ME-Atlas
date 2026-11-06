@@ -14,11 +14,11 @@ items:
   level_reason[0]:
     text: En kontrollert studie fra en nederlandsk klinikk (Stichting CardioZorg) målte blodstrømmen til hjernen med ultralyd
       av halspulsårene under en tilt-test med hodet opp på 30 minutter hos 429 pasienter og 44 friske kontroller. Alle pasientene
-      oppfylte Fukuda-definisjonen, som ikke krever PEM, og 70% oppfylte også International
-      Consensus Criteria. Ved slutten av tilt-testen hadde blodstrømmen til hjernen falt med 26% hos pasientene og 7% hos
-      kontrollene; fallet var større enn hos kontrollene hos pasienter med POTS, med forsinket ortostatisk hypotensjon og
-      med normal hjertefrekvens og blodtrykksrespons. Midt i tilt-testen hadde pasienter som oppga flere ortostatiske symptomer
-      et større fall. Ingen uavhengig gruppe har gjentatt dette funnet ennå. Kortet er på nivå 2 på grunn av denne studien.
+      oppfylte Fukuda-definisjonen, som ikke krever PEM, og 70% oppfylte også International Consensus Criteria. Ved slutten
+      av tilt-testen hadde blodstrømmen til hjernen falt med 26% hos pasientene og 7% hos kontrollene; fallet var større enn
+      hos kontrollene hos pasienter med POTS, med forsinket ortostatisk hypotensjon og med normal hjertefrekvens og blodtrykksrespons.
+      Midt i tilt-testen hadde pasienter som oppga flere ortostatiske symptomer et større fall. Ingen uavhengig gruppe har
+      gjentatt dette funnet ennå. Kortet er på nivå 2 på grunn av denne studien.
     sources:
     - pmid:32140630
     source_hash: 2782d4c3f8ebb9b018c1687d3e9979eb5aafb78fef7841a72e86fc16f83eb680
@@ -32,10 +32,9 @@ items:
     source_hash: c6e516ad120161377ec2924187f12f889084acd787e1d55eeb60a083d0096829
   level_reason[2]:
     text: En tidligere kontrollert studie fra Johns Hopkins, av 23 pasienter som oppfylte CDC-kriteriene (versjon ikke oppgitt,
-      som ikke krever PEM) og 14 friske kontroller, fant en unormal respons på oppreist
-      tilt hos 22 av 23 pasienter og 4 av 14 kontroller, inkludert trinn med legemidlet isoproterenol; i det første trinnet,
-      uten legemidler, hos 70% av pasientene og ingen kontroller. En av forfatterne er også forfatter av den nederlandske
-      studien, så de to er ikke uavhengige.
+      som ikke krever PEM) og 14 friske kontroller, fant en unormal respons på oppreist tilt hos 22 av 23 pasienter og 4 av
+      14 kontroller, inkludert trinn med legemidlet isoproterenol; i det første trinnet, uten legemidler, hos 70% av pasientene
+      og ingen kontroller. En av forfatterne er også forfatter av den nederlandske studien, så de to er ikke uavhengige.
     sources:
     - pmid:7674527
     - pmid:32140630
@@ -106,12 +105,12 @@ items:
     - pmid:33050553
     source_hash: ee606602d489519b85fc5c869658d581f2414a3192ddb3e4ee0404ade295bb34
   badge_reasons.explains_pem[0]:
-    text: 'Ingen studie på nivå 2 eller høyere måler PEM og kobler den til blodstrømmen
-      til hjernen hos de samme pasientene. En studie fra den nederlandske klinikken, av pasienter som oppfylte både Fukuda-definisjonen
-      og International Consensus Criteria, fulgte skårer for smerte, utmattelse og konsentrasjon etter en tilt-test hos 278
-      pasienter og 30 friske kontroller: skårene økte hos pasientene og var fortsatt høyere etter 7 dager, mens kontrollenes
-      ikke endret seg. Størrelsen på fallet i blodstrømmen til hjernen hang ikke sammen med endringen i symptomer. En passiv
-      tilt er ortostatisk stress, ikke fysisk eller mental anstrengelse, så kortet regner den ikke som et direkte mål på PEM.'
+    text: 'Ingen studie på nivå 2 eller høyere måler PEM og kobler den til blodstrømmen til hjernen hos de samme pasientene.
+      En studie fra den nederlandske klinikken, av pasienter som oppfylte både Fukuda-definisjonen og International Consensus
+      Criteria, fulgte skårer for smerte, utmattelse og konsentrasjon etter en tilt-test hos 278 pasienter og 30 friske kontroller:
+      skårene økte hos pasientene og var fortsatt høyere etter 7 dager, mens kontrollenes ikke endret seg. Størrelsen på fallet
+      i blodstrømmen til hjernen hang ikke sammen med endringen i symptomer. En passiv tilt er ortostatisk stress, ikke fysisk
+      eller mental anstrengelse, så kortet regner den ikke som et direkte mål på PEM.'
     sources:
     - pmid:33585505
     source_hash: f55b727b534877d87d219295b6b3125c40e6396206a9c22409423328204d46ba
@@ -125,10 +124,22 @@ items:
     source_hash: f7808c600d8c98e695f3387756d98db1ae8b73ded19fd1e6c96debaede13f538
   early_signals[0]:
     text: En studie av n=62 pasienter og 35 kontroller fant lavt karbondioksid i utåndingsluften ved stående stilling (ortostatisk
-      hypokapni) hos 20,6% av pasientene og 2,9% av kontrollene. Ikke gjentatt ennå av en uavhengig gruppe med kontrollerte diagnosekriterier.
+      hypokapni) hos 20,6% av pasientene og 2,9% av kontrollene. Ikke gjentatt ennå av en uavhengig gruppe med kontrollerte
+      diagnosekriterier.
     sources:
     - pmid:17263876
     source_hash: 3460dbbd2cdadd287c06322172cff14efebc1f7a8ef9e2217a6a36070f90c7bd
+  links[0]:
+    text: I en kontrollert studie av 429 pasienter som oppfylte Fukuda-kriteriene og 44 friske kontroller hadde pasienter
+      som svarte på et symptomspørreskjema under head-up tilt og rapporterte flere ortostatiske symptomer, et større fall
+      i blodstrømmen til hjernen midt i tilten (spørreskjemaet ble lagt til underveis i studien, og artikkelen oppgir ikke
+      hvor mange pasienter som svarte på det). En senere studie fra samme klinikk, med 278 pasienter, fant ingen sammenheng
+      mellom fallet i blodstrømmen til hjernen og skårer for smerte, utmattelse eller konsentrasjon etter tilten. Det første
+      funnet er ikke gjentatt av en uavhengig gruppe.
+    sources:
+    - pmid:32140630
+    - pmid:33585505
+    source_hash: ff9632700fd7325895faead85580bfead59125fcacc42d33fb4b7cdc9c375161
   studies[pmid:32140630].finding:
     text: En studie av n=429 pasienter og 44 friske kontroller fant at blodstrømmen til hjernen falt med 26% ved slutten av
       en tilt-test med hodet opp hos pasientene og med 7% hos kontrollene, med et større fall hos pasienter med POTS, forsinket

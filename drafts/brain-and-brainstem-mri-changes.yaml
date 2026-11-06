@@ -535,6 +535,10 @@ studies:
       A study of n=25 adolescents with ME/CFS and 23 healthy controls found no significant group
       differences in white matter properties on diffusion MRI, apart from one tract difference that
       did not survive correction for intracranial volume.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links: []
 last_checked:
   date: 2026-11-02
   by: ai_pair

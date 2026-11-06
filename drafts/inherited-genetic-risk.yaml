@@ -553,6 +553,25 @@ studies:
     finding: >-
       A study of n=95 patients and 77 healthy controls found no variant in the targeted genes that
       remained significant after correction for multiple testing; the lowest, in ADRA1A, had P = 0.059.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: predisposition
+links:
+  - to: question:who-is-vulnerable
+    support: proposed
+    text: >-
+      A study of n=426 patients meeting the Canadian Consensus Criteria and 4511 healthy controls found two HLA gene variants more often in patients, and a study of n=305 patients and 201 controls found two variants linked to autoimmune diseases more often in patients. A study of 25 patients assessed with CDC criteria (version not stated) and 36 medical controls found higher rates of the illness in patients' first-degree relatives. On infectious onset, the Berlin study found its variants more often only in the 232 patients whose illness began with an infection, while in the HLA study the share with infectious onset did not differ significantly between carriers and non-carriers. None of these findings has been repeated by an independent group.
+    sources: [pmid:32210306, pmid:32328064, pmid:11702053]
+  - to: autoimmunity-autoantibodies-b-cells
+    support: proposed
+    text: >-
+      A study of n=305 patients and 201 healthy controls found two gene variants linked to autoimmune diseases (in PTPN22 and CTLA4) more often in patients whose illness began with an infection; the authors write that autoimmunity might play a role in ME/CFS with an infection-triggered onset. The tests were one-sided, with no correction reported for the five variants tested, and the confidence interval for PTPN22 in all patients includes 1. In the same patients it counted B cells and found no difference in B cell numbers between carriers and non-carriers of the risk variants; autoantibodies (TPO, ANA) were measured in some patients but not reported by variant. Not yet repeated.
+    sources: [pmid:32328064]
+  - to: reduced-nk-cell-function
+    support: proposed
+    text: >-
+      A study of n=418 patients and 473 healthy controls found differences in some variants of the KIR genes, which code for receptors on natural killer cells; of 76 variants tested, only one, less common in patients, passed the corrected threshold the authors give. It did not measure natural killer cell function. Not yet repeated.
+    sources: [pmid:40897283]
 last_checked:
   date: 2026-11-02
   by: ai_pair

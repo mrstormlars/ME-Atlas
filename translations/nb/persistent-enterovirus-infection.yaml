@@ -66,11 +66,32 @@ items:
     source_hash: 099572ca54a49b8538f9a99cf806758c1793efcee1f5fd4ac52927e9396013d4
   subgroups[0]:
     text: I en muskelstudie fra London var 9 av de 10 pasientene med enterovirus i muskel blant de 28 med et unormalt laktatsvar
-      på trening. I en studie fra California kom magebiopsiene fra pasienter med kroniske magebesvær. Diagnosekriteriene i begge studiene er ikke bekreftet ennå. Dette funnet fra én enkelt studie er ikke gjentatt.
+      på trening. I en studie fra California kom magebiopsiene fra pasienter med kroniske magebesvær. Diagnosekriteriene i
+      begge studiene er ikke bekreftet ennå. Dette funnet fra én enkelt studie er ikke gjentatt.
     sources:
     - pmid:14570830
     - pmid:17872383
     source_hash: 79c30c695d1912098ae1a19f66b1c1e1163e0fc90a2455aaa4b9f217eb0a476d
+  links[0]:
+    text: 'Forfatterne av en muskelstudie fra 1993 (n=158 pasienter med postviralt utmattelsessyndrom, 152 kontrollprøver
+      av muskel; tittelen sier chronic fatigue syndrome) foreslo, i analogi med enteroviral myokarditt, at enterovirus-RNA
+      som blir værende i muskel, tyder på at noen tilfeller skyldes en tidligere betennelse i muskelen forårsaket av virus.
+      Diagnosekriteriene er ikke kontrollert ennå. Ingen av disse funnene er gjentatt av en uavhengig gruppe med kontrollerte
+      diagnosekriterier: uavhengige muskelstudier fra Liverpool (n=34) og Stockholm (n=29, CDC-kriterier) fant ikke enterovirus-RNA.'
+    sources:
+    - pmid:8409778
+    - pmid:8777836
+    - pmid:8863367
+    source_hash: 2e2d66bcaa6a32c80697e9a11d9933b34856350afaab31971fb4846ba61620df
+  links[1]:
+    text: 'En studie fra London i 2003 (n=48 pasienter; 29 kontroller som bare ga muskelprøver, alle negative for enterovirus)
+      ga funnet tittelen enterovirus-related metabolic myopathy: 9 av de 10 pasientene med enterovirus-RNA i muskel var blant
+      de 28 med et unormalt laktatsvar i blodet på anstrengelse, mot 1 av de 20 med et normalt svar. Den målte laktat i blodet
+      rundt én belastningstest, ikke oksygenbruk eller arbeid ved en gjentatt test dagen etter. Diagnosekriteriene er ikke
+      kontrollert ennå, og funnet er ikke replikert.'
+    sources:
+    - pmid:14570830
+    source_hash: aa5d54bdb39961a385107b030474ee834cfd8f94426b649c3de90bde7d9fc973
   studies[pmid:42941838].finding:
     text: En studie med n=6 pasienter og 2 friske kontroller (fra en kohort på 15 pasienter og 5 kontroller) fant ikke enterovirus-RNA
       i fullblod hos noen, verken direkte eller etter forsøk på å dyrke virus fra blodceller eller plasmavesikler; dette er

@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import datetime as dt
 import re
+import shutil
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -200,9 +201,15 @@ class Site:
         self.cards.mkdir()
         self.drafts.mkdir()
         self.glossary = make_glossary(tmp_path, extra_terms)
+        # Never the repo's real content folder: only its fixed texts, no symptoms or open questions.
+        self.content = tmp_path / "site-content"
+        self.content.mkdir()
+        for part in ("i18n", "methods"):
+            shutil.copytree(REPO_ROOT / "content" / part, self.content / part)
         self.out = tmp_path / "build"
 
     def build(self, *, drafts: bool = False, **options) -> site.BuildResult:
+        options.setdefault("content_dir", self.content)
         return site.build(
             self.cards, self.out, self.glossary, drafts_dir=self.drafts if drafts else None, today=TODAY, **options
         )
@@ -218,6 +225,8 @@ class Site:
             str(self.glossary),
             "--out",
             str(self.out),
+            "--content-dir",
+            str(self.content),
         ]
         return site.main(args + (extra or []) + (["--drafts"] if drafts else []))
 

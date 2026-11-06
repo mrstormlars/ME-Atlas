@@ -351,6 +351,15 @@ studies:
       confirmed or probable COVID-19 (infection confirmed by test in one) found strong histories of
       allergies in all three and elevated plasma histamine in two, judged against the laboratory
       reference range; serum tryptase, reported for one patient, was normal.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+layer: dysfunction
+links:
+  - to: symptom:orthostatic-intolerance
+    support: associated
+    text: >-
+      A retrospective study of n=285 patients meeting the 2015 Institute of Medicine criteria, from one Vienna clinic, found orthostatic intolerance confirmed by a tilt or standing test more often in patients judged to have mast cell activation than in the others (70.3% against 49.7%, of 233 patients with usable data). Mast cell activation was judged from patient records of symptoms and response to medicines, not from measured mediators, and there was no control group. The symptoms used to judge mast cell activation included low blood pressure, fast heart rate and fainting, which overlap with orthostatic intolerance, so the two ends were not measured independently. Not yet repeated by an independent group; the same paper's online survey of self-reported diagnoses, whose case definition was not checked, is not counted.
+    sources: [pmid:41300853]
 last_checked:
   date: 2026-11-02
   by: ai_pair

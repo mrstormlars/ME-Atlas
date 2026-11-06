@@ -1,0 +1,18 @@
+# Open-question nodes of the causal map: questions, never claims. At most one per layer to begin with.
+# `editorial: true` marks the editorial team's own question (shown as such); `asked_by` cites a publication that asks it.
+- id: who-is-vulnerable
+  layer: predisposition
+  text: Why do some people, and not others, develop ME/CFS after the same infection?
+  editorial: true
+- id: triggers-other-than-infection
+  layer: trigger
+  text: Which triggers other than infection start ME/CFS?
+  editorial: true
+- id: what-keeps-it-going
+  layer: mechanism
+  text: What keeps the illness going after the trigger has passed?
+  editorial: true
+- id: closest-to-symptoms
+  layer: dysfunction
+  text: Which measurable abnormality lies closest to the symptoms, and does it explain PEM?
+  editorial: true

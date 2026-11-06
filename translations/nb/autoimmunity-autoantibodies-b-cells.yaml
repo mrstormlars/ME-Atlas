@@ -151,6 +151,14 @@ items:
     sources:
     - pmid:40703261
     source_hash: b1b3006dea367810a99f698bb0ab3d6b9bdeebf1442d3e43b09d352bc6e98827
+  links[0]:
+    text: En oversiktsartikkel foreslår at antistoffer mot β2 adrenerge og M3 muskarine reseptorer, som bidrar til å utvide
+      blodkar, kan svekke sirkulasjonen og oksygentilførselen. Den viser til rapporter om redusert blodstrøm til muskler og
+      hjerne ved ME/CFS som forenlig med denne ideen. Oversiktsartikkelens sammendrag omtaler ikke blodstrøm ved stående stilling,
+      og ideen ble ikke testet hos pasienter.
+    sources:
+    - pmid:32247028
+    source_hash: ccbe3d3403f23e2960d5be88b1135cac0e480f0e7f099fdd8b8f377621a072cf
   studies[pmid:34589868].finding:
     text: En studie med n=48 pasienter i to kohorter på 24 og 24 matchede friske kontroller fant høyere antistoffer mot de
       muskarine reseptorene M3 og M4 i begge kohortene og mot de adrenerge reseptorene β1 og β2 i én, uten korrelasjon mellom
@@ -214,3 +222,8 @@ items:
       fant at fem immunadsorpsjonsøkter senket IgG med 79 % og β2-reseptorantistoffer med 77 %, og at skårene for fysisk funksjon
       økte med i gjennomsnitt 17,75 poeng, der 14 av 20 ble bedre med minst ti poeng.
     source_hash: 5937da0fb730aeb21e2f289db96d40e480636b1e9fa10b622571299b4ad8d074
+  studies[pmid:32247028].finding:
+    text: En oversiktsartikkel av forfattere av antistoffstudier på dette kortet foreslår at antistoffer mot β2 adrenerge
+      og M3 muskarine reseptorer kan svekke sirkulasjonen og oksygentilførselen. Den er sitert på kartet som kilde til en
+      foreslått lenke, ikke som evidens for nivået.
+    source_hash: 5a411b854ab10b02ba1eb37fc764f1aca31bc68c539a2009b32e1759adba0e6b

@@ -74,4 +74,4 @@ Not checked by code: that the cited study really measured both ends in the same 
 
 - A pipeline subcommand that merges the proposals into a draft. For now the founder (or a chat session at the founder's request) copies an accepted layer and links into the draft by hand.
 - The drawn map (boxes, arrows, line styles), contested marks on links, subgroup-specific maps, weighting or scoring of nodes beyond the counts, and automatic link proposals from the weekly run.
-- Placing the 16 cards, writing the symptom list and the open questions: the first mapping, a separate pull request (plan step 6).
+- Done 2026-11-06: the first mapping (16 cards placed, 17 links, symptom list from the ICC 2011, four editorial open questions); rulings in DECISIONS. Still open: a verifiable IOM 2015 or CCC record for the symptom list, and a second drafting pass with per-card excerpts of the cached reviews (the drafters could not read the full texts in the first run).

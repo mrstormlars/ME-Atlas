@@ -280,6 +280,11 @@ studies:
       A study of n=160 patients with skin biopsies found that 31% of biopsies were consistent with small
       fibre neuropathy (epidermal innervation at or below 5.0% of predicted), and that the severity of
       nerve fibre loss did not correlate with exercise test measures.
+# Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
+# checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Other reading: A mechanism reading also exists, in which small fibre damage is one form of dysautonomia upstream of vascular changes such as shunting of blood past the muscle capillaries (pmid:37054777, pmid:33577778); no card or open question covers peripheral oxygen extraction or shunting, so that link waits for such a card or question.
+layer: dysfunction
+links: []
 last_checked:
   date: 2026-11-02
   by: ai_pair
