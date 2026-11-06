@@ -112,7 +112,7 @@ def test_both_trees_share_one_stylesheet_and_one_script(proj_tmp):
 def test_every_norwegian_page_says_nb_carries_the_notice_and_links_to_its_english_page(proj_tmp):
     out = built(proj_tmp, make_card("one", "Fictional one", 2))
     pages = nb_files(out)
-    assert len(pages) == 5
+    assert len(pages) == 6
     for path in pages:
         doc = parse(path.read_text(encoding="utf-8"))
         assert doc.find("html").get("lang") == "nb", path
@@ -156,7 +156,13 @@ def test_navigation_inside_the_norwegian_tree_stays_in_norwegian(proj_tmp):
     for path in nb_files(out):
         doc = parse(path.read_text(encoding="utf-8"))
         links = doc.find("nav").find_all("a")
-        assert [norm(a.text()) for a in links] == ["Forside", "Hva som er endret", "Metode", "Ordliste"], path
+        assert [norm(a.text()) for a in links] == [
+            "Forside",
+            "Hva som er endret",
+            "Årsakskart",
+            "Metode",
+            "Ordliste",
+        ], path
         for a in links:
             assert (path.parent / a.get("href")).resolve().is_relative_to((out / "nb").resolve()), (path, a.get("href"))
         brand = doc.find(cls="brand").find("a")
@@ -967,3 +973,172 @@ def test_a_translation_file_for_a_card_that_is_not_in_the_build_is_a_warning(pro
     assert (
         "[nb] gone: a translation file exists but this build has no English card 'gone'" in result.translation_warnings
     )
+
+
+# --- the causal map page in Norwegian -----
+
+
+def nb_map_project(proj: Site, tmp_path: Path, *, translate_link: bool = True, nb_content: bool = True):
+    """Two cards, one link between them and one to a symptom. Both cards and the symptom are translated, so a note on
+    a link sentence can only come from the link text itself."""
+    from test_site_map import map_content, map_link
+
+    content = map_content(tmp_path)
+    first = make_card(
+        "first-idea",
+        "Fictional first idea",
+        2,
+        layer="trigger",
+        links=[
+            map_link("second-idea", "A fictional review proposes a link."),
+            map_link("symptom:fatigue", "A fictional link to fatigue."),
+        ],
+    )
+    second = make_card("second-idea", "Fictional second idea", 1, layer="mechanism")
+    write_card(proj.cards, first)
+    write_card(proj.cards, second)
+    skip = () if translate_link else ("links[1]",)
+    write_sidecar(proj, first, skip=skip, **{"links[0]": "NB En fiktiv oversikt foreslår en lenke."})
+    write_sidecar(proj, second)
+    if nb_content:
+        write_yaml(content / "symptoms.nb.yaml", [{"id": "fatigue", "name": "Fiktiv utmattelse"}])
+    return content
+
+
+def test_the_norwegian_map_uses_fresh_link_texts_and_norwegian_labels(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path)
+    assert proj_tmp.build(content_dir=content).errors == []
+    doc = page(proj_tmp.out, "nb/map.html")
+    assert doc.find("html").get("lang") == "nb"
+    assert norm(doc.find("h1").text()) == "Årsakskart"
+    assert [norm(h.text()) for h in doc.find_all("h2") if (h.get("id") or "").startswith("layer-")] == [
+        "Disposisjon",
+        "Utløser",
+        "Vedlikeholdende mekanisme",
+        "Målbar dysfunksjon",
+        "Symptom",
+    ]
+    items = doc.find("article", id="card-first-idea").find_all("li")
+    assert "NB En fiktiv oversikt foreslår en lenke. — foreslått [1]" in norm(items[0].text())
+    assert items[0].find(cls="untranslated") is None
+    assert items[0].find("a", "ref").get("href") == "hypotheses/first-idea.html#study-pmid:00000001"
+
+
+def test_a_link_text_without_a_fresh_translation_is_english_with_the_note(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path, translate_link=False)
+    assert proj_tmp.build(content_dir=content).errors == []
+    items = page(proj_tmp.out, "nb/map.html").find("article", id="card-first-idea").find_all("li")
+    english = [s for s in items[1].find_all("span") if s.get("lang") == "en"]
+    assert [norm(e.text()) for e in english] == ["A fictional link to fatigue."]
+    assert "Denne delen er ikke oversatt ennå." in norm(items[1].text())
+    assert "Denne delen er ikke oversatt ennå." not in norm(items[0].text())
+
+
+def test_a_card_without_a_norwegian_file_has_its_links_in_english_with_the_note(proj_tmp, tmp_path):
+    from test_site_map import map_content, map_link
+
+    content = map_content(tmp_path)
+    write_card(
+        proj_tmp.cards,
+        make_card(
+            "only-en", "Fictional only en", 1, layer="trigger", links=[map_link("symptom:fatigue", "English only.")]
+        ),
+    )
+    assert proj_tmp.build(content_dir=content).errors == []
+    item = page(proj_tmp.out, "nb/map.html").find("article", id="card-only-en").find("li")
+    assert "English only." in norm(item.text()) and "Denne delen er ikke oversatt ennå." in norm(item.text())
+
+
+def test_support_labels_are_norwegian(proj_tmp, tmp_path):
+    from test_site_map import map_content, map_link
+
+    content = map_content(tmp_path)
+    links = [
+        map_link("symptom:fatigue", "One.", "proposed"),
+        map_link("question:own", "Two.", "associated"),
+        map_link("question:asked", "Three.", "directional", ["pmid:00000002"]),
+    ]
+    write_card(proj_tmp.cards, make_card("labels", "Fictional labels", 1, layer="trigger", links=links))
+    assert proj_tmp.build(content_dir=content).errors == []
+    text = [
+        norm(li.text()) for li in page(proj_tmp.out, "nb/map.html").find("article", id="card-labels").find_all("li")
+    ]
+    assert [t.split(": ", 1)[1].split(" [")[0].split(" — ")[1] for t in text] == [
+        "foreslått",
+        "samvariasjon",
+        "retning støttet",
+    ]
+
+
+def test_norwegian_symptom_and_question_texts_come_from_the_nb_content_files(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path)
+    write_yaml(content / "open-questions.nb.yaml", [{"id": "own", "text": "Hva holder det fiktive signalet nede?"}])
+    assert proj_tmp.build(content_dir=content).errors == []
+    doc = page(proj_tmp.out, "nb/map.html")
+    assert norm(doc.find(id="symptom-fatigue").text()).startswith("Fiktiv utmattelse")
+    assert "Hva holder det fiktive signalet nede?" in norm(doc.find(id="question-own").text())
+    assert "Redaksjonens eget spørsmål" in norm(doc.find(id="question-own").text())
+    assert "Stilt i:" in norm(doc.find(id="question-asked").text())
+    # no note on the translated ones; the question without a translation is English with the note
+    assert "ikke oversatt" not in norm(doc.find(id="symptom-fatigue").text())
+    asked = doc.find(id="question-asked")
+    assert "What starts the fictional change?" in norm(asked.text()) and "Denne delen er ikke oversatt ennå." in norm(
+        asked.text()
+    )
+    assert any(s.get("lang") == "en" for s in asked.find_all("span"))
+    # the English page is untouched by the Norwegian files
+    assert "Fiktiv utmattelse" not in (proj_tmp.out / "map.html").read_text(encoding="utf-8")
+
+
+def test_without_nb_content_files_symptoms_and_questions_fall_back_to_english_with_the_note(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path, nb_content=False)
+    assert proj_tmp.build(content_dir=content).errors == []
+    node = page(proj_tmp.out, "nb/map.html").find(id="symptom-fatigue")
+    assert "Fictional fatigue" in norm(node.text()) and "Denne delen er ikke oversatt ennå." in norm(node.text())
+
+
+def test_an_nb_content_entry_for_an_unknown_id_stops_the_build(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path)
+    write_yaml(content / "symptoms.nb.yaml", [{"id": "ghost", "name": "Spøkelse"}])
+    result = proj_tmp.build(content_dir=content)
+    assert any("'ghost' is not an id of the English file" in e for e in result.errors)
+    assert not proj_tmp.out.exists()
+
+
+def test_the_norwegian_convergence_labels_and_counts(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path)
+    assert proj_tmp.build(content_dir=content).errors == []
+    doc = page(proj_tmp.out, "nb/map.html")
+    assert norm(doc.find("h2", id="common-mechanisms").text()) == "Kandidater til felles mekanisme"
+    assert norm(doc.find("h2", id="roots").text()) == "Kandidater til rot"
+    roots = doc.find(cls="map-convergence")
+    assert [norm(li.text()) for li in roots.find_all("li")] == ["NB Fictional first idea — 2 lenker ut"]
+
+
+def test_every_map_string_exists_in_both_languages_with_the_same_placeholders():
+    en = i18n.load_strings(I18N_DIR / "en.yaml")
+    nb = i18n.load_strings(I18N_DIR / "nb.yaml")
+    keys = [k for k in en if k.startswith(("map.", "layer.", "support.")) or k == "page.map"]
+    assert len(keys) >= 25 and all(k in nb for k in keys)
+    assert i18n.compare(en, nb, "nb") == []
+
+
+def test_a_link_translation_whose_numbers_differ_is_left_out_of_the_map_with_a_warning(proj_tmp, tmp_path):
+    from test_site_map import map_content, map_link
+
+    content = map_content(tmp_path)
+    card = make_card(
+        "numbers",
+        "Fictional numbers",
+        1,
+        layer="trigger",
+        links=[map_link("symptom:fatigue", "A fictional study of 40 patients found a relation.")],
+    )
+    write_card(proj_tmp.cards, card)
+    write_sidecar(proj_tmp, card, **{"links[0]": "NB En fiktiv studie av 400 pasienter fant en sammenheng."})
+    result = proj_tmp.build(content_dir=content)
+    assert result.errors == []
+    assert any("numbers" in w and "links[0]" in w for w in result.translation_warnings)
+    item = page(proj_tmp.out, "nb/map.html").find("article", id="card-numbers").find("li")
+    assert "A fictional study of 40 patients found a relation." in norm(item.text())
+    assert "400" not in norm(item.text()) and "Denne delen er ikke oversatt ennå." in norm(item.text())

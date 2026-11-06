@@ -4,9 +4,9 @@ Builds plain HTML from approved cards (and, with ``--drafts``, drafts) into a di
 
     uv run python -m me_atlas.site build [--drafts] [--out build]
 
-Pages: front page, one page per hypothesis, glossary, what changed, methods. English is written at the top of the
-output directory and every other language in ``content/i18n/`` in a folder of its own (``build/nb/``). No external
-fonts, scripts or styles; every page works from ``file://``. See ``docs/site.md`` and ``docs/translation.md``.
+Pages: front page, one page per hypothesis, glossary, what changed, causal map, methods. English is written at the top
+of the output directory and every other language in ``content/i18n/`` in a folder of its own (``build/nb/``).
+No external fonts, scripts or styles; every page works from ``file://``. See ``docs/site.md``, ``docs/translation.md``.
 """
 
 from __future__ import annotations
@@ -27,6 +27,7 @@ from markupsafe import Markup, escape
 
 from me_atlas import cards as cardlib
 from me_atlas import i18n, translations
+from me_atlas import map as maplib
 from me_atlas.cards import Card, ChangeLogEntry, SourcedText, Study
 from me_atlas.glossary import (
     Glossary,
@@ -246,6 +247,19 @@ class Page:
         )
         return Markup("{} {}{}").format(self._english(item, self.mark(item.text)), refs, self._note(item))
 
+    def plain(self, item: object, text: str) -> Markup:
+        """Text of a translatable item without references (the map page puts them after the support label)."""
+        return self._english(item, self.mark(text))
+
+    def note(self, item: object) -> Markup:
+        return self._note(item)
+
+    def ref_to(self, href: str, n: int) -> Markup:
+        """A numbered reference to an anchor on another page."""
+        return Markup('<a class="ref" href="{href}" aria-label="{label}">[{n}]</a>').format(
+            href=href, n=n, label=self.source_label.replace("{n}", str(n))
+        )
+
     def finding(self, study: Study) -> Markup:
         return self._english(study, self.mark(study.finding)) + self._note(study)
 
@@ -276,7 +290,7 @@ def _environment(content_dir: Path) -> Environment:
 
 
 def _check_inputs(
-    cards_dir: Path, drafts_dir: Path | None, glossary_path: Path, today: dt.date
+    cards_dir: Path, drafts_dir: Path | None, glossary_path: Path, today: dt.date, content_dir: Path
 ) -> tuple[list[str], Glossary | None]:
     problems: list[str] = []
     paths: list[Path] = [cards_dir]
@@ -286,7 +300,7 @@ def _check_inputs(
             paths += sorted(p for p in drafts_dir.glob("*.yaml") if p.name != cardlib.CHANGELOG_NAME)
         else:
             problems.append(f"{drafts_dir}: path does not exist")
-    _, issues = cardlib.validate_paths(paths, today)
+    _, issues = cardlib.validate_paths(paths, today, content_dir=content_dir, cards_dir=cards_dir)
     problems += [str(i) for i in issues]
     glossary: Glossary | None = None
     try:
@@ -384,6 +398,8 @@ class _Shared:
     entries: list[ChangeLogEntry]
     drafts: bool
     built: str
+    map_content: maplib.MapContent = field(default_factory=maplib.MapContent)
+    map_local: dict[str, tuple[dict[str, str], dict[str, str]]] = field(default_factory=dict)
 
 
 @dataclass
@@ -391,6 +407,133 @@ class _Rendered:
     pages: dict[str, str]  # path relative to the output directory
     uses: dict[str, list[tuple[str, str]]]
     warnings: list[str]
+
+
+@dataclass(frozen=True)
+class MapText:
+    """A name or text on the map page; ``english`` is true when a page of another language shows the English."""
+
+    text: str
+    english: bool = False
+
+
+@dataclass(frozen=True)
+class LinkView:
+    link: object  # the Link as this language shows it (a Link, kept opaque for the page's fallback marking)
+    support: str
+    target: MapText
+    target_href: str
+    refs: tuple[tuple[int, str], ...]  # (number, href on the card page)
+
+
+@dataclass(frozen=True)
+class CardView:
+    slug: str
+    name: str
+    name_in_english: bool
+    links: tuple[LinkView, ...]
+
+
+@dataclass(frozen=True)
+class SymptomView:
+    id: str
+    name: MapText
+    sources: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class QuestionView:
+    id: str
+    text: MapText
+    asked_by: tuple[str, ...]
+    editorial: bool
+
+
+@dataclass(frozen=True)
+class SectionView:
+    key: str  # a layer, or maplib.UNPLACED
+    cards: tuple[CardView, ...]
+    symptoms: tuple[SymptomView, ...]
+    questions: tuple[QuestionView, ...]
+
+
+@dataclass(frozen=True)
+class ConvergenceView:
+    name: MapText
+    href: str
+    count: int
+
+
+def _map_views(
+    code: str,
+    local_cards: Sequence[translations.LocalCard],
+    english_cards: Sequence[Card],
+    content: maplib.MapContent,
+    local_names: dict[str, str],
+    local_texts: dict[str, str],
+) -> tuple[list[SectionView], list[ConvergenceView], list[ConvergenceView]]:
+    """The map page as one language shows it. Structure and counts come from the English cards; link texts and names
+    come from the translated cards, symptom names and question texts from the language's content files."""
+    default = code == DEFAULT_LANGUAGE
+    graph = maplib.build_graph(english_cards, content)
+    by_slug = {lc.card.slug: lc for lc in local_cards}
+
+    def local(table: dict[str, str], key: str, english: str) -> MapText:
+        if default:
+            return MapText(english)
+        return MapText(table[key], False) if key in table else MapText(english, True)
+
+    def name_of(key: str) -> MapText:
+        node = graph.nodes[key]
+        if node.kind == "card":
+            lc = by_slug[key]
+            return MapText(lc.card.name, lc.name_fallback and not default)
+        return local(local_names if node.kind == "symptom" else local_texts, key, node.name)
+
+    def href_of(key: str) -> str:
+        node = graph.nodes[key]
+        if node.kind == "card":
+            return f"hypotheses/{key}.html"
+        return "#" + key.replace(":", "-")
+
+    sections: list[SectionView] = []
+    for layer in (*maplib.LAYER_ORDER, maplib.UNPLACED):
+        cards_here: list[CardView] = []
+        for node in graph.in_layer(layer, "card"):
+            lc = by_slug[node.key]
+            numbers: dict[str, int] = {}
+            views: list[LinkView] = []
+            for link in lc.card.links:
+                if link.to not in graph.nodes:
+                    continue
+                for source in link.sources:
+                    numbers.setdefault(source, len(numbers) + 1)
+                refs = tuple(
+                    (numbers[x], f"hypotheses/{node.key}.html#{study_anchor(x)}")
+                    for x in sorted(link.sources, key=numbers.__getitem__)
+                )
+                views.append(LinkView(link, link.support, name_of(link.to), href_of(link.to), refs))
+            cards_here.append(CardView(node.key, lc.card.name, lc.name_fallback and not default, tuple(views)))
+        symptoms = tuple(
+            SymptomView(s.id, local(local_names, maplib.SYMPTOM_PREFIX + s.id, s.name), tuple(s.sources))
+            for s in content.symptoms
+            if layer == "symptom"
+        )
+        questions = tuple(
+            QuestionView(
+                q.id, local(local_texts, maplib.QUESTION_PREFIX + q.id, q.text), tuple(q.asked_by), q.editorial
+            )
+            for q in content.questions
+            if q.layer == layer
+        )
+        if layer == maplib.UNPLACED and not cards_here:
+            continue
+        sections.append(SectionView(layer, tuple(cards_here), symptoms, questions))
+
+    def convergence(found: list[tuple[maplib.Node, int]]) -> list[ConvergenceView]:
+        return [ConvergenceView(name_of(n.key), href_of(n.key), count) for n, count in found]
+
+    return sections, convergence(maplib.common_mechanisms(graph)), convergence(maplib.candidate_roots(graph))
 
 
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:
@@ -553,6 +696,18 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             groups=split_studies(card),
         )
     render("changes.html", "changes.html", txt0["page.changes"], entries=shared.entries, names=names)
+    local_names, local_texts = shared.map_local.get(code, ({}, {}))
+    sections, common, roots = _map_views(code, local_cards, shared.cards, shared.map_content, local_names, local_texts)
+    render(
+        "map.html",
+        "map.html",
+        txt0["page.map"],
+        fallback=frozenset().union(*(lc.fallback for lc in local_cards)),
+        note=txt0["untranslated.part"] if not default else None,
+        sections=sections,
+        common=common,
+        roots=roots,
+    )
     render(
         "methods.html",
         "methods.html",
@@ -602,7 +757,7 @@ def build(
     translations_dir = Path(translations_dir) if translations_dir is not None else cards_dir.parent / "translations"
     result = BuildResult()
 
-    problems, glossary = _check_inputs(cards_dir, drafts_dir, glossary_path, today)
+    problems, glossary = _check_inputs(cards_dir, drafts_dir, glossary_path, today, content_dir)
     if glossary is None:
         result.errors = problems
         return result
@@ -621,9 +776,17 @@ def build(
                 problems += exc.problems
         sidecars[code], schema_problems = translations.load_language(translations_dir, code)
         problems += schema_problems
+    map_content, _ = maplib.load_content(content_dir)  # its problems are already in `problems` (rule M6)
+    map_local: dict[str, tuple[dict[str, str], dict[str, str]]] = {}
+    for code in strings:
+        if code != DEFAULT_LANGUAGE:
+            names, texts, local_problems = maplib.load_local_texts(content_dir, code, map_content)
+            map_local[code] = (names, texts)
+            problems += local_problems
     if problems:
         result.errors = problems
         return result
+    map_warnings = [f"map: {w}" for w in maplib.content_warnings(map_content)]
 
     published = {c.slug: c for c in cardlib.load_cards(cards_dir)}
     by_slug = dict(published)
@@ -646,6 +809,8 @@ def build(
         entries=entries,
         drafts=drafts_dir is not None,
         built=today.isoformat(),
+        map_content=map_content,
+        map_local=map_local,
     )
     pages: dict[str, str] = {}
     try:
@@ -663,6 +828,7 @@ def build(
         result.warnings = []
         result.translation_warnings = []
         return result
+    result.warnings += map_warnings
 
     try:
         _prepare_output(out_dir)

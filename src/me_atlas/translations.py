@@ -98,6 +98,8 @@ def english_items(card: Card) -> dict[str, EnglishItem]:
         add_sourced(f"subgroups[{i}]", s)
     for i, s in enumerate(card.early_signals):
         add_sourced(f"early_signals[{i}]", s)
+    for i, link in enumerate(card.links):
+        add_sourced(f"links[{i}]", link)
     for study in card.studies:
         add(f"studies[{study.id}].finding", study.finding, None)
     return out
@@ -309,6 +311,7 @@ def localise_card(card: Card, check: CardCheck) -> LocalCard:
         ),
         "subgroups": [sourced(f"subgroups[{i}]", s) for i, s in enumerate(card.subgroups)],
         "early_signals": [sourced(f"early_signals[{i}]", s) for i, s in enumerate(card.early_signals)],
+        "links": [sourced(f"links[{i}]", link) for i, link in enumerate(card.links)],
     }
     if card.contested:
         update["contested"] = card.contested.model_copy(

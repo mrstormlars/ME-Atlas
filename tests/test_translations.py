@@ -831,3 +831,58 @@ def test_the_translation_doc_lists_every_locator_kind_the_code_produces(card):
             "early_signals[i]",
             "studies[<id>].finding",
         }, loc
+
+
+# --- links (causal map) -----
+
+
+def card_with_links(tmp_path) -> cardlib.Card:
+    data = card_data()
+    data["links"] = [
+        {"to": "symptom:fatigue", "support": "proposed", "text": "A fictional link.", "sources": ["pmid:00000001"]},
+        {
+            "to": "other-fictional-card",
+            "support": "associated",
+            "text": "A fictional study of 40 patients found them related.",
+            "sources": ["pmid:00000001", "pmid:00000002"],
+        },
+    ]
+    return load_card_from(data, tmp_path)
+
+
+def test_links_are_items_in_card_order_after_the_early_signals(tmp_path):
+    items = tr.english_items(card_with_links(tmp_path))
+    locators = list(items)
+    assert locators[locators.index("early_signals[0]") + 1 :][:2] == ["links[0]", "links[1]"]
+    assert items["links[1]"].text == "A fictional study of 40 patients found them related."
+    assert items["links[1]"].sources == ["pmid:00000001", "pmid:00000002"]
+
+
+def test_a_link_translation_whose_numbers_differ_is_reported_as_invalid(tmp_path):
+    card = card_with_links(tmp_path)
+    problems = invalid(card, "links[1]", text="NB En fiktiv studie av 400 pasienter fant sammenheng.")
+    assert any("numbers differ" in p for p in problems)
+
+
+def test_a_link_translation_with_other_sources_is_invalid(tmp_path):
+    assert any("sources" in p for p in invalid(card_with_links(tmp_path), "links[1]", sources=["pmid:00000001"]))
+
+
+def test_a_fresh_link_translation_is_used_and_a_missing_one_falls_back(tmp_path):
+    card = card_with_links(tmp_path)
+    side = sidecar_for(card, **{"links[0]": "En fiktiv lenke."})
+    del side.items["links[1]"]
+    local = tr.localise_card(card, tr.check_card(card, side, "nb"))
+    assert local.card.links[0].text == "En fiktiv lenke."
+    assert local.card.links[0].to == "symptom:fatigue" and local.card.links[0].support == "proposed"
+    assert local.card.links[1].text == card.links[1].text
+    assert id(card.links[1]) in local.fallback and id(card.links[0]) not in local.fallback
+
+
+def test_a_stale_link_translation_is_stale_when_the_english_text_changes(tmp_path):
+    card = card_with_links(tmp_path)
+    side = sidecar_for(card)
+    changed = card_data()
+    changed["links"] = [card.links[0].model_dump(), {**card.links[1].model_dump(), "text": "A changed link."}]
+    result = tr.check_card(load_card_from(changed, tmp_path), side, "nb")
+    assert status(result, "links[1]") == "stale" and status(result, "links[0]") == "fresh"

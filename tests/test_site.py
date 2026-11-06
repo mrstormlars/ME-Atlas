@@ -1108,7 +1108,7 @@ def test_every_page_has_navigation_footer_statement_and_build_date(proj):
         doc = page(out, rel)
         nav = doc.find("nav")
         labels = [norm(a.text()) for a in nav.find_all("a")]
-        assert labels == ["Front page", "What changed", "Methods", "Glossary"], rel
+        assert labels == ["Front page", "What changed", "Causal map", "Methods", "Glossary"], rel
         footer = norm(doc.find("footer").text())
         assert "No medical or research expert has reviewed this content yet." in footer, rel
         assert "Built 2026-11-01" in footer, rel
@@ -1257,6 +1257,7 @@ def test_build_result_lists_every_written_file(proj):
         "index.html",
         "listed.html",
         "changes.html",
+        "map.html",
         "methods.html",
         "glossary.html",
         "site.css",
@@ -1574,7 +1575,13 @@ def test_the_english_tree_is_unchanged_apart_from_the_selector_hreflang_tags_and
     tests/fixtures/site_en_golden. Today's English pages must match them once the added lines are taken out."""
 
     def without_additions(text: str) -> str:
-        added = ('<link rel="alternate" hreflang=', "<script>(function(){", '<div class="lang-switch"')
+        added = (
+            '<link rel="alternate" hreflang=',
+            "<script>(function(){",
+            '<div class="lang-switch"',
+            '<li><a href="map.html"',  # the navigation entry of the causal map page
+            '<li><a href="../map.html"',
+        )
         return "".join(line for line in text.splitlines(keepends=True) if not line.lstrip().startswith(added))
 
     proj = Site(tmp_path)

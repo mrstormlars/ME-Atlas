@@ -109,6 +109,37 @@ A level is **contested** when at least one study of comparable or higher quality
 - **How it is shown:** the bar is filled up to the highest uncontested rung; the rung or rungs under dispute are drawn as a **hatched segment**. The card lists both sides.
 - **How it ends:** a contested mark is removed when the conflict is resolved (for example a larger study settles it), recorded on "What changed this week".
 
+### Causal map and links
+
+The ladder grades one thing: how far the evidence for a hypothesis has come. A second view, the causal map, gives every hypothesis a *place* in a possible chain from vulnerability to symptoms, and grades the *links* between hypotheses on a scale of their own. The map is a second view: the bar chart keeps answering "how far has the evidence come"; the map answers "where in the chain does this belong". ME/CFS may be several conditions with different triggers that meet downstream, and the map does not assume one chain.
+
+**Layers.** Every node sits in exactly one layer, from root to experience:
+
+| Layer | Key | The question it answers |
+| --- | --- | --- |
+| Predisposition | `predisposition` | Who is vulnerable? |
+| Trigger | `trigger` | What starts it? |
+| Perpetuating mechanism | `mechanism` | Why does it not resolve? |
+| Measurable dysfunction | `dysfunction` | What goes wrong in the body? |
+| Symptom | `symptom` | What does the patient experience? |
+
+The first four layers hold hypothesis cards. The symptom layer is not hypotheses: it is a fixed list taken from the accepted case definitions, each symptom sourced to the document that lists it. A card that could sit in two layers (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one layer and a link that expresses the other reading; the ambiguity is written out, not hidden.
+
+**Links.** A link from one node to another grades a narrower claim than the ladder: "A drives B in ME/CFS patients". It has three steps:
+
+| Step | Key | Requires |
+| --- | --- | --- |
+| 1 Proposed | `proposed` | A peer-reviewed source (a review counts) that states the link. Not studied directly in patients. |
+| 2 Associated | `associated` | A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them. |
+| 3 Direction supported | `directional` | In patients: temporal order (A before B), an intervention on A that changes B, or a mediation analysis. A review alone never reaches this step. |
+
+- **Case definitions** are the ladder's: Oxford-only evidence stays at step 1, and a source that is a review (`design: other`) cannot carry step 2 or 3.
+- **No link without a source, at every step.** "Proposed by [review]" is a source; the editorial team's own reasoning is not. Links may run both ways and form loops.
+- **A link never raises a card's level.** A study that measured both ends and found no relation is recorded as a `context` study and the link text says so. Links have no contested mark in v1.
+- **Open questions** are empty boxes, never claims: a question sourced to a publication that asks it, or marked as the editorial team's own question.
+- **Convergence is counted, not judged.** A node with two or more incoming links from different cards is listed as a *candidate common mechanism*; a card with two or more links out as a *candidate root*. Nobody writes "the common cause is".
+- **Who decides:** setting a card's layer and adding or changing a link are founder decisions, like levels, badges and contested marks (section 6). AI may propose and the `card-reviewer` checks each link against its sources; it never sets either.
+
 ## 4. Pages
 
 ### Front page
