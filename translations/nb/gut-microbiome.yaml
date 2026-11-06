@@ -176,6 +176,22 @@ items:
     sources:
     - pmid:41516296
     source_hash: 7e23e5af1e42e21f82fee0c8e8f1ba7d46f50862d8261bc364e988d2e3f99c5e
+  links[3]:
+    text: En oversikt fra 2025 rapporterer at noen forskere mener at overgangen av tarmbakterier eller produktene deres til
+      kroppen, som kan gi betennelse i hele kroppen og endre blod-hjerne-barrieren, kan utløse nevroinflammasjon og ligge
+      bak nevrologiske problemer ved ME/CFS; oversikten rapporterer ingen studie som målte begge deler hos de samme pasientene.
+    sources:
+    - pmid:41516296
+    source_hash: 3620ea35a396aa06de269f13d0275c4b5895ea970d3ce20c11ed453610864960
+  links[4]:
+    text: To oversikter foreslår at bakterieprodukter som krysser tarmveggen kan drive produksjonen av reaktive oksygenmolekyler
+      ved ME/CFS, og den ene nevner også reaktive nitrogenmolekyler og knytter den mer gjennomtrengelige tarmveggen til pasienter
+      med irritabel tarm-syndrom; ingen av dem var en studie av pasienter, og begge sier at det ikke er kjent hva som kommer
+      først.
+    sources:
+    - pmid:41516296
+    - pmid:31330791
+    source_hash: f27d38c571f38e3def32c5bb0b3ca778e423cba10252d90282aa7d46eb3b1b6f
   studies[pmid:36758522].finding:
     text: En studie med n=106 pasienter og 91 friske kontroller fant mindre av de butyratproduserende bakteriene Faecalibacterium
       prausnitzii og Eubacterium rectale, færre kopier av et bakterielt butyratgen og lavere butyrat og acetat i avføring
@@ -246,3 +262,8 @@ items:
       til nevrokognitive symptomer og til tryptofanprodukter som lages av tarmbakterier. Sitert på kartet som kilde til foreslåtte
       lenker, ikke som evidens for nivået.
     source_hash: d6909251a842e9f84cdfcfc700efd19511bba9b9ac61d66722f92fb1ba19fb3a
+  studies[pmid:31330791].finding:
+    text: En oversikt fra 2019 over foreslåtte sykdomsmekanismer ved ME/CFS; den sier at de årsaksmessige sammenhengene mellom
+      de berørte systemene er ukjente og ikke kan avgjøres av klinisk korrelasjon alene. Sitert på kartet som kilde til foreslåtte
+      lenker, ikke som evidens for nivået.
+    source_hash: 5604f4fa97fb07010e9d370b51fda37bc9cf5491fef3465fdb9709341cf85932

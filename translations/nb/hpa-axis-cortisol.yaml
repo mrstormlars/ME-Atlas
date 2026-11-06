@@ -96,12 +96,12 @@ items:
     source_hash: 7dbb3e6755c7754d2b1985b7da1c2f8492425c1ea0e57bbf1d94b0df450a6b3a
   level_reason[7]:
     text: En crossover-studie fra London med 32 pasienter fant at utmattelsen sank mer på hydrokortison i lav dose enn på
-      placebo (p = 0,009), men diagnosekriteriene er ennå ikke kontrollert, så den kan ikke telle mot nivå 4. HPA-studien fra
-      London, fra samme gruppe, behandlet 32 av pasientene sine med hydrokortison i samme type crossover; det er ikke oppgitt
-      om dette er de samme pasientene. Hos pasientene som ble bedre, økte kortisolresponsen på CRH, og den svekkede responsen
-      som var sett tidligere, snudde. Dette er en endring hos pasientene som ble bedre, ikke en sammenligning med kontroller,
-      og den er ikke gjentatt. En studie av fludrokortison alene hos 100 pasienter som oppfylte CDC-kriteriene fant ingen
-      forskjell fra placebo; den ble testet som behandling av lavt blodtrykk ved stående, ikke av lavt kortisol.
+      placebo (p = 0,009), men diagnosekriteriene er ennå ikke kontrollert, så den kan ikke telle mot nivå 4. HPA-studien
+      fra London, fra samme gruppe, behandlet 32 av pasientene sine med hydrokortison i samme type crossover; det er ikke
+      oppgitt om dette er de samme pasientene. Hos pasientene som ble bedre, økte kortisolresponsen på CRH, og den svekkede
+      responsen som var sett tidligere, snudde. Dette er en endring hos pasientene som ble bedre, ikke en sammenligning med
+      kontroller, og den er ikke gjentatt. En studie av fludrokortison alene hos 100 pasienter som oppfylte CDC-kriteriene
+      fant ingen forskjell fra placebo; den ble testet som behandling av lavt blodtrykk ved stående, ikke av lavt kortisol.
     sources:
     - pmid:9989716
     - pmid:11502777
@@ -175,6 +175,25 @@ items:
     sources:
     - pmid:34254637
     source_hash: 606b6ff5bb6a7716745f37ca685dfdb60bfef2649d8cbe86b327b0e648e06aba
+  links[0]:
+    text: En oversikt fra 2025 sier at unormale nivåer av HPA-akse-hormoner ved ME/CFS har vært knyttet til verre søvnvansker,
+      og viser til én tidligere artikkel; oversikten testet ikke dette selv.
+    sources:
+    - pmid:41516296
+    source_hash: a3bde5dd6990081c574d4d11207c4d637a6d7e522f34c8a2011bf796ce161e3c
+  links[1]:
+    text: Den samme oversikten fra 2025 sier at unormale nivåer av HPA-akse-hormoner ved ME/CFS har vært knyttet til verre
+      konsentrasjonsvansker, og viser til én tidligere artikkel; oversikten testet ikke dette selv.
+    sources:
+    - pmid:41516296
+    source_hash: e5fb97a89a30110fe9820d0f3d8e64f0f423c979c639809bb5087b0c03cf4a86
+  links[2]:
+    text: En oversikt fra 2019 antyder at dysregulering av HPA-aksen, blant annet det lave kortisolet som tidligere studier
+      har antydet, kan legge til en forstyrret reguleringssløyfe som kan bidra til å holde kroppen i en endret likevektstilstand;
+      den sier at de årsaksmessige sammenhengene mellom systemer er ukjente.
+    sources:
+    - pmid:31330791
+    source_hash: 0fd3526c69d6a8fa9012dbe32bf2423e1addd36fdc8442ad0f9b8b6bb1cdd4eb
   studies[pmid:9669518].finding:
     text: En studie med n=14 pasienter og 14 friske frivillige fant lavere frigjøring av ACTH (P < 0,005) og kortisol (P <
       0,05) etter kortikotropinfrigjørende hormon hos pasientene, uten forskjell i basalt ACTH eller kortisol.
@@ -210,8 +229,8 @@ items:
     source_hash: 196b43545f618d9e1e5f5566a42376ca27f41b0dbe124aec8d10772e396b3463
   studies[pmid:40713801].finding:
     text: En studie med n=24 pasienter og 24 kontroller matchet på alder og kjønn fant ingen forskjell i kortisol i plasma
-      om morgenen, selv før korreksjon for multippel testing (gjennomsnitt 138,064 hos kontrollene og 135,157 hos pasientene, p
-      0,718), og ingen hos kvinner eller menn analysert hver for seg.
+      om morgenen, selv før korreksjon for multippel testing (gjennomsnitt 138,064 hos kontrollene og 135,157 hos pasientene,
+      p 0,718), og ingen hos kvinner eller menn analysert hver for seg.
     source_hash: 94d8db96dc55208d5db7ed23434089146ff6e48adc68e9741bb4fcad04f3988d
   studies[pmid:38724880].finding:
     text: En studie av kvinner (20 med lett eller moderat og 24 med alvorlig sykdom, 12 friske kontroller) og menn (8 og 6,
@@ -248,3 +267,12 @@ items:
       i basale hormoner, lavere ACTH 4 minutter etter en maksimal tredemølletest hos pasientene, og ingen forskjeller dagen
       etter.
     source_hash: c6c6ad52fb492737d3ce23b488139a53848d84539772b13bfc67bd72da7fb71d
+  studies[pmid:41516296].finding:
+    text: En oversikt over forskning på tarmens mikrobiom ved ME/CFS som også oppsummerer andre foreslåtte mekanismer, blant
+      annet unormale nivåer av HPA-akse-hormoner. Sitert på kartet som kilde til foreslåtte lenker, ikke som evidens for nivået.
+    source_hash: 8f96d92291a7cf207ef0fc053bd58a636663574f70c98957bad218055c5bce77
+  studies[pmid:31330791].finding:
+    text: En oversikt fra 2019 over foreslåtte sykdomsmekanismer ved ME/CFS; den sier at de årsaksmessige sammenhengene mellom
+      de berørte systemene er ukjente og ikke kan avgjøres av klinisk korrelasjon alene. Sitert på kartet som kilde til foreslåtte
+      lenker, ikke som evidens for nivået.
+    source_hash: 5604f4fa97fb07010e9d370b51fda37bc9cf5491fef3465fdb9709341cf85932

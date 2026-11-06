@@ -507,9 +507,27 @@ studies:
     direction: not_applicable
     finding: >-
       A review of gut microbiome research in ME/CFS; it says it cannot be said whether gut changes precede, cause or follow the immune or metabolic changes, and proposes gut-brain-axis routes to neurocognitive symptoms and to tryptophan products made by gut bacteria. Cited on the map as the source of proposed links, not as evidence for the level.
+  # Added 2026-11-06 (founder ruling, causal map second pass): a review cited by a link on the map, kept as context.
+  - id: pmid:31330791
+    title: "Pathological Mechanisms Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
+    year: 2019
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A 2019 review of proposed disease mechanisms in ME/CFS; it states that the causal links between the affected systems are unknown and cannot be discerned from clinical correlation alone. Cited on the map as the source of proposed links, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also sit in the dysfunction layer (what goes wrong in the body); a 2025 review says it cannot be said whether gut changes precede, cause or follow immune or metabolic changes (pmid:41516296), and no source given here states a link that expresses the dysfunction reading.
+# Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 layer: mechanism
 links:
   - to: symptom:gastrointestinal-symptoms
@@ -527,6 +545,16 @@ links:
     text: >-
       A 2025 review proposes that, because gut bacteria also metabolise tryptophan, dysbiosis can change the production of tryptophan- and phenylalanine-derived products made by gut bacteria, potentially affecting the gut, the brain and the microbiota-gut-brain axis; it was not studied directly in patients. The review does not say that this changes the body's own breakdown of tryptophan along the kynurenine pathway, which is what the linked card is about.
     sources: [pmid:41516296]
+  - to: neuroinflammation
+    support: proposed
+    text: >-
+      A 2025 review reports that some researchers believe the passage of gut bacteria or their products into the body, which can cause inflammation throughout the body and alter the blood-brain barrier, may trigger neuroinflammation and underlie neurological problems in ME/CFS; the review reports no study that measured both in the same patients.
+    sources: [pmid:41516296]
+  - to: oxidative-nitrosative-stress
+    support: proposed
+    text: >-
+      Two reviews propose that bacterial products crossing the gut wall may drive the production of reactive oxygen molecules in ME/CFS, and one also names reactive nitrogen molecules and ties the more permeable gut wall to patients with irritable bowel syndrome; neither was a study in patients, and both note that it is not known which comes first.
+    sources: [pmid:41516296, pmid:31330791]
 last_checked:
   date: 2026-11-01
   by: ai_pair

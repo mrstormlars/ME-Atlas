@@ -71,6 +71,13 @@ items:
     sources:
     - pmid:33577778
     source_hash: 5f15368ac8da688e2ba1b2c989b14f96affbbb6c179f62f939333ad99ce3f267
+  links[0]:
+    text: En oversikt fra 2023 sier at skade på små nervefibre kan redusere sammentrekningen av vener, slik det sees ved unormal
+      opphoping av blod i bena ved stående stilling ved postural ortostatisk takykardisyndrom (POTS). Observasjonene den viser
+      til gjelder POTS; ingen studie på dette kortet målte begge deler hos pasienter med ME/CFS.
+    sources:
+    - pmid:37054777
+    source_hash: 4d0a3b3df8ed4dc42ccc13a209f92f135fd2dc7f6a85561532bb1c35409d4783
   studies[pmid:41576003].finding:
     text: En studie med n=170 pasienter og 73 historiske friske kontroller fant småfibernevropati ved hudbiopsi hos 52,6%
       av pasientene med biopsiresultater og 0,0% av kontrollene med resultater, og en lavere gjennomsnittlig nervefibertetthet
@@ -101,3 +108,8 @@ items:
       innervasjon på eller under 5,0% av forventet), og at alvorlighetsgraden av tap av nervefibre ikke korrelerte med mål
       fra en treningstest.
     source_hash: c8c0544e6054f0f8a742f42294b06b2c3e319a43c7b65563d273c633c46c7420
+  studies[pmid:37054777].finding:
+    text: En oversikt over patofysiologien ved trening ved ME/CFS og langvarig covid som også omtaler småfibernevropati og
+      opphoping av blod ved stående stilling ved POTS. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
+      for nivået.
+    source_hash: bc0e4a0717f823732767cb27f0783c2f4b461f1fcf9d8ce3dc3080e69c573a16
