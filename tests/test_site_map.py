@@ -247,10 +247,11 @@ def test_the_convergence_lists_are_empty_when_nothing_converges(proj):
     assert norm(page(out, "map.html").text()).count("None yet.") == 2
 
 
-def test_the_map_page_draws_nothing_and_loads_nothing_external(map_site):
+def test_the_map_page_draws_only_inline_svg_and_loads_nothing_external(map_site):
     html = (map_site.out / "map.html").read_text(encoding="utf-8")
     doc = parse(html)
-    assert not any(doc.find_all(tag) for tag in ("svg", "canvas", "img", "object", "embed"))
+    assert doc.find_all("svg")
+    assert not any(doc.find_all(tag) for tag in ("canvas", "img", "object", "embed"))
     assert external_resource_refs(html) == []
 
 
@@ -327,3 +328,151 @@ def test_a_card_page_with_a_layer_and_links_is_identical_to_the_same_card_withou
     link = map_link("symptom:fatigue", "A fictional link to fatigue.", "associated", ["pmid:00000001", "pmid:00000002"])
     linked = make_card("same", "Fictional same", 2, layer="mechanism", links=[link])
     assert card_page(proj, linked, content) == plain
+
+
+# --- the drawing on the page ---
+
+
+def drawing_of(node: Node) -> Node:
+    svg = node.find("svg")
+    assert svg is not None
+    return svg
+
+
+def drawn_nodes(svg: Node) -> dict[str, Node]:
+    return {a.get("data-key"): a for a in svg.find_all("a") if "node" in a.classes}
+
+
+def drawn_links(svg: Node) -> list[Node]:
+    return [p for p in svg.find_all("path") if "link" in p.classes]
+
+
+def test_the_whole_map_is_an_open_details_above_the_lists_with_the_localised_summary(map_site):
+    doc = page(map_site.out, "map.html")
+    details = doc.find("details", cls="map-whole")
+    assert details is not None and "open" in details.attrs
+    assert norm(details.find("summary").text()) == "Show the whole map"
+    assert details.find("figure") is not None and details.find("svg") is not None
+    order = [n for n in doc.find("main").walk() if n is details or n.get("id") == "layer-predisposition"]
+    assert order[0] is details
+    assert page(map_site.out, "nb/map.html").find("details", cls="map-whole").find("summary").text().strip() == (
+        "Vis hele kartet"
+    )
+
+
+def test_the_whole_drawing_has_every_node_and_every_link_of_the_page_once(map_site):
+    svg = drawing_of(page(map_site.out, "map.html").find("details", cls="map-whole"))
+    nodes = drawn_nodes(svg)
+    assert set(nodes) == {
+        "root-idea",
+        "middle-idea",
+        "loose-idea",
+        "symptom:fatigue",
+        "question:own",
+        "question:asked",
+    }
+    assert sorted((p.get("data-from"), p.get("data-to")) for p in drawn_links(svg)) == [
+        ("middle-idea", "symptom:fatigue"),
+        ("root-idea", "middle-idea"),
+        ("root-idea", "symptom:fatigue"),
+    ]
+    assert nodes["root-idea"].get("href") == "hypotheses/root-idea.html"
+    doc = page(map_site.out, "map.html")
+    for key in ("symptom:fatigue", "question:own", "question:asked"):
+        target = nodes[key].get("href")
+        assert target.startswith("#") and doc.find(id=target[1:]) is not None
+
+
+def test_a_neighbourhood_drawing_sits_under_each_card_with_a_link_and_not_under_one_without(map_site):
+    doc = page(map_site.out, "map.html")
+    middle = drawing_of(doc.find("article", id="card-middle-idea"))
+    assert sorted((p.get("data-from"), p.get("data-to")) for p in drawn_links(middle)) == [
+        ("middle-idea", "symptom:fatigue"),
+        ("root-idea", "middle-idea"),
+    ]
+    assert doc.find("article", id="card-root-idea").find("svg") is not None
+    assert doc.find("article", id="card-loose-idea").find("svg") is None
+
+
+def test_the_page_has_no_duplicate_ids_with_many_drawings(map_site):
+    for name in ("map.html", "nb/map.html"):
+        ids = [n.get("id") for n in page(map_site.out, name).walk() if n.get("id")]
+        assert len(ids) == len(set(ids)), name
+
+
+def test_convergence_markers_on_the_page_match_the_lists(map_site):
+    nodes = drawn_nodes(drawing_of(page(map_site.out, "map.html").find("details", cls="map-whole")))
+    assert [norm(t.text()) for t in nodes["symptom:fatigue"].find_all("text", cls="marker")] == ["2 in"]
+    assert [norm(t.text()) for t in nodes["root-idea"].find_all("text", cls="marker")] == ["2 out"]
+    assert nodes["middle-idea"].find_all("text", cls="marker") == []
+
+
+def test_the_contested_word_is_drawn_for_a_contested_card_only(proj, tmp_path):
+    content = map_content(tmp_path)
+    write_card(proj.cards, make_card("disputed", "Fictional disputed", 2, contested_rungs=[2], layer="mechanism"))
+    write_card(proj.cards, make_card("settled", "Fictional settled", 2, layer="mechanism"))
+    assert proj.build(content_dir=content).errors == []
+    nodes = drawn_nodes(drawing_of(page(proj.out, "map.html").find("details", cls="map-whole")))
+    assert "Contested" in nodes["disputed"].text()
+    assert "Contested" not in nodes["settled"].text()
+    assert "Level 2" in nodes["settled"].text()
+
+
+def test_the_legend_explains_the_three_line_styles_and_the_node_types(map_site):
+    legend = page(map_site.out, "map.html").find("div", cls="map-legend")
+    samples = legend.find_all("svg")
+    assert len(samples) == 3
+    assert [bool(s.find("line").get("stroke-dasharray")) for s in samples] == [True, False, False]
+    text = norm(legend.text())
+    for phrase in ("Proposed link", "Associated link", "Direction supported", "open question", "symptom"):
+        assert phrase in text
+
+
+def test_the_stylesheet_scrolls_the_figure_not_the_page_and_styles_focus_and_the_script_closes_it_on_narrow_screens():
+    css = (REPO_ROOT / "src" / "me_atlas" / "static" / "site.css").read_text(encoding="utf-8")
+    figure = next(r for r in css.split("}") if r.strip().startswith(".map-figure {"))
+    assert "overflow-x: auto" in figure
+    assert ".node:focus-visible" in css
+    js = (REPO_ROOT / "src" / "me_atlas" / "static" / "site.js").read_text(encoding="utf-8")
+    assert "details.map-whole" in js and "max-width: 40em" in js
+
+
+def test_the_whole_map_figure_breaks_out_of_the_text_column_up_to_the_window_width():
+    css = (REPO_ROOT / "src" / "me_atlas" / "static" / "site.css").read_text(encoding="utf-8")
+    rule = next(r for r in css.split("}") if ".map-whole .map-figure {" in r)
+    assert "width: max-content" in rule and "max-width: calc(100vw - 2rem)" in rule
+    assert "left: 50%" in rule and "translateX(-50%)" in rule
+
+
+def test_the_script_handles_the_chain_on_hover_focus_touch_and_escape_and_the_css_dims_only_when_focusing():
+    js = (REPO_ROOT / "src" / "me_atlas" / "static" / "site.js").read_text(encoding="utf-8")
+    for needle in (
+        "mouseenter",
+        "focusin",
+        "focusout",
+        "'touch'",
+        "Escape",
+        "is-focusing",
+        "on-chain",
+        "data-chain-links",
+    ):
+        assert needle in js, needle
+    css = (REPO_ROOT / "src" / "me_atlas" / "static" / "site.css").read_text(encoding="utf-8")
+    dim = [r for r in css.split("}") if "opacity: .2" in r]
+    assert "drawing.addEventListener('mouseleave', restore)" in js  # leaving the whole drawing clears
+    assert "node.addEventListener('mouseleave'" not in js  # leaving a box does not
+    assert len(dim) == 1 and ".is-focusing" in dim[0] and ":not(.on-chain)" in dim[0]
+
+
+def test_the_legend_has_the_chain_line_in_both_languages_and_the_svg_carries_chains(map_site):
+    en = page(map_site.out, "map.html")
+    assert "Point at or focus a box" in norm(en.find("div", cls="map-legend").text())
+    assert "Pek på eller tab til en boks" in norm(
+        page(map_site.out, "nb/map.html").find("div", cls="map-legend").text()
+    )
+    nodes = drawn_nodes(drawing_of(en.find("details", cls="map-whole")))
+    assert set(nodes["root-idea"].get("data-chain").split()) == {"root-idea", "middle-idea", "symptom:fatigue"}
+    assert nodes["loose-idea"].get("data-chain") == "loose-idea"
+    assert all(
+        a.get("data-chain") is None for a in drawn_nodes(drawing_of(en.find("article", id="card-middle-idea"))).values()
+    )

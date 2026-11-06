@@ -1142,3 +1142,29 @@ def test_a_link_translation_whose_numbers_differ_is_left_out_of_the_map_with_a_w
     item = page(proj_tmp.out, "nb/map.html").find("article", id="card-numbers").find("li")
     assert "A fictional study of 40 patients found a relation." in norm(item.text())
     assert "400" not in norm(item.text()) and "Denne delen er ikke oversatt ennå." in norm(item.text())
+
+
+def test_the_norwegian_drawing_uses_norwegian_labels_and_marks_english_nodes(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path)
+    assert proj_tmp.build(content_dir=content).errors == []
+    doc = page(proj_tmp.out, "nb/map.html")
+    whole = doc.find("details", cls="map-whole")
+    assert norm(whole.find("summary").text()) == "Vis hele kartet"
+    svg = whole.find("svg")
+    labels = [norm(t.text()) for t in svg.find_all("text", cls="band-label")]
+    assert labels == ["Disposisjon", "Utløser", "Vedlikeholdende mekanisme", "Målbar dysfunksjon", "Symptom"]
+    nodes = {a.get("data-key"): a for a in svg.find_all("a") if "node" in a.classes}
+    assert "Nivå 2" in nodes["first-idea"].text() and "2 ut" in nodes["first-idea"].text()
+    assert "Fiktiv utmattelse" in nodes["symptom:fatigue"].text() and nodes["symptom:fatigue"].get("lang") is None
+    assert nodes["question:asked"].get("lang") == "en"  # no Norwegian text for this question
+    assert nodes["first-idea"].get("href") == "hypotheses/first-idea.html"
+    legend = norm(doc.find("div", cls="map-legend").text())
+    assert "Slik leser du tegningen" in legend and "Foreslått lenke" in legend
+    assert "Level" not in norm(svg.text())
+
+
+def test_the_english_drawing_is_not_changed_by_norwegian_files(proj_tmp, tmp_path):
+    content = nb_map_project(proj_tmp, tmp_path)
+    assert proj_tmp.build(content_dir=content).errors == []
+    text = (proj_tmp.out / "map.html").read_text(encoding="utf-8")
+    assert "Nivå" not in text and "Fiktiv utmattelse" not in text and "Level 2" in text
