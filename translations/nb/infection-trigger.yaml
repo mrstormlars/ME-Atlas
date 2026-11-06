@@ -1,0 +1,163 @@
+slug: infection-trigger
+items:
+  name:
+    text: Infeksjon som utløser
+    source_hash: 494260ba11ef922ffc61e31d75ed27ed843cfa95e071bf249f3bfc3b086aa912
+  core_claim:
+    text: 'Hypotesen går ut på at ME/CFS hos noen starter etter en akutt infeksjon: infeksjonen kommer før sykdommen og øker
+      risikoen for å utvikle den. Den handler om når og etter hva sykdommen begynner, ikke om hvilket smittestoff som blir
+      værende eller hva som skjer i kroppen etterpå.'
+    sources:
+    - pmid:39804551
+    - pmid:16950834
+    - pmid:9926075
+    source_hash: 0a51017b0c68f2ce72f43282d330b833c6bc6c76bdaaf5e8f6cffeb165141657
+  level_reason[0]:
+    text: En amerikansk studie (RECOVER-Adult) fulgte 4515 voksne som var med innen 30 dager etter SARS-CoV-2-infeksjon, eller
+      som ble smittet under studien, og sammenlignet dem med voksne uten infeksjon. ME/CFS ble klassifisert med IOM 2015-kriteriene
+      brukt på selvrapporterte symptomer, og personer med en tidligere ME/CFS-diagnose ble utelukket. Raten av ny ME/CFS var
+      2,66 per 100 personår etter infeksjon og 0,93 hos matchede uinfiserte deltakere (hazard ratio 4,93, 95% KI 3,62-6,71);
+      847 av de 1439 uinfiserte deltakerne hadde ingen match, så sammenligningen brukte de andre 592 (regnet ut fra de oppgitte
+      antallene). Blant alle infiserte deltakere oppfylte 531 av 11785 (4,5%) kriteriene, mot 9 av 1439 (0,6%) uinfiserte
+      deltakere. Forfatterne nevner mulig hukommelsesskjevhet og seleksjonsskjevhet, tidligere symptomer som ble oversett
+      hos personer som aldri fikk diagnose, og at alvorlighetsgraden av PEM ikke ble vurdert, og sier at disse begrensningene
+      kan ha ført til overestimering. Kortet er på nivå 2 på grunn av denne studien. Ingen uavhengig gruppe har gjentatt den
+      med et kontrollert diagnosekriterium, så den er ikke replikert.
+    sources:
+    - pmid:39804551
+    source_hash: 3be20789f3d1550249e0161487906bd36d00edfd11400eecc57968a3cc566f5e
+  level_reason[1]:
+    text: En tysk studie av 221 sykehusansatte som testet positivt for SARS-CoV-2 fant at minst 7 (3,2%) oppfylte Canadian
+      Consensus Criteria da de ble vurdert i 2022; forfatterne oppgir 3,2% til 9,0% som et område, fordi ikke alle med vedvarende
+      utmattelse ble vurdert. Den hadde ingen sammenligningsgruppe.
+    sources:
+    - pmid:41901562
+    source_hash: 9a34bf8410515bdff5237102094d86e8715e20e0156fc175b76d0cdb42c39adb
+  level_reason[2]:
+    text: En annen amerikansk studie (INSPIRE) av voksne som alle hadde en akutt sykdom som førte til en covid-19-test, fant
+      ME/CFS-lignende sykdom, etter IOM 2015-kriteriene brukt på selvrapporterte symptomer, hos 2,8% til 3,7% av dem som testet
+      positivt og 3,1% til 4,5% av dem som testet negativt, uten signifikant forskjell på noe tidspunkt opptil 12 måneder.
+      Av de 4738 som var med, svarte 38,7% til 76,3% på hver oppfølgingsundersøkelse (omtrent 1840 og 1729 personer etter
+      tre måneder, vektet), og undersøkelsene kunne ikke tydelig fange opp symptomer som fantes før den akutte sykdommen.
+      Som RECOVER-Adult klassifiserte den personer ut fra selvrapporterte symptomer. Forfatterne skriver at det var like sannsynlig
+      etter SARS-CoV-2 som etter en ukjent infeksjon. Den er mindre i målingen enn RECOVER-Adult, og fordi sammenligningsgruppen
+      også hadde en akutt sykdom, sammenligner denne studien SARS-CoV-2 med andre sykdommer og ikke med ingen infeksjon, og
+      kortet regner den ikke som en motsigelse av nivå 2.
+    sources:
+    - pmid:39046739
+    source_hash: 4714d36700dd951519f18ff96b8dbbfebbfcaa80800d40a825c788b5cb0dc28d
+  level_reason[3]:
+    text: 'Tidligere studier som fulgte personer fra en dokumentert infeksjon peker i samme retning, men kan ikke telle med
+      i nivået, fordi diagnosekriteriene deres ennå ikke er kontrollert. I en studie av pasienter i primærhelsetjenesten ble
+      kronisk utmattelsessyndrom funnet hos 9-22% seks måneder etter kyssesyke og hos 0-6% etter en vanlig øvre luftveisinfeksjon.
+      Ti år etter et utbrudd av Q-feber ble det funnet hos 14 (19,4%) eksponerte personer og 3 (4,2%) matchede ueksponerte
+      personer blant dem som ble undersøkt på sykehus. To studier hadde ingen sammenligningsgruppe, så de gir en hyppighet
+      etter infeksjon og ikke en høyere risiko: i Australia oppfylte 28 av 253 personer (11%) kriteriene seks måneder etter
+      infeksjon med Epstein-Barr-virus, Q-feber eller Ross River-virus, med lik rate etter hver. I en amerikansk studentkohort
+      oppfylte 55 av 238 studenter (23%) kriteriene seks måneder etter infeksiøs mononukleose.'
+    sources:
+    - pmid:9926075
+    - pmid:12145392
+    - pmid:16950834
+    - pmid:33367564
+    source_hash: 4b6a1d96ebdbabd92c36a0a3c0876ee02111f5d3186f2882f88d894adf9a0da2
+  level_reason[4]:
+    text: Andre studier fant ingen forskjell. I primærhelsetjenesten i Storbritannia skilte 1199 personer som var sett for
+      en infeksjon og 1167 som var sett av andre grunner, hvorav 84% ble fulgt opp etter seks måneder, seg ikke i andelen
+      som oppfylte ulike kriterier for kronisk utmattelsessyndrom. Seks år etter et utbrudd av Q-feber i Tyskland oppfylte
+      3 av 80 personer med bekreftet tidligere infeksjon og 2 av 52 husstandsmedlemmer kriteriene for kronisk utmattelsessyndrom
+      (3,8% i begge). Ingen av studienes diagnosekriterier er kontrollert. En nettverksstudie av helsejournaler fra åtte land
+      fant ingen økning i registrerte ME/CFS-diagnoser etter covid-19 sammenlignet med en negativ test (ujustert rateratio
+      0,98), med store forskjeller mellom databasene (2,03 i én britisk database, 0,89 i en annen); diagnosekoder er ikke
+      diagnosekriterier.
+    sources:
+    - pmid:7752755
+    - pmid:34240822
+    - pmid:42516718
+    source_hash: 56f436cdacecc11aa40ee3fa5693a45b8f8a25f85ae8386733d3e29b1d48d862
+  level_reason[5]:
+    text: I den norske befolkningen var registrerte ME/CFS-diagnoser i spesialisthelsetjenesten omtrent dobbelt så hyppige
+      etter en diagnose med pandemisk influensa (hazard ratio 2,04) og ikke hyppigere etter pandemivaksinen (hazard ratio
+      0,97). Utfallet var en diagnosekode og ikke et diagnosekriterium, så denne studien teller ikke med i nivået.
+    sources:
+    - pmid:26475444
+    source_hash: ca2ba5f6016ff481d704b950d76a1205046a1709dfe59b6d2d382934f343cc8b
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen studie på dette kortet tester en diagnostisk markør i en annen, uavhengig pasientgruppe. Én studie målte autoantistoffer,
+      antistoffer mot Epstein-Barr-virus og koagulasjonsverdier hos 15 til 18 av de 19 sykehusansatte som ble vurdert etter
+      SARS-CoV-2 med vedvarende utmattelse, uten kontrollgruppe.
+    sources:
+    - pmid:41901562
+    source_hash: c837c8779906a77dd926270fe166dda9832a5caed6b56d0f414b100dffc05e24
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet måler PEM direkte. I RECOVER-Adult-studien var PEM ett ja-eller-nei-spørsmål i en symptomundersøkelse;
+      det var det hyppigst rapporterte ME/CFS-symptomet etter infeksjon.
+    sources:
+    - pmid:39804551
+    source_hash: 60d89cac2c51d31d4429f3ab4adb1230a68d4208733c2eef415f55920ede4250
+  links[0]:
+    text: To prospektive studier sammenlignet personer som fikk og ikke fikk ME/CFS etter den samme infeksjonen. Den ene fant
+      at alvorlighetsgraden av den akutte sykdommen forutså det mer enn demografiske, psykologiske eller mikrobiologiske faktorer;
+      den andre fant flere fysiske symptomer og immunforskjeller, men ikke flere psykologiske symptomer, før infeksjonen hos
+      dem som senere fikk alvorlig ME/CFS. Hvert funn kommer fra én enkelt studie, og ingen av studienes diagnosekriterier
+      er kontrollert ennå.
+    sources:
+    - pmid:16950834
+    - pmid:33367564
+    source_hash: 5c3b9a3466d1d035d336ed845941054cfc6705311ba6a8c90c82ecbcf35a9db1
+  studies[pmid:39804551].finding:
+    text: En studie med n=4515 voksne fulgt fra akutt SARS-CoV-2-infeksjon fant en høyere rate av ny ME/CFS enn hos de 592
+      matchede uinfiserte deltakerne (regnet ut fra de oppgitte antallene; 2,66 mot 0,93 per 100 personår, hazard ratio 4,93),
+      med ME/CFS klassifisert ut fra selvrapporterte symptomer.
+    source_hash: fab508b2b4c8a7b285673f8124afb89b1f3dba3a542e766a41d4daeb215e4ba6
+  studies[pmid:41901562].finding:
+    text: En studie med n=221 sykehusansatte som testet positivt for SARS-CoV-2 fant at minst 7 (3,2%) oppfylte Canadian Consensus
+      Criteria, av 19 vurderte, uten sammenligningsgruppe.
+    source_hash: 026502e8bce64598b5fd02d0281482d9030db26bc80e890edbbb74a78bd57f79
+  studies[pmid:39046739].finding:
+    text: En studie av voksne som alle hadde en akutt infeksjonslignende sykdom fant ME/CFS-lignende sykdom hos 2,8% til 3,7%
+      av dem som testet positivt for SARS-CoV-2 og 3,1% til 4,5% av dem som testet negativt, uten signifikant forskjell i
+      odds opptil 12 måneder; 38,7% til 76,3% av de 4738 som var med, svarte på hver oppfølgingsundersøkelse (omtrent 1840
+      og 1729 etter tre måneder, vektet).
+    source_hash: ffc80ba2dfc91be0065eb26c7f67a9466451e0a91ec3fc58146e437cfa798081
+  studies[pmid:9926075].finding:
+    text: En prospektiv studie av 250 pasienter i primærhelsetjenesten fant kronisk utmattelsessyndrom hos 9-22% seks måneder
+      etter kyssesyke og hos 0-6% etter en vanlig øvre luftveisinfeksjon (relative risikoer 2,7-5,1).
+    source_hash: 4e118a1788320cc35a1a5ceeeb38ffb8e904ce713d37f57b45ee605b2fe33ff2
+  studies[pmid:12145392].finding:
+    text: En matchet studie ti år etter et utbrudd av Q-feber fant kronisk utmattelsessyndrom hos 14 (19,4%) eksponerte personer
+      og 3 (4,2%) ueksponerte kontroller blant dem som ble undersøkt på sykehus (p=0,003).
+    source_hash: 2e9949eb87c65070dab8f7787e9d6a72f195feba176091da22d6d45f2e180e4f
+  studies[pmid:16950834].finding:
+    text: En prospektiv studie av n=253 personer fulgt fra infeksjon med Epstein-Barr-virus, Q-feber eller Ross River-virus
+      fant at 28 (11%) oppfylte diagnosekriteriene for kronisk utmattelsessyndrom etter seks måneder, med lik rate etter hver
+      infeksjon, og at det hovedsakelig ble forutsagt av alvorlighetsgraden av den akutte sykdommen.
+    source_hash: 371a62c5f349390a17a41ca9fd1ed2dc16fe81c710b474bf037ff6eb432f54f6
+  studies[pmid:33367564].finding:
+    text: En studie av 4501 studenter som var med før infeksjon fant at 238 fikk infeksiøs mononukleose og 55 av dem (23%)
+      oppfylte kriteriene for ME/CFS seks måneder senere; før infeksjonen skilte de som senere fikk alvorlig ME/CFS seg på
+      flere atferdsmål og hadde lavere IL-6 og IL-13, men ikke på stress, mestring, angst eller depresjon, sammenlignet med
+      studenter som var uten symptomer seks måneder etter infeksjonen.
+    source_hash: 10f16384f6bdefa58d2b63b4ec77de70beecf53ec47448ba8123e95754e6a35a
+  studies[pmid:7752755].finding:
+    text: En prospektiv studie av n=1199 pasienter i primærhelsetjenesten med en infeksjon med symptomer og 1167 som kom av
+      andre grunner, hvorav 84% ble fulgt opp etter seks måneder, fant ingen forskjell i kronisk utmattelse (9,9% mot 11,7%)
+      eller i andelen som oppfylte ulike kriterier for kronisk utmattelsessyndrom.
+    source_hash: 88274c1d052b572a7f8d25eae53a5049cfd75799ed2ab245dddfa45c3c7e7989
+  studies[pmid:34240822].finding:
+    text: En studie seks år etter et utbrudd av Q-feber med n=80 personer med bekreftet tidligere infeksjon og 52 uinfiserte
+      husstandsmedlemmer fant at 3 (3,8%) og 2 (3,8%) oppfylte kriteriene for kronisk utmattelsessyndrom.
+    source_hash: 5249522b49e2bf7a6272c39513755ed62f8886e4c6752cfeebfb28881252a311
+  studies[pmid:42516718].finding:
+    text: En studie av helsejournaler med n=2521812 personer med covid-19 og 4233145 med en negativ test fant ingen økning
+      i registrerte ME/CFS-diagnoser fra tre måneder til ett år etter infeksjon (rateratio 0,98).
+    source_hash: 2b3fae388bb8f00ea3e9e1ea9227eb9c0415484c4c4c856223ffe3ea85d63e01
+  studies[pmid:26475444].finding:
+    text: En registerstudie av den norske befolkningen fant en hazard ratio på 2,04 for en ME/CFS-diagnose i spesialisthelsetjenesten
+      etter en diagnose med pandemisk influensa og 0,97 etter pandemivaksinasjon.
+    source_hash: d678342cde119b7fb47b015471d082b7539ff6d5064da3558288e0f067455dc2
+  studies[pmid:37881452].finding:
+    text: 'En spørreskjemastudie av n=17074 personer med en selvrapportert ME/CFS-diagnose fant at 63,6% oppga infeksiøs start:
+      kyssesyke 17,2%, covid-19 2,2% og en annen infeksjon 44,1%. Starttype var selvrapportert; 68%, 51% og 26% av dem som
+      oppga hver av disse utløserne, oppga en positiv laboratorietest som bekreftet infeksjonen.'
+    source_hash: a9453bcc87a2a701972ecacb7cb6ba23e8acff091cdb8bb29822f4f2ad036af0

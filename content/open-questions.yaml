@@ -4,9 +4,9 @@
   layer: predisposition
   text: Why do some people, and not others, develop ME/CFS after the same infection?
   editorial: true
-- id: triggers-other-than-infection
+- id: what-starts-it
   layer: trigger
-  text: Which triggers other than infection start ME/CFS?
+  text: What starts ME/CFS?
   editorial: true
 - id: what-keeps-it-going
   layer: mechanism

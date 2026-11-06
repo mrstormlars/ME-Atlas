@@ -223,11 +223,35 @@ def test_no_boxes_overlap_all_lie_inside_the_viewbox_and_a_row_holds_at_most_fiv
     assert sorted(rows.values()) == [3, 5, 5]
 
 
-def test_text_is_never_smaller_than_16_px():
+def test_the_whole_map_uses_12_px_text_and_the_neighbourhood_keeps_16_px():
     g = many_graph(6)
-    root = parse_svg(md.render_full(g, infos(g), STRINGS))
-    sizes = {float(t.get("font-size")) for t in q(root, ".//s:text")}
+    full = parse_svg(md.render_full(g, infos(g), STRINGS))
+    assert {float(t.get("font-size")) for t in q(full, ".//s:text")} == {12.0}
+    near = parse_svg(md.render_neighbourhood(g, "top", infos(g), STRINGS, "n"))
+    sizes = {float(t.get("font-size")) for t in q(near, ".//s:text")}
     assert sizes and min(sizes) >= 16
+
+
+def real_shaped_graph() -> maplib.Graph:
+    """About the size of the first mapping: 16 cards in four layers, 14 symptoms, 4 questions, 23 links."""
+    nodes = [card(f"p{i}", f"Fictional predisposition {i}", "predisposition") for i in range(3)]
+    nodes += [card(f"m{i}", f"Fictional mechanism {i}", "mechanism") for i in range(8)]
+    nodes += [card(f"d{i}", f"Fictional dysfunction {i}", "dysfunction") for i in range(5)]
+    nodes += [maplib.Node(f"symptom:s{i}", "symptom", f"Fictional symptom {i}", "symptom") for i in range(14)]
+    nodes += [maplib.Node(f"question:q{i}", "question", f"Fictional question {i}?", "mechanism") for i in range(4)]
+    links = [(f"p{i}", f"m{i + 1}", "proposed") for i in range(3)] + [("p0", "d1", "proposed")]
+    links += [(f"m{i}", f"d{i % 5}", "associated") for i in range(8)]
+    links += [(f"d{i}", f"symptom:s{i * 2}", "associated") for i in range(5)]
+    links += [(f"m{i}", f"symptom:s{i + 5}", "proposed") for i in range(4)]
+    links += [("m7", "question:q0", "proposed"), ("m6", "question:q1", "proposed")]
+    return make_graph(nodes, links)
+
+
+def test_the_natural_width_of_the_whole_map_on_real_shaped_input_is_at_most_950_px():
+    g = real_shaped_graph()
+    root = parse_svg(md.render_full(g, infos(g), STRINGS))
+    assert float(root.get("width")) <= 950
+    assert_routing_is_clean(root)
 
 
 def test_wrap_cuts_on_word_boundaries_and_marks_what_it_cuts_off():

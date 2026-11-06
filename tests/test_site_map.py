@@ -476,3 +476,10 @@ def test_the_legend_has_the_chain_line_in_both_languages_and_the_svg_carries_cha
     assert all(
         a.get("data-chain") is None for a in drawn_nodes(drawing_of(en.find("article", id="card-middle-idea"))).values()
     )
+
+
+def test_from_40em_the_whole_map_scales_down_to_its_figure_and_never_up():
+    css = (REPO_ROOT / "src" / "me_atlas" / "static" / "site.css").read_text(encoding="utf-8")
+    media = next(r for r in css.splitlines() if r.startswith("@media (min-width: 40em) { .map-whole .map-figure svg"))
+    assert "max-width: 100%" in media and "height: auto" in media
+    assert "width: 100%" not in media.replace("max-width: 100%", "")  # width 100% would scale it up

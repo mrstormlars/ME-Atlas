@@ -221,6 +221,8 @@ a.ref::before {
 .map-near { border: 0; background: none; }
 /* the whole map leaves the text column: as wide as the drawing, at most the window less 1rem each side, centred */
 .map-whole .map-figure { width: max-content; max-width: calc(100vw - 2rem); position: relative; left: 50%; transform: translateX(-50%); }
+/* from 40em the whole-map drawing shrinks to fit its figure (never grows past its natural size); narrower, it scrolls */
+@media (min-width: 40em) { .map-whole .map-figure svg { max-width: 100%; height: auto; } }
 .map-svg text { fill: var(--ink); }
 .band-box { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
 .band-label { font-weight: 600; paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }

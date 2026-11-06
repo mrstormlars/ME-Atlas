@@ -17,11 +17,6 @@ from dataclasses import dataclass
 
 from me_atlas import map as maplib
 
-FONT = 16  # px; nothing in the drawing is smaller
-LINE = 20  # px between text lines
-PAD_X = 8
-PAD_Y = 6
-CHAR_W = 8.5  # a generous average width of a 16 px sans-serif character
 ROUNDS = 4  # barycentre rounds
 EMPTY_BAND_H = 28
 MAX_NAME_LINES = 3
@@ -72,13 +67,46 @@ class Style:
     label_h: int  # height of a band's label strip, 0 for no band labels
     top: int  # space above the first band
     name_lines: int = 3  # most lines of a card name
+    font: int = 16  # px
+    line: int = 20  # px between text lines
+    pad_x: int = 8
+    pad_y: int = 6
+    char_w: float = 8.5  # a generous average width of a character at this font size
+    base: int = 15  # baseline of the first text line below the top of a box
+    edge: int = 14  # space between a channel's edge and its first lane
+    slack: int = 16  # a gutter is this much wider than its lanes need
+    band_pad: int = 10  # space below the last row of a band
+    label_y: int = 24  # baseline of a band label below the top of the band
+    rect_pad: int = 8  # how far a band's rectangle reaches past the boxes
 
     @property
     def chars(self) -> int:
-        return int((self.box_w - 2 * PAD_X) / CHAR_W)
+        return int((self.box_w - 2 * self.pad_x) / self.char_w)
 
 
-FULL = Style(cols=5, box_w=200, gutter=40, outer=20, lane=8, row_gap=40, band_gap=24, label_h=36, top=8)
+# The whole map is an overview at 12 px; the neighbourhood drawings keep 16 px (docs/map.md, "The drawing").
+FULL = Style(
+    cols=5,
+    box_w=150,
+    gutter=30,
+    outer=15,
+    lane=5,
+    row_gap=30,
+    band_gap=18,
+    label_h=27,
+    top=6,
+    font=12,
+    line=15,
+    pad_x=6,
+    pad_y=5,
+    char_w=6.4,
+    base=11,
+    edge=11,
+    slack=10,
+    band_pad=8,
+    label_y=18,
+    rect_pad=6,
+)
 NEAR = Style(cols=2, box_w=124, gutter=28, outer=12, lane=5, row_gap=40, band_gap=0, label_h=0, top=8, name_lines=4)
 
 
@@ -144,6 +172,7 @@ class _Box:
     w: float = 0.0
     h: float = 0.0
     row: int = 0
+    st: Style | None = None
 
     @property
     def n_lines(self) -> int:
@@ -156,7 +185,7 @@ class _Box:
 
     @property
     def natural_h(self) -> float:
-        return self.n_lines * LINE + 2 * PAD_Y
+        return self.n_lines * self.st.line + 2 * self.st.pad_y
 
 
 @dataclass(frozen=True)
@@ -206,7 +235,7 @@ def _box_for(key: str, g: maplib.Graph, info: Mapping[str, NodeInfo], s: Strings
         text = ("? " if node.kind == "question" else "") + i.label
         lines = wrap(text, st.chars, MAX_QUESTION_LINES if node.kind == "question" else MAX_NAME_LINES)
         meta = contested = None
-    return _Box(key, node.kind, lines, meta, contested, None, None)
+    return _Box(key, node.kind, lines, meta, contested, None, None, st=st)
 
 
 def _sign(v: float) -> int:
@@ -333,7 +362,7 @@ def _draw(
             routes[i].vlane = lane_of[i]
         gutter_lanes[gi] = 1 + max(lane_of.values()) if lane_of else 0
     gutter_w = [
-        max(st.outer if gi in (0, used_cols) else st.gutter, gutter_lanes[gi] * st.lane + 16)
+        max(st.outer if gi in (0, used_cols) else st.gutter, gutter_lanes[gi] * st.lane + st.slack)
         for gi in range(used_cols + 1)
     ]
     gutter_left: list[float] = []
@@ -394,7 +423,7 @@ def _draw(
         channel_lanes[ch] = offset
 
     def needed(ch: int) -> float:
-        return 14 + max(channel_lanes.get(ch, 0) - 1, 0) * st.lane + 14
+        return st.edge + max(channel_lanes.get(ch, 0) - 1, 0) * st.lane + st.edge
 
     # 5. vertical layout: a channel is as high as its lanes need
     y = float(st.top)
@@ -419,13 +448,13 @@ def _draw(
             if ri < len(rows) - 1:
                 y = max(y + st.row_gap, min_next)
             row_no += 1
-        band_bottom = y + 10
+        band_bottom = y + st.band_pad
         band_rects.append((band.key, band.label, top, band_bottom))
         y = band_bottom + st.band_gap
     height = max(y - st.band_gap, min_next) + st.top
 
     def lane_y(ch: int, group: str, i: int) -> float:
-        return channel_start[ch] + 14 + lane_index[(ch, group, i)] * st.lane
+        return channel_start[ch] + st.edge + lane_index[(ch, group, i)] * st.lane
 
     paths: list[str] = []
     for i, r in enumerate(routes):
@@ -467,14 +496,15 @@ def _draw(
     labelled = [(key, label, top, bottom) for key, label, top, bottom in band_rects if label is not None]
     for key, _label, top, bottom in labelled:
         out.append(
-            f'<rect class="band-box band-{_esc(key)}" x="{_n(left - 8)}" y="{_n(top)}" '
-            f'width="{_n(right_edge - left + 16)}" height="{_n(bottom - top)}" rx="8"/>'
+            f'<rect class="band-box band-{_esc(key)}" x="{_n(left - st.rect_pad)}" y="{_n(top)}" '
+            f'width="{_n(right_edge - left + 2 * st.rect_pad)}" height="{_n(bottom - top)}" rx="8"/>'
         )
     out.append('<g class="links">' + "".join(paths) + "</g>")
     # the labels come after the links, with a halo, so a link passing behind one never hides it
     for _key, label, top, _bottom in labelled:
         out.append(
-            f'<text class="band-label" x="{_n(left + 4)}" y="{_n(top + 24)}" font-size="{FONT}">{_esc(label)}</text>'
+            f'<text class="band-label" x="{_n(left + 4)}" y="{_n(top + st.label_y)}" '
+            f'font-size="{st.font}">{_esc(label)}</text>'
         )
     out.append('<g class="nodes">')
     for key in sorted(present):
@@ -533,27 +563,28 @@ def _node_svg(g: maplib.Graph, b: _Box, i: NodeInfo, chain_keys: tuple[str, str]
         + (f' stroke-dasharray="{DASH}"' if b.kind == "question" else "")
         + "/>",
     ]
-    y = b.y + PAD_Y + 15
-    tx = b.x + PAD_X
+    st = b.st
+    y = b.y + st.pad_y + st.base
+    tx = b.x + st.pad_x
     for line in b.lines:
-        parts.append(f'<text class="node-label" x="{_n(tx)}" y="{_n(y)}" font-size="{FONT}">{_esc(line)}</text>')
-        y += LINE
+        parts.append(f'<text class="node-label" x="{_n(tx)}" y="{_n(y)}" font-size="{st.font}">{_esc(line)}</text>')
+        y += st.line
     if b.meta is not None:
-        parts.append(f'<text class="node-level" x="{_n(tx)}" y="{_n(y)}" font-size="{FONT}">{_esc(b.meta)}</text>')
-        y += LINE
+        parts.append(f'<text class="node-level" x="{_n(tx)}" y="{_n(y)}" font-size="{st.font}">{_esc(b.meta)}</text>')
+        y += st.line
     if b.contested is not None:
         parts.append(
-            f'<text class="node-contested" x="{_n(tx)}" y="{_n(y)}" font-size="{FONT}">{_esc(b.contested)}</text>'
+            f'<text class="node-contested" x="{_n(tx)}" y="{_n(y)}" font-size="{st.font}">{_esc(b.contested)}</text>'
         )
-        y += LINE
+        y += st.line
     if b.count_in is not None:
         parts.append(
-            f'<text class="marker marker-in" x="{_n(tx)}" y="{_n(y)}" font-size="{FONT}">{_esc(b.count_in)}</text>'
+            f'<text class="marker marker-in" x="{_n(tx)}" y="{_n(y)}" font-size="{st.font}">{_esc(b.count_in)}</text>'
         )
     if b.count_out is not None:
         parts.append(
-            f'<text class="marker marker-out" x="{_n(b.x + b.w - PAD_X)}" y="{_n(y)}" text-anchor="end" '
-            f'font-size="{FONT}">{_esc(b.count_out)}</text>'
+            f'<text class="marker marker-out" x="{_n(b.x + b.w - st.pad_x)}" y="{_n(y)}" text-anchor="end" '
+            f'font-size="{st.font}">{_esc(b.count_out)}</text>'
         )
     parts.append("</a>")
     return "".join(parts)
