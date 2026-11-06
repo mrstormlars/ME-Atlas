@@ -15,6 +15,26 @@
 {% endmacro %}
 <h1>{{ txt("map.h1") }}</h1>
 <p>{{ t("map.intro") }}</p>
+<details class="map-whole" open>
+  <summary>{{ txt("map.whole") }}</summary>
+  <figure class="map-figure">{{ whole }}</figure>
+  <div class="map-legend">
+    <h2>{{ txt("map.legend.h") }}</h2>
+    <ul>
+{% for step in ["proposed", "associated", "directional"] %}
+      <li>{{ legend.samples[step] }} {{ txt("map.legend." ~ step) }}</li>
+{% endfor %}
+    </ul>
+    <p class="small">{{ txt("map.legend.arrow") }}</p>
+    <ul>
+      <li>{{ txt("map.legend.card") }}</li>
+      <li>{{ txt("map.legend.symptom") }}</li>
+      <li>{{ txt("map.legend.question") }}</li>
+    </ul>
+    <p class="small">{{ txt("map.legend.markers") }}</p>
+    <p class="small">{{ txt("map.legend.chain") }}</p>
+  </div>
+</details>
 {% for section in sections %}
 
 <h2 id="layer-{{ section.key }}">{{ txt("layer." ~ section.key) }}</h2>
@@ -35,6 +55,9 @@
   </ul>
 {% else %}
   <p class="empty">{{ txt("map.no_links") }}</p>
+{% endif %}
+{% if card.drawing %}
+  <figure class="map-figure map-near">{{ card.drawing }}</figure>
 {% endif %}
 </article>
 {% endfor %}

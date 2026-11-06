@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-06 — Drawn causal map
+
+- The defaults in `docs/plan-drawn-map.md` are accepted ("we adjust when we see the result"): bands from predisposition at the top to symptoms at the bottom, evidence level and contested mark in each card box, line style carries the link step, unlinked symptoms muted, on phones a neighbourhood drawing per card with the whole map behind "Show the whole map".
+- Pointing at or focusing a box dims everything not on its chain: the box, everything it leads to and everything that leads to it, at any depth, and the links between them (founder request). Why: with 23 links the whole drawing is too dense to follow one chain by eye.
+
 ## 2026-11-06 — Causal map: second pass with review full texts
 
 - Six new step-1 (proposed) links accepted by the founder after `link-drafter` on all 16 cards with the three cached review full texts as plain text with numbered paragraphs, and two `card-reviewer` rounds (run files in `data/pipeline/2026-11-06-map-pass2/`, list in `decisions.md` there): gut microbiome to neuroinflammation and to oxidative and nitrosative stress; small fibre neuropathy to the orthostatic intolerance symptom (observations in POTS, said in the text); HPA axis and cortisol to sleep disturbance, to neurocognitive impairment and to the open question "What keeps the illness going". Why: the first pass could not read the full texts; these links are stated in them.

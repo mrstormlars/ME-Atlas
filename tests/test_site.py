@@ -1361,7 +1361,8 @@ def test_the_stylesheet_meets_the_basic_accessibility_rules():
     assert "prefers-reduced-motion: reduce" in css
     assert ":focus-visible" in css and "outline:" in css
     assert "min-height: 44px" in css
-    assert "overflow-x" not in css  # nothing scrolls sideways
+    # nothing scrolls sideways except the map figure, which scrolls inside itself (docs/map.md, "The drawing")
+    assert "overflow-x" not in re.sub(r"(?m)^\.map-figure \{[^}]*\}", "", css)
 
 
 # --- layout revision: ladder key, table behind a disclosure, one h1, minimum text size -----

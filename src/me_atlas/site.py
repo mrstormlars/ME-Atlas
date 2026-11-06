@@ -26,7 +26,7 @@ from jinja2 import ChoiceLoader, Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup, escape
 
 from me_atlas import cards as cardlib
-from me_atlas import i18n, translations
+from me_atlas import i18n, map_draw, translations
 from me_atlas import map as maplib
 from me_atlas.cards import Card, ChangeLogEntry, SourcedText, Study
 from me_atlas.glossary import (
@@ -432,6 +432,7 @@ class CardView:
     name: str
     name_in_english: bool
     links: tuple[LinkView, ...]
+    drawing: Markup | None = None  # the neighbourhood drawing, when the card has a link in or out
 
 
 @dataclass(frozen=True)
@@ -458,6 +459,11 @@ class SectionView:
 
 
 @dataclass(frozen=True)
+class LegendView:
+    samples: dict[str, Markup]  # support step -> inline SVG sample of its line style
+
+
+@dataclass(frozen=True)
 class ConvergenceView:
     name: MapText
     href: str
@@ -471,9 +477,11 @@ def _map_views(
     content: maplib.MapContent,
     local_names: dict[str, str],
     local_texts: dict[str, str],
-) -> tuple[list[SectionView], list[ConvergenceView], list[ConvergenceView]]:
+    draw_strings: map_draw.Strings,
+) -> tuple[list[SectionView], list[ConvergenceView], list[ConvergenceView], Markup]:
     """The map page as one language shows it. Structure and counts come from the English cards; link texts and names
-    come from the translated cards, symptom names and question texts from the language's content files."""
+    come from the translated cards, symptom names and question texts from the language's content files. The last
+    value is the drawing of the whole map; each card view carries its own neighbourhood drawing."""
     default = code == DEFAULT_LANGUAGE
     graph = maplib.build_graph(english_cards, content)
     by_slug = {lc.card.slug: lc for lc in local_cards}
@@ -496,6 +504,19 @@ def _map_views(
             return f"hypotheses/{key}.html"
         return "#" + key.replace(":", "-")
 
+    english_by_slug = {c.slug: c for c in english_cards}
+    info: dict[str, map_draw.NodeInfo] = {}
+    for key in graph.nodes:
+        label = name_of(key)
+        card = english_by_slug.get(key)
+        info[key] = map_draw.NodeInfo(
+            label.text,
+            href_of(key),
+            card.level if card else None,
+            bool(card and card.contested),
+            label.english,
+        )
+
     sections: list[SectionView] = []
     for layer in (*maplib.LAYER_ORDER, maplib.UNPLACED):
         cards_here: list[CardView] = []
@@ -513,7 +534,12 @@ def _map_views(
                     for x in sorted(link.sources, key=numbers.__getitem__)
                 )
                 views.append(LinkView(link, link.support, name_of(link.to), href_of(link.to), refs))
-            cards_here.append(CardView(node.key, lc.card.name, lc.name_fallback and not default, tuple(views)))
+            near = (
+                Markup(map_draw.render_neighbourhood(graph, node.key, info, draw_strings, f"near-{node.key}"))
+                if map_draw.has_links(graph, node.key)
+                else None
+            )
+            cards_here.append(CardView(node.key, lc.card.name, lc.name_fallback and not default, tuple(views), near))
         symptoms = tuple(
             SymptomView(s.id, local(local_names, maplib.SYMPTOM_PREFIX + s.id, s.name), tuple(s.sources))
             for s in content.symptoms
@@ -533,7 +559,8 @@ def _map_views(
     def convergence(found: list[tuple[maplib.Node, int]]) -> list[ConvergenceView]:
         return [ConvergenceView(name_of(n.key), href_of(n.key), count) for n, count in found]
 
-    return sections, convergence(maplib.common_mechanisms(graph)), convergence(maplib.candidate_roots(graph))
+    whole = Markup(map_draw.render_full(graph, info, draw_strings, "map-whole"))
+    return sections, convergence(maplib.common_mechanisms(graph)), convergence(maplib.candidate_roots(graph)), whole
 
 
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:
@@ -697,7 +724,21 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         )
     render("changes.html", "changes.html", txt0["page.changes"], entries=shared.entries, names=names)
     local_names, local_texts = shared.map_local.get(code, ({}, {}))
-    sections, common, roots = _map_views(code, local_cards, shared.cards, shared.map_content, local_names, local_texts)
+    draw_strings = map_draw.Strings(
+        bands={k: txt0[f"layer.{k}"] for k in (*maplib.LAYER_ORDER, maplib.UNPLACED)},
+        level=txt0["map.draw.level"],
+        contested=txt0["map.draw.contested"],
+        count_in=txt0["map.draw.in"],
+        count_out=txt0["map.draw.out"],
+        supports={k: txt0[f"support.{k}"] for k in map_draw.LINK_STYLES},
+        title=txt0["map.draw.title"],
+        desc=txt0["map.draw.desc"],
+        near_title=txt0["map.draw.near_title"],
+    )
+    sections, common, roots, whole = _map_views(
+        code, local_cards, shared.cards, shared.map_content, local_names, local_texts, draw_strings
+    )
+    legend = LegendView({k: Markup(map_draw.legend_sample(k)) for k in map_draw.LINK_STYLES})
     render(
         "map.html",
         "map.html",
@@ -707,6 +748,8 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         sections=sections,
         common=common,
         roots=roots,
+        whole=whole,
+        legend=legend,
     )
     render(
         "methods.html",

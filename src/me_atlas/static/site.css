@@ -214,6 +214,38 @@ a.ref::before {
 .js .tip { position: absolute; z-index: 10; max-width: min(19rem, calc(100% - 1rem)); margin: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, .3); }
 .js .tip[hidden] { display: none; }
 
+/* causal map drawing: inline SVG at its natural size; the figure scrolls sideways, the page never does */
+.map-whole > summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.map-figure { margin: .5rem 0; overflow-x: auto; max-width: 100%; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+.map-figure svg { display: block; max-width: none; }
+.map-near { border: 0; background: none; }
+/* the whole map leaves the text column: as wide as the drawing, at most the window less 1rem each side, centred */
+.map-whole .map-figure { width: max-content; max-width: calc(100vw - 2rem); position: relative; left: 50%; transform: translateX(-50%); }
+.map-svg text { fill: var(--ink); }
+.band-box { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
+.band-label { font-weight: 600; paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+.node { cursor: pointer; text-decoration: none; }
+.node-box { fill: var(--card); stroke: var(--ink); stroke-width: 1.5; }
+.node-symptom .node-box { fill: var(--empty); }
+.node-question .node-box { fill: var(--card); stroke: var(--muted); }
+.node-muted .node-box { stroke: var(--muted); stroke-width: 1; }
+.node-muted text { fill: var(--muted); }
+.node-contested { font-weight: 700; fill: var(--warn); }
+.node-level, .marker { fill: var(--muted); }
+.marker { font-weight: 600; }
+.node:hover .node-box { stroke: var(--fill); stroke-width: 3; }
+.node:focus-visible { outline: none; }
+.node:focus-visible .node-box { stroke: var(--focus); stroke-width: 4; }
+/* the chain of a pointed-at or focused box: set by site.js; without it nothing is dimmed */
+.map-svg.is-focusing .node:not(.on-chain), .map-svg.is-focusing .link:not(.on-chain) { opacity: .2; }
+.map-svg.is-focusing .link.on-chain { opacity: 1; }
+.link { color: var(--ink); }
+.arrowhead { color: var(--ink); }
+.map-legend h2 { margin-top: 1rem; }
+.map-legend ul { list-style: none; padding: 0; margin: .5rem 0; }
+.map-legend li { margin: .25rem 0; display: flex; align-items: center; gap: .5rem; }
+.legend-sample { flex: none; color: var(--ink); }
+
 footer { margin-top: 3rem; padding-bottom: 2rem; color: var(--muted); font-size: .889rem; }
 footer .inner { padding-top: 1rem; }
 footer .inner::before { content: ""; display: block; border-top: 1px solid var(--line); margin-bottom: 1rem; }
