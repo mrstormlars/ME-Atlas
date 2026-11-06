@@ -1,8 +1,8 @@
 # Norwegian text of the open-question nodes in content/open-questions.yaml (same ids). Checked by card-reviewer.
 - id: who-is-vulnerable
   text: Hvorfor utvikler noen, men ikke andre, ME/CFS etter den samme infeksjonen?
-- id: triggers-other-than-infection
-  text: Hvilke utløsere, andre enn infeksjon, starter ME/CFS?
+- id: what-starts-it
+  text: Hva utløser ME/CFS?
 - id: what-keeps-it-going
   text: Hva holder sykdommen i gang etter at utløseren er borte?
 - id: closest-to-symptoms

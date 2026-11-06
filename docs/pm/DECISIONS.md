@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-06 — New hypothesis: infection as a trigger
+
+- New draft card `drafts/infection-trigger.yaml` (17th hypothesis), added at the founder's request because the causal map's trigger layer held no card: herpesvirus and enterovirus sit in the mechanism layer as reactivation and persistence. Founder ruling on the drafter's proposal after two `card-reviewer` rounds (run files in `data/pipeline/2026-11-06-infection-trigger/`): level 2 (RECOVER-Adult, IOM 2015 from self-reported symptoms, ME/CFS more frequent after SARS-CoV-2 than in matched uninfected people); not contested (INSPIRE compared SARS-CoV-2 with other acute illness, not with no infection, and measured fewer than half as many); both badges no; long COVID label; layer trigger; one proposed link to the open question on who is vulnerable. The older post-infection cohorts (glandular fever, Q fever, Ross River virus) have no verifiable case definition and do not count.
+- The trigger open question now reads "What starts ME/CFS?" (id `what-starts-it`); the old wording assumed infection was already covered.
+
 ## 2026-11-06 — Drawn causal map
 
 - The defaults in `docs/plan-drawn-map.md` are accepted ("we adjust when we see the result"): bands from predisposition at the top to symptoms at the bottom, evidence level and contested mark in each card box, line style carries the link step, unlinked symptoms muted, on phones a neighbourhood drawing per card with the whole map behind "Show the whole map".

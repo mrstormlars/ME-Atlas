@@ -1,0 +1,471 @@
+# FOUNDER RULING (2026-11-06): level 2, not contested (INSPIRE stays context), both badges no, long COVID label
+# shown, layer trigger, one proposed link to question:who-is-vulnerable. Accepted as drafted after two card-reviewer rounds.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-06 from the founder request in
+# data/pipeline/2026-11-06-infection-trigger/brief.md. Nothing here is published. Level, contested mark, badges,
+# layer and links below are proposals for the founder (CLAUDE.md rule 2), not rulings.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract) or, where `case_definition_source: fulltext` or a comment names a full
+# text, from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (39804551: PMC11968624;
+# 41901562: PMC13027803; 39046739: PMC11270135; 42516718: PMC13404851; 37881452: PMC10593357). The other seven
+# have no open full text in Europe PMC (`europepmc fulltext`, checked 2026-11-06): 9926075, 16950834, 33367564,
+# 12145392, 34240822, 7752755, 26475444. Searches and hit counts: data/pipeline/2026-11-06-infection-trigger/report.md.
+#
+# SCOPE: onset. The card's measure is "ME/CFS (by a case definition) is more frequent after a documented acute
+# infection than in a comparison group". Which pathogen persists and what mechanism follows belong to other cards
+# (herpesvirus-reactivation, persistent-enterovirus-infection); EBV reactivation markers are not used here.
+#
+# n CONVENTION: these are cohort studies of exposure, not patient-control studies. `n_patients` is the infected
+# (exposed) group followed for ME/CFS, `n_controls` the comparison group (uninfected, or a different illness).
+#
+# LEVEL, RUNG BY RUNG (proposal)
+#   Rung 1: met. 41901562 (Tack 2026, CCC from the abstract, uncontrolled): at least 7 of 221 hospital employees
+#     met the CCC after SARS-CoV-2 infection. Also met by the rung 2 study.
+#   Rung 2: met by 39804551 (Vernon 2025, RECOVER-Adult; IOM 2015 applied to self-reported symptoms; controlled):
+#     incidence 2.66 per 100 person-years in 4515 participants followed from acute infection against 0.93 in
+#     propensity-matched uninfected participants, hazard ratio 4.93 (95% CI 3.62-6.71). Temporal order is part of the
+#     design (enrolled within 30 days of infection, earlier ME/CFS diagnosis excluded), but the rubric does not grade
+#     temporality below level 4 (spec section 3, Bradford Hill table), so it does not raise the level here.
+#   Rung 3: not met. No second controlled study with a verified recognised case definition, from an independent
+#     group in a separate cohort, repeats the finding. The pre-COVID prospective cohorts that point the same way
+#     (9926075 White 1998, glandular fever against URTI; 12145392 Wildman 2002, Q fever against matched unexposed;
+#     16950834 Hickie 2006; 33367564 Jason 2021) have no open full text and no case definition named in the abstract,
+#     so they are `unverified` and `context` (V9). Note for the founder: if White 1998 or Wildman 2002 were verified,
+#     they would be the earlier, original findings and RECOVER the later one (checklist item 5); whether that counts
+#     as a replication of "infection raises risk" across different pathogens is a founder question.
+#   Rung 4 and above: not met (no intervention study; an infection cannot be assigned).
+# CONTESTED (proposal: null). The ladder needs a contradicting study of comparable quality against the rung 2
+#   finding. Candidates considered:
+#   - 39046739 (Unger 2024, INSPIRE; IOM 2015 by self-report; 4738 enrolled): no difference in ME/CFS-like illness.
+#     Same definition, but NOT of comparable quality on size: the measurement n is the people who answered a
+#     follow-up survey (38.7% to 76.3% of 4738; weighted totals at 3 months about 1840 COVID-19 positive and 1729
+#     negative, full-text health-status table), below half of RECOVER's 4515 (2257.5). Spec section 3 counts "the
+#     number of patients in the measurement that bears on the finding", so the contested rule does not apply.
+#     A second, independent reason: its comparison group is different: everyone had an acute
+#     infection-like illness and the negative group tested negative for SARS-CoV-2; the authors write that ME/CFS-like
+#     illness "was equally likely to occur after SARS-CoV-2 and unknown infection". RECOVER compares with people who
+#     had no SARS-CoV-2 infection. INSPIRE therefore bears on whether SARS-CoV-2 differs from other acute illnesses,
+#     not on whether infection comes before ME/CFS. Recorded as `context`, direction `no_difference`, and shown in
+#     level_reason. FOUNDER DECISION only if the founder reads both reasons differently: then contested rungs [2]
+#     and role `contradicts`.
+#   - 7752755 (Wessely 1995; common infections against other consultations in UK primary care; no difference in
+#     "various criteria" for CFS): the strongest contradicting design, but the criteria are not named in the
+#     abstract and there is no open full text, so `unverified` and `context` (V9). TODO: verify.
+#   - 34240822 (Ankert 2022; Q fever against household members, 3.8% against 3.8%): CFS assessed with the CDC
+#     Short Form Symptom Inventory, which is an instrument, not a named definition; `unverified`. 80 exposed, below
+#     half of 4515 in any case.
+#   - 42516718 (Burkard 2026, network cohort): ME/CFS by diagnosis/symptom codes, `none` (DECISIONS 2026-11-02
+#     precedent: a diagnosis code is not a case definition); test-negative comparison as in INSPIRE.
+# OXFORD: no study on the card uses an Oxford cohort as far as can be seen; the unverified pre-COVID UK studies
+#   (9926075, 7752755) could use Oxford among their criteria. TODO: verify.
+# LONG COVID: label shown, carried by 39804551 (IOM 2015), 39046739 (IOM 2015) and 41901562 (CCC), whose
+#   participants were classified by a recognised ME/CFS definition. 42516718 is recorded as `me_cfs` cohort because
+#   its outcome is ME/CFS codes with no recognised definition, so it must not carry the label.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Vernon SD is an author on 16950834 (Dubbo) and 39804551 (RECOVER); Jason LA on 33367564 (Chicago college
+#     cohort) and 39804551. The cohorts are separate (Australia 1999-era Dubbo cohort, US students, US RECOVER).
+#   - White PD is on 9926075 and on 16330509 (left out, below).
+#   - No authors shared between RECOVER and INSPIRE (checked on the cached author lists).
+#
+# Not on the card (read, left out; reasons also in report.md):
+#   - Diagnosis-code registry studies, case definition `none`, kept to one null and one positive example to avoid
+#     padding: 37951920 (Taiwan, any infection, aHR 1.5; codes include 780.7 and R53.8, broad fatigue codes),
+#     40640868, 39018725, 35189895 (same Taiwan group and database: influenza, pneumonia, tuberculosis),
+#     39418958 (TriNetX COVID-19, HR 1.59), 28601847 (Bavaria claims, GI infection, CFS HR 1.35-1.82).
+#   - Fatigue, not ME/CFS, as outcome: 25115874 (giardiasis, Chalder chronic fatigue), 16330509 (GP records after
+#     infectious mononucleosis), 40094121 (post-COVID youth, fatigue score), 36573005 (INSPIRE first 1000, symptoms
+#     only), 30261303 and 31003854 (CEBA adolescents, fatigue score).
+#   - Same cohorts as studies on the card: 41836950 (7-year follow-up of the 33367564 cohort), 35350440, 28717787
+#     (same college cohort), 35959390 and 42773889 (Dubbo re-analyses).
+#   - Selected patient series without an incidence denominator: 23399438 (22 of 53 with chronic fatigue after
+#     giardiasis met Fukuda), 36042189 (19 of 42 post-COVID patients met CCC), 19564299 (adolescents after
+#     infectious mononucleosis, "established pediatric criteria" not named; TODO: verify, could be added as rung 1
+#     context), 38304441, 1846641.
+#   - Reviews: 34867935, 40284540, 33959278.
+slug: infection-trigger
+name: Infection as a trigger
+core_claim:
+  text: >-
+    The hypothesis proposes that in some people ME/CFS starts after an acute infection: the infection
+    comes before the illness and raises the risk of developing it. It is about when and after what
+    the illness begins, not about which germ persists or what happens in the body afterwards.
+  sources: [pmid:39804551, pmid:16950834, pmid:9926075]
+level: 2
+level_reason:
+  - text: >-
+      A US study (RECOVER-Adult) followed 4515 adults enrolled within 30 days of SARS-CoV-2 infection,
+      or who became infected during the study, and compared them with adults who had no infection.
+      ME/CFS was classified with the 2015 IOM criteria applied to self-reported symptoms, and people
+      with an earlier ME/CFS diagnosis were excluded. The rate of new ME/CFS was 2.66 per 100
+      person-years after infection and 0.93 in matched uninfected participants (hazard ratio 4.93,
+      95% CI 3.62-6.71); 847 of the 1439 uninfected participants had no match, so the comparison used
+      the other 592 (calculated from the reported counts). Across all infected participants, 531 of
+      11,785 (4.5%) met the criteria, against 9 of 1439 (0.6%) uninfected participants. The authors
+      list possible recall bias and selection bias, earlier symptoms missed in people never
+      diagnosed, and the severity of post-exertional malaise not being assessed, and say these limits
+      could have led to overestimation. The card is at level 2 because of this study. No independent
+      group has repeated it with a verified case definition, so it is unreplicated.
+    sources: [pmid:39804551]
+  - text: >-
+      A German study of 221 hospital employees who tested positive for SARS-CoV-2 found that at least
+      7 (3.2%) met the Canadian Consensus Criteria when assessed in 2022; the authors give 3.2% to
+      9.0% as a range, because not everyone with persistent fatigue was assessed. It had no
+      comparison group.
+    sources: [pmid:41901562]
+  - text: >-
+      A second US study (INSPIRE) of adults who all had an acute illness that led to a COVID-19 test
+      found ME/CFS-like illness, by the 2015 IOM criteria applied to self-reported symptoms, in 2.8%
+      to 3.7% of those who tested positive and 3.1% to 4.5% of those who tested negative, with no
+      significant difference at any point up to 12 months. Of the 4738 enrolled, 38.7% to 76.3%
+      answered each follow-up survey (about 1840 and 1729 people at three months, weighted), and the
+      surveys could not clearly detect symptoms present before the acute illness. Like RECOVER-Adult,
+      it classified people from self-reported symptoms. The authors write that it was equally likely
+      after SARS-CoV-2 and after an unknown infection. It is smaller in the measurement than
+      RECOVER-Adult, and because the comparison group also had
+      an acute illness, this study compares SARS-CoV-2 with other illnesses rather than with no
+      infection, and the card does not treat it as contradicting level 2.
+    sources: [pmid:39046739]
+  - text: >-
+      Earlier studies that followed people from a documented infection point the same way but cannot
+      count towards the level, because their case definitions are not yet verified. In a study of
+      primary care patients, chronic fatigue syndrome was found in 9-22% six months after glandular fever and 0-6% after an ordinary
+      upper respiratory tract infection. Ten years after a Q fever outbreak, it was found in 14
+      (19.4%) exposed people and 3 (4.2%) matched unexposed people among those examined in hospital.
+      Two studies had no comparison group, so they give a frequency after infection rather than a
+      higher risk: in Australia, 28 of 253 people
+      (11%) met the criteria six months after Epstein-Barr virus, Q fever or Ross River virus
+      infection, at a similar rate after each. In a US college cohort, 55 of 238 students (23%) met
+      the criteria six months after infectious mononucleosis.
+    sources: [pmid:9926075, pmid:12145392, pmid:16950834, pmid:33367564]
+  - text: >-
+      Other studies found no difference. In UK primary care, 1199 people seen with an infection and
+      1167 seen for other reasons, of whom 84% were followed up at six months, did not differ in the
+      proportions who met various criteria for chronic fatigue syndrome. Six years after a Q fever outbreak in Germany, 3 of
+      80 people with confirmed past infection and 2 of 52 household members met chronic fatigue
+      syndrome criteria (3.8% in both). Neither study's case definition is verified. A network study
+      of health records from eight countries found no increase in recorded ME/CFS diagnoses after
+      COVID-19 compared with a negative test (crude rate ratio 0.98), with large differences between
+      databases (2.03 in one UK database, 0.89 in another); diagnosis codes are not a case
+      definition.
+    sources: [pmid:7752755, pmid:34240822, pmid:42516718]
+  - text: >-
+      In the Norwegian population, recorded ME/CFS diagnoses in specialist care were about twice as
+      frequent after a diagnosis of pandemic influenza (hazard ratio 2.04) and not more frequent after
+      the pandemic vaccine (hazard ratio 0.97). The outcome was a diagnosis code, not a case
+      definition, so this study does not count towards the level.
+    sources: [pmid:26475444]
+contested: null
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        No study on this card tests a diagnostic marker in a second, independent patient group. One
+        study measured autoantibodies, Epstein-Barr virus antibodies and clotting values in 15 to 18
+        of the 19 hospital employees assessed after SARS-CoV-2 with persistent fatigue, without a
+        control group.
+      sources: [pmid:41901562]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        No study on this card measures post-exertional malaise directly. In the RECOVER-Adult study,
+        post-exertional malaise was one yes-or-no question in a symptom survey; it was the most often
+        reported ME/CFS symptom after infection.
+      sources: [pmid:39804551]
+subgroups: []
+working_on_it: []
+early_signals: []
+studies:
+  # --- supports ---
+  - id: pmid:39804551
+    title: "Incidence and Prevalence of Post-COVID-19 Myalgic Encephalomyelitis: A Report from the Observational RECOVER-Adult Study."
+    year: 2025
+    cohort: long_covid
+    # IOM 2015, applied to self-reported symptoms (full text: PEM and OI each from one survey question).
+    case_definition: IOM2015
+    case_definition_source: abstract
+    case_definition_quote: "Incidence rate and prevalence of post-COVID-19 ME/CFS based on the 2015 Institute of Medicine ME/CFS clinical diagnostic criteria."
+    design: controlled
+    # Full text: 4515 acute infected (enrolled within 30 days of infection); 1439 uninfected (negative nucleic acid
+    # and nucleocapsid antibody tests); propensity matching with replacement, 847 of 1439 uninfected unmatched.
+    # Abstract CI for the uninfected rate reads "0.91-10.95"; the full text reads 0.91-0.95 (typo in the abstract).
+    # Pre-existing ME/CFS diagnosis excluded (n=198 infected, n=22 uninfected).
+    # n_controls: the matched comparison that carries HR 4.93; 592 calculated from the reported counts (1439 - 847
+    # unmatched; matching with replacement). The 9 of 1439 prevalence comparison uses all 1439. C6 may warn.
+    n_patients: 4515
+    n_controls: 592
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    group: Vernon SD and Hess R, NIH RECOVER Consortium, USA
+    finding: >-
+      A study of n=4515 adults followed from acute SARS-CoV-2 infection found a higher rate of new
+      ME/CFS than in the 592 matched uninfected participants (calculated from the reported counts;
+      2.66 against 0.93 per 100 person-years, hazard ratio 4.93), with ME/CFS classified from
+      self-reported symptoms.
+  - id: pmid:41901562
+    title: Assessment and Incidence Determination of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Following a SARS-CoV-2 Infection in a Prospective Cohort of Hospital Employees.
+    year: 2026
+    cohort: long_covid
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: "Canadian Consensus Criteria were used for the diagnosis of ME/CFS."
+    design: uncontrolled
+    # Full text: staged: 26 of 221 reported persistent fatigue, 19 assessed with the CCC (patient-reported, administered
+    # by a physician or trained team member), 7 met full criteria; range 3.2-9.0% (7-20/221) under assumptions.
+    n_patients: 221
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 1
+    direction: not_applicable
+    group: Tack M and Mattner F, Cologne Merheim Medical Center, Germany
+    finding: >-
+      A study of n=221 hospital employees who tested positive for SARS-CoV-2 found that at least 7
+      (3.2%) met the Canadian Consensus Criteria, of 19 assessed, without a comparison group.
+  # --- context ---
+  - id: pmid:39046739
+    title: Myalgic Encephalomyelitis/Chronic Fatigue Syndrome After SARS-CoV-2 Infection.
+    year: 2024
+    cohort: long_covid
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: "We used the 2015 Institute of Medicine (IOM) criteria15 for binary classification of the primary ME/CFS outcome, operationalized using participants’ responses to symptoms from the CDC ME/CFS Symptom Screener–Short Form, version 1.2 (eAppendix 1 in Supplement 1) and the Physical Function subscale of the PROMIS-29, version 2.118 profile (algorithm in eTable 1 in Supplement 1)."
+    design: controlled  # comparison group: acute infection-like illness, SARS-CoV-2 test negative
+    # n: 4738 enrolled (full-text Results: "There were 4738 participants included in the study, of whom 3226 (68.1%)
+    # identified as female"; the abstract's 4378 is a transposition, card-reviewer round 1). Table 1 (2418 positive,
+    # 2320 negative) gives weighted enrolment counts. Measurement n used here: weighted totals at 3 months from the
+    # full-text health-status table, 1840 positive (100 + 1740) and 1729 negative (96 + 1633), fewer later; weighted
+    # and summed, so C6 may warn. Survey completion 38.7% to 76.3% of 4738; 1357 (28.6%) answered at all time points.
+    # Full text: "the survey questions did not allow clear detection of the presence of chronic symptoms before
+    # participants' acute index illness."
+    n_patients: 1840
+    n_controls: 1729
+    measures_pem: false
+    preregistered: null
+    role: context  # see header: compares SARS-CoV-2 with other acute illness, not with no infection
+    direction: no_difference
+    group: Unger ER and Elmore JG, INSPIRE Group, USA
+    finding: >-
+      A study of adults who all had an acute infection-like illness found ME/CFS-like illness in 2.8%
+      to 3.7% of those who tested positive for SARS-CoV-2 and 3.1% to 4.5% of those who tested
+      negative, with no significant difference in odds up to 12 months; 38.7% to 76.3% of the 4738
+      enrolled answered each follow-up survey (about 1840 and 1729 at three months, weighted).
+  - id: pmid:9926075
+    title: Incidence, risk and prognosis of acute and chronic fatigue syndromes and psychiatric disorders after glandular fever.
+    year: 1998
+    cohort: me_cfs
+    # No open full text; the abstract names no case definition. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled  # glandular fever against ordinary upper respiratory tract infection
+    n_patients: null  # 250 in total; the split between groups is not in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: White PD and Clare AW
+    finding: >-
+      A prospective study of 250 primary care patients found chronic fatigue syndrome in 9-22% six
+      months after glandular fever and 0-6% after an ordinary upper respiratory tract infection
+      (relative risks 2.7-5.1).
+  - id: pmid:12145392
+    title: "Chronic fatigue following infection by Coxiella burnetii (Q fever): ten-year follow-up of the 1989 UK outbreak cohort."
+    year: 2002
+    cohort: me_cfs
+    # No open full text; the abstract names no CFS definition. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled  # age-, sex- and smoking-matched unexposed controls
+    # The CFS comparison is in "those more intensively studied": 14 (19.4%) against 3 (4.2%), p=0.003. The number of
+    # pairs is not stated in the abstract (about 72, calculated from counts and percentages), so n is null.
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Wildman MJ and Ayres JG
+    finding: >-
+      A matched study ten years after a Q fever outbreak found chronic fatigue syndrome in 14 (19.4%)
+      exposed people and 3 (4.2%) unexposed controls among those studied in hospital (p=0.003).
+  - id: pmid:16950834
+    title: "Post-infective and chronic fatigue syndromes precipitated by viral and non-viral pathogens: prospective cohort study."
+    year: 2006
+    cohort: me_cfs
+    # PMC1569956 exists but Europe PMC returned no open full text; the abstract says "diagnostic criteria for chronic
+    # fatigue syndrome" without naming them. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: uncontrolled  # three infections compared with each other; no uninfected group
+    n_patients: 253
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Hickie I and Lloyd A, Dubbo Infection Outcomes Study Group, Australia
+    finding: >-
+      A prospective study of n=253 people followed from Epstein-Barr virus, Q fever or Ross River
+      virus infection found that 28 (11%) met the diagnostic criteria for chronic fatigue syndrome at
+      six months, at a similar rate after each infection, predicted mainly by the severity of the
+      acute illness.
+  - id: pmid:33367564
+    title: "Risks for Developing Myalgic Encephalomyelitis/Chronic Fatigue Syndrome in College Students Following Infectious Mononucleosis: A Prospective Cohort Study."
+    year: 2021
+    cohort: me_cfs
+    # PMC8664491 exists but Europe PMC returned no open full text; the abstract says "met criteria for ME/CFS" and
+    # "meeting >1 set of criteria" without naming them. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: uncontrolled  # no group without infectious mononucleosis; 67 recovered students as comparison for predictors
+    n_patients: 238
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Jason LA and Katz BZ, USA
+    finding: >-
+      A study of 4501 students enrolled before infection found that 238 developed infectious
+      mononucleosis and 55 of them (23%) met criteria for ME/CFS six months later; before infection,
+      those who later had severe ME/CFS differed in several behavioural
+      measures and had lower IL-6 and IL-13, but not in stress, coping, anxiety or depression, compared
+      with students who were asymptomatic six months after infection.
+  - id: pmid:7752755
+    title: "Postinfectious fatigue: prospective cohort study in primary care."
+    year: 1995
+    cohort: me_cfs
+    # No open full text; the abstract says "various criteria for chronic fatigue syndrome". TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled  # people attending general practice for other reasons
+    # Enrolled numbers; "84% were followed up at 6 months"; per-group follow-up numbers are not in the abstract.
+    n_patients: 1199
+    n_controls: 1167
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Wessely S and Wright DJ
+    finding: >-
+      A prospective study of n=1199 primary care patients with a symptomatic infection and 1167
+      attending for other reasons, of whom 84% were followed up at six months, found no difference in
+      chronic fatigue (9.9% against 11.7%) or in the proportions meeting various criteria for chronic
+      fatigue syndrome.
+  - id: pmid:34240822
+    title: "Incidence of chronic Q fever and chronic fatigue syndrome: A 6 year follow-up of a large Q fever outbreak."
+    year: 2022
+    cohort: me_cfs
+    # The abstract names the CDC Short Form Symptom Inventory (an instrument), not a case definition; no open full
+    # text. TODO: verify which criteria the inventory was scored against.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled  # household members without serological evidence of infection
+    n_patients: 80
+    n_controls: 52
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Ankert J and Pletz MW, Jena, Germany
+    finding: >-
+      A study six years after a Q fever outbreak of n=80 people with confirmed past infection and 52
+      uninfected household members found that 3 (3.8%) and 2 (3.8%) met criteria for chronic fatigue
+      syndrome.
+  - id: pmid:42516718
+    title: "Risks of autoimmune and inflammatory post-acute COVID-19 conditions: a network cohort study in six European countries, the USA and Korea."
+    year: 2026
+    # Outcome is ME/CFS diagnosis or symptom codes, not a recognised definition, so `me_cfs` and not `long_covid`
+    # (must not carry the label). Full text: ME/CFS diagnoses IRR 0.98 (0.86 to 1.11); symptoms 1.48 (0.91 to 2.40);
+    # high heterogeneity between databases (CPRD GOLD 2.03, CPRD Aurum 0.89).
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled  # SARS-CoV-2 test-negative comparison
+    n_patients: 2521812
+    n_controls: 4233145
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Burkard TM and Xie J, network of nine databases
+    finding: >-
+      A health-record study of n=2,521,812 people with COVID-19 and 4,233,145 with a negative test
+      found no increase in recorded ME/CFS diagnoses from three months to one year after infection
+      (rate ratio 0.98).
+  - id: pmid:26475444
+    title: Chronic fatigue syndrome/myalgic encephalomyelitis (CFS/ME) is associated with pandemic influenza infection, but not with an adjuvanted pandemic influenza vaccine.
+    year: 2015
+    cohort: me_cfs
+    # Outcome: "CFS/ME, as diagnosed in the specialist health care services (diagnostic code G93.3 in the International
+    # Classification of Diseases, Version 10)" (abstract). A diagnosis code is not a case definition: `none`.
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: controlled  # whole-population registry, Cox regression
+    n_patients: null  # number with influenza diagnosis not in the abstract
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: Magnus P and Håberg SE, Norway
+    finding: >-
+      A registry study of the Norwegian population found a hazard ratio of 2.04 for a specialist
+      ME/CFS diagnosis after a diagnosis of pandemic influenza and 0.97 after pandemic vaccination.
+  - id: pmid:37881452
+    title: "Typing myalgic encephalomyelitis by infection at onset: A DecodeME study."
+    year: 2023
+    cohort: me_cfs
+    # Analysed: everyone who self-reported a diagnosis by a health professional; the full text says 14,789 (86.6%)
+    # met CCC and/or IOM/NAM criteria, but the onset analysis is not limited to them.
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: "Questionnaire responses from participants who both consented to participate and self-reported being given a diagnosis of ME, CFS, ME/CFS or CFS/ME by a health professional (as of 19 December 2022) were analysed."
+    design: uncontrolled
+    n_patients: 17074
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Bretherick AD and Ponting CP, DecodeME, UK
+    finding: >-
+      A questionnaire study of n=17,074 people with a self-reported ME/CFS diagnosis found that 63.6%
+      reported an infectious onset: glandular fever 17.2%, COVID-19 2.2% and another infection 44.1%.
+      Onset type was self-reported; 68%, 51% and 26% of those reporting each of these triggers
+      reported a positive laboratory test confirming the infection.
+last_checked:
+  date: 2026-11-06
+  by: ai_pair
+# Causal map (founder ruling 2026-11-06): layer `trigger` per the brief; the card's claim is about what starts the
+# illness. The mechanism readings belong to herpesvirus-reactivation and persistent-enterovirus-infection.
+# No link to herpesvirus-reactivation: card-reviewer round 2 found that pmid:41901562 does not state that the
+# infection reactivated EBV (antibodies measured once, about 21 months after infection, in 15 people, no baseline or
+# control group). A source stating that an acute infection reactivates latent herpesviruses would be needed.
+# Link to question:who-is-vulnerable: step 1 (proposed) only. Both sources compare people who did and did not
+# develop ME/CFS after the same infection, but their case definitions are unverified, which allows step 1 and never
+# step 2 (DECISIONS 2026-11-06).
+layer: trigger
+links:
+  - to: question:who-is-vulnerable
+    support: proposed
+    text: >-
+      Two prospective studies compared people who did and did not develop ME/CFS after the same
+      infection. One found that the severity of the acute illness predicted it more than demographic,
+      psychological or microbiological factors; the other found more physical symptoms and immune
+      differences, but not more psychological symptoms, before the infection in those who later had
+      severe ME/CFS. Each finding comes from a single study, and neither study's case definition is
+      verified yet.
+    sources: [pmid:16950834, pmid:33367564]
