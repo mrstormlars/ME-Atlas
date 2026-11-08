@@ -122,7 +122,7 @@ Refuted hypotheses are not candidates; they are listed with the reason in `docs/
 - Reviews: pmid:9857114, pmid:17561705, pmid:34474739, pmid:29417255
 - Meets inclusion rule on abstracts: yes
 - Why: 29246267 carries the rule (IOM 2015 named) but has only eight patients. Most others name no case definition. 30876666 and 29855991 are weak or null for this hypothesis. 41598987 is a post-infection cohort in which ME/CFS is only one of the presentations.
-- Status: to draft (founder ruling 2026-11-08)
+- Status: drafted as autonomic-imbalance (founder ruling 2026-11-08)
 - Date: 2026-11-08
 
 ## Small heart, low cardiac output and reduced blood volume regulation

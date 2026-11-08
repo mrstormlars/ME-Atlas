@@ -1,0 +1,212 @@
+slug: autonomic-imbalance
+items:
+  name:
+    text: Ubalanse i det autonome nervesystemet (mindre vagal, mer sympatisk aktivitet)
+    source_hash: 5ad70534009bcee2cd9153f9b24edbb78a789e8831d911791dbdb297e37b8e08
+  core_claim:
+    text: 'Hypotesen foreslår at balansen i det autonome nervesystemet, som styrer hjertefrekvens, blodtrykk og andre automatiske
+      kroppsfunksjoner, er forskjøvet ved ME/CFS: mindre parasympatisk (vagal) aktivitet og relativt mer sympatisk aktivitet.
+      Den måles som lavere hjertefrekvensvariabilitet, høyere hvilepuls eller svakere barorefleks, i hvile, i søvn eller etter
+      anstrengelse. Den handler om selve balansen, ikke om fallet i blodstrømmen til hjernen ved stående stilling.'
+    sources:
+    - pmid:22670061
+    - pmid:38251045
+    - pmid:31906988
+    - pmid:23166694
+    - pmid:29246267
+    - pmid:34640544
+    source_hash: 127a5acb2daffa36b275d4b2d4cb93b31e376ea1943910e03ee2aacfe8da3a6d
+  level_reason[0]:
+    text: En britisk studie målte hjertefrekvens og blodtrykk i hvile og ved stående stilling hos 68 pasienter som oppfylte
+      Fukuda-kriteriene og 68 matchede kontroller. I hvile var de parasympatiske målene på hjertefrekvensvariabilitet lavere
+      og lavfrekvensmålet (sympatisk) høyere hos pasientene. Forfatterne utledet en kombinasjon av terskler for blodtrykksvariabilitet
+      som skilte pasienter fra kontroller med 77 % sensitivitet og 53 % spesifisitet i samme kohort.
+    sources:
+    - pmid:22670061
+    source_hash: 9a5966e75e97488ebd3f116ab9d6a010d6dfb4c024f84f858e7113e031334ad0
+  level_reason[1]:
+    text: To senere studier fra andre grupper, i separate kohorter, fant lavere høyfrekvent hjertefrekvensvariabilitet i hvile,
+      slik den britiske studien gjorde. I Spania hadde 45 kvinner som oppfylte Fukuda-kriteriene kortere intervaller mellom
+      hjerteslag, lavere hjertefrekvensvariabilitet og et høyere forhold mellom lav- og høyfrekvent effekt i hvile enn 25
+      matchede friske kvinner. I Russland hadde 34 pasienter som oppfylte Fukuda-, Canada- og IOM 2015-kriteriene lavere total,
+      lavfrekvent og høyfrekvent hjertefrekvensvariabilitet og en svakere barorefleks i hvile enn 32 friske kontroller, uten
+      forskjell i dette forholdet. I motsetning til den britiske studien fant begge at den lavfrekvente hjertefrekvensvariabiliteten
+      var lavere, ikke høyere. Dette gjentatte høyfrekvensfunnet er grunnen til at kortet er på nivå 3.
+    sources:
+    - pmid:22670061
+    - pmid:31906988
+    - pmid:38251045
+    source_hash: d00b298b982d6b957b25865f4b55082e6ecb535e1189b24b2dd50367cfb19084
+  level_reason[2]:
+    text: To mindre studier fant beslektede forskjeller rundt anstrengelse og mental innsats. Hos 20 kvinner med ME/CFS og
+      20 kontroller var høy- og lavfrekvent hjertefrekvensvariabilitet lavere i hvile, mens hjertefrekvens og tidsdomenemålet
+      ikke var det, og etter en submaksimal sykkeltest kom ikke høyfrekvensmålet tilbake til nivået før anstrengelsen hos
+      pasientene. Hos 30 pasienter og 40 kontroller var hvilepulsen høyere, hjertefrekvensvariabiliteten i hvile viste en
+      tendens til å være lavere som ikke var signifikant, den endret seg på en annen måte under kognitive oppgaver (en forsinket
+      respons), og hjertefrekvensen brukte lenger tid på å vende tilbake til utgangsnivået etterpå. Ingen av funnene er gjentatt
+      av en uavhengig gruppe.
+    sources:
+    - pmid:34640544
+    - pmid:23166694
+    source_hash: 03c4bcc92c12de7eb8e4781f81dd0b1e716665e01c046ae5e61a663ee3ad2027
+  level_reason[3]:
+    text: Andre studier fant ikke lavere hjertefrekvensvariabilitet. En belgisk studie av 38 pasienter som oppfylte CDC-kriteriene
+      fra 1988 (Holmes) og 38 friske kontroller fant en jevnt over høyere hjertefrekvens, men ingen store endringer i RR-intervallvariabilitet.
+      En amerikansk studie av 19 pasienter som oppfylte CDC-kriteriene og 11 kontroller fant lignende hjertefrekvensvariabilitet
+      liggende og ved tilt. Hos 16 pasienter og 10 kontroller som gjorde anstrengelsestester på to dager, var hjertefrekvensvariabiliteten
+      i hvile lik, mens hjertefrekvensen falt mindre i første minutt etter maksimal anstrengelse hos pasientene.
+    sources:
+    - pmid:9505867
+    - pmid:9430800
+    - pmid:34970156
+    source_hash: 29b5ab17b0d03adde94e14f30eae9eb31ba294cad9245838bc219215b1d8ba29
+  level_reason[4]:
+    text: Søvnstudiene gir blandede resultater. Åtte pasienter som oppfylte IOM 2015-kriteriene hadde et høyere lavfrekvensmål
+      i alle søvnstadier og et lavere høyfrekvensmål i dyp søvn enn åtte trette kontroller, men et høyere høyfrekvensmål samlet
+      sett og en lavere hjertefrekvens. Hos 24 pasienter og 24 kontroller var høyfrekvensmålet lavere i dypere søvn, men ikke
+      i våkenhet før søvn. Disse to gruppene, i Finland og Australia, fant altså begge et lavere høyfrekvensmål i dyp søvn.
+      Hos 14 kvinner med kronisk utmattelsessyndrom og 14 kontroller var hjertefrekvensvariabiliteten lik. Diagnosekriteriene
+      i de to siste studiene er ikke kontrollert ennå.
+    sources:
+    - pmid:29246267
+    - pmid:31957647
+    - pmid:29855991
+    source_hash: cb1033a81b7b03c67d0ecb36efc2290037726b6572e052c2a201b6292223012f
+  level_reason[5]:
+    text: Ingen kontrollert studie på dette kortet har vist at en endring i autonom balanse endrer sykdommen. I en randomisert
+      studie av 120 ungdommer, som også hadde høyere noradrenalin i plasma enn 68 friske ungdommer, senket lavdose klonidin
+      noradrenalinet, men økte ikke antall skritt per dag (de var lavere med klonidin, ikke signifikant), og forfatterne konkluderte
+      med at det ikke er klinisk nyttig. De antyder at den økte sympatiske aktiviteten kan være kompensatorisk. Diagnosekriteriene
+      i denne studien er ikke kontrollert ennå.
+    sources:
+    - pmid:24493300
+    source_hash: 883d5abaa5e8a15723e971972e30a19517bc5a7433d0f30090d99920c2611577
+  contested_reason[0]:
+    text: En studie av 38 pasienter som oppfylte CDC-kriteriene fra 1988 (Holmes) og 38 friske kontroller kunne ikke påvise
+      store endringer i autonom funksjon ut fra RR-intervallvariabilitet registrert liggende og stående. Holmes-kriteriene
+      godtas på samme linje som Fukuda, og studien er stor nok til å veie opp mot Fukuda-studiene som nivå 3 hviler på, så
+      det gjentatte funnet er omstridt. Den samme studien fant en jevnt over høyere hjertefrekvens hos pasientene, noe som
+      peker i motsatt retning, og sammendraget sier ikke hvilke mål på hjertefrekvensvariabilitet som ble sammenlignet.
+    sources:
+    - pmid:9505867
+    - pmid:22670061
+    - pmid:31906988
+    source_hash: 7b3c7d81a3e0642ad6ac4cdca108bd4c605ca1ec6eec2d0893f98db46fadd189
+  contested_reason[1]:
+    text: 'Nivå 2 er ikke omstridt: det hviler også på studien der pasientene oppfylte Canada- og IOM 2015-kriteriene i tillegg
+      til Fukuda, strengere kriterier enn de i studien som motsier funnet.'
+    sources:
+    - pmid:38251045
+    source_hash: 5a1343ce95b4cadfa619d096f32f417d5e500d1e31743b7d4fd44abcc847310a
+  badge_reasons.diagnostic_marker[0]:
+    text: 'Fire studier bygde en klassifikator eller terskel på autonome mål, men hver av dem testet den bare i sin egen kohort:
+      terskler for blodtrykksvariabilitet (77 % sensitivitet, 53 % spesifisitet), høyfrekvent hjertefrekvensvariabilitet i
+      hvile (81,3 % sensitivitet, 79,4 % spesifisitet), hjertefrekvensrestitusjon etter anstrengelse (en terskel på 34,5 slag
+      per minutt, 63 % sensitivitet, 40 % spesifisitet) og en maskinlæringsmodell der testsettet var tatt fra de samme 112
+      pasientene og 61 kontrollene og holdt utenfor treningen. Ingen av dem er testet i en annen, uavhengig pasientgruppe.'
+    sources:
+    - pmid:22670061
+    - pmid:38251045
+    - pmid:34970156
+    - pmid:41437251
+    source_hash: 18c442e7a8dd179b09605a20f168f8ed399df68be4734f9bfab0d47c05218d15
+  badge_reasons.explains_pem[0]:
+    text: En studie målte PEM direkte med anstrengelsestester to dager på rad. Hjertefrekvensrestitusjonen etter anstrengelse
+      var lavere hos pasientene, men hjertefrekvensvariabiliteten i hvile var lik. Ingen hjertefrekvensmål endret seg på en
+      annen måte hos pasienter og kontroller fra dag én til dag to. Studien testet ikke noe hjertefrekvensmål mot symptomer.
+      Hos 101 pasienter som oppfylte Fukuda-kriteriene hadde de som rapporterte PEM en høyere sympatovagal balanse i hvile,
+      men ingen forskjell var signifikant etter korreksjon for multiple tester.
+    sources:
+    - pmid:34970156
+    - pmid:34073494
+    source_hash: edf253f0ee2c98a79bcda3b27967d4ad0ac67a32b1f35cf75a4c722372455970
+  links[0]:
+    text: En studie av 24 pasienter og 24 kontroller fant at lavere parasympatisk hjertefrekvensvariabilitet i dypere søvn
+      hang sammen med dårligere selvrapportert søvnkvalitet hos de samme personene. Diagnosekriteriene er ikke kontrollert
+      ennå. En annen studie, av 45 pasienter som oppfylte Fukuda-kriteriene og 25 kontroller, fant at lavere hjertefrekvensvariabilitet
+      i hvile på dagtid korrelerte med dårligere selvrapportert søvn, i en analyse av pasienter og kontroller samlet.
+    sources:
+    - pmid:31957647
+    - pmid:31906988
+    source_hash: 197ce014b5a6eff645daca23c53baef3ac1248cee2e3c619f0a0ed46a4c7b55d
+  links[1]:
+    text: En studie av 30 pasienter og 40 kontroller fant at hjertefrekvensvariabiliteten i hvile forutsa hvor raskt folk
+      løste kognitive oppgaver. Pasientene var langsommere, men ikke mindre nøyaktige. Analysen omfattet pasienter og kontroller
+      samlet, og funnet er ikke gjentatt.
+    sources:
+    - pmid:23166694
+    source_hash: d3dde718a5a50ee741aca005082a18982c3e6a315bdf3be04f96be88de9b5cdc
+  links[2]:
+    text: Forfatterne av en studie som fant en svakere barorefleks hos pasientene antyder at baroreflekssvikt muligens bidrar
+      til reduksjonen i blodstrømmen til hjernen som er rapportert ved ME/CFS. De målte ikke blodstrømmen til hjernen.
+    sources:
+    - pmid:38251045
+    source_hash: 66b443d29b3171de6633b1d95e4f3ba14f3d33eedfdd24929c4f13c068a2c304
+  studies[pmid:22670061].finding:
+    text: En studie av n=68 pasienter og 68 matchede kontroller fant lavere parasympatisk og høyere lavfrekvent hjertefrekvensvariabilitet
+      i hvile, høyere variabilitet i diastolisk blodtrykk i hvile og en mindre respons i variabiliteten i systolisk blodtrykk
+      ved stående stilling.
+    source_hash: c77be17647ec7373da406a73e93ae90a8f9c7544528eb3e7039f8f6780c278b7
+  studies[pmid:31906988].finding:
+    text: En studie av n=45 kvinner og 25 matchede friske kvinner fant kortere RR-intervaller, lavere mål på hjertefrekvensvariabilitet
+      i tids- og frekvensdomenet og et høyere LF/HF-forhold i hvile. Hos pasientene hang lavere RMSSD og normaliserte høyfrekvensverdier
+      sammen med mer selvrapportert utmattelse.
+    source_hash: 19eaa719e726a8239fba392ee62f9dd8b95c8dfcb24786e5ff51490e6978fa08
+  studies[pmid:38251045].finding:
+    text: En studie av n=34 pasienter og 32 friske kontroller fant lavere total, lavfrekvent og høyfrekvent hjertefrekvensvariabilitet
+      og lavere baroreflekssensitivitet i hvile, uten forskjell i LF/HF-forholdet. Hos pasientene korrelerte lavere baroreflekssensitivitet
+      med mer generell utmattelse.
+    source_hash: f4e966972c4a8db428b221fd92cb0c8dc70f19dcbb4d81ef03bba039e5fd0d42
+  studies[pmid:34640544].finding:
+    text: En studie av n=20 kvinner og 20 friske stillesittende kvinner fant lavere høy- og lavfrekvent hjertefrekvensvariabilitet
+      i hvile, uten forskjell i hjertefrekvens og RMSSD, og etter en submaksimal sykkeltest et høyfrekvensmål som holdt seg
+      under nivået før anstrengelsen og en hjertefrekvens som holdt seg over det hos pasientene.
+    source_hash: a2a5c313225cd5c066f819e43ac04bfee472d0b7487cb59bfbdf935b7c79e60c
+  studies[pmid:23166694].finding:
+    text: En studie av n=30 pasienter og 40 matchede kontroller fant en høyere hvilepuls (72 mot 67 slag per minutt), en tendens
+      til lavere RMSSD i hvile (p=0,07), hjertefrekvensvariabilitet som endret seg mindre under kognitive oppgaver og tregere
+      restitusjon av hjertefrekvensen etterpå. Hjertefrekvensvariabiliteten i hvile forutsa hvor raskt oppgavene ble utført.
+    source_hash: da2172dfaaa5d4eaa5044f849561bf37f1b80d5d74500afa7eea35f1eedde8b2
+  studies[pmid:9505867].finding:
+    text: En studie av n=38 pasienter og 38 friske kontroller fant en jevnt over høyere hjertefrekvens (77 mot 68 slag per
+      minutt målt på legekontoret), lavere blodtrykksvariabilitet liggende og ingen store endringer i autonom funksjon ut
+      fra RR-intervallvariabilitet.
+    source_hash: e78919b4ee2da252232b27ca3bfeb0c1dbe296815863595b02e3585270bedfda
+  studies[pmid:9430800].finding:
+    text: En studie av n=19 pasienter og 11 kontroller fant lik høy- og lavfrekvent hjertefrekvensvariabilitet og likt LF/HF-forhold
+      liggende, og en lik endring ved tilt til oppreist stilling.
+    source_hash: 8dbee74c509193024b6a4f370958bbe7bba60a600d0e5c6bc247cd66dfd5cadd
+  studies[pmid:34970156].finding:
+    text: En studie av n=16 pasienter og 10 kontroller som gjorde maksimale anstrengelsestester to dager på rad, fant ingen
+      forskjell i hjertefrekvensvariabilitet i hvile og et mindre fall i hjertefrekvens i første minutt etter anstrengelse
+      hos pasientene (33,2 mot 43,2 slag per minutt på dag én), som ikke endret seg fra dag én til dag to.
+    source_hash: 97fb7de18834b9c1f94e64773b4264afd80e668b6092be3a01c7b0981283ccc8
+  studies[pmid:41437251].finding:
+    text: En maskinlæringsstudie av n=112 pasienter og 61 friske kontroller fant at lavere forskjeller i hjertefrekvens fra
+      slag til slag og høyfrekvente RR-intervaller, tolket av forfatterne som redusert kardial vagal tonus, gjorde det mer
+      sannsynlig at en person ble klassifisert som pasient. Testsettet var en del av den samme kohorten, holdt utenfor treningen
+      av modellen.
+    source_hash: 529462ecc382b5e845c271368d75fe26436682504d701885a03383d1dc59b5b3
+  studies[pmid:29246267].finding:
+    text: En studie av n=8 pasienter og 8 trette kontroller fant høyere lavfrekvent hjertefrekvensvariabilitet i alle søvnstadier
+      og lavere høyfrekvent variabilitet i dyp søvn, men høyere høyfrekvent variabilitet samlet sett, en lavere hjertefrekvens
+      og høyere systolisk blodtrykk og middelblodtrykk om natten.
+    source_hash: 78bced43eefface11d352c5ad10bfe470cd32b5ba513033708e66604564b2937
+  studies[pmid:31957647].finding:
+    text: En studie av n=24 pasienter og 24 matchede friske kontroller fant lavere normalisert høyfrekvent hjertefrekvensvariabilitet
+      i dypere søvn, men ikke i våkenhet før søvn. Lavere verdier i dypere søvn hang sammen med dårligere selvrapportert søvnkvalitet
+      og velvære.
+    source_hash: 230bbe25bb9f4b578b6129b85e5df954765e2a239d191d1e775e5c7f96da2ac2
+  studies[pmid:29855991].finding:
+    text: En studie av n=14 kvinner med kronisk utmattelsessyndrom og 14 friske kontroller fant ingen gruppeforskjell i hjertefrekvensvariabilitet.
+      Hos pasientene hang mer effekt i hjertefrekvensvariabiliteten sammen med mindre utmattelse.
+    source_hash: 568d71771cd818bc9de30b786cd20d63306142c441ad7fb075683d3ab199746c
+  studies[pmid:34073494].finding:
+    text: En studie av n=101 pasienter, 82 med og 19 uten PEM, fant at en høyere sympatovagal balanse i hvile hang sammen
+      med høyere risiko for PEM, men ingen forskjell mellom gruppene var signifikant etter korreksjon for multiple tester.
+    source_hash: a144a2fb6f854f6035b98fd0f45f6a65d18e23dae36e86193660080fc315500c
+  studies[pmid:24493300].finding:
+    text: En studie av n=120 ungdommer og 68 friske ungdommer fant høyere noradrenalin i plasma og høyere responsivitet i
+      hjertefrekvens hos pasientene. I den randomiserte delen senket lavdose klonidin noradrenalinet, men antall skritt per
+      dag var lavere enn med placebo (ikke signifikant), og forfatterne konkluderte med at det ikke er klinisk nyttig.
+    source_hash: 8d0506829ce9f59f46a700d4e44ba5a82b48cb6dbce8ed292423c47f31eba83b

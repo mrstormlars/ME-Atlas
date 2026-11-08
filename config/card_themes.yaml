@@ -11,6 +11,10 @@ autoimmunity-autoantibodies-b-cells:
   mesh: [Autoantibodies, Autoimmune Diseases, B-Lymphocytes, Rituximab]
   terms: [autoimmunity, autoantibody]
   related: [Cytokines, Inflammation, "Leukocytes, Mononuclear", "Antibodies, Antinuclear", Immunoglobulin G]
+autonomic-imbalance:
+  mesh: [Sympathetic Nervous System, Parasympathetic Nervous System, Vagus Nerve, Baroreflex]
+  terms: [heart rate variability, vagal, sympathovagal, parasympathetic]
+  related: [Heart Rate, Autonomic Nervous System, Blood Pressure, Autonomic Nervous System Diseases, Norepinephrine, Electrocardiography]
 brain-and-brainstem-mri-changes:
   mesh: [Magnetic Resonance Imaging, White Matter, Gray Matter, Brain Stem, Diffusion Tensor Imaging]
   terms: [brainstem]
