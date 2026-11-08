@@ -398,10 +398,84 @@ studies:
       assay; the authors note that some or all of the differences may be normal biological or
       assay variability. This single-patient observation is unreplicated.
     group: Elahi S, University of Alberta, Edmonton, Canada (affiliation from the full text)
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:24068616
+    title: "The emerging role of autoimmunity in myalgic encephalomyelitis/chronic fatigue syndrome (ME/cfs)."
+    year: 2014
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Maes M (last author; the record gives no affiliation), with first author Morris G, Llanelli, UK
+    finding: >-
+      A review of potential sources of autoimmunity in ME/CFS; it describes reduced natural killer cell function as commonly observed and as a source of disrupted homeostasis and prolonged effector T cell survival. Cited on the map as the source of a proposed link, not as evidence for the level.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:38970055
+    title: "Potential pathophysiological role of the ion channel TRPM3 in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) and the therapeutic effect of low-dose naltrexone."
+    year: 2024
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Wirth KJ, Institute for General Pharmacology and Toxicology, Goethe University, Frankfurt am Main, Germany, and Mitodicure GmbH, Kriftel, Germany (first author Löhn M, same institute)
+    finding: >-
+      A review of the ion channel TRPM3 in ME/CFS; it reports that TRPM3 dysfunction in natural killer cells, characterised by reduced calcium flux, has been observed in ME/CFS and post-COVID patients, and suggests a role in ineffective pathogen clearance, virus persistence and autoimmunity development. Cited on the map as the source of a proposed link, not as evidence for the level.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:7476598
+    title: "Chronic intestinal candidiasis as a possible etiological factor in the chronic fatigue syndrome."
+    year: 1995
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Cater RE (sole author; the record gives no affiliation)
+    finding: >-
+      A hypothesis paper arguing that chronic intestinal candidiasis may depress immune function and be a causal factor in chronic fatigue syndrome; it adds that natural killer and T cell function is important in preventing herpesvirus reactivation. Cited on the map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 layer: dysfunction
-links: []
+links:
+  - to: autoimmunity-autoantibodies-b-cells
+    support: proposed
+    text: >-
+      A 2014 review of possible sources of autoimmunity in ME/CFS proposes that reduced natural
+      killer cell function, which it describes as commonly observed, is a source of disrupted
+      homeostasis and prolonged effector T cell survival. A 2024 review proposes that
+      dysfunction of the TRPM3 ion channel in natural killer cells, characterised by reduced
+      calcium flux, suggests a role in ineffective pathogen clearance and a potential route to autoimmunity. Both speak of autoimmunity in general; neither names autoantibodies or B
+      cells as the route.
+    sources: [pmid:24068616, pmid:38970055]
+  - to: herpesvirus-reactivation
+    support: proposed
+    text: >-
+      A 1995 hypothesis paper proposes that the function of natural killer cells, with cytotoxic
+      and helper T cell function, is important in preventing reactivation of Epstein-Barr virus,
+      cytomegalovirus and other herpesviruses, and that reactivation could lead to the flu-like
+      symptoms of CFS. The paper's main argument is that chronic intestinal candidiasis may
+      depress immune function and be a causal factor in CFS; its abstract reports no test of the
+      herpesvirus step in patients.
+    sources: [pmid:7476598]
 last_checked:
   date: 2026-10-31
   by: ai_pair

@@ -135,6 +135,13 @@ items:
     sources:
     - pmid:42625188
     source_hash: 986fc1df93a3c8d061ee03e71ab7267b0073cf279f4ac06c393ce9f6edb79713
+  links[0]:
+    text: En oversiktsartikkel fra 2025 foreslår at endoteldysfunksjon, drevet av oksidativt og nitrosativt stress og av autoantistoffformidlet
+      forstyrrelse av reseptorer, kan forklare ortostatisk intoleranse og nedsatt blodstrøm ved ME/CFS. Denne kilden oppgir
+      ingen pasientdata som knytter de to sammen.
+    sources:
+    - pmid:41516145
+    source_hash: 6688b8000dbb9d5b7b7ec603dabe19fbdf13afba98f21777ea7db20e924cd5be
   studies[pmid:32154656].finding:
     text: En studie med n=35 pasienter og 20 friske kontroller fant en lavere reaktiv hyperemi-indeks hos pasientene, der
       51 % av pasientene og 20 % av kontrollene lå under grenseverdien for endoteldysfunksjon; pasienter under den rapporterte
@@ -205,3 +212,8 @@ items:
     text: En studie med n=17 pasienter, 17 personer med langvarig covid og 17 friske kontroller fant lavere flow-mediated
       dilation hos pasientene enn hos kontrollene (6,60 % mot 11,30 %).
     source_hash: 4255d2e991f4bd0232d171104abfa21e74c0048b1273739296eabb2c45731b30
+  studies[pmid:41516145].finding:
+    text: En oversiktsartikkel om det biologiske nettverket bak ME/CFS. Den foreslår at endoteldysfunksjon, drevet av oksidativt
+      og nitrosativt stress sammen med autoantistoffformidlet forstyrrelse av reseptorer, kan forklare ortostatisk intoleranse
+      og nedsatt perfusjon. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: ac2d87c13cd95373992655c6cc989e0bd55e61ed1ca1374c4042506a13f1d530

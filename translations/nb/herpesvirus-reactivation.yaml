@@ -144,6 +144,14 @@ items:
     - pmid:22927850
     - pmid:34422848
     source_hash: 60d54a04aa2c3c2020d4190019453229273a0479537b8fb343cbdc436a981843
+  links[2]:
+    text: En oversiktsartikkel fra 2024 antyder at det langvarige sykdomsforløpet og de mange organsystemene som rammes ved
+      ME/CFS, delvis kan skyldes at herpesvirus har gitt en uheldig tilpasning i endotelceller. Den ber om studier av hvor
+      utbredt herpesvirusinfeksjon er i endotelcellene til ME/CFS-pasienter, og hvor mye virus som finnes der. Dette er en
+      oversiktsartikkel, og hypotesen er ikke bekreftet.
+    sources:
+    - pmid:38675914
+    source_hash: d61075c44fdc5641b4684cb0debf68bf5a3d2393e3d782adb727277338ae36d7
   studies[pmid:36653846].finding:
     text: En studie med n=200 pasienter og 150 friske kontroller fant aktiv dobbeltinfeksjon med HHV-6 og HHV-7 bare hos pasienter
       (p < 0,0001, antall ikke oppgitt), og markører på aktiv infeksjon med HHV-6, HHV-7 eller parvovirus B19 (ikke et herpesvirus)
@@ -214,3 +222,8 @@ items:
       fra Epstein-Barr-virus, HHV-6 og varicella zoster-virus hos pasientene, og en sammenheng mellom antistoffer mot dUTPase
       fra Epstein-Barr-virus og HHV-6 og utmattelse.
     source_hash: fdde1f562fa2008e06b316fe0211f75c545ab8f82a1d1ce829df66897aa3b585
+  studies[pmid:38675914].finding:
+    text: En oversiktsartikkel som undersøker hypotesen om at herpesvirusinfeksjon i endotelceller kan ligge bak symptomene
+      ved ME/CFS. Den ber om studier av hvor utbredt herpesvirus er i endotelcellene til pasienter, og hvor mye virus som
+      finnes der. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: a5f5415fccd318346ec389cc3c35c8e5fd3cf4afcebf557bb8dff8858c5caab2

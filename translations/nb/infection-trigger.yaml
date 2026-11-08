@@ -105,6 +105,15 @@ items:
     - pmid:16950834
     - pmid:33367564
     source_hash: 5c3b9a3466d1d035d336ed845941054cfc6705311ba6a8c90c82ecbcf35a9db1
+  links[1]:
+    text: En studie av personer med ME/CFS rapporterte at lav løselig CD26 hos pasienter som ble syke etter en infeksjon,
+      var forbundet med økte autoantistoffer mot alfa-1-adrenerge og M3 muskarinerge acetylkolinreseptorer; forfatterne sier
+      at disse sammenhengene peker mot en infeksjonsutløst, autoimmunt formidlet dysregulering i kar og immunsystem. Det var
+      en korrelasjonsanalyse, ikke en oppfølging fra infeksjon til autoantistoffer; diagnosekriteriene er ikke kontrollert,
+      og funnet kommer fra én enkelt studie som ikke er gjentatt.
+    sources:
+    - pmid:33889154
+    source_hash: 09c4ed9d1dc9c0e3ecde9689c51093a20a092ce0df5e42a692de668d939279c8
   studies[pmid:39804551].finding:
     text: En studie med n=4515 voksne fulgt fra akutt SARS-CoV-2-infeksjon fant en høyere rate av ny ME/CFS enn hos de 592
       matchede uinfiserte deltakerne (regnet ut fra de oppgitte antallene; 2,66 mot 0,93 per 100 personår, hazard ratio 4,93),
@@ -161,3 +170,9 @@ items:
       kyssesyke 17,2%, covid-19 2,2% og en annen infeksjon 44,1%. Starttype var selvrapportert; 68%, 51% og 26% av dem som
       oppga hver av disse utløserne, oppga en positiv laboratorietest som bekreftet infeksjonen.'
     source_hash: a9453bcc87a2a701972ecacb7cb6ba23e8acff091cdb8bb29822f4f2ad036af0
+  studies[pmid:33889154].finding:
+    text: En korrelasjonsanalyse hos ME/CFS-pasienter fant at lav løselig CD26 hos dem med infeksjonsutløst sykdomsstart var
+      forbundet med økte autoantistoffer mot alfa-1-adrenerge og M3 muskarinerge acetylkolinreseptorer; sammendraget oppgir
+      verken utvalgsstørrelse eller diagnosekriterier. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
+      for nivået.
+    source_hash: dfa22b004a3aa2b71527a0b4264ff033073d20a6f7cd6665f2f8a70ed01c13dd

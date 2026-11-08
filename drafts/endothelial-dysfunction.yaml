@@ -57,6 +57,8 @@
 #     per the main trial, pmid:30934066 on the autoimmunity card); its methods refer to the main article.
 #
 # Not on the card (searched in the cache, read, left out):
+#   - 41516145 (Review, 2025) is the exception: it is on the card as a context study, cited by the link to
+#     orthostatic-intolerance-cerebral-blood-flow (founder ruling 2026-11-08).
 #   - Reviews, hypotheses, letters without data: 34248502, 35073915, 36557009, 38399482 (Wirth: hypothesis),
 #     37584410, 10695770, 14739476 (letter), and the long COVID microclot reviews.
 #   - 22078396 (Newton 2012, Dundee, FMD and PORH): a letter with data; no abstract and no open full text, so n,
@@ -548,10 +550,36 @@ studies:
     finding: >-
       A study of n=17 patients, 17 people with long COVID and 17 healthy controls found lower
       flow-mediated dilation in patients than in controls (6.60% against 11.30%).
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:41516145
+    title: "Insights into the Complex Biological Network Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
+    year: 2025
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Ivanov IN, National Centre of Infectious and Parasitic Diseases, Sofia, Bulgaria (first author Dudova D, Medical University of Plovdiv, Bulgaria)
+    finding: >-
+      A review of the biological network underlying ME/CFS; it proposes that endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion. Cited on the map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 layer: dysfunction
-links: []
+links:
+  - to: orthostatic-intolerance-cerebral-blood-flow
+    support: proposed
+    text: >-
+      A 2025 review proposes that endothelial dysfunction, driven by oxidative and nitrosative
+      stress and by autoantibody-mediated receptor interference, may explain orthostatic
+      intolerance and impaired blood flow in ME/CFS; this source does not report patient data
+      linking the two.
+    sources: [pmid:41516145]
 last_checked:
   date: 2026-11-02
   by: ai_pair

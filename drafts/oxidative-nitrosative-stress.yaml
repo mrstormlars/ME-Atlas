@@ -502,6 +502,42 @@ studies:
     finding: >-
       A placebo-controlled trial of n=43 patients (31 completed: 17 given ubiquinol, 14 placebo) reported
       that 12 weeks of ubiquinol improved several symptoms.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:41516145
+    title: "Insights into the Complex Biological Network Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
+    year: 2025
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Ivanov IN, National Centre of Infectious and Parasitic Diseases, Sofia, Bulgaria (first author Dudova D, Medical University of Plovdiv, Bulgaria)
+    finding: >-
+      A review of the biological network underlying ME/CFS; it proposes that endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion. Cited on the map as the source of a proposed link, not as evidence for the level.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:27766535
+    title: "Hypothalamic-Pituitary-Adrenal Hypofunction in Myalgic Encephalomyelitis (ME)/Chronic Fatigue Syndrome (CFS) as a Consequence of Activated Immune-Inflammatory and Oxidative and Nitrosative Pathways."
+    year: 2017
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Maes M, IMPACT Strategic Research Centre, Deakin University, Geelong, Australia, with first author Morris G, Llanelli, UK (Maes M is also an author of 21455120, 20010505 and 21552194 on this card, listed there as Maes M / Bosmans E, Maes Clinics, Antwerp, Belgium)
+    finding: >-
+      A narrative review of the communication between immune-inflammatory and oxidative and nitrosative pathways and low activity of the stress-hormone (HPA) axis in ME/CFS; it concludes that the low activity is most likely a consequence and not a cause of these pathways. Cited on the map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 layer: dysfunction
@@ -511,6 +547,23 @@ links:
     text: >-
       A study of 47 patients meeting the CDC criteria (version not named) and 34 healthy volunteers found that plasma isoprostane levels, a marker of oxidative damage to fats, correlated with symptom scores, including a post-exertional malaise item, in the subgroup without cardiovascular risk factors. The symptom score is not an exertion test. Not yet repeated.
     sources: [pmid:16085177]
+  - to: endothelial-dysfunction
+    support: proposed
+    text: >-
+      A 2025 review proposes that endothelial dysfunction in ME/CFS is driven by oxidative and
+      nitrosative stress, along with autoantibody-mediated receptor interference, and that this
+      may explain orthostatic intolerance and impaired perfusion; this source does not report
+      patient data linking them.
+    sources: [pmid:41516145]
+  - to: hpa-axis-cortisol
+    support: proposed
+    text: >-
+      A 2017 review proposes that activated immune-inflammatory and oxidative and nitrosative
+      pathways may underpin the low cortisol and reduced activity of the stress-hormone (HPA)
+      axis seen in ME/CFS, and concludes that HPA axis hypoactivity is most likely a consequence
+      and not a cause of these pathways. The review groups the two sets of pathways together;
+      its abstract reports no patient study that tested the direction.
+    sources: [pmid:27766535]
 last_checked:
   date: 2026-11-02
   by: ai_pair

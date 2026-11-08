@@ -159,6 +159,15 @@ items:
     sources:
     - pmid:32247028
     source_hash: ccbe3d3403f23e2960d5be88b1135cac0e480f0e7f099fdd8b8f377621a072cf
+  links[1]:
+    text: En studie med n=30 kvinner med ME/CFS (Fukuda, Canadian og IOM-kriteriene) og 25 friske kontroller fant antistoffer
+      mot hypofysevev hos 56 % og mot hypotalamusvev hos 33 % av pasientene, og ingen hos kontrollene. Dette er antistoffer
+      mot hypofyse- og hypotalamusvev, ikke mot reseptorer. ACTH, kortisol, toppverdi for veksthormon og IGF-1 var lavere
+      hos de 13 pasientene med høye antistofftitre enn hos de 7 med middels eller lave titre og de 10 uten antistoffer. Studien
+      er en tverrsnittsstudie, så ingen rekkefølge i tid er vist. Forfatterne beskriver en samvariasjon, og den er ikke gjentatt.
+    sources:
+    - pmid:34254637
+    source_hash: 03a8a114d0166ebd5beac90bafc9584cb331440afc049994584f803802a0506c
   studies[pmid:34589868].finding:
     text: En studie med n=48 pasienter i to kohorter på 24 og 24 matchede friske kontroller fant høyere antistoffer mot de
       muskarine reseptorene M3 og M4 i begge kohortene og mot de adrenerge reseptorene β1 og β2 i én, uten korrelasjon mellom
@@ -227,3 +236,9 @@ items:
       og M3 muskarine reseptorer kan svekke sirkulasjonen og oksygentilførselen. Den er sitert på kartet som kilde til en
       foreslått lenke, ikke som evidens for nivået.
     source_hash: 5a411b854ab10b02ba1eb37fc764f1aca31bc68c539a2009b32e1759adba0e6b
+  studies[pmid:34254637].finding:
+    text: En studie med n=30 kvinner og 25 friske kontroller fant antistoffer mot hypofysen hos 56 % og mot hypotalamus hos
+      33 % av pasientene, og hos ingen av kontrollene. ACTH, kortisol, toppverdi for veksthormon og IGF-1 var lavere hos de
+      13 pasientene med høye antistofftitre enn hos både de 7 med lavere titre og de 10 antistoffnegative pasientene. Sitert
+      på kartet som kilde til en lenke utenfor reseptoromfanget til dette kortet, ikke som evidens for nivået.
+    source_hash: d50603260c06a54a1fe5ab06e31f4a852b27144435607bbaa65e74e252336fad

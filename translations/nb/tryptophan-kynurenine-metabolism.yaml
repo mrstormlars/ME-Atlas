@@ -143,6 +143,22 @@ items:
     - pmid:34829952
     - pmid:39302151
     source_hash: e39b9f022990c8fb19e9af9178960d22cc2a7c06b2fff393a0485486795ba8b7
+  links[0]:
+    text: En oversiktsartikkel fra 2022 sier at kynureninveien er vist å formidle immunrespons og nevroinflammasjon gjennom
+      stoffene den danner. Dette er en generell uttalelse, ikke spesifikk for ME/CFS, og sammendraget rapporterer ingen pasientstudie
+      som måler begge deler.
+    sources:
+    - pmid:35821534
+    source_hash: ed25dbb3b6cc7cccb27ac9860d83ae49af4f939f453c2ff39ea6242d84bee66b
+  links[1]:
+    text: 'En oversiktsartikkel fra 2016 foreslår at noen nedbrytningsprodukter av tryptofan, som kinolinsyre, fører til økt
+      oksidativt og nitrosativt stress ved nevroinflammatoriske og nevroprogressive sykdommer. Kronisk utmattelsessyndrom
+      er én av tre sykdommer den tar for seg, sammen med schizofreni og Alzheimers sykdom. Oversiktsartikkelen beskriver også
+      det motsatte: oksidativt og nitrosativt stress og proinflammatoriske cytokiner aktiverer enzymet IDO og øker dermed
+      aktiviteten i nedbrytningsveien. Sammendraget rapporterer ingen pasientstudie som måler begge deler.'
+    sources:
+    - pmid:26667000
+    source_hash: d09fdc75aaab59e430bd746e1f763731aea7541bcfb0e36ea3c2216d0452b915
   studies[pmid:34829952].finding:
     text: En studie der 39 av de 40 pasientene og 40 friske kontroller ble målt, fant lavere serumkynurenin (p = 0,012) og
       serotonin, høyere 3-hydroksykynurenin, og høyere forholdstall kynurensyre/kynurenin og 3-hydroksykynurenin/kynurenin
@@ -193,3 +209,13 @@ items:
     text: En studie av pasienter med bare CFS, CFS med fibromyalgi og friske kontroller (antall er ikke oppgitt i sammendraget)
       fant at "Plasma tryptophan and kynurenine concentrations did not differ among groups."
     source_hash: b22893ad7402b4c67943239aea86fe68d286245d2c4255601c993492fb702e00
+  studies[pmid:35821534].finding:
+    text: En oversiktsartikkel om kynureninveien ved ME/CFS. Den sier at veien er vist å formidle immunrespons og nevroinflammasjon
+      gjennom stoffene den danner. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: 3d9e869ca8abb2e65af1c414e216745c4bb8864aa2e927cf83f7bc1663aca035
+  studies[pmid:26667000].finding:
+    text: En oversiktsartikkel om nedbrytningsprodukter av tryptofan ved nevroinflammatoriske og nevroprogressive sykdommer.
+      Den tar for seg schizofreni, Alzheimers sykdom og kronisk utmattelsessyndrom, og sier at noen nedbrytningsprodukter,
+      som kinolinsyre, fører til økt oksidativt og nitrosativt stress. Sitert på kartet som kilde til en foreslått lenke,
+      ikke som evidens for nivået.
+    source_hash: 161b96f664c37b13ec6929f32a004a0307e423cff51011a3483aa27b85a23d8f

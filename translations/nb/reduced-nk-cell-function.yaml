@@ -35,7 +35,8 @@ items:
     text: Mot disse funnene fant en studie som oppfylte Canadian Consensus Criteria (48 pasienter og 52 kontroller i hele
       studien; NK-dreping målt hos 39 pasienter og 44 kontroller) ingen forskjell (se merknaden om omstridt), det samme gjorde
       en studie med 21 pasienter og 21 kontroller som brukte en CDC-definisjon der versjonen ikke er navngitt, en multisenterstudie
-      med 174 pasienter og 86 kontroller der pasientene ble diagnostisert av klinikere som er eksperter, uten navngitte diagnosekriterier, og en kasus-kontrollstudie med ikke oppgitt størrelse der sammendraget ikke navngir noen diagnosekriterier.
+      med 174 pasienter og 86 kontroller der pasientene ble diagnostisert av klinikere som er eksperter, uten navngitte diagnosekriterier,
+      og en kasus-kontrollstudie med ikke oppgitt størrelse der sammendraget ikke navngir noen diagnosekriterier.
     sources:
     - pmid:28694809
     - pmid:7983659
@@ -147,6 +148,25 @@ items:
     - pmid:8148445
     - pmid:16731230
     source_hash: a8adf04a85f1580d3f6247ef356194e0f99909f458d49d47d0c0bc1084259761
+  links[0]:
+    text: En oversiktsartikkel fra 2014 om mulige kilder til autoimmunitet ved ME/CFS foreslår at nedsatt funksjon i naturlige
+      drepeceller, som den beskriver som vanlig å observere, er en kilde til forstyrret homeostase og forlenget overlevelse
+      av effektor-T-celler. En oversiktsartikkel fra 2024 foreslår at dysfunksjon i ionekanalen TRPM3 i naturlige drepeceller,
+      kjennetegnet ved redusert kalsiumfluks, tyder på en rolle i mangelfull fjerning av patogener og en mulig vei til autoimmunitet.
+      Begge snakker om autoimmunitet generelt; ingen av dem nevner autoantistoffer eller B-celler som veien.
+    sources:
+    - pmid:24068616
+    - pmid:38970055
+    source_hash: e1bb64798a068c37a5f376a780da2a8049f1ada10651224ef7d762a0de617bca
+  links[1]:
+    text: En hypoteseartikkel fra 1995 foreslår at funksjonen til naturlige drepeceller, sammen med funksjonen til cytotoksiske
+      T-celler og hjelper-T-celler, er viktig for å hindre reaktivering av Epstein-Barr-virus, cytomegalovirus og andre herpesvirus,
+      og at reaktivering kan gi de influensalignende symptomene ved CFS. Artikkelens hovedargument er at kronisk candidainfeksjon
+      i tarmen kan svekke immunfunksjonen og være en årsaksfaktor ved CFS. Sammendraget oppgir ingen test av herpesvirus-trinnet
+      hos pasienter.
+    sources:
+    - pmid:7476598
+    source_hash: 8ae16404d2f71a9a10d5be715309b11cf6c43f52b753d9710a72211a9cde7cf9
   studies[pmid:27099524].finding:
     text: En studie med n=39 pasienter og 30 kontroller uten utmattelse fant lavere NK-cellelysis av målceller hos pasienter
       (17% mot 31%).
@@ -203,3 +223,20 @@ items:
       påpeker at noen av forskjellene, eller alle, kan skyldes normal biologisk variasjon eller variasjon i analysen. Denne
       observasjonen hos én pasient er ikke replikert.
     source_hash: 5bad57b1fcb45a7bd64b0a616441825ccd40c70dca0b85e08208b402393d4a85
+  studies[pmid:24068616].finding:
+    text: En oversiktsartikkel om mulige kilder til autoimmunitet ved ME/CFS. Den beskriver nedsatt funksjon i naturlige drepeceller
+      som vanlig å observere og som en kilde til forstyrret homeostase og forlenget overlevelse av effektor-T-celler. Sitert
+      på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: 5430a4fe3b66c4577cb349ec6909c47d67ca14e8cdf7c1a3ab8208e73371dee4
+  studies[pmid:38970055].finding:
+    text: En oversiktsartikkel om ionekanalen TRPM3 ved ME/CFS. Den rapporterer at TRPM3-dysfunksjon i naturlige drepeceller,
+      kjennetegnet ved redusert kalsiumfluks, er observert hos pasienter med ME/CFS og post-covid, og tyder på en rolle i
+      mangelfull fjerning av patogener, viruspersistens og utvikling av autoimmunitet. Sitert på kartet som kilde til en foreslått
+      lenke, ikke som evidens for nivået.
+    source_hash: eebbc9363489a7327338d48ca54968f29aa5353a14890f074aaabcdbf740ce23
+  studies[pmid:7476598].finding:
+    text: En hypoteseartikkel som argumenterer for at kronisk candidainfeksjon i tarmen kan svekke immunfunksjonen og være
+      en årsaksfaktor ved kronisk utmattelsessyndrom. Den tilføyer at funksjonen til naturlige drepeceller og T-celler er
+      viktig for å hindre reaktivering av herpesvirus. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
+      for nivået.
+    source_hash: f25bef9423d7fcb91dde26c1d5cd806c73ba2394730cbf70a48678208dab81d5
