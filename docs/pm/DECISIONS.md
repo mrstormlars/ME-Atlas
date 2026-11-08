@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-08 — New hypothesis: altered gene expression in blood immune cells
+
+- New draft card `drafts/immune-cell-gene-expression.yaml`, the survey candidate marked `to draft`. Founder ruling on the drafter's recommendations after two `card-reviewer` rounds (run files in the drafting worktree's `data/pipeline/2026-11-08-immune-genes/`): level 2; contested at rung 2; both badges no; long COVID label; layer dysfunction; one proposed link to the post-exertional malaise symptom node.
+- Level 2, not 3: three controlled CCC studies from three groups and two CDC studies from a fourth find altered expression, but each points to different genes and pathways (T-cell activation, inflammation, lower interferon and immunoglobulin genes, T-cell exhaustion). "Some immune genes differ" does not count as the finding an independent group must reproduce. The exhaustion reading is contradicted on the card itself (fewer estimated exhausted CD8 cells in pmid:39435656; no exhaustion signature in the re-analysis pmid:41822518).
+- Contested at rung 2: pmid:28172519 (CCC, 25 and 25, no differentially expressed genes) and pmid:21479222 (Fukuda, 64 and 64, no difference in the earlier genes) together are of comparable quality to every study rung 2 rests on. Whole blood against mononuclear cells is stated, not graded (not a rubric criterion).
+- Diagnostic marker no: the ESRRA check in pmid:39394558 used a public dataset whose own paper states no case definition; a definition is not carried across from another paper on the same cohort.
+- Layer dysfunction, not mechanism: the card measures a pattern in blood; exhaustion "maintained by chronic stimulation" is the authors' unreplicated reading. No incoming link from herpesvirus reactivation: the source names only "chronic viral infections" in general.
+
 ## 2026-11-08 — First survey run: candidates to draft and eleven new links
 
 - Census of 21 headings (top three of each survey domain): 46 candidate hypotheses and 40 gaps on existing cards, recorded in `docs/pm/candidates.md` (abstract level only). XMRV came up again under "DNA, Viral" and is marked declined (refuted, see the ruling below).
