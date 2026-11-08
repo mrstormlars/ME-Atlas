@@ -25,9 +25,11 @@
 #   is cached and verified as CCC, it may contest rungs 2 and 3 (vs 34589868, 48 patients: half = 24; vs 42082542,
 #   59 patients: half = 29.5), and the founder will decide then. TODO: verify its case definition and patient n.
 #   Scope: receptor autoantibodies, B cells and antibody- or B-cell-targeting interventions; IVIG trials and other
-#   autoantibody panels left out (see below).
+#   autoantibody panels left out (see below). Exception: 34254637 (antipituitary and antihypothalamic antibodies) is on
+#   the card as a context study outside the receptor scope, for the link to hpa-axis-cortisol (founder ruling 2026-11-08).
 #
 # Not on the card (searched in the cache, read, left out):
+#   - 34254637 is the exception: a context study outside the receptor scope (founder ruling 2026-11-08).
 #   - Reviews, not studies: 24068616, 29635081, 32247028, 29772554, 40543860, 34140635.
 #   - Same trial programme or cohort as a study on the card: 26132314 (Fluge 2015, open-label rituximab maintenance,
 #     uncontrolled, included placebo patients from 22039471); 39042627 (six-year follow-up of 30934066 and of the
@@ -495,9 +497,33 @@ studies:
     direction: not_applicable
     finding: >-
       A review by authors of antibody studies on this card proposes that antibodies against the β2 adrenergic and M3 muscarinic receptors could impair circulation and oxygen supply; cited on the map as the source of a proposed link, not as evidence for the level.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:34254637
+    title: Hypothalamic-Pituitary Autoimmunity and Related Impairment of Hormone Secretions in Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    # Patients met Fukuda, "Canadian" and IOM criteria; recorded as CCC (ranks equal to IOM 2015), as on the HPA card.
+    # The antibodies are against pituitary and hypothalamus tissue (immunofluorescence), not receptors.
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls.
+    design: controlled
+    n_patients: 30
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: higher
+    group: "Montoya JG, Stanford University, USA, with co-authors at the University of Campania \"Luigi Vanvitelli\", Naples, Italy"
+    finding: >-
+      A study of n=30 women and 25 healthy controls found antibodies against the pituitary in 56% and
+      against the hypothalamus in 33% of patients and in none of the controls; ACTH, cortisol, growth
+      hormone peak and IGF-1 were lower in the 13 patients with high antibody titres than in both the 7 with lower titres and the 10 antibody-negative patients.
+      Cited on the map as the source of a link outside the receptor scope of this card, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also sit in 'dysfunction' (what goes wrong in the body), since raised receptor antibodies are a measured abnormality in blood; 'mechanism' was chosen because the hypothesis answers why the illness does not resolve, and no source states a separate link that expresses the dysfunction reading.
+# Founder ruling 2026-11-08: the link to hpa-axis-cortisol rests on antipituitary/antihypothalamic antibodies, outside the receptor scope of the card's studies; scope of the card's claim and level unchanged.
 layer: mechanism
 links:
   - to: orthostatic-intolerance-cerebral-blood-flow
@@ -505,6 +531,16 @@ links:
     text: >-
       A review proposes that antibodies against the β2 adrenergic and M3 muscarinic receptors, which help widen blood vessels, could impair circulation and oxygen supply, and cites reports of reduced blood flow to muscle and brain in ME/CFS as fitting this idea. The review's abstract does not discuss blood flow on standing, and the idea was not tested in patients.
     sources: [pmid:32247028]
+  - to: hpa-axis-cortisol
+    support: associated
+    text: >-
+      A study of n=30 women with ME/CFS (Fukuda, Canadian and IOM criteria) and 25 healthy
+      controls found antibodies against pituitary tissue in 56% and against hypothalamus tissue
+      in 33% of patients, and none in controls; these are antibodies against pituitary and
+      hypothalamus tissue, not against receptors. ACTH, cortisol, growth hormone peak and IGF-1 were lower in the 13 patients with high antibody titres than in the 7 with middle or low titres
+      and the 10 without antibodies. The study is cross-sectional, so no order in time is shown;
+      the authors describe an association, and it has not been repeated.
+    sources: [pmid:34254637]
 last_checked:
   date: 2026-11-01
   by: ai_pair

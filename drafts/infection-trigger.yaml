@@ -446,6 +446,29 @@ studies:
       reported an infectious onset: glandular fever 17.2%, COVID-19 2.2% and another infection 44.1%.
       Onset type was self-reported; 68%, 51% and 26% of those reporting each of these triggers
       reported a positive laboratory test confirming the infection.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:33889154
+    title: "Delineating the Association Between Soluble CD26 and Autoantibodies Against G-Protein Coupled Receptors, Immunological and Cardiovascular Parameters Identifies Distinct Patterns in Post-Infectious vs. Non-Infection-Triggered Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
+    year: 2021
+    cohort: me_cfs
+    # The abstract names no case definition and no sample size, and names no control group, though it reports a
+    # difference only in the female cohort. TODO: verify from the full text.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Scheibenbogen C, Charité - Universitätsmedizin Berlin, Germany (first author Szklarski M, same institute)
+    finding: >-
+      A correlation analysis in ME/CFS patients found that, in those with infection-triggered onset, low
+      soluble CD26 was associated with raised autoantibodies against alpha-1 adrenergic and M3
+      muscarinic acetylcholine receptors; the abstract gives no sample size or case definition.
+      Cited on the map as the source of a proposed link, not as evidence for the level.
 last_checked:
   date: 2026-11-06
   by: ai_pair
@@ -454,6 +477,8 @@ last_checked:
 # No link to herpesvirus-reactivation: card-reviewer round 2 found that pmid:41901562 does not state that the
 # infection reactivated EBV (antibodies measured once, about 21 months after infection, in 15 people, no baseline or
 # control group). A source stating that an acute infection reactivates latent herpesviruses would be needed.
+# Link to autoimmunity-autoantibodies-b-cells (founder ruling 2026-11-08): step 1 (proposed), resting on pmid:33889154 only;
+# its case definition is unverified.
 # Link to question:who-is-vulnerable: step 1 (proposed) only. Both sources compare people who did and did not
 # develop ME/CFS after the same infection, but their case definitions are unverified, which allows step 1 and never
 # step 2 (DECISIONS 2026-11-06).
@@ -469,3 +494,14 @@ links:
       severe ME/CFS. Each finding comes from a single study, and neither study's case definition is
       verified yet.
     sources: [pmid:16950834, pmid:33367564]
+  - to: autoimmunity-autoantibodies-b-cells
+    support: proposed
+    text: >-
+      One study in people with ME/CFS reported that, in patients whose illness began with an
+      infection, low soluble CD26 was associated with raised autoantibodies against alpha-1
+      adrenergic and M3 muscarinic acetylcholine receptors; the authors say these associations
+      point to an infection-triggered autoimmune-mediated vascular and immunological
+      dysregulation. It was a correlation analysis, not a follow-up from infection to
+      autoantibodies; its case definition is not verified, and the finding comes from a single,
+      unreplicated study.
+    sources: [pmid:33889154]

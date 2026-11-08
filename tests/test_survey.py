@@ -949,10 +949,23 @@ def test_unknown_top_level_key_is_an_error(world, ctx, capsys):
     assert "unknown key 'note'" in capsys.readouterr().err
 
 
-def test_the_repository_candidates_file_has_the_two_sections_and_no_entries():
+def sections_in_order(text):
+    """True when "# Candidates" comes once, before "# Gaps on existing cards" once."""
+    heads = [line for line in text.splitlines() if line in ("# Candidates", "# Gaps on existing cards")]
+    return heads == ["# Candidates", "# Gaps on existing cards"]
+
+
+def test_the_repository_candidates_file_has_the_two_sections_in_order():
     text = (HERE.parent / "docs" / "pm" / "candidates.md").read_text(encoding="utf-8")
-    assert text.startswith("# Candidates\n") and "\n# Gaps on existing cards\n" in text
-    assert "\n## " not in text and "\n- **" not in text
+    assert sections_in_order(text)
+
+
+def test_section_check_fails_on_missing_repeated_or_misordered_sections():
+    assert sections_in_order("# Candidates\n\n# Gaps on existing cards\n")
+    assert not sections_in_order("# Candidates\n")
+    assert not sections_in_order("# Gaps on existing cards\n")
+    assert not sections_in_order("# Gaps on existing cards\n\n# Candidates\n")
+    assert not sections_in_order("# Candidates\n# Candidates\n# Gaps on existing cards\n")
 
 
 def test_the_surveyor_agent_is_restricted_to_read_and_write_on_sonnet():

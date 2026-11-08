@@ -206,6 +206,15 @@ items:
     - pmid:20937116
     - pmid:30871578
     source_hash: 8c552bcff8883191bb72881c0008e17c90844ccd7c5e014879633dbd8c0688c9
+  links[1]:
+    text: 'En systematisk oversikt fra 2026 over mekanismene bak PEM foreslår at mitokondriedysfunksjon generelt, med nedsatt
+      ATP-syntese og for mange reaktive oksygenforbindelser, kan være en utløsende faktor for PEM, og at kjeden går gjennom
+      immunaktivering: Betennelse i kroppen kan da nå hjernen, aktivere gliaceller og sette i gang nevroinflammasjon. Kjeden
+      starter med mitokondriedysfunksjon og ender i nevroinflammasjon. Ingen studie på dette kortet målte begge deler hos
+      de samme pasientene.'
+    sources:
+    - pmid:42051540
+    source_hash: 4309965d3d21fbabd989e3491cd4ea0d4fa7f1f641013ff1a52ed4972492b3ba
   studies[pmid:38965566].finding:
     text: En studie med n=84 pasienter og 71 stillesittende kontroller fant at pasientene, i motsetning til kontrollene, ikke
       gjentok sin første treningstest 24 timer senere, med fall i arbeid, oksygenbruk og puls ved maksimal innsats og i oksygenbruk
@@ -287,3 +296,8 @@ items:
       testet hvordan kroppens reaksjoner på trening henger sammen med PEM. Sitert på kartet som kilde til en foreslått lenke,
       ikke som evidens for nivået.
     source_hash: f230b1a641c49e6949457d764f79c3d0d5652bd00c9712e997a2266b23cd7b51
+  studies[pmid:42051540].finding:
+    text: En systematisk oversikt over de patofysiologiske mekanismene bak PEM ved langvarig covid og kronisk utmattelsessyndrom.
+      Den foreslår et rammeverk der mitokondriedysfunksjon, immunaktivering og nevroinflammasjon danner en selvforsterkende
+      sløyfe. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: 770484aff64cf0d64996422a948ff636d03ff03ea72a776cb54584235cbc0b4f

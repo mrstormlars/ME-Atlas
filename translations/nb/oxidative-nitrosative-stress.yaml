@@ -123,6 +123,22 @@ items:
     sources:
     - pmid:16085177
     source_hash: 550aaeb49899a9d722f2794e2aa0ef3b737001dd7e1de045d5715512d68c4f18
+  links[1]:
+    text: En oversiktsartikkel fra 2025 foreslår at endoteldysfunksjon ved ME/CFS drives av oksidativt og nitrosativt stress,
+      sammen med autoantistoffformidlet forstyrrelse av reseptorer, og at dette kan forklare ortostatisk intoleranse og nedsatt
+      perfusjon. Kilden oppgir ingen pasientdata som knytter dem sammen.
+    sources:
+    - pmid:41516145
+    source_hash: e33090a0c5a86fe72bc2287aab45596d7c10b3092eaffea31d79b8c5e64f05c0
+  links[2]:
+    text: En oversiktsartikkel fra 2017 foreslår at aktiverte immuninflammatoriske og oksidative og nitrosative signalveier
+      kan ligge bak det lave kortisolet og den reduserte aktiviteten i stresshormonaksen (HPA-aksen) som sees ved ME/CFS.
+      Den konkluderer med at lav aktivitet i HPA-aksen mest sannsynlig er en følge av disse signalveiene og ikke en årsak
+      til dem. Oversiktsartikkelen behandler de to gruppene av signalveier samlet. Sammendraget oppgir ingen pasientstudie
+      som har testet retningen.
+    sources:
+    - pmid:27766535
+    source_hash: 381e1e2a13adb304f6a19ccfd927f170f75a85f929d92b6e1ae5dd81f6ff22b6
   studies[pmid:16085177].finding:
     text: En studie med n=47 pasienter og 34 friske frivillige som var innrullert (antallet som ble målt er ikke oppgitt)
       fant høyere isoprostaner i plasma hos pasientene; hos pasienter uten risikofaktorer for hjerte- og karsykdom hang nivåene
@@ -187,3 +203,14 @@ items:
     text: 'En placebokontrollert studie av n=43 pasienter (31 fullførte: 17 fikk ubikinol, 14 placebo) rapporterte at 12 uker
       med ubikinol bedret flere symptomer.'
     source_hash: ad91d4ea2f2f7c7557750840bf6ed473f9eee462ab8b929f1c234722e05a7841
+  studies[pmid:41516145].finding:
+    text: En oversiktsartikkel om det biologiske nettverket bak ME/CFS. Den foreslår at endoteldysfunksjon drevet av oksidativt
+      og nitrosativt stress, sammen med autoantistoffformidlet forstyrrelse av reseptorer, kan forklare ortostatisk intoleranse
+      og nedsatt perfusjon. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: ac2d87c13cd95373992655c6cc989e0bd55e61ed1ca1374c4042506a13f1d530
+  studies[pmid:27766535].finding:
+    text: En narrativ oversiktsartikkel om samspillet mellom immuninflammatoriske og oksidative og nitrosative signalveier
+      og lav aktivitet i stresshormonaksen (HPA-aksen) ved ME/CFS. Den konkluderer med at den lave aktiviteten mest sannsynlig
+      er en følge av disse signalveiene og ikke en årsak til dem. Sitert på kartet som kilde til en foreslått lenke, ikke
+      som evidens for nivået.
+    source_hash: 03b322671db920939fb2512c0e5fc69850f187ce9759cb902243986b42500612

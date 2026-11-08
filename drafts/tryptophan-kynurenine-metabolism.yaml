@@ -465,11 +465,64 @@ studies:
       A study of patients with CFS alone, CFS with fibromyalgia and healthy controls (numbers not
       stated in the abstract) found that "Plasma tryptophan and kynurenine concentrations did not
       differ among groups."
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:35821534
+    title: "Could the kynurenine pathway be the key missing piece of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) complex puzzle?"
+    year: 2022
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Guillemin GJ, Neuroinflammation Group, Macquarie University, Sydney, Australia (first author Kavyani B, same group)
+    finding: >-
+      A review of the kynurenine pathway in ME/CFS; it states that the pathway has been shown to mediate immune response and neuroinflammation through its metabolites. Cited on the map as the source of a proposed link, not as evidence for the level.
+  # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
+  - id: pmid:26667000
+    title: "The Many Neuroprogressive Actions of Tryptophan Catabolites (TRYCATs) that may be Associated with the Pathophysiology of Neuro-Immune Disorders."
+    year: 2016
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Maes M, IMPACT Strategic Research Center, Deakin University, Geelong, Australia (first author Morris G; the record gives no affiliation for Morris G)
+    finding: >-
+      A review of tryptophan catabolites in neuro-inflammatory and neuroprogressive disease, discussing schizophrenia, Alzheimer's disease and chronic fatigue syndrome; it states that some catabolites, such as quinolinic acid, provoke increases in oxidative and nitrosative stress. Cited on the map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also be read as a mechanism (an altered pathway that keeps the illness going); a review (pmid:41516296, section 4.3) says some researchers hypothesise insufficient kynurenine production from tryptophan in ME/CFS, but its sentences are general and name no symptom or question node, so no link expresses this reading.
 layer: dysfunction
-links: []
+links:
+  - to: neuroinflammation
+    support: proposed
+    text: >-
+      A 2022 review says that the kynurenine pathway has been shown to mediate immune response
+      and neuroinflammation through its metabolites; this is a general statement, not specific
+      to ME/CFS, and the abstract reports no patient study measuring both.
+    sources: [pmid:35821534]
+  - to: oxidative-nitrosative-stress
+    support: proposed
+    text: >-
+      A 2016 review proposes that some tryptophan catabolites, such as quinolinic acid, provoke
+      increases in oxidative and nitrosative stress in neuro-inflammatory and neuroprogressive
+      disease; chronic fatigue syndrome is one of three diseases it discusses, with
+      schizophrenia and Alzheimer's disease. The review also describes the reverse: oxidative
+      and nitrosative stress and pro-inflammatory cytokines activate the enzyme IDO and so
+      upregulate the catabolite pathway. The abstract reports no patient study measuring both.
+    sources: [pmid:26667000]
 last_checked:
   date: 2026-11-02
   by: ai_pair
