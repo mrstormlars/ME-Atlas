@@ -524,6 +524,8 @@ studies:
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also sit in 'dysfunction' (what goes wrong in the body), since raised receptor antibodies are a measured abnormality in blood; 'mechanism' was chosen because the hypothesis answers why the illness does not resolve, and no source states a separate link that expresses the dysfunction reading.
 # Founder ruling 2026-11-08: the link to hpa-axis-cortisol rests on antipituitary/antihypothalamic antibodies, outside the receptor scope of the card's studies; scope of the card's claim and level unchanged.
+# Link to autonomic-imbalance (founder ruling 2026-11-08): step 2 (associated), resting on pmid:42082542 (already on the card, Fukuda);
+# scope of the card's claim and level unchanged.
 layer: mechanism
 links:
   - to: orthostatic-intolerance-cerebral-blood-flow
@@ -541,6 +543,20 @@ links:
       and the 10 without antibodies. The study is cross-sectional, so no order in time is shown;
       the authors describe an association, and it has not been repeated.
     sources: [pmid:34254637]
+  - to: autonomic-imbalance
+    support: associated
+    text: >-
+      A study of n=59 people with ME/CFS (Fukuda criteria, which do not require post-exertional malaise) and 36
+      healthy controls measured antibodies against adrenergic and muscarinic receptors and autonomic function in
+      the same people; it also included 96 people with post-COVID condition, not defined as ME/CFS, whose results
+      are not used here. In the ME/CFS group, antibodies against the β2 adrenergic receptor correlated with a
+      higher sympathovagal index, a heart rate variability measure of sympathetic relative to vagal activity (r =
+      0.45, p = 0.001). In this study the ME/CFS group did not differ from the controls on the heart rate
+      variability balance measures, and receptor antibodies also correlated with autonomic measures in the healthy
+      controls. The study is cross-sectional and was described by its authors as exploratory, with no correction
+      for the many comparisons made, and medication, including beta-blockers, was not accounted for, so no order
+      in time is shown; it has not been repeated.
+    sources: [pmid:42082542]
 last_checked:
   date: 2026-11-01
   by: ai_pair

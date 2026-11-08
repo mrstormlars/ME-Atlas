@@ -537,8 +537,68 @@ studies:
       did not survive correction for intracranial volume.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Links to symptom:respiratory-symptoms, symptom:cognitive-impairment, symptom:sleep-disturbance and symptom:pain
+# (founder ruling 2026-11-08): all step 2 (associated), cross-sectional correlations from studies already on the card; the
+# Griffith group's studies among them are not independent of each other (see AUTHOR AND COHORT OVERLAPS above). The
+# pain link gives no direction because the studies point different ways (SF-36 bodily pain: a higher score means less pain).
 layer: dysfunction
-links: []
+links:
+  - to: symptom:respiratory-symptoms
+    support: associated
+    text: >-
+      A study of n=10 patients meeting both the Canadian and International criteria and 10 healthy controls, at 7
+      Tesla, found that smaller midbrain and whole-brainstem volumes went with higher self-reported scores for
+      breathing difficulty in the patients. The score was low on average in the patients, and the correlations
+      were not corrected for multiple comparisons. The group is small and the finding is unreplicated.
+    sources: [pmid:36937672]
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: >-
+      A study of n=16 of 18 patients meeting the International criteria (two were left out of this analysis) and
+      26 healthy controls found that the relation between diffusion MRI measures and a self-reported information
+      processing score (a 1 to 10 rating of difficulty processing information) differed from that in controls. A
+      study at 7 Tesla of n=29 patients meeting the Canadian criteria (17 of them also the International criteria)
+      found that the volume of one hippocampal subfield (left CA4 body) was larger in patients who rated their
+      impaired concentration (a five-point severity rating) as more severe (r = 0.41). Both measures are self-
+      ratings, not cognitive tests. The two studies are from the same research group, and whether their patients
+      overlap is not stated; the correction for multiple comparisons in the second study applied to the group
+      comparisons, not to the correlations. Small and unreplicated.
+    sources: [pmid:34355438, pmid:39804864]
+  - to: symptom:sleep-disturbance
+    support: associated
+    text: >-
+      Three studies from one research group related brain measures to self-rated sleep scores, and the directions
+      differ, so no overall direction is given. In 16 of 18 patients meeting the International criteria (two were
+      left out of this analysis), the relation between diffusion MRI measures and a sleep disturbance score (a 1
+      to 10 rating) differed from that in controls. A second study of 25 patients meeting the Fukuda criteria
+      (which do not require post-exertional malaise) and 18 meeting the International criteria, which analyses the
+      same cohort as the first, found the sleep disturbance score negatively correlated with the volume of the
+      right CA1 hippocampal region in 24 Fukuda patients, but positively correlated with four hippocampal volumes
+      (left and right hippocampal tail, left CA4 body and right subiculum body) in 16 International-criteria
+      patients. A study at 7 Tesla of n=29 patients meeting the Canadian criteria (17 of them also the International
+      criteria) found that larger volumes of the left subiculum body and of the whole hippocampal body went with
+      more severe unrefreshing sleep, a
+      positive correlation. The first two studies analyse the same patients, so they are not independent findings.
+      Small and unreplicated.
+    sources: [pmid:34355438, pmid:39804864, pmid:35355311]
+  - to: symptom:pain
+    support: associated
+    text: >-
+      Three studies from one research group (Griffith University), so not independent findings, found correlations
+      between brain volumes and a pain score, and they do not point the same way, so no direction is given here.
+      In n=10 patients meeting both the Canadian and International criteria and 10 healthy controls, at 7 Tesla,
+      pons and whole-brainstem volumes correlated with the SF-36 bodily pain score, on which a higher score means
+      less pain. A study at 7 Tesla of n=29 patients meeting the Canadian criteria (17 of them also the
+      International criteria) found a correlation between one hippocampal subfield volume (left presubiculum head)
+      and the pain score. A study of 18 patients meeting the International criteria and 25 meeting the Fukuda
+      criteria reported, in 16 of the International-criteria patients, a negative correlation between the pain
+      score and two hippocampal subfield volumes, which the 7 Tesla study describes as a positive correlation, and
+      found no statistically significant association with pain in the Fukuda group (24 measured). The correction
+      for multiple comparisons described in these papers applied to the group comparisons, not to the
+      correlations. A study from a different group (n=34 patients meeting the Fukuda and Canadian criteria and 24
+      controls) found no significant correlation between brain signals at rest, before and after exercise, and
+      symptoms including pain (data not shown); it did not measure brain volumes. Small and unreplicated.
+    sources: [pmid:36937672, pmid:39804864, pmid:35355311, pmid:34975370]
 last_checked:
   date: 2026-11-02
   by: ai_pair

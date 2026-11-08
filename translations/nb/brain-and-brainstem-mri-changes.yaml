@@ -126,6 +126,65 @@ items:
     sources:
     - pmid:36937672
     source_hash: a6ecfc85e1ccb7b029136b9a8faacdd0e7a473868f84c369f04944c2dab02315
+  links[0]:
+    text: En studie med n=10 pasienter som oppfylte både Canadian- og International-kriteriene og 10 friske kontroller, ved
+      7 tesla, fant at mindre volum av mellomhjernen og hele hjernestammen hang sammen med høyere selvrapporterte skårer for
+      pustevansker hos pasientene. Skåren var i gjennomsnitt lav hos pasientene, og korrelasjonene var ikke korrigert for
+      flere sammenligninger. Gruppen er liten, og funnet er ikke gjentatt.
+    sources:
+    - pmid:36937672
+    source_hash: 60246ceeda994ded59ce50f87b56c05b75e402c0b4b65a856c2de17491d4ad7d
+  links[1]:
+    text: En studie med n=16 av 18 pasienter som oppfylte International-kriteriene (to ble utelatt fra denne analysen) og
+      26 friske kontroller fant at sammenhengen mellom mål fra diffusjons-MR og en selvrapportert skår for informasjonsbehandling
+      (en vurdering fra 1 til 10 av hvor vanskelig det er å behandle informasjon) var annerledes enn hos kontrollene. En studie
+      ved 7 tesla med n=29 pasienter som oppfylte Canadian-kriteriene (17 av dem oppfylte også International-kriteriene) fant
+      at volumet av ett delområde i hippocampus (venstre CA4 body) var større hos pasienter som vurderte den nedsatte konsentrasjonen
+      sin (en alvorlighetsvurdering på fem trinn) som mer alvorlig (r = 0,41). Begge målene er egenvurderinger, ikke kognitive
+      tester. De to studiene kommer fra samme forskergruppe, og det er ikke oppgitt om pasientene overlapper. Korreksjonen
+      for flere sammenligninger i den andre studien gjaldt gruppesammenligningene, ikke korrelasjonene. Små studier som ikke
+      er gjentatt.
+    sources:
+    - pmid:34355438
+    - pmid:39804864
+    source_hash: 71ed736ca795ce260654d54d23597d918e721812775206881b6d784b941c5510
+  links[2]:
+    text: Tre studier fra én forskergruppe satte hjernemål i sammenheng med egenvurderte søvnskårer, og retningene er ulike,
+      så ingen samlet retning er oppgitt. Hos 16 av 18 pasienter som oppfylte International-kriteriene (to ble utelatt fra
+      denne analysen) var sammenhengen mellom mål fra diffusjons-MR og en skår for søvnforstyrrelse (en vurdering fra 1 til
+      10) annerledes enn hos kontrollene. En andre studie med 25 pasienter som oppfylte Fukuda-kriteriene (som ikke krever
+      PEM) og 18 som oppfylte International-kriteriene, og som analyserer den samme kohorten som den første, fant at skåren
+      for søvnforstyrrelse var negativt korrelert med volumet av høyre CA1-område i hippocampus hos 24 Fukuda-pasienter, men
+      positivt korrelert med fire hippocampusvolumer (venstre og høyre hippocampushale, venstre CA4 body og høyre subiculum
+      body) hos 16 pasienter som oppfylte International-kriteriene. En studie ved 7 tesla med n=29 pasienter som oppfylte
+      Canadian-kriteriene (17 av dem oppfylte også International-kriteriene) fant at større volum av venstre subiculum body
+      og av hele hippocampus body hang sammen med mer alvorlig søvn som ikke gir hvile, en positiv korrelasjon. De to første
+      studiene analyserer de samme pasientene, så de er ikke uavhengige funn. Små studier som ikke er gjentatt.
+    sources:
+    - pmid:34355438
+    - pmid:39804864
+    - pmid:35355311
+    source_hash: 04b686857340d669dbb8b1079d9a89b25de51ded8edf2e42dd28f55a9ac0b8e7
+  links[3]:
+    text: Tre studier fra én forskergruppe (Griffith University), og dermed ikke uavhengige funn, fant korrelasjoner mellom
+      hjernevolumer og en smerteskår. De peker ikke i samme retning, så ingen retning er oppgitt her. Hos n=10 pasienter som
+      oppfylte både Canadian- og International-kriteriene og 10 friske kontroller, ved 7 tesla, var volumene av pons og hele
+      hjernestammen korrelert med SF-36-skåren for kroppslig smerte, der høyere skår betyr mindre smerte. En studie ved 7
+      tesla med n=29 pasienter som oppfylte Canadian-kriteriene (17 av dem oppfylte også International-kriteriene) fant en
+      korrelasjon mellom volumet av ett delområde i hippocampus (venstre presubiculum head) og smerteskåren. En studie med
+      18 pasienter som oppfylte International-kriteriene og 25 som oppfylte Fukuda-kriteriene rapporterte, hos 16 av pasientene
+      som oppfylte International-kriteriene, en negativ korrelasjon mellom smerteskåren og volumet av to delområder i hippocampus,
+      noe 7 tesla-studien beskriver som en positiv korrelasjon, og fant ingen statistisk signifikant sammenheng med smerte
+      i Fukuda-gruppen (24 målt). Korreksjonen for flere sammenligninger som er beskrevet i disse artiklene, gjaldt gruppesammenligningene,
+      ikke korrelasjonene. En studie fra en annen gruppe (n=34 pasienter som oppfylte Fukuda- og Canadian-kriteriene og 24
+      kontroller) fant ingen signifikant korrelasjon mellom hjernesignaler i hvile, før og etter anstrengelse, og symptomer,
+      blant dem smerte (data ikke vist). Den målte ikke hjernevolumer. Små studier som ikke er gjentatt.
+    sources:
+    - pmid:36937672
+    - pmid:39804864
+    - pmid:35355311
+    - pmid:34975370
+    source_hash: 76556ddfe8415121523f21e223580413e3b06548e9c025790737ddf970ea2fea
   studies[pmid:34355438].finding:
     text: En studie med n=18 pasienter som oppfylte International Consensus Criteria og 26 friske kontroller fant lavere aksial
       og gjennomsnittlig diffusivitet i en klynge i mellomhjernen og pons og høyere transversal diffusivitet i medulla; de

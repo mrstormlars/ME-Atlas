@@ -198,8 +198,31 @@ studies:
       choline-containing compounds in the left basal ganglia, which the authors suggest may reflect higher
       cell membrane turnover due to gliosis or altered intramembrane signalling, in the absence of regional
       structural or inflammatory pathology.
+  - id: pmid:29759891
+    title: "The putative role of oxidative stress and inflammation in the pathophysiology of sleep dysfunction across neuropsychiatric disorders: Focus on chronic fatigue syndrome, bipolar disorder and multiple sclerosis."
+    year: 2018
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Morris G (first author), Tir Na Nog, Llanelli, Wales, UK; Carvalho AF (last author), University of Toronto, Canada
+    finding: >-
+      A review that proposes a framework in which systemic inflammation may activate microglia and astrocytes,
+      whose cytokines and nitric oxide may influence the expression of circadian regulators such as CLOCK; it
+      takes chronic fatigue syndrome, bipolar disorder and multiple sclerosis as example disorders. Cited on the
+      map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Link to circadian-rhythm-disruption (founder ruling 2026-11-08): step 1 (proposed), resting on the review pmid:29759891 only, which is on
+# the card as a context study for this map link, not for the level. Only the neuroinflammation-to-clock direction is
+# stated; the review's reverse loop (sleep disruption aggravating neuroinflammation) is not a link out of this card.
 layer: dysfunction
 links:
   - to: symptom:cognitive-impairment
@@ -212,6 +235,13 @@ links:
     text: >-
       A PET study of n=9 patients and 10 healthy controls, whose case definition is not verified, found that binding of a marker of activated microglia or astrocytes in some brain areas correlated with pain scores; a later PET study of n=9 Fukuda-defined women found no difference from controls. Unreplicated.
     sources: [pmid:24665088, pmid:34815320]
+  - to: circadian-rhythm-disruption
+    support: proposed
+    text: >-
+      A review proposes that activated microglia and astrocytes may release inflammatory cytokines and nitric
+      oxide that may change the expression of circadian regulators such as CLOCK; it used chronic fatigue syndrome
+      as one of three example disorders and was not a patient study of this link.
+    sources: [pmid:29759891]
 last_checked:
   date: 2026-10-31
   by: ai_pair

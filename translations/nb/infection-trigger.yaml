@@ -114,6 +114,25 @@ items:
     sources:
     - pmid:33889154
     source_hash: 09c4ed9d1dc9c0e3ecde9689c51093a20a092ce0df5e42a692de668d939279c8
+  links[2]:
+    text: En oversiktsartikkel fra 2025 foreslår at SARS-CoV-2-infeksjon kan forstyrre døgnrytmen, gjennom endringer i klokkegener,
+      mitokondriesvikt og cytokindrevet nevroinflammasjon, og at dette kan ligge bak utmattelse og søvnforstyrrelser etter
+      infeksjon. Artikkelen handler hovedsakelig om langvarig covid, er ikke en pasientstudie som måler begge ender, og etterlyser
+      selv mer forskning.
+    sources:
+    - pmid:39896874
+    source_hash: 24fab7f8d179e6ff6d234fe93e00fea685a5c2c09eb671c633a8b84e30c11260
+  links[3]:
+    text: En studie fra 2025 med 100 personer med serologisk tegn på akutt Coxiella burnetii-infeksjon, som kom med polymorfe
+      symptomer, dysautonomi eller ME/CFS, og 56 matchede kontroller fant mer autonom dysfunksjon i den infiserte gruppen,
+      hovedsakelig i parasympatisk regulering, på kardiovaskulære refleksprøver, effektivitet av barorefleksen og indekser
+      for hjerterytmevariabilitet på kort sikt. Mål for hjerterytmevariabilitet på lang sikt skilte seg ikke signifikant mellom
+      gruppene. Forfatterne foreslår at infeksjonen kan utløse vedvarende autonom dysfunksjon som kan bidra til ME/CFS. Studien
+      var tverrsnitts, i en blandet gruppe valgt ut etter symptomer, uten at noen diagnosekriterier for ME/CFS er nevnt i
+      sammendraget. Forfatterne sier at langsgående studier trengs.
+    sources:
+    - pmid:41598987
+    source_hash: 6c23f17558db654d7c226d66b27b9cf15ced0e6b6685fca83b7cdbbf0ea48aa0
   studies[pmid:39804551].finding:
     text: En studie med n=4515 voksne fulgt fra akutt SARS-CoV-2-infeksjon fant en høyere rate av ny ME/CFS enn hos de 592
       matchede uinfiserte deltakerne (regnet ut fra de oppgitte antallene; 2,66 mot 0,93 per 100 personår, hazard ratio 4,93),
@@ -176,3 +195,15 @@ items:
       verken utvalgsstørrelse eller diagnosekriterier. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
       for nivået.
     source_hash: dfa22b004a3aa2b71527a0b4264ff033073d20a6f7cd6665f2f8a70ed01c13dd
+  studies[pmid:39896874].finding:
+    text: En oversiktsartikkel om hvordan SARS-CoV-2-infeksjon kan forstyrre døgnrytmen ved langvarig covid, gjennom klokkegener,
+      mitokondriesvikt og cytokinindusert nevroinflammasjon, med forslaget om at dette ligger bak utmattelse og søvnforstyrrelser
+      etter infeksjon. Den fokuserer på langvarig covid, og tittelen etterlyser mer forskning. Sitert på kartet som kilde
+      til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: 54d77434ac6651176cd17783050fd78f3dd3003807f84993623566299148d84e
+  studies[pmid:41598987].finding:
+    text: En studie med n=100 pasienter med serologisk tegn på akutt Coxiella burnetii-infeksjon, som kom med polymorfe symptomer,
+      dysautonomi eller ME/CFS, og 56 matchede kontroller fant mer autonom dysfunksjon i den infiserte gruppen, hovedsakelig
+      i parasympatisk regulering. Mål for hjerterytmevariabilitet på lang sikt skilte seg ikke signifikant mellom gruppene.
+      Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: 0915c0abef5d4afb13212d6260009b392f5df4a685dd882b51e48bce86774198

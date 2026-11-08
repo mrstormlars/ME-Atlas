@@ -81,7 +81,8 @@
 #     giardiasis met Fukuda), 36042189 (19 of 42 post-COVID patients met CCC), 19564299 (adolescents after
 #     infectious mononucleosis, "established pediatric criteria" not named; TODO: verify, could be added as rung 1
 #     context), 38304441, 1846641.
-#   - Reviews: 34867935, 40284540, 33959278.
+#   - Reviews: 34867935, 40284540, 33959278. Exception (founder ruling 2026-11-08): the review 39896874 is on the card
+#     as a context study, cited only for a map link, not for the level.
 slug: infection-trigger
 name: Infection as a trigger
 core_claim:
@@ -469,6 +470,49 @@ studies:
       soluble CD26 was associated with raised autoantibodies against alpha-1 adrenergic and M3
       muscarinic acetylcholine receptors; the abstract gives no sample size or case definition.
       Cited on the map as the source of a proposed link, not as evidence for the level.
+  - id: pmid:39896874
+    title: "Post infectious fatigue and circadian rhythm disruption in long-COVID and other infections: a need for further research."
+    year: 2025
+    cohort: long_covid
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Tsiodras S / Livieratos A, Attikon University Hospital, Athens, Greece (Livieratos A is an independent researcher, Athens)
+    finding: >-
+      A review of how SARS-CoV-2 infection may disrupt circadian rhythms in long COVID, through clock genes,
+      mitochondrial dysfunction and cytokine-induced neuroinflammation, with the proposal that this underlies
+      fatigue and sleep disturbance after infection; it focuses on long COVID and its title calls for further
+      research. Cited on the map as the source of a proposed link, not as evidence for the level.
+  - id: pmid:41598987
+    title: "Autonomic Dysfunction in Patients with Acute Infection with Coxiella burnetii."
+    year: 2025
+    cohort: me_cfs
+    # The abstract names no ME/CFS case definition, and the infected group is mixed (polymorphic symptoms, dysautonomia or ME/CFS). TODO: verify from the full text.
+    # Head-up tilt testing was done only in the infected group. How many of the 100 had ME/CFS is not stated in the abstract.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 100
+    n_controls: 56
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed
+    group: Bojić M / Milovanović B, Institute for Cardiovascular Diseases "Dedinje", Belgrade, Serbia
+    finding: >-
+      A study of n=100 patients with serological evidence of acute Coxiella burnetii infection, who presented with
+      polymorphic symptoms, dysautonomia or ME/CFS, and 56 matched controls found more autonomic dysfunction in
+      the infected group, mainly in parasympathetic regulation; long-term heart rate variability measures did not
+      differ significantly between the groups. Cited on the map as the source of a proposed link, not as evidence
+      for the level.
 last_checked:
   date: 2026-11-06
   by: ai_pair
@@ -482,6 +526,9 @@ last_checked:
 # Link to question:who-is-vulnerable: step 1 (proposed) only. Both sources compare people who did and did not
 # develop ME/CFS after the same infection, but their case definitions are unverified, which allows step 1 and never
 # step 2 (DECISIONS 2026-11-06).
+# Links to circadian-rhythm-disruption and autonomic-imbalance (founder ruling 2026-11-08): both step 1 (proposed). The first rests on a review
+# (pmid:39896874, mainly about long COVID); the second on pmid:41598987, whose case definition is unverified and whose
+# group is mixed. Both records are on the card as context studies, so the 'Reviews' note above does not cover pmid:39896874.
 layer: trigger
 links:
   - to: question:who-is-vulnerable
@@ -505,3 +552,23 @@ links:
       autoantibodies; its case definition is not verified, and the finding comes from a single,
       unreplicated study.
     sources: [pmid:33889154]
+  - to: circadian-rhythm-disruption
+    support: proposed
+    text: >-
+      A 2025 review proposes that SARS-CoV-2 infection may disrupt circadian rhythms, through changes in clock
+      genes, mitochondrial dysfunction and cytokine-driven neuroinflammation, and that this may underlie fatigue
+      and sleep disturbance after infection. The review is mainly about long COVID, is not a patient study
+      measuring both ends, and itself calls for further research.
+    sources: [pmid:39896874]
+  - to: autonomic-imbalance
+    support: proposed
+    text: >-
+      A 2025 study of 100 people with serological evidence of acute Coxiella burnetii infection, who presented
+      with polymorphic symptoms, dysautonomia or ME/CFS, and 56 matched controls found more autonomic dysfunction
+      in the infected group, mainly in parasympathetic regulation, on cardiovascular reflex tests, baroreflex
+      effectiveness and short-term heart rate variability indices; long-term heart rate variability measures did
+      not differ significantly between the groups. The authors suggest the infection may trigger persistent
+      autonomic dysfunction that could contribute to ME/CFS. It was cross-sectional, in a mixed group selected for
+      symptoms, with no ME/CFS case definition named in the abstract; the authors say longitudinal studies are
+      needed.
+    sources: [pmid:41598987]

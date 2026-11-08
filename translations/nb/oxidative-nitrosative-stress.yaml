@@ -139,6 +139,24 @@ items:
     sources:
     - pmid:27766535
     source_hash: 381e1e2a13adb304f6a19ccfd927f170f75a85f929d92b6e1ae5dd81f6ff22b6
+  links[3]:
+    text: En genuttrykksstudie fra 2006 av 111 kvinner med og uten uforklart utmattelse konkluderte med at resultatene tyder
+      på en felles sammenheng mellom oksidativt stress, svikt i immunsystemet og kaliumubalanse hos pasienter med CFS, noe
+      som fører til svekket sympato-vagal balanse som gir seg utslag i unormal hjerterytmevariabilitet. Dette er forfatternes
+      tolkning, ikke en direkte test. Deltakerne hadde uforklart utmattelse, og sammendraget nevner ingen diagnosekriterier
+      for ME/CFS. Oksidativt stress ble ikke målt direkte, men utledet av aktiviteten til ett gen (sestrin 1), og forfatterne
+      sier at den nøyaktige mekanismen er uklar. Ikke gjentatt.
+    sources:
+    - pmid:16610951
+    source_hash: b21faa03c57c568f401780476664d9d1d331d67ded5b1443741505d1c38d68ed
+  links[4]:
+    text: En oversiktsartikkel fra 2018 foreslår at samspillende immunologiske, oksidative og nitrosative stressprosesser
+      og mitokondrielle signalveier kan drive søvnforstyrrelser ved kronisk utmattelsessyndrom og andre nevroimmune tilstander.
+      Den er en hypoteseartikkel og rapporterer ingen pasientdata som knytter de to sammen. Førsteforfatteren skrev også oversiktsartikkelen
+      fra 2017 som er sitert på dette kortets lenke til hpa-axis-cortisol, så de to oversiktskildene er ikke uavhengige.
+    sources:
+    - pmid:29759891
+    source_hash: 882443072c19538f01f4ed48fef9dbe6214d9c332589ecb6ba05f4307b8a261a
   studies[pmid:16085177].finding:
     text: En studie med n=47 pasienter og 34 friske frivillige som var innrullert (antallet som ble målt er ikke oppgitt)
       fant høyere isoprostaner i plasma hos pasientene; hos pasienter uten risikofaktorer for hjerte- og karsykdom hang nivåene
@@ -214,3 +232,15 @@ items:
       er en følge av disse signalveiene og ikke en årsak til dem. Sitert på kartet som kilde til en foreslått lenke, ikke
       som evidens for nivået.
     source_hash: 03b322671db920939fb2512c0e5fc69850f187ce9759cb902243986b42500612
+  studies[pmid:16610951].finding:
+    text: En studie av kliniske data og genuttrykksdata fra 111 kvinner med uforklart utmattelse og kontroller uten utmattelse
+      fant at det mest innflytelsesrike genet var sestrin 1 (SESN1), og at hjerterytmevariabilitet under søvn dominerte blant
+      de kliniske variablene. Forfatterne skriver at den nøyaktige mekanismen er uklar. Sitert på kartet som kilde til en
+      foreslått lenke, ikke som evidens for nivået.
+    source_hash: b00bc4ff7dd80aadf8331e071c197faefd19cb80bf60d6a404960b648154bdd7
+  studies[pmid:29759891].finding:
+    text: En oversiktsartikkel som foreslår et rammeverk der gjensidig samspill mellom immunologiske, oksidative og nitrosative
+      stressprosesser og mitokondrielle signalveier kan drive søvnforstyrrelser ved nevroimmune tilstander, med kronisk utmattelsessyndrom,
+      bipolar lidelse og multippel sklerose som eksempler. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
+      for nivået.
+    source_hash: f095603072b3c37806edec5f104355439f5c06949a097e722f2b5c75960f6e7e

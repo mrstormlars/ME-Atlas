@@ -89,6 +89,13 @@ items:
     - pmid:24665088
     - pmid:34815320
     source_hash: 24c6237ef6371572776d5e2a79af5b10c8d5b25edd96eaa51c5e1d22ea6a4cba
+  links[2]:
+    text: En oversiktsartikkel foreslår at aktiverte mikroglia og astrocytter kan frigjøre inflammatoriske cytokiner og nitrogenoksid
+      som kan endre uttrykket av døgnrytmeregulatorer som CLOCK. Den brukte kronisk utmattelsessyndrom som én av tre eksempeltilstander
+      og var ikke en pasientstudie av denne sammenhengen.
+    sources:
+    - pmid:29759891
+    source_hash: 20eb4eb27eccb48c13f26553c8eb66a0ea39ee2fafeae43c03a7b45741cd9379
   studies[pmid:24665088].finding:
     text: En studie av n=9 pasienter og 10 friske kontroller fant at bindingen av PET-sporstoffet 11C-(R)-PK11195, som markerer
       et protein uttrykt av aktiverte mikroglia eller astrocytter, var 45%-199% høyere i cingulære cortex, hippocampus, amygdala,
@@ -122,3 +129,9 @@ items:
       kolinholdige forbindelser i venstre basalganglier, som forfatterne antyder kan gjenspeile raskere omsetning av cellemembraner
       på grunn av gliose eller endret signalering inne i membranen, uten regional strukturell eller inflammatorisk patologi.
     source_hash: 019c324d47d867dbf659675516515d2effbe0c0b196b7a5f8c7024f74da878d3
+  studies[pmid:29759891].finding:
+    text: En oversiktsartikkel som foreslår et rammeverk der systemisk betennelse kan aktivere mikroglia og astrocytter, hvis
+      cytokiner og nitrogenoksid kan påvirke uttrykket av døgnrytmeregulatorer som CLOCK. Den tar kronisk utmattelsessyndrom,
+      bipolar lidelse og multippel sklerose som eksempeltilstander. Sitert på kartet som kilde til en foreslått lenke, ikke
+      som evidens for nivået.
+    source_hash: cfa1e6c94e6bc36c1547950f985c66807ec886ae00d3c9d4427483757f93be5d
