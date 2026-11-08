@@ -1,0 +1,211 @@
+slug: circadian-rhythm-disruption
+items:
+  name:
+    text: Forstyrrede døgnrytmer
+    source_hash: 505379de3caa893a7157a44d2a3c1f28fcffa13ae301a6c1b131657e769fbb5a
+  core_claim:
+    text: 'Hypotesen foreslår at kroppens 24-timers tidssystem er forstyrret hos personer med ME/CFS: døgnrytmene for hvile
+      og aktivitet, kroppstemperatur, melatonin og lyseksponering er svakere, mindre regelmessige eller ute av takt med hverandre,
+      og dette bidrar til symptomene. Den handler om den tidsmessige organiseringen av disse rytmene, ikke om selve søvnkvaliteten,
+      og døgnrytmen for kortisol hører hjemme på kortet om funksjonen til stresshormonsystemet (HPA-aksen).'
+    sources:
+    - pmid:42399727
+    - pmid:8842569
+    - pmid:21532961
+    source_hash: f2dd12a9c573daf5bcfe6363ed36d398545f49c0117c408055338dc7e9fa4716
+  level_reason[0]:
+    text: En studie fra Barcelona med 100 personer med ME/CFS diagnostisert etter International Consensus Criteria og 56 friske
+      kontroller registrerte lys, bevegelse og hudtemperatur på håndleddet i én uke. Registreringer manglet for 6 pasienter
+      og 3 kontroller, så sammenligningene av rytmene bygger på inntil 94 pasienter og 53 kontroller (regnet ut fra de oppgitte
+      tallene). Pasientene hadde mindre lyseksponering og lavere amplitude i lys-mørke-syklusen, lavere og mer oppsplittet
+      aktivitet og en mer oppsplittet temperaturrytme på håndleddet. Stabiliteten i aktivitetsrytmen fra dag til dag var ikke
+      forskjellig, og amplituden og stabiliteten i temperaturrytmen var ikke forskjellige. Disse gruppesammenligningene var
+      ikke justert for alder eller kroppsmasseindeks, og pasientene var eldre (49,5 mot 42,9 år) og hadde høyere kroppsmasseindeks
+      (27,0 mot 24,4). Det var en sekundæranalyse av data fra gruppens tidligere studier. Kortet står på nivå 2 på grunn av
+      denne studien. Ingen uavhengig gruppe har gjentatt den med kontrollerte diagnosekriterier, så den er ikke gjentatt.
+    sources:
+    - pmid:42399727
+    source_hash: a7e42f1b173c60e0560d70815d9f8f4dc2d857ac37e84cc3b381a5ad72f6493b
+  level_reason[1]:
+    text: To tidligere studier fra samme gruppe og klinikk peker delvis i samme retning. De er ikke uavhengige, og pasientene
+      kan overlappe. Hos 10 kvinner som oppfylte både Fukuda og Canadian Consensus Criteria og 10 matchede kontroller (8 om
+      sommeren) hadde pasientene lavere daglig aktivitet, et svakere fall i aktivitet etter lunsj og lavere hudtemperatur
+      om natten bare om vinteren. Sammendraget sier at relativ amplitude og stabilitet i aktivitetsrytmen var lavere, men
+      tabellen i fulltekstartikkelen viser at relativ amplitude var høyere hos pasientene, og at det ikke var noen forskjell
+      i stabilitet eller i tidspunktet for rytmen. Hos 67 kvinner med ME/CFS diagnostisert etter International Consensus Criteria
+      og 48 kontroller var gjennomsnittlig aktivitet og amplituden i aktivitetsrytmen lavere hos pasientene (sammendraget
+      sier høyere; tabellen og resultatdelen i fulltekstartikkelen sier lavere), mens oppsplitting og stabilitet i aktivitetsrytmen
+      ikke var forskjellige, og temperaturrytmen på håndleddet ikke var forskjellig etter justering for alder og kroppsmasseindeks.
+    sources:
+    - pmid:29874259
+    - pmid:36902264
+    source_hash: 76983bfec489ad11d28a0ed012990ee5b40b6a3d7371329f44a1f281f182adbc
+  level_reason[2]:
+    text: 'Lavere gjennomsnittlig aktivitet hos pasientene er den ene forskjellen som alle tre studiene har felles. Studien
+      fra 2018 påpeker at redusert aktivitet er et hovedtrekk i foreslåtte definisjoner av sykdommen, og studien fra 2026
+      skriver at omvendt årsakssammenheng ikke kan utelukkes: personer med mer alvorlige symptomer kan få mindre dagslys og
+      mer lys om natten. En studie fra 1996 påpeker også at tapet av den vanlige koblingen mellom temperatur og tidspunktet
+      for melatonin, som den fant, kan skyldes søvnmangel, sosial forstyrrelse eller redusert fysisk aktivitet. Kortet kan
+      derfor ikke si om forstyrrede rytmer er en årsak til eller en følge av sykdommen.'
+    sources:
+    - pmid:29874259
+    - pmid:36902264
+    - pmid:42399727
+    - pmid:8842569
+    source_hash: 66784bc78269f5ea1cb7d0aed15343879dda500d2de3ec7e4738b55b62bc7bc8
+  level_reason[3]:
+    text: Studier fra andre grupper som peker i samme retning har diagnosekriterier som ikke er kontrollert ennå, så de kan
+      ikke telle med i nivået. I USA hadde 8 pasienter, registrert i 2 til 7 dager, lavere aktivitet på dagtid og mindre regelmessige
+      aktivitets-hvile-sykluser enn 10 kontroller, registrert i 5 til 7 dager. I Norge ble 120 ungdommer med kronisk utmattelsessyndrom
+      værende lenger i sengen, hadde et senere midtpunkt i søvnen og en mer variert søvn-våken-rytme på ukedager enn 39 friske
+      ungdommer.
+    sources:
+    - pmid:15451649
+    - pmid:28470767
+    source_hash: 16bbdbe864c4e01cd1e501745225a90d12af4340729bea0d82558f0c88418286
+  level_reason[4]:
+    text: 'Andre studier fant ingen forskjell. To små amerikanske studier av pasienter diagnostisert etter CDC-kriterier (versjon
+      ikke oppgitt, så definisjonen krever ikke PEM) registrerte kjernekroppstemperatur kontinuerlig: 7 pasienter og 7 kontroller
+      hadde like temperaturprofiler over 24 timer, og hos 10 pasienter og 10 kontroller var rytmen nesten umulig å skille,
+      bortsett fra fasen til den tredje harmoniske og en tendens til mer variasjon. En australsk studie av 15 pasienter og
+      15 kontroller, matchet for alder, kjønn, kroppsmasseindeks og aktivitetsnivå (så like mengder aktivitet var delvis bygd
+      inn i designet), fant ingen forskjell mellom gruppene i mønsteret eller mengden av søvn eller aktivitet over fem dager
+      og ingen tegn til forstyrret døgnrytme. Diagnosekriteriene i den studien er ikke kontrollert ennå. Disse studiene er
+      mindre enn studien på nivå 2, og CDC-definisjonen står lavere enn International Consensus Criteria, så kortet regner
+      dem ikke som studier som gjør nivå 2 omstridt.'
+    sources:
+    - pmid:9513740
+    - pmid:11318826
+    - pmid:21532961
+    - pmid:42399727
+    source_hash: d25b23b6d393a5bbb94c5c999fded852dd142f46a0be1d36af3e66c8753f0fb8
+  level_reason[5]:
+    text: Studier av selve den indre klokken er få, små og eldre, med diagnosekriterier som ikke er kontrollert ennå. Hos
+      20 pasienter og 17 kontroller i Storbritannia var amplituden og tidspunktet for kjernetemperaturrytmen og tidspunktet
+      for melatoninstart ikke forskjellige, men den vanlige koblingen mellom tidspunktet for temperatur og tidspunktet for
+      melatonin manglet hos pasientene. Hos 8 kvinner med kronisk utmattelsessyndrom og matchede kontroller var melatonin
+      i blodet om natten og tidspunktet for melatoninutskillelsen ikke forskjellige.
+    sources:
+    - pmid:8842569
+    - pmid:10606381
+    source_hash: ec56669d3669811b62754ee333c5396c3c74bc9f4a932d596b7bee176e29561e
+  level_reason[6]:
+    text: Barcelona-gruppen koblet også rytmemål til andre funn hos de samme pasientene. Hos 31 personer med ME/CFS, 23 med
+      ME/CFS etter covid-19 og 31 kontroller hadde pasientene lavere aktivitet og dårligere søvnkvalitet, og blodfettprofilen
+      deres var knyttet til forstyrrelser i temperaturrytmen. Diagnosekriteriene i denne studien er ikke kontrollert ennå.
+      I studien på nivå 2 (inntil 94 pasienter med lysregistreringer) hadde de med et stabilt lysmønster på dagtid mindre
+      utmattelse og bedre skårer på søvnspørreskjemaet enn de med ugunstige eller lave lysmønstre på dagtid, i en utforskende
+      sammenligning. Forfatterne av studien skriver at årsakssammenheng ikke kan utledes.
+    sources:
+    - pmid:39037125
+    - pmid:42399727
+    source_hash: 749604b517324928c3be302ceb437ab4c7c0b411521f230c666188ea31e9f19e
+  level_reason[7]:
+    text: I en britisk utprøving med 30 pasienter med uforklart utmattelse i mer enn seks måneder (diagnosekriteriene er ikke
+      kontrollert ennå) endret 12 uker med melatonin om kvelden og 12 uker med sterkt lys om morgenen, etter en placeboperiode,
+      ingen av hovedsymptomene. Ingen av dem endret heller temperaturrytmen eller tidspunktet for melatoninstart, bortsett
+      fra en liten framskyvning av temperaturrytmen med lys.
+    sources:
+    - pmid:12423324
+    source_hash: a0e43c6bd44ac2550f43b6dde0ee79f688f1278431c621c9212b7d26d5635431
+  badge_reasons.diagnostic_marker[0]:
+    text: Ingen studie på dette kortet tester et rytmemål som diagnostisk markør i en andre, uavhengig pasientgruppe.
+    sources:
+    - pmid:42399727
+    - pmid:29874259
+    - pmid:36902264
+    source_hash: c9cd801acac7f218cac8386c7632013ca1020d93d11b675ae0b556e905285ac5
+  badge_reasons.explains_pem[0]:
+    text: Ingen studie på dette kortet måler PEM direkte og knytter den til døgnrytmene. En studie registrerte aktivitetsrytmen
+      i seks dager før og etter en maksimal tredemølletest hos 10 pasienter og 6 kontroller, uten å følge symptomene, og diagnosekriteriene
+      i den er ikke kontrollert ennå.
+    sources:
+    - pmid:12213500
+    source_hash: 3a58026b0015e93badc4fb267270292fdbc266324463ba675c0a4ab25c9cc9a2
+  links[0]:
+    text: En studie av personer med ME/CFS diagnostisert etter International Consensus Criteria (inntil 94 med lysregistreringer)
+      målte lyseksponering med aktigrafi på håndleddet og søvnplager med spørreskjema hos de samme pasientene. Pasienter i
+      gruppen med et stabilt lysmønster på dagtid hadde bedre søvnskårer enn de med ugunstige eller lave lysmønstre på dagtid,
+      i en utforskende sammenligning uten korreksjon for multippel testing. I regresjonen var ingen av lyskomponentene knyttet
+      til den samlede søvnskåren. Forfatterne skriver at årsakssammenheng ikke kan utledes. En studie av 67 pasienter fra
+      samme gruppe fant ingen signifikant sammenheng mellom hudtemperatur på håndleddet om natten og søvnskåren hos pasientene.
+    sources:
+    - pmid:42399727
+    - pmid:36902264
+    source_hash: 0ec9b3f06b6771a2dafcda745d9f9a4bfd9581d68ca9e7975f4d8007063d9224
+  links[1]:
+    text: En studie fra 1996 foreslår at forstyrrede døgnrytmer kan være en faktor når symptomer som svekket konsentrasjon
+      starter og holdes ved like, ut fra en sammenligning med jetlag og skiftarbeid. Den testet ikke dette. En studie fra
+      2001 som målte kjernekroppstemperatur konkluderte med at symptomene neppe kommer av en forstyrrelse i den rytmen.
+    sources:
+    - pmid:8842569
+    - pmid:11318826
+    source_hash: b244db8cd10831dd774890e32c6f1c0047ea77721ffb41dfe30d777cc3738cb1
+  links[2]:
+    text: En studie fra 1996 foreslår at forstyrrede døgnrytmer kan bidra til å holde hovedsymptomene ved like, ut fra en
+      sammenligning med jetlag og skiftarbeid. Den testet ikke dette, og dens egne data kan også være en følge av sykdommen.
+    sources:
+    - pmid:8842569
+    source_hash: f80c1758432c05cb5468d2ed3eb0f6374bb9c9b589be4c54fb87502ca41c7cd5
+  studies[pmid:42399727].finding:
+    text: En studie med n=100 personer med ME/CFS og 56 kontroller (aktigrafi hos inntil 94 og 53) fant lavere lyseksponering
+      og lavere amplitude i lyssyklusen, lavere og mer oppsplittet aktivitet og en mer oppsplittet temperaturrytme på håndleddet
+      hos pasientene, uten forskjell i stabiliteten i aktivitetsrytmen fra dag til dag.
+    source_hash: 5ea02e1fa824c2df6aaf108ab47153544685d482ec35bbbd82ecdc7e200b78f4
+  studies[pmid:29874259].finding:
+    text: En studie med n=10 kvinner som oppfylte Fukuda- og Canada-kriteriene og 10 matchede kontroller fant lavere daglig
+      aktivitet, et svakere fall i aktivitet etter lunsj og lavere hudtemperatur om natten om vinteren hos pasientene. I tabellen
+      i fulltekstartikkelen var relativ amplitude i aktivitetsrytmen høyere hos pasientene, og stabiliteten og tidspunktet
+      var ikke forskjellige.
+    source_hash: bc334add2f993d3376deb4f58dd9dc033b5a2b21ede0053b53888e3c38989b09
+  studies[pmid:36902264].finding:
+    text: En studie med n=67 kvinner med ME/CFS og 48 kontroller fant lavere gjennomsnittlig aktivitet og lavere amplitude
+      i aktivitetsrytmen hos pasientene i tabellen i fulltekstartikkelen (sammendraget sier høyere), ingen forskjell i oppsplitting
+      eller stabilitet, og ingen forskjell i temperaturrytmen på håndleddet etter justering.
+    source_hash: 4e0f20182e8bcca28238e1c6970be4ccffcee07459dc45255fc82907db5a58a6
+  studies[pmid:9513740].finding:
+    text: En studie med n=7 pasienter og 7 matchede kontroller fant ingen forskjell i gjennomsnittlig kjernekroppstemperatur
+      over 24 timer eller i gjennomsnittlig topp- og bunntemperatur, med en lik døgnprofil.
+    source_hash: eef411bdf81c4cdede559e54475284a4fb57c0886ba56bc7e667433a30724218
+  studies[pmid:11318826].finding:
+    text: En studie med n=10 pasienter og 10 matchede kontroller fant at døgnrytmen for kjernekroppstemperatur var nesten
+      umulig å skille mellom gruppene, bortsett fra fasen til den tredje harmoniske, med en tendens til større variasjon hos
+      pasientene.
+    source_hash: 0aebc66287e032052136280730521bdcf479c1dfbb7d6d7bc28421a2a3093788
+  studies[pmid:21532961].finding:
+    text: En studie med n=15 pasienter og 15 kontroller matchet for alder, kjønn, kroppsmasseindeks og aktivitetsnivå fant
+      ingen forskjell mellom gruppene i mønsteret eller mengden av søvn eller aktivitet over fem dager og ingen tegn til forstyrret
+      døgnrytme.
+    source_hash: 7088550656f664b33e1a0c0e99d95f65a116ab0b82daa2da641a3e55f620179d
+  studies[pmid:15451649].finding:
+    text: En studie med n=8 pasienter og 10 kontroller fant lavere aktivitet på dagtid og mindre regelmessige aktivitets-hvile-sykluser
+      hos pasientene.
+    source_hash: e66877509012d9782614102e451c4a17a93b75f04d3e098197ce3209d91c5a9b
+  studies[pmid:28470767].finding:
+    text: En studie med n=120 ungdommer med kronisk utmattelsessyndrom og 39 friske ungdommer fant lengre tid i sengen, et
+      senere midtpunkt i søvnen og en mer variert søvn-våken-rytme på ukedager hos pasientene.
+    source_hash: b831cebc7827818e55b9a7ebe6f2400a0eab03c02e2443e4e100abdc4c4e0f60
+  studies[pmid:8842569].finding:
+    text: En studie med n=20 pasienter og 17 matchede kontroller fant ingen forskjell i amplitude, gjennomsnitt eller tidspunkt
+      for kjernetemperaturrytmen eller i melatoninstart, men ingen sammenheng mellom tidspunktet for temperatur og melatoninstart
+      hos pasientene, i motsetning til hos kontrollene.
+    source_hash: f7f17fc894e07bdafa4731879cf20ec3c307a8e06be234502cfac660bcbaa5cb
+  studies[pmid:10606381].finding:
+    text: En studie med n=8 kvinner med kronisk utmattelsessyndrom og matchede kontroller fant ingen forskjell i melatonin
+      i blodplasma om natten eller i tidspunktet for melatoninutskillelsen.
+    source_hash: c2edece2b9f375e51758f263c9fed81fa3c6627c95a6ab2b111c7bca43a25c55
+  studies[pmid:39037125].finding:
+    text: En studie med n=54 pasienter (31 med ME/CFS og 23 med ME/CFS etter covid-19, regnet ut fra de oppgitte tallene)
+      og 31 kontroller fant lavere aktivitet og dårligere søvnkvalitet hos pasientene, og en dårligere lipidprofil knyttet
+      til forstyrrelser i temperaturrytmen.
+    source_hash: 7578ec9809d5513def1639a5031173275cef30b09701c4af94120baae96dc03e
+  studies[pmid:12423324].finding:
+    text: En studie med n=30 pasienter med uforklart utmattelse i mer enn seks måneder fant ingen effekt av melatonin om kvelden
+      eller sterkt lys om morgenen sammenlignet med placebo på hovedsymptomene, og ingen endring i temperatur- eller melatoninrytmen,
+      bortsett fra en liten framskyvning av temperaturfasen med lys.
+    source_hash: d2120d30e2721777c60bd00c8a43ac69bc35715440c59573fb839a6584696553
+  studies[pmid:12213500].finding:
+    text: En studie med n=10 kvinner med kronisk utmattelsessyndrom og 6 stillesittende kontroller fant at den gjennomsnittlige
+      hvile-aktivitet-perioden ble lengre enn 24 timer etter en maksimal tredemølletest hos pasientene og ikke endret seg
+      hos kontrollene.
+    source_hash: f20cf3642d571210f3706b7cea672a53aea296bb4e5493b7fa0ab8f0def0a261
