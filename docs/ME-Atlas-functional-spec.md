@@ -158,6 +158,7 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 ### Gaps page
 
 - **Shows:** under the title "What is missing" (Norwegian "Hva mangler"), five counted lists derived from the cards and the symptom list: symptoms with no link to any hypothesis; symptoms linked only at step 1 (proposed), with the hypotheses that point to them; every link at step 1, grouped by target, written as on the causal map with its sources and the rubric sentence for step 2; the hypotheses grouped by current level with the ladder's wording for the next rung and the contested mark where there is one; hypotheses with no links yet. Each list has a count.
+- **Also shows:** above the lists, "At a glance": a table of links into each symptom by support step, one bar of all links by step, and the hypotheses by level 0 to 5 (with the contested count), all counted from the same data as the lists and written out as numbers.
 - **Does not show:** a score, weight or ranking of hypotheses or gaps; which gap matters most or what should be studied; the absence of a link as a finding (it only means nobody has mapped it here yet); any sentence without the same sources as elsewhere on the site.
 
 ### What changed this week

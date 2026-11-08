@@ -327,6 +327,19 @@ def unlinked_cards(g: Graph) -> list[Node]:
     return [n for n in g.nodes.values() if n.kind == "card" and not g.incoming.get(n.key) and not g.out.get(n.key)]
 
 
+def step_counts(g: Graph) -> tuple[dict[str, dict[str, int]], dict[str, int]]:
+    """Link counts by support step: per symptom node (key -> step -> number of incoming links, every step present,
+    node order) and over every link on the map (step -> number)."""
+    steps = cardlib.SUPPORT_LEVELS
+    per_symptom = {
+        n.key: {s: sum(e.support == s for e in g.incoming.get(n.key, [])) for s in steps}
+        for n in g.nodes.values()
+        if n.kind == "symptom"
+    }
+    total = {s: sum(e.support == s for edges in g.out.values() for e in edges) for s in steps}
+    return per_symptom, total
+
+
 def cards_by_level(cards: Sequence[Card]) -> list[tuple[int, list[Card]]]:
     """Cards grouped by level, 5 down to 0, alphabetical by name within a level (the front page's order). Only
     levels that have a card."""

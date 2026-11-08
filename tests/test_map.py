@@ -461,6 +461,20 @@ def test_unlinked_cards_has_a_card_with_nothing_in_or_out_and_not_one_with_only_
     assert maplib.unlinked_cards(maplib.build_graph(pair, content)) == []
 
 
+def test_step_counts_gives_every_step_per_symptom_and_the_totals_over_all_links(tmp_path, gap_content):
+    _, g = gap_cards(tmp_path, gap_content)
+    per_symptom, total = maplib.step_counts(g)
+    assert per_symptom["symptom:only-proposed"] == {"proposed": 2, "associated": 0, "directional": 0}
+    assert per_symptom["symptom:mixed"] == {"proposed": 1, "associated": 1, "directional": 0}
+    assert per_symptom["symptom:assoc"] == {"proposed": 0, "associated": 1, "directional": 0}
+    # a symptom with no link has every step at 0 (the negative case); questions and cards are not rows
+    assert per_symptom["symptom:none"] == {"proposed": 0, "associated": 0, "directional": 0}
+    assert all(k.startswith("symptom:") for k in per_symptom)
+    # all links, including the card-to-card and question links
+    assert total == {"proposed": 4, "associated": 2, "directional": 1}
+    assert sum(total.values()) == sum(len(e) for e in g.out.values())
+
+
 def test_cards_by_level_goes_from_5_down_to_0_alphabetically_and_skips_levels_without_a_card(tmp_path, gap_content):
     cards, _ = gap_cards(tmp_path, gap_content)
     levelled = [

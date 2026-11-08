@@ -270,6 +270,55 @@ footer p { margin: .25rem 0; }
   th, td { border: 0; border-bottom: 1px solid var(--line); }
   td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
 }
+/* gaps page summary: counts as text, with marks that reuse the map's line vocabulary (dashed, solid, thick) */
+.gaps-summary h3 { margin-top: 1.5rem; }
+.gaps-table th[scope="row"] { font-weight: 400; }
+.gaps-table th[scope="col"] { white-space: nowrap; }
+.gaps-table th[scope="col"] .legend-sample { width: 32px; vertical-align: middle; }
+.gaps-table td { white-space: normal; }
+.gaps-table td.zero { color: var(--muted); }
+.gaps-row-none th { color: var(--muted); }
+.gaps-row-none th .small { font-style: italic; }
+.marks { display: inline-flex; flex-wrap: wrap; gap: 3px; margin-left: .3rem; vertical-align: middle; }
+.mk, .mk-sw { display: inline-block; box-sizing: border-box; width: .8rem; height: .8rem; }
+.mk-sw { margin-right: .5rem; vertical-align: middle; }
+.mk-proposed { background: var(--card); border: 1.5px solid var(--fill); }
+.mk-associated { background: var(--fill); border: 1px solid var(--fill); }
+.mk-directional { background: var(--fill); border: 3px solid var(--ink); }
+.gaps-linkbar { display: flex; gap: 2px; height: 1.1rem; margin: .5rem 0; }
+.mk-seg { display: block; flex-basis: 0; min-width: 0; height: 100%; }
+.gaps-linklist { list-style: none; padding: 0; margin: .25rem 0; }
+.gaps-linklist li { margin: .15rem 0; }
+.gaps-levels { list-style: none; padding: 0; margin: .5rem 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; }
+.gaps-levels li { display: flex; flex-direction: column-reverse; gap: .35rem; min-width: 0; }
+.gl-bar { display: flex; flex-direction: column; height: 5rem; border-bottom: 1px solid var(--line); }
+.gl-rest, .gl-fill { display: block; flex-basis: 0; min-height: 0; min-width: 0; }
+.gl-fill { background: var(--fill); }
+.gl-text { display: block; font-size: .889rem; line-height: 1.3; text-align: center; overflow-wrap: anywhere; }
+.gl-no, .gl-name { display: block; color: var(--muted); }
+.gl-count { display: block; }
+@media (max-width: 40em) {
+  /* the symptom table stays a real table at every width (the site-wide stacking would make it very tall) */
+  .gaps-table { display: table; table-layout: fixed; width: 100%; }
+  .gaps-table thead { display: table-header-group; position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+  .gaps-table tbody { display: table-row-group; }
+  .gaps-table tr { display: table-row; border: 0; margin: 0; }
+  .gaps-table caption { display: table-caption; width: auto; }
+  .gaps-table th, .gaps-table td { display: table-cell; width: auto; border: 1px solid var(--line); padding: .3rem; overflow-wrap: break-word; hyphens: auto; }
+  .gaps-table th[scope="col"] { white-space: normal; }
+  .gaps-table th[scope="col"]:first-child { width: 40%; }
+  .gaps-table th[scope="col"] .legend-sample { display: block; width: 24px; }
+  .gaps-table td[data-label]::before { content: none; }
+  .gaps-table td .marks { display: flex; margin-left: 0; margin-top: .15rem; }
+  .gaps-levels { grid-template-columns: 1fr; gap: .5rem; }
+  .gaps-levels li { flex-direction: row; align-items: center; gap: .75rem; }
+  .gl-bar { order: 2; flex: 1 1 auto; flex-direction: row-reverse; height: 1rem; border-bottom: 0; border-left: 1px solid var(--line); }
+  .gl-text { order: 1; flex: 0 0 11rem; text-align: left; }
+  .gl-no, .gl-name, .gl-count { display: inline; }
+}
+@media print {
+  .mk-sw, .mk, .mk-seg, .gl-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

@@ -623,6 +623,36 @@ class GapLevel:
 
 
 @dataclass(frozen=True)
+class SummarySymptom:
+    id: str
+    name: MapText
+    counts: tuple[int, ...]  # incoming links per support step, in cardlib.SUPPORT_LEVELS order
+    no_link: bool
+
+
+@dataclass(frozen=True)
+class SummaryLevel:
+    level: int
+    count: int
+    contested: int
+    rest: int  # the largest level's count less this one's: the empty part of the bar
+
+
+@dataclass(frozen=True)
+class SummaryStep:
+    step: str
+    count: int
+
+
+@dataclass(frozen=True)
+class GapsSummary:
+    symptoms: tuple[SummarySymptom, ...]
+    steps: tuple[SummaryStep, ...]
+    total: int
+    levels: tuple[SummaryLevel, ...]  # levels 0 to 5, each present
+
+
+@dataclass(frozen=True)
 class GapsView:
     unlinked_symptoms: tuple[GapSymptom, ...]
     step1_symptoms: tuple[GapSymptom, ...]
@@ -630,6 +660,7 @@ class GapsView:
     untested_count: int
     levels: tuple[GapLevel, ...]
     unlinked_cards: tuple[GapCard, ...]
+    summary: GapsSummary
 
 
 def _gaps_view(
@@ -683,7 +714,32 @@ def _gaps_view(
         GapLevel(level, tuple(gap_card(c) for c in members)) for level, members in maplib.cards_by_level(english_cards)
     )
     loose = tuple(GapCard(*card_ref(n.key), ()) for n in maplib.unlinked_cards(graph))
-    return GapsView(unlinked, step1, tuple(targets), sum(len(t.links) for t in targets), levels, loose)
+    per_symptom, totals = maplib.step_counts(graph)
+    steps = cardlib.SUPPORT_LEVELS
+    summary_symptoms = tuple(
+        SummarySymptom(
+            key.removeprefix(prefix),
+            namer.name_of(key),
+            tuple(by_step[s] for s in steps),
+            not any(by_step.values()),
+        )
+        for key, by_step in per_symptom.items()
+    )
+    all_links = sum(totals.values())
+    summary_steps = tuple(SummaryStep(s, totals[s]) for s in steps)
+    in_level = {g.level: g.cards for g in levels}
+    biggest = max((len(v) for v in in_level.values()), default=0)
+    summary_levels = tuple(
+        SummaryLevel(
+            k,
+            len(in_level.get(k, ())),
+            sum(bool(c.contested_rungs) for c in in_level.get(k, ())),
+            biggest - len(in_level.get(k, ())),
+        )
+        for k in range(6)
+    )
+    summary = GapsSummary(summary_symptoms, summary_steps, all_links, summary_levels)
+    return GapsView(unlinked, step1, tuple(targets), sum(len(t.links) for t in targets), levels, loose, summary)
 
 
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:
@@ -882,6 +938,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         fallback=frozenset().union(*(lc.fallback for lc in local_cards)),
         note=txt0["untranslated.part"] if not default else None,
         gaps=gaps,
+        legend=legend,
     )
     render(
         "methods.html",
