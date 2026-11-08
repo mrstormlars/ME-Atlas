@@ -7,7 +7,8 @@
 # DRAFT — AI-drafted (ai_pair) on 2026-11-08 from the founder ruling "First survey run" (DECISIONS 2026-11-08,
 # candidate "Disrupted daily (circadian) rhythms of activity, body temperature and light exposure", docs/pm/candidates.md).
 # Nothing here is published. Level, contested mark, badges, layer and links below are proposals for the founder
-# (CLAUDE.md rule 2), not rulings. Revised after card-reviewer round 1 (data/pipeline/2026-11-08-circadian/review.json).
+# (CLAUDE.md rule 2), not rulings. Revised after card-reviewer rounds 1 to 3 (data/pipeline/2026-11-08-circadian/
+# review.json, review2.json, review3.json); founder ruling at the top.
 # Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
 # data/cache/pubmed/<pmid>.xml (abstract) or, where `case_definition_source: fulltext` or a comment names a full
 # text, from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (29874259: PMC5991397;
@@ -83,8 +84,8 @@
 #   a factor "initiating and perpetuating" symptoms) or a consequence of the illness (8842569: could be due to sleep
 #   deprivation, social disruption or reduced activity; 42399727: reverse causation). Links:
 #   symptom:sleep-disturbance (associated: 42399727 measured light by actigraphy and the PSQI in the same ICC patients;
-#   the relation holds for the light-pattern grouping, p = 0.042, not for the night-time light component in the
-#   regression, Table 2 PSQI row Light2 p = 0.70; 36902264 found no significant correlation between night-time wrist
+#   the relation holds for the light-pattern grouping, p = 0.042, not for either light component in the regression,
+#   Table 2 overall PSQI row Light1 p = 0.92, Light2 p = 0.70; analyses need actigraphy, so up to 94 patients; 36902264 found no significant correlation between night-time wrist
 #   temperature and PSQI in patients; both written into the link text) and symptom:cognitive-impairment (proposed:
 #   8842569 states it; 11318826 argues against it for core temperature) and question:what-keeps-it-going (proposed,
 #   8842569, expressing the `mechanism` reading, as on hpa-axis-cortisol). 36902264 is `supports` on the card but is
@@ -92,12 +93,12 @@
 #   carries the null. Not proposed: endothelial-dysfunction.
 #   36902264 (ICC) found endothelin-1 associated with the stability of the skin temperature rhythm in the same patients,
 #   but its title reads the direction as vascular tone driving skin temperature, which would put the link on the
-#   endothelial-dysfunction card (links live on the upstream card); left for the founder.
+#   endothelial-dysfunction card (links live on the upstream card); founder ruling 2026-11-08: no link now.
 #
 # AUTHOR AND COHORT OVERLAPS
 #   - Barcelona group (Cambras T, Castro-Marrero J, Alegre J; Zerón-Rugerio MF; Vall d'Hebron ME/CFS Unit):
-#     29874259, 36902264, 39037125, 42399727. 42399727 reuses data from 39037125 and 36902264 (its references 26 and
-#     27 in the sentence on the secondary analysis), so patients likely overlap across these three. TODO: verify.
+#     29874259, 36902264, 39037125, 42399727. 42399727 reuses data from 39037125, 36902264 and Domingo et al. (its
+#     references 26 to 28 in the sentence on the secondary analysis), so patients likely overlap. TODO: verify.
 #   - Hamilos DL and Jones JF (first-author affiliation Denver in 1998, St Louis in 2001): 9513740 and 11318826;
 #     whether the 7 patients of 1998 are among the 10 of 2001 is not stated in the abstracts. TODO: verify.
 #   - Williams G (Liverpool): 8842569 and 12423324.
@@ -159,8 +160,8 @@ level_reason:
       and the wrist temperature rhythm did not differ after adjusting for age and body mass index.
     sources: [pmid:29874259, pmid:36902264]
   - text: >-
-      In these studies, lower activity (mean activity and the most active hours) accounts for much
-      of the weaker activity rhythm. The 2018 study notes that a
+      Lower mean activity in patients is the one difference all three of these studies share. The
+      2018 study notes that a
       decrease in activity is a cardinal feature of proposed definitions of the illness, and the
       2026 study writes that reverse causation cannot be excluded: people with more severe symptoms
       may get less daylight and more night-time light. A 1996 study also notes that the loss of the
@@ -188,7 +189,7 @@ level_reason:
       and no evidence of circadian disturbance; its case definition is not yet verified. These
       studies are smaller than the level 2 study, and the CDC definition ranks below the
       International Consensus Criteria, so the card does not treat them as contesting level 2.
-    sources: [pmid:9513740, pmid:11318826, pmid:21532961]
+    sources: [pmid:9513740, pmid:11318826, pmid:21532961, pmid:42399727]
   - text: >-
       Studies of the internal clock itself are few, small and older, with case definitions not yet
       verified. In 20 patients and 17 controls in the UK, the amplitude and timing of the core
@@ -202,7 +203,7 @@ level_reason:
       31 people with ME/CFS, 23 with ME/CFS after COVID-19 and 31 controls, patients had lower
       activity and worse sleep quality, and their blood lipid profile was associated with
       disturbances in the temperature rhythm; this study's case definition is not yet verified. In
-      the 100 patients of the level 2 study, those with a stable daytime light pattern had less
+      the level 2 study (up to 94 patients with light recordings), those with a stable daytime light pattern had less
       fatigue and better sleep-questionnaire scores than those with adverse or low daytime light
       patterns in an exploratory comparison; the authors of that study write that causality cannot
       be inferred.
@@ -518,12 +519,13 @@ links:
   - to: symptom:sleep-disturbance
     support: associated
     text: >-
-      A study of 100 people with ME/CFS diagnosed by the International Consensus Criteria measured
-      light exposure by wrist actigraphy and sleep complaints by questionnaire in the same patients.
+      A study of people with ME/CFS diagnosed by the International Consensus Criteria (up to 94 with
+      light recordings) measured light exposure by wrist actigraphy and sleep complaints by
+      questionnaire in the same patients.
       Patients grouped as having a stable daytime light pattern had better sleep scores than those
       with adverse or low daytime light patterns, in an exploratory comparison without correction
-      for multiple tests; in the regression, neither light component was related to the sleep
-      score. Its authors write that causality cannot be inferred. A study of 67 patients from the
+      for multiple tests; in the regression, neither light component was related to the overall
+      sleep score. Its authors write that causality cannot be inferred. A study of 67 patients from the
       same group found no significant relation between night-time wrist temperature and the sleep
       score in patients.
     sources: [pmid:42399727, pmid:36902264]
@@ -538,7 +540,7 @@ links:
   - to: question:what-keeps-it-going
     support: proposed
     text: >-
-      A 1996 study proposes that disturbed daily rhythms could help keep the illness going, by
+      A 1996 study proposes that disturbed daily rhythms could help keep the main symptoms going, by
       analogy with jet lag and shift work; it did not test this, and its own data could also follow
       from the illness.
     sources: [pmid:8842569]
