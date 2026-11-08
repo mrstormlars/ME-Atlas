@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+{% macro mt(item) %}{% if item.english %}<span lang="en">{{ item.text }}</span> <span class="untranslated">{{ txt("untranslated.part") }}</span>{% else %}{{ item.text }}{% endif %}{% endmacro %}
+{% macro source_links(ids) %}{% for s in ids %}<a href="{{ study_url(s) }}" rel="noopener noreferrer">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %}{% endmacro %}
+{% macro card_link(name, href) %}<a href="{{ lroot }}{{ href }}">{{ mt(name) }}</a>{% endmacro %}
+<h1>{{ txt("gaps.h1") }}</h1>
+<p>{{ t("gaps.intro") }}</p>
+
+<h2 id="gaps-unlinked-symptoms">{{ txt("gaps.unlinked_symptoms.h2") }}</h2>
+<p class="small">{{ txt("gaps.unlinked_symptoms.intro") }}</p>
+<p class="small">{{ t("gaps.count", n=gaps.unlinked_symptoms|length) }}</p>
+{% if gaps.unlinked_symptoms %}
+<ul class="map-symptoms">
+{% for s in gaps.unlinked_symptoms %}
+  <li><strong><a href="{{ lroot }}map.html#symptom-{{ s.id }}">{{ mt(s.name) }}</a></strong> · {{ txt("map.listed_in") }} {{ source_links(s.sources) }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="empty">{{ txt("gaps.none") }}</p>
+{% endif %}
+
+<h2 id="gaps-step1-symptoms">{{ txt("gaps.step1_symptoms.h2") }}</h2>
+<p class="small">{{ txt("gaps.step1_symptoms.intro") }}</p>
+<p class="small">{{ t("gaps.count", n=gaps.step1_symptoms|length) }}</p>
+{% if gaps.step1_symptoms %}
+<ul class="map-symptoms">
+{% for s in gaps.step1_symptoms %}
+  <li><strong><a href="{{ lroot }}map.html#symptom-{{ s.id }}">{{ mt(s.name) }}</a></strong> · {{ txt("map.listed_in") }} {{ source_links(s.sources) }}<br>{{ txt("gaps.step1_symptoms.from") }} {% for name, href in s.cards %}{{ card_link(name, href) }}{% if not loop.last %}, {% endif %}{% endfor %}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="empty">{{ txt("gaps.none") }}</p>
+{% endif %}
+
+<h2 id="gaps-untested-links">{{ txt("gaps.untested.h2") }}</h2>
+<p class="small">{{ txt("gaps.untested.intro") }} {{ txt("gaps.untested.rubric") }}</p>
+<p class="small">{{ t("gaps.count", n=gaps.untested_count) }}</p>
+{% if gaps.untested %}
+{% for target in gaps.untested %}
+<h3><a href="{{ lroot }}{% if target.href.startswith('#') %}map.html{% endif %}{{ target.href }}">{{ mt(target.name) }}</a></h3>
+<ul class="map-links">
+{% for gl in target.links %}
+{% set lv = gl.view %}
+  <li>{{ txt("gaps.untested.from") }} {{ card_link(gl.source, gl.source_href) }}: {{ page.plain(lv.link, lv.link.text) }} — {{ txt("support." ~ lv.support) }}{% for n, href in lv.refs %} {{ page.ref_to(lroot ~ href, n) }}{% endfor %}{{ page.note(lv.link) }}</li>
+{% endfor %}
+</ul>
+{% endfor %}
+{% else %}
+<p class="empty">{{ txt("gaps.none") }}</p>
+{% endif %}
+
+<h2 id="gaps-next-rung">{{ txt("gaps.next_rung.h2") }}</h2>
+<p class="small">{{ txt("gaps.next_rung.intro") }}</p>
+{% for group in gaps.levels %}
+<h3>{{ t("gaps.level", level=group.level, name=txt("rung." ~ group.level ~ ".name")) }}</h3>
+<ul>
+{% for c in group.cards %}
+  <li>{{ card_link(c.name, c.href) }}{% if c.contested_rungs %} {{ t("gaps.contested", rungs=c.contested_rungs|join(", ")) }}{% endif %}</li>
+{% endfor %}
+</ul>
+{% if group.level < 5 %}
+<p class="small">{{ t("gaps.next_rung.requires", name=txt("rung." ~ (group.level + 1) ~ ".name"), meaning=txt("rung." ~ (group.level + 1) ~ ".meaning")) }}</p>
+{% endif %}
+{% else %}
+<p class="empty">{{ txt("gaps.none") }}</p>
+{% endfor %}
+
+<h2 id="gaps-unlinked-cards">{{ txt("gaps.unlinked_cards.h2") }}</h2>
+<p class="small">{{ txt("gaps.unlinked_cards.intro") }}</p>
+<p class="small">{{ t("gaps.count", n=gaps.unlinked_cards|length) }}</p>
+{% if gaps.unlinked_cards %}
+<ul>
+{% for c in gaps.unlinked_cards %}
+  <li>{{ card_link(c.name, c.href) }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="empty">{{ txt("gaps.none") }}</p>
+{% endif %}
+{% endblock %}

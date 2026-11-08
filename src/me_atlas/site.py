@@ -4,8 +4,9 @@ Builds plain HTML from approved cards (and, with ``--drafts``, drafts) into a di
 
     uv run python -m me_atlas.site build [--drafts] [--out build]
 
-Pages: front page, one page per hypothesis, glossary, what changed, causal map, methods. English is written at the top
-of the output directory and every other language in ``content/i18n/`` in a folder of its own (``build/nb/``).
+Pages: front page, one page per hypothesis, glossary, what changed, causal map, gaps, methods. English is written
+at the top of the output directory and every other language in ``content/i18n/`` in a folder of its own
+(``build/nb/``).
 No external fonts, scripts or styles; every page works from ``file://``. See ``docs/site.md``, ``docs/translation.md``.
 """
 
@@ -470,6 +471,52 @@ class ConvergenceView:
     count: int
 
 
+@dataclass(frozen=True)
+class _Namer:
+    """Names, hrefs and reference numbers of the map's nodes and links in one language; the map page and the gaps
+    page both use it, so they show the same names and the same numbers."""
+
+    default: bool
+    graph: maplib.Graph
+    by_slug: dict[str, translations.LocalCard]
+    local_names: dict[str, str]
+    local_texts: dict[str, str]
+
+    def local(self, table: dict[str, str], key: str, english: str) -> MapText:
+        if self.default:
+            return MapText(english)
+        return MapText(table[key], False) if key in table else MapText(english, True)
+
+    def name_of(self, key: str) -> MapText:
+        node = self.graph.nodes[key]
+        if node.kind == "card":
+            lc = self.by_slug[key]
+            return MapText(lc.card.name, lc.name_fallback and not self.default)
+        return self.local(self.local_names if node.kind == "symptom" else self.local_texts, key, node.name)
+
+    def href_of(self, key: str) -> str:
+        node = self.graph.nodes[key]
+        if node.kind == "card":
+            return f"hypotheses/{key}.html"
+        return "#" + key.replace(":", "-")
+
+    def link_refs(self, slug: str) -> dict[int, tuple[tuple[int, str], ...]]:
+        """Link index -> (number, href on the card page) for the links of a card, numbered in order of first citation
+        across the card's links."""
+        numbers: dict[str, int] = {}
+        out: dict[int, tuple[tuple[int, str], ...]] = {}
+        for i, link in enumerate(self.by_slug[slug].card.links):
+            if link.to not in self.graph.nodes:
+                continue
+            for source in link.sources:
+                numbers.setdefault(source, len(numbers) + 1)
+            out[i] = tuple(
+                (numbers[x], f"hypotheses/{slug}.html#{study_anchor(x)}")
+                for x in sorted(link.sources, key=numbers.__getitem__)
+            )
+        return out
+
+
 def _map_views(
     code: str,
     local_cards: Sequence[translations.LocalCard],
@@ -485,24 +532,8 @@ def _map_views(
     default = code == DEFAULT_LANGUAGE
     graph = maplib.build_graph(english_cards, content)
     by_slug = {lc.card.slug: lc for lc in local_cards}
-
-    def local(table: dict[str, str], key: str, english: str) -> MapText:
-        if default:
-            return MapText(english)
-        return MapText(table[key], False) if key in table else MapText(english, True)
-
-    def name_of(key: str) -> MapText:
-        node = graph.nodes[key]
-        if node.kind == "card":
-            lc = by_slug[key]
-            return MapText(lc.card.name, lc.name_fallback and not default)
-        return local(local_names if node.kind == "symptom" else local_texts, key, node.name)
-
-    def href_of(key: str) -> str:
-        node = graph.nodes[key]
-        if node.kind == "card":
-            return f"hypotheses/{key}.html"
-        return "#" + key.replace(":", "-")
+    namer = _Namer(default, graph, by_slug, local_names, local_texts)
+    local, name_of, href_of = namer.local, namer.name_of, namer.href_of
 
     english_by_slug = {c.slug: c for c in english_cards}
     info: dict[str, map_draw.NodeInfo] = {}
@@ -522,18 +553,11 @@ def _map_views(
         cards_here: list[CardView] = []
         for node in graph.in_layer(layer, "card"):
             lc = by_slug[node.key]
-            numbers: dict[str, int] = {}
+            refs_of = namer.link_refs(node.key)
             views: list[LinkView] = []
-            for link in lc.card.links:
-                if link.to not in graph.nodes:
-                    continue
-                for source in link.sources:
-                    numbers.setdefault(source, len(numbers) + 1)
-                refs = tuple(
-                    (numbers[x], f"hypotheses/{node.key}.html#{study_anchor(x)}")
-                    for x in sorted(link.sources, key=numbers.__getitem__)
-                )
-                views.append(LinkView(link, link.support, name_of(link.to), href_of(link.to), refs))
+            for i, link in enumerate(lc.card.links):
+                if i in refs_of:
+                    views.append(LinkView(link, link.support, name_of(link.to), href_of(link.to), refs_of[i]))
             near = (
                 Markup(map_draw.render_neighbourhood(graph, node.key, info, draw_strings, f"near-{node.key}"))
                 if map_draw.has_links(graph, node.key)
@@ -561,6 +585,105 @@ def _map_views(
 
     whole = Markup(map_draw.render_full(graph, info, draw_strings, "map-whole"))
     return sections, convergence(maplib.common_mechanisms(graph)), convergence(maplib.candidate_roots(graph)), whole
+
+
+@dataclass(frozen=True)
+class GapLink:
+    source: MapText
+    source_href: str
+    view: LinkView  # the link as the map page shows it
+
+
+@dataclass(frozen=True)
+class GapTarget:
+    name: MapText
+    href: str
+    links: tuple[GapLink, ...]
+
+
+@dataclass(frozen=True)
+class GapSymptom:
+    id: str
+    name: MapText
+    sources: tuple[str, ...]  # the case-definition documents that list it
+    cards: tuple[tuple[MapText, str], ...]  # (name, href) of the hypotheses that link to it (list 2 only)
+
+
+@dataclass(frozen=True)
+class GapCard:
+    name: MapText
+    href: str
+    contested_rungs: tuple[int, ...]
+
+
+@dataclass(frozen=True)
+class GapLevel:
+    level: int
+    cards: tuple[GapCard, ...]
+
+
+@dataclass(frozen=True)
+class GapsView:
+    unlinked_symptoms: tuple[GapSymptom, ...]
+    step1_symptoms: tuple[GapSymptom, ...]
+    untested: tuple[GapTarget, ...]
+    untested_count: int
+    levels: tuple[GapLevel, ...]
+    unlinked_cards: tuple[GapCard, ...]
+
+
+def _gaps_view(
+    code: str,
+    local_cards: Sequence[translations.LocalCard],
+    english_cards: Sequence[Card],
+    content: maplib.MapContent,
+    local_names: dict[str, str],
+    local_texts: dict[str, str],
+) -> GapsView:
+    """The gaps page as one language shows it: the lists of ``me_atlas.map`` with the map page's names, links and
+    reference numbers."""
+    graph = maplib.build_graph(english_cards, content)
+    by_slug = {lc.card.slug: lc for lc in local_cards}
+    namer = _Namer(code == DEFAULT_LANGUAGE, graph, by_slug, local_names, local_texts)
+    prefix = maplib.SYMPTOM_PREFIX
+    symptom_sources = {prefix + s.id: tuple(s.sources) for s in content.symptoms}
+
+    def card_ref(slug: str) -> tuple[MapText, str]:
+        return namer.name_of(slug), namer.href_of(slug)
+
+    unlinked = tuple(
+        GapSymptom(n.key.removeprefix(prefix), namer.name_of(n.key), symptom_sources[n.key], ())
+        for n in maplib.unlinked_symptoms(graph)
+    )
+    step1 = tuple(
+        GapSymptom(
+            n.key.removeprefix(prefix),
+            namer.name_of(n.key),
+            symptom_sources[n.key],
+            tuple(card_ref(s) for s in sources),
+        )
+        for n, sources in maplib.proposed_only_symptoms(graph)
+    )
+    refs_cache: dict[str, dict[int, tuple[tuple[int, str], ...]]] = {}
+    targets: list[GapTarget] = []
+    for node, edges in maplib.proposed_links(graph):
+        links: list[GapLink] = []
+        for e in edges:
+            refs = refs_cache.setdefault(e.source, namer.link_refs(e.source))[e.index]
+            link = by_slug[e.source].card.links[e.index]
+            view = LinkView(link, link.support, namer.name_of(e.target), namer.href_of(e.target), refs)
+            links.append(GapLink(namer.name_of(e.source), namer.href_of(e.source), view))
+        targets.append(GapTarget(namer.name_of(node.key), namer.href_of(node.key), tuple(links)))
+
+    def gap_card(c: Card) -> GapCard:
+        name, href = card_ref(c.slug)
+        return GapCard(name, href, tuple(sorted(c.contested.rungs)) if c.contested else ())
+
+    levels = tuple(
+        GapLevel(level, tuple(gap_card(c) for c in members)) for level, members in maplib.cards_by_level(english_cards)
+    )
+    loose = tuple(GapCard(*card_ref(n.key), ()) for n in maplib.unlinked_cards(graph))
+    return GapsView(unlinked, step1, tuple(targets), sum(len(t.links) for t in targets), levels, loose)
 
 
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:
@@ -738,6 +861,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
     sections, common, roots, whole = _map_views(
         code, local_cards, shared.cards, shared.map_content, local_names, local_texts, draw_strings
     )
+    gaps = _gaps_view(code, local_cards, shared.cards, shared.map_content, local_names, local_texts)
     legend = LegendView({k: Markup(map_draw.legend_sample(k)) for k in map_draw.LINK_STYLES})
     render(
         "map.html",
@@ -750,6 +874,14 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         roots=roots,
         whole=whole,
         legend=legend,
+    )
+    render(
+        "gaps.html",
+        "gaps.html",
+        txt0["page.gaps"],
+        fallback=frozenset().union(*(lc.fallback for lc in local_cards)),
+        note=txt0["untranslated.part"] if not default else None,
+        gaps=gaps,
     )
     render(
         "methods.html",

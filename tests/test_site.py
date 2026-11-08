@@ -1117,7 +1117,7 @@ def test_every_page_has_navigation_footer_statement_and_build_date(proj):
         doc = page(out, rel)
         nav = doc.find("nav")
         labels = [norm(a.text()) for a in nav.find_all("a")]
-        assert labels == ["Front page", "What changed", "Causal map", "Methods", "Glossary"], rel
+        assert labels == ["Front page", "What changed", "Causal map", "What is missing", "Methods", "Glossary"], rel
         footer = norm(doc.find("footer").text())
         assert "No medical or research expert has reviewed this content yet." in footer, rel
         assert "Built 2026-11-01" in footer, rel
@@ -1267,6 +1267,7 @@ def test_build_result_lists_every_written_file(proj):
         "listed.html",
         "changes.html",
         "map.html",
+        "gaps.html",
         "methods.html",
         "glossary.html",
         "site.css",
@@ -1591,6 +1592,8 @@ def test_the_english_tree_is_unchanged_apart_from_the_selector_hreflang_tags_and
             '<div class="lang-switch"',
             '<li><a href="map.html"',  # the navigation entry of the causal map page
             '<li><a href="../map.html"',
+            '<li><a href="gaps.html"',
+            '<li><a href="../gaps.html"',
         )
         return "".join(line for line in text.splitlines(keepends=True) if not line.lstrip().startswith(added))
 

@@ -139,6 +139,7 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 - **A link never raises a card's level.** A study that measured both ends and found no relation is recorded as a `context` study and the link text says so. Links have no contested mark in v1.
 - **Open questions** are empty boxes, never claims: a question sourced to a publication that asks it, or marked as the editorial team's own question.
 - **Convergence is counted, not judged.** A node with two or more incoming links from different cards is listed as a *candidate common mechanism*; a card with two or more links out as a *candidate root*. Nobody writes "the common cause is".
+- **Gaps are counted and listed, never judged.** Symptoms with no link, links not yet tested in patients (step 1) and what the next rung requires are shown as lists with counts; no gap is ranked, weighted or called important.
 - **Who decides:** setting a card's layer and adding or changing a link are founder decisions, like levels, badges and contested marks (section 6). AI may propose and the `card-reviewer` checks each link against its sources; it never sets either.
 
 ## 4. Pages
@@ -153,6 +154,11 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 - **Shows:** name; core claim in plain words; level, badges and contested state, with the reason for each; key supporting studies (link, sample size, case definition, year); contradicting studies; replication status; subgroups it may apply to; who is working on it; early signals; a small "Also studied in long COVID" label at the top of the card when at least one long COVID study that meets the inclusion rule points to the same mechanism; last checked (date, and whether by the AI review pair or by the founder).
 - **Early signals** come only from studies with a recognised case definition confirmed in the abstract or full text; a study whose case definition is unverified or not stated is not shown as an early signal. They appear only on the card, under the fixed heading "Early signals: not yet repeated", in a fixed sentence pattern ("A study of n=… found …"). They never appear on the front page, and words such as "promising", "breakthrough" or "hope" are not used.
 - **Does not show:** advice on what a patient should do; a verdict that a hypothesis is "right" or "wrong"; any sentence without a source link.
+
+### Gaps page
+
+- **Shows:** under the title "What is missing" (Norwegian "Hva mangler"), five counted lists derived from the cards and the symptom list: symptoms with no link to any hypothesis; symptoms linked only at step 1 (proposed), with the hypotheses that point to them; every link at step 1, grouped by target, written as on the causal map with its sources and the rubric sentence for step 2; the hypotheses grouped by current level with the ladder's wording for the next rung and the contested mark where there is one; hypotheses with no links yet. Each list has a count.
+- **Does not show:** a score, weight or ranking of hypotheses or gaps; which gap matters most or what should be studied; the absence of a link as a finding (it only means nobody has mapped it here yet); any sentence without the same sources as elsewhere on the site.
 
 ### What changed this week
 
