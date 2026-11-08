@@ -69,16 +69,19 @@ items:
       hadde like temperaturprofiler over 24 timer, og hos 10 pasienter og 10 kontroller var rytmen nesten umulig å skille,
       bortsett fra fasen til den tredje harmoniske og en tendens til mer variasjon. En australsk studie av 15 pasienter og
       15 kontroller, matchet for alder, kjønn, kroppsmasseindeks og aktivitetsnivå (så like mengder aktivitet var delvis bygd
-      inn i designet), fant ingen forskjell mellom gruppene i mønsteret eller mengden av søvn eller aktivitet over fem dager
-      og ingen tegn til forstyrret døgnrytme. Diagnosekriteriene i den studien er ikke kontrollert ennå. Disse studiene er
-      mindre enn studien på nivå 2, og CDC-definisjonen står lavere enn International Consensus Criteria, så kortet regner
-      dem ikke som studier som gjør nivå 2 omstridt.'
+      inn i designet), med pasienter diagnostisert etter Fukuda-definisjonen (som heller ikke krever PEM), fant ingen forskjell
+      mellom gruppene i mønsteret eller mengden av søvn eller aktivitet over fem dager og ingen tegn til forstyrret døgnrytme.
+      Pasientene ble rekruttert ved starten av et program med kognitiv atferdsterapi med gradert aktivitet; forfatterne skriver
+      at pasientene kan ha vært motiverte for å endre aktivitets- og hvilemønsteret sitt, at utvalget kanskje ikke er representativt
+      for pasienter generelt, og at resultatene må gjentas i et større utvalg. Disse studiene er mindre enn studien på nivå
+      2, og CDC- og Fukuda-definisjonene står lavere enn International Consensus Criteria, så kortet regner dem ikke som studier
+      som gjør nivå 2 omstridt.'
     sources:
     - pmid:9513740
     - pmid:11318826
     - pmid:21532961
     - pmid:42399727
-    source_hash: d25b23b6d393a5bbb94c5c999fded852dd142f46a0be1d36af3e66c8753f0fb8
+    source_hash: 2317da6db0b1f710578235b60193d3fc736e52071034b9f07650ed00869d3d66
   level_reason[5]:
     text: Studier av selve den indre klokken er få, små og eldre, med diagnosekriterier som ikke er kontrollert ennå. Hos
       20 pasienter og 17 kontroller i Storbritannia var amplituden og tidspunktet for kjernetemperaturrytmen og tidspunktet
