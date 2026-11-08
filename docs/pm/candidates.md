@@ -167,7 +167,7 @@ Refuted hypotheses are not candidates; they are listed with the reason in `docs/
 - Reviews: pmid:42320559, pmid:7795892
 - Meets inclusion rule on abstracts: yes
 - Why: PMID 29874259 carries the rule (abstract names Fukuda and Canadian criteria) but has only n=10 and found no difference in rhythm stability or phase, so the evidence is small. Larger cohorts (39037125, 36902264, 42399727) do not name a case definition in the abstract, and 21532961 found no circadian disturbance, so the findings are mixed. Several cohorts seem to come from one research group and may overlap. The Fukuda value is entered for 29874259; the abstract also names Canadian criteria (CCC). The cell study 37393850 (patient serum on mouse fibroblasts) is left out as not a patient cohort.
-- Status: to draft (founder ruling 2026-11-08)
+- Status: drafted as `drafts/circadian-rhythm-disruption.yaml` (founder ruling 2026-11-08, DECISIONS.md)
 - Date: 2026-11-08
 
 ## Altered circulating cytokine profile (chronic low-grade inflammation)
