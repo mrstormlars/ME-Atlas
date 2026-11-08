@@ -1,0 +1,76 @@
+# Which MeSH headings and title/abstract terms each card covers (docs/survey.md).
+# The survey counts a record for a card when one of its MeSH headings is on the record, or one of its terms is a
+# whole word in the title or abstract. A heading listed here is left out of the theme census (it has a card).
+# Start from `uv run python -m me_atlas.survey themes --suggest <slug>` and keep only headings about the hypothesis.
+# 1-6 MeSH headings and 0-4 terms per card. `related` (0-8 headings) names census headings that stay in the census
+# but sit near the card: they are listed as `near` and the surveying agent is shown the card (docs/survey.md).
+# A related heading is not in any card's `mesh` list and not on the stoplist.
+# Reviewed in a pull request like config/pubmed_query.txt.
+
+autoimmunity-autoantibodies-b-cells:
+  mesh: [Autoantibodies, Autoimmune Diseases, B-Lymphocytes, Rituximab]
+  terms: [autoimmunity, autoantibody]
+  related: [Cytokines, Inflammation, "Leukocytes, Mononuclear", "Antibodies, Antinuclear", Immunoglobulin G]
+brain-and-brainstem-mri-changes:
+  mesh: [Magnetic Resonance Imaging, White Matter, Gray Matter, Brain Stem, Diffusion Tensor Imaging]
+  terms: [brainstem]
+endothelial-dysfunction:
+  mesh: ["Endothelium, Vascular", Microcirculation, Blood Coagulation]
+  terms: [endothelial, endothelium]
+gut-microbiome:
+  mesh: [Gastrointestinal Microbiome, Dysbiosis, "RNA, Ribosomal, 16S"]
+  terms: [microbiome, microbiota]
+herpesvirus-reactivation:
+  mesh: ["Herpesvirus 4, Human", "Herpesvirus 6, Human", Herpesviridae Infections, Epstein-Barr Virus Infections, Cytomegalovirus]
+  terms: [herpesvirus, herpesviruses, Epstein-Barr]
+  related: ["Antibodies, Viral", "Antigens, Viral"]
+hpa-axis-cortisol:
+  mesh:
+    - Hydrocortisone
+    - Pituitary-Adrenal System
+    - Hypothalamo-Hypophyseal System
+    - Adrenocorticotropic Hormone
+    - Corticotropin-Releasing Hormone
+  terms: [cortisol]
+  related: ["Stress, Physiological"]
+impaired-energy-production-after-exertion:
+  mesh: [Energy Metabolism, Oxygen Consumption, Exercise Test, Anaerobic Threshold, Exercise Tolerance]
+  terms: [cardiopulmonary exercise]
+  related: [Mitochondria, "Muscle, Skeletal", Muscles, Muscle Fatigue, Lactic Acid]
+infection-trigger:
+  mesh: [Infectious Mononucleosis, Q Fever]
+  terms: [post-infectious, postinfectious, post-infective]
+inherited-genetic-risk:
+  mesh: [Genetic Predisposition to Disease, "Polymorphism, Single Nucleotide", Genome-Wide Association Study, HLA Antigens]
+  terms: [heritability]
+mast-cell-activation:
+  mesh: [Mast Cells, Histamine]
+  terms: [mast cell, mast cells, tryptase]
+neuroinflammation:
+  mesh: [Neuroinflammatory Diseases, Microglia, Magnetic Resonance Spectroscopy]
+  terms: [neuroinflammation, microglial]
+  related: [Cytokines, Inflammation, "Leukocytes, Mononuclear", Brain]
+orthostatic-intolerance-cerebral-blood-flow:
+  mesh: [Tilt-Table Test, "Hypotension, Orthostatic", Cerebrovascular Circulation, Orthostatic Intolerance, Postural Orthostatic Tachycardia Syndrome]
+  terms: [orthostatic]
+  related: [Autonomic Nervous System, Heart Rate, Blood Pressure, Posture, Hemodynamics]
+oxidative-nitrosative-stress:
+  mesh: [Oxidative Stress, Antioxidants, Reactive Oxygen Species, Glutathione]
+  terms: [nitrosative]
+  related: [Lipid Peroxidation, Nitric Oxide, Oxidation-Reduction, Mitochondria]
+persistent-enterovirus-infection:
+  mesh: [Enterovirus, Enterovirus Infections, "Enterovirus B, Human"]
+  terms: [coxsackievirus]
+  related: ["Antibodies, Viral", "DNA, Viral", "RNA, Viral", Virus Replication]
+reduced-nk-cell-function:
+  mesh: ["Killer Cells, Natural", "Cytotoxicity, Immunologic"]
+  terms: [natural killer, NK cell, NK cells]
+  related: [Cytokines, Inflammation, "Leukocytes, Mononuclear", Lymphocyte Activation]
+small-fibre-neuropathy:
+  mesh: [Small Fiber Neuropathy]
+  terms: [small fibre, small fiber, corneal confocal]
+  related: [Autonomic Nervous System, Heart Rate, Autonomic Nervous System Diseases]
+tryptophan-kynurenine-metabolism:
+  mesh: [Tryptophan, Kynurenine]
+  terms: [kynurenine, indoleamine]
+  related: [Serotonin]

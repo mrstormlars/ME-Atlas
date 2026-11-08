@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-08 — Hypothesis and link survey of the cached literature
+
+- Grow the content from the ME/CFS literature already fetched before looking anywhere else: a theme census for MeSH headings no card covers, and a pair search for records that mention two cards. Code counts, an agent (`hypothesis-surveyor`) reads only the records the code selected, the founder decides. Candidates are tracked in `docs/pm/candidates.md`; v1 stays at 15 to 20 cards. Plan: `docs/plan-hypothesis-and-link-survey.md`; reference: `docs/survey.md`. Sources outside the ME/CFS literature wait for a separate ruling. Why: the whole PubMed query is cached but only the weekly window was ever read, and four cards had no link.
+- Balance: the census is read per domain (the top three headings of each of seven mechanism areas, psychological and behavioural models included, with the same number of places as the others), not by raw count. Headings close to a card are marked "near" that card instead of hidden; pairs are ranked by core matches (the card's heading is a major topic, or its term is in the title). Why: raw counts were led by comorbid diagnoses and older psychiatric headings, and broad headings inflated pair counts.
+- "Adaptation, Psychological" (coping) is a reaction to the illness, not a causal model: it is not surveyed (domain `reaction_to_illness`).
+- Refuted hypotheses get no card and are not surveyed; each is named, with the reason and its sources, in `docs/pm/excluded-hypotheses.md`. First case: XMRV (the 2009 study is retracted; blinded multi-site studies found no association). Its census headings are in the domain `refuted`. Why: the founder's ruling; a reader should still be able to see that it was left out and why.
+
 ## 2026-11-06 — New hypothesis: infection as a trigger
 
 - New draft card `drafts/infection-trigger.yaml` (17th hypothesis), added at the founder's request because the causal map's trigger layer held no card: herpesvirus and enterovirus sit in the mechanism layer as reactivation and persistence. Founder ruling on the drafter's proposal after two `card-reviewer` rounds (run files in `data/pipeline/2026-11-06-infection-trigger/`): level 2 (RECOVER-Adult, IOM 2015 from self-reported symptoms, ME/CFS more frequent after SARS-CoV-2 than in matched uninfected people); not contested (INSPIRE compared SARS-CoV-2 with other acute illness, not with no infection, and measured fewer than half as many); both badges no; long COVID label; layer trigger; one proposed link to the open question on who is vulnerable. The older post-infection cohorts (glandular fever, Q fever, Ross River virus) have no verifiable case definition and do not count.

@@ -1,0 +1,244 @@
+# Headings the theme census ignores: one MeSH heading per line; '#' starts a comment, blank lines are ignored,
+# matching ignores case. Put here only generic headings that say nothing about a mechanism: demographics, study
+# design and statistics, countries, questionnaires and scales, and the disease headings themselves.
+# A heading that names a possible cause or mechanism does not belong here, however common it is.
+
+# Demographics
+Humans
+Female
+Male
+Adult
+Middle Aged
+Adolescent
+Aged
+Aged, 80 and over
+Young Adult
+Child
+Child, Preschool
+Infant
+Infant, Newborn
+Age Factors
+Sex Factors
+Sex Characteristics
+Age Distribution
+Animals
+Mice
+Rats
+
+# Study design, methods and statistics
+Case-Control Studies
+Cohort Studies
+Cross-Sectional Studies
+Prospective Studies
+Retrospective Studies
+Longitudinal Studies
+Follow-Up Studies
+Randomized Controlled Trials as Topic
+Controlled Clinical Trials as Topic
+Double-Blind Method
+Cross-Over Studies
+Pilot Projects
+Research Design
+Qualitative Research
+Time Factors
+Risk Factors
+Risk Assessment
+Prevalence
+Incidence
+Prognosis
+Comorbidity
+Reproducibility of Results
+Sensitivity and Specificity
+Reference Values
+Analysis of Variance
+Regression Analysis
+Factor Analysis, Statistical
+Confounding Factors, Epidemiologic
+Seroepidemiologic Studies
+Area Under Curve
+ROC Curve
+Models, Statistical
+Models, Biological
+Disease Models, Animal
+Biomarkers
+Phenotype
+Terminology as Topic
+Evidence-Based Medicine
+Practice Guidelines as Topic
+Forecasting
+Algorithms
+Machine Learning
+Meta-Analysis as Topic
+Systematic Reviews as Topic
+Review Literature as Topic
+Data Interpretation, Statistical
+Follow-Up Studies
+Treatment Outcome
+Outcome Assessment, Health Care
+Case Reports as Topic
+Polymerase Chain Reaction
+In Vitro Techniques
+
+# Questionnaires, scales and interviews
+Surveys and Questionnaires
+Health Surveys
+Interviews as Topic
+Self Report
+Psychometrics
+Psychiatric Status Rating Scales
+Severity of Illness Index
+Disability Evaluation
+Activities of Daily Living
+Quality of Life
+Health Status
+Pain Measurement
+Personality Inventory
+Neuropsychological Tests
+Surveys and Questionnaires
+
+# Health services and attitudes
+Primary Health Care
+Physician-Patient Relations
+Attitude of Health Personnel
+Attitude to Health
+Patient Education as Topic
+Patient Satisfaction
+Health Services Accessibility
+Delivery of Health Care
+Family Practice
+Referral and Consultation
+Sick Role
+Combined Modality Therapy
+
+# Countries and places
+United States
+United Kingdom
+England
+Netherlands
+Canada
+Australia
+Norway
+Sweden
+Germany
+Japan
+Spain
+Italy
+Denmark
+Belgium
+France
+Scotland
+London
+New South Wales
+Residence Characteristics
+Social Class
+
+# The disease headings themselves
+Fatigue Syndrome, Chronic
+Encephalomyelitis
+Fatigue
+Syndrome
+Chronic Disease
+Disease
+Post-Acute COVID-19 Syndrome
+COVID-19
+SARS-CoV-2
+Pandemics
+Diagnosis, Differential
+Diagnosis
+
+# More design, statistics, methods and population headings
+Chi-Square Distribution
+Statistics, Nonparametric
+Logistic Models
+Linear Models
+Multivariate Analysis
+Odds Ratio
+Predictive Value of Tests
+Cluster Analysis
+Sex Distribution
+Body Mass Index
+Registries
+Cost of Illness
+Cost-Benefit Analysis
+Socioeconomic Factors
+Employment
+Internet
+History, 20th Century
+History, 21st Century
+Research
+Biomedical Research
+Cell Line
+Cell Line, Tumor
+Cells, Cultured
+Rats, Sprague-Dawley
+Pregnancy
+Persons with Disabilities
+Veterans
+Patient Care Team
+Life Style
+Social Support
+Self Concept
+Internal-External Control
+Interview, Psychological
+Health Knowledge, Attitudes, Practice
+Mental Health
+Cross-Cultural Comparison
+Patient Acceptance of Health Care
+Sick Leave
+Base Sequence
+Molecular Sequence Data
+Enzyme-Linked Immunosorbent Assay
+Flow Cytometry
+Physical Examination
+Saliva
+Feces
+Models, Psychological
+Centers for Disease Control and Prevention (U.S.)
+Disease Progression
+Acute Disease
+Infections
+Clinical Trials as Topic
+Dose-Response Relationship, Drug
+Administration, Oral
+Reverse Transcriptase Polymerase Chain Reaction
+Blotting, Western
+DNA Primers
+Oligonucleotide Array Sequence Analysis
+Principal Component Analysis
+Statistics as Topic
+Models, Theoretical
+Feasibility Studies
+Demography
+Patient Selection
+Placebos
+Single-Blind Method
+Epidemiologic Methods
+Mass Screening
+Population Surveillance
+Program Evaluation
+Health Services
+Health Care Costs
+State Medicine
+Educational Status
+Absenteeism
+Patient Reported Outcome Measures
+Health Status Indicators
+Sickness Impact Profile
+Psychological Tests
+Self-Assessment
+Diagnostic and Statistical Manual of Mental Disorders
+History, 19th Century
+Centers for Disease Control and Prevention, U.S.
+Taiwan
+Dissent and Disputes
+Survivors
+Parents
+Family
+Caregivers
+Interpersonal Relations
+Recurrence
+Health Behavior
+Mice, Inbred C57BL
+Behavior, Animal
+Phylogeny
+Mice, Inbred BALB C

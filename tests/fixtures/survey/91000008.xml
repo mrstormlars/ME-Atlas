@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">91000008</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2018</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Survey Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional second unrelated study.</ArticleTitle>
+        <Abstract>
+          <AbstractText>A fictional abstract that mentions only subwidgets and widgetry.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType UI="D000001">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Delta Unrelated</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">91000008</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
