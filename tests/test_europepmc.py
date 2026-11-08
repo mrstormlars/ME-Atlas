@@ -17,7 +17,11 @@ from me_atlas.europepmc import (
     EuropePmcClient,
     EuropePmcError,
     find_case_definitions,
+    find_case_definitions_in_page,
     get_fulltext,
+    get_pmc_page,
+    parse_lookup,
+    pmc_page_text,
     split_sentences,
 )
 
@@ -27,13 +31,20 @@ EMAIL = "tester@example.org"
 OA_PMID, OA_PMCID = "90000001", "PMC9000001"
 CLOSED_PMID, CLOSED_PMCID = "90000002", "PMC9000002"
 UNKNOWN_PMID = "90000003"
+FREE_PMID, FREE_PMCID = "90000004", "PMC9000004"  # free to read on PMC, not open access
+WRONG_PMID, WRONG_PMCID = "90000005", "PMC9000005"  # its page says it is for another PMID
+NOBODY_PMID, NOBODY_PMCID = "90000006", "PMC9000006"  # its page has no main article body
 
 
 def fulltext_xml() -> str:
     return (FIXTURES / f"{OA_PMCID}.xml").read_text(encoding="utf-8")
 
 
-def search_json(pmid: str, pmcid: str | None, open_access: str | None) -> str:
+def page_html() -> str:
+    return (FIXTURES / f"{FREE_PMCID}.html").read_text(encoding="utf-8")
+
+
+def search_json(pmid: str, pmcid: str | None, open_access: str | None, in_pmc: bool = False) -> str:
     if pmcid is None and open_access is None:
         return json.dumps({"hitCount": 0, "resultList": {"result": []}})
     hit = {
@@ -43,6 +54,7 @@ def search_json(pmid: str, pmcid: str | None, open_access: str | None) -> str:
         "title": "Fictional widget study",
         "isOpenAccess": open_access,
         "inEPMC": "Y" if pmcid else "N",
+        "inPMC": "Y" if in_pmc else "N",
     }
     if pmcid:
         hit["pmcid"] = pmcid
@@ -71,8 +83,17 @@ class FakeEuropePmc:
             OA_PMID: search_json(OA_PMID, OA_PMCID, "Y"),
             CLOSED_PMID: search_json(CLOSED_PMID, CLOSED_PMCID, "N"),
             UNKNOWN_PMID: search_json(UNKNOWN_PMID, None, None),
+            FREE_PMID: search_json(FREE_PMID, FREE_PMCID, "N", in_pmc=True),
+            WRONG_PMID: search_json(WRONG_PMID, WRONG_PMCID, "N", in_pmc=True),
+            NOBODY_PMID: search_json(NOBODY_PMID, NOBODY_PMCID, "N", in_pmc=True),
         }
         self.fulltexts = {OA_PMCID: fulltext_xml()}
+        page = page_html()
+        self.pages = {
+            FREE_PMCID: page,
+            WRONG_PMCID: page,  # says citation_pmid 90000004
+            NOBODY_PMCID: page.replace("main-article-body", "something-else"),
+        }
         self.statuses: list[int] = []  # forced status codes, consumed one per request
         self.requests: list[tuple[httpx.Request, float]] = []
 
@@ -86,6 +107,9 @@ class FakeEuropePmc:
             pmid = query.removeprefix("EXT_ID:").split(" ")[0]
             body = self.lookups.get(pmid, search_json(pmid, None, None))
             return httpx.Response(200, text=body, headers={"content-type": "application/json"})
+        if path.startswith("/articles/"):
+            page = self.pages.get(path.split("/")[2])
+            return httpx.Response(200, text=page) if page else httpx.Response(404)
         pmcid = path.split("/")[-2]
         if pmcid in self.fulltexts:
             return httpx.Response(200, text=self.fulltexts[pmcid])
@@ -406,3 +430,169 @@ def test_cli_needs_pmids_or_a_card(tmp_path):
 def test_cli_rejects_a_non_numeric_pmid(tmp_path):
     with pytest.raises(SystemExit):
         run_cli(["fulltext", "abc"], FakeEuropePmc(), tmp_path)
+
+
+# --- PMC article page (free to read, not open access) -----------------------
+
+
+def page_cache_path(tmp_path, pmcid=FREE_PMCID):
+    return tmp_path / "europepmc" / f"{pmcid}.html"
+
+
+def make_card(tmp_path, ids=(FREE_PMID, WRONG_PMID, NOBODY_PMID, CLOSED_PMID)):
+    """A copy of the fictional card fixture whose first four pmid: studies have the given ids."""
+    text = CARD_FIXTURE.read_text(encoding="utf-8")
+    for old, new in zip(("00000001", "00000002", "00000003", "00000004"), ids, strict=True):
+        text = text.replace(f"pmid:{old}", f"pmid:{new}")
+    path = tmp_path / "fictional-hypothesis.yaml"
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
+def test_lookup_reads_the_in_pmc_flag():
+    free = parse_lookup(FREE_PMID, search_json(FREE_PMID, FREE_PMCID, "N", in_pmc=True))
+    assert free.in_pmc is True and free.status == "not_open_access"
+    assert parse_lookup(CLOSED_PMID, search_json(CLOSED_PMID, CLOSED_PMCID, "N")).in_pmc is False
+
+
+def test_a_good_page_is_fetched_once_cached_and_the_second_call_makes_no_request(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    first = get_pmc_page(server.client(), cache, FREE_PMID)
+    assert first.outcome == "fetched" and first.requests_made == 2
+    assert first.path == page_cache_path(tmp_path)
+    assert server.paths[1] == f"/articles/{FREE_PMCID}/"
+    assert "pmc.ncbi.nlm.nih.gov" in str(server.requests[1][0].url)
+    before = len(server.requests)
+    second = get_pmc_page(server.client(), cache, FREE_PMID)
+    assert second.outcome == "cached" and second.requests_made == 0
+    assert len(server.requests) == before
+    third = get_pmc_page(server.client(), cache, FREE_PMID, refresh=True)
+    assert third.outcome == "fetched" and len(server.requests) == before + 2
+
+
+def test_page_requests_carry_the_contact_email_and_are_retried_on_the_fake_clock(tmp_path):
+    server = FakeEuropePmc()
+    get_pmc_page(server.client(), EuropePmcCache(tmp_path), FREE_PMID)
+    for request, _ in server.requests:
+        assert EMAIL in request.headers["user-agent"]
+    cache = EuropePmcCache(tmp_path / "other")
+    cache.write(cache.lookup_path(FREE_PMID), server.lookups[FREE_PMID].encode())
+    server.statuses = [500]
+    get_pmc_page(server.client(), cache, FREE_PMID)
+    assert server.clock.sleeps
+
+
+def test_open_access_record_fetches_no_page(tmp_path):
+    server = FakeEuropePmc()
+    result = get_pmc_page(server.client(), EuropePmcCache(tmp_path), OA_PMID)
+    assert result.outcome == "open_access" and result.path is None
+    assert server.paths == ["/europepmc/webservices/rest/search"]  # the lookup only
+
+
+def test_record_not_in_pmc_or_without_pmcid_fetches_no_page(tmp_path):
+    server = FakeEuropePmc()
+    closed = get_pmc_page(server.client(), EuropePmcCache(tmp_path), CLOSED_PMID)
+    unknown = get_pmc_page(server.client(), EuropePmcCache(tmp_path), UNKNOWN_PMID)
+    assert closed.outcome == "not_in_pmc" and closed.path is None
+    assert unknown.outcome == "no_pmcid" and unknown.path is None
+    assert all(p.endswith("/search") for p in server.paths)
+
+
+def test_a_page_for_another_pmid_is_not_cached(tmp_path):
+    server = FakeEuropePmc()
+    with pytest.raises(EuropePmcError, match="pmid:90000004, not pmid:90000005"):
+        get_pmc_page(server.client(), EuropePmcCache(tmp_path), WRONG_PMID)
+    assert not page_cache_path(tmp_path, WRONG_PMCID).exists()
+
+
+def test_a_page_without_a_main_article_body_is_not_cached(tmp_path):
+    server = FakeEuropePmc()
+    server.pages[NOBODY_PMCID] = server.pages[NOBODY_PMCID].replace('content="90000004"', 'content="90000006"')
+    with pytest.raises(EuropePmcError, match="no main article body"):
+        get_pmc_page(server.client(), EuropePmcCache(tmp_path), NOBODY_PMID)
+    assert not page_cache_path(tmp_path, NOBODY_PMCID).exists()
+
+
+def test_a_page_without_citation_pmid_is_not_cached(tmp_path):
+    server = FakeEuropePmc()
+    server.pages[FREE_PMCID] = server.pages[FREE_PMCID].replace('name="citation_pmid"', 'name="other"')
+    with pytest.raises(EuropePmcError, match="no citation_pmid"):
+        get_pmc_page(server.client(), EuropePmcCache(tmp_path), FREE_PMID)
+    assert not page_cache_path(tmp_path).exists()
+
+
+def test_page_text_has_the_abstract_and_body_but_not_references_navigation_or_scripts():
+    text = pmc_page_text(page_html())
+    assert "31 fictional patients" in text  # abstract
+    assert "62 fictional patients and 41 fictional controls" in text  # body
+    assert "fictional fatigue1." in text  # footnote link flattens as in the XML path
+    assert "Fictional table row 58" in text
+    for left_out in (
+        "Canadian Consensus",
+        "999 patients",
+        "4242",
+        "5151",
+        "6161",
+        "Fictional navigation",
+        "color: red",
+    ):
+        assert left_out not in text
+    assert "  " not in text
+
+
+def test_page_finder_reads_only_the_methods_sections():
+    found = find_case_definitions_in_page(page_html())
+    assert [(c.section, c.scope) for c in found] == [("Methods", "methods")]
+    assert found[0].sentence.startswith("All fictional patients met the Fukuda criteria")
+    # not the introduction's Oxford sentence, the abstract's "Participants:" or the reference list
+    assert all("Oxford" not in c.sentence and "Canadian" not in c.sentence for c in found)
+
+
+def test_page_finder_falls_back_to_the_body_without_a_methods_section():
+    page = page_html().replace("Methods</h2>", "Fictional design</h2>").replace("Participants</h3>", "Cohort</h3>")
+    found = find_case_definitions_in_page(page)
+    assert found and all(c.scope == "body" for c in found)
+    assert any("Oxford" in c.sentence for c in found)
+
+
+def test_cli_pmcpage_stops_before_any_request_for_a_pmid_not_on_the_card(tmp_path, capsys):
+    server = FakeEuropePmc()
+    card = make_card(tmp_path)
+    code = run_cli(["pmcpage", "--card", str(card), FREE_PMID, "90000009"], server, tmp_path)
+    err = capsys.readouterr().err
+    assert code == 1 and "pmid:90000009" in err and "Nothing was requested" in err
+    assert server.requests == []
+    assert not (tmp_path / "europepmc").exists()
+
+
+def test_cli_pmcpage_requires_a_card(tmp_path):
+    server = FakeEuropePmc()
+    with pytest.raises(SystemExit):
+        run_cli(["pmcpage", FREE_PMID], server, tmp_path)
+    assert server.requests == []
+
+
+def test_cli_pmcpage_reports_each_outcome_and_prints_candidates(tmp_path, capsys):
+    server = FakeEuropePmc()
+    card = make_card(tmp_path, ids=(FREE_PMID, CLOSED_PMID, OA_PMID, UNKNOWN_PMID))
+    code = run_cli(["pmcpage", "--card", str(card), FREE_PMID, CLOSED_PMID, OA_PMID, UNKNOWN_PMID], server, tmp_path)
+    out = capsys.readouterr().out
+    assert code == 0
+    assert f"pmid:{FREE_PMID}  free to read on PMC (page fetched)  {FREE_PMCID}" in out
+    assert "1 candidate sentence(s)" in out and "[Methods] All fictional patients met the Fukuda criteria" in out
+    assert f"pmid:{CLOSED_PMID}  not in PubMed Central" in out
+    assert f"pmid:{OA_PMID}  open access; use `fulltext`" in out
+    assert f"pmid:{UNKNOWN_PMID}  no PMCID" in out
+    assert [p for p in server.paths if p.startswith("/articles/")] == [f"/articles/{FREE_PMCID}/"]
+
+
+def test_cli_pmcpage_a_bad_page_sets_the_exit_code_and_caches_nothing(tmp_path, capsys):
+    server = FakeEuropePmc()
+    card = make_card(tmp_path)
+    code = run_cli(["pmcpage", "--card", str(card), WRONG_PMID, FREE_PMID], server, tmp_path)
+    captured = capsys.readouterr()
+    assert code == 1
+    assert f"pmid:{WRONG_PMID}  error" in captured.err
+    assert not page_cache_path(tmp_path, WRONG_PMCID).exists()
+    assert page_cache_path(tmp_path).is_file()

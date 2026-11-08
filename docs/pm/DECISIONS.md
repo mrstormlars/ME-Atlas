@@ -2,6 +2,10 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-08 — Free-to-read PMC article pages as a full-text source
+
+- When Europe PMC has no open-access full text for a PMID that a card or draft cites, and its lookup shows the article is in PubMed Central (`inPMC` "Y"), the article page on pmc.ncbi.nlm.nih.gov may be fetched with `uv run python -m me_atlas.europepmc pmcpage --card <card> <pmid>`: on demand, only for PMIDs on that card, never in bulk, never from a publisher site. The page is cached like other full text and used only to find and check the case-definition sentence (C5) and sample sizes (C6); on the card it counts as `case_definition_source: fulltext`. Why: some articles are free for anyone to read on PMC but are not in the open-access subset, so neither Europe PMC's API nor NCBI EFetch gives their text (example: Rahman 2011, pmid:21532961); one cited article at a time, cached once, is reading, not crawling, and the sentence is still checked mechanically against a cached copy. Plan and contract: `docs/plan-pmc-free-fulltext.md`. Amends the open-access-only rule of 2026-11-01 for this case only.
+
 ## 2026-11-08 — New hypothesis: altered gene expression in blood immune cells
 
 - New draft card `drafts/immune-cell-gene-expression.yaml` (19th hypothesis), the second survey candidate drafted. Founder ruling on the drafter's recommendations after two `card-reviewer` rounds (run files in the drafting worktree's `data/pipeline/2026-11-08-immune-genes/`): level 2; contested at rung 2; both badges no; long COVID label; layer dysfunction; one proposed link to the post-exertional malaise symptom node.

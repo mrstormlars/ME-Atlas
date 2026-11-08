@@ -88,6 +88,27 @@ def add_fulltext(
         )
 
 
+PAGE_PMCID = "PMC9000005"
+PAGE_REFERENCE_SENTENCE = "Fictional reference cites the Holmes criteria."
+
+
+def add_page(root: Path, pmid: str = PMID, pmcid: str = PAGE_PMCID, *, in_pmc: bool = True, body: str = "") -> None:
+    """A fictional lookup (not open access) and a cached PMC article page for it."""
+    folder = root / "europepmc"
+    folder.mkdir(parents=True, exist_ok=True)
+    hit = {"id": pmid, "source": "MED", "pmid": pmid, "pmcid": pmcid, "isOpenAccess": "N"}
+    hit["inPMC"] = "Y" if in_pmc else "N"
+    (folder / f"{pmid}.json").write_text(json.dumps({"hitCount": 1, "resultList": {"result": [hit]}}), encoding="utf-8")
+    body = body or f"<p>{FULLTEXT_ONLY_SENTENCE} Fictional enrolment: 77 fictional patients.</p>"
+    (folder / f"{pmcid}.html").write_text(
+        f'<html><head><meta name="citation_pmid" content="{pmid}"></head><body><header>Fictional 4321</header>'
+        f'<section class="body main-article-body"><section id="s1"><h2>Methods</h2>{body}</section>'
+        f'<section class="ref-list"><p>{PAGE_REFERENCE_SENTENCE} Fictional cohort of 999 patients.</p></section>'
+        "</section></body></html>",
+        encoding="utf-8",
+    )
+
+
 def make_study(pmid: str = PMID, **over: object) -> dict:
     study: dict = {
         "id": f"pmid:{pmid}",
@@ -552,3 +573,59 @@ def test_article_text_joins_blocks_with_a_space_but_not_inline_markup():
         "<p>Cited<xref>1</xref>.</p></body><back><ref-list><ref>Fictional 12345</ref></ref-list></back></article>"
     )
     assert europepmc.article_text(xml) == ("Fictional title CO2 was not measured. Second paragraph. Cited1.")
+
+
+# --- the cached PMC article page as full text -------------------------------
+
+
+def test_c5_passes_on_a_quote_in_the_body_of_a_cached_pmc_page(tmp_path, cache):
+    add_page(cache)
+    study = make_study(case_definition_source="fulltext", case_definition_quote=FULLTEXT_ONLY_SENTENCE)
+    assert [i for i in check(tmp_path, cache, study) if i.code == "C5"] == []
+
+
+def test_c5_fails_on_a_quote_that_is_only_in_the_reference_list_of_the_page(tmp_path, cache):
+    add_page(cache)
+    study = make_study(case_definition_source="fulltext", case_definition_quote=PAGE_REFERENCE_SENTENCE)
+    c5 = [i for i in check(tmp_path, cache, study) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"] and "not verbatim in the cached full text" in c5[0].message
+
+
+def test_c6_finds_a_number_in_the_page_but_not_one_in_its_reference_list(tmp_path, cache):
+    add_page(cache)
+    study = make_study(n_patients=77, n_controls=999)
+    c6 = [i for i in check(tmp_path, cache, study) if i.code == "C6"]
+    assert [("n_controls 999" in i.message) for i in c6] == [True]
+
+
+def test_the_open_access_xml_is_preferred_over_a_cached_page(tmp_path, cache):
+    add_page(cache)
+    (cache / "europepmc" / f"{PAGE_PMCID}.xml").write_text(
+        "<article><body><p>Fictional xml text only.</p></body></article>", encoding="utf-8"
+    )
+    study = make_study(case_definition_source="fulltext", case_definition_quote=FULLTEXT_ONLY_SENTENCE)
+    c5 = [i for i in check(tmp_path, cache, study) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"]  # the quote is only in the page, which is not read
+
+
+def test_c5_without_a_cached_page_names_pmcpage_when_the_record_is_in_pmc(tmp_path, cache):
+    add_page(cache)
+    (cache / "europepmc" / f"{PAGE_PMCID}.html").unlink()
+    c5 = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"]
+    assert "europepmc pmcpage --card" in c5[0].message and "not open access" in c5[0].message
+
+
+def test_c5_without_a_cached_page_does_not_name_pmcpage_when_the_record_is_not_in_pmc(tmp_path, cache):
+    add_page(cache, in_pmc=False)
+    (cache / "europepmc" / f"{PAGE_PMCID}.html").unlink()
+    c5 = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"] and "pmcpage" not in c5[0].message
+
+
+def test_c5_with_an_unreadable_cached_page_is_an_error_naming_pmcpage_refresh(tmp_path, cache):
+    add_page(cache)
+    (cache / "europepmc" / f"{PAGE_PMCID}.html").write_text("<html>no article</html>", encoding="utf-8")
+    c5 = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"]
+    assert "unreadable" in c5[0].message and "pmcpage" in c5[0].message and "--refresh" in c5[0].message

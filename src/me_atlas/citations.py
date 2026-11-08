@@ -5,7 +5,8 @@ Command line::
     uv run python -m me_atlas.citations check [paths...] [--cache-dir data/cache]
 
 With no paths, ``cards/`` and ``drafts/`` are checked. The check is offline: it reads only
-``<cache>/pubmed/<pmid>.xml``, ``<cache>/europepmc/<pmid>.json`` and ``<cache>/europepmc/<pmcid>.xml`` and
+``<cache>/pubmed/<pmid>.xml``, ``<cache>/europepmc/<pmid>.json`` and ``<cache>/europepmc/<pmcid>.xml`` (else the
+PMC article page ``<pmcid>.html``) and
 never makes a network request. Missing records are fetched by hand with the command the error names.
 
 Checks per study (errors unless marked); the reference is ``docs/citation-check.md``:
@@ -33,6 +34,7 @@ from me_atlas.europepmc import (
     EuropePmcCache,
     EuropePmcError,
     article_text,
+    pmc_page_text,
     read_cached_lookup,
 )
 from me_atlas.pubmed import DEFAULT_CACHE_ROOT, ParseError, PubMedRecord, RawCache
@@ -123,6 +125,10 @@ def fulltext_fetch_hint(pmid: str) -> str:
     return f"uv run python -m me_atlas.europepmc fulltext {pmid}"
 
 
+def pmcpage_fetch_hint(pmid: str) -> str:
+    return f"uv run python -m me_atlas.europepmc pmcpage --card <card.yaml> {pmid}"
+
+
 class CacheReader:
     """Reads and remembers cached records for one run."""
 
@@ -151,6 +157,8 @@ class CacheReader:
 
     def _read_fulltext(self, pmid: str) -> str | tuple[str]:
         hint = f"`{fulltext_fetch_hint(pmid)}`"
+        page_hint = f"`{pmcpage_fetch_hint(pmid)}`"
+        reading_page = False
         try:
             lookup = read_cached_lookup(self.epmc, pmid)
             if lookup is None:
@@ -160,15 +168,23 @@ class CacheReader:
                     f"no cached full text (Europe PMC: {lookup.status.replace('_', ' ')}); {hint} cannot download it",
                 )
             path = self.epmc.fulltext_path(lookup.pmcid)
-            if not path.is_file():
-                if lookup.open_access:
-                    return (f"no cached full text ({lookup.pmcid} is not in the cache); run {hint}",)
-                return (
-                    f"no cached full text (Europe PMC: {lookup.status.replace('_', ' ')}); {hint} cannot download it",
+            if path.is_file():
+                return article_text(path.read_bytes())
+            page = self.epmc.page_path(lookup.pmcid)
+            if page.is_file():
+                reading_page = True
+                return pmc_page_text(page.read_bytes())
+            if lookup.open_access:
+                return (f"no cached full text ({lookup.pmcid} is not in the cache); run {hint}",)
+            reason = f"no cached full text (Europe PMC: {lookup.status.replace('_', ' ')}); {hint} cannot download it"
+            if lookup.in_pmc:
+                reason += (
+                    f". It is free to read on PubMed Central: run {page_hint} (with the card or draft that cites it)"
                 )
-            return article_text(path.read_bytes())
+            return (reason,)
         except (EuropePmcError, OSError) as exc:
-            return (f"cached full text is unreadable ({exc}); refresh it with {hint} --refresh",)
+            retry = page_hint if reading_page else hint
+            return (f"cached full text is unreadable ({exc}); refresh it with {retry} --refresh",)
 
 
 # ---------------------------------------------------------------------------
