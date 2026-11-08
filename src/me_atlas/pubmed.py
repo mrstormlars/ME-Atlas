@@ -79,6 +79,7 @@ class PubMedRecord(BaseModel):
     authors: list[str]
     publication_types: list[str]
     mesh_terms: list[str]
+    mesh_major: list[str] = []  # descriptors marked major topic, or with a major-topic qualifier
     retracted: bool
     entry_date: str | None  # ISO date (the PubMed "entrez" history date)
 
@@ -178,6 +179,16 @@ def parse_article(article: ET.Element) -> PubMedRecord:
     )
     mesh_terms = [t for t in (_text(n) for n in citation.findall("MeshHeadingList/MeshHeading/DescriptorName")) if t]
 
+    mesh_major = [
+        name
+        for heading in citation.findall("MeshHeadingList/MeshHeading")
+        if (name := _text(heading.find("DescriptorName")))
+        and (
+            heading.find("DescriptorName").get("MajorTopicYN") == "Y"
+            or any(q.get("MajorTopicYN") == "Y" for q in heading.findall("QualifierName"))
+        )
+    ]
+
     return PubMedRecord(
         id=f"pmid:{pmid}",
         pmid=pmid,
@@ -189,6 +200,7 @@ def parse_article(article: ET.Element) -> PubMedRecord:
         authors=_authors(art),
         publication_types=publication_types,
         mesh_terms=mesh_terms,
+        mesh_major=mesh_major,
         retracted=retracted,
         entry_date=_entry_date(pubmed_data),
     )

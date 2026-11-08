@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">91000002</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2023</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Survey Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional review of the alpha pathway and the gamma axis.</ArticleTitle>
+        <Abstract>
+          <AbstractText>This fictional review summarises invented findings on both.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType UI="D000001">Journal Article</PublicationType>
+          <PublicationType UI="D000002">Review</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Humans</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D900002" MajorTopicYN="N">Alpha Pathway</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D900003" MajorTopicYN="N">Gamma Axis</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">91000002</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

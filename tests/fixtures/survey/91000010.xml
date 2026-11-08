@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">91000010</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2020</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Survey Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional gamma axis study with a term.</ArticleTitle>
+        <Abstract>
+          <AbstractText>This fictional abstract measures the Widget level in invented patients.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType UI="D000001">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Gamma Axis</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">91000010</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

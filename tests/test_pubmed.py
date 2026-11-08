@@ -143,6 +143,30 @@ def test_parse_normal_record():
     assert rec.entry_date == "2021-02-13"
 
 
+def test_mesh_major_holds_major_descriptors_and_descriptors_with_a_major_qualifier():
+    xml = fixture_text("90000001")
+    start = xml.index("<MeshHeadingList>")
+    end = xml.index("</MeshHeadingList>") + len("</MeshHeadingList>")
+    headings = (
+        "<MeshHeadingList>"
+        '<MeshHeading><DescriptorName UI="D1" MajorTopicYN="Y">Major Descriptor</DescriptorName></MeshHeading>'
+        '<MeshHeading><DescriptorName UI="D2" MajorTopicYN="N">Major Qualifier</DescriptorName>'
+        '<QualifierName UI="Q1" MajorTopicYN="N">minor</QualifierName>'
+        '<QualifierName UI="Q2" MajorTopicYN="Y">major</QualifierName></MeshHeading>'
+        '<MeshHeading><DescriptorName UI="D3" MajorTopicYN="N">Not Major</DescriptorName>'
+        '<QualifierName UI="Q3" MajorTopicYN="N">minor</QualifierName></MeshHeading>'
+        "</MeshHeadingList>"
+    )
+    rec = parse_xml(xml[:start] + headings + xml[end:])
+    assert rec.mesh_terms == ["Major Descriptor", "Major Qualifier", "Not Major"]
+    assert rec.mesh_major == ["Major Descriptor", "Major Qualifier"]  # "Not Major" is left out
+
+
+def test_mesh_major_is_empty_without_major_headings():
+    assert record("90000001").mesh_major == []
+    assert record("90000002").mesh_major == []
+
+
 def test_record_id_is_valid_study_id():
     adapter = TypeAdapter(StudyId)
     for pmid in ALL_FIXTURES:

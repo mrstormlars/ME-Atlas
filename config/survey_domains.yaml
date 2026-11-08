@@ -1,0 +1,239 @@
+# Domains for the balanced theme census (docs/survey.md).
+# Each MeSH heading that reached the census belongs to one domain, so that `themes --by-domain` can pick the top few
+# headings of each mechanism area instead of a list dominated by psychiatric and older headings.
+# survey: true  = the census selects the top headings of this domain (mechanism areas, in this order).
+# survey: false = counted but never selected: other diagnoses, symptom and function measures, treatments,
+#   reactions to illness and refuted hypotheses (founder ruling 2026-11-08, docs/pm/DECISIONS.md).
+# A heading is in at most one domain; it is not on the stoplist and not in a card's `mesh` list (the loader checks).
+# related_conditions holds other diagnoses (psychiatric ones included); psychological_behavioural holds headings of
+# psychological or behavioural causal models; symptom_measures holds symptom and function measures.
+
+immune:
+  label: Immune system and inflammation
+  survey: true
+  headings:
+    - Cytokines
+    - Leukocytes, Mononuclear
+    - Inflammation
+    - Immunoglobulin G
+    - Immunoglobulin M
+    - Tumor Necrosis Factor-alpha
+    - Interleukin-6
+    - Interleukin-1
+    - Interferon-gamma
+    - Immunity, Cellular
+    - Lymphocyte Activation
+    - T-Lymphocytes
+    - CD8-Positive T-Lymphocytes
+    - T-Lymphocyte Subsets
+    - Lymphocyte Subsets
+    - Lymphocytes
+    - Antigens, CD
+    - Immunophenotyping
+    - Monocytes
+    - Leukocytes
+    - C-Reactive Protein
+    - Hypersensitivity
+    - Lipopolysaccharides
+    - Poly I-C
+    - Antibodies, Antinuclear
+    - Antibodies, Bacterial
+    - Endoribonucleases
+    - Signal Transduction
+nervous_system:
+  label: Brain and nervous system
+  survey: true
+  headings:
+    - Brain
+    - Brain Mapping
+    - Electroencephalography
+    - Cerebral Cortex
+    - Hippocampus
+    - Nervous System Diseases
+    - Serotonin
+    - Norepinephrine
+    - Circadian Rhythm
+    - Stress, Physiological
+    - Neuroimmunomodulation
+energy_metabolism:
+  label: Energy and metabolism
+  survey: true
+  headings:
+    - Mitochondria
+    - Muscle, Skeletal
+    - Muscles
+    - Muscle Fatigue
+    - Muscular Diseases
+    - Electromyography
+    - Lactic Acid
+    - Carnitine
+    - Oxygen
+    - Oxidation-Reduction
+    - Lipid Peroxidation
+    - Nitric Oxide
+    - Metabolomics
+    - Proteomics
+circulation_autonomic:
+  label: Circulation and autonomic nervous system
+  survey: true
+  headings:
+    - Heart Rate
+    - Blood Pressure
+    - Autonomic Nervous System
+    - Autonomic Nervous System Diseases
+    - Posture
+    - Hemodynamics
+    - Electrocardiography
+infection:
+  label: Infection and viruses
+  survey: true
+  headings:
+    - Antibodies, Viral
+    - DNA, Viral
+    - RNA, Viral
+    - Virus Diseases
+    - Antigens, Viral
+    - Disease Outbreaks
+    - Virus Replication
+    - Tumor Virus Infections
+    - Vaccination
+genetics_epigenetics:
+  label: Genetics and epigenetics
+  survey: true
+  headings:
+    - Gene Expression Profiling
+    - Gene Expression Regulation
+    - Gene Expression
+    - RNA, Messenger
+    - Genotype
+    - Polymorphism, Genetic
+    - Diseases in Twins
+    - Twins, Monozygotic
+    - MicroRNAs
+    - DNA Methylation
+    - Gene Frequency
+    - Alleles
+    - Up-Regulation
+psychological_behavioural:
+  label: Psychological and behavioural models
+  survey: true
+  headings:
+    - Stress, Psychological
+    - Somatoform Disorders
+    - Psychophysiologic Disorders
+    - Medically Unexplained Symptoms
+    - Neurasthenia
+    - Life Change Events
+    - Social Adjustment
+    - Burnout, Professional
+    - Self Efficacy
+    - Personality
+    - Personality Assessment
+    - Personality Disorders
+    - Emotions
+    - Affect
+    - Affective Symptoms
+    - Motivation
+related_conditions:
+  label: Other diagnoses ME/CFS is compared with or co-occurs with
+  survey: false
+  headings:
+    - Fibromyalgia
+    - Irritable Bowel Syndrome
+    - Multiple Sclerosis
+    - Persian Gulf Syndrome
+    - Multiple Chemical Sensitivity
+    - Chronic Pain
+    - Depression
+    - Depressive Disorder
+    - Major Depressive Disorder
+    - Anxiety
+    - Anxiety Disorders
+    - Mental Disorders
+    - Mood Disorders
+    - Stress Disorders, Post-Traumatic
+    - Panic Disorder
+    - Neoplasms
+    - Prostatic Neoplasms
+    - Cystitis, Interstitial
+    - Migraine Disorders
+    - Headache
+    - Pelvic Pain
+    - Endometriosis
+    - Arthritis, Rheumatoid
+    - Asthma
+    - Lyme Disease
+    - HIV Infections
+    - Occupational Diseases
+symptom_measures:
+  label: Symptom and function measures
+  survey: false
+  headings:
+    - Pain
+    - Sleep Wake Disorders
+    - Sleep
+    - Sleep Initiation and Maintenance Disorders
+    - Sleep Stages
+    - Polysomnography
+    - Wakefulness
+    - Arousal
+    - Cognition
+    - Cognition Disorders
+    - Cognitive Dysfunction
+    - Memory
+    - Memory Disorders
+    - Memory, Short-Term
+    - Attention
+    - Reaction Time
+    - Psychomotor Performance
+    - Perception
+    - Task Performance and Analysis
+    - Mental Fatigue
+    - Motor Activity
+    - Exercise
+    - Physical Exertion
+    - Physical Endurance
+    - Physical Fitness
+    - Hand Strength
+    - Pain Threshold
+    - Rest
+    - Swimming
+    - Dizziness
+treatment:
+  label: Treatments that reached the census (not surveyed)
+  survey: false
+  headings:
+    - Cognitive Behavioral Therapy
+    - Exercise Therapy
+    - Dietary Supplements
+    - Acupuncture Therapy
+    - Acupuncture Points
+    - Moxibustion
+    - Electroacupuncture
+    - Drugs, Chinese Herbal
+    - Phytotherapy
+    - Plant Extracts
+    - Antidepressive Agents
+    - Anti-Bacterial Agents
+    - Antiviral Agents
+    - Anti-Inflammatory Agents
+    - Psychotherapy
+    - Behavior Therapy
+    - Physical Therapy Modalities
+    - Complementary Therapies
+    - Pain Management
+    - Self Care
+    - Self-Help Groups
+reaction_to_illness:
+  label: Reactions to illness (coping, not a cause)
+  survey: false
+  headings:
+    - Adaptation, Psychological
+refuted:
+  label: Refuted hypotheses (see docs/pm/excluded-hypotheses.md)
+  survey: false
+  headings:
+    - Xenotropic murine leukemia virus-related virus
+    - Retroviridae Infections
+    - Leukemia Virus, Murine
+    - Gammaretrovirus

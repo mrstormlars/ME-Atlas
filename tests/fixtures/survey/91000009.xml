@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">91000009</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2025</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Survey Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional newer review of the alpha pathway.</ArticleTitle>
+        <Abstract>
+          <AbstractText>This fictional newer review covers invented work.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType UI="D000001">Journal Article</PublicationType>
+          <PublicationType UI="D000002">Review</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Alpha Pathway</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">91000009</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

@@ -82,7 +82,7 @@ Not checked by code: that the cited study really measured both ends in the same 
 
 ## Agents
 
-- `.claude/agents/link-drafter.md` (sonnet) reads one card and the cached review records it is given and writes a proposal `{slug, layer, links: [{to, support, text, sources, why}]}` under `data/pipeline/<date>/map/`. It may cite only ids in the card's studies or in the records it was given.
+- `.claude/agents/link-drafter.md` (sonnet) reads one card and the cached records (reviews or original studies) it is given and writes a proposal `{slug, layer, links: [{to, support, text, sources, why}]}` under `data/pipeline/<date>/map/`. It may cite only ids in the card's studies or in the records it was given. `uv run python -m me_atlas.survey pairs --context <slug-a> <slug-b>` can supply it with the cached records that match both cards (`docs/survey.md`).
 - `.claude/agents/card-reviewer.md`, "Map mode", checks each proposed link against the cited sources and the rubric and writes a verdict with findings, in the same shape as translation mode.
 
 ## Out of scope

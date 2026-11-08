@@ -32,11 +32,12 @@ The rule judges **method, not origin**. Any approach, conventional or alternativ
 
 Excluded, and why:
 
-- **Ideas with no peer-reviewed cohort data yet.** They cannot be graded on any rung; they may be tracked internally as candidates.
+- **Ideas with no peer-reviewed cohort data yet.** They cannot be graded on any rung; they may be tracked internally as candidates. Candidates are tracked in `docs/pm/candidates.md`.
 - **Studies of healthy people, animals or cells only.** These can support plausibility on a card but do not admit a hypothesis alone.
 - **Cohorts without a stated case definition.** Without one we cannot tell whether the patients had ME/CFS.
 - **Claims backed only by opinion, anecdote, patient surveys without a clinical comparison, or non-peer-reviewed material.** Not enough to check.
 - **Treatment products and commercial claims.** The site lists hypotheses about causes, not remedies.
+- **Refuted hypotheses.** No card, and not surveyed; each is named with the reason and its sources in `docs/pm/excluded-hypotheses.md` (founder ruling 2026-11-08).
 
 Hypotheses are **not mutually exclusive**. They may be links in one causal chain, or may apply to different patient subgroups. The front page says so.
 
