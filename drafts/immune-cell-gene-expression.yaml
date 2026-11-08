@@ -1,0 +1,485 @@
+# FOUNDER RULING (2026-11-08): level 2, contested at rung 2 (28172519 and 21479222), both badges no, long COVID label
+# shown, layer dysfunction, one proposed link to symptom:post-exertional-neuroimmune-exhaustion. Accepted as drafted
+# after two card-reviewer rounds; the founder accepted the drafter's recommendations on every open question below
+# (no rung 3, ESRRA check does not count, no mechanism layer, no herpesvirus link). DECISIONS.md 2026-11-08.
+# DRAFT — AI-drafted (ai_pair) on 2026-11-08 from the founder ruling "First survey run" (DECISIONS 2026-11-08) and the
+# candidate "Altered immune-cell gene expression and exhaustion or chronic activation in blood mononuclear cells"
+# (docs/pm/candidates.md, marked `to draft`). Nothing here is published. Level, contested mark, badges, layer and
+# links below are proposals for the founder (CLAUDE.md rule 2), not rulings.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract) or, where `case_definition_source: fulltext` or a comment names a full
+# text, from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (39435656: PMC11529985;
+# 39621903: PMC11648872; 30791746: PMC6350121; 28172519: PMC5850034; 19503787: PMC2688030; 21479222: PMC3068152;
+# 38232699: PMC10829790; 41822518: PMC12975919; 39394558: PMC11468054; 28494812: PMC5426002). No open full text in
+# Europe PMC (checked 2026-11-08): 18462164, 16049284 (abstract only). Searches and hit counts:
+# data/pipeline/2026-11-08-immune-genes/report.md.
+#
+# SCOPE AND MEASURE. The card's measure is "gene expression in circulating immune cells (PBMCs, leukocytes or whole
+# blood) differs between patients and controls at rest", including the authors' readings of it as exhaustion,
+# suppression or chronic activation. Bounded against the neighbouring cards:
+#   - reduced-nk-cell-function grades NK cell killing measured by a functional assay; NK-cell transcripts that turn up
+#     in a whole-transcriptome study are reported here only as part of that study's pattern.
+#   - autoimmunity-autoantibodies-b-cells grades autoantibodies and B-cell-depleting treatment, with B-cell subset
+#     phenotyping as context; B-cell gene sets in an expression study stay here, antibodies and cell counts there.
+#   - NK-cell killing molecules measured by flow cytometry (perforin, CD107a) belong to reduced-nk-cell-function.
+#   - impaired-energy-production-after-exertion and the survey candidate "abnormal blood-cell gene-expression
+#     response to exercise" (not drafted): the change in expression after an exercise challenge is not this card's
+#     measure. Two studies here (39621903, 38232699) took blood before and after a challenge; the card uses their
+#     baseline comparison, and says so where a result was measured after the challenge.
+#   - Epigenetic and microRNA studies (survey candidate, not drafted) are left out.
+#
+# LEVEL, RUNG BY RUNG (proposal: 2, contested at rung 2)
+#   Rung 1: met (also by the rung 2 studies).
+#   Rung 2: met. Controlled studies with a recognised definition found altered expression:
+#     - 39435656 (Eaton-Fitch 2024, Griffith University, last author Marshall-Gradisnik S; CCC in the abstract;
+#       14 ME/CFS, 18 controls; NanoString immune-exhaustion panel): 14 differentially expressed genes, with
+#       interferon-alpha and immunoglobulin genes down. Full text: all met CCC except 1 participant who met Fukuda
+#       at the study visit (participants section). Its cell-type scores from the same panel put the abundance of
+#       exhausted CD8 cells LOWER in ME/CFS (Padj = 0.0147), against the exhaustion reading of 39621903. Pilot.
+#     - 39621903 (Iu 2024, Cornell, Grimson A; IOM 2015 and CCC from the full text): bulk RNA-seq and ATAC-seq of
+#       purified CD8+ memory T cells from 7 female patients and 7 controls found EOMES, SLAMF6 and SLAMF7 up and
+#       chromatin changes consistent with exhaustion (n on the card: 7 / 7, the measurement behind the finding).
+#       Its single-cell analysis of the shared Cornell atlas found late effector memory cells with impaired effector
+#       genes; flow cytometry after an exercise test in 15 patients and 11 controls. The atlas size: 39621903 writes
+#       28 patients and 30 controls, the atlas paper 38232699 writes 30 and 28 throughout; the card prints the atlas
+#       paper's numbers on 38232699 only. TODO: verify (probably swapped in 39621903; not asserted).
+#     - 30791746 (Sweetman 2019, Otago, Tate W; CCC from the full text; 10 and 10): 27 transcripts up, 6 down,
+#       IL8 and NFKBIA confirmed by qPCR.
+#     - 18462164 and 16049284 (Kerr JR group, London; CDC criteria, version not named: CDC_unspecified, flagged
+#       "does not require PEM"). 16049284: microarray 25 / 25; the PCR confirmation used fresh samples whose number
+#       the abstract does not give (no open full text).
+#   Rung 3: NOT met (proposal). Rung 3 needs "the finding" reproduced by an independent group in a separate cohort.
+#     That some genes differ is reported by four groups (Kerr, Tate, Marshall-Gradisnik, Grimson), but no specific
+#     gene or pathway finding is repeated: the Kerr genes point to T cell activation (16049284), Sweetman's to
+#     inflammation, Eaton-Fitch's to interferon and immunoglobulin genes down (read as suppression), Iu's to CD8+
+#     T cell exhaustion. The exhaustion reading is contradicted on the card itself: 39435656 estimated fewer
+#     exhausted CD8 cells, and 41822518's re-analysis of the Cornell single-cell data found no exhaustion signature.
+#     Founder question: if "altered expression of some immune genes" were taken as the finding, the four groups
+#     would meet rung 3; the drafter reads the rubric's "reproduced the finding" as needing the same direction in
+#     the same genes or pathway, and proposes level 2.
+#   Rung 4 and above: not met (no intervention study).
+# CONTESTED (proposal: rungs [2]). Two contradicting studies, each of comparable quality to part of rung 2:
+#   - 28172519 (Bouquet 2017, Vancouver, last named author Patrick DM): whole-blood RNA-seq, 25 CFS and 25 matched
+#     controls, no significantly differentially expressed genes. Case definition: the text says "Canadian case
+#     definition [19]", but reference 19 is Carruthers 2011, the International Consensus Criteria (ICC), not the
+#     2003 CCC. Recorded as CCC because that is what the sentence names; CCC and ICC rank equal, so the test is the
+#     same either way. Comparable-quality test: definition accepted at every rung and the same rank as the CCC
+#     studies, stricter than CDC_unspecified; a control group; 25 is at least half of 14 (39435656), 7 (39621903),
+#     10 (30791746) and 25 (16049284), but NOT of 55 (18462164, half = 27.5). So it is comparable to every rung 2
+#     study except 18462164.
+#   - 21479222 (Frampton 2011, Kellam P with Kerr JR; Fukuda from the full text): on a new, blinded set "no
+#     significant difference is observed between the means for any of these genes in the test set" for the 44
+#     reporter genes the group identified earlier (16049284, 18462164). Fukuda ranks equal to CDC_unspecified;
+#     controls; 64 patients (methods: "64 CFS patients and 64 healthy volunteers"; the results give 67 in one
+#     place, so the paper is inconsistent; the card uses the methods' 64 / 64) is at least half of 55. So it is
+#     comparable to 18462164 (the results table also implies 61 controls; the size test is unaffected). Shared authorship is not a rubric criterion for contradicting.
+#   Together they reach every study rung 2 rests on, so the rule in spec section 3 makes rung 2 contested.
+#   Whole blood against PBMCs and blinding are stated as facts only; neither is a rubric criterion. FOUNDER DECISION.
+#   Not used for the contested mark: 19503787 (Byrnes 2009, twins, no difference in 44 pairs): the CFS twins are
+#     cited to references 1 and 2 (Fukuda 1994 and Reeves 2003), but 12 of the 44 affected twins had idiopathic
+#     chronic fatigue and the analysis pooled both groups with no CFS-only result, so `other`, context.
+#     41822518 (Shahbaz 2026) re-analysed the 38232699 data, not a new cohort.
+# BADGES (proposal: both no). diagnostic_marker: two checks in a second population. 21479222 found no difference
+#   and is from the same group. 39394558 (4 / 4) checked ESRRA in GSE214284 (n = 58), the Cornell atlas of
+#   38232699, whose paper states no case definition; IOM 2015 and CCC for that cohort appear only in 39621903, and
+#   the card does not carry a definition across papers. FOUNDER QUESTION whether that check could count. explains_pem: 38232699 (fraction of "diseased" monocytes correlated with PEM
+#   severity) and 28494812 (expression pattern associated with PEM symptoms) relate expression to PEM in the same
+#   patients, but 38232699 states no case definition (`none`) and 28494812 uses a broad one (`other`), so neither
+#   meets the V5/V7 test.
+# LONG COVID: label shown, carried by 41822518 (long COVID with ME/CFS, CCC per full text; context study; single-cell
+#   data from 5 patients and 5 recovered people, ten per group enrolled). The long COVID arm of 39435656 used the WHO
+#   definition and is not counted on this card.
+# AUTHOR AND COHORT OVERLAPS
+#   - 39621903 and 38232699 share the Cornell cohort and authors (Grimson A, Hanson MR, Vu LT, Iu DS): one group.
+#     The case definition of that cohort is stated only in 39621903; the card does not carry it across to 38232699
+#     (`none`), so one cohort shows two provenance values on purpose.
+#   - 41822518 re-analysed the public 38232699 scRNA-seq data for its idiopathic ME/CFS comparison: same cohort.
+#   - 16049284, 18462164 and 21479222 share Kerr JR: one group; whether the patients overlap is not stated in the
+#     abstracts. TODO: verify.
+# LAYER (proposal: dysfunction): the card's finding is a pattern measured in blood. Other reading, FOR THE FOUNDER:
+#   39621903 describes exhaustion as a state maintained by chronic stimulation, which would place the card in
+#   `mechanism`; with it, a possible incoming link from herpesvirus-reactivation (39621903 names "chronic viral
+#   infections"), which would live on that card and is not added here (other cards are out of this task's scope).
+#   Both are listed in report.md.
+# EARLY SIGNALS: only studies with a confirmed recognised definition (DECISIONS 2026-11-01, spec section 4).
+#   38232699 (`none`) and 28494812 (`other`) are therefore `context`, cited only in the PEM badge reason, the
+#   diagnostic-marker reason (38232699) and the link.
+# LINKS (proposal): one step-1 link to the PEM symptom node, stated by 39621903. Two studies relate expression to PEM
+#   in the same patients (38232699, 28494812), but neither has a recognised case definition, so step 2 is not met.
+#
+# Not on the card (read, left out; reasons also in report.md):
+#   - 38383456 (Walitt 2024, NIH): PBMC expression differences split by sex, nominal p <= 0.05, and the number
+#     of samples in the PBMC RNA-seq is not stated in the text read; left out rather than guessed.
+#   - 33633136 (re-analysis of public data, definitions of the source cohorts not stated), 42886747 (re-analysis of
+#     GSE14577 plus a cell line), 18822143 (CDC empiric definition, gene-set and co-expression network analysis,
+#     only one gene set differed), 12590173 (5 cases), 19555476 (8 and 7, post-infectious, definition not in abstract).
+#   - Exercise-response studies (30897114, 36769022, 40372680, 19647494, 22210239, 15790422): different measure.
+#   - 41205594 (long COVID with ME/CFS, mostly cytokine and hormone profiling, sex comparison within patients).
+#   - Epigenetic, microRNA and non-coding RNA studies (30119681, 32291908, 37328077, 30036399): left with the
+#     separate survey candidate.
+slug: immune-cell-gene-expression
+name: Altered gene expression in blood immune cells (exhaustion or chronic activation)
+core_claim:
+  text: >-
+    The hypothesis proposes that immune cells circulating in the blood of people with ME/CFS switch their genes
+    on and off in a different pattern from healthy people, and that this pattern reflects immune cells that are
+    worn out (exhausted) or held in a state of ongoing activation.
+  sources: [pmid:39435656, pmid:39621903, pmid:30791746]
+level: 2
+level_reason:
+  - text: >-
+      An Australian study of 14 patients who met the Canadian Consensus Criteria (one met only the Fukuda
+      criteria at the study visit) and 18 controls measured a panel of immune-exhaustion genes in blood
+      mononuclear cells. It found 14 genes expressed differently, with interferon-alpha and immunoglobulin genes
+      lower in patients; the authors read this as immune suppression. Cell-type scores from the same panel
+      estimated fewer exhausted CD8+ T cells in patients than in controls. It was a pilot study and has not been
+      repeated.
+    sources: [pmid:39435656]
+  - text: >-
+      A US study using the Canadian Consensus Criteria and the 2015 IOM criteria compared purified CD8+ memory T
+      cells from 7 women with ME/CFS and 7 controls and found higher expression of several regulators of T-cell
+      exhaustion, with changes in chromatin consistent with exhaustion. Its analysis of single-cell data from the
+      same research centre found late effector memory T cells with weaker effector genes. Flow cytometry in 15
+      patients and 11 controls, with blood taken after an exercise test, found a larger share of cells with high
+      levels of one exhaustion-associated marker (SLAMF6) in some effector memory subsets. These results are
+      unreplicated.
+    sources: [pmid:39621903]
+  - text: >-
+      A New Zealand study of 10 patients meeting the Canadian Consensus Criteria and 10 controls found 27
+      transcripts higher and 6 lower in patients, with the top ones related to inflammation. Two UK studies using
+      CDC criteria (version not named), which do not require post-exertional malaise, found genes expressed
+      differently and confirmed them by PCR: 16 genes in a study of 25 patients and 25 controls, and 88 genes in
+      55 patients and 75 controls. The first read its pattern as T-cell activation.
+    sources: [pmid:30791746, pmid:16049284, pmid:18462164]
+  - text: >-
+      The card is at level 2. Each group found some genes expressed differently, but the genes and pathways
+      differ from study to study: T-cell activation, inflammation, lower interferon and immunoglobulin genes, and
+      T-cell exhaustion. No independent group has repeated a specific finding in a separate cohort, so each is
+      unreplicated. The exhaustion reading is not consistent across the card's own studies: the Australian study
+      estimated fewer exhausted CD8+ T cells in patients, and a re-analysis of the US single-cell data found no
+      T-cell exhaustion signature.
+    sources: [pmid:39435656, pmid:30791746, pmid:39621903, pmid:16049284, pmid:18462164, pmid:41822518]
+contested:
+  rungs: [2]
+  reason:
+    - text: >-
+        A study of whole blood from 25 patients and 25 matched controls found no genes expressed significantly
+        differently. Samples were taken at enrolment, not during symptom flares. The paper names the Canadian
+        case definition and cites the 2011 International Consensus Criteria for it; both are accepted at every
+        rung. It had a control group and at least half as many patients as each of the studies above that used
+        the Canadian Consensus Criteria and as the first UK study, so it is of comparable quality to them.
+      sources: [pmid:28172519]
+    - text: >-
+        The UK group tested 44 of its earlier genes on a new, blinded set of samples from 64 patients meeting
+        the Fukuda criteria, which do not require post-exertional malaise, and 64 controls (the paper also gives
+        67 patients in one place). It found no significant difference between patients and controls in any of
+        the 44 genes, and a score built from them classified about 58% of samples correctly. Its definition ranks
+        equal to the second UK study's and it had more than half as many patients, so it is of comparable quality
+        to that study.
+      sources: [pmid:21479222]
+    - text: >-
+        A study of 44 pairs of identical twins, in which one twin was ill and the other well, also found no
+        difference in any transcript in blood leukocytes. The ill twins with chronic fatigue syndrome were
+        diagnosed by criteria the paper cites to the 1994 Fukuda definition and a 2003 paper on it, but 12 of the 44 had idiopathic
+        chronic fatigue instead and the analysis pooled both, so it does not count towards the contested mark.
+      sources: [pmid:19503787]
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        Two checks in a second group of patients have been made. A gene list from two earlier studies by one
+        group was tested on a new, blinded set of samples by the same group and did not separate patients from
+        controls. A study of 4 patients checked one candidate gene (ESRRA) in public single-cell data from a
+        US cohort of 58 people and found it higher in monocytes of male patients, but the paper behind that
+        dataset does not state its case definition, so the check does not meet the badge's test.
+      sources: [pmid:21479222, pmid:39394558, pmid:38232699]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        Two studies related blood-cell gene expression to post-exertional malaise in the same patients: one found
+        that the share of altered monocytes rose with its severity, the other an association with its symptoms.
+        One did not state a case definition and the other used a broad one, so neither meets the badge's test.
+      sources: [pmid:38232699, pmid:28494812]
+subgroups:
+  - text: >-
+      A 2008 UK study grouped 55 patients into 7 subtypes by their gene expression, with different scores on a
+      quality-of-life questionnaire and different severity. This grouping has not been repeated.
+    sources: [pmid:18462164]
+working_on_it: []
+early_signals:
+  - text: >-
+      A single-cell study of 4 patients and 4 controls in China found changed proportions of immune cell types,
+      altered development paths of T and B cells, and signs of B-cell overactivity. It is very small and
+      unreplicated.
+    sources: [pmid:39394558]
+  - text: >-
+      In long COVID, a single-cell study of 5 women with long COVID and ME/CFS and 5 people who had recovered from
+      COVID-19 found higher T-cell exhaustion scores in the patients. It is very small and unreplicated.
+    sources: [pmid:41822518]
+studies:
+  - id: pmid:39435656
+    title: Immune exhaustion in ME/CFS and long COVID.
+    year: 2024
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: abstract
+    case_definition_quote: Participants with ME/CFS were included according to Canadian Consensus Criteria.
+    design: controlled
+    n_patients: 14
+    n_controls: 18
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed
+    finding: >-
+      A study of n=14 ME/CFS patients, 15 long COVID patients and 18 controls found 14 immune-exhaustion panel
+      genes expressed differently in ME/CFS blood mononuclear cells, with interferon-alpha and immunoglobulin
+      genes lower and CEACAM3 higher; cell-type scores from the panel estimated fewer exhausted CD8 cells in
+      ME/CFS.
+    group: Marshall-Gradisnik S, Griffith University
+  - id: pmid:39621903
+    title: Transcriptional reprogramming primes CD8+ T cells toward exhaustion in Myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2024
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: >-
+      ME and healthy sedentary control participants were identified by experienced medical doctors, and all ME
+      subjects fulfilled the IOM and Canadian Consensus Criteria for diagnosis (82).
+    design: controlled
+    n_patients: 7
+    n_controls: 7
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: higher
+    finding: >-
+      A study of purified CD8+ memory T cells from n=7 female patients and 7 controls found higher expression of
+      exhaustion regulators (EOMES, SLAMF6, SLAMF7) and chromatin changes consistent with exhaustion; single-cell
+      data from the same centre showed late effector memory cells with impaired effector genes, and flow
+      cytometry after an exercise test in 15 patients and 11 controls found more cells with exhaustion-associated
+      factors.
+    group: Grimson A, Cornell University
+  - id: pmid:30791746
+    title: Changes in the transcriptome of circulating immune cells of a New Zealand cohort with myalgic encephalomyelitis/chronic fatigue syndrome.
+    year: 2019
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: >-
+      A total of 10 ME/CFS patients, diagnosed according to the canadian consensus criteria (CCC) guidelines3 by
+      an experienced ME/CFS clinician, were recruited along with matched controls.
+    design: controlled
+    n_patients: 10
+    n_controls: 10
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed
+    finding: >-
+      A study of n=10 patients and 10 matched controls found 27 PBMC transcripts increased and 6 decreased by
+      RNA-seq, with IL8 and NFKBIA increases confirmed by qPCR.
+    group: Tate W, University of Otago
+  - id: pmid:18462164
+    title: Gene expression subtypes in patients with chronic fatigue syndrome/myalgic encephalomyelitis.
+    year: 2008
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: >-
+      We analyzed gene expression in peripheral blood from 25 patients with CFS/ME diagnosed according to the
+      Centers for Disease Control and Prevention diagnostic criteria and 50 healthy blood donors, using a
+      microarray with a cutoff fold difference of expression of >or=2.5.
+    design: controlled
+    n_patients: 55
+    n_controls: 75
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed
+    finding: >-
+      A study screening 25 patients and 50 blood donors by microarray, then testing n=55 patients and 75 donors
+      by quantitative PCR, confirmed differential expression of 88 genes (85 up, 3 down) and found 7 patient
+      subtypes.
+    group: Holgate ST / Kerr JR, St George's University of London
+  - id: pmid:16049284
+    title: Gene expression in peripheral blood mononuclear cells from patients with chronic fatigue syndrome.
+    year: 2005
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: >-
+      To gain further insight into the pathogenesis of this disease, gene expression was analysed in peripheral
+      blood mononuclear cells from 25 patients with CFS diagnosed according to the Centers for Disease Control
+      criteria and 25 normal blood donors matched for age, sex, and geographical location, using a single colour
+      microarray representing 9522 human genes.
+    design: controlled
+    n_patients: 25
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: mixed
+    finding: >-
+      A study of n=25 patients and 25 matched blood donors found 35 PBMC genes expressed differently by
+      microarray, 16 confirmed by real-time PCR in fresh samples whose number the abstract does not give (15 up,
+      1 down), which the authors read as suggesting T cell activation.
+    group: Kerr JR, London (first author at Imperial College London)
+  - id: pmid:28172519
+    title: RNA-Seq Analysis of Gene Expression, Viral Pathogen, and B-Cell/T-Cell Receptor Signatures in Complex Chronic Disease.
+    year: 2017
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: >-
+      Briefly, we enrolled 25 CFS patients who met the Canadian case definition [19], 13 ADCLS cases diagnosed on
+      clinical grounds and supported only by nonreference testing, and 11 SLE cases meeting American College of
+      Rheumatology criteria [20].
+    design: controlled
+    n_patients: 25
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: contradicts
+    direction: no_difference
+    finding: >-
+      A blinded RNA-seq study of whole blood from n=25 CFS patients and 25 matched controls, sampled outside
+      symptom flares, found no significantly differentially expressed genes and no difference in B-cell or T-cell
+      receptor repertoires.
+    group: Patrick DM, Vancouver (Complex Chronic Disease Study Group)
+  - id: pmid:19503787
+    title: "Gene expression in peripheral blood leukocytes in monozygotic twins discordant for chronic fatigue: no evidence of a biomarker."
+    year: 2009
+    cohort: me_cfs
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled
+    n_patients: 44
+    n_controls: 44
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    finding: >-
+      A microarray study of n=44 affected twins (32 with chronic fatigue syndrome, 12 with idiopathic chronic
+      fatigue) and their 44 unaffected identical co-twins found no significant difference in blood leukocyte
+      expression for any transcript.
+    group: Sullivan PF, University of North Carolina at Chapel Hill
+  - id: pmid:21479222
+    title: Assessment of a 44 gene classifier for the evaluation of chronic fatigue syndrome from peripheral blood mononuclear cell gene expression.
+    year: 2011
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: The diagnosis of CFS was based on the Fukuda criteria and this diagnosis was made by CFS clinical experts.
+    design: controlled
+    n_patients: 64
+    n_controls: 64
+    measures_pem: false
+    preregistered: null
+    role: contradicts
+    direction: no_difference
+    finding: >-
+      On a new, blinded set of samples from n=64 patients and 64 healthy volunteers (the results give 67 patients
+      in one place), none of 44 previously reported genes differed significantly between patients and controls,
+      and a score built from them predicted 58% of samples correctly.
+    group: Kellam P / Kerr JR, University College London and St George's University of London
+  - id: pmid:38232699
+    title: Single-cell transcriptomics of the immune system in ME/CFS at baseline and following symptom provocation.
+    year: 2024
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: controlled
+    n_patients: 30
+    n_controls: 28
+    measures_pem: true
+    preregistered: null
+    role: context
+    direction: higher
+    finding: >-
+      A single-cell RNA study of n=30 patients and 28 controls found classical monocytes with raised chemokine and
+      cytokine signalling genes at baseline, and the fraction of these cells correlated with severity; after an
+      exercise test, platelets changed but other immune cells changed little.
+    group: Grimson A, Cornell University
+  - id: pmid:41822518
+    title: Single-cell analysis reveals immune remodeling of monocytes, NK cells, T cell exhaustion, and Galectin-9-associated depletion of gamma delta and mucosal-associated invariant T cells in Long COVID with ME/CFS.
+    year: 2026
+    cohort: long_covid
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: >-
+      LC patients with ME/CFS were selected based on clinical evaluation, laboratory tests, and the
+      administration of seven validated questionnaires consistent with the Canadian Consensus Criteria (CCC) for
+      ME/CFS and WHO guidelines, as we have reported before (3, 11).
+    design: controlled
+    n_patients: 5
+    n_controls: 5
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed
+    finding: >-
+      A single-cell RNA study of n=5 women with long COVID and ME/CFS and 5 recovered people (ten per group
+      enrolled) found higher T-cell exhaustion scores in patients; its re-analysis of public idiopathic ME/CFS
+      data found T-cell activation but no difference in T-cell exhaustion.
+    group: Elahi S, University of Alberta
+  - id: pmid:39394558
+    title: Immunometabolic changes and potential biomarkers in CFS peripheral immune cells revealed by single-cell RNA sequencing.
+    year: 2024
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: >-
+      Enrolled ME/CFS participants were required to meet the research criteria of the International Chronic
+      Fatigue Syndrome Study Group [30], the Canadian consensus criteria [31], and the diagnostic tool issued by
+      the Institute of Medicine in 2015 [32].
+    design: controlled
+    n_patients: 4
+    n_controls: 4
+    measures_pem: false
+    preregistered: null
+    role: early_signal
+    direction: mixed
+    finding: >-
+      A single-cell RNA study of n=4 patients and 4 controls found changed proportions of immune cell types,
+      altered differentiation trajectories of T and B cells, and signs of B-cell overactivity.
+    group: Zhao R, Shandong University, Jinan, China
+  - id: pmid:28494812
+    title: "Whole blood gene expression in adolescent chronic fatigue syndrome: an exploratory cross-sectional study suggesting altered B cell differentiation and survival."
+    year: 2017
+    cohort: me_cfs
+    case_definition: other
+    case_definition_source: abstract
+    case_definition_quote: >-
+      A broad case definition of CFS was applied, requiring 3 months of unexplained, disabling chronic/relapsing
+      fatigue of new onset, whereas no accompanying symptoms were necessary.
+    design: controlled
+    n_patients: 29
+    n_controls: 18
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed
+    finding: >-
+      An RNA-seq study of n=29 adolescents with CFS by a broad definition and 18 controls found 176 genes
+      expressed differently in whole blood, with enrichment suggesting impaired B cell differentiation and
+      enhanced innate antiviral responses.
+    group: Wyller VB, Oslo University Hospital
+last_checked:
+  date: 2026-11-08
+  by: ai_pair
+layer: dysfunction
+links:
+  - to: symptom:post-exertional-neuroimmune-exhaustion
+    support: proposed
+    text: >-
+      A US study proposes that exhausted CD8+ T cells, pushed further by an exercise challenge, may contribute to
+      inflammation and post-exertional malaise. Two studies found blood-cell expression patterns related to
+      post-exertional malaise in the same patients, but one did not state a case definition and the other used a
+      broad definition, so the link stays at proposed.
+    sources: [pmid:39621903, pmid:38232699, pmid:28494812]

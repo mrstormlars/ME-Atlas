@@ -1,0 +1,186 @@
+slug: immune-cell-gene-expression
+items:
+  name:
+    text: Endret genuttrykk i immunceller i blodet (utslitte eller kronisk aktiverte celler)
+    source_hash: eae588b5bb9f79ca9336105db337c9f5f8a692f7c311d774f503ad280aa8b175
+  core_claim:
+    text: Hypotesen foreslår at immunceller som sirkulerer i blodet hos personer med ME/CFS, slår genene sine av og på i et
+      annet mønster enn hos friske, og at dette mønsteret gjenspeiler immunceller som er utslitte (utmattede) eller holdt
+      i en tilstand av vedvarende aktivering.
+    sources:
+    - pmid:39435656
+    - pmid:39621903
+    - pmid:30791746
+    source_hash: e89ad175fd9f45369a7ab3689e3975aaf6099d7a36427474d0f1e54030ac1438
+  level_reason[0]:
+    text: En australsk studie av 14 pasienter som oppfylte Canadian Consensus Criteria (én oppfylte bare Fukuda-kriteriene
+      ved studiebesøket) og 18 kontroller målte et panel av gener for immunutmattelse i mononukleære blodceller. Den fant
+      14 gener med ulikt uttrykk, med lavere interferon-alfa- og immunglobulingener hos pasientene; forfatterne tolket dette
+      som immunsuppresjon. Skårer for celletyper fra det samme panelet anslo færre utmattede CD8+ T-celler hos pasientene
+      enn hos kontrollene. Det var en pilotstudie, og den er ikke gjentatt.
+    sources:
+    - pmid:39435656
+    source_hash: 70a35a5e38c1568024e19ba0f9eedd943849cea6ee8548ca366dc9dd3c4cfd92
+  level_reason[1]:
+    text: En amerikansk studie som brukte Canadian Consensus Criteria og IOM 2015-kriteriene, sammenlignet rensede CD8+ minne-T-celler
+      fra 7 kvinner med ME/CFS og 7 kontroller. Den fant høyere uttrykk av flere regulatorer av T-celleutmattelse, med endringer
+      i kromatin som stemmer med T-celleutmattelse. Analysen av enkeltcelledata fra det samme forskningssenteret fant sene
+      effektor-minne-T-celler med svakere effektorgener. Flowcytometri hos 15 pasienter og 11 kontroller, med blod tatt etter
+      en treningstest, fant en større andel celler med høye nivåer av én markør knyttet til T-celleutmattelse (SLAMF6) i noen
+      undergrupper av effektor-minneceller. Disse resultatene er ikke gjentatt.
+    sources:
+    - pmid:39621903
+    source_hash: c0d05a5a5aa52e6527ba1193f28f189565e1fc676cd4f0a6403d77e522207982
+  level_reason[2]:
+    text: 'En newzealandsk studie av 10 pasienter som oppfylte Canadian Consensus Criteria og 10 kontroller fant 27 transkripter
+      høyere og 6 lavere hos pasientene, og de fremste var knyttet til betennelse. To britiske studier som brukte CDC-kriteriene
+      (versjon ikke oppgitt), som ikke krever PEM, fant gener med ulikt uttrykk og bekreftet dem med PCR: 16 gener i en studie
+      av 25 pasienter og 25 kontroller, og 88 gener hos 55 pasienter og 75 kontroller. Den første tolket mønsteret sitt som
+      T-celleaktivering.'
+    sources:
+    - pmid:30791746
+    - pmid:16049284
+    - pmid:18462164
+    source_hash: d74f3f76e50ee1dc6c860011d5cee8267baf39777072738ca9f5296aa03639dc
+  level_reason[3]:
+    text: 'Kortet er på nivå 2. Hver gruppe fant noen gener med ulikt uttrykk, men genene og signalveiene er forskjellige
+      fra studie til studie: T-celleaktivering, betennelse, lavere interferon- og immunglobulingener, og T-celleutmattelse.
+      Ingen uavhengig gruppe har gjentatt et bestemt funn i en annen kohort, så ingen av funnene er gjentatt. Tolkningen om
+      T-celleutmattelse er ikke konsekvent i kortets egne studier: den australske studien anslo færre utmattede CD8+ T-celler
+      hos pasientene, og en ny analyse av de amerikanske enkeltcelledataene fant ingen signatur for T-celleutmattelse.'
+    sources:
+    - pmid:39435656
+    - pmid:30791746
+    - pmid:39621903
+    - pmid:16049284
+    - pmid:18462164
+    - pmid:41822518
+    source_hash: ebc330811c0b68e62b7ba4ee03f822a914bb2fa7bee26284bbf3c2482779b975
+  contested_reason[0]:
+    text: En studie av fullblod fra 25 pasienter og 25 matchede kontroller fant ingen gener med signifikant ulikt uttrykk.
+      Prøvene ble tatt ved inklusjon, ikke under oppbluss av symptomer. Artikkelen nevner de kanadiske diagnosekriteriene
+      og viser til International Consensus Criteria fra 2011 for dem; begge godtas på alle trinn. Studien hadde en kontrollgruppe
+      og minst halvparten så mange pasienter som hver av studiene ovenfor som brukte Canadian Consensus Criteria, og som den
+      første britiske studien, så den er av sammenlignbar kvalitet med dem.
+    sources:
+    - pmid:28172519
+    source_hash: 02d431359968c3ecb1c915ac000e20240a13bd5522843132d7f958848037e9b6
+  contested_reason[1]:
+    text: Den britiske gruppen testet 44 av sine tidligere gener på et nytt, blindet sett med prøver fra 64 pasienter som
+      oppfylte Fukuda-kriteriene, som ikke krever PEM, og 64 kontroller (artikkelen oppgir også 67 pasienter ett sted). Den
+      fant ingen signifikant forskjell mellom pasienter og kontroller i noen av de 44 genene, og en skåre bygd på dem klassifiserte
+      omtrent 58% av prøvene riktig. Diagnosekriteriene står likt med den andre britiske studiens, og studien hadde mer enn
+      halvparten så mange pasienter, så den er av sammenlignbar kvalitet med den studien.
+    sources:
+    - pmid:21479222
+    source_hash: 989dbf75a17852953e28898d9d2b0afdce1dc880083ac45cd8173e5f6ea81733
+  contested_reason[2]:
+    text: En studie av 44 par eneggede tvillinger, der den ene tvillingen var syk og den andre frisk, fant heller ingen forskjell
+      i noe transkript i hvite blodceller. De syke tvillingene med kronisk utmattelsessyndrom ble diagnostisert etter kriterier
+      som artikkelen knytter til Fukuda-definisjonen fra 1994 og en artikkel om den fra 2003, men 12 av de 44 hadde i stedet
+      idiopatisk kronisk utmattelse, og analysen slo begge gruppene sammen, så den teller ikke med i den omstridte markeringen.
+    sources:
+    - pmid:19503787
+    source_hash: 3dcdd1622a3c9a4cb7826a2926faaf9555b88d1dbdd239bcc6b4b300a914e20e
+  badge_reasons.diagnostic_marker[0]:
+    text: To undersøkelser i en ny pasientgruppe er gjort. En genliste fra to tidligere studier av én gruppe ble testet av
+      den samme forskergruppen på et nytt, blindet sett med prøver og skilte ikke pasienter fra kontroller. En studie av 4
+      pasienter undersøkte ett kandidatgen (ESRRA) i offentlige enkeltcelledata fra en amerikansk kohort på 58 personer og
+      fant det høyere i monocytter hos mannlige pasienter, men artikkelen bak datasettet oppgir ikke diagnosekriteriene sine,
+      så undersøkelsen oppfyller ikke merkets test.
+    sources:
+    - pmid:21479222
+    - pmid:39394558
+    - pmid:38232699
+    source_hash: 9adcf96e12844ba685b066a5b7039283fcc931a5f96d64611dbbcb2404c88384
+  badge_reasons.explains_pem[0]:
+    text: 'To studier satte genuttrykk i blodceller i sammenheng med PEM hos de samme pasientene: den ene fant at andelen
+      endrede monocytter økte med hvor alvorlig PEM var, den andre fant en sammenheng med PEM-symptomene. Den ene oppgav ikke
+      diagnosekriterier, og den andre brukte brede kriterier, så ingen av dem oppfyller merkets test.'
+    sources:
+    - pmid:38232699
+    - pmid:28494812
+    source_hash: c1818438782fa944054272ef139ed3c3e04b337412f69a33620f3edd6ec73204
+  subgroups[0]:
+    text: En britisk studie fra 2008 delte 55 pasienter inn i 7 undertyper etter genuttrykket deres, med ulike skårer på et
+      spørreskjema om livskvalitet og ulik alvorlighetsgrad. Denne inndelingen er ikke gjentatt.
+    sources:
+    - pmid:18462164
+    source_hash: aafe2661596bc8697404bf93d0878ddaef351de0ba42e40ae0d0719b11721815
+  early_signals[0]:
+    text: En enkeltcellestudie av 4 pasienter og 4 kontroller i Kina fant endrede andeler av immuncelletyper, endrede utviklingsveier
+      for T- og B-celler og tegn på overaktivitet i B-celler. Den er svært liten og ikke gjentatt.
+    sources:
+    - pmid:39394558
+    source_hash: 77d18b661f052d99ecf646a3e79eb8ed1418001b63d774fa22610f2cb6ff159f
+  early_signals[1]:
+    text: Ved langvarig covid fant en enkeltcellestudie av 5 kvinner med langvarig covid og ME/CFS og 5 personer som hadde
+      blitt friske etter covid-19, høyere skårer for T-celleutmattelse hos pasientene. Den er svært liten og ikke gjentatt.
+    sources:
+    - pmid:41822518
+    source_hash: 3682b395b2ac33b6e27110bb564f287dce128e4dd4cbd9d438142e977a93d254
+  links[0]:
+    text: En amerikansk studie foreslår at utmattede CD8+ T-celler, presset lenger av en treningsutfordring, kan bidra til
+      betennelse og PEM. To studier fant uttrykksmønstre i blodceller som hang sammen med PEM hos de samme pasientene, men
+      den ene oppgav ikke diagnosekriterier og den andre brukte brede kriterier, så lenken blir stående som foreslått.
+    sources:
+    - pmid:39621903
+    - pmid:38232699
+    - pmid:28494812
+    source_hash: bc9433b1807883b51787407258270a74fc9da1b7ec7353b76b76d262061fb7f2
+  studies[pmid:39435656].finding:
+    text: En studie av n=14 ME/CFS-pasienter, 15 pasienter med langvarig covid og 18 kontroller fant 14 gener i panelet for
+      immunutmattelse med ulikt uttrykk i mononukleære blodceller ved ME/CFS, med lavere interferon-alfa- og immunglobulingener
+      og høyere CEACAM3; skårer for celletyper fra panelet anslo færre utmattede CD8-celler ved ME/CFS.
+    source_hash: fa79a5f6ee5353ae8cbf0b2792d2ea8b98813b0a7a91c1165da4cc366b29ee68
+  studies[pmid:39621903].finding:
+    text: En studie av rensede CD8+ minne-T-celler fra n=7 kvinnelige pasienter og 7 kontroller fant høyere uttrykk av regulatorer
+      av T-celleutmattelse (EOMES, SLAMF6, SLAMF7) og kromatinendringer som stemmer med T-celleutmattelse; enkeltcelledata
+      fra det samme senteret viste sene effektor-minneceller med svekkede effektorgener, og flowcytometri etter en treningstest
+      hos 15 pasienter og 11 kontroller fant flere celler med faktorer knyttet til T-celleutmattelse.
+    source_hash: a11878f4b6a844e30348e3e7b0aea90e6a377c6777397582d4b258c9278726a5
+  studies[pmid:30791746].finding:
+    text: En studie av n=10 pasienter og 10 matchede kontroller fant at 27 PBMC-transkripter var økt og 6 redusert ved RNA-seq,
+      og økningene i IL8 og NFKBIA ble bekreftet med qPCR.
+    source_hash: b9fe425a47ddbe1cac39b093137a30fbd99956dd4d580034193a217564e438e7
+  studies[pmid:18462164].finding:
+    text: En studie som screenet 25 pasienter og 50 blodgivere med microarray og deretter testet n=55 pasienter og 75 givere
+      med kvantitativ PCR, bekreftet ulikt uttrykk av 88 gener (85 opp, 3 ned) og fant 7 undertyper av pasienter.
+    source_hash: 6e9db510cc6b9b56e06955120faacba4aa6fdb17694060d93c23ecf31d5fce56
+  studies[pmid:16049284].finding:
+    text: En studie av n=25 pasienter og 25 matchede blodgivere fant 35 PBMC-gener med ulikt uttrykk ved microarray, og 16
+      ble bekreftet med sanntids-PCR i et antall ferske prøver som sammendraget ikke oppgir (15 opp, 1 ned); forfatterne tolket
+      dette som at det tyder på T-celleaktivering.
+    source_hash: 43d746ca56bed451262f553f71d38a500168ce26af01575b3ef9b73508b59c44
+  studies[pmid:28172519].finding:
+    text: En blindet RNA-seq-studie av fullblod fra n=25 CFS-pasienter og 25 matchede kontroller, tatt utenfor oppbluss av
+      symptomer, fant ingen gener med signifikant ulikt uttrykk og ingen forskjell i repertoarene av B-cellereseptorer eller
+      T-cellereseptorer.
+    source_hash: 78b54df04d42f8ddc5dfab869c7249e957c7c8f74e0ca01bbd20ede09939e980
+  studies[pmid:19503787].finding:
+    text: En microarray-studie av n=44 rammede tvillinger (32 med kronisk utmattelsessyndrom, 12 med idiopatisk kronisk utmattelse)
+      og deres 44 friske eneggede tvillingsøsken fant ingen signifikant forskjell i uttrykk i hvite blodceller for noe transkript.
+    source_hash: 3c8c6d6e5d4f01cf965b63b3edad6b1222f4dc822e45d3358fecddf80cdea45d
+  studies[pmid:21479222].finding:
+    text: På et nytt, blindet sett med prøver fra n=64 pasienter og 64 friske frivillige (resultatene oppgir 67 pasienter
+      ett sted) var ingen av 44 tidligere rapporterte gener signifikant forskjellige mellom pasienter og kontroller, og en
+      skåre bygd på dem forutså 58% av prøvene riktig.
+    source_hash: 4243802d6e0fee19ed7fccbb69e8696dc89e2a5894768fbece39bec4c37241d3
+  studies[pmid:38232699].finding:
+    text: En enkeltcelle-RNA-studie av n=30 pasienter og 28 kontroller fant klassiske monocytter med økte gener for kjemokin-
+      og cytokinsignalering ved baseline, og andelen av disse cellene hang sammen med alvorlighetsgraden; etter en treningstest
+      endret blodplatene seg, men andre immunceller endret seg lite.
+    source_hash: 93c21b6c6399541ff59850b2b6362f961007aae809fed078320f9abcdff8a796
+  studies[pmid:41822518].finding:
+    text: En enkeltcelle-RNA-studie av n=5 kvinner med langvarig covid og ME/CFS og 5 personer som var blitt friske (ti per
+      gruppe var inkludert) fant høyere skårer for T-celleutmattelse hos pasientene; den nye analysen av offentlige data om
+      idiopatisk ME/CFS fant T-celleaktivering, men ingen forskjell i T-celleutmattelse.
+    source_hash: 1f8b16e5ecb2d4eb7a9a05d7253b59ec6e1b3fb8bf4d5f5fb7c7dbfe2c933f95
+  studies[pmid:39394558].finding:
+    text: En enkeltcelle-RNA-studie av n=4 pasienter og 4 kontroller fant endrede andeler av immuncelletyper, endrede differensieringsforløp
+      for T- og B-celler og tegn på overaktivitet i B-celler.
+    source_hash: 8d6f4128db8c3462fa5d57eb75d031469ad516c759993d66bcea643e4ecdef13
+  studies[pmid:28494812].finding:
+    text: En RNA-seq-studie av n=29 ungdommer med CFS etter en bred definisjon og 18 kontroller fant 176 gener med ulikt uttrykk
+      i fullblod, med anrikning som tyder på nedsatt differensiering av B-celler og styrkede medfødte antivirale responser.
+    source_hash: dec4f5d68e93233feb22e2146eb597ee3cc6b884080c0dbfa8817d40cffab61c

@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-08 — New hypothesis: altered gene expression in blood immune cells
+
+- New draft card `drafts/immune-cell-gene-expression.yaml` (19th hypothesis), the second survey candidate drafted. Founder ruling on the drafter's recommendations after two `card-reviewer` rounds (run files in the drafting worktree's `data/pipeline/2026-11-08-immune-genes/`): level 2; contested at rung 2; both badges no; long COVID label; layer dysfunction; one proposed link to the post-exertional malaise symptom node.
+- Level 2, not 3: three controlled CCC studies from three groups and two CDC studies from a fourth find altered expression, but each points to different genes and pathways (T-cell activation, inflammation, lower interferon and immunoglobulin genes, T-cell exhaustion). "Some immune genes differ" does not count as the finding an independent group must reproduce. The exhaustion reading is contradicted on the card itself (fewer estimated exhausted CD8 cells in pmid:39435656; no exhaustion signature in the re-analysis pmid:41822518).
+- Contested at rung 2: pmid:28172519 (CCC, 25 and 25, no differentially expressed genes) and pmid:21479222 (Fukuda, 64 and 64, no difference in the earlier genes) together are of comparable quality to every study rung 2 rests on. Whole blood against mononuclear cells is stated, not graded (not a rubric criterion).
+- Diagnostic marker no: the ESRRA check in pmid:39394558 used a public dataset whose own paper states no case definition; a definition is not carried across from another paper on the same cohort.
+- Layer dysfunction, not mechanism: the card measures a pattern in blood; exhaustion "maintained by chronic stimulation" is the authors' unreplicated reading. No incoming link from herpesvirus reactivation: the source names only "chronic viral infections" in general.
+
 ## 2026-11-08 — New hypothesis: autonomic nervous system imbalance
 
 - New draft card `drafts/autonomic-imbalance.yaml` (18th hypothesis), the first survey candidate drafted (see the entry below). Founder ruling on the drafter's proposal after two `card-reviewer` rounds (run files in `data/pipeline/2026-11-08-autonomic/`): level 3 (lower high-frequency heart rate variability at rest in a Fukuda study of 68 patients and 68 controls, found again later by two other groups in separate cohorts, Fukuda and Fukuda/CCC/IOM 2015); contested at rung 3 (Duprez 1998, Holmes, 38 against 38, found no major change in RR-interval variability; rung 2 rests on the stricter definition and is not contested); both badges no; layer `dysfunction`; three step-1 links (sleep disturbance, cognitive impairment, orthostatic intolerance and cerebral blood flow). Boundary: this card is about autonomic tone itself (heart rate variability, resting heart rate, baroreflex, catecholamines); the orthostatic card keeps the fall in brain blood flow on standing.

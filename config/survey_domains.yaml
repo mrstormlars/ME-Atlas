@@ -101,7 +101,6 @@ genetics_epigenetics:
   label: Genetics and epigenetics
   survey: true
   headings:
-    - Gene Expression Profiling
     - Gene Expression Regulation
     - Gene Expression
     - RNA, Messenger

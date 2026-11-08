@@ -37,6 +37,10 @@ hpa-axis-cortisol:
     - Corticotropin-Releasing Hormone
   terms: [cortisol]
   related: ["Stress, Physiological"]
+immune-cell-gene-expression:
+  mesh: [Gene Expression Profiling, Transcriptome, Single-Cell Analysis]
+  terms: [transcriptome, transcriptomic, gene expression, T cell exhaustion]
+  related: ["Leukocytes, Mononuclear", Gene Expression Regulation, "RNA, Messenger", Monocytes, Lymphocyte Activation]
 impaired-energy-production-after-exertion:
   mesh: [Energy Metabolism, Oxygen Consumption, Exercise Test, Anaerobic Threshold, Exercise Tolerance]
   terms: [cardiopulmonary exercise]

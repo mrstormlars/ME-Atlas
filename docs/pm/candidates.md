@@ -411,7 +411,7 @@ Refuted hypotheses are not candidates; they are listed with the reason in `docs/
 - Reviews: none
 - Meets inclusion rule on abstracts: yes
 - Why: 39435656 carries the rule (Canadian Consensus Criteria named in the abstract, n=14 ME/CFS). Uncertain: it is a gene-panel study with small groups, unreplicated, and the other records name no case definition. 'Exhaustion' is the authors' interpretation of expression data; 38383456 may use strict criteria but the abstract only says 'rigorous criteria'. Possible overlap with any existing immune-dysregulation theme; not mapped to a card since none of the near cards covers general PBMC expression changes.
-- Status: to draft (founder ruling 2026-11-08)
+- Status: drafted as `drafts/immune-cell-gene-expression.yaml` (founder ruling 2026-11-08, DECISIONS.md)
 - Date: 2026-11-08
 
 ## Activation of human endogenous retrovirus (HERV) sequences in ME/CFS blood cells
