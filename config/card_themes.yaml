@@ -18,6 +18,10 @@ autonomic-imbalance:
 brain-and-brainstem-mri-changes:
   mesh: [Magnetic Resonance Imaging, White Matter, Gray Matter, Brain Stem, Diffusion Tensor Imaging]
   terms: [brainstem]
+circadian-rhythm-disruption:
+  mesh: [Circadian Rhythm, Melatonin, Chronobiology Disorders, Activity Cycles]
+  terms: [circadian, melatonin, chronobiology]
+  related: [Actigraphy, Body Temperature, Sleep]
 endothelial-dysfunction:
   mesh: ["Endothelium, Vascular", Microcirculation, Blood Coagulation]
   terms: [endothelial, endothelium]
