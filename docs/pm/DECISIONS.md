@@ -2,6 +2,10 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-08 — Circadian card: Rahman 2011 verified from its PMC page
+
+- First use of the free-to-read PMC page rule (entry below): Rahman 2011 (pmid:21532961) is recorded as Fukuda from its PMC page ("international diagnostic criteria for CFS" with reference 1, the Fukuda 1994 definition) and is now `contradicts` on `drafts/circadian-rhythm-disruption.yaml`. Level 2 and "not contested" are unchanged: Fukuda ranks below the ICC of the level 2 study, and 15 patients are below half of its up to 94. The card now also states the authors' limits: patients recruited at the start of a graded-activity cognitive-behavioural therapy programme, possibly motivated to change activity-rest patterns, a sample that may not be representative, results to be repeated in a larger sample. Founder request 2026-11-08 ("Oppdater Rahman 2011 når PR 30 er flettet inn").
+
 ## 2026-11-08 — Free-to-read PMC article pages as a full-text source
 
 - When Europe PMC has no open-access full text for a PMID that a card or draft cites, and its lookup shows the article is in PubMed Central (`inPMC` "Y"), the article page on pmc.ncbi.nlm.nih.gov may be fetched with `uv run python -m me_atlas.europepmc pmcpage --card <card> <pmid>`: on demand, only for PMIDs on that card, never in bulk, never from a publisher site. The page is cached like other full text and used only to find and check the case-definition sentence (C5) and sample sizes (C6); on the card it counts as `case_definition_source: fulltext`. Why: some articles are free for anyone to read on PMC but are not in the open-access subset, so neither Europe PMC's API nor NCBI EFetch gives their text (example: Rahman 2011, pmid:21532961); one cited article at a time, cached once, is reading, not crawling, and the sentence is still checked mechanically against a cached copy. Plan and contract: `docs/plan-pmc-free-fulltext.md`. Amends the open-access-only rule of 2026-11-01 for this case only.

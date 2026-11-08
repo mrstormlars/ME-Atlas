@@ -4,6 +4,9 @@
 # 42399727 as ICC, 36902264 stays `supports`, no endothelial-dysfunction link now, NPAS2 study 21912186 left out).
 # No early signals: 12213500 has an unverified case definition (spec section 4), so it is `context`.
 # DECISIONS.md 2026-11-08.
+# UPDATE (founder request 2026-11-08, after PR 30): 21532961 (Rahman 2011) verified from its free-to-read PMC page
+# (cached data/cache/europepmc/PMC3079947.html, `europepmc pmcpage`): Fukuda, now `contradicts`. Level 2 and
+# "not contested" are unchanged (Fukuda ranks below ICC; 15 < 47).
 # DRAFT — AI-drafted (ai_pair) on 2026-11-08 from the founder ruling "First survey run" (DECISIONS 2026-11-08,
 # candidate "Disrupted daily (circadian) rhythms of activity, body temperature and light exposure", docs/pm/candidates.md).
 # Nothing here is published. Level, contested mark, badges, layer and links below are proposals for the founder
@@ -12,8 +15,9 @@
 # Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
 # data/cache/pubmed/<pmid>.xml (abstract) or, where `case_definition_source: fulltext` or a comment names a full
 # text, from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (29874259: PMC5991397;
-# 36902264: PMC10003028; 42399727: PMC13508389). The other ten have no open full text in Europe PMC
-# (`europepmc fulltext`, checked 2026-11-08): 39037125, 21532961, 8842569, 9513740, 11318826, 10606381, 28470767,
+# 36902264: PMC10003028; 42399727: PMC13508389), or the cached free-to-read PMC page for 21532961
+# (PMC3079947.html, DECISIONS 2026-11-08). The other nine have no open full text in Europe PMC
+# (`europepmc fulltext`, checked 2026-11-08) and no PMC page: 39037125, 8842569, 9513740, 11318826, 10606381, 28470767,
 # 12423324, 15451649, 12213500. Searches and hit counts: data/pipeline/2026-11-08-circadian/report.md.
 #
 # SCOPE: the circadian timing system: the 24-hour rhythms of rest and activity, core and skin temperature, melatonin
@@ -62,8 +66,8 @@
 #   definition than ICC (CCC, ICC or IOM 2015), a control group and at least 47 patients (half of the up to 94 with
 #   actigraphy). None on the
 #   card meets it: 9513740 (Hamilos 1998, CDC, 7 v 7) and 11318826 (Hamilos 2001, CDC, 10 v 10) found a normal core
-#   temperature rhythm but rank below ICC and are far smaller; 21532961 (Rahman 2011, 15 v 15, null on activity and
-#   sleep pattern, controls matched on activity level) is `unverified` and below half the size even if verified.
+#   temperature rhythm but rank below ICC and are far smaller; 21532961 (Rahman 2011, Fukuda, 15 v 15, null on
+#   activity and sleep pattern, controls matched on activity level) ranks below ICC and is below half the size.
 # ACTIVITY LEVEL: much of the "weaker rhythm" signal in the Barcelona studies is lower activity (mean, M10, absolute
 #   cosinor amplitude). 29874259's discussion calls a decrease in activity "a cardinal feature" of proposed CFS/ME
 #   definitions, and 42399727's discussion says reverse causation cannot be excluded for light. This is written out on
@@ -185,10 +189,15 @@ level_reason:
       profiles, and in 10 patients and 10 controls the rhythm was nearly indistinguishable, apart
       from the phase of the third harmonic and a tendency to more variability. An Australian study
       of 15 patients and 15 controls, matched for age, sex, body mass index and activity level (so
-      similar amounts of activity were partly built into the design), found no between-group difference in the pattern or amount of sleep or activity over five days
-      and no evidence of circadian disturbance; its case definition is not yet verified. These
-      studies are smaller than the level 2 study, and the CDC definition ranks below the
-      International Consensus Criteria, so the card does not treat them as contesting level 2.
+      similar amounts of activity were partly built into the design), with patients diagnosed by the
+      Fukuda definition (which also does not require post-exertional malaise), found no between-group
+      difference in the pattern or amount of sleep or activity over five days and no evidence of
+      circadian disturbance. Its patients were recruited at the start of a graded-activity
+      cognitive-behavioural therapy programme; the authors write that they may have been motivated to
+      change their activity-rest patterns, that the sample may not be representative of patients in
+      general, and that the results need to be repeated in a larger sample. These studies are smaller
+      than the level 2 study, and the CDC and Fukuda definitions rank below the International
+      Consensus Criteria, so the card does not treat them as contesting level 2.
     sources: [pmid:9513740, pmid:11318826, pmid:21532961, pmid:42399727]
   - text: >-
       Studies of the internal clock itself are few, small and older, with case definitions not yet
@@ -353,27 +362,30 @@ studies:
       A study of n=10 patients and 10 matched controls found the circadian rhythm of core body
       temperature nearly indistinguishable between groups, apart from the phase of the third
       harmonic, with a tendency to greater variability in patients.
-  # --- context ---
   - id: pmid:21532961
     title: Sleep-wake behavior in chronic fatigue syndrome.
     year: 2011
     cohort: me_cfs
-    # The abstract names no case definition; PMC3079947 exists but is not open access in Europe PMC. TODO: verify.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    # Free-to-read PMC page (not open access), cached as PMC3079947.html via `europepmc pmcpage`. The quote's "CFS1"
+    # is the footnote to reference 1, Fukuda K et al. 1994, "The chronic fatigue syndrome: a comprehensive approach to
+    # its definition and study" (the page's reference list). The full text also says controls were matched for
+    # exercise levels on purpose.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Fifteen patients fulfilling international diagnostic criteria for CFS1 were recruited from a tertiary referral clinic associated with a university teaching hospital, which provides a graded-activity oriented cognitive-behavioral therapy program for patients with fatigue syndromes."
     design: controlled
     n_patients: 15
     n_controls: 15
     measures_pem: false
     preregistered: null
-    role: context
+    role: contradicts  # not of comparable quality against the ICC rung-2 study (Fukuda < ICC; 15 < 47)
     direction: no_difference
     group: Rahman K and Vollmer-Conna U, Sydney, Australia
     finding: >-
       A study of n=15 patients and 15 controls matched for age, sex, body mass index and activity
       level found no between-group difference in the pattern or amount of sleep or activity over
       five days and no evidence of circadian rhythm disturbance.
+  # --- context ---
   - id: pmid:15451649
     title: Chronic fatigue syndrome impairs circadian rhythm of activity level.
     year: 2004
