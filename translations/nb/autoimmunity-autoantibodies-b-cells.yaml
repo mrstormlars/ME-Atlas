@@ -168,6 +168,19 @@ items:
     sources:
     - pmid:34254637
     source_hash: 03a8a114d0166ebd5beac90bafc9584cb331440afc049994584f803802a0506c
+  links[2]:
+    text: En studie med n=59 personer med ME/CFS (Fukuda-kriteriene, som ikke krever PEM) og 36 friske kontroller målte antistoffer
+      mot adrenerge og muskarine reseptorer og autonom funksjon hos de samme personene. Den omfattet også 96 personer med
+      post-covid-tilstand, ikke definert som ME/CFS, og resultatene deres er ikke brukt her. I ME/CFS-gruppen var antistoffer
+      mot β2-adrenerg reseptor knyttet til en høyere sympatovagal indeks, et mål på hjerterytmevariabilitet som viser sympatisk
+      aktivitet i forhold til vagal aktivitet (r = 0,45, p = 0,001). I denne studien skilte ME/CFS-gruppen seg ikke fra kontrollene
+      på målene for balansen i hjerterytmevariabilitet, og reseptorantistoffene var også knyttet til autonome mål hos de friske
+      kontrollene. Studien er en tverrsnittsstudie og ble av forfatterne beskrevet som utforskende, uten korreksjon for de
+      mange sammenligningene som ble gjort, og medisiner, blant annet betablokkere, ble ikke tatt hensyn til. Derfor er ingen
+      rekkefølge i tid vist. Den er ikke gjentatt.
+    sources:
+    - pmid:42082542
+    source_hash: 34d52a58268b5598e0160adaf12a4314c69522b16d964288b6a253cc8da28799
   studies[pmid:34589868].finding:
     text: En studie med n=48 pasienter i to kohorter på 24 og 24 matchede friske kontroller fant høyere antistoffer mot de
       muskarine reseptorene M3 og M4 i begge kohortene og mot de adrenerge reseptorene β1 og β2 i én, uten korrelasjon mellom

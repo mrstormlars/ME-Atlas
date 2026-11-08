@@ -75,7 +75,9 @@
 #
 # Not on the card (searched in the cache, read, left out):
 #   - Reviews, hypotheses and theory papers: 10790736, 17448611, 21253446, 21892413, 24669210, 24557875, 26454487,
-#     34315375, 19436827, 22837795 and others flagged Review.
+#     34315375, 19436827, 22837795 and others flagged Review. Exception (founder ruling 2026-11-08): the review
+#     29759891 is on the card as a context study, cited only for a map link, not for the level; 16610951 (unverified
+#     case definition, oxidative stress inferred from one gene) is likewise on the card only for a map link.
 #   - Exercise-induced oxidative stress (exercise tests, other card): 15715687, 19457057, 22112145, 27580693,
 #     30665828, 32306967 (Jammes group). 19422646 is kept only for its resting isoprostane result.
 #   - Mitochondrial energy production (other card): 20937116, 29065167, 1446478 and other muscle spectroscopy studies.
@@ -538,8 +540,55 @@ studies:
     group: Maes M, IMPACT Strategic Research Centre, Deakin University, Geelong, Australia, with first author Morris G, Llanelli, UK (Maes M is also an author of 21455120, 20010505 and 21552194 on this card, listed there as Maes M / Bosmans E, Maes Clinics, Antwerp, Belgium)
     finding: >-
       A narrative review of the communication between immune-inflammatory and oxidative and nitrosative pathways and low activity of the stress-hormone (HPA) axis in ME/CFS; it concludes that the low activity is most likely a consequence and not a cause of these pathways. Cited on the map as the source of a proposed link, not as evidence for the level.
+  - id: pmid:16610951
+    title: "Identifying illness parameters in fatiguing syndromes using classical projection methods."
+    year: 2006
+    cohort: me_cfs
+    # The abstract names no ME/CFS case definition (participants had unexplained fatigue), gives no split between fatigued and nonfatigued participants and no n for either. TODO: verify from the full text.
+    # Oxidative stress was not measured directly; the abstract infers it from the activity of one gene (SESN1).
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Broderick G, Institute for Biomolecular Design, University of Alberta, Edmonton, Canada (last author Unger ER)
+    finding: >-
+      A study of clinical and gene-expression data from 111 women with unexplained fatigue and nonfatigued
+      controls found that the most influential gene was sestrin 1 (SESN1) and that heart rate variability during
+      sleep dominated the clinical variables; the authors write that the exact mechanism is unclear. Cited on the
+      map as the source of a proposed link, not as evidence for the level.
+  - id: pmid:29759891
+    title: "The putative role of oxidative stress and inflammation in the pathophysiology of sleep dysfunction across neuropsychiatric disorders: Focus on chronic fatigue syndrome, bipolar disorder and multiple sclerosis."
+    year: 2018
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Morris G (first author), Tir Na Nog, Llanelli, Wales, UK; Carvalho AF (last author), University of Toronto, Canada (Morris G is also first author of 27766535 on this card; the two reviews are not independent sources)
+    finding: >-
+      A review that proposes a framework in which reciprocal interactions of immune, oxidative and nitrosative
+      stress, and mitochondrial pathways may drive sleep abnormalities across neuro-immune disorders, with chronic
+      fatigue syndrome, bipolar disorder and multiple sclerosis as examples. Cited on the map as the source of a
+      proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Links to autonomic-imbalance and symptom:sleep-disturbance (founder ruling 2026-11-08): both step 1 (proposed). The first rests on
+# pmid:16610951 (unverified case definition, oxidative stress inferred from one gene); the second on the review
+# pmid:29759891, retargeted from circadian-rhythm-disruption because the review says the pathways may drive sleep
+# abnormalities. Both records are on the card as context studies for these map links only, not for the level; the
+# 'Not on the card' note above that lists reviews does not cover them.
 layer: dysfunction
 links:
   - to: symptom:post-exertional-neuroimmune-exhaustion
@@ -564,6 +613,24 @@ links:
       and not a cause of these pathways. The review groups the two sets of pathways together;
       its abstract reports no patient study that tested the direction.
     sources: [pmid:27766535]
+  - to: autonomic-imbalance
+    support: proposed
+    text: >-
+      A 2006 gene-expression study of 111 women with and without unexplained fatigue concluded that its results
+      suggest a common link between oxidative stress, immune system dysfunction and potassium imbalance in CFS
+      patients, leading to impaired sympatho-vagal balance reflected in abnormal heart rate variability. This is
+      the authors' interpretation, not a direct test: the participants had unexplained fatigue and the abstract
+      names no ME/CFS case definition; oxidative stress was not measured directly but inferred from the activity
+      of one gene (sestrin 1); and the authors say the exact mechanism is unclear. Not repeated.
+    sources: [pmid:16610951]
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: >-
+      A 2018 review proposes that interacting immune, oxidative and nitrosative stress, and mitochondrial pathways
+      may drive sleep abnormalities in chronic fatigue syndrome and other neuro-immune disorders. It is a
+      hypothesis paper and reports no patient data linking the two. Its first author also wrote the 2017 review
+      cited on this card's link to hpa-axis-cortisol, so the two review sources are not independent.
+    sources: [pmid:29759891]
 last_checked:
   date: 2026-11-02
   by: ai_pair

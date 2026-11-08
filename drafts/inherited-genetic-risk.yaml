@@ -65,7 +65,8 @@
 # Not on the card (searched in the cache, read, left out):
 #   - Reviews, meta-analyses, letters, comments, protocols and cohort-description papers: 33816394 (23andMe
 #     re-analysis, no abstract), 35854226, 37881452, 40443420 (DecodeME / UK Biobank cohort papers), 27317438, the
-#     genetics reviews (e.g. 28089639).
+#     genetics reviews (e.g. 28089639). Exception (founder ruling 2026-11-08): the narrative review 42196410 is on the
+#     card as a context study, cited only for a map link, not for the level.
 #   - Unverified case definition, small candidate-gene studies, not needed (no open full text): 14592408 (5-HTT,
 #     78 patients), 18079067 and 16740143 (Wichita, 40 CFS v 42 non-fatigued, HTR2A and NR3C1), 21912186 (40 v 40),
 #     26116897 (50 v 121), 16762155 (TNF-857, 80 patients; 32328064 reports a lower, not higher, frequency of this
@@ -553,8 +554,31 @@ studies:
     finding: >-
       A study of n=95 patients and 77 healthy controls found no variant in the targeted genes that
       remained significant after correction for multiple testing; the lowest, in ADRA1A, had P = 0.059.
+  - id: pmid:42196410
+    title: "Toward a Molecular Reclassification of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Integrating Multi-Omics, Machine Learning, and Precision Medicine."
+    year: 2026
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Frank J / Nathanson L, Institute for Neuro-Immune Medicine, Nova Southeastern University, Fort Lauderdale, USA
+    finding: >-
+      A narrative review of recent genetic, epigenetic and immune findings in ME/CFS; its abstract states that the
+      findings revealed downstream consequences of genetic and epigenetic priming, including chronic innate immune
+      activation and CD8+ T cell exhaustion with upregulation of the transcription factors TOX and EOMES. Cited on
+      the map as the source of a proposed link, not as evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
+# Link to immune-cell-gene-expression (founder ruling 2026-11-08): step 1 (proposed), resting on the review pmid:42196410 only. The review is
+# on the card as a context study for this map link, not for the level; the 'Not on the card' note above that lists
+# reviews has this one exception.
 layer: predisposition
 links:
   - to: question:who-is-vulnerable
@@ -572,6 +596,16 @@ links:
     text: >-
       A study of n=418 patients and 473 healthy controls found differences in some variants of the KIR genes, which code for receptors on natural killer cells; of 76 variants tested, only one, less common in patients, passed the corrected threshold the authors give. It did not measure natural killer cell function. Not yet repeated.
     sources: [pmid:40897283]
+  - to: immune-cell-gene-expression
+    support: proposed
+    text: >-
+      A 2026 narrative review proposes that genetic and epigenetic variation in ME/CFS has downstream consequences
+      that include chronic innate immune activation and exhaustion of CD8+ T cells, with upregulation of the
+      exhaustion-driving transcription factors TOX and EOMES. The review does not separate genetic from epigenetic
+      effects, and the genetic findings it names (rare variants, the DecodeME genome-wide study) are not the
+      variants on this card. It summarises other studies and was not itself a test in patients of a link from
+      inherited variants to immune cell gene expression.
+    sources: [pmid:42196410]
 last_checked:
   date: 2026-11-02
   by: ai_pair

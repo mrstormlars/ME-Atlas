@@ -171,6 +171,16 @@ items:
     sources:
     - pmid:40897283
     source_hash: 82b7b856b84a65ef779df0e6e5ae15aa0db3b2941ad956875e61a58c865d7307
+  links[3]:
+    text: En narrativ oversiktsartikkel fra 2026 foreslår at genetisk og epigenetisk variasjon ved ME/CFS har nedstrøms konsekvenser,
+      blant dem kronisk aktivering av det medfødte immunforsvaret og utmattelse av CD8+ T-celler, med oppregulering av de
+      transkripsjonsfaktorene som driver utmattelsen, TOX og EOMES. Artikkelen skiller ikke genetiske fra epigenetiske effekter,
+      og de genetiske funnene den nevner (sjeldne varianter, den genomomfattende DecodeME-studien) er ikke variantene på dette
+      kortet. Den oppsummerer andre studier og var ikke selv en test hos pasienter av en sammenheng fra arvelige varianter
+      til genuttrykk i immunceller.
+    sources:
+    - pmid:42196410
+    source_hash: fe1f35c433ea21c04ab3536d7457ecf41c675de6bfb1a8bb829bbfc0f34a50b2
   studies[pmid:32210306].finding:
     text: En studie med n=426 pasienter og 4511 friske kontroller fant HLA-C*07:04 (OR 2,1) og HLA-DQB1*03:03 (OR 1,5) oftere
       hos pasientene; 19,2% av pasientene og 12,2% av kontrollene bar én av eller begge.
@@ -240,3 +250,9 @@ items:
     text: En studie med n=95 pasienter og 77 friske kontroller fant ingen variant i de utvalgte genene som forble signifikant
       etter korreksjon for multippel testing; den laveste, i ADRA1A, hadde P = 0,059.
     source_hash: 326e9882aa9c6a7bd0acea900c7dfcb908085bc1e3b1e62534e0ef0deb85d4a9
+  studies[pmid:42196410].finding:
+    text: En narrativ oversiktsartikkel om nyere genetiske, epigenetiske og immunologiske funn ved ME/CFS. Sammendraget sier
+      at funnene avdekket nedstrøms konsekvenser av genetisk og epigenetisk priming, blant dem kronisk aktivering av det medfødte
+      immunforsvaret og utmattelse av CD8+ T-celler med oppregulering av transkripsjonsfaktorene TOX og EOMES. Sitert på kartet
+      som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: e06aaba35b7f6bd231a057af8f6b258f50877b6df752e4804b8fc208eae31cfb
