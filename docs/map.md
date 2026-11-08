@@ -69,6 +69,8 @@ Not checked by code: that the cited study really measured both ends in the same 
 
 `gaps.html` (and `nb/gaps.html`, "What is missing" / "Hva mangler"), after "Causal map" in the navigation: the same five gap lists as the report, with the same counts, as sections `gaps-unlinked-symptoms`, `gaps-step1-symptoms`, `gaps-untested-links`, `gaps-next-rung` and `gaps-unlinked-cards`. Symptoms and links are shown as on the map page (the numbers on a link are the map page's numbers for that card); the next-rung sentences are the existing `rung.<k>.name` and `rung.<k>.meaning` strings. The lists live in `me_atlas.map` (`unlinked_symptoms`, `proposed_only_symptoms`, `proposed_links`, `unlinked_cards`, `cards_by_level`). The page adds no claim: gaps are counted, never judged. Plan: `docs/plan-gaps-page.md`.
 
+Above the lists, a section `gaps-summary` ("At a glance" / "Kort oppsummert") shows the same data as three counted figures: a table of incoming links per symptom by support step (`gaps-summary-symptoms`, one mark per link in the map's line vocabulary, rows with no link marked in muted text), one bar of all links by step (`gaps-summary-links`) and the hypotheses by level 0 to 5 with the contested count (`gaps-summary-levels`). All numbers are text; the bars and marks are aria-hidden; nothing is ordered by count. The per-step counts come from `me_atlas.map.step_counts`.
+
 ## The drawing
 
 `src/me_atlas/map_draw.py` (pure functions, no I/O, no dependency) turns the graph into inline SVG at build time. It draws only what the lists already state; every fact in the drawing is also in the text, with its sources. Same input, same bytes.

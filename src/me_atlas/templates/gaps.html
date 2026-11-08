@@ -6,6 +6,46 @@
 <h1>{{ txt("gaps.h1") }}</h1>
 <p>{{ t("gaps.intro") }}</p>
 
+<section id="gaps-summary" class="gaps-summary">
+<h2>{{ txt("gaps.summary.h2") }}</h2>
+{% set sm = gaps.summary %}
+<div id="gaps-summary-symptoms">
+<h3>{{ txt("gaps.summary.symptoms.h3") }}</h3>
+<table class="gaps-table">
+<caption>{{ txt("gaps.summary.symptoms.caption") }}</caption>
+<thead><tr><th scope="col">{{ txt("gaps.summary.symptom") }}</th>{% for st in sm.steps %}<th scope="col">{{ legend.samples[st.step] }} {{ txt("support." ~ st.step) }}</th>{% endfor %}</tr></thead>
+<tbody>
+{% for s in sm.symptoms %}
+<tr{% if s.no_link %} class="gaps-row-none"{% endif %}><th scope="row"><a href="{{ lroot }}map.html#symptom-{{ s.id }}">{{ mt(s.name) }}</a>{% if s.no_link %} <span class="small">{{ txt("gaps.summary.none") }}</span>{% endif %}</th>
+{% for st in sm.steps %}{% set n = s.counts[loop.index0] %}<td data-label="{{ txt("support." ~ st.step) }}" class="{% if n == 0 %}zero{% endif %}">{{ n }}{% if n %} <span class="marks" aria-hidden="true">{% for _ in range(n) %}<span class="mk mk-{{ st.step }}"></span>{% endfor %}</span>{% endif %}</td>{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div id="gaps-summary-links">
+<h3>{{ txt("gaps.summary.links.h3") }}</h3>
+<div class="gaps-linkbar" aria-hidden="true">{% for st in sm.steps if st.count %}<span class="mk-seg mk-{{ st.step }}" style="flex-grow: {{ st.count }}"></span>{% endfor %}</div>
+<ul class="gaps-linklist">
+{% for st in sm.steps %}
+  <li><span class="mk-sw mk-{{ st.step }}" aria-hidden="true"></span>{{ txt("support." ~ st.step) }}: {{ st.count }}</li>
+{% endfor %}
+</ul>
+<p class="small">{{ t("gaps.summary.links.total", n=sm.total) }} <a href="#gaps-untested-links">{{ txt("gaps.summary.links.see") }}</a></p>
+</div>
+
+<div id="gaps-summary-levels">
+<h3>{{ txt("gaps.summary.levels.h3") }}</h3>
+<ol class="gaps-levels">
+{% for lv in sm.levels %}
+  <li><span class="gl-bar" aria-hidden="true">{% if lv.count %}<span class="gl-rest" style="flex-grow: {{ lv.rest }}"></span><span class="gl-fill" style="flex-grow: {{ lv.count }}"></span>{% endif %}</span><span class="gl-text"><span class="gl-no">{{ txt("gaps.summary.levels.level") }} {{ lv.level }}</span> <span class="gl-name">{{ txt("rung." ~ lv.level ~ ".name") }}</span> <strong class="gl-count">{{ t("gaps.summary.levels.count", n=lv.count) }}</strong>{% if lv.contested %} <span class="small">{{ t("gaps.summary.levels.contested", n=lv.contested) }}</span>{% endif %}</span></li>
+{% endfor %}
+</ol>
+<p class="small"><a href="#gaps-next-rung">{{ txt("gaps.summary.levels.see") }}</a></p>
+</div>
+</section>
+
 <h2 id="gaps-unlinked-symptoms">{{ txt("gaps.unlinked_symptoms.h2") }}</h2>
 <p class="small">{{ txt("gaps.unlinked_symptoms.intro") }}</p>
 <p class="small">{{ t("gaps.count", n=gaps.unlinked_symptoms|length) }}</p>

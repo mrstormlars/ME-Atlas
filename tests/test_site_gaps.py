@@ -129,6 +129,7 @@ def test_the_page_is_built_in_both_languages_with_the_navigation_entry_after_the
 def test_the_five_sections_have_their_ids(gaps_site):
     doc = page(gaps_site.out, "gaps.html")
     assert [h.get("id") for h in doc.find_all("h2")] == [
+        None,  # the summary heading; its section carries the id
         "gaps-unlinked-symptoms",
         "gaps-step1-symptoms",
         "gaps-untested-links",
@@ -302,6 +303,7 @@ def test_the_norwegian_page_shows_the_norwegian_strings(gaps_site):
     doc = page(gaps_site.out, "nb/gaps.html")
     nb = i18n.load_strings(REPO_I18N / "nb.yaml")
     assert [norm(h.text()) for h in doc.find_all("h2")] == [
+        nb["gaps.summary.h2"],
         nb["gaps.unlinked_symptoms.h2"],
         nb["gaps.step1_symptoms.h2"],
         nb["gaps.untested.h2"],
@@ -314,3 +316,161 @@ def test_the_norwegian_page_shows_the_norwegian_strings(gaps_site):
     assert "Neste trinn, Første tegn, krever:" in text
     assert "omstridt på trinn 3" in text
     assert "What is missing" not in text and "contested at rung" not in text
+    summary = norm(doc.find("section", id="gaps-summary").text())
+    for key in (
+        "gaps.summary.symptoms.caption",
+        "gaps.summary.none",
+        "gaps.summary.links.h3",
+        "gaps.summary.levels.h3",
+    ):
+        assert nb[key] in summary, key
+    assert nb["gaps.summary.levels.contested"].format(n=1) in summary
+    assert "At a glance" not in summary and "no link yet" not in summary
+
+
+# --- the summary ("At a glance") ---
+
+
+def summary(rel: str, site: Site) -> Node:
+    node = page(site.out, rel).find("section", id="gaps-summary")
+    assert node is not None
+    return node
+
+
+def table_rows(sec: Node) -> dict[str, Node]:
+    table = sec.find("table")
+    return {norm(r.find("th").text()): r for r in table.find("tbody").find_all("tr")}
+
+
+def cell_counts(row: Node) -> list[str]:
+    """The count text of the three step cells, without the aria-hidden marks."""
+    return [norm(td.text(frozenset({"marks"}))) for td in row.find_all("td")]
+
+
+def test_the_summary_comes_after_the_intro_and_before_the_first_list_with_three_blocks_in_order(gaps_site):
+    for rel in ("gaps.html", "nb/gaps.html"):
+        doc = page(gaps_site.out, rel)
+        main = list(doc.find("main").walk())
+        sec = doc.find("section", id="gaps-summary")
+        ids = [d.get("id") for d in sec.find_all("div") if d.get("id")]
+        assert ids == ["gaps-summary-symptoms", "gaps-summary-links", "gaps-summary-levels"], rel
+        assert sec.find("h2") is not None
+        intro = next(n for n in main if n.tag == "p")
+        first_list = next(n for n in main if n.tag == "h2" and n.get("id") == "gaps-unlinked-symptoms")
+        assert main.index(intro) < main.index(sec) < main.index(first_list), rel
+
+
+def test_symptom_table_has_a_caption_one_row_per_symptom_in_order_and_links_to_the_map(gaps_site):
+    sec = summary("gaps.html", gaps_site)
+    table = sec.find("table")
+    assert table.find("caption") is not None
+    head = table.find("thead").find_all("th")
+    assert [norm(th.text()) for th in head] == ["Symptom", "proposed", "associated", "direction supported"]
+    # the map's own line sample sits in each step header, hidden from screen readers
+    samples = [th.find("svg") for th in head[1:]]
+    assert all(s is not None and s.get("aria-hidden") == "true" for s in samples)
+    assert samples[0].find("line").get("stroke-dasharray") and not samples[1].find("line").get("stroke-dasharray")
+    assert samples[2].find("line").get("stroke-width") == "3.5"
+    rows = list(table_rows(sec))
+    assert [r.removesuffix(" no link yet") for r in rows] == [s["name"] for s in SYMPTOMS]
+    assert table.find("tbody").find_all("tr")[0].find("a").get("href") == "map.html#symptom-s-none"
+
+
+def test_a_symptom_with_no_link_is_marked_and_one_with_an_associated_link_is_not_and_shows_1(gaps_site):
+    rows = table_rows(summary("gaps.html", gaps_site))
+    none = rows["Fictional unlinked symptom no link yet"]
+    assert "gaps-row-none" in none.classes
+    assert cell_counts(none) == ["0", "0", "0"]
+    assoc = rows["Fictional associated symptom"]
+    assert "gaps-row-none" not in assoc.classes
+    assert cell_counts(assoc) == ["0", "1", "0"]
+    assert "no link yet" not in assoc.text()
+    assert cell_counts(rows["Fictional mixed symptom"]) == ["1", "1", "0"]
+    assert cell_counts(rows["Fictional proposed-only symptom"]) == ["2", "0", "0"]
+    # one mark per link, styled by step, and hidden from screen readers
+    marks = rows["Fictional proposed-only symptom"].find_all("span", "mk")
+    assert len(marks) == 2
+    assert all(m.parent.get("aria-hidden") == "true" for m in marks)
+    assert all("mk-proposed" in m.classes for m in marks)
+
+
+def test_the_link_bar_omits_a_step_with_no_links_but_the_text_says_0(gaps_site):
+    sec = summary("gaps.html", gaps_site).find("div", id="gaps-summary-links")
+    bar = sec.find("div", "gaps-linkbar")
+    assert bar.get("aria-hidden") == "true"
+    segments = [s for s in bar.find_all("span")]
+    kinds = [next(c for c in s.classes if c.startswith("mk-") and c != "mk-seg") for s in segments]
+    assert kinds == ["mk-proposed", "mk-associated"]  # no directional segment
+    assert [s.get("style") for s in segments] == ["flex-grow: 5", "flex-grow: 2"]
+    assert [norm(li.text()) for li in sec.find_all("li")] == ["proposed: 5", "associated: 2", "direction supported: 0"]
+    assert "All links on the causal map: 7." in norm(sec.text())
+    assert sec.find("a").get("href") == "#gaps-untested-links"
+
+
+@pytest.fixture
+def gaps_site_no_level_4(tmp_path) -> Site:
+    proj = Site(tmp_path)
+    content = map_content(tmp_path, SYMPTOMS, QUESTIONS)
+    for card in cards():
+        if card["slug"] != "lvl-4":
+            write_card(proj.cards, card)
+    assert proj.build(content_dir=content).errors == []
+    return proj
+
+
+def level_items(site: Site, rel: str = "gaps.html") -> list[Node]:
+    return summary(rel, site).find("div", id="gaps-summary-levels").find_all("li")
+
+
+def test_the_level_block_shows_all_six_levels_in_ladder_order_and_a_level_without_a_card_shows_0(
+    gaps_site_no_level_4,
+):
+    lis = level_items(gaps_site_no_level_4)
+    assert len(lis) == 6
+    texts = [norm(li.text()) for li in lis]
+    assert [t.split(" ")[:2] for t in texts] == [["Level", str(k)] for k in range(6)]
+    assert [norm(li.find("strong").text()) for li in lis] == [
+        "Cards: 2",
+        "Cards: 1",
+        "Cards: 1",
+        "Cards: 1",
+        "Cards: 0",
+        "Cards: 1",
+    ]
+    assert "Proposed" in texts[0] and "Causal case built" in texts[5]
+    assert lis[4].find("span", "gl-fill") is None  # no bar for 0
+    assert all(li.find("span", "gl-fill") is not None for i, li in enumerate(lis) if i != 4)
+    assert "1 contested" in texts[3]
+    assert not any("contested" in t for i, t in enumerate(texts) if i != 3)
+    block = summary("gaps.html", gaps_site_no_level_4).find("div", id="gaps-summary-levels")
+    assert block.find("a").get("href") == "#gaps-next-rung"
+
+
+def test_the_summary_numbers_equal_the_lists(gaps_site):
+    doc = page(gaps_site.out, "gaps.html")
+    sec = summary("gaps.html", gaps_site)
+    rows = list(table_rows(sec).values())
+    unlinked = [r for r in rows if "gaps-row-none" in r.classes]
+    assert len(unlinked) == len(items(doc, "gaps-unlinked-symptoms")) == 1
+    proposed_only = [r for r in rows if cell_counts(r)[0] != "0" and cell_counts(r)[1:] == ["0", "0"]]
+    assert len(proposed_only) == len(items(doc, "gaps-step1-symptoms")) == 1
+    links = sec.find("div", id="gaps-summary-links")
+    proposed_total = int(norm(links.find_all("li")[0].text()).split(": ")[1])
+    listed = [li for n in section(doc, "gaps-untested-links") if n.tag == "ul" for li in n.find_all("li")]
+    assert proposed_total == len(listed) == 5
+    per_level: dict[int, int] = {}
+    level = -1
+    for n in section(doc, "gaps-next-rung"):
+        if n.tag == "h3":
+            level = int(norm(n.text()).split(":")[0].split(" ")[1])
+            per_level[level] = 0
+        elif n.tag == "li":
+            per_level[level] += 1
+    shown = {k: int(norm(li.find("strong").text()).split(": ")[1]) for k, li in enumerate(level_items(gaps_site))}
+    assert shown == {k: per_level.get(k, 0) for k in range(6)}
+
+
+def test_the_summary_has_no_judging_word(gaps_site):
+    pattern = re.compile(r"\b(" + "|".join(BANNED_ON_PAGE) + r")\b", re.I)
+    for rel in ("gaps.html", "nb/gaps.html"):
+        assert not pattern.search(summary(rel, gaps_site).text()), rel
