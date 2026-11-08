@@ -93,7 +93,7 @@ All of these are required except `group`; use `null` where the value is allowed 
 - Every other value needs a `case_definition_source`. The named definitions (`CCC`, `ICC`, `IOM2015`, `Fukuda`, `Holmes1988`, `CDC_unspecified`, `Oxford`) also need a non-empty `case_definition_quote`: the verbatim sentence, so a reader can check it. `other` may leave the quote `null`.
 - `Holmes1988` is the 1988 CDC definition. It is accepted like `Fukuda` (counts at every rung), is flagged on the card as "does not require PEM", and ranks equal to `Fukuda` in the comparable-quality rule.
 - `CDC_unspecified` is for a study that cites "CDC criteria" without naming the version. It is treated exactly like `Fukuda` and `Holmes1988`: counts at every rung, flagged "does not require PEM", ranked equal to `Fukuda`. The quote is the sentence that names the CDC criteria.
-- To find the sentence, `uv run python -m me_atlas.europepmc casedef <pmid>...` shows candidate sentences from open-access full text. It only suggests; the person or agent drafting the card decides which definition a sentence means.
+- To find the sentence, `uv run python -m me_atlas.europepmc casedef <pmid>...` shows candidate sentences from open-access full text. For a study that is free to read on PubMed Central but not open access, `uv run python -m me_atlas.europepmc pmcpage --card <card.yaml> <pmid>...` does the same from the cached PMC article page (fetched once, only for studies on that card; see `docs/citation-check.md`), and a quote from it has `case_definition_source: fulltext`. It only suggests; the person or agent drafting the card decides which definition a sentence means.
 
 ## Links (causal map)
 
