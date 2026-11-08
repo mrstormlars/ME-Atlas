@@ -296,9 +296,62 @@ def candidate_roots(g: Graph) -> list[tuple[Node, int]]:
     return sorted(found, key=lambda nc: (-nc[1], nc[0].name.casefold(), nc[0].key))
 
 
+def unlinked_symptoms(g: Graph) -> list[Node]:
+    """Symptom nodes with no incoming link, in node order."""
+    return [n for n in g.nodes.values() if n.kind == "symptom" and not g.incoming.get(n.key)]
+
+
+def proposed_only_symptoms(g: Graph) -> list[tuple[Node, tuple[str, ...]]]:
+    """Symptom nodes with at least one incoming link, all of them ``proposed``, with the distinct source cards
+    (slugs, in card order). Node order."""
+    found: list[tuple[Node, tuple[str, ...]]] = []
+    for n in g.nodes.values():
+        edges = g.incoming.get(n.key, [])
+        if n.kind == "symptom" and edges and all(e.support == "proposed" for e in edges):
+            found.append((n, tuple(dict.fromkeys(e.source for e in edges))))
+    return found
+
+
+def proposed_links(g: Graph) -> list[tuple[Node, list[Edge]]]:
+    """Every link at step ``proposed``, grouped by target node. Groups in node order, edges in card order."""
+    found: list[tuple[Node, list[Edge]]] = []
+    for n in g.nodes.values():
+        edges = [e for e in g.incoming.get(n.key, []) if e.support == "proposed"]
+        if edges:
+            found.append((n, edges))
+    return found
+
+
+def unlinked_cards(g: Graph) -> list[Node]:
+    """Card nodes with no link in and none out, in node order."""
+    return [n for n in g.nodes.values() if n.kind == "card" and not g.incoming.get(n.key) and not g.out.get(n.key)]
+
+
+def cards_by_level(cards: Sequence[Card]) -> list[tuple[int, list[Card]]]:
+    """Cards grouped by level, 5 down to 0, alphabetical by name within a level (the front page's order). Only
+    levels that have a card."""
+    groups: dict[int, list[Card]] = {}
+    for c in cards:
+        groups.setdefault(c.level, []).append(c)
+    return [
+        (level, sorted(groups[level], key=lambda c: (c.name.casefold(), c.slug)))
+        for level in sorted(groups, reverse=True)
+    ]
+
+
 # ---------------------------------------------------------------------------
 # Report
 # ---------------------------------------------------------------------------
+
+# The plain-language names of the rungs of the evidence ladder (docs/ME-Atlas-functional-spec.md section 3).
+RUNG_NAMES = (
+    "Proposed",
+    "First signs",
+    "Backed in a defined group",
+    "Repeated by others",
+    "Tested by intervention",
+    "Causal case built",
+)
 
 LAYER_TITLES = {
     "predisposition": "Predisposition",
@@ -310,7 +363,7 @@ LAYER_TITLES = {
 }
 
 
-def render_report(g: Graph) -> str:
+def render_report(g: Graph, cards: Sequence[Card] = ()) -> str:
     lines: list[str] = []
     for layer in (*cardlib.LAYERS, UNPLACED):
         members = g.in_layer(layer, "card")
@@ -337,7 +390,57 @@ def render_report(g: Graph) -> str:
         if not found:
             lines.append("  none")
         lines.append("")
+    lines += _gap_lines(g, cards)
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _gap_lines(g: Graph, cards: Sequence[Card]) -> list[str]:
+    """The gap lists: counted and listed, never judged."""
+    lines: list[str] = []
+    unlinked = unlinked_symptoms(g)
+    lines.append(f"Symptoms with no link ({len(unlinked)})")
+    lines += [f"  {n.name} ({n.key})" for n in unlinked]
+    if not unlinked:
+        lines.append("  none")
+    lines.append("")
+    step1 = proposed_only_symptoms(g)
+    lines.append(f"Symptoms linked only at step 1 ({len(step1)})")
+    for n, sources in step1:
+        word = "hypothesis" if len(sources) == 1 else "hypotheses"
+        lines.append(f"  {n.name} ({n.key}): {len(sources)} {word}, none above step 1")
+        lines += [f"    <- {g.nodes[s].name} ({s})" for s in sources]
+    if not step1:
+        lines.append("  none")
+    lines.append("")
+    groups = proposed_links(g)
+    lines.append(f"Links not yet tested in patients ({sum(len(es) for _, es in groups)})")
+    for n, edges in groups:
+        lines.append(f"  -> {n.name} ({n.key})")
+        lines += [f"    <- {g.nodes[e.source].name} [{e.support}] ({', '.join(e.sources)})" for e in edges]
+    if not groups:
+        lines.append("  none")
+    lines.append("")
+    lines.append("What the next rung requires")
+    levels = cards_by_level(cards)
+    for level, members in levels:
+        lines.append(f"  Level {level}: {RUNG_NAMES[level]}")
+        for c in members:
+            line = f"    {c.name} ({c.slug})"
+            if c.contested:
+                line += f" — contested at rung(s) {', '.join(str(r) for r in sorted(c.contested.rungs))}"
+            lines.append(line)
+        if level < 5:
+            lines.append(f"    next: {RUNG_NAMES[level + 1]}")
+    if not levels:
+        lines.append("  none")
+    lines.append("")
+    loose = unlinked_cards(g)
+    lines.append(f"Hypotheses with no links yet ({len(loose)})")
+    lines += [f"  {n.name} ({n.key})" for n in loose]
+    if not loose:
+        lines.append("  none")
+    lines.append("")
+    return lines
 
 
 def _card_paths(cards_dir: Path, drafts_dir: Path | None) -> list[Path]:
@@ -363,7 +466,7 @@ def run_report(cards_dir: Path, drafts_dir: Path | None, content_dir: Path) -> i
     for w in content_warnings(content):
         print(f"warning: {w}", file=sys.stderr)
     cards = sorted((cardlib.load_card(p) for p in paths), key=lambda c: (c.name.casefold(), c.slug))
-    sys.stdout.write(render_report(build_graph(cards, content)))
+    sys.stdout.write(render_report(build_graph(cards, content), cards))
     return 0
 
 

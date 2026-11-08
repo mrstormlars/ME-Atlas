@@ -378,3 +378,134 @@ def test_the_reviewer_map_mode_shows_the_verdict_and_findings_shape_of_translati
         tr.TranslationReview.model_validate({**review, "lang": "nb"})
     for needle in ("both ends measured in the same patients", "temporal order", "intervention", "mediation"):
         assert needle in section
+
+
+# --- the gap lists ------------------------------------------------------------------
+
+GAP_SYMPTOMS = [
+    {"id": "none", "name": "Fictional none", "sources": ["doi:10.0000/fictional.5"]},
+    {"id": "only-proposed", "name": "Fictional only proposed", "sources": ["doi:10.0000/fictional.5"]},
+    {"id": "mixed", "name": "Fictional mixed", "sources": ["doi:10.0000/fictional.5"]},
+    {"id": "assoc", "name": "Fictional associated", "sources": ["doi:10.0000/fictional.5"]},
+]
+
+
+@pytest.fixture
+def gap_content(tmp_path: Path) -> Path:
+    folder = tmp_path / "gapcontent"
+    dump(folder / "symptoms.yaml", GAP_SYMPTOMS)
+    dump(folder / "open-questions.yaml", QUESTIONS)
+    return folder
+
+
+def gap_cards(tmp_path: Path, content_dir: Path):
+    """Four cards: a and b both link, a lone card, and c with a link out only. Returns (cards, graph)."""
+    datas = [
+        card_data(
+            "card-a",
+            "Card A",
+            "predisposition",
+            [
+                lk("symptom:only-proposed"),
+                lk("symptom:mixed"),
+                lk("symptom:assoc", "associated"),
+                lk("question:asked"),
+            ],
+        ),
+        card_data("card-b", "Card B", "trigger", [lk("symptom:only-proposed"), lk("symptom:mixed", "associated")]),
+        card_data("card-c", "Card C", "mechanism", [lk("card-a", "directional")]),
+        card_data("card-d", "Card D"),
+    ]
+    for d in datas:
+        put(tmp_path / "gapcards", d)
+    cards = [cardlib.load_card(p) for p in sorted((tmp_path / "gapcards").glob("*.yaml"))]
+    content, _ = maplib.load_content(content_dir)
+    return cards, maplib.build_graph(cards, content)
+
+
+def test_unlinked_symptoms_lists_a_symptom_with_no_incoming_edge_and_not_one_with_an_associated_edge(
+    tmp_path, gap_content
+):
+    _, g = gap_cards(tmp_path, gap_content)
+    assert [n.key for n in maplib.unlinked_symptoms(g)] == ["symptom:none"]
+
+
+def test_proposed_only_symptoms_has_the_distinct_sources_and_skips_mixed_and_unlinked(tmp_path, gap_content):
+    _, g = gap_cards(tmp_path, gap_content)
+    assert [(n.key, s) for n, s in maplib.proposed_only_symptoms(g)] == [
+        ("symptom:only-proposed", ("card-a", "card-b"))
+    ]  # 'mixed' has an associated edge, 'none' has no edge, 'assoc' has only an associated edge
+
+
+def test_proposed_links_groups_by_target_in_node_order_and_never_holds_other_steps(tmp_path, gap_content):
+    _, g = gap_cards(tmp_path, gap_content)
+    groups = maplib.proposed_links(g)
+    assert [(n.key, [e.source for e in edges]) for n, edges in groups] == [
+        ("symptom:only-proposed", ["card-a", "card-b"]),
+        ("symptom:mixed", ["card-a"]),
+        ("question:asked", ["card-a"]),
+    ]
+    assert all(e.support == "proposed" for _, edges in groups for e in edges)  # not the associated or directional
+
+
+def test_unlinked_cards_has_a_card_with_nothing_in_or_out_and_not_one_with_only_an_incoming_edge(tmp_path, gap_content):
+    _, g = gap_cards(tmp_path, gap_content)
+    # card-a has links in and out, card-c only out, card-d nothing; a card with only an incoming edge is not listed
+    assert [n.key for n in maplib.unlinked_cards(g)] == ["card-d"]
+    only_in = card_data("card-e", "Card E", links=[lk("card-f")])
+    only_target = card_data("card-f", "Card F")
+    put(tmp_path / "pair", only_in)
+    put(tmp_path / "pair", only_target)
+    content, _ = maplib.load_content(gap_content)
+    pair = [cardlib.load_card(p) for p in sorted((tmp_path / "pair").glob("*.yaml"))]
+    assert maplib.unlinked_cards(maplib.build_graph(pair, content)) == []
+
+
+def test_cards_by_level_goes_from_5_down_to_0_alphabetically_and_skips_levels_without_a_card(tmp_path, gap_content):
+    cards, _ = gap_cards(tmp_path, gap_content)
+    levelled = [
+        c.model_copy(update={"level": level, "name": name})
+        for c, level, name in zip(cards, (2, 5, 2, 0), ("Zeta", "Only five", "alpha", "Zero"), strict=True)
+    ]
+    assert [(lvl, [c.name for c in members]) for lvl, members in maplib.cards_by_level(levelled)] == [
+        (5, ["Only five"]),
+        (2, ["alpha", "Zeta"]),
+        (0, ["Zero"]),
+    ]
+
+
+def test_the_report_prints_the_five_gap_sections_after_candidate_roots(tmp_path, gap_content):
+    cards, g = gap_cards(tmp_path, gap_content)
+    cards = [c.model_copy(update={"level": 3, "contested": None}) if c.slug == "card-b" else c for c in cards]
+    out = maplib.render_report(g, cards)
+    tail = out[out.index("Candidate roots") :]
+    assert tail.index("Symptoms with no link (1)") < tail.index("Symptoms linked only at step 1 (1)")
+    assert tail.index("Symptoms linked only at step 1 (1)") < tail.index("Links not yet tested in patients (4)")
+    assert tail.index("Links not yet tested in patients (4)") < tail.index("What the next rung requires")
+    assert tail.index("What the next rung requires") < tail.index("Hypotheses with no links yet (1)")
+    assert "  Fictional none (symptom:none)\n" in tail
+    assert (
+        "  Fictional only proposed (symptom:only-proposed): 2 hypotheses, none above step 1\n"
+        "    <- Card A (card-a)\n    <- Card B (card-b)\n"
+    ) in tail
+    assert "  -> Fictional mixed (symptom:mixed)\n    <- Card A [proposed] (pmid:00000001)\n" in tail
+    assert "  Level 4: Tested by intervention\n" in tail and "    Card A (card-a) — contested at rung(s) 4\n" in tail
+    assert "    next: Causal case built\n" in tail
+    assert "  Level 3: Repeated by others\n    Card B (card-b)\n    next: Tested by intervention\n" in tail
+    assert tail.endswith("Hypotheses with no links yet (1)\n  Card D (card-d)\n")
+
+
+def test_the_report_of_a_graph_with_no_gaps_prints_none_under_each_heading(tmp_path, content):
+    # a single linked pair, the symptom linked above step 1, no cards given for the level list
+    put(tmp_path / "cards", card_data("card-a", "Card A", "trigger", [lk("symptom:fatigue", "associated")]))
+    cards = [cardlib.load_card(tmp_path / "cards" / "card-a.yaml")]
+    ccontent, _ = maplib.load_content(content)
+    out = maplib.render_report(maplib.build_graph(cards, ccontent))
+    for heading in (
+        "Symptoms with no link (0)",
+        "Symptoms linked only at step 1 (0)",
+        "Links not yet tested in patients (0)",
+        "Hypotheses with no links yet (0)",
+    ):
+        assert f"{heading}\n  none\n" in out
+    assert "What the next rung requires\n  none\n" in out

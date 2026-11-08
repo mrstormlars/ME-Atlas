@@ -21,7 +21,7 @@ uv run python -m me_atlas.site build --drafts           # build/map.html and bui
 
 `cards validate` also takes `--content DIR` (default `content/`) and `--cards DIR` (default `cards/`), both relative to the current directory.
 
-The report prints, per layer in plan order (predisposition, trigger, perpetuating mechanism, measurable dysfunction) and then "Not yet placed", each card with its links out as `-> <target name> [<support>] (sources)`; then the symptom nodes and the open questions; then **Candidate common mechanisms** (nodes with two or more incoming links from different cards, with the count) and **Candidate roots** (cards with two or more links out, with the count). It is offline and calls no AI. If any input is invalid it prints the validation errors to stderr and exits 1, with no report. Convergence is counted, never judged: nobody writes "the common cause is".
+The report prints, per layer in plan order (predisposition, trigger, perpetuating mechanism, measurable dysfunction) and then "Not yet placed", each card with its links out as `-> <target name> [<support>] (sources)`; then the symptom nodes and the open questions; then **Candidate common mechanisms** (nodes with two or more incoming links from different cards, with the count) and **Candidate roots** (cards with two or more links out, with the count); then the gap lists, each heading with its count and `  none` when empty: **Symptoms with no link**; **Symptoms linked only at step 1** (per symptom the number of hypotheses and one `<- card (slug)` line per source card); **Links not yet tested in patients** (the number of links at step `proposed`, per target `-> target (key)` and per link `<- card [proposed] (sources)`); **What the next rung requires** (per level present, 5 down to 0, `Level k: <rung name>`, the cards, ` — contested at rung(s) r` where the card has a contested mark, and `next: <next rung name>` for levels 0-4); and **Hypotheses with no links yet**. It is offline and calls no AI. If any input is invalid it prints the validation errors to stderr and exits 1, with no report. Convergence is counted, never judged: nobody writes "the common cause is".
 
 ## Content files
 
@@ -65,6 +65,10 @@ Not checked by code: that the cited study really measured both ends in the same 
 
 `map.html` (and `nb/map.html`), after "What changed" in the navigation: an introduction (a second view; links are hypotheses graded on their own scale; ME/CFS may be several conditions with different triggers that meet downstream), one section per layer plus "Not yet placed" when a card has no layer, each card as a link to its page with its links written as sentences `<text> — <support label> [n]` (the numbers refer to the card page's study anchors), the symptom nodes with the documents that list them, the open questions (with the publication that asks them, or "The editorial team's own question"), and the two convergence lists with counts. The card pages do not change.
 
+## The gaps page
+
+`gaps.html` (and `nb/gaps.html`, "What is missing" / "Hva mangler"), after "Causal map" in the navigation: the same five gap lists as the report, with the same counts, as sections `gaps-unlinked-symptoms`, `gaps-step1-symptoms`, `gaps-untested-links`, `gaps-next-rung` and `gaps-unlinked-cards`. Symptoms and links are shown as on the map page (the numbers on a link are the map page's numbers for that card); the next-rung sentences are the existing `rung.<k>.name` and `rung.<k>.meaning` strings. The lists live in `me_atlas.map` (`unlinked_symptoms`, `proposed_only_symptoms`, `proposed_links`, `unlinked_cards`, `cards_by_level`). The page adds no claim: gaps are counted, never judged. Plan: `docs/plan-gaps-page.md`.
+
 ## The drawing
 
 `src/me_atlas/map_draw.py` (pure functions, no I/O, no dependency) turns the graph into inline SVG at build time. It draws only what the lists already state; every fact in the drawing is also in the text, with its sources. Same input, same bytes.
@@ -88,5 +92,6 @@ Not checked by code: that the cited study really measured both ends in the same 
 ## Out of scope
 
 - A pipeline subcommand that merges the proposals into a draft. For now the founder (or a chat session at the founder's request) copies an accepted layer and links into the draft by hand.
-- Contested marks on links, subgroup-specific maps, weighting or scoring of nodes beyond the counts, and automatic link proposals from the weekly run.
+- Contested marks on links, subgroup-specific maps and automatic link proposals from the weekly run.
+- A principle that stays: nodes and gaps are counted, never weighted, scored or ranked (no "number of symptoms explained" score, no weights on link steps).
 - Done 2026-11-06: the first mapping (16 cards placed, 17 links, symptom list from the ICC 2011, four editorial open questions); rulings in DECISIONS. Done 2026-11-06: a second pass with the review full texts as plain text with numbered paragraphs (`data/pipeline/2026-11-06-map-pass2/reviews/`), six more proposed links. Still open: a verifiable IOM 2015 or CCC record for the symptom list. The drawn map (built, see "The drawing") had its own plan: `docs/plan-drawn-map.md`.
