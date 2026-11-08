@@ -10,7 +10,7 @@ Repository set up (structure, Claude Code roles, Python tooling). Functional spe
 
 1. Live check of the weekly pipeline: `/ukentlig --since <30 days back> --no-pr`, then a fresh `card-reviewer` on the resulting draft changes, before any pull request is opened.
 2. Causal map and cards, next: verify the case definitions of the older post-infection cohorts on `drafts/infection-trigger.yaml` if their full texts become available (they could raise it to level 3, or bring Oxford flags). Also cache a verifiable IOM 2015 record for the symptom list.
-3. Draft the three survey candidates marked `to draft` in `docs/pm/candidates.md`, one card at a time through the manual process (autonomic imbalance first; set it apart from the orthostatic intolerance card). Each new card adds its entry to `config/card_themes.yaml`. Does not displace priority 1.
+3. Survey candidates marked `to draft` in `docs/pm/candidates.md`: autonomic imbalance drafted and ruled 2026-11-08 (`drafts/autonomic-imbalance.yaml`, level 3, contested at rung 3); immune-cell gene expression and circadian rhythm disruption are being drafted on their own branches. Each new card adds its entry to `config/card_themes.yaml`. Does not displace priority 1.
 
 Done 2026-11-01: rulings from the site review (level 2 needs a recognised case definition; `CDC_unspecified` accepted like Fukuda; reasons may be split into paragraphs with their own sources; `last_checked.by` stays `ai_pair`). Both drafts updated: CDC studies re-labelled, long reasons split per source, NK "Explains PEM" reason added, neuroinflammation states why the PET study does not contest level 2, and pmid:7983659 named in the NK contested reason. Levels unchanged.
 

@@ -1,0 +1,535 @@
+# FOUNDER RULING (2026-11-08): level 3, contested at rung 3 (Duprez 1998 as contradicting), both badges no, layer
+# `dysfunction`, the three proposed links accepted. Two card-reviewer rounds (data/pipeline/2026-11-08-autonomic/).
+# DRAFT — AI-drafted (ai_pair) on 2026-11-08 from the founder request in
+# data/pipeline/2026-11-08-autonomic/brief.md (survey candidate marked `to draft`, DECISIONS 2026-11-08). Nothing here
+# is published. Level, contested mark, badges, layer and links below are proposals for the founder (CLAUDE.md rule 2),
+# not rulings.
+# Source rule: every title, year, n, quote and finding below comes from the cached PubMed record
+# data/cache/pubmed/<pmid>.xml (abstract) or, where `case_definition_source: fulltext` or a comment names a full
+# text, from the cached Europe PMC open-access text data/cache/europepmc/PMC<id>.xml (31906988: PMC6943898;
+# 38251045: PMC10801610; 34640544: PMC8509376; 23166694: PMC3498107; 34970156: PMC8713453; 41437251: PMC12729017;
+# 34073494: PMC8198768). The other seven have no open full text in Europe PMC (`europepmc fulltext`, checked
+# 2026-11-08): 22670061, 9505867, 9430800, 29246267, 31957647, 29855991, 24493300. Searches and hit counts:
+# data/pipeline/2026-11-08-autonomic/report.md.
+#
+# SCOPE AND BOUNDARY WITH orthostatic-intolerance-cerebral-blood-flow. This card is about the balance of the
+# autonomic nervous system itself: vagal (parasympathetic) and sympathetic tone, measured as heart rate variability
+# (HRV), resting heart rate, baroreflex sensitivity, blood pressure variability or catecholamines, at rest, in sleep,
+# during or after exertion or a mental task. The orthostatic card is about the fall in blood flow to the brain and
+# the orthostatic response (POTS, orthostatic hypotension, hypocapnia) on standing, sitting or tilt. A tilt or
+# standing study belongs here only when it reports autonomic tone measures (HRV, baroreflex); 9430800 (Yataco 1997)
+# is here for that reason. Orthostatic-only studies stay on the other card, and no study is on both cards.
+#
+# LEVEL, RUNG BY RUNG (proposal: 3, contested at rung 3)
+#   The finding the card grades: lower vagal (high-frequency) heart rate variability at rest in patients than in
+#   healthy controls, read by the authors as less parasympathetic and relatively more sympathetic activity.
+#   Rung 1: met (the rung 2 studies meet it).
+#   Rung 2: met. 22670061 (Frith 2012, Fukuda from the abstract, 68 vs 68 matched controls): parasympathetic HRV
+#     markers lower and low-frequency HRV higher at rest. 38251045 (Ryabkova 2024, every patient met Fukuda, CCC and
+#     IOM 2015, full text, 34 vs 32): total, low- and high-frequency HRV power and baroreflex sensitivity lower at rest.
+#     31906988 (Escorihuela 2020, Fukuda from the abstract, 45 vs 25): lower HRV time- and frequency-domain measures
+#     and shorter RR intervals at rest, with a higher LF/HF index (full text, p = 0.014). The agreement across the
+#     three studies is on lower high-frequency HRV; low-frequency HRV was higher in Frith and lower in the other two.
+#   Rung 3: met. Original: 22670061 (2012; Newton JL, Newcastle, with Bydgoszcz co-authors). Repeated later, in
+#     separate cohorts, by different groups: 31906988 (2020; Castro-Marrero J, Barcelona) and 38251045 (2024;
+#     Churilov LP, Saint Petersburg). No author is shared between the three (checked on the cached author lists).
+#   Rung 4: NOT met. No `supports` study with design `intervention_controlled`. The one controlled trial that lowered
+#     sympathetic activity (24493300, clonidine in adolescents) lowered plasma norepinephrine but did not help, and its
+#     case definition is not verified (companion paper pmid 26357864, not on the card, says in its full text that
+#     NorCAPITAL used a "broad" three-month definition; TODO: verify for 24493300). It is `context`.
+# CONTESTED (proposal: rungs [3]). FOUNDER DECISION (tier 2).
+#   9505867 (Duprez 1998; Holmes 1988 from the abstract; 38 vs 38 healthy controls) found that RR-interval
+#   variability "could not detect major alterations in autonomic function" (abstract). Holmes ranks equal to
+#   Fukuda; it had a control group; 38 is at least half of 45 (22.5, Escorihuela) and of 68 (34, Frith). So it is of
+#   comparable quality to the Fukuda studies. Rung 3 needs two studies, and every pair that can carry it includes a
+#   Fukuda study (Ryabkova is the only one above Fukuda), so rung 3 is contested under spec section 3. Rung 2 is not:
+#   it can rest on Ryabkova (CCC/IOM), which a Holmes study does not match.
+#   Alternative reading for the founder: Duprez also found a consistently higher heart rate in patients (77 against
+#   68 beats per minute in the office), which fits the sympathetic side of the hypothesis, and its abstract does not
+#   say which HRV indices were compared (no open full text; TODO: verify). If the founder reads it as mixed rather
+#   than contradicting, contested is null and Duprez becomes `context`.
+#   Not of comparable quality: 9430800 (Yataco 1997, CDC criteria, 19 patients: below 22.5 and 34); 34970156 (Nelson
+#   2021, resting HRV no different, 16 patients); 34640544 rest results are mixed but 20 patients. Unverified, so
+#   `context` (V9): 31957647 (Fatt 2020, 24 vs 24, nocturnal HF lower in deep sleep but not in wakefulness before
+#   sleep; "medically diagnosed CFS"). TODO: verify its definition. If Fukuda or stricter, it would also be of
+#   comparable quality to Escorihuela (24 >= 22.5) for the wake measure.
+# OXFORD: no study on the card is known to use Oxford. Unverified: 31957647, 29855991, 24493300.
+# LONG COVID: label not shown. 38251045 had a post-COVID group, but only 14 of 29 met the CCC and 16 of 29 the IOM
+#   criteria (full text), so the group is not defined by a recognised ME/CFS definition; all studies are `me_cfs`.
+#
+# AUTHOR AND COHORT OVERLAPS
+#   - Zalewski P (Bydgoszcz) is an author on 22670061 (Frith, with Newton JL), 41437251 and 34073494 (Kujawski,
+#     Bydgoszcz cohort 2013-2020). Whether Frith's 68 patients overlap the Bydgoszcz cohort is not stated in the
+#     abstract (TODO: verify). The Kujawski papers are not used as replications.
+#   - Lloyd AR and Vollmer-Conna U (Sydney) are on 23166694 (Beaumont 2012) and 31957647 (Fatt 2020); also on 20502886
+#     (left out, below).
+#   - Van Oosterwijck J, Nijs J and co-authors: 34640544 (2021) and 28339438 (2017, left out) describe 20 women with
+#     ME/CFS and 20 controls doing the same exercise test; likely the same cohort (34640544 says the test "was
+#     performed as described in our previous study").
+#   - 34970156 (Nelson 2021) is the same 16 vs 10 cohort as 30871578 on impaired-energy-production-after-exertion.
+#   - Wyller VB (Oslo) is last author of 24493300 and of the left-out adolescent studies 17564672, 18234008, 18066580,
+#     20890710, 21059182.
+#
+# Not on the card (read, left out; reasons also in report.md):
+#   - Same group or cohort as a study on the card: 28339438 (same cohort as 34640544), 20502886 (Burton 2010, Sydney,
+#     20 vs 20, lower nocturnal HRV; no open full text, definition unverified), 26357864 (NorCAPITAL autonomic
+#     outcomes; the case-definition sentence is used only in a comment), 32764516 and 30908516 (further Bydgoszcz /
+#     Newcastle analyses, uncontrolled or 9 controls).
+#   - Definition not verifiable or not ME/CFS: 17851136 (Boneva 2007, Wichita population sample, 30 vs 38, higher
+#     heart rate and lower HRV in sleep; no open full text, abstract names no definition; would be useful if
+#     verified), 7549414 (Sisto 1995, 12 women, "diagnosis of CFS"), 7874856 (unexplained fatigue, not CFS),
+#     39755009 (fibromyalgia and/or CFS pooled, n=26), 37300057 (no n in abstract), 23499514 (fractal index only),
+#     14508037 (baroreflex in severity groups; no open full text), the Wyller adolescent studies above (broad or
+#     unstated definitions, no open full text), 21156045 (13 adolescents).
+#   - Defined by a non-accepted definition: 39941481 and 40002769 (Milovanovic 2025, NICE 2021 criteria, patients
+#     selected for recurrent syncope).
+#   - Mainly orthostatic or small fibre outcomes (belong on other cards): 41576003, 37968647.
+#   - Symptom questionnaires only: 40944028 (MCAM, COMPASS-31, 301 vs 141).
+#   - Uncontrolled or no patient-control comparison of tone: 39374820 (inspiratory muscle training pilot), 40315935
+#     (acupuncture, outcome symptoms), 28107894 (HRV biofeedback against graded exercise), 41598987 (Q fever).
+#   - Reviews and meta-analyses (not counted): 31651868, 19463887, 23838093, 39319943, 24662556, 9857114, 17561705,
+#     34474739, 29417255. 31651868 (64 case-control articles) reports higher resting heart rate and lower
+#     high-frequency HRV at rest; 19463887 found the pooled HRV effect across functional somatic disorders
+#     unreliable after correcting for publication bias.
+slug: autonomic-imbalance
+name: Autonomic nervous system imbalance (less vagal, more sympathetic activity)
+core_claim:
+  text: >-
+    The hypothesis proposes that in ME/CFS the balance of the autonomic nervous system, which runs heart rate,
+    blood pressure and other automatic body functions, is shifted: less parasympathetic (vagal) activity and
+    relatively more sympathetic activity. It is measured as lower heart rate variability, a higher resting heart
+    rate or a weaker baroreflex, at rest, in sleep or after exertion. It is about this balance itself, not about
+    the fall in blood flow to the brain on standing.
+  # Measures: HRV and baroreflex at rest (22670061, 38251045, 31906988); higher resting heart rate (23166694; also
+  # 31906988 full-text Table 1); sleep (29246267); after exertion (34640544).
+  sources: [pmid:22670061, pmid:38251045, pmid:31906988, pmid:23166694, pmid:29246267, pmid:34640544]
+level: 3
+level_reason:
+  - text: >-
+      A UK study measured heart rate and blood pressure at rest and on standing in 68 patients meeting the
+      Fukuda definition and 68 matched controls. At rest, the parasympathetic measures of heart rate
+      variability were lower and the low-frequency (sympathetic) measure higher in patients. The authors
+      derived a combination of blood pressure variability thresholds that separated patients from controls
+      with 77% sensitivity and 53% specificity in the same cohort.
+    sources: [pmid:22670061]
+  - text: >-
+      Two later studies by other groups, in separate cohorts, found lower high-frequency heart rate
+      variability at rest, as the UK study did. In Spain, 45 women meeting the Fukuda definition had shorter
+      intervals between heartbeats, lower heart rate variability and a higher ratio of low- to high-frequency
+      power at rest than 25 matched healthy women. In Russia, 34 patients who met the Fukuda, Canadian and
+      2015 IOM criteria had lower total, low- and high-frequency heart rate variability and a weaker
+      baroreflex at rest than 32 healthy controls, with no difference in that ratio. Unlike the UK study, both
+      found low-frequency heart rate variability lower, not higher. This repeated high-frequency finding is
+      why the card is at level 3.
+    sources: [pmid:22670061, pmid:31906988, pmid:38251045]
+  - text: >-
+      Two smaller studies found related differences around exertion and mental effort. In 20 women with
+      ME/CFS and 20 controls, high- and low-frequency heart rate variability were lower at rest, though heart
+      rate and the time-domain measure were not, and after a submaximal cycle test the high-frequency measure
+      did not return to its pre-exercise level in patients. In 30 patients and 40 controls, resting heart rate
+      was higher, resting heart rate variability showed a trend to be lower that was not significant, it
+      changed differently during cognitive tasks (a delayed response), and heart rate took longer to return
+      to baseline afterwards. Neither
+      finding has been repeated by an independent group.
+    sources: [pmid:34640544, pmid:23166694]
+  - text: >-
+      Other studies did not find lower heart rate variability. A Belgian study of 38 patients meeting the 1988
+      CDC (Holmes) definition and 38 healthy controls found a consistently higher heart rate but no major
+      changes in RR-interval variability; a US study of 19 patients meeting CDC criteria and 11 controls found
+      similar heart rate variability lying down and on tilt. In 16 patients and 10 controls who did exercise
+      tests on two days, resting heart rate variability did not differ, while heart rate fell less in the
+      first minute after maximal exercise in patients.
+    sources: [pmid:9505867, pmid:9430800, pmid:34970156]
+  - text: >-
+      Sleep studies are mixed. Eight patients meeting the 2015 IOM criteria had a higher low-frequency measure
+      in all sleep stages and a lower high-frequency measure in deep sleep than eight tired controls, but a
+      higher high-frequency measure overall and a lower heart rate. In 24 patients and 24 controls the
+      high-frequency measure was lower in deeper sleep but not during wakefulness before sleep. These two
+      groups, in Finland and Australia, thus both found a lower high-frequency measure in deep sleep. In 14 women with
+      chronic fatigue syndrome and 14 controls, heart rate variability did not differ. The last two studies'
+      case definitions are not yet verified.
+    sources: [pmid:29246267, pmid:31957647, pmid:29855991]
+  - text: >-
+      No controlled study on this card has shown that changing autonomic balance changes the illness. In a randomised trial in 120
+      adolescents, who also had higher plasma norepinephrine than 68 healthy adolescents, low-dose clonidine
+      lowered norepinephrine but did not increase daily steps (they were lower with clonidine, not
+      significantly), and the authors concluded it is not clinically useful; they suggest the raised
+      sympathetic activity may be compensatory. Its case definition is not yet verified.
+    sources: [pmid:24493300]
+contested:
+  rungs: [3]
+  reason:
+    - text: >-
+        A study of 38 patients meeting the 1988 CDC (Holmes) definition and 38 healthy controls could not
+        detect major alterations in autonomic function from RR-interval variability recorded lying and
+        standing. The Holmes definition is accepted on the same footing as
+        Fukuda, and the study is large enough to weigh against the Fukuda studies that level 3 rests on, so the
+        repeated finding is disputed. The same study found a consistently higher heart rate in patients, which
+        points the other way, and its abstract does not say which heart rate variability measures were compared.
+      sources: [pmid:9505867, pmid:22670061, pmid:31906988]
+    - text: >-
+        Level 2 is not disputed: it also rests on the study whose patients met the Canadian and 2015 IOM
+        criteria as well as Fukuda, a stricter definition than the one in the contradicting study.
+      sources: [pmid:38251045]
+badges:
+  diagnostic_marker:
+    value: false
+    reason:
+      text: >-
+        Four studies built a classifier or threshold from autonomic measures, but each tested it in its own
+        cohort only: blood pressure variability thresholds (77% sensitivity, 53% specificity), resting
+        high-frequency heart rate variability (81.3% sensitivity, 79.4% specificity), heart rate recovery
+        after exercise (a threshold of 34.5 beats per minute, 63% sensitivity, 40% specificity), and a
+        machine-learning model whose test set was held out from the same 112 patients and 61 controls. None
+        has been tested in a second, independent patient group.
+      sources: [pmid:22670061, pmid:38251045, pmid:34970156, pmid:41437251]
+  explains_pem:
+    value: false
+    reason:
+      text: >-
+        One study measured post-exertional malaise directly with exercise tests on two consecutive days. Heart
+        rate recovery after exercise was lower in patients, but resting heart rate variability did not differ.
+        No heart rate measure changed differently in patients and controls from day one to day two. The study did not test any heart rate measure against symptoms. In 101
+        patients meeting the Fukuda definition, those who reported post-exertional malaise had a higher
+        sympathovagal balance at rest, but no difference was significant after correction for multiple tests.
+      sources: [pmid:34970156, pmid:34073494]
+subgroups: []
+working_on_it: []
+early_signals: []
+studies:
+  # --- supports ---
+  - id: pmid:22670061
+    title: Impaired blood pressure variability in chronic fatigue syndrome--a potential biomarker.
+    year: 2012
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "Heart rate and non-invasive continuous blood pressure measurements (task force monitor) at rest and on standing were performed in CFS (Fukuda n = 68) and matched controls (n = 68) to derive high frequency (HF; parasympathetic) and low frequency (LF; sympathetic) heart rate variability (HRV), systolic (SBPV) and diastolic (DBPV) blood pressure variability."
+    design: controlled
+    n_patients: 68
+    n_controls: 68
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2 and the original finding for rung 3
+    direction: lower
+    group: Newton JL, Newcastle, UK (with Zalewski P, Bydgoszcz, Poland)
+    finding: >-
+      A study of n=68 patients and 68 matched controls found lower parasympathetic and higher low-frequency
+      heart rate variability at rest, higher diastolic blood pressure variability at rest and a smaller
+      systolic blood pressure variability response on standing.
+  - id: pmid:31906988
+    title: Reduced heart rate variability predicts fatigue severity in individuals with chronic fatigue syndrome/myalgic encephalomyelitis.
+    year: 2020
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "In this case-control study, 45 female patients who met the 1994 CDC/Fukuda definition for CFS/ME and 25 age- and gender-matched healthy controls underwent HRV recording-resting state tests."
+    design: controlled
+    n_patients: 45
+    n_controls: 25
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 3, independent repeat
+    direction: lower
+    group: Castro-Marrero J, Vall d'Hebron University Hospital, Barcelona, Spain
+    finding: >-
+      A study of n=45 women and 25 matched healthy women found shorter RR intervals, lower heart rate
+      variability time- and frequency-domain measures and a higher LF/HF ratio at rest; within patients,
+      lower RMSSD and normalised high-frequency values were associated with more self-reported fatigue.
+  - id: pmid:38251045
+    title: Similar Patterns of Dysautonomia in Myalgic Encephalomyelitis/Chronic Fatigue and Post-COVID-19 Syndromes.
+    year: 2024
+    cohort: me_cfs
+    # Every ME/CFS patient met all three: Fukuda, CCC 2003 and IOM 2015 (full text). Recorded as CCC, the strictest
+    # named definition they all met. The post-COVID group (n=29) is not used: 14/29 met CCC and 16/29 IOM.
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: "Patients with ME/CFS were included in the study if they met all three of the most commonly used sets of ME/CFS diagnostic criteria (Fukuda et al. (1994) CFS criteria [11], the Canadian Consensus criteria of ME/CFS (2003) [12] and the US Institute of Medicine, now called the National Academy of Medicine (IOM/NAM), criteria (2015) [13])."
+    design: controlled
+    n_patients: 34
+    n_controls: 32
+    measures_pem: false
+    preregistered: null
+    role: supports  # rung 2 (strictest definition) and independent repeat for rung 3
+    direction: lower
+    group: Churilov LP, Saint Petersburg State University, Russia
+    finding: >-
+      A study of n=34 patients and 32 healthy controls found lower total, low- and high-frequency heart rate
+      variability and lower baroreflex sensitivity at rest, with no difference in the LF/HF ratio; within
+      patients, lower baroreflex sensitivity correlated with more general fatigue.
+  - id: pmid:34640544
+    title: Reduced Parasympathetic Reactivation during Recovery from Exercise in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    # "CDCP criteria" cites ref 19, Fukuda et al. 1994 (full text reference list), so recorded as Fukuda. The full text
+    # also says all patients met the "Canadian criteria", but that sentence cites ref 1, the 2011 ICC; not used.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Patients were diagnosed according to the CDCP criteria for ME/CFS [19]."
+    design: controlled
+    n_patients: 20
+    n_controls: 20
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Nijs J and Van Oosterwijck J, Brussels and Ghent, Belgium
+    finding: >-
+      A study of n=20 women and 20 healthy sedentary women found lower high- and low-frequency heart rate
+      variability at rest, with heart rate and RMSSD not different, and after a submaximal cycle test a high-
+      frequency measure that stayed below its pre-exercise level and a heart rate that stayed above it in
+      patients.
+  - id: pmid:23166694
+    title: Reduced cardiac vagal modulation impacts on cognitive performance in chronic fatigue syndrome.
+    year: 2012
+    cohort: me_cfs
+    # "international diagnostic criteria for CFS [1]": ref 1 is Fukuda et al. 1994 (full text reference list).
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "All patients had been diagnosed according to the international diagnostic criteria for CFS [1]."
+    design: controlled
+    n_patients: 30
+    n_controls: 40
+    measures_pem: false
+    preregistered: null
+    role: supports
+    direction: lower
+    group: Vollmer-Conna U and Lloyd A, University of New South Wales, Sydney, Australia
+    finding: >-
+      A study of n=30 patients and 40 matched controls found a higher resting heart rate (72 against 67 beats
+      per minute), a trend to lower resting RMSSD (p=0.07), heart rate variability that changed less during
+      cognitive tasks and slower heart rate recovery afterwards; resting heart rate variability predicted
+      performance speed.
+  # --- contradicts ---
+  - id: pmid:9505867
+    title: Long- and short-term blood pressure and RR-interval variability and psychosomatic distress in chronic fatigue syndrome.
+    year: 1998
+    cohort: me_cfs
+    case_definition: Holmes1988
+    case_definition_source: abstract
+    case_definition_quote: "We performed office and 24 h ambulatory BP recordings in 38 subjects (age, 34.8 +/- 8.0 years) who fulfilled the Holmes criteria for CFS and in 38 healthy control subjects (age 35.6 +/- 10.5 years), as well as short-term beat-to-beat BP and RR-interval recordings for 10 min in supine and standing position, and calculated spectral indices."
+    design: controlled
+    n_patients: 38
+    n_controls: 38
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # proposed: contests rung 3 (see header); founder may read it as mixed
+    # direction is on the card's measure (HRV): no detected alteration. Heart rate, a second measure, was higher
+    # (77 against 68 beats per minute in the office). The abstract implies, without saying outright, that the RR
+    # recordings covered all 38 patients and 38 controls (checklist 9).
+    direction: no_difference
+    group: Clement DL and Duprez DA, Ghent, Belgium
+    finding: >-
+      A study of n=38 patients and 38 healthy controls found a consistently higher heart rate (77 against 68
+      beats per minute in the office), lower blood pressure variability lying down, and no major alterations in
+      autonomic function on RR-interval variability.
+  - id: pmid:9430800
+    title: Comparison of heart rate variability in patients with chronic fatigue syndrome and controls.
+    year: 1997
+    cohort: me_cfs
+    case_definition: CDC_unspecified
+    case_definition_source: abstract
+    case_definition_quote: "We prospectively studied 19 patients who fulfilled the Centers for Disease Control criteria for chronic fatigue syndrome and 11 controls."
+    design: controlled
+    n_patients: 19
+    n_controls: 11
+    measures_pem: false
+    preregistered: null
+    role: contradicts  # below half the n of every study level 3 needs, so it does not contest
+    direction: no_difference
+    group: Calkins H, Johns Hopkins, USA
+    finding: >-
+      A study of n=19 patients and 11 controls found similar high- and low-frequency heart rate variability and
+      LF/HF ratio lying down, and a similar change on upright tilt.
+  # --- context ---
+  - id: pmid:34970156
+    title: Markers of Cardiac Autonomic Function During Consecutive Day Peak Exercise Tests in People With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
+    year: 2021
+    cohort: me_cfs
+    # Patients were diagnosed by one of Fukuda, CCC or ICC; recorded as Fukuda, the lowest-ranked of the three (as
+    # for 30871578, the same cohort, on impaired-energy-production-after-exertion).
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "Participants were required to be between the ages of 18–65years, and ME/CFS patients had to have been previously diagnosed with ME/CFS based on one of three widely accepted diagnostic criteria: (1) 1994 Centres For Disease Control and Prevention [CDC 1994 – also known as the ‘Fukuda’ criteria (Fukuda et al., 1994)], (2) 2003 ‘Canadian’ Consensus Criteria (Carruthers et al., 2003) or (3) 2011 International Consensus Criteria (Carruthers et al., 2011)."
+    design: controlled
+    n_patients: 16
+    n_controls: 10
+    measures_pem: true  # two maximal exercise tests on consecutive days
+    preregistered: null
+    # Resting supine HRV (HFP, LFP, LF/HF, RMSSD) did not differ (full-text Table 1), as in 9430800, so the role is
+    # `contradicts` like Yataco; 16 patients is below half the n of every study level 3 needs, so it does not contest.
+    # Direction `mixed`: resting HRV no different, heart rate recovery after exercise lower.
+    role: contradicts
+    direction: mixed
+    group: Davison K and Nelson MJ, University of South Australia
+    finding: >-
+      A study of n=16 patients and 10 controls doing maximal exercise tests on two consecutive days found no
+      difference in resting heart rate variability, and a smaller fall in heart rate in the first minute after
+      exercise in patients (33.2 against 43.2 beats per minute on day one), which did not change from day one
+      to day two.
+  - id: pmid:41437251
+    title: Diagnosis of chronic fatigue syndrome using beat-to-beat autonomic measurements.
+    year: 2025
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: "CFS patients included in the studies met the Fukuda diagnostic criteria for CFS, which require unexplained, persistent, or relapsing fatigue lasting six or more months, accompanied by at least four out of eight additional symptoms such as post-exertional malaise, impaired memory or concentration, unrefreshing sleep, muscle/joint pain, tender lymph nodes, sore throat, and new headaches."
+    design: controlled
+    n_patients: 112
+    n_controls: 61
+    measures_pem: false
+    preregistered: null
+    role: context  # a classifier, not a group comparison; same Bydgoszcz group as 22670061 co-authors
+    direction: lower
+    group: Zalewski P and Kujawski S, Collegium Medicum Bydgoszcz, Poland
+    finding: >-
+      A machine-learning study of n=112 patients and 61 healthy controls found that lower beat-to-beat heart
+      rate differences and high-frequency RR intervals, read by the authors as reduced cardiac vagal tone, made
+      classification as a patient more likely; the test set was held out from the same cohort.
+  - id: pmid:29246267
+    title: Autonomic Nervous System Functioning Related to Nocturnal Sleep in Patients With Chronic Fatigue Syndrome Compared to Tired Controls.
+    year: 2018
+    cohort: me_cfs
+    case_definition: IOM2015
+    case_definition_source: abstract
+    case_definition_quote: "We aimed to study the nocturnal cardiac ANS in different sleep stages in patients filling the 2015 Institute of Medicine CFS diagnostic criteria."
+    design: controlled  # tired controls, not healthy controls
+    n_patients: 8
+    n_controls: 8
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed
+    group: Partinen M, Helsinki Sleep Clinic, Finland
+    finding: >-
+      A study of n=8 patients and 8 tired controls found higher low-frequency heart rate variability in all
+      sleep stages and lower high-frequency variability in deep sleep, but higher high-frequency variability
+      overall, a lower heart rate and higher nocturnal systolic and mean blood pressure.
+  - id: pmid:31957647
+    title: Parasympathetic activity is reduced during slow-wave sleep, but not resting wakefulness, in patients with chronic fatigue syndrome.
+    year: 2020
+    cohort: me_cfs
+    # "medically diagnosed CFS" (abstract); PMC7053003 exists but Europe PMC returned no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 24
+    n_controls: 24
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: mixed
+    group: Cvejic E, Vollmer-Conna U and Lloyd AR, University of New South Wales, Sydney, Australia
+    finding: >-
+      A study of n=24 patients and 24 matched healthy controls found lower normalised high-frequency heart rate
+      variability during deeper sleep but not during wakefulness before sleep; lower values in deeper sleep
+      were associated with poorer self-reported sleep quality and wellbeing.
+  - id: pmid:29855991
+    title: Cerebral blood flow and heart rate variability predict fatigue severity in patients with chronic fatigue syndrome.
+    year: 2019
+    cohort: me_cfs
+    # The abstract names no case definition; PMC6274602 exists but Europe PMC returned no open full text. TODO: verify.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: controlled
+    n_patients: 14
+    n_controls: 14
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    group: Staud R, University of Florida, USA
+    finding: >-
+      A study of n=14 women with chronic fatigue syndrome and 14 healthy controls found no group difference in
+      heart rate variability; within patients, more heart rate variability power was associated with less
+      fatigue.
+  - id: pmid:34073494
+    title: Post-Exertional Malaise May Be Related to Central Blood Pressure, Sympathetic Activity and Mental Fatigue in Chronic Fatigue Syndrome Patients.
+    year: 2021
+    cohort: me_cfs
+    case_definition: Fukuda
+    case_definition_source: abstract
+    case_definition_quote: "One-hundred and one patients met the Fukuda criteria."
+    design: uncontrolled  # patients with and without PEM compared; no healthy controls
+    n_patients: 101
+    n_controls: null
+    measures_pem: false  # PEM by the Fukuda symptom item, not by an exertion challenge
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Zalewski P and Kujawski S, Collegium Medicum Bydgoszcz, Poland
+    finding: >-
+      A study of n=101 patients, 82 with and 19 without post-exertional malaise, found that a higher
+      sympathovagal balance at rest was associated with a higher risk of post-exertional malaise, but no
+      difference between the groups was significant after correction for multiple tests.
+  - id: pmid:24493300
+    title: "Disease mechanisms and clonidine treatment in adolescent chronic fatigue syndrome: a combined cross-sectional and randomized clinical trial."
+    year: 2014
+    cohort: me_cfs
+    # The abstract names no case definition; no open full text. The companion paper on the same trial (pmid
+    # 26357864, full text PMC4566847) says the study "applied a 'broad' case definition of CFS, requiring three months
+    # of unexplained, disabling chronic/relapsing fatigue of new onset" (would be `other`). TODO: verify for this paper.
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: intervention_controlled  # 1:1 clonidine against placebo, double-blind, 9 weeks; plus a cross-sectional arm
+    # n: 120 patients and 68 healthy controls in the cross-sectional comparison; 120 randomised (60 per arm per the
+    # companion paper).
+    n_patients: 120
+    n_controls: 68
+    measures_pem: false
+    preregistered: true  # NCT01040429 (abstract)
+    role: context
+    direction: higher  # plasma norepinephrine at baseline, patients against controls
+    group: Wyller VB, Oslo University Hospital, Norway (NorCAPITAL)
+    finding: >-
+      A study of n=120 adolescents and 68 healthy adolescents found higher plasma norepinephrine and heart rate
+      responsiveness in patients; in the randomised part, low-dose clonidine lowered norepinephrine but daily
+      steps were lower than with placebo (not significant), and the authors concluded it is not clinically
+      useful.
+last_checked:
+  date: 2026-11-08
+  by: ai_pair
+# Causal map (founder ruling 2026-11-08): layer `dysfunction`, answering "what goes wrong in the body?". The card
+# grades a measured abnormality (heart rate variability, baroreflex, catecholamines), like the orthostatic card.
+# Other reading: a perpetuating mechanism. 24493300's authors suggest the raised sympathetic activity may instead be
+# compensatory; that reading is written here and in level_reason, not as a link.
+# Links: all step 1 (proposed).
+#   - symptom:sleep-disturbance: 31957647 relates nocturnal HF to self-reported sleep quality in the same patients,
+#     but its case definition is unverified, which allows step 1 only (DECISIONS 2026-11-06 precedent). 31906988
+#     (Fukuda) correlates daytime HRV with PSQI "in the sample" (full-text Table 2, patients and controls pooled),
+#     so it is a second source but not a within-patient relation; the step stays proposed.
+#   - symptom:cognitive-impairment: 23166694 (Fukuda) measured both, but its regression pooled patients and controls
+#     (condition as a predictor, full text), so it is not clearly a relation within patients; proposed, not
+#     associated. Founder may read it as step 2.
+#   - orthostatic-intolerance-cerebral-blood-flow: 38251045's discussion (full text): "baroreflex dysfunction
+#     possibly contributes to the reduction in cerebral blood flow, which has been reported in ME/CFS and PCC"; it
+#     did not measure blood flow to the brain. Proposed only.
+#   No link to symptom:post-exertional-neuroimmune-exhaustion: 34073494's association did not survive correction.
+layer: dysfunction
+links:
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: >-
+      One study of 24 patients and 24 controls found that lower parasympathetic heart rate variability during
+      deeper sleep was associated with poorer self-reported sleep quality in the same people; its case
+      definition is not yet verified. A second study, of 45 patients meeting the Fukuda definition and 25
+      controls, found that lower daytime resting heart rate variability correlated with poorer self-reported
+      sleep, in an analysis of patients and controls together.
+    sources: [pmid:31957647, pmid:31906988]
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: >-
+      One study of 30 patients and 40 controls found that resting heart rate variability predicted how fast
+      people did cognitive tasks; patients were slower but not less accurate. The analysis included patients
+      and controls together, and the finding has not been repeated.
+    sources: [pmid:23166694]
+  - to: orthostatic-intolerance-cerebral-blood-flow
+    support: proposed
+    text: >-
+      The authors of one study that found a weaker baroreflex in patients suggest that baroreflex dysfunction
+      possibly contributes to the reduction in blood flow to the brain reported in ME/CFS. They did not
+      measure blood flow to the brain.
+    sources: [pmid:38251045]

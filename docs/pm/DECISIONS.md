@@ -2,6 +2,10 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-08 — New hypothesis: autonomic nervous system imbalance
+
+- New draft card `drafts/autonomic-imbalance.yaml` (18th hypothesis), the first survey candidate drafted (see the entry below). Founder ruling on the drafter's proposal after two `card-reviewer` rounds (run files in `data/pipeline/2026-11-08-autonomic/`): level 3 (lower high-frequency heart rate variability at rest in a Fukuda study of 68 patients and 68 controls, found again later by two other groups in separate cohorts, Fukuda and Fukuda/CCC/IOM 2015); contested at rung 3 (Duprez 1998, Holmes, 38 against 38, found no major change in RR-interval variability; rung 2 rests on the stricter definition and is not contested); both badges no; layer `dysfunction`; three step-1 links (sleep disturbance, cognitive impairment, orthostatic intolerance and cerebral blood flow). Boundary: this card is about autonomic tone itself (heart rate variability, resting heart rate, baroreflex, catecholamines); the orthostatic card keeps the fall in brain blood flow on standing.
+
 ## 2026-11-08 — First survey run: candidates to draft and eleven new links
 
 - Census of 21 headings (top three of each survey domain): 46 candidate hypotheses and 40 gaps on existing cards, recorded in `docs/pm/candidates.md` (abstract level only). XMRV came up again under "DNA, Viral" and is marked declined (refuted, see the ruling below).
