@@ -20,8 +20,8 @@ The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is
 
 | # | Command | Who | Output in `data/pipeline/<date>/` |
 | --- | --- | --- | --- |
-| 1 | `prepare [--since] [--reprocess]` | code | `papers.json` (papers in the fetch window that no earlier run processed), `cards.json` (slug, name, core claim), `prepare.json` (counts, newly retracted PMIDs cited on a card) |
-| 2 | `paper-classifier` agent, then `record-classification` | haiku, code | `classify.json`, then `matches.json` (card/paper pairs to draft, papers stopped, possible new hypotheses) |
+| 1 | `prepare [--since] [--reprocess]` | code | `papers.json` (papers in the fetch window that no earlier run processed, and preprints that survive de-duplication), `cards.json` (slug, name, core claim), `prepare.json` (counts, newly retracted PMIDs cited on a card, the preprint counts and every dropped preprint with its reason, cards that cite a preprint with a published version) |
+| 2 | `paper-classifier` agent, then `record-classification` | haiku, code | `classify.json`, then `matches.json` (card/paper pairs to draft, `preprint_matches`, papers stopped, possible new hypotheses) |
 | 3 | `context <slug> <pmid>`, then `card-drafter` agent | code, sonnet | `context/<slug>-<pmid>.md`, `ops/<slug>-<pmid>-r<N>.json` |
 | 4 | `apply <slug> <ops> [--round N]` | code | `checks/...-r<N>.json`, `applied/<slug>-<pmid>-r<N>/<slug>.yaml` and `changes.diff` |
 | 5 | `card-reviewer` agent (pipeline mode), then `record-review <slug> <pmid> [--round N]` | opus, code | `review/<slug>-<pmid>-r<N>.json` |
@@ -37,6 +37,26 @@ By default each command after `prepare` works on the newest run in `data/pipelin
 
 The papers in the fetch window (`window_pmids` of the run manifest, cached or not) that no earlier run has processed, minus any that are marked retracted. "Processed" is kept in a ledger, `data/pipeline/processed.json` (gitignored, shared by all runs: PMID to the date of the run). Only `report` writes to it, so a run that is aborted before `report` can be repeated and selects the same papers again. `prepare --reprocess` ignores the ledger. `prepare` prints how many papers it selected and how many it skipped as already processed. Retracted papers are never selected, and a newly retracted paper that a card cites is still flagged whatever the ledger says. A newly retracted paper that a card cites is listed in the report; it is the founder's decision how the card changes (spec section 3: a retracted study is removed from the evidence and the level re-assessed).
 
+## Preprints
+
+`prepare` also searches Europe PMC for preprints first indexed in the same window (`config/europepmc_preprint_query.txt`; the facts about the API and the cache are in `docs/fetch.md`, "Preprints (Europe PMC)"). The search is a function that tests inject, like the PubMed fetch; a failed search fails `prepare` before anything is written. Each preprint is dropped for the first matching reason, and `prepare.json` lists every drop under `preprints.dropped` (PPR id, DOI, reason and details) with `preprints.counts` (found, dropped per reason, offered):
+
+| Reason | Meaning |
+| --- | --- |
+| `published` | it has a "Preprint of" link to a PubMed record (the PMID, whether it is in the PubMed cache, and the link's note are listed) |
+| `in_pubmed` | its DOI (case-insensitive) is the DOI of a record in this run's PubMed window or in the PubMed cache |
+| `superseded` | a higher version, whose PPR id is in the same search, exists |
+| `no_doi` | no DOI, so it cannot be cited |
+| `processed` | the ledger has its PPR id (unless `--reprocess`) |
+
+Survivors are added to `papers.json` after the PubMed papers: `id` `doi:<doi>`, `pmid` null, `preprint` true, `ppr_id`, `journal` the preprint server, `publication_types` ["Preprint"] and `entry_date` the first index date. Every PubMed paper also has `preprint` (true for a PubMed record with the publication type "Preprint", such as pmid:42996068; that record keeps its PMID and flows as any other paper). The ledger holds a preprint under its PPR id, in the same file; PMIDs come first, in numeric order, so a ledger written before preprints reads unchanged.
+
+A classification names its paper by exactly one of `pmid` or `id` (`doi:<doi>`, for a preprint with no PMID); both, neither, an unknown id, a repeated paper and a missing paper are rejected. A DOI-only preprint that matches a card goes to `preprint_matches` (`{slug, id}`) in `matches.json`, not to `matches`: no step drafts it, and the report lists it under "Preprints matched to a card (not drafted)". A preprint that PubMed also holds is classified and drafted as a PubMed paper; its context file says it is a preprint and that it can only be added with `preprint: true` and `role: early_signal`.
+
+A study marked `preprint: true` on a card or draft whose cached preprint record (or this run's search result) has a "Preprint of" link is listed in `prepare.json` under `preprints_published` and in the report under "Preprints on cards with a published version". No operation is written; the founder decides.
+
+**Tier 2.** An operation that adds a study with `preprint: true`, or cites a study marked `preprint: true` (on the card or in the same file) in its sources, is tier 2 (the founder approves), until the founder rules otherwise. `apply` counts it in `tiers` and the report lists it under tier 2.
+
 ## The context file
 
 `context/<slug>-<pmid>.md` is the only thing the drafter and the reviewer read about the paper. It holds six sections, numbered 1 to 6 with no number repeated: (1) the card as it is now; (2) the inclusion rule (spec section 2); (3) the rubric, the evidence ladder (spec section 3); (4) the paper's PubMed record and abstract; (5) the Europe PMC full text when the paper has open full text, without its reference list; (6) sentences from the full text, in two lists under their own labels: sentences that may name a case definition, and sentences that may exclude people with the illness (an exclusion wording together with ME/CFS, CFS or the illness's full name). The second list tells the reader to check whether ME/CFS itself was what the study excluded. The spec excerpts keep their text, but their headings are one level lower, so the only level-2 headings are the six above. If the spec has no section 2 followed by section 3, `context` stops with a message. "Oxford" in a sentence counts as a case definition only when it is not an affiliation, publisher, place or vendor ("University of Oxford", "Oxford University Press", "Oxford, UK", "Oxford Instruments").
@@ -49,9 +69,9 @@ The drafter writes a list of operations, not a card (`operations.py`). All keys 
 
 | Operation | Tier | What it does |
 | --- | --- | --- |
-| `add_study` | 1 | Appends a study (all Study fields; the id must be the paper itself). |
-| `add_paragraph` | 1 | Appends a sourced paragraph to `level_reason`, `contested.reason`, `badges.*.reason`, `subgroups` or `early_signals`. |
-| `replace_paragraph` | 1 | Replaces paragraph `index` of such a field. |
+| `add_study` | 1 (2 with `preprint: true`) | Appends a study (all Study fields; the id must be the paper itself). `preprint` is written only when true. |
+| `add_paragraph` | 1 (2 if it cites a preprint study) | Appends a sourced paragraph to `level_reason`, `contested.reason`, `badges.*.reason`, `subgroups` or `early_signals`. |
+| `replace_paragraph` | 1 (2 if it cites a preprint study) | Replaces paragraph `index` of such a field. |
 | `propose` | 2 | Sets the level, the contested mark or a badge, with the complete new reason. |
 
 **How operations are applied.** As text splices, not through a YAML library, because round-tripping would lose this repository's comments and folded text. Only the lines of the named field are replaced or inserted; every other line stays byte-identical. After each operation the edited text is parsed again and compared with the same change made on the parsed data; any difference stops the run. Limits: a field written in flow style on one line, and CRLF line endings, are refused with a message; comments inside a field that is rewritten (a `propose` reason, one replaced paragraph) are lost, comments elsewhere stay. Adding a paragraph to a reason written as a single sourced text turns it into a list of two paragraphs, keeping the first one's words.
@@ -74,15 +94,16 @@ Stage 6, after the reviews and before the report, keeps the Norwegian text in st
 
 `report.md` (also the pull request description), in this order:
 
-1. **Tier 2**, the founder decides: proposed level, contested mark or badge changes, each with the new reason, sources and the review verdict.
+1. **Tier 2**, the founder decides: proposed level, contested mark or badge changes, and anything that adds or cites a preprint, each with the new reason, sources and the review verdict.
 2. **Tier 1**: added studies and paragraphs.
 3. **Parking lot**: changes still rejected after two rounds, with the reviewer's findings (severity shown, `must_fix` first) and what the drafter proposed. Accepted changes show the reviewer's remaining notes with their severity in the same way, and any `group` warnings from `apply`. The parking lot also shows `not_on_card` when the reviewer set it.
 4. **Rejected by the reviewer, then withdrawn**: pairs where round 1 was rejected and round 2 proposed nothing. For each: the round of the rejection, every finding of the rejecting review (severity shown, `must_fix` first, problem and suggested fix in full), what the drafter proposed in the rejected round, and the reviewer's `not_on_card` line when there is one. `None.` when there is no such pair. The summary sentence at the top counts these pairs on their own.
 5. **Possible new hypotheses**: papers that fit no card. No card is drafted.
-6. **Retracted papers cited on cards.**
-7. **Skipped**: failed checks, no operations file, no review, papers stopped as reviews or off-topic.
-8. **Pre-existing problems on cards**: citation-check errors the card already had (they do not block a new paper).
-9. A table of every new paper and how it was classified.
+6. **Preprints matched to a card (not drafted)** and **Preprints on cards with a published version** (see "Preprints").
+7. **Retracted papers cited on cards.**
+8. **Skipped**: failed checks, no operations file, no review, papers stopped as reviews or off-topic.
+9. **Pre-existing problems on cards**: citation-check errors the card already had (they do not block a new paper).
+10. A table of every new paper and how it was classified.
 
 When stage 6 ran, a **Translations** section sits between the parking lot / new hypotheses and the retraction list: per card, the items made stale by accepted changes, the items the changes added and how many were already stale or missing, and the cards with no translation yet.
 
@@ -92,4 +113,4 @@ When stage 6 ran, a **Translations** section sits between the parking lot / new 
 
 ## Tests
 
-`tests/test_operations.py` and `tests/test_pipeline.py`, with fictional papers and agent outputs in `tests/fixtures/pipeline/`. The fetch, the full-text loader and the subprocess runner are injected; no test touches the network, an AI or git.
+`tests/test_operations.py` and `tests/test_pipeline.py`, with fictional papers and agent outputs in `tests/fixtures/pipeline/`. The fetch, the preprint search, the full-text loader and the subprocess runner are injected; no test touches the network, an AI or git.

@@ -1,0 +1,60 @@
+{
+  "version": "6.9",
+  "hitCount": 3,
+  "nextCursorMark": "CURSOR2",
+  "request": {
+    "queryString": "fictional",
+    "resultType": "core",
+    "cursorMark": "*",
+    "pageSize": 2,
+    "synonym": false
+  },
+  "resultList": {
+    "result": [
+      {
+        "id": "PPR9000003",
+        "source": "PPR",
+        "fullTextIdList": {
+          "fullTextId": [
+            "PPR9000003"
+          ]
+        },
+        "title": "A fictional preprint without a DOI",
+        "authorString": "Testperson A, Exempel C.",
+        "pubYear": "2026",
+        "abstractText": "No DOI here.",
+        "pubTypeList": {
+          "pubType": [
+            "Preprint"
+          ]
+        },
+        "bookOrReportDetails": {
+          "publisher": "FictionRxiv",
+          "yearOfPublication": 2026
+        },
+        "isOpenAccess": "N",
+        "inEPMC": "N",
+        "inPMC": "N",
+        "firstPublicationDate": "2026-10-02",
+        "firstIndexDate": "2026-10-02",
+        "versionList": {
+          "version": [
+            {
+              "id": "PPR9000003",
+              "source": "PPR",
+              "versionNumber": 1,
+              "firstPublishDate": "2026-10-02",
+              "pubTypeList": {
+                "pubType": [
+                  "preprint"
+                ]
+              },
+              "hasEvaluations": "N"
+            }
+          ]
+        },
+        "versionNumber": 1
+      }
+    ]
+  }
+}

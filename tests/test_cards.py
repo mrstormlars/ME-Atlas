@@ -1208,3 +1208,98 @@ def test_v14_a_word_that_only_contains_todo_is_not_a_marker(tmp_path):
     data = base()
     data["core_claim"]["text"] += " The mastodon fictional result is unrelated."
     assert [i for i in check(tmp_path, data) if i.rule == "V14"] == []
+
+
+# --- preprints (V15) ---------------------------------------------------------
+
+PREPRINT_ID = "doi:10.99999/fictional.pre"
+
+
+def with_preprint(data: dict, role: str = "early_signal") -> dict:
+    """The fixture card plus one preprint study, cited in no text yet."""
+    data["studies"].append(
+        {
+            "id": PREPRINT_ID,
+            "title": "Fictional preprint of widget signalling",
+            "year": 2026,
+            "cohort": "me_cfs",
+            "case_definition": "other",
+            "case_definition_source": "abstract",
+            "case_definition_quote": None,
+            "design": "uncontrolled",
+            "n_patients": 12,
+            "n_controls": None,
+            "measures_pem": False,
+            "preregistered": None,
+            "role": role,
+            "direction": "mixed",
+            "finding": "A preprint of n=12 patients reported a fictional change.",
+            "preprint": True,
+        }
+    )
+    return data
+
+
+def v15(issues: list[Issue]) -> list[str]:
+    return [i.path for i in issues if i.rule == "V15"]
+
+
+def test_a_study_is_not_a_preprint_unless_it_says_so():
+    assert {s.preprint for s in cards.load_card(VALID_CARD).studies} == {False}
+
+
+def test_v15_a_preprint_early_signal_cited_only_in_early_signals_passes(tmp_path):
+    data = with_preprint(base())
+    data["early_signals"].append(
+        {"text": "A fictional preprint reported a change, not yet replicated.", "sources": [PREPRINT_ID]}
+    )
+    assert check(tmp_path, data) == []
+
+
+def test_v15_a_preprint_study_that_is_not_cited_anywhere_passes(tmp_path):
+    assert check(tmp_path, with_preprint(base())) == []
+
+
+@pytest.mark.parametrize("role", ["supports", "contradicts", "context"])
+def test_v15_a_preprint_with_a_role_other_than_early_signal_fails_at_its_role(tmp_path, role):
+    issues = check(tmp_path, with_preprint(base(), role=role))
+    assert "studies[5].role" in v15(issues)
+
+
+def test_v15_a_preprint_in_the_level_reason_fails_at_that_paragraph(tmp_path):
+    data = with_preprint(base())
+    data["level_reason"] = [
+        data["level_reason"],
+        {"text": "A fictional preprint also pointed this way.", "sources": [PREPRINT_ID]},
+    ]
+    assert v15(check(tmp_path, data)) == ["level_reason[1].sources[0]"]
+
+
+def test_v15_a_preprint_in_a_single_level_reason_fails(tmp_path):
+    data = with_preprint(base())
+    data["level_reason"]["sources"].append(PREPRINT_ID)
+    assert v15(check(tmp_path, data)) == ["level_reason.sources[2]"]
+
+
+def test_v15_a_preprint_in_the_contested_reason_fails(tmp_path):
+    data = with_preprint(base())
+    data["contested"]["reason"]["sources"].append(PREPRINT_ID)
+    assert v15(check(tmp_path, data)) == ["contested.reason.sources[1]"]
+
+
+def test_v15_a_preprint_in_the_diagnostic_marker_reason_fails(tmp_path):
+    data = with_preprint(base())
+    data["badges"]["diagnostic_marker"]["reason"]["sources"].append(PREPRINT_ID)
+    assert v15(check(tmp_path, data)) == ["badges.diagnostic_marker.reason.sources[1]"]
+
+
+def test_v15_a_preprint_in_the_explains_pem_reason_fails(tmp_path):
+    data = with_preprint(base())
+    data["badges"]["explains_pem"]["reason"]["sources"].append(PREPRINT_ID)
+    assert v15(check(tmp_path, data)) == ["badges.explains_pem.reason.sources[1]"]
+
+
+def test_v15_a_preprint_in_a_link_fails_at_that_link(tmp_path):
+    data = with_preprint(base())
+    data["links"] = [link(sources=(PREPRINT_ID,))]
+    assert v15(check(tmp_path, data)) == ["links[0].sources[0]"]

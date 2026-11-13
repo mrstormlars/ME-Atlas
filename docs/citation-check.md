@@ -9,7 +9,7 @@ uv run python -m me_atlas.citations check                    # cards/ and drafts
 uv run python -m me_atlas.citations check drafts/ cards/some-card.yaml [--cache-dir data/cache]
 ```
 
-The check is **offline**. It reads only `data/cache/pubmed/<pmid>.xml`, `data/cache/europepmc/<pmid>.json` and `data/cache/europepmc/<pmcid>.xml`, and never makes a request. It is separate from `cards validate` because the cache is gitignored: the validator can run on GitHub, this check runs locally (and later in the weekly pipeline). It does not refresh anything; retraction status is what the cached record says, and the weekly fetch is what updates it.
+The check is **offline**. It reads only `data/cache/pubmed/<pmid>.xml`, `data/cache/europepmc/<pmid>.json` and `data/cache/europepmc/<pmcid>.xml` (and, for preprints, `data/cache/europepmc/preprints/PPR<digits>.json`), and never makes a request. It is separate from `cards validate` because the cache is gitignored: the validator can run on GitHub, this check runs locally (and later in the weekly pipeline). It does not refresh anything; retraction status is what the cached record says, and the weekly fetch is what updates it.
 
 Output is one line per issue, then a summary:
 
@@ -32,9 +32,21 @@ Each study on the card is checked. Errors unless marked.
 | **C4** Not retracted | The cached record is not marked retracted. | The card cites a retracted paper. This is an editorial decision, not a typo: report it. |
 | **C5** Quote is verbatim | `case_definition_quote` appears in the source named in `case_definition_source`: `abstract` is the PubMed abstract, `fulltext` is the cached full text: the Europe PMC open-access XML if there is one, otherwise the cached PMC article page (see below). Either way it is the front matter or abstract and the body, without the reference list. `fulltext` with no cached full text is an error. Studies without a quote (`unverified`, `none`, `other`) skip this check. | Copy the sentence from the abstract or full text. If the full text is not cached: `uv run python -m me_atlas.europepmc fulltext <pmid>`, or, when the study has no open full text but Europe PMC says it is free to read on PubMed Central (`inPMC` Y), `uv run python -m me_atlas.europepmc pmcpage --card <card.yaml> <pmid>`. If the record has no open full text, the quote cannot be checked mechanically: a person checks it and the source is changed to what can be verified. If the sentence is only in the full text, set the source to `fulltext`. |
 | **C6** Sample size (**warning**) | `n_patients` and `n_controls`, when not null, appear as a whole number in the abstract or in the cached full text (open-access XML or cached PMC page). | Look at the paper. Fix the number if it is wrong; leave it if the warning is explained (below). |
-| **C7** DOI-only id | A `doi:` study id is an error: "cite by PMID". | Find the PMID and use `pmid:<digits>`. DOI-only ids cannot be checked yet. |
+| **C7** DOI-only id | A `doi:` study id without `preprint: true` is an error: "cite by PMID". | Find the PMID and use `pmid:<digits>`. DOI-only ids cannot be checked yet, except preprints (below). |
+| **C8** Preprint flag | A `pmid:` study whose cached PubMed record has the publication type "Preprint" must have `preprint: true`; a study with `preprint: true` must have a record with that type. | Set or remove `preprint: true`. |
 
-When there is no usable record (C1), the other checks for that study are skipped. A DOI-only study gets only C7.
+When there is no usable record (C1), the other checks for that study are skipped. A DOI-only study without `preprint: true` gets only C7.
+
+## Preprints
+
+A `doi:` study with `preprint: true` is checked against the cached Europe PMC preprint record with that DOI (`data/cache/europepmc/preprints/PPR<digits>.json`, DOI compared case-insensitively), by the same normalisation as above:
+
+- **C1**: no cached record. The hint is `uv run python -m me_atlas.europepmc preprint <doi>`.
+- **C2** title and **C3** year against the record (`pubYear`).
+- **C5**: the quote must be verbatim in the record's abstract (HTML tags such as `<h4>` removed) or, with source `fulltext`, in the cached full text. Full text is the shared `<pmcid>.xml` cache, with the PMC id taken from the preprint record; the hint is `europepmc preprint <doi> --fulltext`. A placeholder (PDF note) is not full text.
+- **C6** (warning): sample sizes in the abstract or the cached full text.
+
+C4 does not apply (the record carries no retraction marker). The status of a preprint is not peer review; V15 in `docs/card-format.md` keeps it out of levels, badges, contested marks and links.
 
 ## Normalisation
 
@@ -64,7 +76,7 @@ The PMC id used to find `<pmcid>.xml` and `<pmcid>.html` is the one in the cache
 
 ## Tests
 
-`tests/test_citations.py` builds a fictional cache (PMIDs 9000000x, titles starting "Fictional", fictional PMCIDs) and fictional cards in a temporary directory. A test makes any HTTP client construction or request fail, to show the check stays offline.
+`tests/test_citations.py` (preprint tests use fictional records in `tests/fixtures/europepmc/preprint_page1.json`) builds a fictional cache (PMIDs 9000000x, titles starting "Fictional", fictional PMCIDs) and fictional cards in a temporary directory. A test makes any HTTP client construction or request fail, to show the check stays offline.
 
 ## Free-to-read PMC pages as full text
 

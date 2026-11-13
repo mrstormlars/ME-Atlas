@@ -15,6 +15,7 @@ from me_atlas.operations import (
     OpsFile,
     apply_operations,
     parse_ops,
+    preprint_ids,
     tier,
 )
 
@@ -396,3 +397,63 @@ def test_splice_self_check_fails_safely_when_a_column_zero_comment_sits_between_
     with pytest.raises(OperationError, match="does not match the intended change"):
         apply_operations(text, ops(add_study()))
     assert text == snapshot
+
+
+# --- preprints: tier 2 --------------------------------------------------------
+
+PREPRINT = "doi:10.99999/fictional.pre"
+
+
+def add_preprint_study() -> dict:
+    study = {
+        **copy.deepcopy(NEW_STUDY),
+        "id": PREPRINT,
+        "role": "early_signal",
+        "case_definition": "other",
+        "case_definition_quote": None,
+        "preprint": True,
+    }
+    return {"op": "add_study", "study": study}
+
+
+def preprint_ops(*operations: dict) -> OpsFile:
+    return ops(*operations, paper=PREPRINT)
+
+
+def test_an_operation_that_adds_a_preprint_study_is_tier_2():
+    parsed = preprint_ops(add_preprint_study())
+    assert [tier(o, preprint_ids(parsed)) for o in parsed.operations] == [2]
+
+
+def test_a_paragraph_citing_a_preprint_added_in_the_same_file_is_tier_2_but_one_citing_a_journal_paper_is_tier_1():
+    parsed = preprint_ops(
+        add_preprint_study(),
+        add_par("early_signals", sources=[PREPRINT]),
+        add_par("early_signals", sources=["pmid:90000100"]),
+    )
+    found = preprint_ids(parsed)
+    assert found == {PREPRINT}
+    assert [tier(o, found) for o in parsed.operations] == [2, 2, 1]
+
+
+def test_a_paragraph_citing_a_preprint_already_on_the_card_is_tier_2():
+    data = yaml.safe_load(card_text())
+    data["studies"].append({**copy.deepcopy(NEW_STUDY), "id": PREPRINT, "role": "early_signal", "preprint": True})
+    parsed = ops(add_par("early_signals", sources=[PREPRINT]), add_par("early_signals"))
+    found = preprint_ids(parsed, data)
+    assert [tier(o, found) for o in parsed.operations] == [2, 1]
+
+
+def test_a_study_added_without_preprint_true_stays_tier_1_even_if_its_id_is_a_doi():
+    plain = {**copy.deepcopy(NEW_STUDY), "id": "doi:10.99999/fictional.plain"}
+    parsed = ops({"op": "add_study", "study": plain}, paper=plain["id"])
+    assert [tier(o, preprint_ids(parsed)) for o in parsed.operations] == [1]
+
+
+def test_a_preprint_study_is_written_with_preprint_true_and_a_plain_study_without_the_key(tmp_path):
+    parsed = preprint_ops(add_preprint_study())
+    new = apply_operations(card_text(), parsed, validate=False)
+    assert yaml.safe_load(new)["studies"][-1]["preprint"] is True
+    assert "    preprint: true" in new
+    plain = apply_operations(card_text(), ops(add_study()), validate=False)
+    assert "preprint" not in plain

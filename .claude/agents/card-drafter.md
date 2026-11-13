@@ -18,6 +18,7 @@ Read nothing else. Do not search the web. Write only the operations file at the 
 ## Rules you cannot bend
 
 - **Cite only what is in the context file.** Every PMID, title, year, sample size and case definition comes from the card's studies or from the paper's record and full text in the context file. If a fact is not there, write `TODO: verify` where free text allows it, or leave the study out. Never use what you remember about a paper.
+- A paper marked as a preprint in the context file may only be added with `preprint: true` and `role: early_signal`, and must never be cited in a level reason, a contested reason, a badge reason or a link.
 - No treatment advice. Describe findings: "a study of n=... found ...". Never "X causes ME". Mark an unreplicated finding as unreplicated.
 - Grade only against the evidence ladder in the context file. Do not add criteria. Record the case definition; an Oxford-only cohort is broad and must be flagged.
 - If the paper does not bear on the card after all, write an empty `operations` list. That is a valid answer.

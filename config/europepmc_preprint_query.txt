@@ -1,0 +1,15 @@
+# Europe PMC search terms for preprints (src/me_atlas/europepmc.py), used by `pipeline prepare`.
+# Lines starting with # are ignored; the rest is joined into one block. Code adds
+# " AND SRC:PPR AND FIRST_IDATE:[since TO until]".
+#
+# These are the title/abstract terms of block 1 of config/pubmed_query.txt, written as TITLE_ABS terms. Add or
+# remove a term in both files together; a test fails if they differ. Block 2 of the PubMed query (long COVID
+# that also mentions ME/CFS) is not searched here: a long COVID preprint that mentions ME/CFS in its title or
+# abstract is already found by the ME/CFS terms.
+(
+  TITLE_ABS:"myalgic encephalomyelitis"
+  OR TITLE_ABS:"chronic fatigue syndrome"
+  OR TITLE_ABS:"ME/CFS"
+  OR TITLE_ABS:"CFS/ME"
+  OR TITLE_ABS:"systemic exertion intolerance disease"
+)

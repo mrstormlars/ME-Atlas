@@ -1072,3 +1072,23 @@ def test_query_diff_needs_something_to_do_and_a_positive_sample(tmp_path):
             run_diff(server, tmp_path, *args)
         assert exc.value.code == 2
         assert server.requests == []
+
+
+# --- preprints -------------------------------------------------------------
+
+
+def test_a_record_with_the_preprint_publication_type_is_a_preprint_whatever_its_journal_says():
+    rec = record("90000009")
+    assert rec.publication_types == ["Journal Article", "Preprint"]
+    assert rec.preprint is True
+
+
+def test_a_plain_journal_article_is_not_a_preprint():
+    assert record("90000001").preprint is False
+
+
+def test_a_journal_that_calls_itself_a_preprint_server_is_not_enough():
+    xml = fixture_text("90000009").replace('<PublicationType UI="D000076942">Preprint</PublicationType>', "")
+    rec = parse_xml(xml)
+    assert "preprint server" in (rec.journal or "")
+    assert rec.preprint is False
