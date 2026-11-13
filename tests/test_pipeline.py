@@ -76,26 +76,31 @@ class Env:
         self.preprint_calls.append((since, until))
         return list(self.preprints)
 
+    @property
+    def dir_args(self) -> list[str]:
+        """The directory options every command takes, all inside tmp_path."""
+        return [
+            "--pipeline-dir",
+            str(self.pipeline),
+            "--cards-dir",
+            str(self.cards),
+            "--drafts-dir",
+            str(self.drafts),
+            "--cache-dir",
+            str(self.cache),
+            "--spec",
+            str(SPEC),
+            "--translations-dir",
+            str(self.translations),
+            "--audits-dir",
+            str(self.root / "audits"),
+        ]
+
     def cli(self, *argv: str, fulltext=None, runner=None, fetch=None, preprint_search=None) -> int:
         command = argv[0]
         extra = ["--date", DATE.isoformat()] if command == "prepare" else ["--run-dir", str(self.run)]
         return pipeline.main(
-            [
-                *argv,
-                *extra,
-                "--pipeline-dir",
-                str(self.pipeline),
-                "--cards-dir",
-                str(self.cards),
-                "--drafts-dir",
-                str(self.drafts),
-                "--cache-dir",
-                str(self.cache),
-                "--spec",
-                str(SPEC),
-                "--translations-dir",
-                str(self.translations),
-            ],
+            [*argv, *extra, *self.dir_args],
             fetch=fetch or self.fetch,
             preprint_search=preprint_search or self.preprint_search,
             fulltext=fulltext,
@@ -477,6 +482,32 @@ def test_record_review_rejects_a_review_of_another_paper_or_malformed_file(ready
 # --- outcomes and report ----------------------------------------------------
 
 
+AUDIT_RUBRIC = "Grading follows only this published ladder; editors do not add criteria."
+
+
+def audit_accepted(env: Env, key: str, paper_id: str, *, second: bool = False, fulltext=None) -> None:
+    """The auditor's context and a valid `accept` record (and, with ``second``, the second run) for one pair."""
+    assert env.cli("audit-plan", SLUG, key, fulltext=fulltext or fulltext_loader()) == 0
+    record = {
+        "card": SLUG,
+        "paper": paper_id,
+        "decision": "accept",
+        "parts": [
+            {
+                "decision_part": "The change.",
+                "rubric": AUDIT_RUBRIC,
+                "evidence": [{"source": "pmid:90000100", "quote": "Fictional controlled study of widget signalling."}],
+            }
+        ],
+        "reasons_summary": "The cited study supports the change.",
+        "would_change": "A failed replication.",
+    }
+    for suffix in ("", "-second") if second else ("",):
+        path = env.run / "audit" / f"{SLUG}-{key}{suffix}.yaml"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(yaml.safe_dump(record, sort_keys=False), encoding="utf-8")
+
+
 def outcome(env: Env):
     [o] = pipeline.collect_outcomes(pipeline.Config(env.run, env.cards, env.drafts, env.cache, SPEC))
     return o
@@ -506,6 +537,7 @@ def test_outcomes_for_each_state_of_a_pair(ready: Env):
 def test_report_puts_tier_2_first_then_parking_lot_new_hypotheses_and_retractions(ready: Env):
     ready.apply("ops_propose_level.json")
     ready.put("review", "review_accept.json")
+    audit_accepted(ready, NEW_PMID, f"pmid:{NEW_PMID}", second=True)  # a tier 2 pair needs the auditor
     # a second card/paper pair that ends in the parking lot
     parked = pipeline.Config(ready.run, ready.cards, ready.drafts, ready.cache, SPEC)
     matches = load(ready.run / "matches.json")
@@ -735,7 +767,7 @@ def test_two_accepted_papers_proposing_the_same_kind_conflict(ready: Env):
             {"op": "propose", "target": "level", "value": 3, "reason": [{"text": "x.", "sources": ["pmid:90000100"]}]}
         ]
         path.write_text(json.dumps(body), encoding="utf-8")
-    outcomes = pipeline.collect_outcomes(cfg)
+    outcomes = pipeline.collect_outcomes(cfg, gate=False)  # conflicts are judged among the pairs the reviewer accepted
     assert [o.status for o in outcomes if o.pmid.startswith("900002")] == ["parked", "parked"]
     assert "propose level" in outcomes[-1].note
 
@@ -1922,6 +1954,10 @@ def test_end_to_end_one_pubmed_pair_and_one_doi_preprint_pair_both_accepted(doi_
     assert doi_run.cli("record-review", SLUG, f"doi:{PP_DOI}") == 0
 
     cfg = pipeline.Config(doi_run.run, doi_run.cards, doi_run.drafts, doi_run.cache, SPEC)
+    assert {o.pmid: o.applied for o in pipeline.collect_outcomes(cfg)} == {NEW_PMID: True, PPR_KEY: False}
+    audit_accepted(
+        doi_run, PPR_KEY, PP_ID, fulltext=NO_FULLTEXT
+    )  # every change that cites a preprint is tier 2: the auditor decides
     outcomes = pipeline.collect_outcomes(cfg)
     assert {(o.pmid, o.paper_id, o.status) for o in outcomes} == {
         (NEW_PMID, f"pmid:{NEW_PMID}", "accepted"),
@@ -1934,7 +1970,7 @@ def test_end_to_end_one_pubmed_pair_and_one_doi_preprint_pair_both_accepted(doi_
     assert doi_run.cli("report") == 0
     report = (doi_run.run / "report.md").read_text(encoding="utf-8")
     tier2 = report.split("### Tier 2")[1].split("### Tier 1")[0]
-    tier1 = report.split("### Tier 1")[1].split("## Parking lot")[0]
+    tier1 = report.split("### Tier 1")[1].split("## Auditor decisions")[0]
     assert f"[{PP_ID}](https://doi.org/{PP_DOI}) {PP_TITLE} (preprint, not peer reviewed)" in tier2
     assert PP_ID not in tier1 and f"pmid:{NEW_PMID}" in tier1
     assert "Preprints matched to a card" not in report
@@ -1969,7 +2005,7 @@ def test_two_accepted_doi_and_pubmed_pairs_on_one_target_are_parked_with_their_p
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(json.dumps(body), encoding="utf-8")
     assert path.is_file()
-    statuses = {o.paper_id: (o.status, o.note) for o in pipeline.collect_outcomes(cfg) if o.slug == SLUG}
+    statuses = {o.paper_id: (o.status, o.note) for o in pipeline.collect_outcomes(cfg, gate=False) if o.slug == SLUG}
     assert statuses[PP_ID][0] == "parked" and "conflicts with pmid:90000201" in statuses[PP_ID][1]
     assert statuses["pmid:90000201"][0] == "parked" and f"conflicts with {PP_ID}" in statuses["pmid:90000201"][1]
 
@@ -2136,7 +2172,7 @@ def test_the_preprint_line_says_a_change_that_adds_or_cites_a_preprint_is_tier_2
     report = (env.run / "report.md").read_text(encoding="utf-8")
     line = next(x for x in report.splitlines() if x.startswith("Preprints (Europe PMC)"))
     assert "never drafted automatically" not in line
-    assert "can only be an early signal" in line and "tier 2" in line and "founder decides" in line
+    assert "can only be an early signal" in line and "tier 2" in line and "the auditor decides" in line
 
 
 def test_the_commit_message_ends_with_a_blank_line_and_the_co_author_trailer(accepted: Env):

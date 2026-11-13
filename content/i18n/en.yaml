@@ -108,6 +108,7 @@ card.working: 'Who is working on it'
 card.early: 'Early signals: not yet repeated'
 card.last_checked: 'Last checked {date} by {by}.'
 by.ai_pair: 'the AI review pair'
+by.ai_audit: 'the AI auditor'
 by.founder: 'the founder'
 
 # --- one study ---

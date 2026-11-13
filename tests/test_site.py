@@ -553,8 +553,8 @@ def test_every_case_definition_label_is_covered():
 def test_last_checked_names_who_checked(proj):
     founder = make_card("founder", "Fictional founder", 2)
     founder["last_checked"] = {"date": dt.date(2026, 10, 2), "by": "founder"}
-    out = built(proj, make_card("pair", "Fictional pair", 2), founder)
-    assert "Last checked 2026-10-01 by the AI review pair." in norm(page(out, "hypotheses/pair.html").text())
+    out = built(proj, make_card("audit", "Fictional audit", 2), founder)
+    assert "Last checked 2026-10-01 by the AI auditor." in norm(page(out, "hypotheses/audit.html").text())
     assert "Last checked 2026-10-02 by the founder." in norm(page(out, "hypotheses/founder.html").text())
 
 

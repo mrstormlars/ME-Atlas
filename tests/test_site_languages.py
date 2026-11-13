@@ -464,7 +464,7 @@ def test_levels_badges_contested_marks_titles_and_numbers_come_from_the_english_
     assert "pmid:00000001" in meta and "Canadian Consensus Criteria (CCC)" in meta and "Kontrollert" in meta
     assert "Lavere hos pasienter" in meta and "sitert som [1]" in meta
     last = norm(nb.find(cls="last-checked").text())
-    assert last == "Sist kontrollert 2026-10-01 av de to KI-agentene."
+    assert last == "Sist kontrollert 2026-10-01 av KI-revisoren."
 
 
 def test_the_case_definition_quote_is_never_shown_and_a_sidecar_cannot_put_one_there(proj_tmp):
