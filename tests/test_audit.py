@@ -861,3 +861,343 @@ def test_two_audited_pairs_that_overwrite_one_target_are_parked_and_a_rejected_o
     verdicts["90000201"] = "reject"  # one of them is not accepted by the auditor: no conflict left
     outcomes = {o.pmid: o for o in pipeline.collect_outcomes(cfg_of(ready)) if o.pmid.startswith("900002")}
     assert outcomes["90000202"].applied and not outcomes["90000201"].applied
+
+
+# --- the redraft (round L) after an accept_lower ---------------------------------------------------
+
+
+def write_l(env: Env, data: dict | str, *, second: bool = False) -> Path:
+    path = env.run / "audit" / f"{SLUG}-{NEW_PMID}-L{'-second' if second else ''}.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(data if isinstance(data, str) else yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+    return path
+
+
+def lower_pair(env: Env) -> None:
+    """A level 2 -> 3 pair the first audit (and the second, a level change always gets one) accepts at level 2 only."""
+    level_pair(env)
+    write_record(env, audit_data("accept_lower"))
+    write_record(env, audit_data("accept_lower"), second=True)
+
+
+def put_redraft_ops(env: Env, mutate=None) -> Path:
+    ops = load(FIXTURES / "agent" / "ops_redraft_level2.json")
+    if mutate is not None:
+        mutate(ops)
+    path = env.run / "ops" / f"{SLUG}-{NEW_PMID}-rL.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(ops), encoding="utf-8")
+    return path
+
+
+def apply_l(env: Env, mutate=None) -> int:
+    return env.cli("apply", SLUG, str(put_redraft_ops(env, mutate)), "--round", "L")
+
+
+def redraft_ready(env: Env, mutate=None) -> None:
+    """The first audit says accept_lower (level 2); a redraft passed the checks and was accepted in review."""
+    lower_pair(env)
+    assert env.cli("redraft-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    assert apply_l(env, mutate) == 0
+    env.put("review", "review_accept.json", n="L")
+    assert env.cli("record-review", SLUG, NEW_PMID, "--round", "L") == 0
+
+
+def audit_l(env: Env, first: str = "accept", second: str | None = "accept") -> None:
+    assert env.cli("audit-plan", SLUG, NEW_PMID, "--round", "L", fulltext=fulltext_loader()) == 0
+    low = {"accepted_level": 1}  # below the redraft's level 2
+    write_l(env, audit_data(first, **(low if first == "accept_lower" else {})))
+    if second is not None:
+        write_l(env, audit_data(second, **(low if second == "accept_lower" else {})), second=True)
+    assert env.cli("record-audit", SLUG, NEW_PMID, "--round", "L") == 0
+
+
+def test_redraft_plan_writes_the_drafters_context(ready: Env):
+    lower_pair(ready)
+    assert ready.cli("redraft-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    text = (ready.run / "redraft-context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+    assert "accepts level 2 only" in text and "- accepted_level: 2" in text
+    assert "Rubric clause: " + RUBRIC in text and f"- evidence {CITED}: {CITED_TITLE}" in text  # the parts
+    assert "would_change: A failed replication." in text
+    assert "slug: fictional-pipeline-card" in text.split("## 1.")[1].split("## 2.")[0]  # the card
+    assert f"### Record: {CITED}" in text and "## 5. The rubric" in text
+    # The applied card of round 1 is what the redraft applies to: it already holds the proposed level 3.
+    assert "level: 3" in text.split("## 1.")[1].split("## 2.")[0]
+
+
+@pytest.mark.parametrize("decision", ["accept", "reject"])
+def test_redraft_plan_refuses_when_the_audit_is_not_accept_lower(ready: Env, capsys, decision):
+    level_pair(ready)
+    write_record(ready, audit_data(decision))
+    write_record(ready, audit_data(decision), second=True)
+    assert ready.cli("redraft-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 1
+    assert f"the audit says {decision}, not accept_lower" in capsys.readouterr().err
+    assert not (ready.run / "redraft-context").exists()
+
+
+def test_redraft_plan_refuses_without_a_valid_audit_and_when_the_two_audits_differ(ready: Env, capsys):
+    level_pair(ready)
+    assert ready.cli("redraft-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 1
+    assert "no valid audit record" in capsys.readouterr().err
+    write_record(ready, audit_data("accept_lower"))
+    write_record(ready, audit_data("accept"), second=True)
+    assert ready.cli("redraft-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 1
+    assert "the first and the second audit differ" in capsys.readouterr().err
+
+
+def test_redraft_plan_refuses_when_a_round_l_already_exists(ready: Env, capsys):
+    redraft_ready(ready)
+    assert ready.cli("redraft-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 1
+    assert "a redraft (round L) already exists; there is at most one" in capsys.readouterr().err
+
+
+def test_a_redraft_accepted_at_every_step_sets_the_level_the_auditor_accepted(ready: Env):
+    before = card_before(ready)
+    redraft_ready(ready)
+    audit_l(ready)
+    after = finish(ready)
+    data = yaml.safe_load(after)
+    after = after.decode("utf-8")
+    assert after != before.decode("utf-8") and data["level"] == 2  # the auditor's accepted_level, not the proposed 3
+    assert "a second fictional study used the Fukuda criteria" in " ".join(after.split())  # the redraft's reason
+    assert data["studies"][-1]["id"] == PAPER  # the study the first round added is kept
+    [o] = pipeline.collect_outcomes(cfg_of(ready))
+    assert o.audit_state == "lower" and o.redraft_state == "accepted" and o.applied
+    report = report_of(ready)
+    assert "redraft at level 2 (round L): accepted" in section(report, "Auditor decisions")
+    assert section(report, "Disputes (card unchanged)").strip() == "None."
+    assert sorted(p.name for p in (ready.root / "audits").glob("*.yaml")) == [
+        f"{DATE.isoformat()}-{SLUG}-{NEW_PMID}-L-second.yaml",
+        f"{DATE.isoformat()}-{SLUG}-{NEW_PMID}-L.yaml",
+        f"{DATE.isoformat()}-{SLUG}-{NEW_PMID}-second.yaml",
+        f"{DATE.isoformat()}-{SLUG}-{NEW_PMID}.yaml",
+    ]
+
+
+def test_a_round_l_pair_is_always_in_the_consistency_sample(ready: Env):
+    redraft_ready(ready)
+    pairs = sample(ready)["pairs"]
+    assert {(p["key"], p.get("round")) for p in pairs} == {(NEW_PMID, None), (NEW_PMID, "L")}
+    [redraft] = [p for p in pairs if p.get("round") == "L"]
+    assert redraft["why"] == "redraft_level_change"
+
+
+def test_a_round_l_audit_needs_its_second_run(ready: Env):
+    redraft_ready(ready)
+    audit_l(ready, second=None)
+    [o] = pipeline.collect_outcomes(cfg_of(ready))
+    assert o.redraft_state == "audit_not_accepted" and not o.applied
+    assert "the second audit is not valid" in o.redraft_note
+
+
+def test_the_round_l_audit_context_is_fresh_and_holds_no_audit_record(ready: Env):
+    redraft_ready(ready)
+    assert ready.cli("audit-plan", SLUG, NEW_PMID, "--round", "L", fulltext=fulltext_loader()) == 0
+    text = (ready.run / "audit-context" / f"{SLUG}-{NEW_PMID}-L.md").read_text(encoding="utf-8")
+    assert "round L" in text.split("## 1.")[0]
+    assert "A failed replication." not in text and "The cited controlled study supports the proposed level." not in text
+    assert "a second fictional study used the Fukuda criteria" in text.split("## 2.")[0]  # the diff against the card
+
+
+# Each of these leaves the card byte-identical after `pr --no-pr`.
+
+
+def scenario_l_wrong_level(env: Env) -> None:
+    lower_pair(env)
+    assert apply_l(env, lambda ops: ops["operations"][0].update(value=1)) == 1
+    assert "the auditor accepted level 2" in "; ".join(env.checks("L")["ops_errors"])
+    env.put("review", "review_accept.json", n="L")
+
+
+def scenario_l_add_study(env: Env) -> None:
+    lower_pair(env)
+    study = load(FIXTURES / "agent" / "ops_add_study.json")["operations"][0]
+    assert apply_l(env, lambda ops: ops["operations"].append(study)) == 1
+    assert "a redraft may hold propose operations only" in "; ".join(env.checks("L")["ops_errors"])
+    env.put("review", "review_accept.json", n="L")
+
+
+def scenario_l_two_level_proposals(env: Env) -> None:
+    lower_pair(env)
+    assert apply_l(env, lambda ops: ops["operations"].append(dict(ops["operations"][0]))) == 1
+    env.put("review", "review_accept.json", n="L")
+
+
+def scenario_l_checks_fail(env: Env) -> None:
+    lower_pair(env)
+    assert apply_l(env, lambda ops: ops["operations"][0]["reason"][0].update(sources=["pmid:90000999"])) == 1
+    env.put("review", "review_accept.json", n="L")
+
+
+def scenario_l_review_reject(env: Env) -> None:
+    lower_pair(env)
+    assert apply_l(env) == 0
+    env.put("review", "review_reject.json", n="L")
+    env.cli("audit-plan", SLUG, NEW_PMID, "--round", "L", fulltext=fulltext_loader())
+    write_l(env, audit_data("accept"))
+    write_l(env, audit_data("accept"), second=True)
+
+
+def scenario_l_audit_reject(env: Env) -> None:
+    redraft_ready(env)
+    audit_l(env, "reject", "reject")
+
+
+def scenario_l_accept_lower_again(env: Env) -> None:
+    redraft_ready(env)
+    audit_l(env, "accept_lower", "accept_lower")  # no further round exists: a third attempt is not offered
+
+
+def scenario_l_no_redraft(env: Env) -> None:
+    lower_pair(env)
+
+
+def scenario_l_second_audit_rejects(env: Env) -> None:
+    redraft_ready(env)
+    audit_l(env, "accept", "reject")
+
+
+L_NOT_APPLIED = {
+    "a redraft whose level is not the accepted_level (E4)": (scenario_l_wrong_level, "redraft failed checks"),
+    "a redraft with an add_study operation (E4)": (scenario_l_add_study, "redraft failed checks"),
+    "a redraft with two level proposals (E4)": (scenario_l_two_level_proposals, "redraft failed checks"),
+    "a redraft that fails the mechanical checks": (scenario_l_checks_fail, "redraft failed checks"),
+    "a redraft the reviewer rejects": (scenario_l_review_reject, "redraft rejected in review"),
+    "a redraft the round-L audit rejects": (scenario_l_audit_reject, "redraft not accepted in audit: reject"),
+    "a redraft the round-L audit answers accept_lower again": (
+        scenario_l_accept_lower_again,
+        "redraft not accepted in audit: accept_lower",
+    ),
+    "a second round-L audit that rejects": (
+        scenario_l_second_audit_rejects,
+        "redraft not accepted in audit: the second audit decided reject",
+    ),
+    "no redraft at all": (scenario_l_no_redraft, "no redraft recorded"),
+}
+
+
+@pytest.mark.parametrize("scenario, reason", L_NOT_APPLIED.values(), ids=L_NOT_APPLIED.keys())
+def test_the_card_is_byte_identical_after_pr_and_the_dispute_is_listed_when(ready: Env, scenario, reason):
+    before = card_before(ready)
+    scenario(ready)
+    assert finish(ready) == before
+    assert not (ready.cards / "changelog.yaml").exists()
+    [o] = pipeline.collect_outcomes(cfg_of(ready))
+    assert o.audit_state == "lower" and not o.applied
+    disputes = section(report_of(ready), "Disputes (card unchanged)")
+    assert "the auditor accepts level 2 only, so nothing is applied" in disputes
+    assert f"redraft (round L): {reason}" in disputes
+
+
+def test_an_audited_redraft_on_a_card_in_cards_logs_the_round_l_audit(published: Env):
+    redraft_ready(published)
+    audit_l(published)
+    assert pr(published) == 0
+    card = yaml.safe_load((published.cards / f"{SLUG}.yaml").read_text(encoding="utf-8"))
+    assert card["level"] == 2 and card["last_checked"] == {"date": DATE, "by": "ai_audit"}
+    [entry] = cards.load_changelog(published.cards / "changelog.yaml", today=DATE)
+    assert entry.decided_by == "ai_audit" and entry.tier == 2
+
+
+# --- parked changes never go to the auditor (D2) ------------------------------------------------
+
+
+def test_a_pair_rejected_in_both_rounds_is_never_sampled_applied_or_audited_even_with_an_accepting_record(ready: Env):
+    key = "90000102"
+    cfg = cfg_of(ready)
+    op = {
+        "op": "propose",
+        "target": "level",
+        "value": 3,
+        "reason": [{"text": "A fictional level reason.", "sources": [CITED]}],
+    }
+    review = {
+        "card": SLUG,
+        "paper": f"pmid:{key}",
+        "verdict": "reject",
+        "findings": [{"operation": 0, "severity": "must_fix", "problem": "Wrong."}],
+    }
+    for n in (1, 2):
+        for path, body in (
+            (cfg.ops_path(SLUG, key, n), {"card": SLUG, "paper": f"pmid:{key}", "operations": [op]}),
+            (cfg.checks_path(SLUG, key, n), {"passed": True, "card": SLUG, "citations": []}),
+            (cfg.review_path(SLUG, key, n), review),
+        ):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(body), encoding="utf-8")
+    matches = load(ready.run / "matches.json")
+    matches["matches"].append({"slug": SLUG, "pmid": key})
+    (ready.run / "matches.json").write_text(json.dumps(matches), encoding="utf-8")
+    # An audit record that accepts it is lying in audit/: it must change nothing.
+    write_record(ready, audit_data("accept", paper=f"pmid:{key}"), key=key)
+    write_record(ready, audit_data("accept", paper=f"pmid:{key}"), key=key, second=True)
+    before = card_before(ready)
+
+    assert key not in {p["key"] for p in sample(ready)["pairs"]}
+    o = next(o for o in pipeline.collect_outcomes(cfg) if o.pmid == key)
+    assert o.status == "parked" and not o.audit_required and o.audit is None and not o.applied
+    assert finish(ready) == before
+    report = report_of(ready)
+    assert key in section(report, "Disputes (card unchanged)") and key not in section(report, "Auditor decisions")
+    assert not (ready.root / "audits").exists()  # nothing of it was copied or committed
+
+
+# --- a whole-card redraft -----------------------------------------------------------------------
+
+
+def test_a_whole_card_redraft_has_a_context_checks_and_an_audit_of_its_own(env: Env, tmp_path: Path, capsys):
+    shutil.copy(FIXTURES / "pubmed" / "90000100.xml", env.cache / "pubmed" / "90000100.xml")
+    out = tmp_path / "card-audit"
+
+    def main(*argv: str) -> int:
+        return pipeline.main([*argv, *env.dir_args], fulltext=fulltext_loader(), out=env.out.append)
+
+    assert main("audit-plan", "--card", SLUG, "--out", str(out)) == 0
+    first = tmp_path / "first.yaml"
+    first.write_text(
+        yaml.safe_dump({k: v for k, v in audit_data("accept_lower", accepted_level=1).items() if k != "paper"}),
+        encoding="utf-8",
+    )
+    # The audit says accept, not accept_lower: refused.
+    accept = tmp_path / "accept.yaml"
+    accept.write_text(yaml.safe_dump({k: v for k, v in audit_data().items() if k != "paper"}), encoding="utf-8")
+    assert main("redraft-plan", "--card", SLUG, "--audit", str(accept), "--out", str(out)) == 1
+    assert "not accept_lower" in capsys.readouterr().err
+    assert main("redraft-plan", "--card", SLUG, "--audit", str(first), "--out", str(out)) == 0
+    context = (out / "redraft-context" / f"{SLUG}.md").read_text(encoding="utf-8")
+    assert "the whole card" in context and "- accepted_level: 1" in context
+    # A second redraft is refused once round L has files... the context file alone is not a round; the ops file is.
+    ops = {
+        "card": SLUG,
+        "operations": [
+            {
+                "op": "propose",
+                "target": "level",
+                "value": 1,
+                "reason": [{"text": "A fictional controlled study found lower widget signalling.", "sources": [CITED]}],
+            },
+            {"op": "propose", "target": "contested", "value": None},
+        ],
+    }
+    ops_path = out / "ops" / f"{SLUG}-rL.json"
+    ops_path.parent.mkdir(parents=True)
+    ops_path.write_text(json.dumps(ops), encoding="utf-8")
+    assert main("apply", SLUG, str(ops_path), "--round", "L", "--audit", str(first), "--run-dir", str(out)) == 0
+    assert (out / "applied" / f"{SLUG}-rL" / f"{SLUG}.yaml").is_file()
+    assert yaml.safe_load((out / "applied" / f"{SLUG}-rL" / f"{SLUG}.yaml").read_text(encoding="utf-8"))["level"] == 1
+    assert main("redraft-plan", "--card", SLUG, "--audit", str(first), "--out", str(out)) == 1
+    assert "already exists" in capsys.readouterr().err
+    # The same file with a paper is not a whole-card redraft; and a level other than accepted_level is refused.
+    bad = out / "ops" / f"{SLUG}-x-rL.json"
+    bad.write_text(json.dumps({**ops, "operations": [{**ops["operations"][0], "value": 0}]}), encoding="utf-8")
+    assert main("apply", SLUG, str(bad), "--round", "L", "--audit", str(first), "--run-dir", str(out)) == 1
+
+
+def test_the_gate_re_checks_e4_even_when_a_checks_file_says_passed(ready: Env):
+    lower_pair(ready)
+    put_redraft_ops(ready, lambda ops: ops["operations"][0].update(value=1))
+    cfg = cfg_of(ready)
+    cfg.checks_path(SLUG, NEW_PMID, "L").write_text(json.dumps({"passed": True, "card": SLUG}), encoding="utf-8")
+    ready.put("review", "review_accept.json", n="L")
+    [o] = pipeline.collect_outcomes(cfg)
+    assert o.redraft_state == "failed_checks" and "the auditor accepted level 2" in o.redraft_note and not o.applied

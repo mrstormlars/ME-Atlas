@@ -182,17 +182,20 @@ class OpsFile(_Op):
     """What the drafting agent writes for one card and one paper. No free text apart from card content."""
 
     card: Slug
-    paper: StudyId
+    # None only in the redraft of a whole-card audit (round L), which adds no paper; `apply` refuses it elsewhere.
+    paper: StudyId | None = None
     operations: list[Operation]
 
     @model_validator(mode="after")
     def _studies_are_the_paper(self) -> OpsFile:
         for i, op in enumerate(self.operations):
+            if isinstance(op, AddStudy) and self.paper is None:
+                raise ValueError(f"operations[{i}]: add_study needs a paper; this file names none")
             if isinstance(op, AddStudy) and op.study.id != self.paper:
                 raise ValueError(
                     f"operations[{i}]: add_study may only add the paper '{self.paper}', not '{op.study.id}'"
                 )
-            if isinstance(op, AddStudy) and self.paper.startswith("doi:") and not op.study.preprint:
+            if isinstance(op, AddStudy) and (self.paper or "").startswith("doi:") and not op.study.preprint:
                 raise ValueError(
                     f"operations[{i}]: a doi: paper is a preprint; its study '{op.study.id}' needs preprint: true"
                 )
@@ -227,7 +230,7 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
 
 def tiers(ops: OpsFile, card_data: Mapping[str, Any] | None = None) -> list[int]:
     """The tier of every operation of an ops file. Every operation of a file for a ``doi:`` preprint is tier 2."""
-    if ops.paper.startswith("doi:"):
+    if (ops.paper or "").startswith("doi:"):
         return [2] * len(ops.operations)
     found = preprint_ids(ops, card_data)
     return [tier(op, found) for op in ops.operations]

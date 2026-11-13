@@ -1,0 +1,20 @@
+{
+  "card": "fictional-pipeline-card",
+  "paper": "pmid:90000101",
+  "operations": [
+    {
+      "op": "propose",
+      "target": "level",
+      "value": 2,
+      "reason": [
+        {
+          "text": "A fictional controlled study that met the Canadian Consensus Criteria found lower widget signalling in 20 patients than in 20 controls; a second fictional study used the Fukuda criteria.",
+          "sources": [
+            "pmid:90000100",
+            "pmid:90000101"
+          ]
+        }
+      ]
+    }
+  ]
+}
