@@ -12,7 +12,7 @@ Make `mrstormlars/ME-Atlas` public so that the method can be checked and so that
 - **Author address:** 78 commits carry a private Gmail address as author and committer; 43 carry the GitHub noreply address.
 - **Preview:** `docs/site.md` gives the address of the draft preview and names the Azure subscription, resource group and storage account. All of it is in the history.
 - **Missing:** a licence, a contribution guide, issue templates, a code of conduct, a security contact. `README.md` is written for the founder ("human reviewers make the judgement calls" is no longer true under the auditor ruling).
-- **GitHub:** private, issues on, wiki and discussions off, no description topics or homepage, no Actions, no repository secrets, no deploy keys, no webhooks, 24 remote branches, no branch protection (not available on a private repository on the free plan).
+- **GitHub:** private, issues on, wiki and discussions off, no description topics or homepage, no Actions, no repository secrets, no deploy keys, no webhooks, 24 remote branches (23 of them merged; deleted 2026-11-13), no branch protection (not available on a private repository on the free plan).
 - **`.env.example`** lists `ANTHROPIC_API_KEY`, which the project does not use.
 - **Test fixtures:** 63 files; a first look found no real PMID in them. To be confirmed (phase 1).
 
@@ -61,7 +61,7 @@ The founder follows the assistant's recommendations:
 16. Confirm the test fixtures contain no real abstract or full text (every record id is fictional or the text is written for the test). A real record found is replaced by a fictional one.
 17. Re-run the history search of the survey on the final state, and add a search for the founder's name and for words like "password" in Norwegian. Report the commands and the output.
 18. Local git identity: set `user.email` in this clone to the GitHub noreply address; say in `CONTRIBUTING.md` how a contributor can do the same.
-19. Remote branches: list the 24; delete those already merged, after the founder has seen the list.
+19. Remote branches: done 2026-11-13 by founder ruling. The 23 branches merged into `main` were deleted on GitHub, and their local copies too, except three that are checked out in old worktrees (`feat/immune-cell-gene-expression`, `feat/rahman-fukuda`, `fix/pr-body-length`). Before opening, check again that no unmerged branch holds something not meant to be public.
 
 ## Phase 2: gate (all must hold before opening)
 
@@ -78,7 +78,7 @@ The founder follows the assistant's recommendations:
 2. Branch protection on `main`: require a pull request, block force pushes and deletion. The local `pre-push` hook stays.
 3. Turn on private vulnerability reporting and secret scanning with push protection (free on public repositories).
 4. Set the description, topics (for example `me-cfs`, `long-covid`, `evidence-synthesis`) and the homepage address (the preview address, until the site has another).
-5. Decide whether Discussions is turned on (default: no; issues are enough to start).
+5. Turn on Discussions (founder ruling 2026-11-13). `CONTRIBUTING.md` says what goes where: an error on a card or a suggested paper is an issue; questions and general talk go to Discussions. The code of conduct applies in both, including no treatment advice.
 6. Actions: leave disabled, or restrict to none, until a workflow is wanted. Never add a workflow that runs on pull requests from forks with access to secrets.
 
 ## Phase 4: after opening
@@ -99,7 +99,7 @@ The founder follows the assistant's recommendations:
 3. The content-path check fails on a branch that changes a file under `cards/`, `drafts/`, `translations/` or `audits/` without the pipeline marker and passes on one that does not (offline tests for both), and is described in `CONTRIBUTING.md` and `docs/pipeline.md`.
 4. Every agent that reads fetched or submitted text has the data-not-instructions sentence; `CLAUDE.md` has the two new engineering lines and no other rule changes.
 5. `.env.example` has no unused key; `docs/site.md` names no subscription, tenant or resource group.
-6. The report lists: the read-through findings (step 15), the fixture check (step 16), the history search with commands and output (step 17), and the remote branches proposed for deletion (step 19, none deleted without the founder's yes).
+6. The report lists: the read-through findings (step 15), the fixture check (step 16), the history search with commands and output (step 17), and any unmerged branch still on GitHub (step 19).
 7. Nothing under `cards/`, `drafts/` or `translations/` changes. No level, badge, contested mark, layer or link is touched.
 8. Tests never touch the network or an LLM; `ruff` and `pytest` clean; no new dependency.
 9. The repository's visibility is not changed by this work.
@@ -117,5 +117,3 @@ The founder follows the assistant's recommendations:
 ## Still for the founder to decide
 
 - The copyright holder's name in the licence files (default: "ME Atlas contributors").
-- Whether Discussions is turned on at opening (default: no).
-- Which merged remote branches are deleted (after the list in step 19).
