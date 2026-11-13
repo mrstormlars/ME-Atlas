@@ -1243,6 +1243,17 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, budg
     return lines
 
 
+def strip_yaml_comments(text: str) -> str:
+    """The YAML without its comments, in a stable form: parsed and dumped again.
+
+    Comments in a card carry earlier drafter and reviewer reasoning and earlier rulings, which the auditor must not
+    see. Parsing drops every comment (full-line or trailing) and keeps a ``#`` that is part of a value.
+    """
+    return yaml.safe_dump(
+        yaml.safe_load(text), sort_keys=False, allow_unicode=True, default_flow_style=False, width=100
+    ).rstrip("\n")
+
+
 def build_audit_context(
     cfg: Config,
     slug: str,
@@ -1258,13 +1269,22 @@ def build_audit_context(
     """
     base = _base_card(cfg, slug)
     base_card = _load_card(base)
-    base_text = base.read_text(encoding="utf-8").rstrip("\n")
+    base_text = strip_yaml_comments(base.read_text(encoding="utf-8"))
     study_ids = [s.id for s in base_card.studies]
     if key is not None:
         paper_id = _paper_id_of_key(cfg, key)
         n = _last_applied_round(cfg, slug, key)
         applied = cfg.applied_dir(slug, key, n)
-        diff = (applied / "changes.diff").read_text(encoding="utf-8")
+        # The diff is built from the comment-free texts, not read from changes.diff (which shows comments).
+        applied_text = strip_yaml_comments((applied / f"{slug}.yaml").read_text(encoding="utf-8"))
+        diff = "".join(
+            difflib.unified_diff(
+                (base_text + "\n").splitlines(keepends=True),
+                (applied_text + "\n").splitlines(keepends=True),
+                fromfile=f"{base}",
+                tofile=f"applied/{slug}.yaml",
+            )
+        )
         study_ids += [s.id for s in _load_card(applied / f"{slug}.yaml").studies]
         subject = f"card `{slug}` and the change from paper `{paper_id}` (round {n})"
         change_section = [

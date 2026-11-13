@@ -38,6 +38,8 @@ OPS_OP_MARKER = "DRAFTER-OPERATION-TEXT-9b2e"
 CHECKS_MARKER = "CHECKS-MARKER-77aa"
 REVIEW_MARKER = "REVIEWER-FINDING-MARKER-31d0"
 EARLIER_AUDIT_MARKER = "EARLIER-AUDIT-MARKER-c5e8"
+FULLLINE_COMMENT_MARKER = "FULLLINE-COMMENT-MARKER-0a7d"
+TRAILING_COMMENT_MARKER = "TRAILING-COMMENT-MARKER-6e19"
 
 
 @pytest.fixture
@@ -105,6 +107,13 @@ def pr(env: Env, runner: FakeRunner | None = None) -> int:
 
 
 def test_the_context_has_the_diff_the_card_a_cited_record_and_the_rubric_and_no_agent_output(ready: Env):
+    # Comments in the draft carry earlier reasoning and rulings: full-line and trailing ones must not reach the auditor,
+    # a "#" inside a text value is content and must stay.
+    draft = ready.drafts / f"{SLUG}.yaml"
+    text = draft.read_text(encoding="utf-8")
+    text = text.replace("\nlevel: 2\n", f"\nlevel: 2  # {TRAILING_COMMENT_MARKER}\n", 1)
+    text = text.replace("than in controls.", "than in controls (see #HASH-KEPT-IN-TEXT).", 1)
+    draft.write_text(f"# {FULLLINE_COMMENT_MARKER}\n" + text, encoding="utf-8")
     assert ready.apply("ops_propose_level.json") == 0
     ready.put("review", "review_accept.json")
     # Unique markers in every file an agent wrote about this change, in places the card diff does not show.
@@ -125,8 +134,19 @@ def test_the_context_has_the_diff_the_card_a_cited_record_and_the_rubric_and_no_
 
     assert ready.cli("audit-plan", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
     text = (ready.run / "audit-context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
-    for marker in (OPS_MARKER, OPS_OP_MARKER, CHECKS_MARKER, REVIEW_MARKER, EARLIER_AUDIT_MARKER):
+    for marker in (
+        OPS_MARKER,
+        OPS_OP_MARKER,
+        CHECKS_MARKER,
+        REVIEW_MARKER,
+        EARLIER_AUDIT_MARKER,
+        FULLLINE_COMMENT_MARKER,
+        TRAILING_COMMENT_MARKER,
+        "a comment between two paragraphs",
+        "a comment inside a badge",
+    ):
         assert marker not in text, marker
+    assert "#HASH-KEPT-IN-TEXT" in text  # a # inside a value is content
     # What it does hold: the diff, the card, a cited record, spec section 3 and the card format.
     assert "+level: 3" in text and "-level: 2" in text
     assert "slug: fictional-pipeline-card" in text  # the card as it stands
@@ -162,6 +182,7 @@ def test_a_whole_card_context_holds_the_card_file_and_goes_to_out(env: Env, tmp_
     assert code == 0
     text = (out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8")
     assert "whole card" in text and "```diff" not in text
+    assert "a comment between two paragraphs" not in text and "a comment inside a badge" not in text
     assert text.count("slug: fictional-pipeline-card") == 1  # the card file appears once
     assert f"### Record: {CITED}" in text and RUBRIC in text
 
