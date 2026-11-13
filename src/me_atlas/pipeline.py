@@ -757,6 +757,7 @@ def build_context(
             "",
             f"- id: `{record.id}`",
             f"- title: {record.title}",
+            f"- authors: {', '.join(record.authors) or 'not stated'}",
             f"- journal: {record.journal or 'not stated'}",
             f"- year: {record.year if record.year is not None else 'not stated'}",
             f"- doi: {record.doi or 'not stated'}",
@@ -787,6 +788,7 @@ def build_context(
             f"- id: `{paper_id}`",
             f"- Europe PMC id: {pre.ppr_id}",
             f"- title: {pre.title}",
+            f"- authors: {', '.join(pre.authors) or 'not stated'}",
             f"- server: {pre.server or 'not stated'}",
             f"- year: {pre.year if pre.year is not None else 'not stated'}",
             f"- first indexed: {pre.first_index_date or 'not stated'}",
@@ -1009,7 +1011,11 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
             row["preexisting"] = (row["study"], row["code"], row["message"]) in known
         result["citations"] = rows
 
-    new_errors = [r for r in result["citations"] if r["level"] == citations.ERROR and not r["preexisting"]]
+    # A C9 issue (the group names no author of the record) is only a warning in `citations check`, but a new one
+    # fails the pair here, so a drafter cannot add an author name that the record does not support.
+    new_errors = [
+        r for r in result["citations"] if not r["preexisting"] and (r["level"] == citations.ERROR or r["code"] == "C9")
+    ]
     result["citation_errors"] = len(new_errors)
     result["passed"] = not ops_errors and not result["validator"] and not new_errors
     _write_json(cfg.checks_path(slug, pmid, n), result)
@@ -1187,7 +1193,7 @@ def _check_failure_summary(checks: dict[str, Any]) -> str:
     bits += [
         f"{r['study']} {r['code']}: {r['message']}"
         for r in checks.get("citations", [])
-        if r["level"] == "ERROR" and not r.get("preexisting")
+        if (r["level"] == "ERROR" or r.get("code") == "C9") and not r.get("preexisting")
     ]
     return "; ".join(b.replace("\n", " ") for b in bits) or "unknown"
 
@@ -1924,8 +1930,8 @@ def _dispatch(
         for line in result["warnings"]:
             out(f"warning: {line}")
         for row in result["citations"]:
-            if row["level"] == citations.ERROR and not row["preexisting"]:
-                out(f"citations: {row['study']}: {row['code']} ERROR: {row['message']}")
+            if (row["level"] == citations.ERROR or row["code"] == "C9") and not row["preexisting"]:
+                out(f"citations: {row['study']}: {row['code']} {row['level']}: {row['message']}")
         for row in result["citations"]:
             if row["level"] == citations.ERROR and row["preexisting"]:
                 out(f"citations (already on the card, not blocking): {row['study']}: {row['code']}: {row['message']}")

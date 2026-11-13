@@ -117,6 +117,39 @@ def test_a_preprint_record_carries_the_fields_later_steps_rely_on():
     assert record.pmcid == PMCID  # the PPR id in fullTextIdList is not a PMC id
 
 
+def _with_authors(authors: list[dict] | None) -> dict:
+    raw = dict(raw_records()[0])
+    if authors is not None:
+        raw["authorList"] = {"author": authors}
+    return raw
+
+
+def test_a_preprint_record_has_its_authors_in_record_order():
+    raw = _with_authors(
+        [
+            {"fullName": "Smith AB", "lastName": "Smith", "initials": "AB"},
+            {"fullName": "Jones C", "lastName": "Jones", "initials": "C"},
+        ]
+    )
+    assert parse_preprint(raw).authors == ("Smith AB", "Jones C")
+
+
+def test_a_preprint_author_falls_back_to_full_name_then_collective_name():
+    raw = _with_authors(
+        [
+            {"fullName": "Only Fullname", "firstName": "Only"},
+            {"collectiveName": "The Fictional Consortium"},
+            {"lastName": "Nolast"},
+            {},
+        ]
+    )
+    assert parse_preprint(raw).authors == ("Only Fullname", "The Fictional Consortium", "Nolast")
+
+
+def test_a_preprint_record_without_an_author_list_has_no_authors():
+    assert parse_preprint(_with_authors(None)).authors == ()
+
+
 def test_a_record_without_a_pmc_id_has_none_even_though_fulltextidlist_names_the_ppr_id():
     record = parse_preprint(raw_records()[1])
     assert record.pmcid is None

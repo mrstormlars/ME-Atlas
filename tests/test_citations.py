@@ -41,6 +41,8 @@ def add_record(
     abstract: str | None = ABSTRACT,
     retracted: bool = False,
     pmcid: str | None = None,
+    authors: tuple[tuple[str, str], ...] = (),
+    collective: tuple[str, ...] = (),
 ) -> None:
     """Write a fictional PubMed record to <root>/pubmed/<pmid>.xml (with the article's PMC id if ``pmcid``)."""
     pub_date = f"<PubDate><Year>{year}</Year></PubDate>" if year is not None else "<PubDate></PubDate>"
@@ -66,6 +68,14 @@ def add_record(
     )
     if abstract is None:
         xml = xml.replace("<Abstract></Abstract>", "")
+    if authors or collective:
+        people = "".join(
+            f"<Author><LastName>{escape(last)}</LastName><Initials>{escape(initials)}</Initials></Author>"
+            for last, initials in authors
+        ) + "".join(f"<Author><CollectiveName>{escape(name)}</CollectiveName></Author>" for name in collective)
+        xml = xml.replace("<Abstract>", f"<AuthorList>{people}</AuthorList><Abstract>", 1)
+        if abstract is None:
+            xml = xml.replace("<PublicationTypeList>", f"<AuthorList>{people}</AuthorList><PublicationTypeList>", 1)
     folder = root / "pubmed"
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f"{pmid}.xml").write_text(xml, encoding="utf-8")
@@ -718,12 +728,16 @@ PREPRINT_QUOTE = "Patients met the 1994 Fukuda criteria."
 PREPRINT_TITLE = "A fictional preprint of widget signalling in a made-up ME/CFS cohort"
 
 
-def add_preprint(root: Path, index: int = 0, *, abstract: str | None = None) -> None:
+def add_preprint(
+    root: Path, index: int = 0, *, abstract: str | None = None, authors: tuple[tuple[str, str], ...] = ()
+) -> None:
     """Cache one fictional Europe PMC preprint record (from the recorded-shape fixture) as the search would."""
     page = json.loads((PREPRINT_FIXTURES / "preprint_page1.json").read_text(encoding="utf-8"))
     result = page["resultList"]["result"][index]
     if abstract is not None:
         result["abstractText"] = abstract
+    if authors:
+        result["authorList"] = {"author": [{"lastName": last, "initials": ini} for last, ini in authors]}
     folder = root / "europepmc" / "preprints"
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f"{result['id']}.json").write_text(json.dumps(result), encoding="utf-8")
@@ -850,3 +864,82 @@ def test_two_cached_preprint_records_with_one_doi_are_reported_as_c1_naming_both
     issues = check_pp(tmp_path, cache, preprint_study())
     assert [i.code for i in issues] == ["C1"]
     assert "PPR9000001 and PPR9000099" in issues[0].message
+
+
+# --- C9: the group names an author of the record ------------------------------
+
+SMITH_JONES = (("Smith", "AB"), ("Jones", "C"))
+
+
+def c9(issues: list[citations.CitationIssue]) -> list[citations.CitationIssue]:
+    return [i for i in issues if i.code == "C9"]
+
+
+def test_c9_a_group_naming_no_author_of_the_record_is_a_warning(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=SMITH_JONES)
+    found = c9(check(tmp_path, root, make_study(group="Ponting CP, Oxford")))
+    assert [(i.level, i.study) for i in found] == [(citations.WARNING, f"pmid:{PMID}")]
+    assert "Smith AB" in found[0].message and "Jones C" in found[0].message
+
+
+def test_c9_a_group_naming_an_author_plus_a_cross_reference_is_supported(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=SMITH_JONES)
+    assert c9(check(tmp_path, root, make_study(group="Jones C, Leeds (same group as Ponting CP, 123)"))) == []
+
+
+@pytest.mark.parametrize("group", ["Smith A, Leeds", "Smith AB", "smith ab", "Leeds (Smith A.B.)"])
+def test_c9_the_first_initial_is_enough_and_case_does_not_matter(tmp_path, group):
+    root = tmp_path / "cache"
+    add_record(root, authors=SMITH_JONES)
+    assert c9(check(tmp_path, root, make_study(group=group))) == []
+
+
+def test_c9_accents_are_ignored_in_both_directions(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=(("Gomez-Esteban", "JC"),))
+    assert c9(check(tmp_path, root, make_study(group="Gómez-Esteban JC, Bilbao"))) == []
+    add_record(root, authors=(("Gómez-Esteban", "JC"),))
+    assert c9(check(tmp_path, root, make_study(group="Gomez-Esteban J, Bilbao"))) == []
+
+
+def test_c9_a_last_name_alone_or_inside_a_longer_word_is_not_a_match(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=SMITH_JONES)
+    assert len(c9(check(tmp_path, root, make_study(group="Smithson AB, Leeds")))) == 1
+    assert len(c9(check(tmp_path, root, make_study(group="Smith, Leeds")))) == 1
+    assert len(c9(check(tmp_path, root, make_study(group="Smith Z, Leeds")))) == 1
+
+
+def test_c9_a_collective_author_is_matched_by_its_full_name(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=(), collective=("Fictional Long COVID Consortium",))
+    assert c9(check(tmp_path, root, make_study(group="the Fictional Long COVID Consortium"))) == []
+    assert len(c9(check(tmp_path, root, make_study(group="Ponting CP")))) == 1
+
+
+def test_c9_a_record_without_authors_gives_no_issue(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root)
+    assert c9(check(tmp_path, root, make_study(group="Ponting CP, Oxford"))) == []
+
+
+def test_c9_a_study_without_a_group_is_not_checked(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=SMITH_JONES)
+    assert c9(check(tmp_path, root, make_study())) == []
+
+
+def test_c9_does_not_make_the_check_fail(tmp_path, capsys):
+    root = tmp_path / "cache"
+    add_record(root, authors=SMITH_JONES)
+    code, lines = run(tmp_path, root, [make_study(group="Ponting CP")], capsys)
+    assert code == 0 and len(issue_lines(lines, "C9")) == 1 and lines[-1].startswith("OK:")
+
+
+def test_c9_applies_to_a_cached_preprint_record(tmp_path):
+    root = tmp_path / "cache"
+    add_preprint(root, authors=SMITH_JONES)
+    assert len(c9(check_pp(tmp_path, root, preprint_study(group="Ponting CP, Oxford")))) == 1
+    assert c9(check_pp(tmp_path, root, preprint_study(group="Jones C, Leeds"))) == []

@@ -20,6 +20,7 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
 * C6 (warning) ``n_patients`` and ``n_controls`` appear as numbers in the abstract or cached full text
 * C7 a DOI-only study id that is not a preprint cannot be checked yet
 * C8 ``preprint`` on the card agrees with the PubMed record (publication type "Preprint")
+* C9 (warning) a non-null ``group`` names at least one author of the record (last name and first initial)
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -58,7 +59,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C8, or LOAD when the file could not be read as a card
+    code: str  # C1..C9, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -307,6 +308,7 @@ def check_study(file: str, study: Study, cache: CacheReader) -> list[CitationIss
 
     issues += _check_quote(study, record.abstract, full, "PubMed", issue)
     issues += _check_sample_sizes(study, record.abstract, full, issue)
+    issues += _check_group(study, record.authors, "PubMed", issue)
     return issues
 
 
@@ -345,7 +347,52 @@ def _check_preprint(study: Study, cache: CacheReader, issue) -> list[CitationIss
 
     issues += _check_quote(study, abstract, full, "Europe PMC preprint", issue)
     issues += _check_sample_sizes(study, abstract, full, issue)
+    issues += _check_group(study, record.authors, "Europe PMC preprint", issue)
     return issues
+
+
+def _fold_name(text: str) -> str:
+    """NFKD, combining marks removed, case folded, whitespace collapsed (the C9 name matching)."""
+    decomposed = unicodedata.normalize("NFKD", text)
+    return _collapse("".join(c for c in decomposed if not unicodedata.combining(c)).casefold())
+
+
+def author_in_group(author: str, group: str) -> bool:
+    """Whether the group text names this record author (docs/citation-check.md, C9).
+
+    A personal name ``<last> <initials>`` is named as ``<last> <first letter of the initials>`` (more initials
+    after it are fine), as whole words. A name with no initials, and a collective name, are matched in full.
+    """
+    text = _fold_name(group)
+    name = _fold_name(author)
+    if not name:
+        return False
+    whole = re.compile(rf"(?<!\w){re.escape(name)}(?!\w)")
+    if whole.search(text):
+        return True
+    last, _, initials = name.rpartition(" ")
+    if not last or not initials:
+        return False
+    first = re.escape(initials[0])
+    personal = re.compile(rf"(?<!\w){re.escape(last)},?\s+{first}(?:\.?\w){{0,3}}\.?(?!\w)")
+    return personal.search(text) is not None
+
+
+def _check_group(study, authors, record_name, issue) -> list[CitationIssue]:
+    """C9 (warning): a ``group`` that names no author of the record. A record without authors gives no issue."""
+    if study.group is None or not authors:
+        return []
+    if any(author_in_group(a, study.group) for a in authors):
+        return []
+    shown = ", ".join(authors[:6]) + (f", ... ({len(authors)} in all)" if len(authors) > 6 else "")
+    return [
+        issue(
+            "C9",
+            WARNING,
+            f"group {study.group!r} names no author of the {record_name} record (authors: {shown}); "
+            "check the names against the record",
+        )
+    ]
 
 
 def _check_quote(study, abstract, full, record_name, issue) -> list[CitationIssue]:

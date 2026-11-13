@@ -61,11 +61,13 @@ One JSON object. The code rejects any key not listed here.
     "preregistered": null,
     "role": "supports",
     "direction": "lower",
-    "group": "<optional: last author and institution as PubMed gives them; leave the key out if unknown>",
+    "group": "<optional: author names and institution; names only from the `- authors:` line of the context file; leave the key out if unknown>",
     "finding": "A study of n=60 patients and 55 controls found ..."
   }
 }
 ```
+
+`group` names the research group: the author names in it come only from the `- authors:` line in section 4 of the context file (the record's own list, in record order), written as `<last name> <initials>` as the line gives them; the affiliation comes from the record or the full text in the context file. At least one author of the record must be named. If the names or the affiliation are not in the context file, leave `group` out rather than write a name that is not there. A name that is not an author of this record may appear only as a cross-reference to another study on the card ("same group as <id>"). `apply` fails a new study whose `group` names no author of the record (check C9).
 
 Allowed values: `cohort` me_cfs | long_covid; `case_definition` CCC | ICC | IOM2015 | Fukuda | Holmes1988 | CDC_unspecified | Oxford | other | none | unverified; `case_definition_source` abstract | fulltext | null; `design` controlled | uncontrolled | intervention_controlled | other; `role` supports | contradicts | early_signal | context; `direction` lower | higher | no_difference | mixed | not_applicable; `n_patients` and `n_controls` a whole number or null; `measures_pem` true or false; `preregistered` true, false or null.
 

@@ -8,6 +8,7 @@
         <Journal><JournalIssue CitedMedium="Print"><PubDate><Year>2026</Year></PubDate></JournalIssue><Title>Fictional Journal of Widget Research</Title></Journal>
         <ArticleTitle>Fictional replication of widget signalling in a larger cohort.</ArticleTitle>
         <Abstract><AbstractText>Participants met the Fukuda criteria. A total of 60 patients and 55 controls were compared. Widget signalling was lower in patients.</AbstractText></Abstract>
+        <AuthorList><Author><LastName>Smith</LastName><Initials>AB</Initials></Author><Author><LastName>Jones</LastName><Initials>C</Initials></Author></AuthorList>
         <PublicationTypeList><PublicationType>Journal Article</PublicationType></PublicationTypeList>
       </Article>
     </MedlineCitation>

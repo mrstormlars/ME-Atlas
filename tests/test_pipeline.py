@@ -254,6 +254,18 @@ def test_context_holds_card_rubric_record_and_fulltext_without_references(ready:
     assert "All fictional participants met the Fukuda criteria." in text  # candidate case-definition sentence
 
 
+def test_context_has_the_authors_line_of_a_pubmed_paper_in_record_order(ready: Env):
+    assert ready.cli("context", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    text = (ready.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+    assert "- authors: Smith AB, Jones C\n" in text
+
+
+def test_context_says_authors_not_stated_when_the_record_has_none(ready: Env):
+    assert ready.cli("context", SLUG, REVIEW_PMID, fulltext=fulltext_loader()) == 0
+    text = (ready.run / "context" / f"{SLUG}-{REVIEW_PMID}.md").read_text(encoding="utf-8")
+    assert "- authors: not stated\n" in text
+
+
 def test_context_states_truncation_with_the_numbers(ready: Env):
     cfg = pipeline.Config(ready.run, ready.cards, ready.drafts, ready.cache, SPEC)
     text = pipeline.build_context(cfg, SLUG, NEW_PMID, fulltext_loader(), budget=50)
@@ -329,6 +341,48 @@ def test_apply_does_not_blame_the_new_paper_for_citation_errors_already_on_the_c
     assert ready.apply("ops_add_study.json") == 0
     old = [r for r in ready.checks()["citations"] if r["preexisting"]]
     assert [(r["study"], r["code"]) for r in old] == [("pmid:90000104", "C1")]  # its record is not in the cache
+
+
+def apply_with_group(env: Env, group: str) -> int:
+    """Apply the add-study ops with ``group`` on the new study (its record, 90000101, has authors Smith AB, Jones C)."""
+    ops = json.loads((FIXTURES / "agent" / "ops_add_study.json").read_text(encoding="utf-8"))
+    ops["operations"][0]["study"]["group"] = group
+    path = env.run / "ops" / f"{SLUG}-{NEW_PMID}-r1.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(ops), encoding="utf-8")
+    return env.cli("apply", SLUG, str(path), "--round", "1")
+
+
+def test_apply_fails_a_new_study_whose_group_names_no_author_of_the_record(ready: Env):
+    assert apply_with_group(ready, "Ponting CP, Oxford") == 1
+    checks = ready.checks()
+    assert checks["passed"] is False and checks["validator"] == []
+    new_c9 = [r for r in checks["citations"] if r["code"] == "C9" and not r["preexisting"]]
+    assert [(r["study"], r["level"]) for r in new_c9] == [("pmid:90000101", "WARNING")]
+    assert checks["citation_errors"] == 1
+    assert any("C9" in line and "Ponting CP" in line for line in ready.out) and ready.out[-1] == "FAILED"
+
+
+def test_apply_passes_a_new_study_whose_group_names_an_author_of_the_record(ready: Env):
+    assert apply_with_group(ready, "Jones C, Leeds") == 0
+    checks = ready.checks()
+    assert checks["passed"] is True and not [r for r in checks["citations"] if r["code"] == "C9"]
+
+
+def test_apply_does_not_blame_the_pair_for_a_c9_issue_already_on_the_card(ready: Env):
+    path = ready.cache / "pubmed" / "90000100.xml"
+    xml = path.read_text(encoding="utf-8")
+    xml = xml.replace(
+        "<Abstract>",
+        "<AuthorList><Author><LastName>Smith</LastName><Initials>AB</Initials></Author></AuthorList><Abstract>",
+        1,
+    )
+    path.write_text(xml, encoding="utf-8")  # the draft's group "Fictional Group" names no author of it
+    assert ready.apply("ops_add_study.json") == 0
+    checks = ready.checks()
+    old = [r for r in checks["citations"] if r["code"] == "C9"]
+    assert [(r["study"], r["preexisting"]) for r in old] == [("pmid:90000100", True)]
+    assert checks["passed"] is True and checks["citation_errors"] == 0
 
 
 def link_draft_to(env: Env, *targets: str) -> None:
@@ -1107,7 +1161,7 @@ def test_c4_no_warning_when_the_new_study_has_a_group(ready: Env):
     make_every_study_grouped(ready)
 
     def change(body):
-        body["operations"][0]["study"]["group"] = "A Fictional Group, Fictional University"
+        body["operations"][0]["study"]["group"] = "Smith AB, Fictional University"
 
     assert put_ops(ready, change) == 0
     assert ready.checks()["warnings"] == []
@@ -1757,6 +1811,20 @@ def test_the_context_of_a_doi_preprint_is_built_from_its_cached_record(doi_run: 
     assert "if neither states it, use `unverified`" in text
     assert "No full text is available: no full text in this test" in text
     assert "PubMed record" not in text
+
+
+def test_the_context_of_a_doi_preprint_has_the_authors_line_in_record_order(doi_run: Env):
+    authors = [{"lastName": "Smith", "initials": "AB"}, {"lastName": "Jones", "initials": "C"}]
+    cache_preprint(doi_run, authorList={"author": authors})
+    assert doi_run.cli("context", SLUG, PPR_KEY, fulltext=NO_FULLTEXT) == 0
+    text = (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").read_text(encoding="utf-8")
+    assert "- authors: Smith AB, Jones C\n" in text
+
+
+def test_the_context_of_a_doi_preprint_without_authors_says_not_stated(doi_run: Env):
+    assert doi_run.cli("context", SLUG, PPR_KEY, fulltext=NO_FULLTEXT) == 0
+    text = (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").read_text(encoding="utf-8")
+    assert "- authors: not stated\n" in text
 
 
 def test_the_context_of_a_doi_preprint_with_full_text_has_the_text_and_the_case_definition_sentences(doi_run: Env):
