@@ -1,0 +1,30 @@
+card: hpa-axis-cortisol
+decision: reject
+parts:
+  - decision_part: "The level 2 itself: a controlled CRH study with CDC criteria supports it. This part is supported and is not the ground for rejection."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:9669518
+        quote: "A sample of 14 patients with CDC-diagnosed CFS were compared with 14 healthy volunteers."
+      - source: pmid:9669518
+        quote: "The release of ACTH was significantly attenuated in the CFS group (P < 0.005), as was the release of cortisol (P < 0.05)."
+  - decision_part: "The contested mark on rung 2 and its reason, and the level_reason paragraphs that say the London study used or gave the same CRH test as the Dinan group. The records show two different CRH preparations, so that statement is contradicted by the records. Whether the contradiction still holds is a judgement the card text must make on the correct facts."
+    rubric: "A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:9669518
+        quote: "ACTH and cortisol responses were measured following the administration of 100 microg ovine CRH."
+      - source: pmid:11502777
+        quote: "We measured ACTH and cortisol responses to human CRH, the insulin stress test, and D-fenfluramine in 37 medication-free patients with CDC-defined chronic fatigue syndrome but no comorbid psychiatric disorders and 28 healthy controls."
+      - source: pmid:11502777
+        quote: "These results indicate that ACTH responses to pituitary and hypothalamic challenges are intact in chronic fatigue syndrome and do not support previous findings of reduced central responses in hypothalamic-pituitary-adrenal axis function or the hypothesis of abnormal CRH secretion in chronic fatigue syndrome."
+  - decision_part: "Statements in the level reason about where carrier studies were done (the hydrocortisone trial from the US National Institutes of Health, the King's College London study, the Leuven crossover trial, the London crossover trial). These carriers have no cached full text, and their abstracts and metadata do not name these institutions, so these statements cannot be checked and are not accepted on trust."
+    rubric: "Grading follows only this published ladder; editors do not add criteria."
+    evidence:
+      - source: pmid:9757853
+        quote: "SETTING: A single-center study in a tertiary care research institution."
+      - source: pmid:12829200
+        quote: "We performed a 6-month, randomized, placebo-controlled, double-blind, crossover study in 100 patients who fulfilled the 1994 Centers for Disease Control and Prevention criteria for chronic fatigue syndrome."
+      - source: pmid:9989716
+        quote: "In a randomised crossover trial, we screened 218 patients with chronic fatigue."
+reasons_summary: "Level 2 and the contested mark are defensible, but the card says the London study used the same CRH test as the Dinan study when the records show ovine versus human CRH, and several institution claims in carriers cannot be checked."
+would_change: "A corrected level_reason and contested.reason that describe the London test as human CRH and the Dinan test as 100 microgram ovine CRH (and state the contradiction on that basis), and that remove or source the institution names not found in the abstracts of pmid:9757853 (NIH), pmid:11502777 (King's College London), pmid:12829200 (Leuven, Belgium) and pmid:9989716 (London); these are unverifiable because no full text is cached. With these corrections, and nothing else changed, level 2 with rung 2 contested would be acceptable on the records shown. The link sources (pmid:41516296, pmid:31330791) and the layer were not the ground for this decision. I was not handed any drafting, review or earlier audit reasoning."
