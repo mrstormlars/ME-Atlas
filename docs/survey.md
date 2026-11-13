@@ -2,7 +2,7 @@
 
 Reference for `src/me_atlas/survey.py`. Plan and reasons: `docs/plan-hypothesis-and-link-survey.md`.
 
-The whole PubMed query is cached in `data/cache/pubmed/`. The survey mines it, offline, for two things: themes (MeSH headings) that no card covers, and pairs of cards whose themes appear together in the same records. **Code counts and sorts; an agent reads only a shortlist; the founder decides.** Nothing here writes to `cards/`, `drafts/`, `content/` or `translations/`, and nothing sets a level, badge, layer or link. The only tracked output is `docs/pm/candidates.md`, written by `record-candidates`.
+The whole PubMed query is cached in `data/cache/pubmed/`. The survey mines it, offline, for two things: themes (MeSH headings) that no card covers, and pairs of cards whose themes appear together in the same records. **Code counts and sorts; an agent reads only a shortlist; a candidate becomes a card only through the pipeline, where the auditor decides a new hypothesis against the inclusion rule (spec section 6); the founder decides the inclusion rule, the scope and removal.** Nothing here writes to `cards/`, `drafts/`, `content/` or `translations/`, and nothing sets a level, badge, layer or link. The only tracked output is `docs/pm/candidates.md`, written by `record-candidates`.
 
 ## Commands
 

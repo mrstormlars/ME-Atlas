@@ -76,20 +76,20 @@ Quality factors that move a finding up or down: case definition used, sample siz
 
 ## AI pipeline
 
-A weekly Python job finds new papers and lets AI do the sorting and first draft; a human approves every change before it goes live.
+A weekly Python job finds new papers. AI sorts them and drafts card updates, a second AI agent reviews each draft, code checks every citation, and an independent AI auditor decides every change to a level, badge or contested mark before it goes live. The founder sets the direction and the rubric; no person decides the content of a card (functional spec section 6).
 
 ```mermaid
 flowchart LR
     A["Fetch new papers<br/>(PubMed, Europe PMC)"] --> B["Sort by hypothesis<br/>(AI classifies)"]
     B --> C["Extract study data<br/>(n, case definition)"]
     C --> D["Draft card update<br/>(AI writes draft)"]
-    D --> E["Human review<br/>(editorial team)"]
-    E --> F{Approved?}
-    F -- yes --> G["Publish to site<br/>(weekly update)"]
-    F -- "no, revise" --> C
+    D --> E["Checks and AI review<br/>(code and review agent)"]
+    E --> F{"Tier 2: audit<br/>(AI auditor)"}
+    F -- accepted --> G["Publish to site<br/>(weekly update)"]
+    F -- "not accepted" --> H["Card unchanged<br/>(listed in the report)"]
 ```
 
-AI handles search, classification, data extraction and drafting. Grading and publishing stay with the editorial team, and every claim links to its source.
+AI handles search, classification, data extraction, drafting, review and audit. Code checks every cited record. Until an expert reviewer is recruited, the AI auditor takes the content decisions that would go to one, and the site says so openly. Every claim links to its source.
 
 ## Frontend
 
@@ -107,12 +107,12 @@ The site must be calm and easy to read for people with limited energy: short tex
 Credibility is the product, so these rules come before features.
 
 - **Every claim links to its source.** No unsourced statements.
-- **AI drafts, humans decide.** No evidence grade is published without human approval.
+- **AI drafts, checks and audits; the founder sets direction.** No evidence grade is published unless the mechanical checks passed, the review agent accepted it and the auditor accepted it. The site states that no medical or research expert has reviewed the content. The founder may overrule an auditor decision, as a logged correction.
 - **No treatment advice.** Early signals are labelled as such and never presented as recommendations.
 - **No money handling in version 1.** We link to existing research funders instead of collecting donations.
 - **Open methods.** The grading rubric and change log are public.
 
-Start with a small editorial team of two to three people: the founder, someone with a medical or research background, and ideally a patient with experience from Science for ME or MEpedia.
+The founder sets the direction and the rubric. The aim is to recruit a medical or research reviewer and a patient advisor (for example with experience from Science for ME or MEpedia); an expert reviewer would replace the AI auditor.
 
 ## KPIs
 
@@ -122,7 +122,7 @@ Version 1 measures the quality and use of the platform, not global suffering.
 | --- | --- |
 | Hypotheses with at least one independent replication | How far the field has come |
 | Days from publication to reviewed entry | How current the overview is |
-| Share of claims sourced and human-approved | How trustworthy the content is |
+| Share of claims that are sourced and passed the checks | How trustworthy the content is |
 | Links from researchers, patient organisations and clinicians | Whether the overview is used and trusted |
 
 For disease burden, use established measures (DALY and YLD) rather than a new scale, so ME can be compared with other diseases.

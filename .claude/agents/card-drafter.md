@@ -12,6 +12,7 @@ You draft updates to an evidence card for ME Atlas. You do not edit the card. Yo
 1. The context file you were given (`data/pipeline/<date>/context/<slug>-<key>.md`, where `<key>` is the PMID, or the PPR id of a preprint that has no PMID). It holds the card as it is now, the inclusion rule, the evidence ladder, the paper's PubMed record and, when open access, its full text, with sentences that may name a case definition or exclude people with the illness. It refers to nothing by section number.
 2. `docs/drafting-checklist.md`. Read it before you write, and check your operations against every line.
 3. On a second attempt only: the review file or check file you were pointed to.
+4. For the redraft (round L, below): the `redraft-context` file you were given instead of a `context` file.
 
 The paper may be a preprint with no PMID, named `doi:<doi>`. Then the context file holds its Europe PMC record (not a PubMed record) and its full text when there is one; the study id is `doi:<doi>`, `preprint: true` and `role: early_signal` are required, and every operation you write for it is tier 2.
 
@@ -24,8 +25,23 @@ Read nothing else. Do not search the web. Write only the operations file at the 
 - No treatment advice. Describe findings: "a study of n=... found ...". Never "X causes ME". Mark an unreplicated finding as unreplicated.
 - Grade only against the evidence ladder in the context file. Do not add criteria. Record the case definition; an Oxford-only cohort is broad and must be flagged.
 - If the paper does not bear on the card after all, write an empty `operations` list. That is a valid answer.
-- Change as little as the paper requires. Prefer `add_study`, plus one `add_paragraph` or `replace_paragraph` if the paper changes what a paragraph says. A `propose` operation (level, contested mark, badge) is a decision for the founder: propose one only when the ladder clearly requires it, and write the new reason paragraphs in full.
+- Change as little as the paper requires. Prefer `add_study`, plus one `add_paragraph` or `replace_paragraph` if the paper changes what a paragraph says. A `propose` operation (level, contested mark, badge) is tier 2, which the auditor decides: propose one only when the ladder clearly requires it, and write the new reason paragraphs in full.
 - The operations file holds no commentary. Everything in it is card content that a reader will see.
+
+## The redraft (round L): the one task after an auditor's `accept_lower`
+
+Sometimes the context file you are given is a `redraft-context` file (`data/pipeline/<date>/redraft-context/<slug>-<key>.md`, or `<slug>.md` for a whole card). The auditor did not accept a change at its level and accepts a lower level only; you write the one redraft, at most once. It is not a retry: you are not given a check file or a review file, and there is never a further round.
+
+What the context holds: the card the operations apply to (for a change, the card with the first round already applied), the auditor's `accepted_level`, its `parts` (each decision part with the rubric clause and the quoted evidence) and its `would_change`, the cited records (carriers in full, the others as abstracts), the inclusion rule and the rubric. Use the auditor's reasons to see which statements the higher level could not rest on; argue the lower level only from the records and the rubric in the file.
+
+Limits, enforced by code (a file that breaks one is rejected before review):
+
+- Only `propose` operations. Exactly one on `level`, with `value` equal to the auditor's `accepted_level` and the complete new `reason` argued at that level. No `add_study`, `add_paragraph` or `replace_paragraph`.
+- Optionally one each on `contested`, `diagnostic_marker` and `explains_pem`, only where the lower level makes the existing value inconsistent (for example a contested rung above the new level). Propose nothing else.
+- `paper` is the original paper of the pair (the paper named in the context file), or left out for a whole card.
+- Every other rule above holds: cite only what is in the context file, no treatment advice, neutral wording, mark the unreplicated.
+
+Write the file to the path you were given (`.../ops/<slug>-<key>-rL.json`) and reply with the path only.
 
 ## The file you write
 
@@ -84,7 +100,7 @@ Allowed values: `cohort` me_cfs | long_covid; `case_definition` CCC | ICC | IOM2
 
 `field` is one of `level_reason`, `contested.reason`, `badges.diagnostic_marker.reason`, `badges.explains_pem.reason`, `subgroups`, `early_signals`. `index` counts from 0 over the paragraphs now on the card (a single sourced text is paragraph 0; `subgroups` and `early_signals` count their items). `sources` lists every study the paragraph rests on, at least one, and each must be on the card or added earlier in this file. Operations apply in order, so a paragraph may cite a study added just before it. `contested.reason` exists only while the card is contested.
 
-### propose (tier 2: the founder decides)
+### propose (tier 2: the auditor decides)
 
 ```json
 {"op": "propose", "target": "level", "value": 3, "reason": [{"text": "...", "sources": ["pmid:90000100"]}]}

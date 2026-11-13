@@ -64,7 +64,7 @@ The bar for a hypothesis shows **causal evidence**, rung 0 to 5.
 
 Up: a new study meeting the criteria of the next rung; an independent replication; a better-defined cohort; a larger sample; a controlled design with a comparison group; a preregistered protocol.
 
-Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group; no preregistration; results that conflict with equally strong studies (see "Contested evidence"). A retracted study is removed from the evidence and the level is re-assessed.
+Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group; no preregistration; results that conflict with equally strong studies (see "Contested evidence"). A retracted study is removed from the evidence and the level is re-assessed. Code only flags a newly retracted cited paper; removing it, or changing a level because of it, is a card change that goes through drafting, review and audit (section 6).
 
 Volume is not evidence. The number of papers, citations or news items never moves a hypothesis.
 
@@ -201,7 +201,7 @@ The pipeline runs on AI, with mechanical checks in code. The founder sets the di
 | --- | --- | --- |
 | Drafting agent | `card-drafter`, `link-drafter`, `hypothesis-surveyor` | Nothing; proposes |
 | Review agent | `card-reviewer` | Whether a draft goes forward (two rounds) |
-| Auditor | `auditor`, an independent AI agent | Tier 2 and tier 3: levels, badges, contested marks, layer and links, preprint early signals, parked disputes, and a new hypothesis against the inclusion rule |
+| Auditor | `auditor`, an independent AI agent | Tier 2 and tier 3: levels, badges, contested marks, layer and links, preprint early signals, and a new hypothesis against the inclusion rule. Never a change the review agent rejected in two rounds |
 | Founder | the founder | Direction: the rubric and its rules, the inclusion rule, the scope, removing a hypothesis, which sources are searched, the agents' prompts. May overrule any auditor decision, as a logged correction (`decided_by: founder`) |
 | Expert reviewer | vacant | Replaces the auditor when recruited |
 
@@ -218,15 +218,17 @@ The pipeline runs on AI, with mechanical checks in code. The founder sets the di
    | --- | --- | --- |
    | 1 | Adding a study to a card, factual text, change-log entry | Applied when the mechanical checks pass and the drafting and review agents agree |
    | 2 | Setting or changing a level, a badge or a contested mark; a card's layer and links; adding a hypothesis; any change that adds or cites a preprint | The auditor, accept or reject, after the checks and the review |
-   | 3 | Anything still disputed after two agent rounds | The auditor decides whether the dispute can be settled; if it is not, the card is unchanged and the lower level stands, with the disagreement noted on the card |
+   | 3 | A change the review agent rejected in two rounds (a parked dispute) | No AI step. The card is unchanged and the change is listed in the report; it is never sent to the auditor. The founder may overrule it, as a logged correction (`decided_by: founder`) |
 
    Changes that add or cite a preprint are tier 2: the auditor decides preprint changes. Removing a hypothesis stays with the founder.
 
-   **What the auditor sees, and nothing else:** the proposed change (the diff of the card), the card as it stands, the cached source records the change cites, the rubric (sections 2 and 3 of this document) and `docs/card-format.md`. It does not see the drafting agent's reasoning, the review agent's findings or any earlier audit of the same change, and each audit starts in a fresh context.
+   **What the auditor sees, and nothing else:** the proposed change (the diff of the card), the card as it stands, the cached source records the change cites (the full text, uncut, of every source that carries the level, a badge or the contested mark; the abstract only for the others; a carrier with no cached full text is given as an abstract with a statement that the full text could not be checked), the rubric (sections 2 and 3 of this document) and `docs/card-format.md`. It does not see the drafting agent's reasoning, the review agent's findings or any earlier audit of the same change, and each audit starts in a fresh context.
 
    **What the auditor writes:** one audit record per decision, validated by code: the decision (`accept`, `reject`, or `accept_lower` with the level it does accept), the rubric clause each part of the decision rests on, the source id and the verbatim quote behind every factual statement in its reasons, and what would change the decision. Code rejects a record with an unknown source id, a quote that is not found word for word in the cached record, or a decision part without a rubric clause. The auditor writes no card text.
 
-   **Conservative default.** A change is applied only when the mechanical checks passed, the review agent accepted the draft and, for a tier 2 change, the auditor accepted it. If the auditor rejects, or accepts only a lower level, the card is unchanged and the record says why. A dispute that is still open leaves the card unchanged.
+   **Conservative default.** A change is applied only when the mechanical checks passed, the review agent accepted the draft and, for a tier 2 change, the auditor accepted it. If the auditor rejects, or accepts only a lower level, the card is unchanged and the record says why. A dispute that is still open leaves the card unchanged. A change the review agent rejected in two rounds is never sent to the auditor and never applied, even if an audit record accepting it were present.
+
+   **A lower level (`accept_lower`).** Nothing is applied at once. The drafting agent writes one redraft (round L, at most once) that proposes only the level the auditor accepted, with its reason rewritten at that level, and a contested mark or badge only where the lower level makes it inconsistent. The redraft goes through the checks and the review agent again, and a fresh auditor audits it (a level change, so a second auditor decides it too). It is applied only when every step accepts; otherwise the card is unchanged and the report lists the dispute with the reason. There is no further round.
 
    **Consistency check.** For a sample of audited changes, a second auditor with a fresh context decides the same change: every level change, and one in five of the others, chosen by a script from a recorded seed. A second verdict that differs from the first leaves the card unchanged, is treated as a dispute and is counted. The count is reported with every weekly pull request; it is the measure of how reliable the auditor is.
 
