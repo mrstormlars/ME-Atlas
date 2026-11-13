@@ -145,6 +145,7 @@ Links live on the upstream card only. Translations of link texts are card text (
 | V12 | Study ids are unique within a card; a repeated id is reported on its second occurrence. |
 | V3, V4 (links) | Apply to every link too: each source is in the card's `studies` and there is at least one. Errors read `links[0].sources[0]`. |
 | V13 | Case definition provenance: `unverified` has `null` source and quote; every other value has a source; the named definitions (CCC, ICC, IOM2015, Fukuda, Holmes1988, CDC_unspecified, Oxford) also have a quote. |
+| V14 | No "TODO" (whole word, any case) in text a reader sees: the `name`, any sourced text (core claim, level reason, contested reason, badge reasons, subgroups, early signals, link texts) or a study's `finding`. The message names the field. A TODO in a YAML comment is fine. |
 | M1 | `layer`, when present, is one of `predisposition`, `trigger`, `mechanism`, `dysfunction` (reported as a schema error on `layer`). |
 | M2 | Every link's `to` resolves: a card slug in the validated set (see `docs/map.md`), `symptom:<id>` in `content/symptoms.yaml`, `question:<id>` in `content/open-questions.yaml`. A malformed value such as `foo:bar`, or an entry marked `todo: verify`, is an error. |
 | M3 | A card does not link to itself. |
@@ -152,7 +153,7 @@ Links live on the upstream card only. Translations of link texts are card text (
 | M5 | A link with `support` `associated` or `directional` cites at least one study that is not a review (`design` not `other`) and whose case definition is not `none`, `other`, `unverified` or `Oxford`: "needs a study in an ME/CFS cohort with a recognised case definition". `proposed` has no such condition. |
 | M6 | The content files: `content/symptoms.yaml` (`id`, `name`, non-empty `sources`, or `todo: verify` instead) and `content/open-questions.yaml` (`id`, `layer`, `text`, and exactly one of non-empty `asked_by` or `editorial: true`, or `todo: verify`). Unique ids, no unknown keys, none of the banned words. A `todo: verify` entry is valid, left out of the build and the report, and printed as a warning. |
 
-The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10, V12 and V13 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
+The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10 and V12-V14 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
 
 What it does not check: that titles, years, sample sizes and case definitions match the PubMed record (a later task, needs the fetch script), that the level is right for the evidence, or that a founder approved a change.
 

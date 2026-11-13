@@ -222,7 +222,7 @@ def test_record_classification_rejects_missing_unknown_and_repeated_papers(env: 
 def fulltext_loader(budget_text: str | None = None):
     xml = (FIXTURES / "agent" / "fulltext-90000101.xml").read_bytes()
 
-    def load_it(pmid: str) -> FullTextResult:
+    def load_it(pmid: str, pmcid: str | None = None) -> FullTextResult:
         return FullTextResult(xml, "Europe PMC open access, PMC9000101")
 
     return load_it
@@ -252,7 +252,7 @@ def test_context_states_truncation_with_the_numbers(ready: Env):
 
 
 def test_context_says_so_when_there_is_no_full_text(ready: Env):
-    loader = lambda pmid: FullTextResult(None, "no open full text (Europe PMC: no open full text)")  # noqa: E731
+    loader = lambda pmid, pmcid=None: FullTextResult(None, "no open full text (Europe PMC: no open full text)")  # noqa: E731
     assert ready.cli("context", SLUG, NEW_PMID, fulltext=loader) == 0
     text = (ready.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
     assert "No full text is available" in text and "unverified" in text
@@ -922,3 +922,302 @@ def test_pr_stages_the_translations_folder_when_there_is_one(accepted: Env):
     assert accepted.cli("pr", runner=runner) == 0
     adds = [c for c in runner.calls if c[:2] == ["git", "add"]]
     assert len(adds) == 2 and adds[1][-1] == str(accepted.translations)
+
+
+# --- A: a rejected draft that was then withdrawn -------------------------------
+
+
+def withdrawn_pair(env: Env, *, not_on_card: str | None = None) -> None:
+    """Round 1 proposes and is rejected (must_fix and advisory findings); round 2 proposes nothing."""
+    env.apply("ops_add_study.json")
+    review = env.put("review", "review_reject.json")
+    body = load(review)
+    body["findings"] = [
+        {"operation": 0, "severity": "advisory", "problem": "ADVISORY-NOTE", "fix": "ADVISORY-FIX"},
+        {"operation": 1, "severity": "must_fix", "problem": "MUST-PROBLEM", "fix": "MUST-FIX-IN-FULL"},
+    ]
+    if not_on_card is not None:
+        body["not_on_card"] = not_on_card
+    review.write_text(json.dumps(body), encoding="utf-8")
+    env.apply("ops_empty.json", n=2)
+
+
+def test_a1_a_rejected_round_followed_by_an_empty_round_is_withdrawn(ready: Env):
+    withdrawn_pair(ready)
+    o = outcome(ready)
+    assert o.status == "withdrawn"
+    assert "round 1" in o.note and "reject" in o.note
+
+
+def test_a1_an_empty_first_round_without_a_review_stays_no_change(ready: Env):
+    ready.apply("ops_empty.json")
+    assert outcome(ready).status == "no_change"
+
+
+def test_a1_an_empty_second_round_after_an_accepted_first_round_stays_no_change(ready: Env):
+    ready.apply("ops_add_study.json")
+    ready.put("review", "review_accept.json")
+    ready.apply("ops_empty.json", n=2)
+    assert outcome(ready).status == "no_change"
+
+
+def section(report: str, heading: str) -> str:
+    start = report.index(heading)
+    nxt = report.find("\n## ", start + 1)
+    return report[start : nxt if nxt != -1 else len(report)]
+
+
+def test_a2_the_report_has_a_withdrawn_section_directly_after_the_parking_lot(ready: Env):
+    withdrawn_pair(ready)
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    parking_lot, withdrawn, hypotheses = (
+        report.index("## Parking lot"),
+        report.index("## Rejected by the reviewer, then withdrawn"),
+        report.index("## Possible new hypotheses"),
+    )
+    assert parking_lot < withdrawn < hypotheses
+    text = section(report, "## Rejected by the reviewer, then withdrawn")
+    assert f"**{SLUG}**" in text and "pmid:90000101" in text and "Fictional replication" in text
+    assert "round 1" in text
+    assert text.index("(must_fix): MUST-PROBLEM") < text.index("(advisory): ADVISORY-NOTE")
+    assert "Suggested fix: MUST-FIX-IN-FULL" in text and "Suggested fix: ADVISORY-FIX" in text
+    assert "Add study `pmid:90000101`" in text  # what the drafter proposed in the rejected round
+    assert "withdrawn" not in section(report, "## Parking lot").replace("then withdrawn", "")
+
+
+def test_a2_without_a_withdrawn_pair_the_section_says_none(ready: Env):
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    assert section(report, "## Rejected by the reviewer, then withdrawn").strip().endswith("None.")
+
+
+def test_a3_the_summary_counts_withdrawn_pairs_on_their_own(ready: Env):
+    withdrawn_pair(ready)
+    assert ready.cli("report") == 0
+    first = (ready.run / "report.md").read_text(encoding="utf-8")
+    assert "1 rejected and then withdrawn" in first and "0 with no change proposed" in first
+
+
+def test_a3_a_pair_with_no_change_is_not_counted_as_withdrawn(ready: Env):
+    ready.apply("ops_empty.json")
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    assert "0 rejected and then withdrawn" in report and "1 with no change proposed" in report
+
+
+def test_a4_not_on_card_is_accepted_by_record_review_and_printed_in_the_withdrawn_section(ready: Env):
+    withdrawn_pair(ready, not_on_card="Outside the card's scope: a fictional pathway study.")
+    assert ready.cli("record-review", SLUG, NEW_PMID) == 0
+    assert ready.cli("report") == 0
+    text = section((ready.run / "report.md").read_text(encoding="utf-8"), "## Rejected by the reviewer, then withdrawn")
+    assert "  - not on the card: Outside the card's scope: a fictional pathway study." in text.splitlines()
+
+
+def test_a4_not_on_card_is_printed_in_the_parking_lot(ready: Env):
+    ready.apply("ops_add_study.json")
+    review = ready.put("review", "review_reject.json")
+    body = load(review)
+    body["not_on_card"] = "Fictional reason to list it as not on the card."
+    review.write_text(json.dumps(body), encoding="utf-8")
+    assert ready.cli("report") == 0
+    text = section((ready.run / "report.md").read_text(encoding="utf-8"), "## Parking lot")
+    assert "  - not on the card: Fictional reason to list it as not on the card." in text.splitlines()
+
+
+def test_a4_an_empty_not_on_card_is_refused_by_record_review(ready: Env, capsys):
+    withdrawn_pair(ready, not_on_card="")
+    assert ready.cli("record-review", SLUG, NEW_PMID) == 1
+    err = capsys.readouterr().err
+    assert "not_on_card" in err and "at least 1 character" in err
+
+
+def test_a4_a_review_without_not_on_card_stays_valid_and_null_is_allowed(ready: Env):
+    ready.apply("ops_add_study.json")
+    review = ready.put("review", "review_reject.json")
+    assert ready.cli("record-review", SLUG, NEW_PMID) == 0
+    review.write_text(json.dumps({**load(review), "not_on_card": None}), encoding="utf-8")
+    assert ready.cli("record-review", SLUG, NEW_PMID) == 0
+
+
+def test_a6_a_withdrawn_pair_writes_nothing_in_pr_and_translation_plan(ready: Env):
+    withdrawn_pair(ready)
+    runner = FakeRunner()
+    assert ready.cli("pr", runner=runner) == 0
+    assert runner.calls == [["git", "rev-parse", "--abbrev-ref", "HEAD"]] or runner.calls == []
+    assert "No accepted changes" in ready.out[-1]
+    assert ready.cli("translation-plan") == 0
+    assert load(ready.run / "translation-plan.json")["cards"] == []
+
+
+# --- C: TODO and group --------------------------------------------------------
+
+
+def put_ops(env: Env, change, n: int = 1) -> int:
+    body = load(FIXTURES / "agent" / "ops_add_study.json")
+    change(body)
+    target = env.run / "ops" / f"{SLUG}-{NEW_PMID}-r{n}.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(body), encoding="utf-8")
+    return env.cli("apply", SLUG, str(target), "--round", str(n))
+
+
+def test_c3_an_add_study_with_todo_verify_in_the_finding_fails_the_pair(ready: Env):
+    def change(body):
+        body["operations"][0]["study"]["finding"] += " (TODO: verify)"
+
+    assert put_ops(ready, change) == 1
+    checks = ready.checks()
+    assert checks["passed"] is False
+    assert any("V14" in line for line in checks["validator"])
+
+
+def make_every_study_grouped(env: Env) -> None:
+    path = env.drafts / f"{SLUG}.yaml"
+    text = path.read_text(encoding="utf-8")
+    text = text.replace(
+        "    direction: no_difference\n", "    direction: no_difference\n    group: Another Fictional Group\n"
+    )
+    path.write_text(text, encoding="utf-8")
+
+
+def test_c4_a_study_without_group_on_a_card_where_every_study_has_one_gives_a_warning(ready: Env):
+    make_every_study_grouped(ready)
+    assert ready.apply("ops_add_study.json") == 0  # a warning never fails the pair
+    checks = ready.checks()
+    assert checks["passed"] is True
+    assert (
+        len(checks["warnings"]) == 1 and "pmid:90000101" in checks["warnings"][0] and "group" in checks["warnings"][0]
+    )
+    assert any(line.startswith("warning:") and "pmid:90000101" in line for line in ready.out)
+
+
+def test_c4_no_warning_when_the_new_study_has_a_group(ready: Env):
+    make_every_study_grouped(ready)
+
+    def change(body):
+        body["operations"][0]["study"]["group"] = "A Fictional Group, Fictional University"
+
+    assert put_ops(ready, change) == 0
+    assert ready.checks()["warnings"] == []
+
+
+def test_c4_no_warning_when_a_study_already_on_the_card_has_no_group(ready: Env):
+    assert ready.apply("ops_add_study.json") == 0  # in the fixture card, pmid:90000104 has no group
+    assert ready.checks()["warnings"] == []
+    assert not any(line.startswith("warning:") for line in ready.out)
+
+
+def test_c5_the_report_shows_the_warnings_of_an_accepted_pair_next_to_the_reviewer_notes(ready: Env):
+    make_every_study_grouped(ready)
+    ready.apply("ops_add_study.json")
+    ready.put("review", "review_accept_advisory.json")
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    notes = next(line for line in report.splitlines() if "reviewer note (advisory)" in line)
+    assert "warning: " in notes and "pmid:90000101" in notes and "group" in notes
+
+
+# --- E and B4: the context file ------------------------------------------------
+
+
+def context_text(env: Env, loader=None) -> str:
+    assert env.cli("context", SLUG, NEW_PMID, fulltext=loader or fulltext_loader()) == 0
+    return (env.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+
+
+def test_e1_the_level_two_headings_are_numbered_without_repeats_and_spec_headings_are_demoted(ready: Env):
+    text = context_text(ready)
+    numbers = [line.split(".")[0].removeprefix("## ") for line in text.splitlines() if line.startswith("## ")]
+    assert numbers == ["1", "2", "3", "4", "5", "6"]
+    spec = SPEC.read_text(encoding="utf-8")
+    spec_headings = {line for line in spec.splitlines() if line.startswith("## ")}
+    assert not spec_headings & set(text.splitlines())
+    assert "### The two badges" in text  # a spec heading, one level lower
+
+
+def test_e2_the_inclusion_rule_comes_before_the_rubric(ready: Env):
+    text = context_text(ready)
+    heads = [line for line in text.splitlines() if line.startswith("## ")]
+    assert heads[1].startswith("## 2. The inclusion rule") and heads[2].startswith("## 3. The rubric")
+    assert "Ideas with no peer-reviewed cohort data yet" in text
+    assert text.index("Ideas with no peer-reviewed cohort data yet") < text.index("Repeated by others")
+
+
+def test_e2_a_spec_without_the_inclusion_section_makes_context_fail_with_a_message(ready: Env, tmp_path, capsys):
+    spec = SPEC.read_text(encoding="utf-8")
+    start, end = spec.index("## 2. "), spec.index("## 3. ")
+    broken = tmp_path / "spec.md"
+    broken.write_text(spec[:start] + spec[end:], encoding="utf-8")
+    cfg = pipeline.Config(ready.run, ready.cards, ready.drafts, ready.cache, broken)
+    with pytest.raises(pipeline.PipelineError, match=r"no section '## 2\.' followed by '## 3\.'"):
+        pipeline.build_context(cfg, SLUG, NEW_PMID, fulltext_loader())
+
+
+def test_d5_the_context_lists_definition_and_exclusion_candidates_apart(ready: Env):
+    xml = (
+        (FIXTURES / "agent" / "fulltext-90000101.xml")
+        .read_text(encoding="utf-8")
+        .replace(
+            "Controls were matched for age.",
+            "We excluded any subjects with CFS or fibromyalgia. Controls were matched for age.",
+        )
+    )
+    text = context_text(
+        ready, lambda pmid, pmcid=None: FullTextResult(xml.encode(), "Europe PMC open access, PMC9000101")
+    )
+    last = text.index("## 6.")
+    definition = text.index("may name a case definition", last)
+    exclusion = text.index("may exclude people with the illness", last)
+    assert definition < text.index("All fictional participants met the Fukuda criteria.", last) < exclusion
+    assert exclusion < text.index("We excluded any subjects with CFS or fibromyalgia.", last)
+    assert "ME/CFS itself" in text[exclusion:]
+    assert "We excluded any subjects" not in text[definition:exclusion]
+
+
+def add_pmcid_to_cached_record(env: Env, pmcid: str = "PMC9000101") -> None:
+    path = env.cache / "pubmed" / f"{NEW_PMID}.xml"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            "<PubmedData>", f'<PubmedData><ArticleIdList><ArticleId IdType="pmc">{pmcid}</ArticleId></ArticleIdList>'
+        ),
+        encoding="utf-8",
+    )
+
+
+def run_live_context(env: Env, monkeypatch, status: str, pmcid: str | None):
+    """The real live loader with europepmc.get_fulltext replaced by a fake that records what it was given."""
+    from me_atlas import europepmc
+
+    calls: list[dict] = []
+
+    def fake(client, cache, pmid, **kwargs):
+        calls.append(kwargs)
+        lookup = europepmc.Lookup(pmid, "not_open_access", None)
+        return europepmc.FullText(lookup, None, 1, status, pmcid)
+
+    monkeypatch.setenv("CONTACT_EMAIL", "tester@example.org")
+    monkeypatch.setattr(europepmc, "get_fulltext", fake)
+    assert env.cli("context", SLUG, NEW_PMID) == 0
+    text = (env.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+    return text, calls
+
+
+def test_b4_pdf_only_says_a_pmc_record_exists_its_full_text_is_a_pdf_and_was_not_read(ready: Env, monkeypatch):
+    add_pmcid_to_cached_record(ready)
+    text, calls = run_live_context(ready, monkeypatch, "pdf_only", "PMC9000101")
+    assert calls[0]["pmcid"] == "PMC9000101"  # the record's PMC id is passed on
+    assert "PMC9000101" in text and "PDF only" in text and "was not read" in text
+    assert "no open full text" not in text
+
+
+def test_b4_pmc_no_xml_says_a_pmc_record_exists_and_europe_pmc_has_no_xml_for_it(ready: Env, monkeypatch):
+    add_pmcid_to_cached_record(ready)
+    text, _ = run_live_context(ready, monkeypatch, "pmc_no_xml", "PMC9000101")
+    assert "PMC9000101" in text and "no full-text XML" in text and "no open full text" not in text
+
+
+def test_b4_without_a_pmc_id_anywhere_the_text_is_unchanged(ready: Env, monkeypatch):
+    text, calls = run_live_context(ready, monkeypatch, "not_open_access", None)
+    assert calls[0]["pmcid"] is None
+    assert "no open full text (Europe PMC: no open full text)" in text

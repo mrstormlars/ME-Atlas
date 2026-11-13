@@ -72,6 +72,7 @@ class PubMedRecord(BaseModel):
     id: StudyId  # "pmid:<digits>", the id used in cards
     pmid: str
     doi: str | None
+    pmcid: str | None = None  # "PMC<digits>" from the article's own PubmedData/ArticleIdList, never from references
     title: str
     abstract: str | None
     journal: str | None
@@ -142,6 +143,17 @@ def _doi(citation: ET.Element, pubmed_data: ET.Element | None) -> str | None:
     return None
 
 
+def _pmcid(pubmed_data: ET.Element | None) -> str | None:
+    """The PMC id of the article itself (``PubmedData/ArticleIdList`` only, not the reference list)."""
+    if pubmed_data is None:
+        return None
+    for node in pubmed_data.findall("ArticleIdList/ArticleId"):
+        value = _text(node)
+        if node.get("IdType") == "pmc" and re.fullmatch(r"PMC\d+", value):
+            return value
+    return None
+
+
 def _entry_date(pubmed_data: ET.Element | None) -> str | None:
     if pubmed_data is None:
         return None
@@ -193,6 +205,7 @@ def parse_article(article: ET.Element) -> PubMedRecord:
         id=f"pmid:{pmid}",
         pmid=pmid,
         doi=_doi(citation, pubmed_data),
+        pmcid=_pmcid(pubmed_data),
         title=title,
         abstract=_abstract(art),
         journal=_text(art.find("Journal/Title")) or _text(art.find("Journal/ISOAbbreviation")) or None,

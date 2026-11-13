@@ -6,6 +6,7 @@ Fictional PMIDs, PMCIDs and articles; the HTTP layer is an ``httpx.MockTransport
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import httpx
@@ -13,6 +14,7 @@ import pytest
 
 from me_atlas import europepmc
 from me_atlas.europepmc import (
+    LOOKUP_MAX_AGE_DAYS,
     EuropePmcCache,
     EuropePmcClient,
     EuropePmcError,
@@ -20,6 +22,7 @@ from me_atlas.europepmc import (
     find_case_definitions_in_page,
     get_fulltext,
     get_pmc_page,
+    is_placeholder_fulltext,
     parse_lookup,
     pmc_page_text,
     split_sentences,
@@ -34,6 +37,16 @@ UNKNOWN_PMID = "90000003"
 FREE_PMID, FREE_PMCID = "90000004", "PMC9000004"  # free to read on PMC, not open access
 WRONG_PMID, WRONG_PMCID = "90000005", "PMC9000005"  # its page says it is for another PMID
 NOBODY_PMID, NOBODY_PMCID = "90000006", "PMC9000006"  # its page has no main article body
+NOID_PMID = "90000007"  # in Europe PMC, not open access, no PMC id anywhere
+PDF_PMID, PDF_PMCID = "90000008", "PMC9000008"  # Europe PMC has no PMC id yet; PubMed does; XML is a placeholder
+NOXML_PMID, NOXML_PMCID = "90000009", "PMC9000009"  # PubMed has the PMC id; Europe PMC answers 404 for the XML
+PLACEHOLDER_BODY = (
+    "Full Text The Full Text of this preprint is available as a PDF (204.8 KB). The Web version will be available soon."
+)
+
+
+def placeholder_xml(body_text: str = PLACEHOLDER_BODY) -> str:
+    return f"<article><front><article-meta/></front><body><p>{body_text}</p></body></article>"
 
 
 def fulltext_xml() -> str:
@@ -86,8 +99,11 @@ class FakeEuropePmc:
             FREE_PMID: search_json(FREE_PMID, FREE_PMCID, "N", in_pmc=True),
             WRONG_PMID: search_json(WRONG_PMID, WRONG_PMCID, "N", in_pmc=True),
             NOBODY_PMID: search_json(NOBODY_PMID, NOBODY_PMCID, "N", in_pmc=True),
+            NOID_PMID: search_json(NOID_PMID, None, "N"),
+            PDF_PMID: search_json(PDF_PMID, None, "N"),
+            NOXML_PMID: search_json(NOXML_PMID, None, "N"),
         }
-        self.fulltexts = {OA_PMCID: fulltext_xml()}
+        self.fulltexts = {OA_PMCID: fulltext_xml(), PDF_PMCID: placeholder_xml()}
         page = page_html()
         self.pages = {
             FREE_PMCID: page,
@@ -151,15 +167,15 @@ def test_requests_identify_the_caller_with_the_contact_email(tmp_path):
     assert all(EMAIL in r.headers["user-agent"] for r, _ in server.requests)
 
 
-def test_not_open_access_is_reported_and_no_full_text_is_requested(tmp_path):
+def test_not_open_access_without_any_pmc_id_is_reported_and_no_full_text_is_requested(tmp_path):
     server = FakeEuropePmc()
     cache = EuropePmcCache(tmp_path)
-    result = get_fulltext(server.client(), cache, CLOSED_PMID)
+    result = get_fulltext(server.client(), cache, NOID_PMID)
     assert result.lookup.status == "not_open_access"
-    assert result.lookup.pmcid == CLOSED_PMCID
+    assert result.status == "not_open_access"
+    assert result.lookup.pmcid is None
     assert result.path is None
     assert len(server.requests) == 1 and server.paths[0].endswith("/search")
-    assert not (tmp_path / "europepmc" / f"{CLOSED_PMCID}.xml").exists()
 
 
 def test_pmid_unknown_to_europe_pmc(tmp_path):
@@ -175,10 +191,10 @@ def test_cached_result_is_not_requested_again(tmp_path):
     server = FakeEuropePmc()
     cache = EuropePmcCache(tmp_path)
     get_fulltext(server.client(), cache, OA_PMID)
-    get_fulltext(server.client(), cache, CLOSED_PMID)
+    get_fulltext(server.client(), cache, NOID_PMID)
     before = len(server.requests)
     again = get_fulltext(server.client(), cache, OA_PMID)
-    again_closed = get_fulltext(server.client(), cache, CLOSED_PMID)
+    again_closed = get_fulltext(server.client(), cache, NOID_PMID)
     assert len(server.requests) == before
     assert again.requests_made == 0 and again.path is not None
     assert again_closed.lookup.status == "not_open_access" and again_closed.requests_made == 0
@@ -196,7 +212,7 @@ def test_refresh_requests_again(tmp_path):
 def test_429_then_200_succeeds(tmp_path):
     server = FakeEuropePmc()
     server.statuses.append(429)
-    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), CLOSED_PMID)
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), NOID_PMID)
     assert result.lookup.status == "not_open_access"
     assert len(server.requests) == 2
     assert server.clock.sleeps == [1.0]
@@ -226,11 +242,11 @@ def test_unreadable_search_response_is_an_error_and_is_not_cached(tmp_path):
     assert not (tmp_path / "europepmc" / f"{OA_PMID}.json").exists()
 
 
-def test_open_access_record_without_full_text_is_an_error(tmp_path):
+def test_open_access_record_whose_full_text_request_answers_404_is_pmc_no_xml(tmp_path):
     server = FakeEuropePmc()
     server.fulltexts.clear()
-    with pytest.raises(EuropePmcError, match="HTTP 404"):
-        get_fulltext(server.client(), EuropePmcCache(tmp_path), OA_PMID)
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), OA_PMID)
+    assert result.status == "pmc_no_xml" and result.pmcid == OA_PMCID and result.path is None
     assert not (tmp_path / "europepmc" / f"{OA_PMCID}.xml").exists()
 
 
@@ -245,6 +261,198 @@ def test_rate_limit_is_three_requests_per_second(tmp_path):
     for i, start in enumerate(times):
         assert sum(1 for t in times if start <= t < start + 1.0) <= 3, f"more than 3 requests in the second from #{i}"
     assert times[3] - times[0] >= 1.0
+
+
+# --- B2: the age of a cached negative lookup --------------------------------
+
+DAY = 86400.0
+NOW = 1_800_000_000.0
+
+
+def age_lookup_file(cache: EuropePmcCache, pmid: str, days: float) -> None:
+    path = cache.lookup_path(pmid)
+    os.utime(path, (NOW - days * DAY, NOW - days * DAY))
+
+
+def lookup_requests(server: FakeEuropePmc) -> int:
+    return sum(1 for p in server.paths if p.endswith("/search"))
+
+
+def test_the_age_limit_is_seven_days():
+    assert LOOKUP_MAX_AGE_DAYS == 7
+
+
+def test_an_old_negative_lookup_is_requested_again(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    get_fulltext(server.client(), cache, NOID_PMID)
+    age_lookup_file(cache, NOID_PMID, 8)
+    server.lookups[NOID_PMID] = search_json(NOID_PMID, OA_PMCID, "Y")  # Europe PMC has caught up
+    result = get_fulltext(server.client(), cache, NOID_PMID, now=lambda: NOW)
+    assert lookup_requests(server) == 2
+    assert result.status == "open_access"
+
+
+def test_an_old_not_found_lookup_is_requested_again(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    get_fulltext(server.client(), cache, UNKNOWN_PMID)
+    age_lookup_file(cache, UNKNOWN_PMID, 8)
+    get_fulltext(server.client(), cache, UNKNOWN_PMID, now=lambda: NOW)
+    assert lookup_requests(server) == 2
+
+
+def test_a_young_negative_lookup_is_not_requested_again(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    get_fulltext(server.client(), cache, NOID_PMID)
+    age_lookup_file(cache, NOID_PMID, 6)
+    get_fulltext(server.client(), cache, NOID_PMID, now=lambda: NOW)
+    assert lookup_requests(server) == 1
+
+
+def test_an_old_open_access_lookup_is_not_requested_again(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    get_fulltext(server.client(), cache, OA_PMID)
+    age_lookup_file(cache, OA_PMID, 400)
+    result = get_fulltext(server.client(), cache, OA_PMID, now=lambda: NOW)
+    assert lookup_requests(server) == 1
+    assert result.requests_made == 0 and result.status == "open_access"
+
+
+# --- B3: the PMC id from PubMed, and the statuses ---------------------------
+
+
+def fulltext_requests(server: FakeEuropePmc) -> list[str]:
+    return [p for p in server.paths if p.endswith("/fullTextXML")]
+
+
+def test_a_placeholder_body_is_pdf_only_and_nothing_is_cached(tmp_path):
+    server = FakeEuropePmc()
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), PDF_PMID, pmcid=PDF_PMCID)
+    assert result.status == "pdf_only" and result.pmcid == PDF_PMCID
+    assert result.path is None
+    assert len(fulltext_requests(server)) == 1
+    assert not (tmp_path / "europepmc" / f"{PDF_PMCID}.xml").exists()
+
+
+def test_an_open_access_lookup_with_a_placeholder_body_is_pdf_only_and_not_cached(tmp_path):
+    server = FakeEuropePmc()
+    server.lookups[PDF_PMID] = search_json(PDF_PMID, PDF_PMCID, "Y")
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), PDF_PMID)
+    assert result.status == "pdf_only" and result.path is None
+    assert not (tmp_path / "europepmc" / f"{PDF_PMCID}.xml").exists()
+
+
+def test_an_article_without_body_text_is_pdf_only(tmp_path):
+    server = FakeEuropePmc()
+    server.fulltexts[PDF_PMCID] = "<article><front><article-meta/></front></article>"
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), PDF_PMID, pmcid=PDF_PMCID)
+    assert result.status == "pdf_only"
+    assert not (tmp_path / "europepmc" / f"{PDF_PMCID}.xml").exists()
+
+
+def test_the_pmc_id_from_pubmed_gives_full_text_when_the_xml_is_real(tmp_path):
+    server = FakeEuropePmc()
+    server.fulltexts[PDF_PMCID] = fulltext_xml()
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), PDF_PMID, pmcid=PDF_PMCID)
+    assert result.status == "open_access" and result.pmcid == PDF_PMCID
+    assert result.path == tmp_path / "europepmc" / f"{PDF_PMCID}.xml" and result.path.is_file()
+
+
+def test_a_404_on_the_full_text_request_is_pmc_no_xml_and_is_not_retried(tmp_path):
+    server = FakeEuropePmc()
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), NOXML_PMID, pmcid=NOXML_PMCID)
+    assert result.status == "pmc_no_xml" and result.pmcid == NOXML_PMCID and result.path is None
+    assert len(fulltext_requests(server)) == 1
+    assert server.clock.sleeps == []
+
+
+def test_a_server_error_on_the_full_text_request_still_raises(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    get_fulltext(server.client(), cache, NOXML_PMID)  # caches the lookup
+    server.statuses.extend([500] * 10)
+    with pytest.raises(EuropePmcError, match="HTTP 500"):
+        get_fulltext(server.client(max_retries=1), cache, NOXML_PMID, pmcid=NOXML_PMCID)
+
+
+def test_without_a_pmc_id_anywhere_the_status_stays_not_open_access(tmp_path):
+    server = FakeEuropePmc()
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), NOID_PMID)
+    assert result.status == "not_open_access" and result.pmcid is None
+    assert fulltext_requests(server) == []
+
+
+def test_not_found_without_a_pmc_id_stays_not_found(tmp_path):
+    server = FakeEuropePmc()
+    result = get_fulltext(server.client(), EuropePmcCache(tmp_path), UNKNOWN_PMID)
+    assert result.status == "not_found"
+
+
+def test_the_full_text_is_requested_once_per_call(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    get_fulltext(server.client(), cache, PDF_PMID, pmcid=PDF_PMCID)
+    get_fulltext(server.client(), cache, PDF_PMID, pmcid=PDF_PMCID)
+    assert len(fulltext_requests(server)) == 2  # one per call, never more
+
+
+def test_a_cached_placeholder_is_never_used_and_is_requested_again(tmp_path):
+    server = FakeEuropePmc()
+    cache = EuropePmcCache(tmp_path)
+    cache.write(cache.fulltext_path(PDF_PMCID), placeholder_xml().encode())
+    result = get_fulltext(server.client(), cache, PDF_PMID, pmcid=PDF_PMCID)
+    assert result.status == "pdf_only" and result.path is None
+
+
+# --- the placeholder test ---------------------------------------------------
+
+
+def test_placeholder_detection():
+    assert is_placeholder_fulltext(placeholder_xml())
+    assert is_placeholder_fulltext(placeholder_xml("The text is AVAILABLE AS A PDF only."))
+    assert is_placeholder_fulltext("<article><front/></article>")  # no body at all
+    assert is_placeholder_fulltext("<article><body/></article>")  # empty body
+
+
+def test_a_real_body_is_not_a_placeholder():
+    assert not is_placeholder_fulltext(fulltext_xml())
+    assert not is_placeholder_fulltext(placeholder_xml("Short real text without the marker wording."))
+
+
+def test_a_long_body_that_mentions_a_pdf_is_not_a_placeholder():
+    long_body = "The figure is available as a PDF. " + "Fictional sentence about widgets. " * 60
+    assert len(long_body) > 1000
+    assert not is_placeholder_fulltext(placeholder_xml(long_body))
+
+
+# --- B7: the command line ---------------------------------------------------
+
+
+def test_cli_fulltext_prints_the_new_statuses_with_the_pmc_id(tmp_path, capsys):
+    server = FakeEuropePmc()
+    pubmed_dir = tmp_path / "pubmed"
+    pubmed_dir.mkdir()
+    for pmid, pmcid in ((PDF_PMID, PDF_PMCID), (NOXML_PMID, NOXML_PMCID)):
+        (pubmed_dir / f"{pmid}.xml").write_text(pubmed_xml(pmid, pmcid), encoding="utf-8")
+    code = run_cli(["fulltext", PDF_PMID, NOXML_PMID, NOID_PMID], server, tmp_path)
+    out = capsys.readouterr().out
+    assert code == 0
+    assert f"pmid:{PDF_PMID}  PMC record, full text is a PDF only (not read)  {PDF_PMCID}" in out
+    assert f"pmid:{NOXML_PMID}  PMC record, no full-text XML in Europe PMC  {NOXML_PMCID}" in out
+    assert f"pmid:{NOID_PMID}  no open full text" in out
+    assert not (tmp_path / "europepmc" / f"{PDF_PMCID}.xml").exists()
+
+
+def pubmed_xml(pmid: str, pmcid: str) -> str:
+    return (
+        f"<PubmedArticle><MedlineCitation><PMID>{pmid}</PMID><Article><ArticleTitle>Fictional title."
+        "</ArticleTitle></Article></MedlineCitation><PubmedData><ArticleIdList>"
+        f'<ArticleId IdType="pubmed">{pmid}</ArticleId><ArticleId IdType="pmc">{pmcid}</ArticleId>'
+        "</ArticleIdList></PubmedData></PubmedArticle>"
+    )
 
 
 # --- case-definition finder -------------------------------------------------
@@ -332,7 +540,7 @@ def test_methods_are_preferred_over_mentions_elsewhere():
 def test_finder_returns_sentences_not_enum_values():
     xml = article(("Methods", "Participants met the Fukuda criteria."))
     candidate = find_case_definitions(xml)[0]
-    assert set(vars(candidate)) == {"section", "scope", "sentence", "matched"}
+    assert set(vars(candidate)) == {"section", "scope", "sentence", "matched", "kind"}
     assert candidate.sentence in "Participants met the Fukuda criteria."
 
 
@@ -388,7 +596,7 @@ def test_cli_fulltext_reports_each_pmid(tmp_path, capsys):
     out = capsys.readouterr().out
     assert code == 0
     assert f"pmid:{OA_PMID}  open access  {OA_PMCID}" in out
-    assert f"pmid:{CLOSED_PMID}  no open full text  {CLOSED_PMCID}" in out
+    assert f"pmid:{CLOSED_PMID}  PMC record, no full-text XML in Europe PMC  {CLOSED_PMCID}" in out
     assert f"pmid:{UNKNOWN_PMID}  not found in Europe PMC" in out
 
 
@@ -596,3 +804,94 @@ def test_cli_pmcpage_a_bad_page_sets_the_exit_code_and_caches_nothing(tmp_path, 
     assert f"pmid:{WRONG_PMID}  error" in captured.err
     assert not page_cache_path(tmp_path, WRONG_PMCID).exists()
     assert page_cache_path(tmp_path).is_file()
+
+
+# --- D: the finder leaves out affiliations and lists exclusions ---------------
+
+AFFILIATION_ONLY = [
+    "Insulin resistance was computed with the HOMA2 calculator (Diabetes Trials Unit, University of Oxford).",
+    "The protocol was described in a book published by Oxford University Press.",
+    "Samples were analysed in Oxford, UK.",
+    "Measurements used a device from Oxford Instruments.",
+]
+EXCLUSION_SENTENCE = (
+    "We excluded any subjects with a lifetime or current history of psychiatric axis-1 disorders, "
+    "substance-use disorders, CFS, and fibromyalgia."
+)
+
+
+@pytest.mark.parametrize("sentence", AFFILIATION_ONLY)
+def test_oxford_as_an_affiliation_publisher_place_or_vendor_gives_no_candidate(sentence):
+    assert find_case_definitions(article(("Methods", sentence))) == []
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Patients met the Oxford criteria (Sharpe et al., 1991).",
+        "Participants were recruited at the University of Oxford and met the Oxford criteria.",
+    ],
+)
+def test_oxford_as_a_case_definition_still_gives_a_candidate_with_oxford_matched(sentence):
+    found = find_case_definitions(article(("Methods", sentence)))
+    assert [c.sentence for c in found] == [sentence]
+    assert "Oxford" in found[0].matched and found[0].kind == "definition"
+
+
+def test_a_sentence_excluding_the_illness_is_an_exclusion_candidate():
+    found = find_case_definitions(article(("Methods", EXCLUSION_SENTENCE)))
+    assert [(c.kind, c.sentence) for c in found] == [("exclusion", EXCLUSION_SENTENCE)]
+    assert "CFS" in found[0].matched
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Subjects with diabetes were excluded.",  # exclusion wording, no illness named
+        "Forty participants with CFS were recruited.",  # illness named, no exclusion wording
+    ],
+)
+def test_exclusion_needs_both_the_wording_and_the_illness(sentence):
+    assert find_case_definitions(article(("Methods", sentence))) == []
+
+
+def test_a_sentence_that_matches_both_ways_gives_one_candidate_of_each_kind():
+    sentence = (
+        "Patients met the Fukuda criteria and those with other chronic fatigue syndrome definitions were excluded."
+    )
+    found = find_case_definitions(article(("Methods", sentence)))
+    assert [c.kind for c in found] == ["definition", "exclusion"]
+    assert {c.sentence for c in found} == {sentence}
+
+
+def page_with(paragraph: str) -> str:
+    return (
+        '<html><head><meta name="citation_pmid" content="90000004"></head><body>'
+        '<section class="body main-article-body"><section id="s1"><h2>Methods</h2>'
+        f"<p>{paragraph}</p></section></section></body></html>"
+    )
+
+
+def test_the_page_finder_follows_the_same_rules():
+    found = find_case_definitions_in_page(page_with(AFFILIATION_ONLY[0]))
+    assert found == []
+    found = find_case_definitions_in_page(page_with(EXCLUSION_SENTENCE))
+    assert [c.kind for c in found] == ["exclusion"]
+    both = "Patients met the Fukuda criteria and people with ME/CFS of other kinds were excluded."
+    assert [c.kind for c in find_case_definitions_in_page(page_with(both))] == ["definition", "exclusion"]
+
+
+def test_cli_casedef_marks_exclusion_candidates(tmp_path, capsys):
+    server = FakeEuropePmc()
+    server.fulltexts[OA_PMCID] = article(("Methods", EXCLUSION_SENTENCE))
+    code = run_cli(["casedef", OA_PMID], server, tmp_path)
+    out = capsys.readouterr().out
+    assert code == 0 and f"[Methods] [exclusion] {EXCLUSION_SENTENCE}" in out
+
+
+def test_cli_pmcpage_marks_exclusion_candidates(tmp_path, capsys):
+    server = FakeEuropePmc()
+    server.pages[FREE_PMCID] = page_with(EXCLUSION_SENTENCE)
+    card = make_card(tmp_path, ids=(FREE_PMID, CLOSED_PMID, WRONG_PMID, NOBODY_PMID))
+    code = run_cli(["pmcpage", "--card", str(card), FREE_PMID], server, tmp_path)
+    assert code == 0 and f"[Methods] [exclusion] {EXCLUSION_SENTENCE}" in capsys.readouterr().out

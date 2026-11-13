@@ -2,7 +2,7 @@
 
 Cards live in ``cards/<slug>.yaml``, drafts in ``drafts/<slug>.yaml`` (same schema) and the public
 change log in ``cards/changelog.yaml``. See ``docs/card-format.md`` for the field reference and the
-plain-English rules V1-V13.
+plain-English rules V1-V14.
 
 Command line::
 
@@ -48,6 +48,7 @@ CASE_DEFINITION_RANK = {
 }
 CONTROLLED_DESIGNS = frozenset({"controlled", "intervention_controlled"})
 
+_TODO_RE = re.compile(r"\bTODO\b", re.IGNORECASE)
 BANNED_WORDS = ("promising", "breakthrough", "cure", "hope", "proven")
 # Whole words, with plain plural / past / adjective forms (e.g. "cured", "hopeful").
 _BANNED_RE = re.compile(
@@ -399,6 +400,14 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
                     f"case_definition '{s.case_definition}' needs the verbatim sentence from the source",
                 )
             )
+
+    # V14: a TODO marker belongs in a YAML comment, not in text a reader sees
+    reader_facing = [("name", card.name)]
+    reader_facing += [(f"{path}.text", text.text) for path, text in _sourced_texts(card)]
+    reader_facing += [(f"studies[{i}].finding", st.finding) for i, st in enumerate(card.studies)]
+    for path, value in reader_facing:
+        if _TODO_RE.search(value):
+            found.append(("V14", path, "contains a TODO marker; settle it or move it to a YAML comment"))
 
     # M3, M4 (M1 is the schema's `layer` enum; M2 needs the other cards and lives in me_atlas.map)
     seen_to: set[str] = set()

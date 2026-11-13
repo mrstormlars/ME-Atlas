@@ -1127,3 +1127,84 @@ def test_m5_one_qualifying_study_among_weak_ones_is_enough(tmp_path):
     data = base()
     data["links"] = [link(support="directional", sources=("doi:10.0000/fictional.5", "pmid:00000002"))]
     assert check(tmp_path, data) == []
+
+
+# --- V14: no TODO in reader-facing text -------------------------------------
+
+
+def _todo_in_name(data):
+    data["name"] = "Fictional hypothesis (TODO: verify name)"
+
+
+def _todo_in_core_claim(data):
+    data["core_claim"]["text"] += " TODO: verify"
+
+
+def _todo_in_level_reason(data):
+    data["level_reason"]["text"] += " todo: check"
+
+
+def _todo_in_contested(data):
+    data["contested"]["reason"]["text"] += " TODO"
+
+
+def _todo_in_badge(data):
+    data["badges"]["explains_pem"]["reason"]["text"] += " (TODO: verify)"
+
+
+def _todo_in_subgroup(data):
+    data["subgroups"][0]["text"] += " TODO: verify"
+
+
+def _todo_in_early_signal(data):
+    data["early_signals"][0]["text"] += " TODO: verify"
+
+
+def _todo_in_link(data):
+    data["links"] = [link(text="A fictional link. TODO: verify")]
+
+
+def _todo_in_finding(data):
+    data["studies"][0]["finding"] += " (TODO: verify)"
+
+
+@pytest.mark.parametrize(
+    ("edit", "path"),
+    [
+        (_todo_in_name, "name"),
+        (_todo_in_core_claim, "core_claim.text"),
+        (_todo_in_level_reason, "level_reason.text"),
+        (_todo_in_contested, "contested.reason.text"),
+        (_todo_in_badge, "badges.explains_pem.reason.text"),
+        (_todo_in_subgroup, "subgroups[0].text"),
+        (_todo_in_early_signal, "early_signals[0].text"),
+        (_todo_in_link, "links[0].text"),
+        (_todo_in_finding, "studies[0].finding"),
+    ],
+)
+def test_v14_todo_in_reader_facing_text_is_an_error_naming_the_field(tmp_path, edit, path):
+    data = base()
+    edit(data)
+    issues = [i for i in check(tmp_path, data) if i.rule == "V14"]
+    assert [i.path for i in issues] == [path]
+
+
+def test_v14_a_study_finding_with_todo_verify_fails(tmp_path):
+    data = base()
+    data["studies"][0]["finding"] = "A study of n=40 patients found a fictional difference (TODO: verify)."
+    assert rules(check(tmp_path, data)) == {"V14"}
+
+
+def test_v14_todo_only_in_yaml_comments_passes(tmp_path):
+    path = write_card(tmp_path / "cards", base())
+    path.write_text(
+        path.read_text(encoding="utf-8").replace("level: 4\n", "level: 4  # TODO: verify the level reason\n", 1),
+        encoding="utf-8",
+    )
+    assert cards.validate_card_file(path) == []
+
+
+def test_v14_a_word_that_only_contains_todo_is_not_a_marker(tmp_path):
+    data = base()
+    data["core_claim"]["text"] += " The mastodon fictional result is unrelated."
+    assert [i for i in check(tmp_path, data) if i.rule == "V14"] == []

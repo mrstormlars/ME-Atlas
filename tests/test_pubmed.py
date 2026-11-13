@@ -167,6 +167,29 @@ def test_mesh_major_is_empty_without_major_headings():
     assert record("90000002").mesh_major == []
 
 
+def test_pmcid_is_read_from_the_articles_own_id_list():
+    xml = fixture_text("90000001").replace(
+        '<ArticleId IdType="doi">10.9999/fictional.0001</ArticleId>',
+        '<ArticleId IdType="doi">10.9999/fictional.0001</ArticleId><ArticleId IdType="pmc">PMC9000001</ArticleId>',
+    )
+    assert parse_xml(xml).pmcid == "PMC9000001"
+
+
+def test_pmcid_is_none_without_a_pmc_id():
+    assert record("90000001").pmcid is None
+
+
+def test_pmcid_in_a_reference_list_only_is_not_taken():
+    xml = fixture_text("90000001").replace(
+        "</PubmedData>",
+        "<ReferenceList><Reference><Citation>Fictional reference.</Citation>"
+        '<ArticleIdList><ArticleId IdType="pmc">PMC9000999</ArticleId></ArticleIdList></Reference></ReferenceList>'
+        "</PubmedData>",
+    )
+    assert "PMC9000999" in xml
+    assert parse_xml(xml).pmcid is None
+
+
 def test_record_id_is_valid_study_id():
     adapter = TypeAdapter(StudyId)
     for pmid in ALL_FIXTURES:
