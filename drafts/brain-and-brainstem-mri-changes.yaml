@@ -535,6 +535,28 @@ studies:
       A study of n=25 adolescents with ME/CFS and 23 healthy controls found no significant group
       differences in white matter properties on diffusion MRI, apart from one tract difference that
       did not survive correction for intracranial volume.
+  - id: pmid:42819213
+    title: 'FreeSurfer-based amygdala subfield volumetry in long COVID and ME/CFS: clinical and immunological correlations.'
+    year: 2026
+    cohort: me_cfs
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: 'The inclusion criteria for the ME/CFS group were as follows: (1) fulfillment of the Canadian Consensus Criteria for ME/CFS (18); (2) completion of the same clinical and laboratory evaluations as those described for the long COVID group; (3) an interval of <30 days between MRI and these evaluations; and (4) no history of COVID-19 infection.'
+    design: controlled
+    n_patients: 38
+    n_controls: 47
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: no_difference
+    finding: >-
+      A study of n=38 patients meeting the Canadian Consensus Criteria and 47 healthy controls
+      (and 27 long COVID patients, who met the WHO definition and are not used here) measured
+      amygdala subfield volumes on 3 T MRI. Patients had a nominally larger left paralaminar
+      nucleus (raw p = 0.048), but no group difference or correlation survived correction for
+      multiple testing, and the authors present the volume results as candidate patterns rather
+      than confirmed group differences. Unreplicated.
+    group: Sato N, National Center Hospital of Neurology and Psychiatry, Tokyo, Japan (no authors shared with the Griffith/Adelaide group)
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Links to symptom:respiratory-symptoms, symptom:cognitive-impairment, symptom:sleep-disturbance and symptom:pain
