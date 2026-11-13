@@ -68,7 +68,7 @@
 
 - term: contested
   aliases: [Contested]
-  explanation: Marked when a study of comparable or higher quality contradicts the finding behind a rung. The founder decides. The disputed rung is drawn hatched on the bar.
+  explanation: Marked when a study of comparable or higher quality contradicts the finding behind a rung. An AI auditor decides; no expert has reviewed it. The disputed rung is drawn hatched on the bar.
 
 - term: control group
   aliases: [controls, healthy controls, controlled study]

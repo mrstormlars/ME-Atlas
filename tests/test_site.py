@@ -1071,8 +1071,9 @@ def test_a_card_with_every_case_definition_builds_with_the_real_glossary(tmp_pat
 def test_methods_page_states_plainly_that_no_expert_has_reviewed_the_content(proj):
     out = built(proj)
     text = norm(page(out, "methods.html").text())
-    assert "No medical or research expert has reviewed this content yet." in text
-    assert "has not been reviewed by a medical or research expert" in text
+    assert "No medical or research expert has reviewed this content." in text
+    assert "no medical or research expert has reviewed the content" in text
+    assert "including every evidence level, is drafted, checked and decided by AI tools" in text
     assert "Draft — pending expert review" in text
 
 
@@ -1084,15 +1085,15 @@ def test_methods_page_follows_the_spec_tables(proj):
     assert names == list(RUNG_NAMES)
     text = norm(doc.text())
     assert 'flagged on the card as "does not require PEM"' in text
-    assert "This is the planned flow; most of it is not running yet." in text
-    assert "Nothing is published automatically." in text
-    assert "Not switched on yet; the founder approves every change." in text
-    assert "That period has not started, because the pipeline is not running yet." in text
+    assert "No person decides the content of a card." in text
     assert "cannot raise a hypothesis above level 1" in text
-    assert (
-        "Tier" in text
-        and "Planned: published automatically when the mechanical checks pass and both agents agree." in text
-    )
+    assert "Applied when the mechanical checks pass and the drafting and review agents agree" in text
+    assert "The AI auditor, accept or reject, after the checks and the review" in text
+    assert "any change that adds or cites a preprint" in text
+    assert "Consistency check." in text and "one in five of the other audited changes" in text
+    assert "It writes no card text." in text and "a quote that code checks against the cached record" in text
+    assert "it does not share a blind spot" not in text  # the page says the opposite, plainly
+    assert "may share the blind spots of the agents whose work it audits" in text
 
 
 def test_methods_page_ladder_and_case_definition_rows_match_the_spec(proj):
@@ -1119,7 +1120,7 @@ def test_every_page_has_navigation_footer_statement_and_build_date(proj):
         labels = [norm(a.text()) for a in nav.find_all("a")]
         assert labels == ["Front page", "What changed", "Causal map", "What is missing", "Methods", "Glossary"], rel
         footer = norm(doc.find("footer").text())
-        assert "No medical or research expert has reviewed this content yet." in footer, rel
+        assert "No medical or research expert has reviewed it." in footer, rel
         assert "Built 2026-11-01" in footer, rel
         assert doc.find("html").get("lang") == "en"
         assert doc.find("main") is not None and doc.find("h1") is not None
@@ -1608,3 +1609,45 @@ def test_the_english_tree_is_unchanged_apart_from_the_selector_hreflang_tags_and
             assert without_additions(now) == recorded.read_text(encoding="utf-8"), f"{name}/{rel.as_posix()}"
             checked += 1
     assert checked == 9  # seven pages of the plain build; front page and draft card of the draft build
+
+
+# --- who decides: the footer and the pages say AI decides and no expert has reviewed -----
+
+FORBIDDEN_PHRASES = (
+    "checked by AI tools and by the founder",
+    "by the founder and by AI",
+    "the founder approves",
+    "the founder decides",
+    "the founder checks",
+    "approved by the founder",
+    "decided by the founder",
+    "Solve ME",
+    "grunnleggeren godkjenner",
+    "grunnleggeren avgjør",
+    "grunnleggeren kontrollerer",
+    "av grunnleggeren",
+)
+
+
+def test_the_footer_says_ai_decides_every_level_and_no_expert_has_reviewed_it_in_both_languages(proj):
+    out = built(proj, make_card("fictional-hypothesis", "Fictional hypothesis", 2))
+    en = norm(page(out, "index.html").find("footer").text())
+    assert "The content, including every evidence level, is drafted, checked and decided by AI tools." in en
+    assert "No medical or research expert has reviewed it." in en
+    assert "checked by AI tools and by the founder" not in en
+    nb = norm(page(out, "nb/index.html").find("footer").text())
+    assert "Innholdet, også hvert evidensnivå, utarbeides, kontrolleres og avgjøres av KI-verktøy." in nb
+    assert "Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått det." in nb
+
+
+def test_no_built_page_says_the_founder_checks_approves_or_decides_content_and_none_has_a_contact_line(proj):
+    write_card(proj.cards, make_card("fictional-hypothesis", "Fictional hypothesis", 2))
+    write_yaml(proj.cards / "changelog.yaml", changelog_entries())
+    assert proj.build().errors == []
+    pages = sorted(proj.out.rglob("*.html"))
+    assert any(p.name == "methods.html" and p.parent.name == "nb" for p in pages)
+    for path in pages:
+        text = norm(page(proj.out, path.relative_to(proj.out).as_posix()).text())
+        for phrase in FORBIDDEN_PHRASES:
+            assert phrase not in text, f"{path.relative_to(proj.out)}: {phrase}"
+        assert "@" not in text.replace("@media", ""), path.name  # no contact address

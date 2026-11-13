@@ -2,7 +2,7 @@
 {% from "_macros.html" import gloss with context %}
 <h1>Metode</h1>
 
-<p class="note"><strong>Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått dette innholdet ennå.</strong> Det er kontrollert av KI-verktøy og av grunnleggeren. En ekstern medisinsk eller forskningsfaglig fagperson skal rekrutteres til å gjennomgå innholdet når nettstedet kan vises fram. Fram til da brukes vurderingsreglene nedenfor slik de står, og de er et utkast.</p>
+<p class="note"><strong>Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått dette innholdet.</strong> Innholdet, også hvert evidensnivå, utarbeides, kontrolleres og avgjøres av KI-verktøy. En ekstern medisinsk eller forskningsfaglig fagperson skal rekrutteres til å gjennomgå innholdet når nettstedet kan vises fram. Fram til da brukes vurderingsreglene nedenfor slik de står, og de er et utkast. Grunnleggeren fastsetter reglene og retningen og kan overstyre en avgjørelse som en loggført rettelse.</p>
 
 <h2>Hva dette nettstedet er</h2>
 <p>ME Atlas gir en oversikt over seriøse {{ gloss("hypotheses") }} om hva som forårsaker ME/CFS, og viser hvor mye evidens som står bak hver av dem. Nettstedet beskriver status for evidensen. Det gir ikke behandlingsråd, og det sier ikke at en idé er riktig eller feil. Langvarig covid er markert på en hypotese der evidensen overlapper. Det er ikke en egen del av nettstedet.</p>
@@ -81,43 +81,46 @@
 <h2 id="contested">Omstridt evidens</h2>
 <p>Et nivå er omstridt når minst én studie av sammenlignbar eller høyere kvalitet motsier funnet som støtter det. Sammenlignbar kvalitet betyr alle tre: samme eller strengere diagnosekriterier (CCC, ICC og IOM 2015 rangeres over Fukuda og Holmes 1988, som rangeres likt og over Oxford), en kontrollgruppe, og minst halvparten av utvalgsstørrelsen i studien den motsier. Utvalgsstørrelse betyr her antall pasienter i den målingen som gjelder funnet, ikke hele studien når bare en del av den ble målt. Et trinn som bygger på mer enn én studie, er omstridt når en studie av sammenlignbar kvalitet motsier en av studiene trinnet trenger.</p>
 <ul>
-  <li><strong>Hvem som avgjør:</strong> grunnleggeren, med studien som motsier lenket på kortet og begrunnelsen skrevet i vanlige setninger, delt i korte avsnitt med egne kilder når den trenger mer enn to. KI kan foreslå en konflikt; den setter aldri en.</li>
+  <li><strong>Hvem som avgjør:</strong> KI-revisoren (se «Hvordan innhold kommer på nettstedet»), med studien som motsier lenket på kortet og begrunnelsen skrevet i vanlige setninger, delt i korte avsnitt med egne kilder når den trenger mer enn to. Utkastagenten kan foreslå en konflikt; den settes først når revisoren godtar den.</li>
   <li><strong>Hvordan det vises:</strong> stolpen er fylt opp til det høyeste trinnet som ikke er omstridt; trinnet eller trinnene som er omstridt, vises som et skravert felt. Kortet viser begge sider.</li>
   <li><strong>Hvordan det avsluttes:</strong> merket for omstridt fjernes når konflikten er løst (for eksempel når en større studie avgjør den). Fjerningen føres på <a href="changes.html">Hva som er endret</a>.</li>
 </ul>
 
 <h2 id="editorial-flow">Hvordan innhold kommer på nettstedet</h2>
-<p class="note"><strong>Dette er den planlagte flyten; det meste av den er ikke i drift ennå.</strong> Så langt hentes artikler med skript som kjøres for hånd, kortene skrives med hjelp fra KI i økter under tilsyn og kontrolleres av en egen KI-gjennomgåer og av kode som sammenligner titler, årstall og sitater av diagnosekriteriene med oppføringene i PubMed og Europe PMC, og hvert nivå er satt av grunnleggeren. Ingenting publiseres automatisk.</p>
-<h3>Planlagt flyt</h3>
-<p>Flyten er planlagt å gå mest med KI, med mekaniske kontroller i kode og et menneske for endringer med stor betydning og for uenigheter.</p>
+<p class="note"><strong>Ingen person avgjør innholdet på et kort.</strong> KI-agenter skriver utkastet, en annen agent gjennomgår det, kode kontrollerer hver kildehenvisning, og en uavhengig KI-revisor avgjør hvert nivå, hvert merke, hvert merke for omstridt, hver plassering og lenke og hvert signal fra en preprint. Den ukentlige flyten og revisoren er bygget og testet. Nivåene på kortene som vises her, kommer fra økter med utkast under tilsyn og er ennå ikke avgjort av revisoren.</p>
+<h3>Flyten</h3>
+<p>Flyten går på KI, med mekaniske kontroller i kode. Grunnleggeren fastsetter retningen og vurderingsreglene.</p>
 <ol>
-  <li><strong>Ukentlig henting.</strong> Nye artikler skal hentes fra PubMed og Europe PMC, og de rå svarene lagres.</li>
-  <li><strong>Utkastagent.</strong> En KI-agent skal sortere artikler etter hypotese, hente ut studiedata (utvalgsstørrelse, diagnosekriterier) og skrive et utkast til oppdatering av kortet. Hvert KI-resultat skal beholde id-en til kilden det kom fra. Resultatet er bare et utkast.</li>
-  <li><strong>Mekaniske kontroller (kode, ikke KI).</strong> Hver id som siteres, må finnes i en hentet oppføring; tittel, årstall og sitatet av diagnosekriteriene sammenlignes med den oppføringen; utvalgsstørrelser kontrolleres og gir en advarsel; hver tekstblokk må vise til en kilde. Et utkast som ikke består, sendes tilbake til utkastagenten.</li>
-  <li><strong>Gjennomgangsagent.</strong> En annen, uavhengig KI-agent skal kontrollere utkastet mot kildene, regelen for hva som tas med, og stigen. Den skal se utkastet og kildeoppføringene, ikke utkastagentens resonnement.</li>
-  <li><strong>Andre runde.</strong> Hvis gjennomgangsagenten avviser utkastet, får utkastagenten ett nytt forsøk, som kontrolleres på nytt. Hvis de fortsatt er uenige etter to runder, går endringen til grunnleggeren.</li>
-  <li><strong>Avgjørelse etter beslutningsnivå</strong> (nedenfor).</li>
-  <li><strong>Publisering.</strong> Godkjente endringer skal publiseres i en ukentlig oppdatering av nettstedet. Kortet viser når det sist ble kontrollert, og om det var de to KI-agentene eller grunnleggeren som kontrollerte.</li>
-  <li><strong>Logg.</strong> Hver publisert endring får en oppføring på <a href="changes.html">Hva som er endret</a>, med dato, kort, begrunnelse, kilde og beslutningsnivået som avgjorde den. Loggen er offentlig og blir bevart for alltid.</li>
-  <li><strong>Rettelser.</strong> En feil som blir funnet senere, også en som en leser melder fra om, skal rettes på samme måte og føres i loggen som en rettelse.</li>
+  <li><strong>Ukentlig henting.</strong> Nye artikler hentes fra PubMed og Europe PMC, og de rå svarene lagres.</li>
+  <li><strong>Utkastagent.</strong> En KI-agent sorterer artikler etter hypotese, henter ut studiedata (utvalgsstørrelse, diagnosekriterier) og skriver et utkast til oppdatering av kortet. Hvert KI-resultat beholder id-en til kilden det kom fra. Resultatet er bare et utkast.</li>
+  <li><strong>Mekaniske kontroller (kode, ikke KI).</strong> Hver id som siteres, må finnes i en hentet oppføring; tittel, årstall og sitatet av diagnosekriteriene sammenlignes med den oppføringen; utvalgsstørrelser kontrolleres og gir en advarsel; hver tekstblokk må vise til en kilde. Et utkast som ikke består, sendes tilbake til utkastagenten. Ingen KI-avgjørelse overstyrer en kontroll som ikke er bestått.</li>
+  <li><strong>Gjennomgangsagent.</strong> En annen KI-agent kontrollerer utkastet mot kildene, regelen for hva som tas med, og stigen. Den ser utkastet og kildeoppføringene, ikke utkastagentens resonnement.</li>
+  <li><strong>Andre runde.</strong> Hvis gjennomgangsagenten avviser utkastet, får utkastagenten ett nytt forsøk, som kontrolleres på nytt. Hvis det avvises igjen, brukes ikke endringen, og den føres opp som en uenighet.</li>
+  <li><strong>Revisjon.</strong> For en endring på beslutningsnivå 2 (nedenfor) godtar en uavhengig KI-revisor endringen, avviser den, eller godtar bare et lavere nivå. Revisoren får bare se den foreslåtte endringen, kortet slik det står, de mellomlagrede kildeoppføringene endringen viser til, og vurderingsreglene på denne siden. Den får ikke se utkastagentens resonnement, gjennomgangsagentens funn eller tidligere revisjoner. Den skriver ingen korttekst. Hver del av avgjørelsen oppgir regelen den bygger på, og hver faktaopplysning i begrunnelsen har en kilde-id og et sitat som kode kontrollerer mot den mellomlagrede oppføringen. Når revisoren ikke godtar en endring, blir kortet stående som det er.</li>
+  <li><strong>Konsistenskontroll.</strong> For hver endring av nivå, og én av fem av de andre reviderte endringene, avgjør en ny revisor med blanke ark den samme endringen. Hvis den kommer til en annen avgjørelse, blir kortet stående som det er, forskjellen behandles som en uenighet, og den telles. Tallet publiseres sammen med hver ukentlig oppdatering.</li>
+  <li><strong>Publisering.</strong> En endring brukes bare når kontrollene er bestått, gjennomgangsagenten har godtatt den og, på beslutningsnivå 2, revisoren har godtatt den. Kortet viser når det sist ble revidert, og av hvem.</li>
+  <li><strong>Logg.</strong> Hver publisert endring får en oppføring på <a href="changes.html">Hva som er endret</a>, med dato, kort, begrunnelse, kilde, beslutningsnivå og hvem som avgjorde den. Loggen er offentlig og blir bevart for alltid.</li>
+  <li><strong>Rettelser.</strong> En feil som blir funnet senere, rettes på samme måte og føres i loggen som en rettelse. Hvis grunnleggeren overstyrer en avgjørelse fra revisoren, er det også en loggført rettelse.</li>
 </ol>
 <table class="plain" id="tiers">
   <caption>Hvem som avgjør hva</caption>
   <thead><tr><th scope="col">Beslutningsnivå</th><th scope="col">Endring</th><th scope="col">Hvem som avgjør</th></tr></thead>
   <tbody>
-    <tr><td data-label="Beslutningsnivå">1</td><td data-label="Endring">Legge til en studie på et kort, faktatekst, oppføring i endringsloggen</td><td data-label="Hvem som avgjør">Planlagt: publiseres automatisk når de mekaniske kontrollene består og begge agentene er enige. Ikke slått på ennå; grunnleggeren godkjenner hver endring.</td></tr>
-    <tr><td data-label="Beslutningsnivå">2</td><td data-label="Endring">Sette eller endre et nivå, et merke eller et merke for omstridt; legge til eller fjerne en hypotese</td><td data-label="Hvem som avgjør">Grunnleggeren, ja eller nei, i en ukentlig liste</td></tr>
-    <tr><td data-label="Beslutningsnivå">3</td><td data-label="Endring">Alt det fortsatt er uenighet om etter to runder med agentene</td><td data-label="Hvem som avgjør">Grunnleggeren. Hvis det ikke blir løst, står det lavere nivået, og uenigheten noteres på kortet</td></tr>
+    <tr><td data-label="Beslutningsnivå">1</td><td data-label="Endring">Legge til en studie på et kort, faktatekst, oppføring i endringsloggen</td><td data-label="Hvem som avgjør">Brukes når de mekaniske kontrollene består og utkast- og gjennomgangsagentene er enige</td></tr>
+    <tr><td data-label="Beslutningsnivå">2</td><td data-label="Endring">Sette eller endre et nivå, et merke eller et merke for omstridt; plassering og lenker på et kort; legge til en hypotese; alle endringer som legger til eller viser til en preprint</td><td data-label="Hvem som avgjør">KI-revisoren, ja eller nei, etter kontrollene og gjennomgangen</td></tr>
+    <tr><td data-label="Beslutningsnivå">3</td><td data-label="Endring">Alt det fortsatt er uenighet om etter to runder med agentene</td><td data-label="Hvem som avgjør">KI-revisoren avgjør om uenigheten kan løses. Hvis den ikke kan det, er kortet uendret, det lavere nivået står, og uenigheten noteres på kortet</td></tr>
   </tbody>
 </table>
-<p>Fram til grunnleggeren avgjør at agentenes feilrate er akseptabel, godkjenner grunnleggeren hver endring, også på beslutningsnivå 1. Den perioden har ikke startet, fordi flyten ikke er i drift ennå.</p>
+<p>For de fire første ukentlige oppdateringene leser grunnleggeren listen over revisorens avgjørelser i etterkant. Grunnleggeren slår sammen hver oppdatering som et rutinemessig steg, uten å gjennomgå innholdet.</p>
 
 <h2>Rollen til KI, og hvem som avgjør</h2>
-<p>KI skriver utkast og kontrollerer. Et menneske avgjør hvert nivå, hvert merke, hvert merke for omstridt og hver ny hypotese. Innholdet er kontrollert av KI og av grunnleggeren og er ikke gjennomgått av en medisinsk eller forskningsfaglig ekspert.</p>
+<p>KI skriver utkast, kontrollerer og reviderer. Hvert evidensnivå, hvert merke, hvert merke for omstridt og hver lenke på dette nettstedet avgjøres av KI-verktøy, og ingen medisinsk eller forskningsfaglig ekspert har gjennomgått innholdet. Grunnleggeren fastsetter vurderingsreglene, omfanget og retningen, og kan overstyre en avgjørelse fra revisoren som en loggført rettelse.</p>
+<p>Revisoren er en KI-agent av samme slag som agentene den reviderer, og den kan ha de samme blinde flekkene. Det som gjør den uavhengig, er hva den får se, ikke modellen den kjører på. Den andre revisjonen av et utvalg av avgjørelser måler hvor ofte to kjøringer er uenige.</p>
 
 <h2>Kjente begrensninger</h2>
 <ul>
   <li>Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått innholdet eller stigen ennå.</li>
+  <li>Revisoren er en KI-agent og kan ha de samme blinde flekkene som agentene den reviderer.</li>
   <li>De seks trinnene og navnene deres er ikke testet på lesere.</li>
-  <li>Kortene er bare så fullstendige som søkene som er gjort så langt. Et ukentlig søk er planlagt, men er ikke i drift ennå.</li>
+  <li>Kortene er bare så fullstendige som søkene som er gjort så langt. Det ukentlige søket startes for hånd, ikke etter en tidsplan.</li>
 </ul>

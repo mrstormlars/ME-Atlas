@@ -81,7 +81,7 @@
 - en: contested
   term: omstridt
   aliases: [Omstridt]
-  explanation: Settes når en studie av sammenlignbar eller høyere kvalitet motsier funnet bak et trinn. Grunnleggeren avgjør. Det omstridte trinnet vises skravert på stolpen.
+  explanation: Settes når en studie av sammenlignbar eller høyere kvalitet motsier funnet bak et trinn. En KI-revisor avgjør; ingen ekspert har gjennomgått det. Det omstridte trinnet vises skravert på stolpen.
 
 - en: control group
   term: kontrollgruppe
