@@ -49,7 +49,7 @@ The client retries HTTP 429, 5xx and network errors up to 4 times with exponenti
 
 The query lives in `config/pubmed_query.txt`, so it can be reviewed and changed in a pull request. Lines starting with `#` are comments.
 
-- **Block 1:** the MeSH heading "Fatigue Syndrome, Chronic", or the phrases "myalgic encephalomyelitis", "chronic fatigue syndrome", "ME/CFS" or "systemic exertion intolerance disease" in title or abstract.
+- **Block 1:** the MeSH heading "Fatigue Syndrome, Chronic", or the phrases "myalgic encephalomyelitis", "chronic fatigue syndrome", "ME/CFS", "CFS/ME" (added 2026-11-13, see the recall check below) or "systemic exertion intolerance disease" in title or abstract.
 - **Block 2:** long COVID terms (MeSH "Post-Acute COVID-19 Syndrome", "long COVID", "post-COVID", "post-acute sequelae of SARS-CoV-2", "PASC") **AND** an ME/CFS term anywhere in the record. Long COVID alone is much larger than ME/CFS and outside v1 scope; this clause only catches the overlap studies that the long COVID label on a card needs. Its ME/CFS side uses "All Fields", so it also finds records where ME/CFS appears only in author keywords or MeSH.
 
 **The MeSH headings were checked on 2026-10-31** against live PubMed: "Fatigue Syndrome, Chronic" alone gave 6,810 hits and "Post-Acute COVID-19 Syndrome" alone 5,524, with no warnings. Re-check them whenever the query changes. PubMed reports phrases it could not find (`phrasesnotfound`); these are printed as warnings and stored in the manifest.
@@ -58,7 +58,7 @@ The query lives in `config/pubmed_query.txt`, so it can be reviewed and changed 
 
 Run on 2026-11-13 with `query-diff`; nothing here changes the query. Result files: `data/cache/query-diff/20261113T100024Z.json` (cited ids) and `data/cache/query-diff/20261113T100033Z.json` (terms). Both give the same hit count for the current query.
 
-**Hit count of the current query on 2026-11-13: 9,403** (the unchanged `config/pubmed_query.txt`, no date window).
+**Hit count of the current query on 2026-11-13: 9,403** (`config/pubmed_query.txt` as it was before the change recorded below, no date window).
 
 #### Cited studies the query does not return
 
@@ -158,14 +158,21 @@ Judged from the cached title and abstract only (`data/cache/pubmed/<pmid>.xml`),
 | 30116169 | 2018 | Cytotoxic Profiling of Endogenous Metabolites Relevant to Chronic Fatigue Immune Dysfunction Syndrome (CFIDS) on p53 Variant Human Colon Carcinoma Cell Lines. | unclear | names CFIDS in the title, but the experiments are on colon carcinoma cell lines |
 | 9630736 | 1998 | The detoxification enzyme systems. | no | detoxification enzymes review; CFIDS in a list of diseases |
 
-#### Outcome (a proposal awaiting the founder's ruling, not a decision)
+#### Outcome (the proposal put to the founder)
 
 - **"CFS/ME": proposed.** 7 of the 9 added records are about ME/CFS by their title. They are mostly short records (correction notices and items with no abstract) whose only ME/CFS wording is the form "CFS/ME", which the query's phrases ("ME/CFS", "chronic fatigue syndrome") do not match. The gain is small (9 records in all).
 - **"post-viral fatigue syndrome" and "postviral fatigue syndrome": not proposed on the plan's criterion** (most of the sample about ME/CFS): no sampled record names ME/CFS. The sampled records are either about other subjects that mention the term in passing, or about "post-viral fatigue syndrome" as a label itself, mostly from 1985 to 1993 (8 and 10 records marked *unclear*). Whether that older label should count as ME/CFS literature is a question for the founder; this check cannot settle it from titles and abstracts. "post-viral fatigue syndrome" (PubMed matches it with and without the hyphen) also adds recent long COVID papers that use the label, and one record of its 21 (the 21st in PubMed's order) was not sampled.
 - **"post-infectious fatigue syndrome" and "chronic fatigue immune dysfunction syndrome": not proposed.** The samples are about other conditions (long COVID, Q fever, a cell-line study, an enzyme review) or one unclear record; all 4 and 2 added records were sampled.
 - **Nothing is missed among the cited studies:** the query returns all 279.
 
-If the founder accepts a term, the query change goes in its own pull request with the hit count before (9,403 on this date) and after, and `docs/fetch.md` is updated there.
+#### Ruling and query change, 2026-11-13
+
+The founder accepted "CFS/ME" on 2026-11-13. `"CFS/ME"[Title/Abstract]` was added to block 1 of `config/pubmed_query.txt`; block 2 is unchanged. No other term was accepted; the question of the older "post-viral fatigue syndrome" label is not ruled on.
+
+- **Hit count before:** 9,403. **After:** 9,412 (both on 2026-11-13, no date window), a gain of 9, equal to the added-record count measured above.
+- After the change, `"CFS/ME"[Title/Abstract] NOT (query)` returns 0 records (result file `data/cache/query-diff/20261113T100810Z.json`).
+- The 9 records are not fetched into the pipeline by this change; a later fetch run picks them up by its own date window or a backfill.
+- The MeSH headings of the query are unchanged and were not re-counted on this date.
 
 #### Which records are sampled
 

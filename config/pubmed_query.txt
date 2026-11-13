@@ -10,6 +10,7 @@
   OR "myalgic encephalomyelitis"[Title/Abstract]
   OR "chronic fatigue syndrome"[Title/Abstract]
   OR "ME/CFS"[Title/Abstract]
+  OR "CFS/ME"[Title/Abstract]
   OR "systemic exertion intolerance disease"[Title/Abstract]
 )
 OR
