@@ -2124,3 +2124,118 @@ def test_without_an_exact_date_run_the_default_fails_and_names_run_dir(tmp_path:
     assert pipeline.main(["report", "--pipeline-dir", str(tmp_path)]) == 1
     err = capsys.readouterr().err
     assert "--run-dir" in err and "YYYY-MM-DD" in err
+
+
+# --- the report header and the commit trailer ----------------------------------
+
+
+def test_the_preprint_line_says_a_change_that_adds_or_cites_a_preprint_is_tier_2(env: Env):
+    env.preprints = [ppr(1)]
+    env.prepare()
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    line = next(x for x in report.splitlines() if x.startswith("Preprints (Europe PMC)"))
+    assert "never drafted automatically" not in line
+    assert "can only be an early signal" in line and "tier 2" in line and "founder decides" in line
+
+
+def test_the_commit_message_ends_with_a_blank_line_and_the_co_author_trailer(accepted: Env):
+    runner = FakeRunner()
+    assert accepted.cli("pr", "--no-pr", runner=runner) == 0
+    commit = next(c for c in runner.calls if c[:2] == ["git", "commit"])
+    message = commit[commit.index("-m") + 1]
+    assert message.endswith("\n\nCo-Authored-By: Claude <noreply@anthropic.com>")
+    assert message.startswith("Weekly pipeline 2026-11-01: 1 draft card update(s)")
+
+
+# --- classify an explicit list of PMIDs ----------------------------------------
+
+
+def cache_old_record(env: Env, pmid: str = "90000110") -> None:
+    shutil.copy(FIXTURES / "pubmed" / f"{pmid}.xml", env.cache / "pubmed" / f"{pmid}.xml")
+
+
+def write_ledger(env: Env, **processed: str) -> None:
+    env.pipeline.mkdir(exist_ok=True)
+    (env.pipeline / "processed.json").write_text(json.dumps({"processed": processed}), encoding="utf-8")
+
+
+def ids_papers(env: Env) -> list[str]:
+    return [p["pmid"] for p in load(env.run / "papers.json")]
+
+
+def test_ids_mode_selects_exactly_the_listed_cached_records_whatever_their_entry_date(env: Env):
+    cache_old_record(env)  # 90000100 is cached by Env; both entered years before --date
+    assert env.cli("prepare", "--ids", "90000100", "pmid:90000110") == 0
+    assert ids_papers(env) == ["90000100", "90000110"]
+    assert env.fetch_calls == [] and env.preprint_calls == []  # all cached: nothing fetched; no preprint search
+    summary = load(env.run / "prepare.json")
+    assert (summary["mode"], summary["ids"], summary["selected"]) == ("ids", ["90000100", "90000110"], 2)
+    assert summary["since"] is None and summary["preprints"]["counts"]["found"] == 0
+    assert any("2 paper(s) selected" in line for line in env.out)
+
+
+def test_ids_mode_fetches_only_the_listed_ids_that_are_not_cached(env: Env):
+    assert env.cli("prepare", "--ids", "90000100", "90000101") == 0
+    assert env.fetch_calls == [["fetch", "--ids", "90000101", "--cache-dir", str(env.cache)]]
+    assert ids_papers(env) == ["90000100", "90000101"]  # not the window (90000102 is cached too, but not listed)
+
+
+def test_the_window_path_still_fetches_a_window(env: Env):
+    env.prepare()
+    assert env.fetch_calls == [["fetch", "--weekly", "--cache-dir", str(env.cache)]]
+    assert load(env.run / "prepare.json")["mode"] == "weekly"
+
+
+def test_ids_mode_skips_what_the_ledger_holds_unless_reprocess(env: Env):
+    cache_old_record(env)
+    write_ledger(env, **{"90000100": "2026-10-01"})
+    assert env.cli("prepare", "--ids", "90000100", "90000110") == 0
+    assert ids_papers(env) == ["90000110"]
+    assert load(env.run / "prepare.json")["skipped_processed"] == 1
+    assert env.cli("prepare", "--ids", "90000100", "90000110", "--force", "--reprocess") == 0
+    assert ids_papers(env) == ["90000100", "90000110"]
+
+
+def test_ids_mode_excludes_a_retracted_record_and_lists_an_unreadable_one(env: Env):
+    assert env.cli("prepare", "--ids", "90000101", "90000103", "99999999") == 0
+    summary = load(env.run / "prepare.json")
+    assert ids_papers(env) == ["90000101"]
+    assert summary["excluded_retracted"] == ["90000103"] and summary["unreadable_records"] == ["99999999"]
+
+
+def test_ids_file_takes_pmid_prefixes_comments_and_blank_lines(env: Env, tmp_path: Path):
+    cache_old_record(env)
+    ids_file = tmp_path / "ids.txt"
+    ids_file.write_text(
+        "# the CFS/ME records\n\npmid:90000110\n  90000100  # trailing note\n90000110\n", encoding="utf-8"
+    )
+    assert env.cli("prepare", "--ids-file", str(ids_file)) == 0
+    assert ids_papers(env) == ["90000110", "90000100"]  # in the order given, once each
+    assert load(env.run / "prepare.json")["ids"] == ["90000110", "90000100"]
+
+
+def test_ids_file_with_a_line_that_is_not_a_pmid_is_an_error_naming_the_line(env: Env, tmp_path: Path, capsys):
+    ids_file = tmp_path / "ids.txt"
+    ids_file.write_text("90000100\nnot-a-pmid\n", encoding="utf-8")
+    assert env.cli("prepare", "--ids-file", str(ids_file)) == 1
+    err = capsys.readouterr().err
+    assert "line 2" in err and "not-a-pmid" in err
+    assert not (env.run / "papers.json").exists()
+
+
+def test_ids_with_since_is_a_usage_error(env: Env):
+    with pytest.raises(SystemExit) as stop:
+        env.cli("prepare", "--ids", "90000100", "--since", "2026-10-01")
+    assert stop.value.code == 2
+    assert env.fetch_calls == []
+
+
+def test_the_header_says_the_papers_were_given_by_id_and_no_preprint_search_was_made(env: Env):
+    assert env.cli("prepare", "--ids", "90000100", "90000101") == 0
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    assert "2 paper(s) selected from the papers given by id (not a fetch window)" in report
+    assert "fetch window" not in report.replace("not a fetch window", "")
+    line = next(x for x in report.splitlines() if x.startswith("Preprints"))
+    assert "no preprint search was made" in line
