@@ -13,7 +13,7 @@ For every cited study:
 2. **Check the extracted facts against the fetched abstract or record:** title, year, sample size, case definition, direction of the finding. Mark each `confirmed`, `contradicted` or `not checkable from abstract`.
 3. **Check the framing:** is a single small or uncontrolled study presented as more than an early signal? Is an Oxford-only cohort flagged? Is a contradicting study missing that the card itself cites elsewhere?
 
-Then check the card as a whole against CLAUDE.md's credibility rules: every sentence sourced, no treatment advice or recommendation language, status level consistent with the rubric given the cited evidence (say which level the evidence supports and why — the decision stays with the editors).
+Then check the card as a whole against CLAUDE.md's credibility rules: every sentence sourced, no treatment advice or recommendation language, status level consistent with the rubric given the cited evidence (say which level the evidence supports and why — you only check; the independent auditor decides every level, badge and contested mark, functional spec section 6).
 
 Report a table — `claim | source | verdict | note` — followed by blocking findings, then advisory ones. State which identifiers you actually fetched and which you could not.
 

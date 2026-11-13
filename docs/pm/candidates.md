@@ -1,7 +1,7 @@
 # Candidates
 
 Tracked list of candidate hypotheses found by the survey of the cached literature (`docs/survey.md`), and of
-records that belong on an existing card. A candidate is not a card: the founder decides which to draft, through
+records that belong on an existing card. A candidate is not a card: a new hypothesis becomes a card only through the pipeline, where the auditor decides it against the inclusion rule (spec section 6); earlier founder rulings below are kept as history. It goes through
 the manual card process. Case definitions below were read from abstracts only and are unverified until a card is
 drafted. Status is one of `candidate`, `to draft`, `drafted as <slug>`, `declined: <reason>`; set it by hand.
 The weekly report's "possible new hypotheses" items are added here by hand when the founder reads the report.
@@ -505,7 +505,7 @@ Refuted hypotheses are not candidates; they are listed with the reason in `docs/
   - pmid:8158191: unverified, n=30. Single-fibre EMG in 30 CFS patients and 30 controls showed abnormal jitter in 5 patients; the authors judged the differences too minor to suggest a neuromuscular cause.
 - Reviews: pmid:1794086
 - Meets inclusion rule on abstracts: no
-- Why: No abstract names a case definition. Small 1990s studies, unreplicated here. This is a rival to peripheral-muscle explanations; the founder decides whether it is a mechanism hypothesis or belongs in the energy-production card's context.
+- Why: No abstract names a case definition. Small 1990s studies, unreplicated here. This is a rival to peripheral-muscle explanations; whether it is a mechanism hypothesis or belongs in the energy-production card's context.
 - Status: candidate
 - Date: 2026-11-08
 

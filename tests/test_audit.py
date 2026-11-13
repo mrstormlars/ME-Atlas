@@ -1201,3 +1201,32 @@ def test_the_gate_re_checks_e4_even_when_a_checks_file_says_passed(ready: Env):
     ready.put("review", "review_accept.json", n="L")
     [o] = pipeline.collect_outcomes(cfg)
     assert o.redraft_state == "failed_checks" and "the auditor accepted level 2" in o.redraft_note and not o.applied
+
+
+def test_a_quote_from_the_full_text_of_a_non_carrier_preprint_is_refused():
+    class Pre:
+        title = "A fictional preprint."
+        abstract = "<p>The abstract sentence.</p>"
+
+    class Reader:
+        def preprint(self, study_id):
+            return Pre()
+
+        def preprint_fulltext(self, pre):
+            return "HIDDEN-PREPRINT-FULLTEXT-3b9e sentence."
+
+    shown = pipeline._record_quote_text(Reader(), "doi:10.1/x", abstract_only=True)
+    assert shown is not None and "The abstract sentence." in shown and "HIDDEN-PREPRINT" not in shown
+    full = pipeline._record_quote_text(Reader(), "doi:10.1/x")  # a carrier: the full text was given
+    assert full is not None and "HIDDEN-PREPRINT-FULLTEXT-3b9e" in full
+
+
+def test_apply_round_l_refuses_a_second_run_and_leaves_the_first_files_alone(ready: Env, capsys):
+    lower_pair(ready)
+    assert apply_l(ready) == 0
+    checks = ready.run / "checks" / f"{SLUG}-{NEW_PMID}-rL.json"
+    applied = ready.run / "applied" / f"{SLUG}-{NEW_PMID}-rL" / f"{SLUG}.yaml"
+    before = (checks.read_bytes(), applied.read_bytes())
+    assert apply_l(ready, lambda ops: ops["operations"][0].update(value=1)) == 1
+    assert "round L already exists" in capsys.readouterr().err
+    assert (checks.read_bytes(), applied.read_bytes()) == before

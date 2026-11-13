@@ -1068,7 +1068,7 @@ def apply_ops_file(
     against the card. A whole-card redraft names no paper (``audit_file`` is then the first audit's record).
     """
     redraft = n == REDRAFT
-    pmid = _pmid_from_name(ops_path)  # the paper key: a PMID, or a PPR id
+    pmid = _pmid_from_name(ops_path)
     ops: OpsFile | None = None
     ops_errors: list[str] = []
     raw: Any = None
@@ -1100,6 +1100,9 @@ def apply_ops_file(
             pmid = candidate if candidate.isdigit() else None
     if pmid is None and not whole_card:
         raise PipelineError("cannot tell which paper the ops file is for; " + "; ".join(ops_errors))
+    if redraft and (cfg.checks_path(slug, pmid, REDRAFT).exists() or cfg.applied_dir(slug, pmid, REDRAFT).exists()):
+        # At most one redraft: an existing round L is a hard stop, never overwritten.
+        raise PipelineError("round L already exists for this pair; there is no further round")
     if paper_id is None and pmid is not None:
         paper_id = ops.paper if ops is not None and (ops.paper or "").startswith("doi:") else f"pmid:{pmid}"
 
@@ -1524,7 +1527,7 @@ def _record_quote_text(reader: citations.CacheReader, study_id: str, *, abstract
         if pre is None:
             return None
         pieces += [pre.title, _TAG_RE.sub(" ", pre.abstract) if pre.abstract else ""]
-        full = reader.preprint_fulltext(pre)
+        full = None if abstract_only else reader.preprint_fulltext(pre)
     if isinstance(full, str):
         pieces.append(full)
     return "\n".join(pieces)
