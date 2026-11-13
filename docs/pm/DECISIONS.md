@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — Opening the repository: preparation rulings
+
+Phase 1 of `docs/plan-open-repository.md`, prepared while the repository is private.
+
+- **Copyright holder:** "ME Atlas contributors" (MIT for code, CC BY 4.0 for content; `LICENSE`, `LICENSE-CONTENT`).
+- **Discussions will be on** when the repository is opened. Issues are for errors on cards, suggested papers and hypotheses, and bugs; questions and general talk go to Discussions.
+- **Preview address** stays in `docs/site.md` (the preview may be public). The Azure account names are taken out of the text of `docs/site.md`; they remain in the history and in the 2026-11-03 entry, which is append-only; this is accepted.
+- **The content-path check** (`pipeline content-paths`) and the marker trailer `ME-Atlas-Pipeline: weekly-run YYYY-MM-DD` on every commit `pipeline pr` makes are a review aid, not a security boundary. The boundary is the founder: an outside pull request comes from a fork; a genuine pipeline pull request has head branch `pipeline/<date>` in this repository, is opened by the repository owner and has the run report as its body.
+
 ## 2026-11-13 — AI auditor: three rulings before the first publication
 
 After the auditor's dry run on the neuroinflammation draft (it accepted the level, badges, layer and links, and rejected the card over two statements it could not find in the text it was given).

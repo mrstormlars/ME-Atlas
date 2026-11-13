@@ -22,14 +22,14 @@ The site is built in every language that has a file in `content/i18n/`: English 
 
 ## Private preview on Azure
 
-A draft build is hosted for a few readers (founder ruling 2026-11-03) as an Azure Storage static website in the StormSolutions subscription: resource group `rg-me-atlas` (Norway East), storage account `meatlaslpr4z`, address <https://meatlaslpr4z.z1.web.core.windows.net/> (Norwegian: `/nb/`). Anyone with the link can read it; it is not listed anywhere, and every draft page carries the banner and `noindex`. It is not updated automatically. To update it after a change is merged to `main`:
+A draft build is hosted for a few readers (founder ruling 2026-11-03) as an Azure Storage static website (Norway East), storage account `meatlaslpr4z`, address <https://meatlaslpr4z.z1.web.core.windows.net/> (Norwegian: `/nb/`). Anyone with the link can read it; it is not listed anywhere, and every draft page carries the banner and `noindex`. It is not updated automatically. To update it after a change is merged to `main`:
 
 ```bash
 uv run python -m me_atlas.site build --drafts
 az storage blob upload-batch --account-name meatlaslpr4z --auth-mode key -s build -d '$web' --pattern '[!.]*' --overwrite
 ```
 
-The pattern leaves out the `.me-atlas-build` marker. Files removed from the build stay online until deleted from the `$web` container (`az storage blob delete-batch --account-name meatlaslpr4z --auth-mode key -s '$web'` empties it before an upload). Needs the Azure CLI signed in to the StormSolutions tenant.
+The pattern leaves out the `.me-atlas-build` marker. Files removed from the build stay online until deleted from the `$web` container (`az storage blob delete-batch --account-name meatlaslpr4z --auth-mode key -s '$web'` empties it before an upload). Needs the Azure CLI signed in to the account that owns the storage account.
 
 ## Pages
 
