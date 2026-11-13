@@ -889,7 +889,9 @@ def test_c9_a_group_naming_an_author_plus_a_cross_reference_is_supported(tmp_pat
     assert c9(check(tmp_path, root, make_study(group="Jones C, Leeds (same group as Ponting CP, 123)"))) == []
 
 
-@pytest.mark.parametrize("group", ["Smith A, Leeds", "Smith AB", "smith ab", "Leeds (Smith A.B.)"])
+@pytest.mark.parametrize(
+    "group", ["Smith A, Leeds", "Smith AB", "smith AB", "Leeds (Smith A.B.)", "Smith A B, Leeds", "Smith, A"]
+)
 def test_c9_the_first_initial_is_enough_and_case_does_not_matter(tmp_path, group):
     root = tmp_path / "cache"
     add_record(root, authors=SMITH_JONES)
@@ -910,6 +912,21 @@ def test_c9_a_last_name_alone_or_inside_a_longer_word_is_not_a_match(tmp_path):
     assert len(c9(check(tmp_path, root, make_study(group="Smithson AB, Leeds")))) == 1
     assert len(c9(check(tmp_path, root, make_study(group="Smith, Leeds")))) == 1
     assert len(c9(check(tmp_path, root, make_study(group="Smith Z, Leeds")))) == 1
+
+
+@pytest.mark.parametrize("group", ["Smith Anna, Leeds", "Smith Ab, Leeds", "Smith Alice B, Leeds"])
+def test_c9_lowercase_letters_after_the_first_initial_are_not_initials(tmp_path, group):
+    root = tmp_path / "cache"
+    add_record(root, authors=(("Smith", "AB"), ("Ponting", "C")))
+    assert len(c9(check(tmp_path, root, make_study(group=group)))) == 1
+    assert len(c9(check(tmp_path, root, make_study(group="Ponting Cox, Oxford")))) == 1
+
+
+def test_c9_a_collective_author_needs_its_full_name_not_a_prefix_or_the_initials_shape(tmp_path):
+    root = tmp_path / "cache"
+    add_record(root, authors=(), collective=("Long COVID Consortium",))
+    assert len(c9(check(tmp_path, root, make_study(group="Long Covid Cons, Leeds")))) == 1
+    assert c9(check(tmp_path, root, make_study(group="the long covid consortium, Leeds"))) == []
 
 
 def test_c9_a_collective_author_is_matched_by_its_full_name(tmp_path):

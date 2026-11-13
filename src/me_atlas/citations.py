@@ -351,30 +351,32 @@ def _check_preprint(study: Study, cache: CacheReader, issue) -> list[CitationIss
     return issues
 
 
-def _fold_name(text: str) -> str:
-    """NFKD, combining marks removed, case folded, whitespace collapsed (the C9 name matching)."""
+def _strip_marks(text: str) -> str:
+    """NFKD with the combining marks removed, whitespace collapsed; case is kept."""
     decomposed = unicodedata.normalize("NFKD", text)
-    return _collapse("".join(c for c in decomposed if not unicodedata.combining(c)).casefold())
+    return _collapse("".join(c for c in decomposed if not unicodedata.combining(c)))
 
 
 def author_in_group(author: str, group: str) -> bool:
     """Whether the group text names this record author (docs/citation-check.md, C9).
 
-    A personal name ``<last> <initials>`` is named as ``<last> <first letter of the initials>`` (more initials
-    after it are fine), as whole words. A name with no initials, and a collective name, are matched in full.
+    Both texts go through NFKD with combining marks removed. A record author ``<last> <initials>`` (initials are
+    capital letters) is named when the group has the last name (case folded), then whitespace (a comma may precede
+    it), then the first initial, then only further capital initials (dots or spaces between them are fine), as whole
+    words: ``Ponting C``, ``Ponting CP``, ``Ponting C.P.`` and ``Ponting C P`` name ``Ponting CP``; ``Ponting Cox``
+    does not. A collective author, and a name with no initials, is named only by its full name as whole words
+    (case folded).
     """
-    text = _fold_name(group)
-    name = _fold_name(author)
+    text = _strip_marks(group)
+    name = _strip_marks(author)
     if not name:
         return False
-    whole = re.compile(rf"(?<!\w){re.escape(name)}(?!\w)")
-    if whole.search(text):
-        return True
     last, _, initials = name.rpartition(" ")
-    if not last or not initials:
-        return False
+    if not last or not re.fullmatch(r"[^\W\d_]+", initials) or not initials.isupper():
+        # a collective author (or a name with no initials): its full name, whole words, case folded
+        return re.search(rf"(?<!\w)(?i:{re.escape(name)})(?!\w)", text) is not None
     first = re.escape(initials[0])
-    personal = re.compile(rf"(?<!\w){re.escape(last)},?\s+{first}(?:\.?\w){{0,3}}\.?(?!\w)")
+    personal = re.compile(rf"(?<!\w)(?i:{re.escape(last)}),?\s+(?i:{first})(?:[.\s]*[A-Z](?!\w))*\.?(?!\w)")
     return personal.search(text) is not None
 
 
