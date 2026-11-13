@@ -1,0 +1,113 @@
+card: tryptophan-kynurenine-metabolism
+decision: accept
+parts:
+  - decision_part: "Rung 2: a controlled study with a recognised case definition supports altered kynurenine-pathway metabolism (Bergen, lower serum kynurenic acid)."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34423789
+        quote: "compare serum from 83 patients with ME/CFS and 35 healthy controls"
+      - source: pmid:34423789
+        quote: "All patients fulfilled the Canadian consensus criteria for ME/CFS"
+      - source: pmid:34423789
+        quote: "Reduced serum kynurenate concentration was a consistent effect in all 3 subsets (Figure 5E)."
+      - source: pmid:34829952
+        quote: "No differences were seen for quinolinic and kynurenic acids."
+  - decision_part: "The level 3: the higher kynurenic acid to kynurenine ratio found in Padova (serum, CCC) was found again by an independent group at Columbia in a separate cohort (plasma, CCC), with no shared authors."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:34829952
+        quote: "Our patients fulfilled the criteria of the Canadian Consensus Criteria for the diagnosis of ME/CFS"
+      - source: pmid:34829952
+        quote: "Case-control comparison of tryptophan metabolites via serotonin and kynurenine (n = 39)."
+      - source: pmid:34829952
+        quote: "The kynurenic acid/kynurenine and 3-hydroxykynurenine/kynurenine ratios, indirect measures of kynurenine aminotransferases and kynurenine 3-monooxygenase enzymatic activities, respectively, are higher in ME-CFS patients than in controls."
+      - source: pmid:34829952
+        quote: "Considering the kynurenine/tryptophan ratio, no difference was found between ME/CFS patients and controls."
+      - source: pmid:40903540
+        quote: "Study subjects were 56 ME/CFS cases and 52 HC recruited in New York and California"
+      - source: pmid:40903540
+        quote: "diagnosed using the CDC/Fukuda and Canadian consensus criteria"
+      - source: pmid:40903540
+        quote: "The ratios of kynurenic acid (KYNA) to KYN, an indirect index for kynurenine aminotransferase (KAT) activity, were higher in ME/CFS before exercise and decreased after exercise (Fig. 2I)."
+      - source: pmid:40903540
+        quote: "Simonato et al. measured higher KYNA:KYN ratios in serum of ME/CFS patients at rest46."
+  - decision_part: "The contested mark on rung 3: the Uppsala study (CCC, ICC and IOM; controls; 38 patients, at least half of 39 and of 56) marks only the Kyn/3HK and Trp/5-HT ratios as different, not the Kyn/KA ratio."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:39302151
+        quote: "Both groups were diagnosed using Canadian Consensus Criteria, the International Consensus Criteria, and the Institute of Medicine (IOM) criteria."
+      - source: pmid:39302151
+        quote: "we compared the metabolic networks in the plasma of 38 ME/CFS patients to those of 24 healthy control participants"
+      - source: pmid:39302151
+        quote: "kynurenine to kynurenic acid (Kyn/KA)"
+      - source: pmid:39302151
+        quote: "Notably, the ratios of Kyn/3HK and Trp/5-HT are higher in the ME/CFS cohort compared to HC."
+      - source: pmid:39302151
+        quote: "The red star * represents (p < 0.05)."
+  - decision_part: "Comparable quality of the contradicting study (case definition, control group, sample size)."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:39302151
+        quote: "We observed that the concentration of 3-hydroxykynurenine (3HK) and 3-hydroxyanthranilic acid (3HAA), a metabolite of 3HK, were significantly lower in ME/CFS patients compared to the control group with a p-value of 0.003 and 0.021 respectively."
+      - source: pmid:39302151
+        quote: "By examining the tryptophan metabolite ratios shown in Figure 2c, we found that the kynurenine/3-hydroxykynurenine (Kyn/3HK) ratio is elevated in ME/CFS, aligning with our finding that 3HK is decreased in the ME/CFS cohort."
+  - decision_part: "Level 4 not reached: the only intervention is a 5-patient acute tryptophan depletion pilot under CDC criteria (version not stated) that found no symptom change and targets the serotonin side."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25227994
+        quote: "Five female CFS-patients who met the US Center for Disease Control and Prevention criteria for CFS were recruited."
+      - source: pmid:25227994
+        quote: "There were no significant differences in fatigue-, depression and concentration between the placebo- and ATD condition."
+      - source: pmid:25227994
+        quote: "However, a much larger sample size is needed to draw final conclusions on the hypothesis of an increased serotonergic state in the pathophysiology of CFS."
+  - decision_part: "Studies kept out of the level: those with no verified case definition, and the stool study that measures gut-bacterial metabolism."
+    rubric: "Not accepted (see the inclusion rule)."
+    evidence:
+      - source: pmid:34090138
+        quote: "49 CFS patients; 57 FM patients; and 54 healthy controls."
+      - source: pmid:15982993
+        quote: "compared in 23 patients with the CFS and 42 healthy controls"
+      - source: pmid:11352361
+        quote: "Plasma-free tryptophan was significantly decreased in CFS."
+      - source: pmid:20384451
+        quote: "Plasma tryptophan and kynurenine concentrations did not differ among groups."
+      - source: pmid:42325052
+        quote: "Frozen stool samples from 42 participants (N = 19 ME/CFS, N = 23 Controls)"
+      - source: pmid:42325052
+        quote: "Using targeted metabolomics of fecal samples, we identified elevated tryptophan and some of its metabolites"
+  - decision_part: "Diagnostic marker badge set to no: no study reports a tryptophan-pathway marker tested for diagnostic performance; the studies report group differences."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:34829952
+        quote: "Overall, clinical traits together with serum biomarkers related to inflammation, intestine function, and tryptophan metabolism deserve to be further considered for the development of personalized medicine strategies for ME/CFS."
+      - source: pmid:39302151
+        quote: "Notably, the ratios of Kyn/3HK and Trp/5-HT are higher in the ME/CFS cohort compared to HC."
+  - decision_part: "PEM badge set to no: the only link is a correlation between a post-exercise kynurenine-pathway product and a general fatigue score at the same time point, and mean general fatigue 24 h after exercise was at its pre-exercise level."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:40903540
+        quote: "Post-exercise elevated levels of 3-methoxyanthranilate correlated with general fatigue in ME/CFS, highlighting the potential impact of KYN pathway on symptom severity (Fig. 3B)."
+      - source: pmid:40903540
+        quote: "correlated with the MFI symptom severity scales at the corresponding time point in ME/CFS"
+      - source: pmid:40903540
+        quote: "Blood samples were collected at two time points: pre-exercise (same day) and 24 h post-exercise."
+      - source: pmid:40903540
+        quote: "General Fatigue 69.4 ± 12.0"
+      - source: pmid:40903540
+        quote: "General Fatigue 69.6 ± 10.3"
+  - decision_part: "Layer set to dysfunction: the evidence is measured changes in blood levels of tryptophan metabolites."
+    rubric: "Measurable dysfunction | `dysfunction` | What goes wrong in the body?"
+    evidence:
+      - source: pmid:34829952
+        quote: "Concerning the kynurenine pathway, ME/CFS patients had lower serum levels of kynurenine"
+  - decision_part: "Links to neuroinflammation and to oxidative-nitrosative-stress at step 1 (proposed), each sourced to a peer-reviewed review that states the link."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:35821534
+        quote: "In addition, this pathway has been shown to mediate immune response and neuroinflammation through its metabolites."
+      - source: pmid:26667000
+        quote: "Some TRYCATs such as quinolinic acid act as potent neurotoxins which inhibit ATP production by mitochondria, provoke increases in O&NS"
+      - source: pmid:26667000
+        quote: "Here we discuss the involvement of the abovementioned TRYCAT pathways in schizophrenia, Alzheimer's disease and chronic fatigue syndrome."
+reasons_summary: "Level 3, contested at rung 3, is supported: Padova and an independent Columbia cohort (both CCC) found a higher kynurenic acid to kynurenine ratio, Uppsala (CCC/ICC/IOM, n=38) did not mark that ratio as different, and both badges correctly stay no."
+would_change: "The contested mark would lift if a larger CCC/ICC/IOM study settles the kynurenic acid to kynurenine ratio, or if the Uppsala supplementary data showed a significant Kyn/KA difference in the same direction. Rung 3 would fall if the Columbia ratio result failed on a corrected reading. A study linking a kynurenine-pathway measure to the change in symptoms after exertion could change the PEM badge. Unverifiable from the records given: the card calls pmid:11352361 a study at the University of Oxford and pmid:20384451 a study from New Jersey, but neither abstract names a place and no full text is cached. Neither statement bears on the level, a badge or the mark. The diagnostic-marker reason says no tryptophan-pathway marker has been tested in a second independent group; this holds only for diagnostic testing, since the ratio itself was measured in two groups. I was not handed any drafting, review or earlier audit reasoning."

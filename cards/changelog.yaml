@@ -117,3 +117,24 @@
   - pmid:8409778
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-13
+  card: tryptophan-kynurenine-metabolism
+  change: First publication at level 3
+  reason: 'Level 3, contested at rung 3, is supported: Padova and an independent Columbia cohort (both
+    CCC) found a higher kynurenic acid to kynurenine ratio, Uppsala (CCC/ICC/IOM, n=38) did not mark that
+    ratio as different, and both badges correctly stay no.'
+  sources:
+  - pmid:34423789
+  - pmid:34829952
+  - pmid:40903540
+  - pmid:39302151
+  - pmid:25227994
+  - pmid:34090138
+  - pmid:15982993
+  - pmid:11352361
+  - pmid:20384451
+  - pmid:42325052
+  - pmid:35821534
+  - pmid:26667000
+  tier: 2
+  decided_by: ai_audit
