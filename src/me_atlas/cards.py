@@ -18,7 +18,7 @@ import argparse
 import datetime as dt
 import re
 import sys
-from collections.abc import Iterator, Sequence
+from collections.abc import Collection, Iterator, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated, Literal
@@ -542,12 +542,14 @@ def validate_paths(
     *,
     content_dir: Path | None = None,
     cards_dir: Path | None = None,
+    extra_known_slugs: Collection[str] = (),
 ) -> tuple[int, list[Issue]]:
     """Validate files and directories. Returns (number of files checked, all issues).
 
     Besides the per-file rules this runs the causal-map rules that need more than one file: M2 (every link target
-    exists; the resolution set is the card files given plus, when a directory is given, ``cards_dir``) and M6 (the
-    content files in ``content_dir``). Defaults: ``cards/`` and ``content/`` relative to the current directory.
+    exists; the resolution set is the card files given plus, when a directory is given, ``cards_dir``, plus
+    ``extra_known_slugs``) and M6 (the content files in ``content_dir``). Defaults: ``cards/`` and ``content/``
+    relative to the current directory.
     """
     from me_atlas import map as maplib  # imported here: me_atlas.map imports this module
 
@@ -576,7 +578,7 @@ def validate_paths(
                 parsed.append((str(f), card))
     content, content_issues = maplib.load_content(content_dir)
     issues += content_issues
-    known = {f.stem for f in files if f.name != CHANGELOG_NAME}
+    known = {f.stem for f in files if f.name != CHANGELOG_NAME} | set(extra_known_slugs)
     if any_directory and cards_dir.is_dir():
         known |= {f.stem for f in _yaml_files(cards_dir)}
     issues += maplib.check_targets(parsed, known, content)
