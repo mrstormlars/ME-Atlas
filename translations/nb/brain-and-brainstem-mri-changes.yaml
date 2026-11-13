@@ -262,3 +262,10 @@ items:
       ved hvit substans på diffusjons-MR, bortsett fra én baneforskjell som ikke holdt seg etter korreksjon for intrakranielt
       volum.
     source_hash: 6ad52dec3be7bfc43c0a596ccb097223059b4974ee6da033bdef06166bc9a291
+  studies[pmid:42819213].finding:
+    text: En studie med n=38 pasienter som oppfylte Canadian Consensus Criteria og 47 friske kontroller (og 27 pasienter med
+      langvarig covid, som oppfylte WHOs definisjon og ikke brukes her) målte volumet av delområdene i amygdala med 3 T MR.
+      Pasientene hadde en nominelt større venstre paralaminær kjerne (rå p = 0,048), men ingen gruppeforskjell eller korrelasjon
+      holdt seg etter korreksjon for multippel testing, og forfatterne presenterer volumresultatene som kandidatmønstre, ikke
+      som bekreftede gruppeforskjeller. Ikke gjentatt.
+    source_hash: 457a73982efb298c0b562a6f27f931448d0712b4a041a76c856362da7d91d59e
