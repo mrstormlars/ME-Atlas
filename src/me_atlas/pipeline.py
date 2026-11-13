@@ -451,6 +451,28 @@ def _preprints_with_published_version(cfg: Config, found: Sequence[europepmc.Pre
     return rows
 
 
+def read_ids_file(path: Path) -> list[str]:
+    """PMIDs from a file, one per line; a ``pmid:`` prefix is allowed, blank lines and ``#`` comments are ignored."""
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError as exc:
+        raise PipelineError(f"cannot read the ids file {path}: {exc}") from exc
+    found: list[str] = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        value = line.split("#", 1)[0].strip()
+        if not value:
+            continue
+        value = value.removeprefix("pmid:").strip()
+        if not value.isdigit():
+            raise PipelineError(
+                f"{path}, line {number}: not a PMID (digits, optionally 'pmid:' first): {line.strip()!r}"
+            )
+        found.append(value)
+    if not found:
+        raise PipelineError(f"the ids file {path} holds no PMID")
+    return found
+
+
 def prepare(
     cfg: Config,
     *,
@@ -460,8 +482,13 @@ def prepare(
     preprint_search: PreprintSearch,
     force: bool = False,
     reprocess: bool = False,
+    ids: Sequence[str] | None = None,
 ) -> dict[str, Any]:
     """Fetch, then write papers.json, cards.json and prepare.json. Returns the summary.
+
+    With ``ids`` (PMIDs given by the caller) there is no fetch window: only the listed ids that are not cached are
+    fetched (``fetch --ids``), papers.json holds exactly the listed records whatever their entry date, the ledger and
+    retraction rules are those of a window run, and no preprint search is made.
 
     Selects the papers in the fetch window, cached or not, that no earlier finished run has processed
     (the ledger), unless ``reprocess``. Retracted papers are never selected. ``preprint_search`` finds the
@@ -471,28 +498,43 @@ def prepare(
     """
     if cfg.f("papers.json").exists() and not force:
         raise PipelineError(f"{cfg.run_dir} already holds a run; use --force to start it again or --date for another")
-    runs = cfg.cache_dir / "runs"
-    before = {p.name for p in runs.glob("*.json")} if runs.is_dir() else set()
-    argv = ["fetch", "--since", since.isoformat()] if since else ["fetch", "--weekly"]
-    code = fetch([*argv, "--cache-dir", str(cfg.cache_dir)])
-    if code != 0:
-        raise PipelineError(f"the PubMed fetch failed (exit code {code}); nothing was prepared")
-    fresh = sorted(p for p in runs.glob("*.json") if p.name not in before) if runs.is_dir() else []
-    if not fresh:
-        raise PipelineError(f"the PubMed fetch wrote no new run manifest in {runs}")
-    manifest = _read_json(fresh[-1])
-
-    window_since = since or date - dt.timedelta(days=pubmed.WEEKLY_DAYS)
-    try:
-        found_preprints = list(preprint_search(window_since, date))
-    except europepmc.EuropePmcError as exc:
-        raise PipelineError(f"the preprint search failed ({exc}); nothing was prepared") from exc
-
     cache = pubmed.RawCache(cfg.cache_dir)
+    given = list(dict.fromkeys(ids)) if ids is not None else None
+    manifest_path: Path | None = None
+    if given is not None:
+        manifest: dict[str, Any] = {}
+        missing = [p for p in given if not cache.has(p)]
+        if missing:
+            code = fetch(["fetch", "--ids", *missing, "--cache-dir", str(cfg.cache_dir)])
+            if code != 0:
+                raise PipelineError(f"the PubMed fetch failed (exit code {code}); nothing was prepared")
+        window_since = date
+        found_preprints: list[europepmc.PreprintRecord] = []  # no preprint search in this mode
+    else:
+        runs = cfg.cache_dir / "runs"
+        before = {p.name for p in runs.glob("*.json")} if runs.is_dir() else set()
+        argv = ["fetch", "--since", since.isoformat()] if since else ["fetch", "--weekly"]
+        code = fetch([*argv, "--cache-dir", str(cfg.cache_dir)])
+        if code != 0:
+            raise PipelineError(f"the PubMed fetch failed (exit code {code}); nothing was prepared")
+        fresh = sorted(p for p in runs.glob("*.json") if p.name not in before) if runs.is_dir() else []
+        if not fresh:
+            raise PipelineError(f"the PubMed fetch wrote no new run manifest in {runs}")
+        manifest_path = fresh[-1]
+        manifest = _read_json(manifest_path)
+
+        window_since = since or date - dt.timedelta(days=pubmed.WEEKLY_DAYS)
+        try:
+            found_preprints = list(preprint_search(window_since, date))
+        except europepmc.EuropePmcError as exc:
+            raise PipelineError(f"the preprint search failed ({exc}); nothing was prepared") from exc
+
     papers: list[dict[str, Any]] = []
     excluded_retracted: list[str] = []
     unreadable: list[str] = []
-    in_window = list(dict.fromkeys(manifest.get("window_pmids", manifest.get("new_pmids", []))))
+    in_window = (
+        given if given is not None else list(dict.fromkeys(manifest.get("window_pmids", manifest.get("new_pmids", []))))
+    )
     ledger = {} if reprocess else read_ledger(cfg)
     skipped_processed = [p for p in in_window if p in ledger]
     for pmid in (p for p in in_window if p not in ledger):
@@ -518,6 +560,7 @@ def prepare(
         else:
             dropped.append(why)
     preprint_summary = {
+        "searched": given is None,
         "since": window_since.isoformat(),
         "until": date.isoformat(),
         "counts": {
@@ -546,6 +589,8 @@ def prepare(
     flagged = set(manifest.get("newly_flagged_retracted_pmids", [])) | (
         set(manifest.get("new_pmids", [])) & set(manifest.get("retracted_pmids", []))
     )
+    if given is not None:
+        flagged = set(excluded_retracted)
     retractions = []
     for pmid in sorted(flagged & set(cited), key=int):
         try:
@@ -557,8 +602,9 @@ def prepare(
     summary = {
         "date": date.isoformat(),
         "since": since.isoformat() if since else None,
-        "mode": "since" if since else "weekly",
-        "manifest": str(fresh[-1]),
+        "mode": "ids" if given is not None else "since" if since else "weekly",
+        "ids": given,
+        "manifest": str(manifest_path) if manifest_path else None,
         "in_window": len(in_window),
         "selected": len(papers),
         "skipped_processed": len(skipped_processed),
@@ -757,6 +803,7 @@ def build_context(
             "",
             f"- id: `{record.id}`",
             f"- title: {record.title}",
+            f"- authors: {', '.join(record.authors) or 'not stated'}",
             f"- journal: {record.journal or 'not stated'}",
             f"- year: {record.year if record.year is not None else 'not stated'}",
             f"- doi: {record.doi or 'not stated'}",
@@ -787,6 +834,7 @@ def build_context(
             f"- id: `{paper_id}`",
             f"- Europe PMC id: {pre.ppr_id}",
             f"- title: {pre.title}",
+            f"- authors: {', '.join(pre.authors) or 'not stated'}",
             f"- server: {pre.server or 'not stated'}",
             f"- year: {pre.year if pre.year is not None else 'not stated'}",
             f"- first indexed: {pre.first_index_date or 'not stated'}",
@@ -1009,7 +1057,11 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
             row["preexisting"] = (row["study"], row["code"], row["message"]) in known
         result["citations"] = rows
 
-    new_errors = [r for r in result["citations"] if r["level"] == citations.ERROR and not r["preexisting"]]
+    # A C9 issue (the group names no author of the record) is only a warning in `citations check`, but a new one
+    # fails the pair here, so a drafter cannot add an author name that the record does not support.
+    new_errors = [
+        r for r in result["citations"] if not r["preexisting"] and (r["level"] == citations.ERROR or r["code"] == "C9")
+    ]
     result["citation_errors"] = len(new_errors)
     result["passed"] = not ops_errors and not result["validator"] and not new_errors
     _write_json(cfg.checks_path(slug, pmid, n), result)
@@ -1187,7 +1239,7 @@ def _check_failure_summary(checks: dict[str, Any]) -> str:
     bits += [
         f"{r['study']} {r['code']}: {r['message']}"
         for r in checks.get("citations", [])
-        if r["level"] == "ERROR" and not r.get("preexisting")
+        if (r["level"] == "ERROR" or r.get("code") == "C9") and not r.get("preexisting")
     ]
     return "; ".join(b.replace("\n", " ") for b in bits) or "unknown"
 
@@ -1286,6 +1338,8 @@ def _rejection_lines(o: Outcome) -> list[str]:
 
 
 def _window_text(prep: dict[str, Any]) -> str:
+    if prep.get("mode") == "ids":
+        return "the papers given by id (not a fetch window)"
     if prep.get("since"):
         return f"the fetch window since {prep['since']}"
     return "the weekly fetch window (the last 14 days)"
@@ -1293,13 +1347,18 @@ def _window_text(prep: dict[str, Any]) -> str:
 
 def _preprint_intro(prep: dict[str, Any]) -> list[str]:
     counts = (prep.get("preprints") or {}).get("counts")
+    rule = (
+        "A preprint can only be an early signal, and any change that adds or cites one is tier 2 (the founder decides)."
+    )
+    if (prep.get("preprints") or {}).get("searched") is False:
+        return ["", f"Preprints (Europe PMC): no preprint search was made (the papers were given by id). {rule}"]
     if not counts:
         return []
     dropped = ", ".join(f"{n} {reason}" for reason, n in counts["dropped"].items() if n) or "none dropped"
     return [
         "",
         f"Preprints (Europe PMC): {counts['found']} found, {counts['offered']} offered to the classifier "
-        f"({dropped}). A preprint can only be an early signal and is never drafted automatically.",
+        f"({dropped}). {rule}",
     ]
 
 
@@ -1652,6 +1711,10 @@ def split_report(report: str, limit: int = GITHUB_BODY_LIMIT) -> list[str]:
     return parts
 
 
+# The agents run on model aliases, so the trailer cannot name a model version.
+COMMIT_TRAILER = "Co-Authored-By: Claude <noreply@anthropic.com>"
+
+
 def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Callable[[str], None] = print) -> int:
     prep = _read_json(cfg.f("prepare.json"))
     report = build_report(cfg)
@@ -1668,6 +1731,7 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
     message = (
         f"{title}\n\nAI-drafted from new PubMed papers and checked by the review agent; "
         "see the pull request for the report. Drafts only, nothing is published."
+        f"\n\n{COMMIT_TRAILER}"
     )
 
     def step(cmd: list[str]) -> bool:
@@ -1757,7 +1821,12 @@ def _pmid_arg(text: str) -> str:
 def _build_parser() -> argparse.ArgumentParser:
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--pipeline-dir", type=Path, default=DEFAULT_PIPELINE_DIR, help="default: %(default)s")
-    common.add_argument("--run-dir", type=Path, help="default: the newest run in --pipeline-dir")
+    common.add_argument(
+        "--run-dir",
+        type=Path,
+        help="default: the newest folder in --pipeline-dir named exactly YYYY-MM-DD that holds papers.json "
+        "(a folder with any other name is never chosen by default)",
+    )
     common.add_argument("--cards-dir", type=Path, default=Path("cards"), help="default: %(default)s")
     common.add_argument("--drafts-dir", type=Path, default=Path("drafts"), help="default: %(default)s")
     common.add_argument("--cache-dir", type=Path, default=Path("data/cache"), help="default: %(default)s")
@@ -1768,7 +1837,23 @@ def _build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     prep = sub.add_parser("prepare", parents=[common], help="fetch new papers and create the run directory")
-    prep.add_argument("--since", type=_date, metavar="YYYY-MM-DD", help="fetch from this entry date (default: weekly)")
+    source = prep.add_mutually_exclusive_group()
+    source.add_argument(
+        "--since", type=_date, metavar="YYYY-MM-DD", help="fetch from this entry date (default: weekly)"
+    )
+    source.add_argument(
+        "--ids",
+        nargs="+",
+        type=pubmed._pmid_arg,
+        metavar="PMID",
+        help="classify exactly these PMIDs (no fetch window, no preprint search; only uncached ids are fetched)",
+    )
+    source.add_argument(
+        "--ids-file",
+        type=Path,
+        metavar="PATH",
+        help="like --ids, with one PMID per line (a 'pmid:' prefix is allowed; blank lines and # comments are ignored)",
+    )
     prep.add_argument("--date", type=_date, metavar="YYYY-MM-DD", help="name of the run directory (default: today)")
     prep.add_argument("--force", action="store_true", help="overwrite an existing run of the same date")
     prep.add_argument("--reprocess", action="store_true", help="ignore the ledger of papers earlier runs processed")
@@ -1805,9 +1890,27 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def _latest_run(pipeline_dir: Path) -> Path:
-    runs = sorted(p for p in pipeline_dir.glob("*") if (p / "papers.json").is_file()) if pipeline_dir.is_dir() else []
+    """The newest folder of ``pipeline_dir`` named exactly as an ISO date (YYYY-MM-DD) that holds ``papers.json``.
+
+    A folder with any other name (``2026-11-13-livecheck``, ``nb-first-run``) is never the default; use ``--run-dir``.
+    """
+
+    def is_date(name: str) -> bool:
+        try:
+            return dt.date.fromisoformat(name).isoformat() == name
+        except ValueError:
+            return False
+
+    runs = (
+        sorted(p for p in pipeline_dir.iterdir() if is_date(p.name) and (p / "papers.json").is_file())
+        if pipeline_dir.is_dir()
+        else []
+    )
     if not runs:
-        raise PipelineError(f"no run in {pipeline_dir}; start one with `prepare`")
+        raise PipelineError(
+            f"no run in {pipeline_dir} whose folder is named YYYY-MM-DD and holds papers.json; "
+            "start one with `prepare`, or name the folder with `--run-dir`"
+        )
     return runs[-1]
 
 
@@ -1883,6 +1986,7 @@ def _dispatch(
             preprint_search=preprint_search or live_preprint_search(cfg.cache_dir),
             force=args.force,
             reprocess=args.reprocess,
+            ids=args.ids if args.ids_file is None else read_ids_file(args.ids_file),
         )
         out(f"run directory: {cfg.run_dir}")
         out(
@@ -1890,10 +1994,13 @@ def _dispatch(
             f"{len(summary['excluded_retracted'])} retracted (excluded)"
         )
         counts = summary["preprints"]["counts"]
-        out(
-            f"preprints: {counts['found']} found, {counts['offered']} offered "
-            f"(dropped: {', '.join(f'{n} {r}' for r, n in counts['dropped'].items())})"
-        )
+        if summary["mode"] == "ids":
+            out("preprints: no preprint search was made (papers given by id)")
+        else:
+            out(
+                f"preprints: {counts['found']} found, {counts['offered']} offered "
+                f"(dropped: {', '.join(f'{n} {r}' for r, n in counts['dropped'].items())})"
+            )
         for row in summary["preprints_published"]:
             out(f"preprint on {row['card']} now published: {row['study']} -> pmid:{row['pmid']}")
         for r in summary["retractions_on_cards"]:
@@ -1924,8 +2031,8 @@ def _dispatch(
         for line in result["warnings"]:
             out(f"warning: {line}")
         for row in result["citations"]:
-            if row["level"] == citations.ERROR and not row["preexisting"]:
-                out(f"citations: {row['study']}: {row['code']} ERROR: {row['message']}")
+            if (row["level"] == citations.ERROR or row["code"] == "C9") and not row["preexisting"]:
+                out(f"citations: {row['study']}: {row['code']} {row['level']}: {row['message']}")
         for row in result["citations"]:
             if row["level"] == citations.ERROR and row["preexisting"]:
                 out(f"citations (already on the card, not blocking): {row['study']}: {row['code']}: {row['message']}")

@@ -254,6 +254,18 @@ def test_context_holds_card_rubric_record_and_fulltext_without_references(ready:
     assert "All fictional participants met the Fukuda criteria." in text  # candidate case-definition sentence
 
 
+def test_context_has_the_authors_line_of_a_pubmed_paper_in_record_order(ready: Env):
+    assert ready.cli("context", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    text = (ready.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+    assert "- authors: Smith AB, Jones C\n" in text
+
+
+def test_context_says_authors_not_stated_when_the_record_has_none(ready: Env):
+    assert ready.cli("context", SLUG, REVIEW_PMID, fulltext=fulltext_loader()) == 0
+    text = (ready.run / "context" / f"{SLUG}-{REVIEW_PMID}.md").read_text(encoding="utf-8")
+    assert "- authors: not stated\n" in text
+
+
 def test_context_states_truncation_with_the_numbers(ready: Env):
     cfg = pipeline.Config(ready.run, ready.cards, ready.drafts, ready.cache, SPEC)
     text = pipeline.build_context(cfg, SLUG, NEW_PMID, fulltext_loader(), budget=50)
@@ -329,6 +341,48 @@ def test_apply_does_not_blame_the_new_paper_for_citation_errors_already_on_the_c
     assert ready.apply("ops_add_study.json") == 0
     old = [r for r in ready.checks()["citations"] if r["preexisting"]]
     assert [(r["study"], r["code"]) for r in old] == [("pmid:90000104", "C1")]  # its record is not in the cache
+
+
+def apply_with_group(env: Env, group: str) -> int:
+    """Apply the add-study ops with ``group`` on the new study (its record, 90000101, has authors Smith AB, Jones C)."""
+    ops = json.loads((FIXTURES / "agent" / "ops_add_study.json").read_text(encoding="utf-8"))
+    ops["operations"][0]["study"]["group"] = group
+    path = env.run / "ops" / f"{SLUG}-{NEW_PMID}-r1.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(ops), encoding="utf-8")
+    return env.cli("apply", SLUG, str(path), "--round", "1")
+
+
+def test_apply_fails_a_new_study_whose_group_names_no_author_of_the_record(ready: Env):
+    assert apply_with_group(ready, "Ponting CP, Oxford") == 1
+    checks = ready.checks()
+    assert checks["passed"] is False and checks["validator"] == []
+    new_c9 = [r for r in checks["citations"] if r["code"] == "C9" and not r["preexisting"]]
+    assert [(r["study"], r["level"]) for r in new_c9] == [("pmid:90000101", "WARNING")]
+    assert checks["citation_errors"] == 1
+    assert any("C9" in line and "Ponting CP" in line for line in ready.out) and ready.out[-1] == "FAILED"
+
+
+def test_apply_passes_a_new_study_whose_group_names_an_author_of_the_record(ready: Env):
+    assert apply_with_group(ready, "Jones C, Leeds") == 0
+    checks = ready.checks()
+    assert checks["passed"] is True and not [r for r in checks["citations"] if r["code"] == "C9"]
+
+
+def test_apply_does_not_blame_the_pair_for_a_c9_issue_already_on_the_card(ready: Env):
+    path = ready.cache / "pubmed" / "90000100.xml"
+    xml = path.read_text(encoding="utf-8")
+    xml = xml.replace(
+        "<Abstract>",
+        "<AuthorList><Author><LastName>Smith</LastName><Initials>AB</Initials></Author></AuthorList><Abstract>",
+        1,
+    )
+    path.write_text(xml, encoding="utf-8")  # the draft's group "Fictional Group" names no author of it
+    assert ready.apply("ops_add_study.json") == 0
+    checks = ready.checks()
+    old = [r for r in checks["citations"] if r["code"] == "C9"]
+    assert [(r["study"], r["preexisting"]) for r in old] == [("pmid:90000100", True)]
+    assert checks["passed"] is True and checks["citation_errors"] == 0
 
 
 def link_draft_to(env: Env, *targets: str) -> None:
@@ -1107,7 +1161,7 @@ def test_c4_no_warning_when_the_new_study_has_a_group(ready: Env):
     make_every_study_grouped(ready)
 
     def change(body):
-        body["operations"][0]["study"]["group"] = "A Fictional Group, Fictional University"
+        body["operations"][0]["study"]["group"] = "Smith AB, Fictional University"
 
     assert put_ops(ready, change) == 0
     assert ready.checks()["warnings"] == []
@@ -1759,6 +1813,20 @@ def test_the_context_of_a_doi_preprint_is_built_from_its_cached_record(doi_run: 
     assert "PubMed record" not in text
 
 
+def test_the_context_of_a_doi_preprint_has_the_authors_line_in_record_order(doi_run: Env):
+    authors = [{"lastName": "Smith", "initials": "AB"}, {"lastName": "Jones", "initials": "C"}]
+    cache_preprint(doi_run, authorList={"author": authors})
+    assert doi_run.cli("context", SLUG, PPR_KEY, fulltext=NO_FULLTEXT) == 0
+    text = (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").read_text(encoding="utf-8")
+    assert "- authors: Smith AB, Jones C\n" in text
+
+
+def test_the_context_of_a_doi_preprint_without_authors_says_not_stated(doi_run: Env):
+    assert doi_run.cli("context", SLUG, PPR_KEY, fulltext=NO_FULLTEXT) == 0
+    text = (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").read_text(encoding="utf-8")
+    assert "- authors: not stated\n" in text
+
+
 def test_the_context_of_a_doi_preprint_with_full_text_has_the_text_and_the_case_definition_sentences(doi_run: Env):
     xml = (FIXTURES / "agent" / "fulltext-90000101.xml").read_bytes()
     seen = {}
@@ -2029,3 +2097,145 @@ def test_pr_cuts_a_line_longer_than_the_limit_and_still_round_trips(accepted: En
     parts = [(accepted.run / f"report-part-{k}.md").read_text(encoding="utf-8") for k in range(1, n + 1)]
     assert n > 2 and all(len(p) <= 200 for p in parts)
     assert _unsplit(parts) == report
+
+
+# --- the default run folder ---------------------------------------------------
+
+
+def make_runs(root: Path, *names: str) -> None:
+    for name in names:
+        (root / name).mkdir(parents=True)
+        (root / name / "papers.json").write_text("[]", encoding="utf-8")
+
+
+def test_the_default_run_is_the_newest_exact_date_folder_not_a_livecheck_folder(tmp_path: Path):
+    make_runs(tmp_path, "2026-11-06", "2026-11-13", "2026-11-13-livecheck", "nb-first-run")
+    assert pipeline._latest_run(tmp_path) == tmp_path / "2026-11-13"
+
+
+def test_a_folder_that_is_not_a_valid_date_or_has_no_papers_json_is_never_the_default(tmp_path: Path):
+    make_runs(tmp_path, "2026-11-06", "2026-13-45")
+    (tmp_path / "2026-11-20").mkdir()  # a date, but no run in it
+    assert pipeline._latest_run(tmp_path) == tmp_path / "2026-11-06"
+
+
+def test_without_an_exact_date_run_the_default_fails_and_names_run_dir(tmp_path: Path, capsys):
+    make_runs(tmp_path, "2026-11-13-livecheck")
+    assert pipeline.main(["report", "--pipeline-dir", str(tmp_path)]) == 1
+    err = capsys.readouterr().err
+    assert "--run-dir" in err and "YYYY-MM-DD" in err
+
+
+# --- the report header and the commit trailer ----------------------------------
+
+
+def test_the_preprint_line_says_a_change_that_adds_or_cites_a_preprint_is_tier_2(env: Env):
+    env.preprints = [ppr(1)]
+    env.prepare()
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    line = next(x for x in report.splitlines() if x.startswith("Preprints (Europe PMC)"))
+    assert "never drafted automatically" not in line
+    assert "can only be an early signal" in line and "tier 2" in line and "founder decides" in line
+
+
+def test_the_commit_message_ends_with_a_blank_line_and_the_co_author_trailer(accepted: Env):
+    runner = FakeRunner()
+    assert accepted.cli("pr", "--no-pr", runner=runner) == 0
+    commit = next(c for c in runner.calls if c[:2] == ["git", "commit"])
+    message = commit[commit.index("-m") + 1]
+    assert message.endswith("\n\nCo-Authored-By: Claude <noreply@anthropic.com>")
+    assert message.startswith("Weekly pipeline 2026-11-01: 1 draft card update(s)")
+
+
+# --- classify an explicit list of PMIDs ----------------------------------------
+
+
+def cache_old_record(env: Env, pmid: str = "90000110") -> None:
+    shutil.copy(FIXTURES / "pubmed" / f"{pmid}.xml", env.cache / "pubmed" / f"{pmid}.xml")
+
+
+def write_ledger(env: Env, **processed: str) -> None:
+    env.pipeline.mkdir(exist_ok=True)
+    (env.pipeline / "processed.json").write_text(json.dumps({"processed": processed}), encoding="utf-8")
+
+
+def ids_papers(env: Env) -> list[str]:
+    return [p["pmid"] for p in load(env.run / "papers.json")]
+
+
+def test_ids_mode_selects_exactly_the_listed_cached_records_whatever_their_entry_date(env: Env):
+    cache_old_record(env)  # 90000100 is cached by Env; both entered years before --date
+    assert env.cli("prepare", "--ids", "90000100", "pmid:90000110") == 0
+    assert ids_papers(env) == ["90000100", "90000110"]
+    assert env.fetch_calls == [] and env.preprint_calls == []  # all cached: nothing fetched; no preprint search
+    summary = load(env.run / "prepare.json")
+    assert (summary["mode"], summary["ids"], summary["selected"]) == ("ids", ["90000100", "90000110"], 2)
+    assert summary["since"] is None and summary["preprints"]["counts"]["found"] == 0
+    assert any("2 paper(s) selected" in line for line in env.out)
+
+
+def test_ids_mode_fetches_only_the_listed_ids_that_are_not_cached(env: Env):
+    assert env.cli("prepare", "--ids", "90000100", "90000101") == 0
+    assert env.fetch_calls == [["fetch", "--ids", "90000101", "--cache-dir", str(env.cache)]]
+    assert ids_papers(env) == ["90000100", "90000101"]  # not the window (90000102 is cached too, but not listed)
+
+
+def test_the_window_path_still_fetches_a_window(env: Env):
+    env.prepare()
+    assert env.fetch_calls == [["fetch", "--weekly", "--cache-dir", str(env.cache)]]
+    assert load(env.run / "prepare.json")["mode"] == "weekly"
+
+
+def test_ids_mode_skips_what_the_ledger_holds_unless_reprocess(env: Env):
+    cache_old_record(env)
+    write_ledger(env, **{"90000100": "2026-10-01"})
+    assert env.cli("prepare", "--ids", "90000100", "90000110") == 0
+    assert ids_papers(env) == ["90000110"]
+    assert load(env.run / "prepare.json")["skipped_processed"] == 1
+    assert env.cli("prepare", "--ids", "90000100", "90000110", "--force", "--reprocess") == 0
+    assert ids_papers(env) == ["90000100", "90000110"]
+
+
+def test_ids_mode_excludes_a_retracted_record_and_lists_an_unreadable_one(env: Env):
+    assert env.cli("prepare", "--ids", "90000101", "90000103", "99999999") == 0
+    summary = load(env.run / "prepare.json")
+    assert ids_papers(env) == ["90000101"]
+    assert summary["excluded_retracted"] == ["90000103"] and summary["unreadable_records"] == ["99999999"]
+
+
+def test_ids_file_takes_pmid_prefixes_comments_and_blank_lines(env: Env, tmp_path: Path):
+    cache_old_record(env)
+    ids_file = tmp_path / "ids.txt"
+    ids_file.write_text(
+        "# the CFS/ME records\n\npmid:90000110\n  90000100  # trailing note\n90000110\n", encoding="utf-8"
+    )
+    assert env.cli("prepare", "--ids-file", str(ids_file)) == 0
+    assert ids_papers(env) == ["90000110", "90000100"]  # in the order given, once each
+    assert load(env.run / "prepare.json")["ids"] == ["90000110", "90000100"]
+
+
+def test_ids_file_with_a_line_that_is_not_a_pmid_is_an_error_naming_the_line(env: Env, tmp_path: Path, capsys):
+    ids_file = tmp_path / "ids.txt"
+    ids_file.write_text("90000100\nnot-a-pmid\n", encoding="utf-8")
+    assert env.cli("prepare", "--ids-file", str(ids_file)) == 1
+    err = capsys.readouterr().err
+    assert "line 2" in err and "not-a-pmid" in err
+    assert not (env.run / "papers.json").exists()
+
+
+def test_ids_with_since_is_a_usage_error(env: Env):
+    with pytest.raises(SystemExit) as stop:
+        env.cli("prepare", "--ids", "90000100", "--since", "2026-10-01")
+    assert stop.value.code == 2
+    assert env.fetch_calls == []
+
+
+def test_the_header_says_the_papers_were_given_by_id_and_no_preprint_search_was_made(env: Env):
+    assert env.cli("prepare", "--ids", "90000100", "90000101") == 0
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    assert "2 paper(s) selected from the papers given by id (not a fetch window)" in report
+    assert "fetch window" not in report.replace("not a fetch window", "")
+    line = next(x for x in report.splitlines() if x.startswith("Preprints"))
+    assert "no preprint search was made" in line

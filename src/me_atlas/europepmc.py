@@ -359,6 +359,7 @@ class PreprintRecord:
     pmcid: str | None  # a PMC id from fullTextIdList, if any (the list also names the PPR id itself)
     is_open_access: bool = False
     in_pmc: bool = False
+    authors: tuple[str, ...] = ()  # "<lastName> <initials>" in record order (authorList.author[])
 
     @property
     def id(self) -> str:
@@ -407,6 +408,25 @@ def _int_or_none(value: object) -> int | None:
         return None
 
 
+def _preprint_authors(result: Mapping[str, object]) -> tuple[str, ...]:
+    """The authors in record order: ``<lastName> <initials>``, else ``fullName``, else ``collectiveName``."""
+    outer = result.get("authorList")
+    items = outer.get("author") if isinstance(outer, dict) else None
+    names: list[str] = []
+    for a in items if isinstance(items, list) else []:
+        if not isinstance(a, dict):
+            continue
+        last = str(a.get("lastName") or "").strip()
+        initials = str(a.get("initials") or "").strip()
+        if last and initials:
+            name = f"{last} {initials}"
+        else:
+            name = str(a.get("fullName") or "").strip() or str(a.get("collectiveName") or "").strip() or last
+        if name:
+            names.append(name)
+    return tuple(names)
+
+
 def parse_preprint(result: Mapping[str, object]) -> PreprintRecord:
     """Read one raw record (a ``result`` of a core search). Raises EuropePmcError if it is not a preprint record."""
     ppr_id = str(result.get("id") or "")
@@ -450,6 +470,7 @@ def parse_preprint(result: Mapping[str, object]) -> PreprintRecord:
         pmcid=pmcids[0] if pmcids else None,
         is_open_access=result.get("isOpenAccess") == "Y",
         in_pmc=result.get("inPMC") == "Y",
+        authors=_preprint_authors(result),
     )
 
 

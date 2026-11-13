@@ -469,10 +469,11 @@ def merge(
 # ---------------------------------------------------------------------------
 
 
-def english_cards(cards_dir: Path, drafts_dir: Path | None) -> dict[str, Path]:
-    """Slug to file; a draft is the newer text, so it wins (as in the pipeline)."""
+def english_cards(cards_dir: Path, drafts_dir: Path | None, overlay_dir: Path | None = None) -> dict[str, Path]:
+    """Slug to file; a draft is the newer text, so it wins (as in the pipeline). A file in ``overlay_dir`` wins
+    over both (the weekly run's final cards, which are not in ``drafts/`` until the pull request is merged)."""
     found: dict[str, Path] = {}
-    for directory in (cards_dir, drafts_dir):
+    for directory in (cards_dir, drafts_dir, overlay_dir):
         if directory is not None and Path(directory).is_dir():
             for path in sorted(Path(directory).glob("*.yaml")):
                 if path.name != cardlib.CHANGELOG_NAME:
@@ -480,9 +481,17 @@ def english_cards(cards_dir: Path, drafts_dir: Path | None) -> dict[str, Path]:
     return found
 
 
-def run_check(cards_dir: Path, drafts_dir: Path | None, translations_dir: Path, langs: Sequence[str] | None) -> int:
+def run_check(
+    cards_dir: Path,
+    drafts_dir: Path | None,
+    translations_dir: Path,
+    langs: Sequence[str] | None,
+    overlay_dir: Path | None = None,
+) -> int:
+    if overlay_dir is not None and not Path(overlay_dir).is_dir():
+        raise TranslationError(f"--overlay {overlay_dir} is not a folder")
     languages = list(langs) if langs else sorted(p.name for p in Path(translations_dir).glob("*") if p.is_dir())
-    cards_by_slug = english_cards(cards_dir, drafts_dir)
+    cards_by_slug = english_cards(cards_dir, drafts_dir, overlay_dir)
     errors = 0
     files = 0
     for lang in languages:
@@ -561,6 +570,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     check = sub.add_parser("check", help="check every translation file against its English card")
     common(check)
     check.add_argument("--lang", action="append", help="a language to check (default: every folder in translations/)")
+    check.add_argument(
+        "--overlay",
+        type=Path,
+        help="a folder of <slug>.yaml cards that replace the English card of that slug from cards/ and drafts/ "
+        "for this check (the weekly run's RUN/final)",
+    )
 
     apply = sub.add_parser("apply", help="merge a translator's output into translations/<lang>/<slug>.yaml")
     common(apply)
@@ -574,7 +589,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         if args.command == "check":
-            return run_check(args.cards_dir, args.drafts_dir, args.translations_dir, args.lang)
+            return run_check(args.cards_dir, args.drafts_dir, args.translations_dir, args.lang, args.overlay)
         return run_apply(args)
     except TranslationError as exc:
         print(f"error: {exc}", file=sys.stderr)

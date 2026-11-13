@@ -666,6 +666,40 @@ def test_check_compares_against_the_draft_when_a_draft_replaces_the_card(project
     assert "stale: nb: fictional-hypothesis: core_claim" in capsys.readouterr().out
 
 
+def put_overlay(tmp_path: Path, data: dict) -> Path:
+    overlay = tmp_path / "overlay"
+    overlay.mkdir(exist_ok=True)
+    (overlay / f"{data['slug']}.yaml").write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+    return overlay
+
+
+def test_check_with_overlay_compares_against_the_overlay_card_not_the_draft(project, tmp_path, capsys):
+    data = card_data()
+    data["subgroups"].append(
+        {"text": "A new fictional subgroup added by the weekly run.", "sources": ["pmid:00000001"]}
+    )
+    overlay = put_overlay(tmp_path, data)
+    project.put(sidecar_for(cardlib.load_card(overlay / f"{SLUG}.yaml")))  # translates the added item too
+    assert project.run("check") == 1  # today's behaviour: the draft has no such item
+    assert "subgroups[" in capsys.readouterr().err
+    assert project.run("check", "--overlay", str(overlay)) == 0
+    assert "OK: 1 translation file(s) checked" in capsys.readouterr().out
+
+
+def test_check_with_overlay_checks_a_slug_that_exists_only_in_the_overlay(project, tmp_path, capsys):
+    project.put(sidecar_for(project.card))
+    project.card_path.unlink()
+    assert project.run("check") == 1
+    capsys.readouterr()
+    overlay = put_overlay(tmp_path, card_data())
+    assert project.run("check", "--overlay", str(overlay)) == 0
+
+
+def test_check_with_an_overlay_that_is_not_a_folder_is_an_error(project, tmp_path, capsys):
+    assert project.run("check", "--overlay", str(tmp_path / "nope")) == 1
+    assert "overlay" in capsys.readouterr().err
+
+
 def test_apply_writes_a_sidecar_with_hash_and_sources_and_the_check_passes(project, tmp_path, capsys):
     out = tmp_path / "translated.json"
     out.write_text(

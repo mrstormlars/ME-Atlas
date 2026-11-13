@@ -20,6 +20,7 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
 * C6 (warning) ``n_patients`` and ``n_controls`` appear as numbers in the abstract or cached full text
 * C7 a DOI-only study id that is not a preprint cannot be checked yet
 * C8 ``preprint`` on the card agrees with the PubMed record (publication type "Preprint")
+* C9 (warning) a non-null ``group`` names at least one author of the record (last name and first initial)
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -58,7 +59,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C8, or LOAD when the file could not be read as a card
+    code: str  # C1..C9, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -307,6 +308,7 @@ def check_study(file: str, study: Study, cache: CacheReader) -> list[CitationIss
 
     issues += _check_quote(study, record.abstract, full, "PubMed", issue)
     issues += _check_sample_sizes(study, record.abstract, full, issue)
+    issues += _check_group(study, record.authors, "PubMed", issue)
     return issues
 
 
@@ -345,7 +347,54 @@ def _check_preprint(study: Study, cache: CacheReader, issue) -> list[CitationIss
 
     issues += _check_quote(study, abstract, full, "Europe PMC preprint", issue)
     issues += _check_sample_sizes(study, abstract, full, issue)
+    issues += _check_group(study, record.authors, "Europe PMC preprint", issue)
     return issues
+
+
+def _strip_marks(text: str) -> str:
+    """NFKD with the combining marks removed, whitespace collapsed; case is kept."""
+    decomposed = unicodedata.normalize("NFKD", text)
+    return _collapse("".join(c for c in decomposed if not unicodedata.combining(c)))
+
+
+def author_in_group(author: str, group: str) -> bool:
+    """Whether the group text names this record author (docs/citation-check.md, C9).
+
+    Both texts go through NFKD with combining marks removed. A record author ``<last> <initials>`` (initials are
+    capital letters) is named when the group has the last name (case folded), then whitespace (a comma may precede
+    it), then the first initial, then only further capital initials (dots or spaces between them are fine), as whole
+    words: ``Ponting C``, ``Ponting CP``, ``Ponting C.P.`` and ``Ponting C P`` name ``Ponting CP``; ``Ponting Cox``
+    does not. A collective author, and a name with no initials, is named only by its full name as whole words
+    (case folded).
+    """
+    text = _strip_marks(group)
+    name = _strip_marks(author)
+    if not name:
+        return False
+    last, _, initials = name.rpartition(" ")
+    if not last or not re.fullmatch(r"[^\W\d_]+", initials) or not initials.isupper():
+        # a collective author (or a name with no initials): its full name, whole words, case folded
+        return re.search(rf"(?<!\w)(?i:{re.escape(name)})(?!\w)", text) is not None
+    first = re.escape(initials[0])
+    personal = re.compile(rf"(?<!\w)(?i:{re.escape(last)}),?\s+(?i:{first})(?:[.\s]*[A-Z](?!\w))*\.?(?!\w)")
+    return personal.search(text) is not None
+
+
+def _check_group(study, authors, record_name, issue) -> list[CitationIssue]:
+    """C9 (warning): a ``group`` that names no author of the record. A record without authors gives no issue."""
+    if study.group is None or not authors:
+        return []
+    if any(author_in_group(a, study.group) for a in authors):
+        return []
+    shown = ", ".join(authors[:6]) + (f", ... ({len(authors)} in all)" if len(authors) > 6 else "")
+    return [
+        issue(
+            "C9",
+            WARNING,
+            f"group {study.group!r} names no author of the {record_name} record (authors: {shown}); "
+            "check the names against the record",
+        )
+    ]
 
 
 def _check_quote(study, abstract, full, record_name, issue) -> list[CitationIssue]:
