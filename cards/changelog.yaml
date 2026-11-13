@@ -16,3 +16,23 @@
   - pmid:8842569
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-13
+  card: autonomic-imbalance
+  change: First publication at level 3
+  reason: Level 3 accepted (lower resting high-frequency HRV in a UK cohort, reproduced in Spain and Russia),
+    rung 3 contested by an equal-quality Holmes 1988 study, rung 2 uncontested, both badges no, layer
+    dysfunction, three links at step 1.
+  sources:
+  - pmid:22670061
+  - pmid:31906988
+  - pmid:38251045
+  - pmid:24493300
+  - pmid:9505867
+  - pmid:9430800
+  - pmid:34970156
+  - pmid:41437251
+  - pmid:34073494
+  - pmid:23166694
+  - pmid:31957647
+  tier: 2
+  decided_by: ai_audit
