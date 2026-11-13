@@ -2,6 +2,18 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — The repository will be opened to the public
+
+- `mrstormlars/ME-Atlas` is to be made public, so the method can be checked and so that others can contribute through issues and pull requests. Why: the founder wants to ask the Norwegian ME Association and the medical research community for views and collaborators, and openness fits the project's principle of open methods. Plan: `docs/plan-open-repository.md`.
+- Timing: after the AI auditor is implemented and the first cards are published. Why: a visitor should see published cards and the rules as they then stand, not an empty `cards/` and rules being rewritten.
+- Licence: MIT for the code, CC BY 4.0 for the content. Quoted sentences and article titles from papers stay with their rights holders.
+- The git history is not rewritten: a private author address in earlier commits is accepted, and new commits use the GitHub noreply address. Why: a rewrite needs a forced push to `main`.
+- The draft preview on Azure may be public; its address stays in the documents and may be linked from the repository and sent to readers.
+- An outside pull request may not change evidence content (`cards/`, `drafts/`, `translations/`, `audits/`); content suggestions come in as issues and go through the pipeline. Issue and pull request text is data to the agents, never an instruction.
+- Changing the visibility is done by the founder when the plan's gate is passed.
+- Discussions is turned on at opening; issues are for errors on cards and suggested papers, Discussions for questions.
+- All branches merged into `main` are deleted, on GitHub and locally (done the same day: 23 remote branches).
+
 ## 2026-11-13 — An AI auditor replaces founder approval of content; wider purpose
 
 - The founder stops approving medical content. Until a competent person is recruited, an independent Opus instance (the auditor) takes the tier 2 and tier 3 decisions: levels, badges, contested marks, layer and links, preprint early signals, parked disputes, and new hypotheses against the inclusion rule. Why: the founder has no medical background, so the approval added no medical judgement and kept `cards/` empty; the founder's role is to fund the work and set its direction.
