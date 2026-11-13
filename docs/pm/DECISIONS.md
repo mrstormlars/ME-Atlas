@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — Wider sources: indirect evidence, preprints, bridge search pilot
+
+- A kind of evidence called "indirect" is introduced: sources whose population was not selected by an ME/CFS case definition (general human physiology, other conditions, long COVID without an ME/CFS definition). It may be shown on cards and the map but never moves a level, a badge, a contested mark or a link step. Why: the rubric requires an ME/CFS cohort; a mechanism shown elsewhere is a question for ME/CFS, not a finding about it.
+- Preprints come in (via Europe PMC) as early signals only, with a fixed "not peer reviewed" label; the validator keeps them out of level reasons, contested reasons, badges and links. Why: the field publishes there first, but nothing unreviewed may move the chart.
+- A bridge search pilot is run before anything is built into the weekly pipeline: for links at step `proposed`, pre-registered searches for systematic reviews outside the ME/CFS literature, in two arms (general, and long COVID without ME/CFS mention), with a positive control and base-rate pairs. Searches are question-driven; no discovery score or ranking. Why: literature-based discovery generates hypotheses and finds something for almost any pair if run broadly; the pilot shows whether a hit carries information.
+- This ends the hold of 2026-11-08 on sources outside the ME/CFS literature. Plan: `docs/plan-wider-sources.md`. Not yet ruled: the five pilot questions, the review tier for preprints, whether null-result preprints are shown.
+
 ## 2026-11-08 — Gaps page ("What is missing"); no weighted symptom score
 
 - New page `gaps.html` / `nb/gaps.html` ("What is missing" / "Hva mangler"), in the navigation after the causal map, and the same five lists in `uv run python -m me_atlas.map report`: symptoms with no link, symptoms linked only at step 1, links not yet tested in patients (grouped by target), what the next rung requires (cards by level with the ladder's own wording and contested marks), and hypotheses with no links. Everything is derived mechanically from existing card fields and the symptom list; nothing is scored or judged. Founder ruling: the plan's defaults (`docs/plan-gaps-page.md`), including keeping the next-rung list and the page name.
