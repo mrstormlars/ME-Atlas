@@ -1,0 +1,28 @@
+ME Atlas content licence
+
+Copyright (c) 2026 ME Atlas contributors
+
+The evidence content, documentation, site text and generated site of ME Atlas
+are licensed under the Creative Commons Attribution 4.0 International licence
+(CC BY 4.0).
+
+  Summary:    https://creativecommons.org/licenses/by/4.0/
+  Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+The legal code is not reproduced here; the text at the address above is the
+licence. You may share and adapt the material for any purpose, including
+commercially, if you give appropriate credit, link to the licence and say if
+you made changes.
+
+Scope: the files under `cards/`, `drafts/`, `content/`, `translations/`,
+`docs/` and `audits/`, and the static site generated from them (`build/`).
+The code, tests and build files are under the MIT licence: see `LICENSE`.
+
+Notice: article titles and the verbatim sentences quoted from papers (for
+example the `case_definition_quote` field of a study) belong to their rights
+holders. They are quoted with their source and are not relicensed by this
+licence. Raw API responses and full texts of papers are not part of this
+repository (`data/cache/` is ignored by git) and must stay out of it.
+
+The content is drafted, checked and graded by AI tools. No medical or research
+expert has reviewed it. It gives no treatment advice. See README.md.

@@ -22,6 +22,7 @@ nav.aria: 'Main'
 tips.title: 'Explanations of the marked words on this page'
 footer.review: 'The content, including every evidence level, is drafted, checked and decided by AI tools. No medical or research expert has reviewed it. See <a href="{lroot}methods.html">Methods</a>.'
 footer.advice: 'This site describes the state of the evidence. It gives no treatment advice. Built {built}.'
+footer.licence: 'The code is under the MIT licence; the content is under CC BY 4.0. Article titles and sentences quoted from papers stay with their rights holders.'
 
 # --- shown on a translated page only (the English text is the reference for the translator) ---
 translation.notice: 'This page is a translation of the English page, which is the authoritative version. <a href="{english_url}">Read the English page</a>.'
