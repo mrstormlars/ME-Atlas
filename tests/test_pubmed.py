@@ -906,3 +906,169 @@ def test_ids_cannot_be_combined_with_a_window_mode(tmp_path, args):
         run_cli(server, tmp_path, *args)
     assert exc.value.code == 2
     assert server.requests == []
+
+
+# --- query-diff ---------------------------------------------------------------
+
+
+def diff_articles(pmids: list[str]) -> dict[str, str]:
+    """Fictional records: fixture 90000001 with the PMID swapped."""
+    return {p: fixture_text("90000001").replace("90000001", p) for p in pmids}
+
+
+def run_diff(server, tmp_path, *args, env=None, query="(fictional query)"):
+    qfile = tmp_path / "query.txt"
+    if query is not None and not qfile.exists():
+        qfile.write_text(query, encoding="utf-8")
+    env = {"CONTACT_EMAIL": "tester@example.org"} if env is None else env
+    return pubmed.main(
+        ["query-diff", "--query-file", str(qfile), "--cache-dir", str(tmp_path / "cache"), *args],
+        env=env,
+        transport=httpx.MockTransport(server.handler),
+        clock=server.clock,
+        sleep=server.clock.sleep,
+        now=lambda: NOW,
+    )
+
+
+def only_diff_result(tmp_path: Path) -> dict:
+    files = list((tmp_path / "cache" / "query-diff").glob("*.json"))
+    assert len(files) == 1
+    return json.loads(files[0].read_text(encoding="utf-8"))
+
+
+def diff_server(added: dict[str, list[str]], inside: set[str] = frozenset()) -> FakePubMed:
+    """Term searches (``... NOT (``) return ``added[term]``; id checks return ids in ``inside``."""
+    all_ids = sorted({i for ids in added.values() for i in ids} | set(inside))
+    server = FakePubMed(articles=diff_articles(all_ids))
+
+    def search(params: dict[str, str]) -> list[str]:
+        term = params["term"]
+        if " NOT (" in term:
+            return added.get(term.split('"')[1], [])
+        if "[uid]" in term:
+            return [i for i in re.findall(r"(\d+)\[uid\]", term) if i in inside]
+        return ["90000001", "90000002", "90000003"]  # the plain query: three hits
+
+    server.search_fn = search
+    return server
+
+
+def test_query_diff_term_counts_all_hits_samples_the_newest_n_and_caches_them(tmp_path, capsys):
+    hits = [f"9100{i:04d}" for i in range(7, 0, -1)]  # 7 hits, newest first
+    server = diff_server({"CFS/ME": hits})
+    assert run_diff(server, tmp_path, "--term", "CFS/ME", "--sample", "3") == 0
+
+    term_searches = [p for p in server.of("esearch.fcgi") if " NOT (" in p["term"]]
+    assert [p["term"] for p in term_searches] == ['"CFS/ME"[Title/Abstract] NOT ((fictional query))']
+    assert efetched_ids(server) == sorted(hits[:3])
+    for pmid in hits[:3]:
+        assert (tmp_path / "cache" / "pubmed" / f"{pmid}.xml").is_file()
+    assert not (tmp_path / "cache" / "pubmed" / f"{hits[3]}.xml").exists()
+
+    result = only_diff_result(tmp_path)
+    assert result["query"] == "(fictional query)" and result["query_hits"] == 3
+    (item,) = result["terms"]
+    assert item["search"] == '"CFS/ME"[Title/Abstract] NOT ((fictional query))'
+    assert (item["count"], item["sample_size"], item["sample_pmids"]) == (7, 3, hits[:3])
+    assert item["warnings"] == []
+    out = capsys.readouterr().out
+    assert "'CFS/ME': 7 added, sample 3" in out and "query-diff" in out
+
+
+def test_query_diff_does_not_download_cached_records_again(tmp_path):
+    hits = ["91000002", "91000001"]
+    server = diff_server({"a": hits})
+    assert run_diff(server, tmp_path, "--term", "a") == 0
+    server.requests.clear()
+    (tmp_path / "cache" / "query-diff" / "20261031T120000Z.json").unlink()
+    assert run_diff(server, tmp_path, "--term", "a") == 0
+    assert server.of("efetch.fcgi") == []
+
+
+def test_query_diff_term_with_no_hits_is_count_zero_and_makes_no_efetch(tmp_path):
+    server = diff_server({"none": []})
+    assert run_diff(server, tmp_path, "--term", "none") == 0
+    assert server.of("efetch.fcgi") == []
+    (item,) = only_diff_result(tmp_path)["terms"]
+    assert (item["count"], item["sample_size"], item["sample_pmids"]) == (0, 0, [])
+
+
+def test_query_diff_prints_and_stores_pubmed_warnings(tmp_path, capsys):
+    server = diff_server({"odd term": []})
+    server.extra_search = {"warninglist": {"phrasesnotfound": ["odd term"], "outputmessages": []}}
+    assert run_diff(server, tmp_path, "--term", "odd term") == 0
+    (item,) = only_diff_result(tmp_path)["terms"]
+    assert item["warnings"] == ["phrasesnotfound: odd term"]
+    assert "odd term" in capsys.readouterr().err
+
+
+def test_query_diff_ids_lists_only_the_id_the_query_does_not_return(tmp_path, capsys):
+    server = diff_server({}, inside={"91000001"})
+    assert run_diff(server, tmp_path, "--ids", "91000001", "91000002") == 0
+    check = only_diff_result(tmp_path)["ids_check"]
+    assert check["ids"] == ["91000001", "91000002"]
+    assert check["outside"] == ["91000002"], "the id the query returns must not be listed as outside"
+    restricted = [p["term"] for p in server.of("esearch.fcgi") if "[uid]" in p["term"]]
+    assert restricted == ["((fictional query)) AND (91000001[uid] OR 91000002[uid])"]
+    assert "outside: 91000002" in capsys.readouterr().out
+    assert server.of("efetch.fcgi") == []
+
+
+def test_query_diff_ids_are_sent_in_batches(tmp_path, monkeypatch):
+    monkeypatch.setattr(pubmed, "IDS_BATCH_SIZE", 2)
+    server = diff_server({}, inside={"91000001", "91000004"})
+    ids = ["91000001", "91000002", "91000003", "91000004", "91000005"]
+    assert run_diff(server, tmp_path, "--ids", *ids) == 0
+    assert len([p for p in server.of("esearch.fcgi") if "[uid]" in p["term"]]) == 3
+    assert only_diff_result(tmp_path)["ids_check"]["outside"] == ["91000002", "91000003", "91000005"]
+
+
+def test_cited_pmids_picks_ids_out_of_yaml_files_only(tmp_path):
+    (tmp_path / "sub").mkdir()
+    (tmp_path / "a.yaml").write_text("studies:\n  - id: pmid:91000002\n  - id: doi:10.1/x\n", encoding="utf-8")
+    (tmp_path / "sub" / "b.yml").write_text("- id: pmid:91000001\n- id: pmid:91000002\n", encoding="utf-8")
+    (tmp_path / "notes.md").write_text("pmid:91000009", encoding="utf-8")
+    assert pubmed.cited_pmids(tmp_path) == ["91000001", "91000002"]
+
+
+def test_query_diff_cited_in_checks_the_ids_in_the_directory(tmp_path):
+    drafts = tmp_path / "drafts"
+    drafts.mkdir()
+    (drafts / "card.yaml").write_text("- id: pmid:91000001\n- id: pmid:91000002\n", encoding="utf-8")
+    server = diff_server({}, inside={"91000001"})
+    assert run_diff(server, tmp_path, "--cited-in", str(drafts)) == 0
+    check = only_diff_result(tmp_path)["ids_check"]
+    assert check["ids"] == ["91000001", "91000002"] and check["outside"] == ["91000002"]
+
+
+def test_query_diff_cited_in_a_missing_directory_fails(tmp_path, capsys):
+    server = diff_server({})
+    assert run_diff(server, tmp_path, "--cited-in", str(tmp_path / "nope")) == 1
+    assert "not a directory" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("env", [{}, {"CONTACT_EMAIL": ""}, {"CONTACT_EMAIL": "  "}])
+def test_query_diff_without_contact_email_exits_2_and_sends_nothing(tmp_path, capsys, env):
+    server = diff_server({"a": ["91000001"]})
+    assert run_diff(server, tmp_path, "--term", "a", env=env) == 2
+    assert "CONTACT_EMAIL" in capsys.readouterr().err
+    assert server.requests == []
+    assert not (tmp_path / "cache").exists()
+
+
+def test_query_diff_writes_under_query_diff_and_never_under_runs(tmp_path, capsys):
+    server = diff_server({"a": ["91000001"]}, inside={"91000002"})
+    assert run_diff(server, tmp_path, "--term", "a", "--ids", "91000002") == 0
+    assert [p.name for p in (tmp_path / "cache" / "query-diff").glob("*.json")] == ["20261031T120000Z.json"]
+    assert not (tmp_path / "cache" / "runs").exists()
+    assert str(tmp_path / "cache" / "query-diff" / "20261031T120000Z.json") in capsys.readouterr().out
+
+
+def test_query_diff_needs_something_to_do_and_a_positive_sample(tmp_path):
+    for args in ([], ["--term", "a", "--sample", "0"]):
+        server = diff_server({})
+        with pytest.raises(SystemExit) as exc:
+            run_diff(server, tmp_path, *args)
+        assert exc.value.code == 2
+        assert server.requests == []
