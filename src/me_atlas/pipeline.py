@@ -605,7 +605,15 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
         _write_text(out_dir / "changes.diff", diff)
         result["applied"] = str(card_path)
         result["diff"] = str(out_dir / "changes.diff")
-        _count, validator_issues = cards.validate_paths([card_path])
+        # The copy sits alone in applied/; link targets (M2) resolve against the cards and drafts of the run.
+        link_targets = {
+            p.stem
+            for directory in (cfg.drafts_dir, cfg.cards_dir)
+            if directory.is_dir()
+            for p in directory.glob("*.yaml")
+            if p.name != CHANGELOG_NAME
+        }
+        _count, validator_issues = cards.validate_paths([card_path], extra_known_slugs=link_targets)
         result["validator"] = [str(i) for i in validator_issues]
         _count, cite_issues = citations.check_paths([card_path], cfg.cache_dir)
         with tempfile.TemporaryDirectory() as tmp:

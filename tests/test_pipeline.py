@@ -320,6 +320,34 @@ def test_apply_does_not_blame_the_new_paper_for_citation_errors_already_on_the_c
     assert [(r["study"], r["code"]) for r in old] == [("pmid:90000104", "C1")]  # its record is not in the cache
 
 
+def link_draft_to(env: Env, *targets: str) -> None:
+    links = "".join(
+        f"  - to: {t}\n    support: proposed\n    text: A fictional link.\n    sources: [pmid:90000100]\n"
+        for t in targets
+    )
+    path = env.drafts / f"{SLUG}.yaml"
+    text = path.read_text(encoding="utf-8").rstrip("\n") + "\nlinks:\n" + links
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def test_apply_resolves_card_links_against_the_cards_and_drafts_of_the_run(ready: Env):
+    (ready.cards / "fictional-linked-card.yaml").write_text("# only the file name matters\n", encoding="utf-8")
+    (ready.drafts / "fictional-linked-draft.yaml").write_text("# only the file name matters\n", encoding="utf-8")
+    link_draft_to(ready, "fictional-linked-card", "fictional-linked-draft")
+    assert ready.apply("ops_add_study.json") == 0
+    checks = ready.checks()
+    assert checks["validator"] == [] and checks["passed"] is True
+
+
+def test_apply_still_reports_a_card_link_to_a_slug_that_exists_nowhere(ready: Env):
+    link_draft_to(ready, "fictional-missing-card")
+    assert ready.apply("ops_add_study.json") == 1
+    checks = ready.checks()
+    assert checks["passed"] is False
+    assert len(checks["validator"]) == 1
+    assert "M2" in checks["validator"][0] and "fictional-missing-card" in checks["validator"][0]
+
+
 def test_apply_rejects_invalid_operations_without_writing_a_card(ready: Env):
     before = ready.draft_text()
     assert ready.apply("ops_unknown_field.json") == 1

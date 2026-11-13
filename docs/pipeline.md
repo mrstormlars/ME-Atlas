@@ -56,7 +56,7 @@ The drafter writes a list of operations, not a card (`operations.py`). All keys 
 
 ## Checks and the two rounds
 
-`apply` never touches `drafts/`. It applies the operations to a copy, then runs the card validator (`cards validate`) and the citations check (`citations check`) on that copy and writes both results. A citation error that the card already had before the change is marked `preexisting` and does not fail the pair; warnings (C6) never do.
+`apply` never touches `drafts/`. It applies the operations to a copy, then runs the card validator (`cards validate`) and the citations check (`citations check`) on that copy and writes both results. A citation error that the card already had before the change is marked `preexisting` and does not fail the pair; warnings (C6) never do. Because the copy sits alone, a link from it to another card (rule M2) is resolved against the card files in `--drafts-dir` and `--cards-dir`; a link to a slug found in neither fails the check.
 
 - A failed check: the drafter gets one retry with the errors. Still failing: the pair is skipped and the report says why.
 - A passed check goes to the reviewer. The reviewer reads the context file, the operations and the applied result, never the drafter's reasoning (the operations file has no field for any).
