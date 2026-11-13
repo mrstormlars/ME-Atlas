@@ -1,5 +1,5 @@
 # Open-question nodes of the causal map: questions, never claims. At most one per layer to begin with.
-# `editorial: true` marks the editorial team's own question (shown as such); `asked_by` cites a publication that asks it.
+# `editorial: true` marks the project's own question (shown as such); `asked_by` cites a publication that asks it.
 - id: who-is-vulnerable
   layer: predisposition
   text: Why do some people, and not others, develop ME/CFS after the same infection?

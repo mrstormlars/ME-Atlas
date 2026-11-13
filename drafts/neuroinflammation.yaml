@@ -13,13 +13,15 @@ core_claim:
 level: 2
 level_reason:
   - text: >-
-      A controlled diffusion MRI study of 67 patients, with a diagnosis consistent with the Canadian Consensus
-      Criteria confirmed by two clinicians, and 67 healthy controls found widespread white matter differences
-      that the authors interpret as neuroinflammation; this is the study the level rests on, and no
-      other study on this card repeats this measure. The authors call their method an indirect measure of
-      neuroinflammation, and a published correction changed their reading of one marker from cellular
-      infiltration to cell shape change or a chronic depletion of microglia.
-    sources: [pmid:41834684]
+      A controlled diffusion MRI study of 67 patients, with a diagnosis consistent with the
+      Canadian Consensus Criteria confirmed by two clinicians, and 67 healthy controls found
+      widespread white matter differences that the authors interpret as neuroinflammation; this
+      is the study the level rests on, and no other study on this card repeats this measure
+      (unreplicated). The authors call their method an indirect measure of neuroinflammation,
+      and a published correction changed their reading of one marker from cellular infiltration
+      to cell shape change or a chronic depletion of microglia, and added a reading of the lower
+      hindered water ratio as cytotoxic-like rather than vasogenic edema.
+    sources: ['pmid:41834684', 'pmid:42227214']
   - text: >-
       Smaller imaging studies whose case definition is not yet verified point the same way: a PET study of 9
       patients found higher binding of a marker of activated microglia or astrocytes, and an MR spectroscopy
@@ -218,6 +220,28 @@ studies:
       whose cytokines and nitric oxide may influence the expression of circadian regulators such as CLOCK; it
       takes chronic fatigue syndrome, bipolar disorder and multiple sclerosis as example disorders. Cited on the
       map as the source of a proposed link, not as evidence for the level.
+  - id: pmid:42227214
+    title: 'Correction to "Evidence of White Matter Neuroinflammation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Diffusion-Based Neuroinflammation Imaging Study".'
+    year: 2026
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A published erratum to pmid:41834684, not a new patient study. It changes the reading of
+      the lower restricted fraction (NII-RF) from increased inflammatory cell infiltration to
+      cell shape change or a chronic depletion of microglia, reads the lower hindered water
+      ratio as cellular swelling or cytotoxic-like edema rather than vasogenic edema, and
+      removes one Discussion sentence. The correction lists no change to the group differences
+      in Table 2.
+    group: Same group as pmid:41834684 (erratum to that article; the erratum record lists no authors)
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Link to circadian-rhythm-disruption (founder ruling 2026-11-08): step 1 (proposed), resting on the review pmid:29759891 only, which is on

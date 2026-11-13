@@ -42,7 +42,7 @@ Both are optional. Absent means no symptom nodes and no question nodes, and the 
   layer: mechanism                 # predisposition, trigger, mechanism, dysfunction or symptom
   text: What keeps the fictional signal low?
   asked_by: [pmid:00000002]        # a publication that asks the question ...
-  # editorial: true                # ... or the editorial team's own question; exactly one of the two
+  # editorial: true                # ... or the project's own question; exactly one of the two
 ```
 
 An entry may say `todo: verify` instead of `sources` or `asked_by`/`editorial`. It is valid, but it is left out of the build and the report and printed as a warning, and a link to it is an M2 error. Use it when a case-definition document cannot be fetched and cached; nothing is cited from memory.
@@ -63,7 +63,7 @@ Not checked by code: that the cited study really measured both ends in the same 
 
 ## The page
 
-`map.html` (and `nb/map.html`), after "What changed" in the navigation: an introduction (a second view; links are hypotheses graded on their own scale; ME/CFS may be several conditions with different triggers that meet downstream), one section per layer plus "Not yet placed" when a card has no layer, each card as a link to its page with its links written as sentences `<text> — <support label> [n]` (the numbers refer to the card page's study anchors), the symptom nodes with the documents that list them, the open questions (with the publication that asks them, or "The editorial team's own question"), and the two convergence lists with counts. The card pages do not change.
+`map.html` (and `nb/map.html`), after "What changed" in the navigation: an introduction (a second view; links are hypotheses graded on their own scale; ME/CFS may be several conditions with different triggers that meet downstream), one section per layer plus "Not yet placed" when a card has no layer, each card as a link to its page with its links written as sentences `<text> — <support label> [n]` (the numbers refer to the card page's study anchors), the symptom nodes with the documents that list them, the open questions (with the publication that asks them, or "This project's own question, not asked in a publication"), and the two convergence lists with counts. The card pages do not change.
 
 ## The gaps page
 

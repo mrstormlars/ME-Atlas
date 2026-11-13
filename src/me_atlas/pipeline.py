@@ -32,6 +32,7 @@ import os
 import random
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -2965,6 +2966,317 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
 
 
 # ---------------------------------------------------------------------------
+# First publication: a whole-card audit moves a draft into cards/
+# ---------------------------------------------------------------------------
+
+PUBLICATION_REPORT = "publication-report.md"
+# The four audit records a whole card can have in the run folder: the file suffix and the part of the file name.
+_AUDIT_SUFFIXES = (("", False, False), ("-second", True, False), ("-L", False, True), ("-L-second", True, True))
+
+
+@dataclass
+class CardPublication:
+    """What `publish-card` decides about one draft: the text to publish (None when held back) and why."""
+
+    slug: str
+    date: str
+    published: bool
+    text: str | None
+    reasons: list[str]
+    records: dict[str, tuple[Path, AuditRecord]]  # file suffix ("", "-second", "-L", "-L-second") to the valid record
+    deciding: AuditRecord | None  # the audit that decided: the first (round-L first audit after a redraft)
+    would_text: str | None  # the card text the audits give, for the report (also when held back, if there is one)
+    would_level: int | None
+    draft_text: str
+
+
+def _load_card_audit(
+    cfg: Config, slug: str, *, second: bool, redraft: bool
+) -> tuple[AuditRecord | None, Path, str | None]:
+    """The valid whole-card audit record in the run folder, or (None, path, why it is missing or invalid)."""
+    path = cfg.audit_path(slug, None, second, redraft)
+    if not path.is_file():
+        return None, path, f"no audit record {path.name}"
+    try:
+        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        record = validate_audit_record(
+            cfg,
+            raw,
+            slug=slug,
+            key=None,
+            source=path,
+            context_path=cfg.audit_context_path(slug, None, redraft),
+            redraft=redraft,
+        )
+    except yaml.YAMLError as exc:
+        return None, path, f"{path.name} is not valid YAML: {str(exc).splitlines()[0]}"
+    except (OSError, PipelineError) as exc:
+        return None, path, str(exc).replace("\n", "; ")
+    return record, path, None
+
+
+def _same_audit(a: AuditRecord, b: AuditRecord) -> bool:
+    return a.decision == b.decision and a.accepted_level == b.accepted_level
+
+
+def _card_facts(text: str) -> dict[str, str]:
+    """The four things a first publication reports: level, contested mark and the two badge values."""
+    data = yaml.safe_load(text)
+    contested = data.get("contested")
+    rungs = contested.get("rungs") if isinstance(contested, dict) else None
+    badges = data.get("badges") or {}
+
+    def badge(name: str) -> str:
+        value = (badges.get(name) or {}).get("value")
+        return "null" if value is None else str(value).lower()
+
+    return {
+        "level": str(data.get("level")),
+        "contested": "null" if not rungs else "rungs " + ", ".join(str(r) for r in rungs),
+        "diagnostic_marker.value": badge("diagnostic_marker"),
+        "explains_pem.value": badge("explains_pem"),
+    }
+
+
+def _fact_differences(draft_text: str, other: dict[str, str]) -> list[tuple[str, str, str]]:
+    """(field, draft, other) for every field of ``other`` that differs from the draft."""
+    draft = _card_facts(draft_text)
+    return [(k, draft[k], v) for k, v in other.items() if draft.get(k) != v]
+
+
+def _published_card_problems(cfg: Config, slug: str, text: str) -> list[str]:
+    """The validator's complaints about ``text`` as a card in ``cards/`` (rule V16 included), for that file only."""
+    with tempfile.TemporaryDirectory() as tmp:
+        folder = Path(tmp) / "cards"
+        folder.mkdir()
+        path = folder / f"{slug}.yaml"
+        path.write_text(text, encoding="utf-8", newline="\n")
+        known = {p.stem for p in (*cfg.cards_dir.glob("*.yaml"), *cfg.drafts_dir.glob("*.yaml"))} | {slug}
+        _count, issues = cards.validate_paths(
+            [path], cards_dir=folder, content_dir=Path("content"), extra_known_slugs=known
+        )
+    return [str(i).replace(str(path), f"{slug}.yaml") for i in issues if i.file == str(path)]
+
+
+def whole_card_outcome(cfg: Config, slug: str, date: str) -> CardPublication:
+    """Decide the first publication of a draft from the whole-card audit records in ``cfg.run_dir``.
+
+    ``accept`` from both audits (the first and the second, from a fresh auditor): the draft text with ``last_checked``
+    set to ``date`` and ``ai_audit``. ``accept_lower`` from both audits at the same level: the one redraft (round L),
+    when it passed E4 and the checks, the reviewer accepted it, it is the result of its operations and both round-L
+    audits say ``accept``. Anything else (a reject, a missing or invalid record, two audits that differ, a redraft that
+    fails a step) holds the card back with the reasons and no text. The text must also validate as a card in cards/.
+    """
+    draft_path = cfg.drafts_dir / f"{slug}.yaml"
+    draft_text = draft_path.read_text(encoding="utf-8")
+    _load_card(draft_path)
+    records: dict[str, tuple[Path, AuditRecord]] = {}
+    problems: dict[str, str] = {}
+    for suffix, second, redraft in _AUDIT_SUFFIXES:
+        record, path, why = _load_card_audit(cfg, slug, second=second, redraft=redraft)
+        if record is not None:
+            records[suffix] = (path, record)
+        elif why is not None:
+            problems[suffix] = why
+    pub = CardPublication(slug, date, False, None, [], records, None, None, None, draft_text)
+
+    def held(reason: str) -> CardPublication:
+        pub.reasons.append(reason)
+        return pub
+
+    first = records.get("", (None, None))[1]
+    second = records.get("-second", (None, None))[1]
+    if first is None:
+        return held(f"no valid first audit: {problems['']}")
+    if first.decision == "reject":
+        return held("the audit decided reject")
+    if second is None:
+        return held(f"no valid second audit: {problems['-second']}")
+    if not _same_audit(first, second):
+        return held("the two audits differ")
+    if first.decision == "accept":
+        text = _set_last_checked(draft_text, date, "ai_audit")
+        pub.deciding, pub.would_text = first, text
+        return _finish(cfg, pub, text)
+    level = first.accepted_level
+    assert level is not None
+    pub.would_level = level
+    r = _load_round(cfg, slug, "", REDRAFT)
+    if r is None:
+        return held("no redraft recorded")
+    applied_path = cfg.applied_dir(slug, None, REDRAFT) / f"{slug}.yaml"
+    if applied_path.is_file():
+        pub.would_text = applied_path.read_text(encoding="utf-8")
+    if r.ops is None:
+        return held(f"redraft failed checks: {r.ops_problem}")
+    if ops_problems := redraft_ops_problems(r.ops, level, None):
+        return held("redraft failed checks: " + "; ".join(ops_problems))
+    if r.checks is None or not r.checks.get("passed"):
+        why = _check_failure_summary(r.checks) if r.checks is not None else "it was never applied (no check result)"
+        return held(f"redraft failed checks: {why}")
+    if r.review is None:
+        return held("redraft rejected in review: no review was recorded")
+    if r.review.verdict != "accept":
+        return held("redraft rejected in review")
+    if not applied_path.is_file():
+        return held("redraft failed checks: its applied text is missing")
+    try:
+        rederived = apply_operations(draft_text, r.ops, validate=False)
+    except OperationError as exc:
+        return held(f"redraft failed checks: its operations do not apply to the draft: {exc}")
+    if rederived != pub.would_text:
+        return held("redraft failed checks: its applied text does not match its operations")
+    first_l = records.get("-L", (None, None))[1]
+    second_l = records.get("-L-second", (None, None))[1]
+    if first_l is None:
+        return held(f"redraft not accepted in audit: no valid record: {problems['-L']}")
+    if first_l.decision != "accept":
+        return held(f"redraft not accepted in audit: {first_l.decision}")
+    if second_l is None:
+        return held(f"redraft not accepted in audit: the second audit is not valid: {problems['-L-second']}")
+    if second_l.decision != "accept":
+        return held(f"redraft not accepted in audit: the second audit decided {second_l.decision}")
+    text = _set_last_checked(pub.would_text, date, "ai_audit")
+    pub.deciding = first_l
+    return _finish(cfg, pub, text)
+
+
+def _finish(cfg: Config, pub: CardPublication, text: str) -> CardPublication:
+    """The audits agree: publish ``text`` unless it does not validate as a card in ``cards/``."""
+    if issues := _published_card_problems(cfg, pub.slug, text):
+        pub.reasons.append("the card to publish does not validate: " + "; ".join(issues))
+        return pub
+    pub.published, pub.text = True, text
+    return pub
+
+
+def _publication_differences(pub: CardPublication) -> tuple[list[tuple[str, str, str]], str]:
+    """The fields that differ between the draft and what is published (or, held back, what the audits give), and a
+    note on where the second column comes from."""
+    if pub.would_text is not None:
+        note = "what is published" if pub.published else "what the audits would give, from the redraft"
+        return _fact_differences(pub.draft_text, _card_facts(pub.would_text)), note
+    if pub.would_level is not None:
+        note = "the level the audits accept; the other fields would come from a redraft that does not exist"
+        draft = _card_facts(pub.draft_text)
+        return _fact_differences(pub.draft_text, {**draft, "level": str(pub.would_level)}), note
+    return [], "the audits give no card text"
+
+
+def _publication_report(pub: CardPublication) -> str:
+    diffs, note = _publication_differences(pub)
+    final = _card_facts(pub.text)["level"] if pub.text is not None else None
+    lines = [f"# First publication of {pub.slug}", ""]
+    if pub.published:
+        lines.append(f"Outcome: published at level {final} ({pub.date}).")
+    else:
+        lines.append("Outcome: held back. The draft stays in `drafts/`; no card is written.")
+        lines += [f"Held back: {reason}" for reason in pub.reasons]
+    lines += [
+        "",
+        "## Differences between the draft and what is published" if pub.published else "## What the audits would give",
+        "",
+    ]
+    if not pub.published and (pub.would_text is not None or pub.would_level is not None):
+        lines += [f"Source: {note}.", ""]
+    if pub.published or pub.would_text is not None or pub.would_level is not None:
+        if diffs:
+            lines += [
+                "| Field | Draft | Published |" if pub.published else "| Field | Draft | Audits |",
+                "| --- | --- | --- |",
+            ]
+            lines += [f"| {_cell(k)} | {_cell(a)} | {_cell(b)} |" for k, a, b in diffs]
+        else:
+            lines.append("No difference.")
+    else:
+        lines.append("None: the audits give no card text.")
+    lines += ["", "## The audits", ""]
+    names = {"": "First audit", "-second": "Second audit", "-L": "First audit of the redraft"}
+    names["-L-second"] = "Second audit of the redraft"
+    if not pub.records:
+        lines.append("No valid audit record.")
+    for suffix, (path, record) in pub.records.items():
+        level = f", accepted level {record.accepted_level}" if record.accepted_level is not None else ""
+        lines += [
+            f"### {names[suffix]} ({path.name})",
+            "",
+            f"- decision: {record.decision}{level}",
+            f"- reasons_summary: {record.reasons_summary}",
+            f"- would_change: {record.would_change}",
+            "",
+        ]
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
+def publication_changelog(cfg: Config, pub: CardPublication) -> tuple[Path, str]:
+    """The new text of ``cards/changelog.yaml`` with the one entry of this first publication; checked before return."""
+    assert pub.published and pub.text is not None and pub.deciding is not None
+    final = _card_facts(pub.text)
+    change = f"First publication at level {final['level']}"
+    names = {"level": "level", "contested": "contested mark", "diagnostic_marker.value": "diagnostic_marker badge"}
+    names["explains_pem.value"] = "explains_pem badge"
+    for field_name, was, _now in _fact_differences(pub.draft_text, final):
+        change += f"; the draft had {names[field_name]} {was}"
+    sources = list(dict.fromkeys(ev.source for part in pub.deciding.parts for ev in part.evidence))
+    entry = {
+        "date": dt.date.fromisoformat(pub.date),
+        "card": pub.slug,
+        "change": change,
+        "reason": pub.deciding.reasons_summary,
+        "sources": sources,
+        "tier": 2,
+        "decided_by": "ai_audit",
+    }
+    path = cfg.cards_dir / CHANGELOG_NAME
+    existing = path.read_text(encoding="utf-8") if path.is_file() else ""
+    dumped = yaml.safe_dump([entry], sort_keys=False, allow_unicode=True, default_flow_style=False, width=100)
+    text = (existing.rstrip("\n") + "\n" + dumped) if existing.strip() not in ("", "[]") else dumped
+    with tempfile.TemporaryDirectory() as tmp:
+        log = Path(tmp) / CHANGELOG_NAME
+        log.write_text(text, encoding="utf-8", newline="\n")
+        for card in {e["card"] for e in yaml.safe_load(text)}:
+            (Path(tmp) / f"{card}.yaml").write_text("", encoding="utf-8")
+        issues = cards.validate_changelog_file(log, today=dt.date.fromisoformat(pub.date))
+    if issues:
+        raise PipelineError("the new change-log entry does not validate:\n" + "\n".join(map(str, issues)))
+    return path, text
+
+
+def run_publish_card(cfg: Config, slug: str, date: str, *, dry_run: bool, out: Callable[[str], None] = print) -> int:
+    """`publish-card`: decide, write ``publication-report.md`` and, when both audits allow it, move the draft into
+    ``cards/``. Exit 0 for a decision (published or held back), 1 for a refusal (nothing written)."""
+    card_path = cfg.cards_dir / f"{slug}.yaml"
+    draft_path = cfg.drafts_dir / f"{slug}.yaml"
+    if card_path.exists():
+        raise PipelineError(f"{card_path} already exists; a card is published once")
+    if not draft_path.is_file():
+        raise PipelineError(f"no draft {draft_path} to publish")
+    pub = whole_card_outcome(cfg, slug, date)
+    copies = [(path, cfg.audits_dir / f"{date}-{slug}{suffix}.yaml") for suffix, (path, _record) in pub.records.items()]
+    changelog = publication_changelog(cfg, pub) if pub.published else None
+    if not dry_run:
+        for _src, dest in copies:
+            if dest.exists():
+                raise PipelineError(f"{dest} already exists; an audit record is never overwritten")
+    report = _publication_report(pub)
+    _write_text(cfg.f(PUBLICATION_REPORT), report)
+    out(report.rstrip("\n"))
+    if dry_run:
+        out(f"Dry run: only {cfg.f(PUBLICATION_REPORT)} was written.")
+        return 0
+    if pub.published:
+        assert pub.text is not None and changelog is not None
+        _write_text(card_path, pub.text)
+        draft_path.unlink()
+        _write_text(changelog[0], changelog[1])
+    for src, dest in copies:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dest)
+    out(f"The commit must end with the trailer: {pipeline_marker(date)}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Content-path check: protected content paths change only through the pipeline
 # ---------------------------------------------------------------------------
 
@@ -3180,6 +3492,15 @@ def _build_parser() -> argparse.ArgumentParser:
     pr.add_argument("--dry-run", action="store_true", help="print the commands; change nothing")
     pr.add_argument("--no-pr", action="store_true", help="branch and commit locally; do not push or open a PR")
 
+    pc = sub.add_parser(
+        "publish-card",
+        parents=[common],
+        help="first publication: move a draft into cards/ when two whole-card audits allow it (--run-dir DIR)",
+    )
+    pc.add_argument("slug")
+    pc.add_argument("--date", type=_date, metavar="YYYY-MM-DD", help="default: today")
+    pc.add_argument("--dry-run", action="store_true", help="write only DIR/publication-report.md")
+
     cp = sub.add_parser(
         "content-paths",
         help="fail when a commit without the pipeline marker changes cards/, drafts/, translations/ or audits/",
@@ -3252,6 +3573,11 @@ def main(
         if args.command == "prepare":
             date = args.date or today or dt.date.today()
             run_dir = args.run_dir or args.pipeline_dir / date.isoformat()
+        elif args.command == "publish-card":
+            if not args.run_dir:
+                raise PipelineError("publish-card needs --run-dir DIR (the folder audit-plan --card --out made)")
+            date = args.date or today or dt.date.today()
+            run_dir = args.run_dir
         elif (
             args.command in ("audit-plan", "record-audit", "redraft-plan")
             and args.card
@@ -3407,6 +3733,9 @@ def _dispatch(
             path = redraft_plan(cfg, args.slug, key, loader)
         out(str(path))
         return 0
+    if args.command == "publish-card":
+        assert date is not None
+        return run_publish_card(cfg, args.slug, date.isoformat(), dry_run=args.dry_run, out=out)
     if args.command == "audit-sample":
         sample = audit_sample(cfg, args.seed)
         out(

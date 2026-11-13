@@ -139,9 +139,9 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 | 3 Direction supported | `directional` | In patients: temporal order (A before B), an intervention on A that changes B, or a mediation analysis. A review alone never reaches this step. |
 
 - **Case definitions** are the ladder's: Oxford-only evidence stays at step 1, and a source that is a review (`design: other`) cannot carry step 2 or 3.
-- **No link without a source, at every step.** "Proposed by [review]" is a source; the editorial team's own reasoning is not. Links may run both ways and form loops.
+- **No link without a source, at every step.** "Proposed by [review]" is a source; an agent's or the founder's own reasoning is not. Links may run both ways and form loops.
 - **A link never raises a card's level.** A study that measured both ends and found no relation is recorded as a `context` study and the link text says so. Links have no contested mark in v1.
-- **Open questions** are empty boxes, never claims: a question sourced to a publication that asks it, or marked as the editorial team's own question.
+- **Open questions** are empty boxes, never claims: a question sourced to a publication that asks it, or marked as the project's own question (no publication asks it). The four current ones were set in the first mapping (founder ruling, 2026-11-06); no ruling yet says who decides a new one.
 - **Convergence is counted, not judged.** A node with two or more incoming links from different cards is listed as a *candidate common mechanism*; a card with two or more links out as a *candidate root*. Nobody writes "the common cause is".
 - **Gaps are counted and listed, never judged.** Symptoms with no link, links not yet tested in patients (step 1) and what the next rung requires are shown as lists with counts; no gap is ranked, weighted or called important.
 - **Who decides:** setting a card's layer and adding or changing a link are tier 2 decisions taken by the auditor, like levels, badges and contested marks (section 6). AI may propose and the `card-reviewer` checks each link against its sources; it never sets either.

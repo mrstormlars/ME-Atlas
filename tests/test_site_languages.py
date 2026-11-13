@@ -1078,7 +1078,7 @@ def test_norwegian_symptom_and_question_texts_come_from_the_nb_content_files(pro
     doc = page(proj_tmp.out, "nb/map.html")
     assert norm(doc.find(id="symptom-fatigue").text()).startswith("Fiktiv utmattelse")
     assert "Hva holder det fiktive signalet nede?" in norm(doc.find(id="question-own").text())
-    assert "Redaksjonens eget spørsmål" in norm(doc.find(id="question-own").text())
+    assert "Prosjektets eget spørsmål, ikke stilt i en publikasjon" in norm(doc.find(id="question-own").text())
     assert "Stilt i:" in norm(doc.find(id="question-asked").text())
     # no note on the translated ones; the question without a translation is English with the note
     assert "ikke oversatt" not in norm(doc.find(id="symptom-fatigue").text())
