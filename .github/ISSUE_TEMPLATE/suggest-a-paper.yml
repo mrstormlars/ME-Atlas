@@ -1,0 +1,36 @@
+name: Suggest a paper
+description: A paper that should be looked at for a card.
+title: "Suggested paper: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A suggested paper is checked against its own record and offered to the weekly pipeline; it is not copied into a card by hand. The content of ME Atlas is drafted, checked and graded by AI, and no medical or research expert has reviewed it. ME Atlas gives no treatment advice. Please describe what a study found; do not ask for or give advice on what anyone should take or do. Do not include personal medical details about named people.
+  - type: input
+    id: id
+    attributes:
+      label: PMID or DOI
+      description: For example a PMID (digits only) or a DOI. Please do not paste the title or abstract.
+    validations:
+      required: true
+  - type: input
+    id: hypothesis
+    attributes:
+      label: Hypothesis (card)
+      description: Which card the paper bears on, if you know.
+    validations:
+      required: false
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters for this card
+      description: One or two sentences on what the paper tested. Describe the finding, not a recommendation.
+    validations:
+      required: true
+  - type: checkboxes
+    id: no-advice
+    attributes:
+      label: No treatment advice
+      options:
+        - label: This suggestion contains no treatment advice and no personal medical details about named people.
+          required: true

@@ -1,0 +1,44 @@
+name: Report an error on a card
+description: A sentence on a card is wrong, unsupported or misquotes its source.
+title: "Error on card: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The content of ME Atlas is drafted, checked and graded by AI. No medical or research expert has reviewed it, so a careful error report is valuable. ME Atlas gives no treatment advice. Please describe what a study found; do not ask for or give advice on what anyone should take or do. Do not include personal medical details about named people.
+        Questions and general talk belong in Discussions, not here.
+  - type: input
+    id: card
+    attributes:
+      label: Card
+      description: The name of the card, or its file name.
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: The text you think is wrong
+      description: Quote the sentence as it appears on the card.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: The source that shows it is wrong
+      description: A PMID or DOI, and where in the paper (a sentence, table or figure). Without a source the report cannot be checked.
+    validations:
+      required: true
+  - type: textarea
+    id: should-say
+    attributes:
+      label: What it should say
+      description: If you know. Describe what the study found, not what anyone should do.
+    validations:
+      required: false
+  - type: checkboxes
+    id: no-advice
+    attributes:
+      label: No treatment advice
+      options:
+        - label: This report contains no treatment advice and no personal medical details about named people.
+          required: true
