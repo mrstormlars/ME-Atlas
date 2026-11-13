@@ -76,8 +76,8 @@ The change log's `sources` (`cards/changelog.yaml`) is not part of a card and V1
 | `early_signals` | List of sourced text. Unreplicated findings only. |
 | `studies` | List of studies (below). |
 | `last_checked` | `date` and `by`: `ai_pair` (the drafting and review agents; allowed on a draft only), `ai_audit` (the AI auditor, the value of an audited card) or `founder` (an overrule). A card in `cards/` must have `ai_audit` or `founder` (rule V16). After an audited change the pipeline sets `date` to the run date and `by` to `ai_audit`; a tier 1 only change leaves it as it is. |
-| `layer` | Optional. Where the hypothesis sits on the causal map: `predisposition`, `trigger`, `mechanism` or `dysfunction`. A card without one is listed as "Not yet placed". A founder decision. |
-| `links` | Optional list of links out of this card (below). A founder decision. |
+| `layer` | Optional. Where the hypothesis sits on the causal map: `predisposition`, `trigger`, `mechanism` or `dysfunction`. A card without one is listed as "Not yet placed". A tier 2 decision, taken by the auditor (functional spec section 6). |
+| `links` | Optional list of links out of this card (below). A tier 2 decision, taken by the auditor (functional spec section 6). |
 
 Unknown fields are errors. `level`, the numbers in `contested.rungs` and the change-log `tier` must be whole numbers: `true` and `2.0` are rejected (V1).
 
