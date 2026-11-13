@@ -167,7 +167,9 @@ Judged from the cached title and abstract only (`data/cache/pubmed/<pmid>.xml`),
 
 #### Ruling and query change, 2026-11-13
 
-The founder accepted "CFS/ME" on 2026-11-13. `"CFS/ME"[Title/Abstract]` was added to block 1 of `config/pubmed_query.txt`; block 2 is unchanged. No other term was accepted; the question of the older "post-viral fatigue syndrome" label is not ruled on.
+The founder accepted "CFS/ME" on 2026-11-13. `"CFS/ME"[Title/Abstract]` was added to block 1 of `config/pubmed_query.txt`; block 2 is unchanged. The four other terms ("post-viral fatigue syndrome", "postviral fatigue syndrome", "post-infectious fatigue syndrome", "chronic fatigue immune dysfunction syndrome") were tested and not accepted (founder: "Bare CFS/ME").
+
+On the two post-viral terms, if every *unclear* record were counted as about ME/CFS: the hyphenated "post-viral fatigue syndrome" would still not meet the criterion (8 of 20 sampled), while "postviral fatigue syndrome" would (10 of 14).
 
 - **Hit count before:** 9,403. **After:** 9,412 (both on 2026-11-13, no date window), a gain of 9, equal to the added-record count measured above.
 - After the change, `"CFS/ME"[Title/Abstract] NOT (query)` returns 0 records (result file `data/cache/query-diff/20261113T100810Z.json`).
