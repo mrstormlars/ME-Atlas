@@ -1948,8 +1948,10 @@ def _set_report(env: Env, monkeypatch, text: str, limit: int) -> None:
 def _unsplit(parts: list[str]) -> str:
     out = []
     for k, part in enumerate(parts, start=1):
-        lines = part.splitlines(keepends=True)
-        out.extend(lines[:-1] if k == 1 else lines[1:])
+        if k == 1:
+            out.append(part[: part[:-1].rfind("\n")])  # drop the added newline and the note line
+        else:
+            out.append(part.split("\n", 1)[1])
     return "".join(out)
 
 
@@ -2016,3 +2018,14 @@ def test_pr_dry_run_prints_the_comment_commands_and_runs_none(accepted: Env, mon
     assert accepted.cli("pr", "--dry-run", runner=runner) == 0
     assert runner.calls == []
     assert any(line.startswith("$ gh pr comment pipeline/2026-11-01 --body-file ") for line in accepted.out)
+
+
+def test_pr_cuts_a_line_longer_than_the_limit_and_still_round_trips(accepted: Env, monkeypatch):
+    report = "x" * 500 + "\n## B\nhi\n"
+    _set_report(accepted, monkeypatch, report, 200)
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    n = len([c for c in runner.calls if c[0] == "gh"])
+    parts = [(accepted.run / f"report-part-{k}.md").read_text(encoding="utf-8") for k in range(1, n + 1)]
+    assert n > 2 and all(len(p) <= 200 for p in parts)
+    assert _unsplit(parts) == report

@@ -1594,7 +1594,7 @@ GITHUB_BODY_LIMIT = 65_536  # characters GitHub accepts in a pull request body o
 def _part_notes(n: int, k: int) -> tuple[str, str]:
     """The line added to part 1 and the line added at the top of part k (of n)."""
     return (
-        f"The report continues in {n - 1} comment(s) below.\n",
+        f"\nThe report continues in {n - 1} comment(s) below.\n",
         f"Report, part {k} of {n}\n",
     )
 
@@ -1646,7 +1646,7 @@ def split_report(report: str, limit: int = GITHUB_BODY_LIMIT) -> list[str]:
     for k, chunk in enumerate(chunks, start=1):
         first, header = _part_notes(n, k)
         if k == 1:
-            parts.append(chunk + ("" if chunk.endswith("\n") else "\n") + first)
+            parts.append(chunk + first)
         else:
             parts.append(header + chunk)
     return parts
