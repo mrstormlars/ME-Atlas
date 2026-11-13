@@ -75,3 +75,23 @@
   - pmid:29759891
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-13
+  card: inherited-genetic-risk
+  change: First publication at level 2
+  reason: 'Level 2 accepted: one CCC-defined controlled HLA study (426 patients, 4511 controls) supports
+    an inherited association, not repeated by an independent group, no comparable contradicting study,
+    both badges correctly no, layer and proposed links sourced.'
+  sources:
+  - pmid:32210306
+  - pmid:32328064
+  - pmid:34403736
+  - pmid:40897283
+  - pmid:42015188
+  - pmid:11422420
+  - pmid:35318112
+  - pmid:26859813
+  - pmid:35821115
+  - pmid:11702053
+  - pmid:42196410
+  tier: 2
+  decided_by: ai_audit
