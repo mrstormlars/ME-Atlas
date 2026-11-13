@@ -1,0 +1,28 @@
+name: Bug or site problem
+description: Something in the code, the build or the website does not work.
+title: "Bug: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a problem with the code or the site: a broken page or link, an accessibility problem, a failing test. A factual error on a card has its own form. ME Atlas gives no treatment advice. ME Atlas gives no treatment advice. Please describe what a study found; do not ask for or give advice on what anyone should take or do. Do not include personal medical details about named people.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you saw. The page address or file name helps.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Browser and device, or command you ran
+    validations:
+      required: false
+  - type: checkboxes
+    id: no-advice
+    attributes:
+      label: No treatment advice
+      options:
+        - label: This report contains no treatment advice and no personal medical details about named people.
+          required: true

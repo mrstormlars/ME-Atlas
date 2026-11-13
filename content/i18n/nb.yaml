@@ -20,6 +20,7 @@ nav.aria: 'Hovedmeny'
 tips.title: 'Forklaringer av de merkede ordene på denne siden'
 footer.review: 'Innholdet, også hvert evidensnivå, utarbeides, kontrolleres og avgjøres av KI-verktøy. Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått det. Se <a href="{lroot}methods.html">Metode</a>.'
 footer.advice: 'Dette nettstedet beskriver status for evidensen. Det gir ingen behandlingsråd. Bygget {built}.'
+footer.licence: 'Koden har MIT-lisens; innholdet har lisensen CC BY 4.0. Artikkeltitler og setninger sitert fra artikler tilhører rettighetshaverne.'
 
 # --- bare på oversatte sider ---
 translation.notice: 'Denne siden er en oversettelse av den engelske siden, som er den gjeldende versjonen. <a href="{english_url}">Les den engelske siden</a>.'

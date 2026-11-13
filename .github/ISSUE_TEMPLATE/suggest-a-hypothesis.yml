@@ -1,0 +1,35 @@
+name: Suggest a hypothesis
+description: A hypothesis about a cause of ME/CFS or long COVID that has no card yet.
+title: "Suggested hypothesis: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The inclusion rule (docs/ME-Atlas-functional-spec.md, section 2): a hypothesis is listed when it has at least one peer-reviewed study with data from an ME/CFS cohort defined by a recognised case definition. The rule judges method, not origin.
+        Sources are required: a suggestion without a peer-reviewed study cannot be considered. The independent AI auditor decides new hypotheses against this rule; no medical or research expert has reviewed ME Atlas. ME Atlas gives no treatment advice. Please describe what a study found; do not ask for or give advice on what anyone should take or do. Do not include personal medical details about named people.
+  - type: input
+    id: name
+    attributes:
+      label: The hypothesis, in one line
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: What it claims goes wrong, in plain words
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: PMIDs or DOIs of the peer-reviewed study or studies in an ME/CFS cohort, and the case definition if you know it (for example Fukuda, CCC, ICC, IOM 2015).
+    validations:
+      required: true
+  - type: checkboxes
+    id: no-advice
+    attributes:
+      label: No treatment advice
+      options:
+        - label: This suggestion contains no treatment advice and no personal medical details about named people.
+          required: true
