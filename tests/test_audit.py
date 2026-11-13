@@ -167,10 +167,101 @@ def test_a_study_with_no_cached_record_is_named_and_cannot_be_cited(ready: Env):
     assert "### Record: pmid:90000104" not in text
 
 
-def test_the_context_says_when_it_cuts_a_full_text(ready: Env):
+def jats(*sentences: str) -> bytes:
+    body = "".join(f"<p>{x}</p>" for x in sentences)
+    return (
+        f"<article><front><article-meta><title-group><article-title>T</article-title></title-group></article-meta>"
+        f"</front><body><sec><title>Results</title>{body}</sec></body></article>"
+    ).encode()
+
+
+def loader_for(texts: dict[str, bytes]):
+    """A full-text loader with a cached text only for the PMIDs in ``texts``; it records which it was asked for."""
+    asked: list[str] = []
+
+    def load_it(pmid: str, pmcid: str | None = None, **_kw) -> pipeline.FullTextResult:
+        asked.append(pmid)
+        if pmid in texts:
+            return pipeline.FullTextResult(texts[pmid], f"fictional cache, PMC{pmid}")
+        return pipeline.FullTextResult(None, "no open full text")
+
+    load_it.asked = asked  # type: ignore[attr-defined]
+    return load_it
+
+
+LAST_SENTENCE = "LAST-SENTENCE-OF-A-LONG-FULL-TEXT-5d3a."
+
+
+def record_block(text: str, study_id: str) -> str:
+    return text.split(f"### Record: {study_id}")[1].split("\n### ")[0].split("\n## ")[0]
+
+
+def test_a_carrier_full_text_longer_than_the_old_budget_appears_whole(ready: Env):
+    long_text = jats(*(["A filler sentence about widget signalling."] * 600), LAST_SENTENCE)
+    assert len(long_text) > 12_000
     ready.apply("ops_propose_level.json")
-    text = pipeline.build_audit_context(cfg_of(ready), SLUG, NEW_PMID, fulltext_loader(), budget=40)
-    assert "TRUNCATED: the first 40 of " in text
+    text = pipeline.build_audit_context(cfg_of(ready), SLUG, NEW_PMID, loader_for({"90000100": long_text}))
+    block = record_block(text, CITED)  # pmid:90000100 carries the level
+    assert LAST_SENTENCE in block and "TRUNCATED" not in text
+    assert "Not truncated (" in block and " characters)." in block
+
+
+def early_signal_ops(env: Env) -> None:
+    """A change whose new study is cited only in an early signal: not a carrier of the level, a badge or the mark."""
+    ops = load(FIXTURES / "agent" / "ops_add_study.json")
+    ops["operations"][1].update(field="early_signals", text="A fictional unreplicated signal.")
+    path = env.run / "ops" / f"{SLUG}-{NEW_PMID}-r1.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(ops), encoding="utf-8")
+    assert env.cli("apply", SLUG, str(path), "--round", "1") == 0
+
+
+def test_a_non_carrier_with_a_cached_full_text_shows_the_abstract_only(ready: Env):
+    early_signal_ops(ready)
+    loader = loader_for({"90000100": jats("Carrier text."), "90000101": jats(LAST_SENTENCE)})
+    text = pipeline.build_audit_context(cfg_of(ready), SLUG, NEW_PMID, loader)
+    block = record_block(text, PAPER)
+    assert "Abstract only (not a carrier of the level, a badge or the contested mark)" in block
+    assert "A total of 60 patients and 55 controls were compared." in block  # the abstract is there
+    assert LAST_SENTENCE not in text and "90000101" not in loader.asked
+    assert "Carrier text." in record_block(text, CITED)
+
+
+def test_a_carrier_without_a_cached_full_text_gets_the_abstract_and_the_plain_statement(ready: Env):
+    ready.apply("ops_propose_level.json")
+    text = pipeline.build_audit_context(cfg_of(ready), SLUG, NEW_PMID, loader_for({}))
+    block = record_block(text, CITED)
+    assert (
+        "FULL TEXT NOT CACHED: only the abstract is given. A statement on the card that is not in this abstract may "
+        "stand in the full text; it cannot be checked here."
+    ) in block
+    assert "Abstract:" in block
+
+
+def test_an_id_the_change_newly_adds_to_level_reason_is_a_carrier(ready: Env):
+    ready.apply("ops_propose_level.json")  # level_reason now cites pmid:90000101, which the card did not cite before
+    loader = loader_for({"90000100": jats("Old carrier."), "90000101": jats(LAST_SENTENCE)})
+    text = pipeline.build_audit_context(cfg_of(ready), SLUG, NEW_PMID, loader)
+    assert LAST_SENTENCE in record_block(text, PAPER)
+    assert "90000101" in loader.asked
+    base = pipeline.carrier_ids(pipeline._load_card(ready.drafts / f"{SLUG}.yaml"))
+    assert PAPER not in base and CITED in base
+
+
+def test_a_quote_from_a_full_text_the_auditor_was_not_shown_is_refused(ready: Env, monkeypatch, capsys):
+    early_signal_ops(ready)
+    ready.put("review", "review_accept.json")
+    full = "HIDDEN-FULLTEXT-SENTENCE-8c2f is only in the cached full text."
+    monkeypatch.setattr(pipeline.citations.CacheReader, "fulltext", lambda self, pmid: full)
+    assert ready.cli("audit-plan", SLUG, NEW_PMID, fulltext=loader_for({"90000100": jats("C.")})) == 0
+    # PAPER is a non-carrier here: shown as abstract only, so its cached full text may not be quoted.
+    quote = "HIDDEN-FULLTEXT-SENTENCE-8c2f is only in the cached full text."
+    write_record(ready, audit_data(parts=part_with(evidence=[{"source": PAPER, "quote": quote}])))
+    assert record(ready) == 1
+    assert "is not found word for word in the cached record of " + PAPER in capsys.readouterr().err
+    # The same quote from a carrier (CITED) is accepted: its full text was given whole.
+    write_record(ready, audit_data(parts=part_with(evidence=[{"source": CITED, "quote": quote}])))
+    assert record(ready) == 0
 
 
 def test_a_whole_card_context_holds_the_card_file_and_goes_to_out(env: Env, tmp_path: Path):

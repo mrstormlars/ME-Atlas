@@ -62,9 +62,6 @@ DEFAULT_SPEC = Path("docs/ME-Atlas-functional-spec.md")
 # The full text goes into the context file up to this many characters; the file says so when it cuts.
 FULLTEXT_CHAR_BUDGET = 60_000
 MAX_ROUNDS = 2
-# Each cited record's full text goes into an audit context file up to this many characters; the file says so
-# when it cuts. (A card cites many studies, so the budget per record is lower than for the drafting context.)
-AUDIT_FULLTEXT_CHAR_BUDGET = 12_000
 # A rubric excerpt in an audit record must be at least this long after normalisation (contract decision D5).
 MIN_RUBRIC_CHARS = 20
 BASE_BRANCH = "main"
@@ -1193,13 +1190,37 @@ def _cached_preprint(cfg: Config, doi: str) -> europepmc.PreprintRecord:
     return record
 
 
-def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, budget: int) -> list[str]:
-    """One cited record for the audit context: its fields, abstract and (when cached) full text."""
+ABSTRACT_ONLY_NOTE = "Abstract only (not a carrier of the level, a badge or the contested mark)."
+FULLTEXT_NOT_CACHED_NOTE = (
+    "FULL TEXT NOT CACHED: only the abstract is given. A statement on the card that is not in this abstract may "
+    "stand in the full text; it cannot be checked here."
+)
+
+
+def carrier_ids(card: cards.Card) -> set[str]:
+    """E1: the study ids cited in ``level_reason``, ``contested.reason`` and the reason of each badge.
+
+    These are the sources that carry the level, a badge or the contested mark; the auditor gets their full text.
+    """
+    found: list[str] = cards.reason_sources(card.level_reason)
+    if card.contested is not None:
+        found += cards.reason_sources(card.contested.reason)
+    found += cards.reason_sources(card.badges.diagnostic_marker.reason)
+    found += cards.reason_sources(card.badges.explains_pem.reason)
+    return set(found)
+
+
+def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carrier: bool) -> list[str]:
+    """One cited record for the audit context: its fields and abstract; for a carrier (E1) also its full text, uncut.
+
+    A study that is not a carrier gets the abstract only (the full text is not even loaded). A carrier with no cached
+    full text gets the abstract and the statement ``FULLTEXT_NOT_CACHED_NOTE`` (E2).
+    """
     lines = [f"### Record: {study_id}", ""]
     if study_id.startswith("pmid:"):
         pmid = study_id.removeprefix("pmid:")
         record = _record(cfg, pmid)
-        full = loader(pmid, record.pmcid)
+        full = loader(pmid, record.pmcid) if carrier else None
         lines += [
             f"- title: {record.title}",
             f"- authors: {', '.join(record.authors) or 'not stated'}",
@@ -1215,7 +1236,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, budg
         ]
     else:
         pre = _cached_preprint(cfg, study_id.removeprefix("doi:"))
-        full = loader(pre.ppr_id, pre.pmcid, preprint=pre)
+        full = loader(pre.ppr_id, pre.pmcid, preprint=pre) if carrier else None
         abstract = " ".join(_TAG_RE.sub(" ", pre.abstract).split()) if pre.abstract else None
         lines += [
             f"- title: {pre.title}",
@@ -1229,16 +1250,17 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, budg
             abstract or "(the record has no abstract)",
         ]
     lines += ["", "Full text:", ""]
-    if full.xml is None:
-        lines.append(f"No full text is available: {full.note}.")
+    if not carrier:
+        lines.append(ABSTRACT_ONLY_NOTE)
+    elif full is None or full.xml is None:
+        lines.append(FULLTEXT_NOT_CACHED_NOTE)
+        if full is not None:
+            lines.append(f"(Why: {full.note}.)")
     else:
         text = europepmc.article_text(full.xml)
         lines.append(f"Source: {full.note}. The reference list is left out.")
-        if len(text) > budget:
-            lines.append(f"TRUNCATED: the first {budget} of {len(text)} characters follow; the rest was left out.")
-        else:
-            lines.append(f"Not truncated ({len(text)} characters).")
-        lines += ["", text[:budget]]
+        lines.append(f"Not truncated ({len(text)} characters).")
+        lines += ["", text]
     lines.append("")
     return lines
 
@@ -1259,8 +1281,6 @@ def build_audit_context(
     slug: str,
     key: str | None,
     loader: FullTextLoader,
-    *,
-    budget: int = AUDIT_FULLTEXT_CHAR_BUDGET,
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -1271,6 +1291,7 @@ def build_audit_context(
     base_card = _load_card(base)
     base_text = strip_yaml_comments(base.read_text(encoding="utf-8"))
     study_ids = [s.id for s in base_card.studies]
+    carriers = carrier_ids(base_card)
     if key is not None:
         paper_id = _paper_id_of_key(cfg, key)
         n = _last_applied_round(cfg, slug, key)
@@ -1285,7 +1306,9 @@ def build_audit_context(
                 tofile=f"applied/{slug}.yaml",
             )
         )
-        study_ids += [s.id for s in _load_card(applied / f"{slug}.yaml").studies]
+        applied_card = _load_card(applied / f"{slug}.yaml")
+        study_ids += [s.id for s in applied_card.studies]
+        carriers = carrier_ids(applied_card)  # E1: the carriers of the card once the change is in
         subject = f"card `{slug}` and the change from paper `{paper_id}` (round {n})"
         change_section = [
             "## 1. The proposed change (the diff of the card)",
@@ -1313,7 +1336,7 @@ def build_audit_context(
     records: list[str] = []
     for study_id in ids:
         try:
-            records += _audit_record_lines(cfg, study_id, loader, budget)
+            records += _audit_record_lines(cfg, study_id, loader, study_id in carriers)
         except PipelineError:
             records += [
                 f"### Not cached: {study_id}",
@@ -1363,15 +1386,33 @@ def _context_record_ids(context: str) -> set[str]:
     return {m.group(1).lower() for m in _RECORD_HEADING.finditer(context[start:end])}
 
 
-def _record_quote_text(reader: citations.CacheReader, study_id: str) -> str | None:
-    """Title, abstract and cached full text of a study, for the verbatim quote check; None if no cached record."""
+def _abstract_only_ids(context: str) -> set[str]:
+    """The ids of the records in section 3 that the context gives as abstract only (not carriers, E1)."""
+    start = context.find("\n## 3. Cited records")
+    end = context.find("\n## 4. ", start)
+    if start < 0 or end < 0:
+        return set()
+    found: set[str] = set()
+    for block in re.split(r"(?m)^(?=### )", context[start:end]):
+        match = _RECORD_HEADING.match(block)
+        if match and ABSTRACT_ONLY_NOTE in block:
+            found.add(match.group(1).lower())
+    return found
+
+
+def _record_quote_text(reader: citations.CacheReader, study_id: str, *, abstract_only: bool = False) -> str | None:
+    """Title, abstract and cached full text of a study, for the verbatim quote check; None if no cached record.
+
+    With ``abstract_only`` (a record the context gave as abstract only) the full text is left out: the auditor was
+    not shown it, so a quote from it cannot be checked against what it read.
+    """
     pieces: list[str] = []
     if study_id.startswith("pmid:"):
         record = reader.record(study_id.removeprefix("pmid:"))
         if isinstance(record, str):
             return None
         pieces += [record.title, record.abstract or ""]
-        full = reader.fulltext(record.pmid)
+        full = None if abstract_only else reader.fulltext(record.pmid)
     else:
         try:
             pre = reader.preprint(study_id)
@@ -1430,6 +1471,7 @@ def validate_audit_record(
         if record.accepted_level is not None and record.accepted_level >= ceiling:
             problems.append(f"accepted_level {record.accepted_level} must be lower than the level {ceiling}")
     cited = _context_record_ids(context)
+    abstract_only = _abstract_only_ids(context)
     reader = citations.CacheReader(cfg.cache_dir)
     texts: dict[str, str | None] = {}
     rubric_texts = [citations.normalise_quote(spec_section(cfg.spec_path, n)) for n in (2, 3)]
@@ -1447,7 +1489,9 @@ def validate_audit_record(
                 problems.append(f"{where}.source {ev.source} is not a record in the context file {context_path.name}")
                 continue
             if ev.source not in texts:
-                texts[ev.source] = _record_quote_text(reader, ev.source)
+                texts[ev.source] = _record_quote_text(
+                    reader, ev.source, abstract_only=ev.source.lower() in abstract_only
+                )
             text = texts[ev.source]
             if text is None:
                 problems.append(f"{where}: no cached record for {ev.source} to check the quote against")
