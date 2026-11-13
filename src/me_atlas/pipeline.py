@@ -1588,6 +1588,70 @@ def final_card_texts(cfg: Config, outcomes: Sequence[Outcome]) -> dict[str, str]
     return result
 
 
+GITHUB_BODY_LIMIT = 65_536  # characters GitHub accepts in a pull request body or comment
+
+
+def _part_notes(n: int, k: int) -> tuple[str, str]:
+    """The line added to part 1 and the line added at the top of part k (of n)."""
+    return (
+        f"The report continues in {n - 1} comment(s) below.\n",
+        f"Report, part {k} of {n}\n",
+    )
+
+
+def _pack_report(report: str, budget: int) -> list[str]:
+    """Cut at the start of '## ' lines; an oversized section is cut at line boundaries, a huge line hard-cut."""
+    sections: list[str] = []
+    for line in report.splitlines(keepends=True):
+        if line.startswith("## ") or not sections:
+            sections.append(line)
+        else:
+            sections[-1] += line
+    units: list[str] = []
+    for section in sections:
+        if len(section) <= budget:
+            units.append(section)
+            continue
+        for line in section.splitlines(keepends=True):
+            units.extend(line[i : i + budget] for i in range(0, len(line), budget))
+    chunks: list[str] = []
+    current = ""
+    for unit in units:
+        if current and len(current) + len(unit) > budget:
+            chunks.append(current)
+            current = ""
+        current += unit
+    if current:
+        chunks.append(current)
+    return chunks
+
+
+def split_report(report: str, limit: int = GITHUB_BODY_LIMIT) -> list[str]:
+    """Split a report into parts of at most ``limit`` characters, each with its note line.
+
+    Part 1 ends with a line saying the report continues in comments; every later part starts with
+    "Report, part k of n". Removing those lines and joining the parts gives the report back.
+    """
+    if len(report) <= limit:
+        return [report]
+    n = 2
+    while True:
+        reserve = max(len(_part_notes(n, 1)[0]), len(_part_notes(n, n)[1]))
+        chunks = _pack_report(report, limit - reserve)
+        if len(chunks) <= n:
+            break
+        n = len(chunks)
+    n = len(chunks)
+    parts = []
+    for k, chunk in enumerate(chunks, start=1):
+        first, header = _part_notes(n, k)
+        if k == 1:
+            parts.append(chunk + ("" if chunk.endswith("\n") else "\n") + first)
+        else:
+            parts.append(header + chunk)
+    return parts
+
+
 def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Callable[[str], None] = print) -> int:
     prep = _read_json(cfg.f("prepare.json"))
     report = build_report(cfg)
@@ -1642,6 +1706,13 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
         return 0
     if not step(["git", "push", "-u", "origin", branch]):
         return 1
+    parts = split_report(report, GITHUB_BODY_LIMIT)
+    body_path = report_path
+    if len(parts) > 1:
+        part_paths = [cfg.f(f"report-part-{k}.md") for k in range(1, len(parts) + 1)]
+        for path, text in zip(part_paths, parts, strict=True):
+            _write_text(path, text)
+        body_path = part_paths[0]
     if not step(
         [
             "gh",
@@ -1654,10 +1725,13 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
             "--title",
             title,
             "--body-file",
-            str(report_path),
+            str(body_path),
         ]
     ):
         return 1
+    for path in part_paths[1:] if len(parts) > 1 else []:
+        if not step(["gh", "pr", "comment", branch, "--body-file", str(path)]):
+            return 1
     return 0
 
 
