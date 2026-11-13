@@ -222,11 +222,11 @@ def test_an_editorial_question_is_labelled_as_the_teams_own_and_a_sourced_one_sa
     doc = page(map_site.out, "map.html")
     own = doc.find(id="question-own")
     assert "What keeps the fictional widget signal low?" in norm(own.text())
-    assert "The editorial team's own question" in norm(own.text()) and "Asked in" not in norm(own.text())
+    assert "This project's own question, not asked in a publication" in norm(own.text()) and "Asked in" not in norm(own.text())
     asked = doc.find(id="question-asked")
     assert "Asked in: pmid:00000006" in norm(asked.text())
     assert asked.find("a").get("href") == "https://pubmed.ncbi.nlm.nih.gov/00000006/"
-    assert "editorial team" not in norm(asked.text())
+    assert "own question" not in norm(asked.text())
     assert section_of(doc, "question-own") == "layer-mechanism"
     assert section_of(doc, "question-asked") == "layer-trigger"
 
