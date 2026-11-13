@@ -1,0 +1,89 @@
+card: endothelial-dysfunction
+decision: accept
+parts:
+  - decision_part: "The level 2 base: a controlled study in a CCC-defined cohort (Berlin, pmid:32154656)."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32154656
+        quote: "Clinical diagnosis of ME/CFS was based on Canadian Criteria."
+      - source: pmid:32154656
+        quote: "Twenty healthy subjects of similar age and body mass index were used as a control group."
+      - source: pmid:32154656
+        quote: "Peripheral ED was found in 18 of 35 patients (51%) with ME/CFS and in 4 healthy subjects (20%, P < 0.05)."
+  - decision_part: "The proposed level 3: the Bergen cyclophosphamide substudy (pmid:33829023) as an independent repeat in a separate CCC cohort, with its control-group limitation stated on the card."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:33829023
+        quote: "This substudy to the open-label phase II trial \"Cyclophosphamide in ME/CFS\" included 40 patients with mild-moderate to severe ME/CFS according to Canadian consensus criteria, aged 18-65 years."
+      - source: pmid:33829023
+        quote: "Baseline FMD was significantly reduced in patients (median FMD 5.9%, range 0.5-13.1, n = 35) compared to healthy individuals (median FMD 7.7%, range 0.7-21, n = 66) (p = 0.005), as was PORH with patient score median 1,331 p.u. (range 343-4,334) vs. healthy individuals 1,886 p.u. (range 808-8,158) (p = 0.003)."
+      - source: pmid:33829023
+        quote: "Patients were recruited from March to December 2015 at Haukeland University Hospital in Bergen, Norway."
+      - source: pmid:33829023
+        quote: "The study did not include a designated control group, but relied on endothelial function data from healthy individuals included as control groups for two other studies, one of which consisted of women only."
+      - source: pmid:35317812
+        quote: "A recent study of postinfectious ME/CFS confirmed these findings by demonstrating ED through both RH assessment and flow-mediated dilatation [11]."
+  - decision_part: "The RituxME substudy (pmid:36730360) is correctly not counted as a further independent repeat: same group, same reference controls."
+    rubric: "Consistency (repeated by different groups)"
+    evidence:
+      - source: pmid:33829023
+        quote: "The reference group for FMD consisted of 66 healthy controls participating in a study of endothelial function in women with pre-eclampsia performed by MKS (32), and the reference group for PORH consisted of 30 healthy volunteers examined by KS for an endothelial function substudy to the multi-center RCT RituxME (28)."
+      - source: pmid:36730360
+        quote: "ME/CFS patients had markedly reduced FMD compared to healthy controls at baseline (5.1% vs. 8.2%, p< 0.0001, adjusted for arterial diameter and sex), and significantly lower microvascular regulation measured by PORH than healthy controls (1354 PU vs. 2208 PU, p = 0.002)."
+  - decision_part: "No contested mark: the Stanford null result (pmid:29426834) applied Fukuda criteria with PEM required, which ranks below CCC, and the New Zealand ICC study (pmid:33671082) measured arterial stiffness, a different measure."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29426834
+        quote: "When designing the study we used the 1994 Centers for Disease Control (CDC)/Fukuda international diagnostic criteria for ME/CFS, but required participants to have post exertional malaise."
+      - source: pmid:29426834
+        quote: "Regarding assessment of endothelial function, the reactive hyperemia index (RHI) was similar in both groups at rest (2.21 ± 0.71 vs 2.44 ± 0.67, p = 0.07)."
+      - source: pmid:33671082
+        quote: "Inclusion criteria for ME/CFS participants was determined by whether they met the International Consensus Criteria [24]."
+      - source: pmid:33671082
+        quote: "No significant differences were found when ME/CFS were directly compared to controls at baseline."
+  - decision_part: "Not level 4: no controlled experiment changed endothelial function and changed the illness; the controlled trials found no effect on vessel measures."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25455721
+        quote: "There was no effect of treatment on pulse wave velocity at 6 months (adjusted treatment effect 0.0 m/s; 95% CI -0.6 to 0.6; p = 0.93)."
+      - source: pmid:36730360
+        quote: "There were no differences between the treatment and placebo groups in symptom changes or vascular measures."
+      - source: pmid:33829023
+        quote: "Changes in endothelial function did not follow clinical responses during follow-up after cyclophosphamide IV intervention."
+  - decision_part: "Diagnostic marker badge: no."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32154656
+        quote: "ED was defined by reactive hyperaemia index ≤1.81."
+      - source: pmid:35317812
+        quote: "Five of the 14 post-COVID ME/CFS patients and five of the 16 PCS patients showed ED defined by a diminished RHI (< 1.67), but none of HCs exhibited this finding."
+      - source: pmid:42625188
+        quote: "The present findings are exploratory and hypothesis-generating and require validation in larger, independent and prospective cohorts."
+      - source: pmid:33829023
+        quote: "Further studies and validation would certainly be required if FMD or PORH testing of ME/CFS patients were to be applied in a clinical or diagnostic setting."
+  - decision_part: "Explains-PEM badge: no. The two post-exercise studies measured vessel function, not symptoms tracked after exertion and linked to it."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis."
+    evidence:
+      - source: pmid:29426834
+        quote: "There was no difference in RHI during recovery (2.40 ± 0.71 vs 2.12 ± 1.12, p = 0.14) or 18 hours post exercise (2.40 ± 0.70 vs 2.42 ± 0.68, p = 0.92)."
+      - source: pmid:33671082
+        quote: "During recovery, the 48 h control group experienced a significant 7.2% reduction in AIx75 from baseline measures (p < 0.05), while the matched ME/CFS experienced no change in AIx75."
+  - decision_part: "Layer: dysfunction."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:33829023
+        quote: "Patients with ME/CFS had reduced endothelial function affecting both large and small vessels compared to healthy controls."
+  - decision_part: "Link to orthostatic-intolerance-cerebral-blood-flow at step 1 (proposed), sourced to a review."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516145
+        quote: "Endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion."
+  - decision_part: "Early signals (PAI-1 in Barcelona; retinal artery-to-vein ratio in Munich) are single, unrepeated findings and are labelled as not yet repeated."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:38600563
+        quote: "ME/CFS patients also showed higher levels of serpin E1 (PAI-1) and E-selectin than did both long COVID and matched control subjects (p < 0.01 in all cases)."
+      - source: pmid:42625188
+        quote: "AVR was lower in PCS patients with ME/CFS than in both NI controls (p < 0.001) and recovered individuals (p = 0.010)."
+reasons_summary: "Level 3 accepted: lower endothelial function in a CCC cohort in Berlin was found again in a separate CCC cohort by an unrelated Bergen group; the only null result on the same measure used Fukuda, so the level is not contested; both badges no; dysfunction layer and a proposed link are supported."
+would_change: "A controlled study in a CCC, ICC or IOM 2015 cohort with at least 18 patients that finds no difference in reactive hyperaemia, PORH or FMD would contest rung 3. So would treating the Stanford study (pmid:29426834) as ICC: its authors label their Fukuda-plus-PEM cohort as matching the 2011 criteria, but it applied Fukuda criteria. A finding that the Bergen and Berlin cohorts overlap would remove the independent repeat. A controlled intervention that changes endothelial function and the illness would be needed for level 4. Note on wording, which does not change the decision: the explains_pem reason says the New Zealand groups \"were not compared directly\". That holds for the change from baseline, but the paper's table does give a between-group p value at 48 hours. The full texts of pmid:25455721 and pmid:16479189 are not cached; the card statements drawn from them match their abstracts, and neither statement carries the level or a badge."

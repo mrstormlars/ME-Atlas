@@ -1,0 +1,67 @@
+card: endothelial-dysfunction
+decision: reject
+parts:
+  - decision_part: "The level 3. Supported: a controlled Berlin study of a CCC cohort found a lower reactive hyperaemia index, and a Bergen group with no shared authors found reduced endothelial function in a separate CCC cohort against healthy controls (borrowed from two other studies, as the card says)."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:32154656
+        quote: "Diagnosis of ME/CFS was based on Canadian Criteria1 and exclusion of other medical or neurological diseases, which may cause fatigue."
+      - source: pmid:32154656
+        quote: "However, RHI was significantly reduced in patients compared with healthy controls (1.95 ± 0.47 vs. 2.21 ± 0.37, P < 0.05, Figure 1 A)."
+      - source: pmid:33829023
+        quote: "Inclusion criteria were age 18 to 65, a confirmed ME/CFS diagnosis according to Canadian consensus criteria (4), disease duration of minimum 2 years, disease severity from mild-moderate to severe (excluding mild and very severe ME/CFS) and signed informed consent."
+      - source: pmid:33829023
+        quote: "Conclusions: Patients with ME/CFS had reduced endothelial function affecting both large and small vessels compared to healthy controls."
+      - source: pmid:33829023
+        quote: "The study did not include a designated control group, but relied on endothelial function data from healthy individuals included as control groups for two other studies, one of which consisted of women only."
+  - decision_part: "Level 4 not reached. Supported: in the controlled interventions on the card, neither vitamin D nor rituximab changed vessel measures."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25455721
+        quote: "High-dose oral vitamin D3 did not improve markers of vascular health or fatigue in patients with chronic fatigue syndrome."
+      - source: pmid:36730360
+        quote: "There were no differences between the treatment and placebo groups in symptom changes or vascular measures."
+  - decision_part: "No contested mark. Supported: the Stanford study that found no significant difference in the reactive hyperaemia index applied Fukuda with PEM added, which ranks below CCC. The New Zealand ICC study measured arterial stiffness in 11 patients, fewer than half of the 35 in the Berlin study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29426834
+        quote: "When designing the study we used the 1994 Centers for Disease Control (CDC)/Fukuda international diagnostic criteria for ME/CFS, but required participants to have post exertional malaise."
+      - source: pmid:29426834
+        quote: "Regarding assessment of endothelial function, the reactive hyperemia index (RHI) was similar in both groups at rest (2.21 ± 0.71 vs 2.44 ± 0.67, p = 0.07)."
+      - source: pmid:33671082
+        quote: "ME/CFS (n = 11) with gender and age-matched controls (n = 11) were randomly assigned to either a 48 h or 72 h protocol."
+  - decision_part: "The diagnostic marker badge set to no. Supported: no marker has been tested in a second, independent patient group, and the authors say validation is still needed."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:42625188
+        quote: "The present findings are exploratory and hypothesis-generating and require validation in larger, independent and prospective cohorts."
+      - source: pmid:33829023
+        quote: "Further studies and validation would certainly be required if FMD or PORH testing of ME/CFS patients were to be applied in a clinical or diagnostic setting."
+  - decision_part: "The PEM badge reason. The value no is supported, but the reason says of the New Zealand study that at 48 hours 'the groups were not compared directly'. The record contradicts this: the paper tested the difference between the two groups, and Table 2 gives a between-group p value for the 48-hour post-exercise augmentation index (17.0 against 9.4, p = 0.21). The reason does not match its cited record, so the card cannot be accepted as it stands."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis."
+    evidence:
+      - source: pmid:33671082
+        quote: "A paired/Wilcoxon test was used to analyse pre and post measures, along with independent/Mann–Whitney U tests where the difference between the two groups were assessed."
+      - source: pmid:33671082
+        quote: "Table 2 Mean (SD) maximal data of physiological variables from maximal cycle test at baseline and at 48 and 72 h. ME/CFS48 h (n = 7) CTRL48 h (n = 7) p Value (grp)"
+      - source: pmid:33671082
+        quote: "Post 17.0 +/− 12.9 9.4 +/− 10.6 0.21"
+  - decision_part: "The layer dysfunction. Supported: the card is about a measured abnormality of the vessel lining."
+    rubric: "| Measurable dysfunction | `dysfunction` | What goes wrong in the body? |"
+    evidence:
+      - source: pmid:33829023
+        quote: "Endothelial function was measured by Flow-mediated dilation (FMD) and Post-occlusive reactive hyperemia (PORH) at baseline and repeated after 12 months."
+  - decision_part: "The link to orthostatic-intolerance-cerebral-blood-flow at step proposed. Supported: a peer-reviewed review states the link."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516145
+        quote: "Endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion."
+  - decision_part: "The two early signals (PAI-1 in one Barcelona cohort, retinal vessel ratio in one Munich cohort). Supported: each is a single finding, labelled as not repeated."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:38600563
+        quote: "ME/CFS patients also showed higher levels of serpin E1 (PAI-1) and E-selectin than did both long COVID and matched control subjects (p < 0.01 in all cases)."
+      - source: pmid:42625188
+        quote: "AVR was lower in PCS patients with ME/CFS than in both NI controls (p < 0.001) and recovered individuals (p = 0.010)."
+reasons_summary: "Level 3, no contested mark, both badges no, the layer and the proposed link are supported, but the PEM badge reason says the New Zealand study did not compare the groups at 48 hours, and its Table 2 shows that it did (p = 0.21)."
+would_change: "Accept once the PEM badge reason no longer says the New Zealand groups were not compared directly (pmid:33671082 Table 2 gives a between-group p = 0.21 at 48 hours). No other change is needed for the level, mark, badges, layer or link. Separately, a statement that cannot be checked here: the card places pmid:16479189 in Dundee, Scotland, but that record is a carrier with no cached full text and no affiliation in its metadata. The level does not rest on it. A record with the affiliation would confirm it."
