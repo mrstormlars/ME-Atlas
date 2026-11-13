@@ -1,0 +1,18 @@
+- date: 2026-11-13
+  card: circadian-rhythm-disruption
+  change: First publication at level 2
+  reason: Level 2 stands on one controlled ICC study (up to 94 patients) that found a weaker light-dark
+    cycle and lower, more fragmented activity; the supporting studies all come from one Barcelona group,
+    the no-difference studies are smaller with broader definitions, both badges are no, the layer is dysfunction,
+    and the three links match their steps.
+  sources:
+  - pmid:42399727
+  - pmid:36902264
+  - pmid:29874259
+  - pmid:9513740
+  - pmid:11318826
+  - pmid:21532961
+  - pmid:12213500
+  - pmid:8842569
+  tier: 2
+  decided_by: ai_audit

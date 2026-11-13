@@ -1,0 +1,73 @@
+card: circadian-rhythm-disruption
+decision: accept
+parts:
+  - decision_part: "The level 2: one controlled study in an ICC-defined cohort (pmid:42399727) found weaker and more fragmented rhythms in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:42399727
+        quote: "Individual with ME/CFS were eligible if they were aged ≥ 18 years and had a confirmed diagnosis of ME/CFS established according to the 2011 Canadian Consensus Criteria (also commonly referred to as ICC) [29]."
+      - source: pmid:42399727
+        quote: "An observational cross-sectional cohort secondary study used collected data from 100 ME/CFS patients and 56 healthy controls to explore the impact of spontaneous light exposure on multidimensional health status and circulating biochemical parameters."
+      - source: pmid:42399727
+        quote: "However, actigraphy-derived data was missing in 6 ME/CFS participants and in 3 healthy controls, and health outcomes measures were also missing in 1 ME/CFS participant and in 3 healthy controls."
+      - source: pmid:42399727
+        quote: "Healthy controls exhibited higher activity rhythm values (mean, amplitude, and M10), whereas ME/CFS showed greater rhythm fragmentation (intradaily variability, IV)."
+      - source: pmid:42399727
+        quote: "Temperature rhythm variables were largely comparable between groups, with the exception of higher IV in the ME/CFS patients."
+      - source: pmid:42399727
+        quote: "Nevertheless, although the present study identified associations between light exposure patterns and both questionnaire-based outcomes and biochemical markers, these findings do not establish directionality and, thus, reverse causation cannot be excluded."
+  - decision_part: "Not level 3: the other studies with verified case definitions come from the same Barcelona group and clinic, so no independent group has reproduced the finding."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:29874259
+        quote: "Ten women who met both the 1994 CDC/Fukuda definition and 2003 Canadian criteria for CFS/ME were included in the study, along with ten healthy controls matched for age, sex and body mass index."
+      - source: pmid:36902264
+        quote: "Patients with ME/CFS were potentially eligible if they were female, aged ≥ 18 years, with a confirmed diagnosis by a specialist of ME/CFS according to the 2011 international consensus criteria [7]."
+      - source: pmid:36902264
+        quote: "Specifically, maximum activity, mean daily activity, and the amplitude of the rhythm were lower in ME/CFS."
+      - source: pmid:29874259
+        quote: "A decrease in activity level is a cardinal feature of many proposed definitions of CFS/ME, which produces a substantial reduction or impairment in the ability to carry out daily activities of life."
+  - decision_part: "No contested mark: the studies finding no difference have CDC (version not stated) or Fukuda-type definitions and 7 to 15 patients, below half of the 94 patients with recordings in the level 2 study. The same-group ICC study of 67 patients agrees on lower activity and a lower activity amplitude, and does not contradict the main finding."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:9513740
+        quote: "Continuous 24-hour recordings of CBT measured every 5 min were performed in 7 subjects meeting the Centers for Disease Control definition of CFS."
+      - source: pmid:11318826
+        quote: "Continuous recordings of CBT were obtained every 5 min over 48 h in a group of 10 subjects who met the Center for Disease Control (CDC) definition of CFS and 10 normal control subjects."
+      - source: pmid:21532961
+        quote: "15 patients with CFS and 15 healthy subjects of similar age, sex, body mass index (BMI), and activity levels."
+      - source: pmid:36902264
+        quote: "However, once corrected for age and BMI, an ANOVA indicated that variables obtained from activity data differed between groups, but not those obtained from temperature data (Table 2)."
+  - decision_part: "Diagnostic marker badge set to no: the only classification of patients and controls was done within one study's own sample, with no second independent group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:36902264
+        quote: "Moreover, a discriminant analysis using blood pressure, endothelium biomarkers, and circadian variables allows a good classification of the participants into patient and control groups."
+  - decision_part: "PEM badge set to no: the one exertion study has an unverified case definition, so it is not a study at level 2 or above."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:12213500
+        quote: "We recorded physical activity for 6-day periods in 16 women (10 CFS and 6 sedentary healthy controls, CON) before and after performing a maximal treadmill test."
+  - decision_part: "Layer dysfunction: the card is about measured rhythm disturbances in the body, and it says openly that they may be a consequence of the illness."
+    rubric: "| Measurable dysfunction | `dysfunction` | What goes wrong in the body? |"
+    evidence:
+      - source: pmid:42399727
+        quote: "Healthy controls exhibited higher activity rhythm values (mean, amplitude, and M10), whereas ME/CFS showed greater rhythm fragmentation (intradaily variability, IV)."
+  - decision_part: "Link to symptom:sleep-disturbance at step associated: the ICC study measured light patterns and sleep questionnaire scores in the same patients and reports a relation, which the link text describes as exploratory, uncorrected and limited."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:42399727
+        quote: "Significant differences were also found for sleep quality (PSQI score; p = 0.042), where healthy group had better scores than adverse or low diurnal light (Fig. 3D)."
+      - source: pmid:42399727
+        quote: "Due to the exploratory nature of the analyses and the intercorrelation among outcome measures, no formal correction for multiple comparisons was applied."
+      - source: pmid:36902264
+        quote: "As expected, in controls, the correlation was negative, but in ME/CFS, it did not reach significance."
+  - decision_part: "Links to symptom:cognitive-impairment and question:what-keeps-it-going at step proposed: a peer-reviewed study states the link without testing it; the counter-statement is included."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:8842569
+        quote: "By analogy with jet-lag and shift-working, circadian dysrhythmia could be an important factor in initiating and perpetuating the cardinal symptoms of CFS, notably tiredness, impaired concentration and intellectual impairment."
+      - source: pmid:11318826
+        quote: "Hence, it is unlikely that the symptoms of CFS are because of disturbance in the circadian rhythm of CBT."
+reasons_summary: "Level 2 holds on one ICC-defined controlled study (pmid:42399727), not repeated by an independent group; the studies finding no difference are too small and less strictly defined to contest it; both badges no; layer dysfunction and three links are supported."
+would_change: "An independent group finding the same rhythm differences in a separate cohort with a verified case definition would support level 3. A controlled study with a CCC, ICC or IOM 2015 cohort of at least 47 patients finding no rhythm difference would support a contested mark on rung 2, as would a reading that the same-group ICC study pmid:36902264 contradicts the fragmentation finding (it is likely part of the same dataset). Some statements could not be checked because no full text was cached. They are unverifiable, not shown false, and no level, badge or mark depends on them: for pmid:21532961, recruitment at the start of a graded-activity programme, the authors' remarks on motivation, representativeness and replication, and the Fukuda reading of the case definition sentence (the study is too small to contest either way); for pmid:12213500, that symptoms were not tracked (the PEM badge stays no because its case definition is unverified); for pmid:8842569, that the study was done in the UK. If the full text of pmid:21532961 shows those statements wrong, that paragraph needs correcting."

@@ -1,0 +1,79 @@
+card: circadian-rhythm-disruption
+decision: accept
+parts:
+  - decision_part: "The level 2: one controlled ICC study (up to 94 patients and 53 controls with recordings) found a weaker light-dark cycle, lower activity amplitude and more fragmented activity in patients; its group comparisons were unadjusted, and an earlier ICC study from the same clinic found the lower activity amplitude after adjustment for age and BMI."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:42399727
+        quote: "Individual with ME/CFS were eligible if they were aged ≥ 18 years and had a confirmed diagnosis of ME/CFS established according to the 2011 Canadian Consensus Criteria (also commonly referred to as ICC) [29]."
+      - source: pmid:42399727
+        quote: "actigraphy-derived data was missing in 6 ME/CFS participants and in 3 healthy controls"
+      - source: pmid:42399727
+        quote: "Light-related variables also differed significantly, with the ME/CFS group showing lower average light exposure, reduced amplitude, and greater fragmentation of the light–dark cycle."
+      - source: pmid:42399727
+        quote: "Healthy controls exhibited higher activity rhythm values (mean, amplitude, and M10), whereas ME/CFS showed greater rhythm fragmentation (intradaily variability, IV)."
+      - source: pmid:42399727
+        quote: "P-values were calculated by Mann-Whitney U-tests for continuous variables"
+      - source: pmid:36902264
+        quote: "Specifically, maximum activity, mean daily activity, and the amplitude of the rhythm were lower in ME/CFS."
+  - decision_part: "Not level 3: the supporting studies come from one group and one clinic, and the 2026 study reuses data from the group's earlier investigations, so no independent group has reproduced the finding in a separate cohort."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:42399727
+        quote: "the current study constitutes a secondary analysis utilizing actigraphy-derived light exposure data, health outcomes measures, and circulating blood parameters from previous investigations"
+      - source: pmid:36902264
+        quote: "recruited at a single outpatient tertiary-referral center (ME/CFS clinical unit"
+      - source: pmid:29874259
+        quote: "were recruited at a single outpatient tertiary-referral centre (CFS/ME Clinical Unit"
+  - decision_part: "No contested mark: the no-difference studies use CDC (version not stated) or Fukuda-type definitions, which rank below ICC, and have 7, 10 and 15 patients, under half of the 94 patients in the level 2 measurement. The 2023 ICC study from the same clinic did not find more fragmentation of activity, but it did find the lower activity amplitude, so it is partly concordant and does not contradict the finding the level rests on."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:9513740
+        quote: "Continuous 24-hour recordings of CBT measured every 5 min were performed in 7 subjects meeting the Centers for Disease Control definition of CFS."
+      - source: pmid:11318826
+        quote: "a group of 10 subjects who met the Center for Disease Control (CDC) definition of CFS and 10 normal control subjects"
+      - source: pmid:21532961
+        quote: "15 patients with CFS and 15 healthy subjects of similar age, sex, body mass index (BMI), and activity levels."
+      - source: pmid:36902264
+        quote: "an ANOVA indicated that variables obtained from activity data differed between groups, but not those obtained from temperature data"
+      - source: pmid:36902264
+        quote: "A_ IV, a.u. 0.42 ± 0.008 0.37 ± 0.01 0.102"
+  - decision_part: "Diagnostic marker badge no: the only classification of patients and controls on the card was made within one sample, not tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:36902264
+        quote: "In all, 91.5% of participants of the original grouped cases (96% of ME/CFS patients and 85% of healthy controls) were correctly classified."
+  - decision_part: "Explains PEM badge no: the one exertion study recorded the activity rhythm before and after a treadmill test in 10 patients and 6 controls; it links its result to symptom worsening only as an interpretation, and its case definition is not verified, so it cannot be a level 2 study."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:12213500
+        quote: "We recorded physical activity for 6-day periods in 16 women (10 CFS and 6 sedentary healthy controls, CON) before and after performing a maximal treadmill test."
+      - source: pmid:12213500
+        quote: "This effect may be associated in part with the common patient complaint of symptom worsening following exertion."
+  - decision_part: "Layer dysfunction: the card's evidence is measured rhythms (light, activity, wrist temperature), and the level 2 study says its data cannot show direction, so the measurable-dysfunction layer fits better than a perpetuating mechanism."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:42399727
+        quote: "Light intensity, wrist temperature, and physical activity were continuously monitored at home over one week using wrist-worn actigraphy."
+      - source: pmid:42399727
+        quote: "Nevertheless, although the present study identified associations between light exposure patterns and both questionnaire-based outcomes and biochemical markers, these findings do not establish directionality and, thus, reverse causation cannot be excluded."
+  - decision_part: "Link to symptom:sleep-disturbance at associated: the ICC study measured light pattern and sleep score in the same patients and reports a relation in an exploratory comparison without correction for multiple tests. The link text states this, and also states that the regression and a second study from the same group found no relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:42399727
+        quote: "Significant differences were also found for sleep quality (PSQI score; p = 0.042), where healthy group had better scores than adverse or low diurnal light (Fig. 3D)."
+      - source: pmid:42399727
+        quote: "Due to the exploratory nature of the analyses and the intercorrelation among outcome measures, no formal correction for multiple comparisons was applied."
+      - source: pmid:42399727
+        quote: "Overall PSQI 9.00 (0.001) 0.05 (0.92) 0.20 (0.70) -0.05 (0.87) 0.29 (0.52)"
+      - source: pmid:36902264
+        quote: "As expected, in controls, the correlation was negative, but in ME/CFS, it did not reach significance."
+  - decision_part: "Links to symptom:cognitive-impairment and question:what-keeps-it-going at proposed: a peer-reviewed study states that circadian dysrhythmia could start and keep up the main symptoms, including impaired concentration. The link text also gives the 2001 study's opposite conclusion."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:8842569
+        quote: "By analogy with jet-lag and shift-working, circadian dysrhythmia could be an important factor in initiating and perpetuating the cardinal symptoms of CFS, notably tiredness, impaired concentration and intellectual impairment."
+      - source: pmid:11318826
+        quote: "Hence, it is unlikely that the symptoms of CFS are because of disturbance in the circadian rhythm of CBT."
+reasons_summary: "Level 2 stands on one controlled ICC study (up to 94 patients) that found a weaker light-dark cycle and lower, more fragmented activity; the supporting studies all come from one Barcelona group, the no-difference studies are smaller with broader definitions, both badges are no, the layer is dysfunction, and the three links match their steps."
+would_change: "A study from an independent group in a separate cohort with CCC, ICC or IOM 2015 that finds the same rhythm differences would raise this to level 3. A controlled study with a comparable definition and at least 47 patients that finds no difference in light-cycle amplitude or activity rhythm would make level 2 contested. Several statements cannot be checked because their full texts are not cached, and none of them is needed for the level, badges, contested mark, layer or links: for pmid:21532961, the Fukuda classification (its case-definition quote comes from a full text not shown), recruitment at the start of a graded-activity CBT programme, and the authors' limitations (motivation to change activity-rest patterns, representativeness, need for a larger sample); 'in the UK' for pmid:8842569 and pmid:12423324, which the abstracts and metadata do not state; and 'without tracking symptoms' for pmid:12213500. One more point: the body text of pmid:42399727 says the Light2 x group interaction was significant for PSQI, but its Table 2 shows p = 0.52. If the published table is corrected, the 'neither light component was related' sentence in the sleep-disturbance link would need a redraft. I was given no drafting, review or earlier audit material."

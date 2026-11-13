@@ -524,8 +524,8 @@ studies:
       mean rest-activity period lengthened beyond 24 hours after a maximal treadmill test in
       patients and did not change in controls.
 last_checked:
-  date: 2026-11-08
-  by: ai_pair
+  date: 2026-11-13
+  by: ai_audit
 layer: dysfunction
 links:
   - to: symptom:sleep-disturbance
