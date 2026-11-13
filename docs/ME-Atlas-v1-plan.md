@@ -6,11 +6,11 @@ October 31, 2026 · Draft v1
 
 ## Purpose
 
-ME Atlas gives patients, carers and researchers one continuously updated, evidence-graded overview of every serious hypothesis about what causes ME/CFS and long COVID.
+ME Atlas aims to contribute to solving ME/CFS. It collects and grades what is known about the causes of ME/CFS and long COVID, shows how the hypotheses connect, and makes visible what has not been tested, so that researchers can see where the next study would matter and patients and carers can follow the state of the evidence.
 
-Today that knowledge is scattered across thousands of papers, forums and wikis. Patients and carers have little energy to follow it, and it is hard for anyone to see which hypotheses are actually gaining ground. ME Atlas uses AI to do most of the collecting and sorting, and human reviewers to make the judgement calls.
+Today that knowledge is scattered across thousands of papers, forums and wikis. Patients and carers have little energy to follow it, and it is hard for anyone, researchers included, to see which hypotheses are gaining ground and what has not been tested. ME Atlas uses AI to do the collecting, sorting, checking and grading; an independent AI auditor takes the content decisions until a medical or research expert is recruited, and the founder sets the direction. The site says openly that no expert has reviewed the content.
 
-The goal is not to give treatment advice. The goal is to make the state of the evidence visible, honest and easy to follow.
+Researchers and patients and carers are readers of equal weight. The goal is not to give treatment advice, and the site makes no claim of discovery. The goal is to make the state of the evidence visible, honest and easy to follow.
 
 ## Existing landscape
 

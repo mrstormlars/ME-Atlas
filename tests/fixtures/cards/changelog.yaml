@@ -5,9 +5,11 @@
   reason: A fictional new paper met the criteria.
   sources: [pmid:00000004]
   tier: 1
+  decided_by: ai_pair
 - date: 2026-10-08
   card: fictional-hypothesis
   change: Marked rung 4 as contested.
   reason: A fictional larger study found no difference.
   sources: [pmid:00000003]
   tier: 2
+  decided_by: ai_audit

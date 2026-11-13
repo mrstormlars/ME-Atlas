@@ -832,7 +832,7 @@ def test_the_weekly_command_describes_the_translation_step_with_the_real_subcomm
         "must not see the translator's reasoning",
     ):
         assert needle in text, needle
-    assert text.index("6. **Translate.**") < text.index("7. **Report.**") < text.index("8. **Pull request.**")
+    assert text.index("7. **Translate.**") < text.index("8. **Report.**") < text.index("9. **Pull request.**")
 
 
 def test_the_translation_doc_lists_every_locator_kind_the_code_produces(card):

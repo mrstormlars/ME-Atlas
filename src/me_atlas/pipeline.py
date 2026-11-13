@@ -9,6 +9,9 @@ Command line::
     uv run python -m me_atlas.pipeline context <slug> <pmid>
     uv run python -m me_atlas.pipeline apply <slug> <ops file> [--round 1|2]
     uv run python -m me_atlas.pipeline record-review <slug> <pmid> [--round 1|2]
+    uv run python -m me_atlas.pipeline audit-plan <slug> <pmid> | --card <slug> [--out DIR]
+    uv run python -m me_atlas.pipeline record-audit <slug> <pmid> [--second] | --card <slug> --file PATH
+    uv run python -m me_atlas.pipeline audit-sample [--seed S]
     uv run python -m me_atlas.pipeline translation-plan [--lang nb]
     uv run python -m me_atlas.pipeline report
     uv run python -m me_atlas.pipeline pr [--dry-run] [--no-pr]
@@ -23,7 +26,9 @@ import argparse
 import datetime as dt
 import difflib
 import json
+import math
 import os
+import random
 import re
 import shlex
 import subprocess
@@ -57,6 +62,11 @@ DEFAULT_SPEC = Path("docs/ME-Atlas-functional-spec.md")
 # The full text goes into the context file up to this many characters; the file says so when it cuts.
 FULLTEXT_CHAR_BUDGET = 60_000
 MAX_ROUNDS = 2
+# Each cited record's full text goes into an audit context file up to this many characters; the file says so
+# when it cuts. (A card cites many studies, so the budget per record is lower than for the drafting context.)
+AUDIT_FULLTEXT_CHAR_BUDGET = 12_000
+# A rubric excerpt in an audit record must be at least this long after normalisation (contract decision D5).
+MIN_RUBRIC_CHARS = 20
 BASE_BRANCH = "main"
 
 Pmid = Annotated[str, StringConstraints(pattern=r"^\d+$")]
@@ -131,6 +141,42 @@ class ReviewFile(_M):
         return self
 
 
+AUDIT_DECISIONS = ("accept", "reject", "accept_lower")
+
+
+class AuditEvidence(_M):
+    source: StudyId
+    quote: NonEmptyStr
+
+
+class AuditPart(_M):
+    decision_part: NonEmptyStr
+    rubric: NonEmptyStr
+    evidence: list[AuditEvidence]
+
+
+class AuditRecord(_M):
+    """What the auditor writes: one decision on one change (``paper`` set) or on a whole card (``paper`` absent)."""
+
+    card: Slug
+    paper: StudyId | None = None
+    decision: Literal["accept", "reject", "accept_lower"]
+    accepted_level: Annotated[int, Field(strict=True, ge=0, le=5)] | None = None
+    parts: Annotated[list[AuditPart], Field(min_length=1)]
+    reasons_summary: NonEmptyStr
+    would_change: NonEmptyStr
+
+    @model_validator(mode="after")
+    def _level_and_summary(self) -> AuditRecord:
+        if self.decision == "accept_lower" and self.accepted_level is None:
+            raise ValueError("accept_lower needs accepted_level (0-5, lower than the proposed or current level)")
+        if self.decision != "accept_lower" and self.accepted_level is not None:
+            raise ValueError("accepted_level is only for accept_lower")
+        if "\n" in self.reasons_summary:
+            raise ValueError("reasons_summary must be one line")
+        return self
+
+
 def by_severity(findings: list[Finding]) -> list[Finding]:
     """must_fix findings first, otherwise in the reviewer's order."""
     return sorted(findings, key=lambda f: SEVERITY_ORDER[f.severity])
@@ -150,6 +196,20 @@ class Config:
     spec_path: Path = DEFAULT_SPEC
     pipeline_dir: Path = DEFAULT_PIPELINE_DIR
     translations_dir: Path = translations.DEFAULT_DIR
+    audits_dir: Path = Path("audits")
+
+    @property
+    def card_format_path(self) -> Path:
+        """``docs/card-format.md``, next to the functional spec."""
+        return self.spec_path.parent / "card-format.md"
+
+    def audit_context_path(self, slug: str, key: str | None = None) -> Path:
+        """``audit-context/<slug>-<key>.md`` for a change; ``audit-context/<slug>.md`` for a whole-card audit."""
+        return self.f("audit-context", f"{slug}-{key}.md" if key else f"{slug}.md")
+
+    def audit_path(self, slug: str, key: str, second: bool = False) -> Path:
+        """The record the auditor writes for a change; the consistency run writes ``...-second.yaml``."""
+        return self.f("audit", f"{slug}-{key}{'-second' if second else ''}.yaml")
 
     @property
     def ledger_path(self) -> Path:
@@ -432,7 +492,7 @@ def _preprints_with_published_version(cfg: Config, found: Sequence[europepmc.Pre
     """Studies marked ``preprint: true`` on a card or draft whose preprint record has a "Preprint of" link.
 
     The record is this run's search result with the DOI, else the cached one (``europepmc preprint <doi>``).
-    Nothing is proposed: the list only tells the founder that a published version now exists.
+    Nothing is proposed: the list only tells the reader that a published version now exists.
     """
     fresh = {r.doi.lower(): r for r in found if r.doi}
     cache = europepmc.EuropePmcCache(cfg.cache_dir)
@@ -1106,6 +1166,436 @@ def record_review(cfg: Config, slug: str, pmid: str, n: int) -> ReviewFile:
 
 
 # ---------------------------------------------------------------------------
+# The audit: audit-plan, record-audit, audit-sample
+# ---------------------------------------------------------------------------
+
+_RECORD_HEADING = re.compile(r"^### Record: (\S+)$", re.MULTILINE)
+
+
+def _last_applied_round(cfg: Config, slug: str, key: str) -> int:
+    """The last round of a pair that has an applied result (``applied/<slug>-<key>-r<N>/``)."""
+    for n in range(MAX_ROUNDS, 0, -1):
+        if (cfg.applied_dir(slug, key, n) / f"{slug}.yaml").is_file():
+            return n
+    raise PipelineError(f"no applied result for {slug} and {key}; run `apply` first")
+
+
+def _cached_preprint(cfg: Config, doi: str) -> europepmc.PreprintRecord:
+    try:
+        record = europepmc.read_cached_preprint(europepmc.EuropePmcCache(cfg.cache_dir), doi)
+    except europepmc.EuropePmcError as exc:
+        raise PipelineError(str(exc)) from exc
+    if record is None:
+        raise PipelineError(
+            f"no cached Europe PMC preprint record for doi:{doi}; "
+            f"cache it with `uv run python -m me_atlas.europepmc preprint {doi}`"
+        )
+    return record
+
+
+def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, budget: int) -> list[str]:
+    """One cited record for the audit context: its fields, abstract and (when cached) full text."""
+    lines = [f"### Record: {study_id}", ""]
+    if study_id.startswith("pmid:"):
+        pmid = study_id.removeprefix("pmid:")
+        record = _record(cfg, pmid)
+        full = loader(pmid, record.pmcid)
+        lines += [
+            f"- title: {record.title}",
+            f"- authors: {', '.join(record.authors) or 'not stated'}",
+            f"- journal: {record.journal or 'not stated'}",
+            f"- year: {record.year if record.year is not None else 'not stated'}",
+            f"- doi: {record.doi or 'not stated'}",
+            f"- publication types: {', '.join(record.publication_types) or 'not stated'}",
+            f"- retracted: {'yes' if record.retracted else 'no'}",
+            "",
+            "Abstract:",
+            "",
+            record.abstract or "(the record has no abstract)",
+        ]
+    else:
+        pre = _cached_preprint(cfg, study_id.removeprefix("doi:"))
+        full = loader(pre.ppr_id, pre.pmcid, preprint=pre)
+        abstract = " ".join(_TAG_RE.sub(" ", pre.abstract).split()) if pre.abstract else None
+        lines += [
+            f"- title: {pre.title}",
+            f"- authors: {', '.join(pre.authors) or 'not stated'}",
+            f"- server: {pre.server or 'not stated'}",
+            f"- year: {pre.year if pre.year is not None else 'not stated'}",
+            "- preprint: yes (not peer reviewed)",
+            "",
+            "Abstract:",
+            "",
+            abstract or "(the record has no abstract)",
+        ]
+    lines += ["", "Full text:", ""]
+    if full.xml is None:
+        lines.append(f"No full text is available: {full.note}.")
+    else:
+        text = europepmc.article_text(full.xml)
+        lines.append(f"Source: {full.note}. The reference list is left out.")
+        if len(text) > budget:
+            lines.append(f"TRUNCATED: the first {budget} of {len(text)} characters follow; the rest was left out.")
+        else:
+            lines.append(f"Not truncated ({len(text)} characters).")
+        lines += ["", text[:budget]]
+    lines.append("")
+    return lines
+
+
+def strip_yaml_comments(text: str) -> str:
+    """The YAML without its comments, in a stable form: parsed and dumped again.
+
+    Comments in a card carry earlier drafter and reviewer reasoning and earlier rulings, which the auditor must not
+    see. Parsing drops every comment (full-line or trailing) and keeps a ``#`` that is part of a value.
+    """
+    return yaml.safe_dump(
+        yaml.safe_load(text), sort_keys=False, allow_unicode=True, default_flow_style=False, width=100
+    ).rstrip("\n")
+
+
+def build_audit_context(
+    cfg: Config,
+    slug: str,
+    key: str | None,
+    loader: FullTextLoader,
+    *,
+    budget: int = AUDIT_FULLTEXT_CHAR_BUDGET,
+) -> str:
+    """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
+
+    ``key`` names a change in this run (the diff of its last round); ``None`` is a whole-card audit (the card file
+    takes the diff's place). Nothing the drafter or the reviewer wrote, and no earlier audit, is in it.
+    """
+    base = _base_card(cfg, slug)
+    base_card = _load_card(base)
+    base_text = strip_yaml_comments(base.read_text(encoding="utf-8"))
+    study_ids = [s.id for s in base_card.studies]
+    if key is not None:
+        paper_id = _paper_id_of_key(cfg, key)
+        n = _last_applied_round(cfg, slug, key)
+        applied = cfg.applied_dir(slug, key, n)
+        # The diff is built from the comment-free texts, not read from changes.diff (which shows comments).
+        applied_text = strip_yaml_comments((applied / f"{slug}.yaml").read_text(encoding="utf-8"))
+        diff = "".join(
+            difflib.unified_diff(
+                (base_text + "\n").splitlines(keepends=True),
+                (applied_text + "\n").splitlines(keepends=True),
+                fromfile=f"{base}",
+                tofile=f"applied/{slug}.yaml",
+            )
+        )
+        study_ids += [s.id for s in _load_card(applied / f"{slug}.yaml").studies]
+        subject = f"card `{slug}` and the change from paper `{paper_id}` (round {n})"
+        change_section = [
+            "## 1. The proposed change (the diff of the card)",
+            "",
+            "```diff",
+            diff.rstrip("\n"),
+            "```",
+        ]
+        card_section = [f"## 2. The card as it stands (`{base}`)", "", "```yaml", base_text, "```"]
+    else:
+        subject = f"the whole card `{slug}`"
+        change_section = [
+            "## 1. The card to audit (a whole-card audit: the card file is the proposal)",
+            "",
+            "```yaml",
+            base_text,
+            "```",
+        ]
+        card_section = [
+            f"## 2. The card as it stands (`{base}`)",
+            "",
+            "This is a whole-card audit: the card as it stands is the file in section 1.",
+        ]
+    ids = list(dict.fromkeys(study_ids))
+    records: list[str] = []
+    for study_id in ids:
+        try:
+            records += _audit_record_lines(cfg, study_id, loader, budget)
+        except PipelineError:
+            records += [
+                f"### Not cached: {study_id}",
+                "",
+                "No cached record. It cannot be cited in an audit record, and nothing here can be said about it.",
+                "",
+            ]
+    try:
+        card_format = cfg.card_format_path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise PipelineError(f"cannot read the card format {cfg.card_format_path}: {exc}") from exc
+    parts = [
+        f"# Audit context: {subject}",
+        "",
+        "This is everything you may rely on. Cite only the records in section 3, by the id in their heading, and "
+        "quote them word for word. Name a rubric clause by copying text from sections 4 or 5.",
+        "",
+        *change_section,
+        "",
+        *card_section,
+        "",
+        "## 3. Cited records",
+        "",
+        *(records or ["The card cites no study.", ""]),
+        "## 4. The inclusion rule (functional spec section 2)",
+        "",
+        _demote_headings(spec_section(cfg.spec_path, 2)),
+        "",
+        "## 5. The rubric (functional spec section 3)",
+        "",
+        _demote_headings(spec_section(cfg.spec_path, 3)),
+        "",
+        "## 6. The card format (docs/card-format.md)",
+        "",
+        _demote_headings(_demote_headings(card_format.strip())),
+        "",
+    ]
+    return "\n".join(parts)
+
+
+def _context_record_ids(context: str) -> set[str]:
+    """The ids of the records in section 3 of an audit context file."""
+    start = context.find("\n## 3. Cited records")
+    end = context.find("\n## 4. ", start)
+    if start < 0 or end < 0:
+        return set()
+    return {m.group(1).lower() for m in _RECORD_HEADING.finditer(context[start:end])}
+
+
+def _record_quote_text(reader: citations.CacheReader, study_id: str) -> str | None:
+    """Title, abstract and cached full text of a study, for the verbatim quote check; None if no cached record."""
+    pieces: list[str] = []
+    if study_id.startswith("pmid:"):
+        record = reader.record(study_id.removeprefix("pmid:"))
+        if isinstance(record, str):
+            return None
+        pieces += [record.title, record.abstract or ""]
+        full = reader.fulltext(record.pmid)
+    else:
+        try:
+            pre = reader.preprint(study_id)
+        except europepmc.EuropePmcError:
+            return None
+        if pre is None:
+            return None
+        pieces += [pre.title, _TAG_RE.sub(" ", pre.abstract) if pre.abstract else ""]
+        full = reader.preprint_fulltext(pre)
+    if isinstance(full, str):
+        pieces.append(full)
+    return "\n".join(pieces)
+
+
+def _proposed_level(cfg: Config, slug: str, key: str | None) -> int:
+    """The level an accept_lower must be below: the level in the last applied result of a change, or the card's own."""
+    path = (
+        cfg.applied_dir(slug, key, _last_applied_round(cfg, slug, key)) / f"{slug}.yaml"
+        if key is not None
+        else _base_card(cfg, slug)
+    )
+    return _load_card(path).level
+
+
+def validate_audit_record(
+    cfg: Config, raw: Any, *, slug: str, key: str | None, source: Path, context_path: Path
+) -> AuditRecord:
+    """Check an audit record against its context file and the cache; raise PipelineError listing every problem.
+
+    Checked: the schema; the card and paper are the ones audited; ``accepted_level`` is below the proposed (or
+    current) level; every evidence ``source`` is a record in the context file and every ``quote`` is found word for
+    word (the narrow normalisation of the citation check) in that record's cached text; every part's ``rubric`` is
+    a verbatim excerpt (at least ``MIN_RUBRIC_CHARS`` characters) of functional spec section 2 or 3.
+    """
+    try:
+        record = AuditRecord.model_validate(raw)
+    except ValidationError as exc:
+        raise PipelineError(f"{source} is malformed:\n" + "\n".join(_pydantic_lines(exc))) from exc
+    try:
+        context = context_path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise PipelineError(
+            f"no audit context file {context_path}; run `audit-plan` first ({exc.__class__.__name__})"
+        ) from exc
+    problems: list[str] = []
+    if record.card != slug:
+        problems.append(f"card is '{record.card}', expected '{slug}'")
+    expected_paper = _paper_id_of_key(cfg, key) if key is not None else None
+    if record.paper != expected_paper:
+        problems.append(
+            f"paper is {record.paper!r}, expected "
+            + (f"'{expected_paper}'" if expected_paper else "no paper (a whole-card audit)")
+        )
+    if record.decision == "accept_lower":
+        ceiling = _proposed_level(cfg, slug, key)
+        if record.accepted_level is not None and record.accepted_level >= ceiling:
+            problems.append(f"accepted_level {record.accepted_level} must be lower than the level {ceiling}")
+    cited = _context_record_ids(context)
+    reader = citations.CacheReader(cfg.cache_dir)
+    texts: dict[str, str | None] = {}
+    rubric_texts = [citations.normalise_quote(spec_section(cfg.spec_path, n)) for n in (2, 3)]
+    for i, part in enumerate(record.parts):
+        rubric = citations.normalise_quote(part.rubric)
+        if len(rubric) < MIN_RUBRIC_CHARS:
+            problems.append(f"parts[{i}].rubric is shorter than {MIN_RUBRIC_CHARS} characters")
+        elif not any(rubric in text for text in rubric_texts):
+            problems.append(
+                f"parts[{i}].rubric is not found word for word in functional spec section 2 or 3: {part.rubric!r}"
+            )
+        for j, ev in enumerate(part.evidence):
+            where = f"parts[{i}].evidence[{j}]"
+            if ev.source.lower() not in cited:
+                problems.append(f"{where}.source {ev.source} is not a record in the context file {context_path.name}")
+                continue
+            if ev.source not in texts:
+                texts[ev.source] = _record_quote_text(reader, ev.source)
+            text = texts[ev.source]
+            if text is None:
+                problems.append(f"{where}: no cached record for {ev.source} to check the quote against")
+            elif citations.normalise_quote(ev.quote) not in citations.normalise_quote(text):
+                problems.append(f"{where}.quote is not found word for word in the cached record of {ev.source}")
+    if problems:
+        raise PipelineError(f"{source} is not valid:\n" + "\n".join(problems))
+    return record
+
+
+def load_audit(cfg: Config, slug: str, key: str, *, second: bool = False) -> tuple[AuditRecord | None, str | None]:
+    """The valid audit record of a change, or (None, why it is missing or invalid)."""
+    path = cfg.audit_path(slug, key, second)
+    if not path.is_file():
+        return None, f"no audit record {path.name}"
+    try:
+        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        record = validate_audit_record(
+            cfg, raw, slug=slug, key=key, source=path, context_path=cfg.audit_context_path(slug, key)
+        )
+    except yaml.YAMLError as exc:
+        return None, f"{path.name} is not valid YAML: {str(exc).splitlines()[0]}"
+    except PipelineError as exc:
+        return None, str(exc).replace("\n", "; ")
+    return record, None
+
+
+def record_audit(
+    cfg: Config,
+    slug: str,
+    key: str | None,
+    *,
+    second: bool = False,
+    file: Path | None = None,
+    out_dir: Path | None = None,
+) -> AuditRecord:
+    """Validate the record the auditor wrote and log it. A change is ``slug`` and ``key`` (the file is
+    ``audit/<slug>-<key>.yaml``, or ``...-second.yaml``); a whole card is ``slug`` with ``key`` None and ``file``."""
+    if key is not None:
+        path = file or cfg.audit_path(slug, key, second)
+        context_path = cfg.audit_context_path(slug, key)
+    else:
+        if file is None:
+            raise PipelineError("a whole-card audit needs --file PATH (the record the auditor wrote)")
+        path = file
+        context_path = (out_dir or cfg.run_dir) / "audit-context" / f"{slug}.md"
+    try:
+        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise PipelineError(f"{path} does not exist") from exc
+    except (OSError, yaml.YAMLError) as exc:
+        raise PipelineError(f"{path} is not readable YAML: {exc}") from exc
+    record = validate_audit_record(cfg, raw, slug=slug, key=key, source=path, context_path=context_path)
+    if key is not None:
+        _log(
+            cfg,
+            {
+                "event": "record-audit",
+                "card": slug,
+                "paper": record.paper,
+                "second": second,
+                "decision": record.decision,
+            },
+        )
+    return record
+
+
+def _is_level_change(ops: OpsFile) -> bool:
+    return any(isinstance(op, Propose) and op.target == "level" for op in ops.operations)
+
+
+def audit_eligible(cfg: Config, outcomes: Sequence[Outcome]) -> list[Outcome]:
+    """Contract decision D1: the pairs that go to the auditor, sorted by card and paper."""
+    return sorted(
+        (o for o in outcomes if o.status == "accepted" and o.audit_required),
+        key=lambda o: (o.slug, _ledger_order(o.pmid)),
+    )
+
+
+def audit_sample(cfg: Config, seed: str | None = None) -> dict[str, Any]:
+    """Which audited pairs need a second audit; written to ``audit-sample.json``.
+
+    Every pair with a ``propose`` on ``level``, plus one in five of the others (rounded up when there are any),
+    chosen with ``random.Random(seed)``. The seed is the run date unless given (decision D6).
+    """
+    if seed is None:
+        seed = str(_read_json(cfg.f("prepare.json"))["date"])
+    eligible = audit_eligible(cfg, collect_outcomes(cfg, gate=False))
+    level = [o for o in eligible if o.last is not None and o.last.ops is not None and _is_level_change(o.last.ops)]
+    others = [o for o in eligible if o not in level]
+    picked = random.Random(seed).sample(others, math.ceil(len(others) / 5)) if others else []
+    chosen = sorted(
+        [(o, "level_change") for o in level] + [(o, "one_in_five") for o in picked],
+        key=lambda pair: (pair[0].slug, _ledger_order(pair[0].pmid)),
+    )
+    result = {
+        "seed": seed,
+        "audited": len(eligible),
+        "pairs": [{"card": o.slug, "key": o.pmid, "paper": o.paper_id, "why": why} for o, why in chosen],
+    }
+    _write_json(cfg.f("audit-sample.json"), result)
+    _log(cfg, {"event": "audit-sample", "seed": seed, "audited": len(eligible), "sampled": len(chosen)})
+    return result
+
+
+def _sampled_keys(cfg: Config) -> set[tuple[str, str]]:
+    path = cfg.f("audit-sample.json")
+    if not path.is_file():
+        return set()
+    try:
+        return {(p["card"], p["key"]) for p in _read_json(path).get("pairs", [])}
+    except (PipelineError, KeyError, TypeError, AttributeError):
+        return set()
+
+
+def _differs(first: AuditRecord, second: AuditRecord) -> bool:
+    return (first.decision, first.accepted_level) != (second.decision, second.accepted_level)
+
+
+def _gate(cfg: Config, o: Outcome, sampled: set[tuple[str, str]]) -> None:
+    """Set the audit state of a pair the reviewer accepted and that needs an audit (D1, D2, D3).
+
+    The pair is applied only when a valid first record says ``accept`` and, when the pair is in the consistency
+    sample (or changes a level, which is always sampled), a valid second record also says ``accept``.
+    """
+    assert o.last is not None and o.last.ops is not None
+    o.sampled = (o.slug, o.pmid) in sampled or _is_level_change(o.last.ops)
+    o.audit, why = load_audit(cfg, o.slug, o.pmid)
+    if o.audit is None:
+        o.audit_state, o.audit_note = "missing", f"no valid audit record: {why}"
+        return
+    if o.sampled:
+        o.second, why2 = load_audit(cfg, o.slug, o.pmid, second=True)
+        if o.second is not None:
+            o.second_differs = _differs(o.audit, o.second)
+    if o.audit.decision == "reject":
+        o.audit_state = "rejected"
+    elif o.audit.decision == "accept_lower":
+        o.audit_state = "lower"
+    elif o.sampled and o.second is None:
+        o.audit_state, o.audit_note = "missing", f"the consistency check needs a valid second audit: {why2}"
+    elif o.second_differs:
+        o.audit_state = "differs"
+    else:
+        o.audit_state = "accepted"
+
+
+# ---------------------------------------------------------------------------
 # Outcomes and the report
 # ---------------------------------------------------------------------------
 
@@ -1127,10 +1617,23 @@ class Outcome:
     note: str
     rounds: list[Round] = field(default_factory=list)
     paper_id: str = ""  # "pmid:<digits>" or "doi:<doi>"
+    # The audit gate (decision D1): a pair the reviewer accepted that has a tier 2 operation needs the auditor.
+    audit_required: bool = False
+    audit: AuditRecord | None = None
+    second: AuditRecord | None = None  # the consistency run, when the pair is sampled
+    sampled: bool = False
+    second_differs: bool = False
+    audit_state: Literal["not_required", "accepted", "rejected", "lower", "missing", "differs"] = "not_required"
+    audit_note: str = ""
 
     @property
     def last(self) -> Round | None:
         return self.rounds[-1] if self.rounds else None
+
+    @property
+    def applied(self) -> bool:
+        """Whether the pair's operations are applied: reviewer accepted, and the audit gate (if any) passed."""
+        return self.status == "accepted" and self.audit_state in ("not_required", "accepted")
 
 
 def _load_round(cfg: Config, slug: str, pmid: str, n: int) -> Round | None:
@@ -1153,7 +1656,13 @@ def _load_round(cfg: Config, slug: str, pmid: str, n: int) -> Round | None:
     return Round(n, ops, problem, checks, review)
 
 
-def collect_outcomes(cfg: Config) -> list[Outcome]:
+def collect_outcomes(cfg: Config, *, gate: bool = True) -> list[Outcome]:
+    """One outcome per (card, paper) pair of ``matches.json``.
+
+    With ``gate`` (the default) a pair that needs an audit is applied only when its audit records say ``accept``
+    (``Outcome.applied``); ``gate=False`` leaves the audit state alone, which ``audit-sample`` uses to find the
+    pairs that need one.
+    """
     matches = _read_json(cfg.f("matches.json"))["matches"] if cfg.f("matches.json").exists() else []
     outcomes = []
     for match in matches:
@@ -1200,6 +1709,14 @@ def collect_outcomes(cfg: Config) -> list[Outcome]:
                 else f"rejected in round {last.n}; no second attempt was recorded"
             )
         outcomes.append(outcome)
+    sampled = _sampled_keys(cfg)
+    for o in outcomes:
+        if o.status == "accepted":
+            assert o.last is not None and o.last.ops is not None
+            base = yaml.safe_load(_base_card(cfg, o.slug).read_text(encoding="utf-8"))
+            o.audit_required = 2 in tiers(o.last.ops, base if isinstance(base, dict) else None)
+            if o.audit_required and gate:
+                _gate(cfg, o, sampled)
     _park_conflicts(outcomes)
     return outcomes
 
@@ -1217,7 +1734,7 @@ def _targets(ops: OpsFile) -> set[tuple[Any, ...]]:
 
 def _park_conflicts(outcomes: list[Outcome]) -> None:
     """Two accepted papers on one card that overwrite the same target: neither is applied; both are parked."""
-    accepted = [o for o in outcomes if o.status == "accepted" and o.last is not None and o.last.ops is not None]
+    accepted = [o for o in outcomes if o.applied and o.last is not None and o.last.ops is not None]
     for o in accepted:
         others = [
             (p, t)
@@ -1348,7 +1865,7 @@ def _window_text(prep: dict[str, Any]) -> str:
 def _preprint_intro(prep: dict[str, Any]) -> list[str]:
     counts = (prep.get("preprints") or {}).get("counts")
     rule = (
-        "A preprint can only be an early signal, and any change that adds or cites one is tier 2 (the founder decides)."
+        "A preprint can only be an early signal, and any change that adds or cites one is tier 2 (the auditor decides)."
     )
     if (prep.get("preprints") or {}).get("searched") is False:
         return ["", f"Preprints (Europe PMC): no preprint search was made (the papers were given by id). {rule}"]
@@ -1360,6 +1877,59 @@ def _preprint_intro(prep: dict[str, Any]) -> list[str]:
         f"Preprints (Europe PMC): {counts['found']} found, {counts['offered']} offered to the classifier "
         f"({dropped}). {rule}",
     ]
+
+
+def _audit_section(cfg: Config, outcomes: Sequence[Outcome]) -> list[str]:
+    """The report sections "Auditor decisions" and "Disputes (card unchanged)" (spec section 6)."""
+    needing = audit_eligible(cfg, outcomes)
+    audited = [o for o in needing if o.audit is not None]
+    lines = ["## Auditor decisions", ""]
+    if not needing:
+        lines.append("None. No change in this run needed an audit.")
+    for o in needing:
+        who = f"**{o.slug}**, from {_outcome_line(cfg, o)}"
+        if o.audit is None:
+            lines.append(f"- {who}: not applied, no valid audit record ({o.audit_note})")
+            continue
+        extra = f" (accepted level: {o.audit.accepted_level})" if o.audit.decision == "accept_lower" else ""
+        second = ""
+        if o.second is not None:
+            second = f"; second audit: {o.second.decision}" + (" (differs)" if o.second_differs else "")
+        elif o.sampled:
+            second = "; second audit: " + (f"not valid ({o.audit_note})" if o.audit_note else "none recorded")
+        lines.append(f"- {who}: {o.audit.decision}{extra}: {o.audit.reasons_summary}{second}")
+    if audited:
+        sampled = [o for o in audited if o.sampled]
+        second_done = [o for o in sampled if o.second is not None]
+        differed = [o for o in second_done if o.second_differs]
+        lines += [
+            "",
+            f"Consistency check: {len(second_done)} of {len(sampled)} sampled decisions decided a second time; "
+            f"{len(differed)} differed.",
+        ]
+    lines += ["", "## Disputes (card unchanged)", ""]
+    disputes: list[str] = []
+    for o in outcomes:
+        if o.status == "parked":
+            disputes.append(f"- **{o.slug}**, from {_outcome_line(cfg, o)}: parked ({o.note}); see the parking lot")
+    for o in audited:
+        assert o.audit is not None
+        who = f"**{o.slug}**, from {_outcome_line(cfg, o)}"
+        if o.audit_state == "rejected":
+            disputes.append(f"- {who}: the auditor rejected the change: {o.audit.reasons_summary}")
+        elif o.audit_state == "lower":
+            disputes.append(
+                f"- {who}: the auditor accepts level {o.audit.accepted_level} only, so nothing is applied: "
+                f"{o.audit.reasons_summary}"
+            )
+        elif o.audit_state == "differs" and o.second is not None:
+            disputes.append(f"- {who}: the second audit decided {o.second.decision}, the first accept: not applied")
+        if o.second_differs and o.audit_state in ("rejected", "lower") and o.second is not None:
+            disputes.append(
+                f"- {who}: the second audit decided {o.second.decision}, a different verdict from the first"
+            )
+    lines += disputes or ["None."]
+    return lines
 
 
 def build_report(cfg: Config) -> str:
@@ -1378,10 +1948,14 @@ def build_report(cfg: Config) -> str:
     tier2: list[str] = []
     tier1: list[str] = []
     for o in by_status["accepted"]:
+        if not o.applied:
+            continue  # held back by the audit: listed under "Auditor decisions" and "Disputes"
         last = o.last
         assert last is not None and last.ops is not None and last.review is not None
         base = base_data(o.slug)
         notes = [f"review: accept (round {last.n})"]
+        if o.audit is not None:
+            notes.append(f"audit: {o.audit.decision}")
         warnings = sum(1 for r in (last.checks or {}).get("citations", []) if r["level"] == citations.WARNING)
         if warnings:
             notes.append(f"{warnings} citation-check warning(s), see checks/")
@@ -1404,31 +1978,37 @@ def build_report(cfg: Config) -> str:
         "",
         f"{prep['selected']} paper(s) selected from {_window_text(prep)} "
         f"({prep['skipped_processed']} skipped as already processed by an earlier run). "
-        f"Proposed changes: {len(by_status['accepted'])} accepted by the reviewer, {len(by_status['parked'])} parked, "
+        f"Proposed changes: {len(by_status['accepted'])} accepted by the reviewer "
+        f"({sum(o.applied for o in by_status['accepted'])} applied after the audit gate), "
+        f"{len(by_status['parked'])} parked, "
         f"{len(by_status['skipped'])} skipped, {len(by_status['withdrawn'])} rejected and then withdrawn by the "
         f"drafter, {len(by_status['no_change'])} with no change proposed.",
         *_preprint_intro(prep),
         "",
-        "Draft changes only. Nothing here is published; merging this pull request puts the drafts on `main`, "
-        "and moving a card into `cards/` is a separate founder decision.",
+        "Changes applied by the pipeline: the mechanical checks passed, the review agent accepted, and every tier 2 "
+        "change was accepted by the auditor (functional spec section 6). A dispute leaves the card unchanged. "
+        "The founder merges this pull request as an operational step (trial period: four weekly runs, the "
+        "decisions read after the fact).",
         "",
         "## Proposed changes",
         "",
-        "### Tier 2: the founder decides (level, contested mark, badge, anything about a preprint)",
+        "### Tier 2: decided by the auditor (level, contested mark, badge, layer, link, anything about a preprint)",
         "",
         *(tier2 or ["None."]),
         "",
-        "### Tier 1: factual additions (calibration period: the founder approves these too)",
+        "### Tier 1: factual additions (applied on the checks and the review)",
         "",
         *(tier1 or ["None."]),
+        "",
+        *_audit_section(cfg, outcomes),
         "",
         "## Parking lot",
         "",
     ]
     if by_status["parked"]:
         lines.append(
-            "Changes the reviewer still rejected after two rounds, or that never passed. Not applied. "
-            "The founder decides."
+            "Changes the reviewer still rejected after two rounds, or that never passed. Not applied, and not "
+            "sent to the auditor. The card is unchanged."
         )
         lines.append("")
         for o in by_status["parked"]:
@@ -1445,7 +2025,7 @@ def build_report(cfg: Config) -> str:
     if by_status["withdrawn"]:
         lines.append(
             "The reviewer rejected the change, and the drafter then proposed nothing. Nothing is applied. "
-            "The reviewer's findings and what the drafter proposed are kept here so the founder can see why."
+            "The reviewer's findings and what the drafter proposed are kept here so a reader can see why."
         )
         lines.append("")
         for o in by_status["withdrawn"]:
@@ -1460,7 +2040,7 @@ def build_report(cfg: Config) -> str:
     lines += ["", "## Possible new hypotheses", ""]
     hyp = classify["new_hypotheses"] if classify else []
     if hyp:
-        lines.append("No card is drafted for these. They are listed so the founder can decide whether to add one.")
+        lines.append("No card is drafted for these. They are listed only; no step drafts a card for them.")
         lines.append("")
         lines += [f"- {_ref_line(cfg, h, papers)}: {h['hypothesis']} ({h['reason']})" for h in hyp]
     else:
@@ -1470,7 +2050,7 @@ def build_report(cfg: Config) -> str:
     if published:
         lines.append(
             "A study marked `preprint: true` whose Europe PMC record links to a published article. Nothing is "
-            "proposed; the founder decides whether the published paper replaces the preprint."
+            "proposed; whether the published paper replaces the preprint is not decided here."
         )
         lines.append("")
         lines += [
@@ -1625,11 +2205,40 @@ def subprocess_runner(cmd: Sequence[str]) -> tuple[int, str]:
     return done.returncode, (done.stdout + done.stderr).strip()
 
 
+_LAST_CHECKED_BLOCK = re.compile(r"^last_checked:[ \t]*\n((?:[ \t]+\S[^\n]*(?:\n|$))+)", re.MULTILINE)
+
+
+def _set_last_checked(text: str, date: str, by: str) -> str:
+    """Set ``last_checked`` (block style, as every card writes it) to ``date`` and ``by``, leaving other lines alone."""
+    match = _LAST_CHECKED_BLOCK.search(text)
+    if match is None:
+        raise PipelineError("the card has no block-style last_checked to update")
+    block = match.group(1)
+    new, n_date = re.subn(r"^([ \t]+date:)[^\n]*", rf"\g<1> {date}", block, flags=re.MULTILINE)
+    new, n_by = re.subn(r"^([ \t]+by:)[^\n]*", rf"\g<1> {by}", new, flags=re.MULTILINE)
+    if n_date != 1 or n_by != 1:
+        raise PipelineError("last_checked must have one date and one by line")
+    return text[: match.start(1)] + new + text[match.end(1) :]
+
+
+def _target_in_cards(cfg: Config, slug: str) -> bool:
+    """Whether the card file the pipeline works on (and writes) is in ``cards/`` rather than ``drafts/``."""
+    return cards.in_directory(_base_card(cfg, slug), cfg.cards_dir)
+
+
 def final_card_texts(cfg: Config, outcomes: Sequence[Outcome]) -> dict[str, str]:
-    """The text of each card after all its accepted operation files, applied in order of paper."""
+    """The text of each card after all its applied operation files, applied in order of paper.
+
+    A pair is applied when the reviewer accepted it and, if it has a tier 2 operation, the audit gate passed
+    (``Outcome.applied``). On a card in ``cards/``, an audited change also sets ``last_checked`` to the run date
+    with ``by: ai_audit`` (decision D4); a tier 1 only change leaves it as it is.
+    """
     result: dict[str, str] = {}
-    for o in sorted((o for o in outcomes if o.status == "accepted"), key=lambda o: (o.slug, _ledger_order(o.pmid))):
+    audited: set[str] = set()
+    for o in sorted((o for o in outcomes if o.applied), key=lambda o: (o.slug, _ledger_order(o.pmid))):
         assert o.last is not None and o.last.ops is not None
+        if o.audit_required:
+            audited.add(o.slug)
         text = result.get(o.slug) or _base_card(cfg, o.slug).read_text(encoding="utf-8")
         try:
             result[o.slug] = apply_operations(text, o.last.ops, validate=False)
@@ -1637,6 +2246,9 @@ def final_card_texts(cfg: Config, outcomes: Sequence[Outcome]) -> dict[str, str]
             raise PipelineError(
                 f"{o.slug}: accepted operations for {o.paper_id} no longer apply together: {exc}"
             ) from exc
+    for slug in sorted(audited):
+        if _target_in_cards(cfg, slug):
+            result[slug] = _set_last_checked(result[slug], str(_read_json(cfg.f("prepare.json"))["date"]), "ai_audit")
     for slug, text in result.items():
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / f"{slug}.yaml"
@@ -1715,6 +2327,111 @@ def split_report(report: str, limit: int = GITHUB_BODY_LIMIT) -> list[str]:
 COMMIT_TRAILER = "Co-Authored-By: Claude <noreply@anthropic.com>"
 
 
+def _op_headline(op: Any, base: dict[str, Any]) -> str:
+    """A short, one-line change-log text for one operation (no card text)."""
+    if isinstance(op, AddStudy):
+        return f"Added study {op.study.id}"
+    if isinstance(op, AddParagraph):
+        return f"Added a paragraph to {op.field}"
+    if isinstance(op, ReplaceParagraph):
+        return f"Replaced paragraph {op.index} of {op.field}"
+    assert isinstance(op, Propose)
+    if op.target == "level":
+        return f"Proposed level {base.get('level')} -> {op.value}"
+    if op.target == "contested":
+        return "Removed the contested mark" if op.value is None else f"Set a contested mark on rungs {op.value}"
+    return f"Set badge {op.target} to {op.value}"
+
+
+def _op_sources(op: Any) -> list[str]:
+    if isinstance(op, AddStudy):
+        return [op.study.id]
+    if isinstance(op, (AddParagraph, ReplaceParagraph)):
+        return list(op.sources)
+    assert isinstance(op, Propose)
+    return [s for p in op.reason or [] for s in p.sources]
+
+
+def changelog_update(cfg: Config, outcomes: Sequence[Outcome], date: str) -> tuple[Path, str] | None:
+    """The new text of ``cards/changelog.yaml``: one entry per applied pair whose card is in ``cards/`` (D4).
+
+    ``decided_by`` is ``ai_audit`` for an audited pair and ``ai_pair`` for a tier 1 only pair. None when no entry is
+    due. The text is checked with the change-log validator before it is returned.
+    """
+    entries: list[dict[str, Any]] = []
+    for o in sorted((o for o in outcomes if o.applied), key=lambda o: (o.slug, _ledger_order(o.pmid))):
+        if not _target_in_cards(cfg, o.slug):
+            continue
+        assert o.last is not None and o.last.ops is not None
+        base = yaml.safe_load(_base_card(cfg, o.slug).read_text(encoding="utf-8"))
+        ops = o.last.ops.operations
+        sources = list(dict.fromkeys([o.paper_id, *(s for op in ops for s in _op_sources(op))]))
+        if o.audit is not None:
+            reason, decided_by = o.audit.reasons_summary, "ai_audit"
+        else:
+            reason = f"Mechanical checks passed and the review agent accepted round {o.last.n}; no audit was needed."
+            decided_by = "ai_pair"
+        entries.append(
+            {
+                "date": dt.date.fromisoformat(date),
+                "card": o.slug,
+                "change": "; ".join(_op_headline(op, base) for op in ops),
+                "reason": reason,
+                "sources": sources,
+                "tier": 2 if o.audit_required else 1,
+                "decided_by": decided_by,
+            }
+        )
+    if not entries:
+        return None
+    path = cfg.cards_dir / CHANGELOG_NAME
+    existing = path.read_text(encoding="utf-8") if path.is_file() else ""
+    dumped = yaml.safe_dump(entries, sort_keys=False, allow_unicode=True, default_flow_style=False, width=100)
+    keep = existing.strip() not in ("", "[]")
+    text = (existing.rstrip("\n") + "\n" + dumped) if keep else dumped
+    with tempfile.TemporaryDirectory() as tmp:
+        log = Path(tmp) / CHANGELOG_NAME
+        log.write_text(text, encoding="utf-8", newline="\n")
+        for entry in yaml.safe_load(text):
+            (Path(tmp) / f"{entry['card']}.yaml").write_text("", encoding="utf-8")
+        issues = cards.validate_changelog_file(log, today=dt.date.fromisoformat(date))
+    if issues:
+        raise PipelineError("the new change-log entries do not validate:\n" + "\n".join(map(str, issues)))
+    return path, text
+
+
+def audit_copies(cfg: Config, outcomes: Sequence[Outcome], date: str) -> list[tuple[Path, Path]]:
+    """(record in the run, file in ``audits/``) for every valid audit record of this run.
+
+    ``audits/<date>-<slug>-<key>.yaml`` (the consistency run adds ``-second``); a whole-card record in
+    ``audit/<slug>.yaml`` becomes ``audits/<date>-<slug>.yaml``.
+    """
+    copies: list[tuple[Path, Path]] = []
+    for o in outcomes:
+        if o.audit is not None:
+            copies.append((cfg.audit_path(o.slug, o.pmid), cfg.audits_dir / f"{date}-{o.slug}-{o.pmid}.yaml"))
+        if o.second is not None:
+            copies.append(
+                (cfg.audit_path(o.slug, o.pmid, True), cfg.audits_dir / f"{date}-{o.slug}-{o.pmid}-second.yaml")
+            )
+    folder = cfg.f("audit")
+    for path in sorted(folder.glob("*.yaml")) if folder.is_dir() else []:
+        try:
+            raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except (OSError, yaml.YAMLError):
+            continue
+        if not isinstance(raw, dict) or raw.get("paper") is not None or raw.get("card") != path.stem:
+            continue
+        try:
+            validate_audit_record(
+                cfg, raw, slug=path.stem, key=None, source=path, context_path=cfg.audit_context_path(path.stem)
+            )
+        except PipelineError:
+            continue
+        copies.append((path, cfg.audits_dir / f"{date}-{path.stem}.yaml"))
+    return copies
+
+
 def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Callable[[str], None] = print) -> int:
     prep = _read_json(cfg.f("prepare.json"))
     report = build_report(cfg)
@@ -1722,15 +2439,19 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
     _write_text(report_path, report)
     outcomes = collect_outcomes(cfg)
     texts = final_card_texts(cfg, outcomes)
-    if not texts:
+    copies = audit_copies(cfg, outcomes, str(prep["date"]))
+    changelog = changelog_update(cfg, outcomes, str(prep["date"]))
+    if not texts and not copies:
         out(f"No accepted changes this run; nothing to commit. The report is {report_path}.")
         return 0
     branch = f"pipeline/{prep['date']}"
     title = f"Weekly pipeline {prep['date']}: {len(texts)} draft card update(s)"
-    targets = {slug: cfg.drafts_dir / f"{slug}.yaml" for slug in sorted(texts)}
+    if copies:
+        title += f", {len(copies)} audit record(s)"
+    targets = {slug: _base_card(cfg, slug) for slug in sorted(texts)}
     message = (
-        f"{title}\n\nAI-drafted from new PubMed papers and checked by the review agent; "
-        "see the pull request for the report. Drafts only, nothing is published."
+        f"{title}\n\nAI-drafted from new PubMed papers, checked by the review agent and, for tier 2 changes, "
+        "decided by the auditor; see the pull request for the report."
         f"\n\n{COMMIT_TRAILER}"
     )
 
@@ -1759,7 +2480,16 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
         out(f"write {target}")
         if not dry_run:
             _write_text(target, texts[slug])
-    if not step(["git", "add", "--", *map(str, targets.values())]):
+    if changelog is not None:
+        out(f"write {changelog[0]}")
+        if not dry_run:
+            _write_text(changelog[0], changelog[1])
+    for source, dest in copies:
+        out(f"write {dest}")
+        if not dry_run:
+            _write_text(dest, source.read_text(encoding="utf-8"))
+    staged = [*targets.values(), *([changelog[0]] if changelog else []), *(dest for _src, dest in copies)]
+    if staged and not step(["git", "add", "--", *map(str, staged)]):
         return 1
     if cfg.translations_dir.is_dir() and not step(["git", "add", "--", str(cfg.translations_dir)]):
         return 1
@@ -1832,6 +2562,7 @@ def _build_parser() -> argparse.ArgumentParser:
     common.add_argument("--cache-dir", type=Path, default=Path("data/cache"), help="default: %(default)s")
     common.add_argument("--spec", type=Path, default=DEFAULT_SPEC, help="default: %(default)s")
     common.add_argument("--translations-dir", type=Path, default=translations.DEFAULT_DIR, help="default: %(default)s")
+    common.add_argument("--audits-dir", type=Path, default=Path("audits"), help="default: %(default)s")
 
     parser = argparse.ArgumentParser(prog="python -m me_atlas.pipeline", description="The weekly pipeline.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1873,6 +2604,25 @@ def _build_parser() -> argparse.ArgumentParser:
     rev.add_argument("slug")
     rev.add_argument("pmid", metavar="paper", help="a PMID, pmid:<pmid>, doi:<doi> or a PPR id (a DOI-only preprint)")
     rev.add_argument("--round", type=int, choices=range(1, MAX_ROUNDS + 1), default=1)
+
+    aplan = sub.add_parser(
+        "audit-plan", parents=[common], help="write the auditor's context file for one change or one whole card"
+    )
+    aplan.add_argument("slug", nargs="?")
+    aplan.add_argument("pmid", nargs="?", metavar="paper", help="a PMID, pmid:<pmid>, doi:<doi> or a PPR id")
+    aplan.add_argument("--card", metavar="SLUG", help="audit the whole card instead of one change")
+    aplan.add_argument("--out", type=Path, help="with --card: write <OUT>/audit-context/<slug>.md (default: the run)")
+
+    arec = sub.add_parser("record-audit", parents=[common], help="validate an audit record")
+    arec.add_argument("slug", nargs="?")
+    arec.add_argument("pmid", nargs="?", metavar="paper", help="a PMID, pmid:<pmid>, doi:<doi> or a PPR id")
+    arec.add_argument("--card", metavar="SLUG", help="a whole-card audit (needs --file)")
+    arec.add_argument("--file", type=Path, help="with --card: the record the auditor wrote")
+    arec.add_argument("--second", action="store_true", help="the consistency run (audit/<slug>-<key>-second.yaml)")
+    arec.add_argument("--out", type=Path, help="with --card: the folder audit-plan --out wrote to")
+
+    asam = sub.add_parser("audit-sample", parents=[common], help="choose the pairs that need a second audit")
+    asam.add_argument("--seed", help="default: the run date (YYYY-MM-DD)")
 
     plan = sub.add_parser(
         "translation-plan", parents=[common], help="list the translated items the accepted changes made stale"
@@ -1949,6 +2699,8 @@ def main(
         if args.command == "prepare":
             date = args.date or today or dt.date.today()
             run_dir = args.run_dir or args.pipeline_dir / date.isoformat()
+        elif args.command in ("audit-plan", "record-audit") and args.card and args.out and not args.run_dir:
+            run_dir = args.out  # a whole-card audit outside a weekly run
         else:
             run_dir = args.run_dir or _latest_run(args.pipeline_dir)
         cfg = Config(
@@ -1959,6 +2711,7 @@ def main(
             args.spec,
             args.pipeline_dir,
             args.translations_dir,
+            args.audits_dir,
         )
         return _dispatch(args, cfg, fetch, preprint_search, fulltext, runner, date, out)
     except PipelineError as exc:
@@ -2046,6 +2799,44 @@ def _dispatch(
         key, _paper = resolve_paper(cfg, args.pmid)
         review = record_review(cfg, args.slug, key, args.round)
         out(f"review recorded: {review.verdict}, {len(review.findings)} finding(s)")
+        return 0
+    if args.command == "audit-plan":
+        loader = fulltext or live_fulltext_loader(cfg.cache_dir)
+        if args.card:
+            if args.slug or args.pmid:
+                raise PipelineError("give either <slug> <paper> or --card <slug>, not both")
+            text = build_audit_context(cfg, args.card, None, loader)
+            path = (args.out or cfg.run_dir) / "audit-context" / f"{args.card}.md"
+        else:
+            if not (args.slug and args.pmid):
+                raise PipelineError("give <slug> <paper>, or --card <slug>")
+            key, _paper = resolve_paper(cfg, args.pmid)
+            text = build_audit_context(cfg, args.slug, key, loader)
+            path = cfg.audit_context_path(args.slug, key)
+        _write_text(path, text)
+        out(str(path))
+        return 0
+    if args.command == "record-audit":
+        if args.card:
+            if args.slug or args.pmid:
+                raise PipelineError("give either <slug> <paper> or --card <slug> --file PATH, not both")
+            record = record_audit(cfg, args.card, None, second=args.second, file=args.file, out_dir=args.out)
+        else:
+            if not (args.slug and args.pmid):
+                raise PipelineError("give <slug> <paper>, or --card <slug> --file PATH")
+            key, _paper = resolve_paper(cfg, args.pmid)
+            record = record_audit(cfg, args.slug, key, second=args.second, file=args.file)
+        level = f" (accepted level {record.accepted_level})" if record.accepted_level is not None else ""
+        out(f"audit recorded: {record.decision}{level}, {len(record.parts)} part(s)")
+        return 0
+    if args.command == "audit-sample":
+        sample = audit_sample(cfg, args.seed)
+        out(
+            f"{len(sample['pairs'])} of {sample['audited']} audited pair(s) need a second audit (seed {sample['seed']})"
+        )
+        for pair in sample["pairs"]:
+            out(f"  {pair['card']} {pair['key']}: {pair['why']}")
+        out(str(cfg.f("audit-sample.json")))
         return 0
     if args.command == "translation-plan":
         plan = translation_plan(cfg, args.lang)

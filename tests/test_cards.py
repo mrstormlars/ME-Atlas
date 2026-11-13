@@ -63,6 +63,7 @@ def entry(**overrides) -> dict:
         "reason": "A fictional paper qualified.",
         "sources": ["pmid:00000004"],
         "tier": 1,
+        "decided_by": "ai_pair",
     }
     return {**e, **overrides}
 
@@ -82,7 +83,7 @@ def test_valid_fixture_card_loads_and_exercises_every_field():
     assert card.subgroups and card.working_on_it and card.early_signals
     assert {s.role for s in card.studies} == {"supports", "contradicts", "early_signal", "context"}
     assert {s.design for s in card.studies} == {"controlled", "intervention_controlled", "uncontrolled", "other"}
-    assert card.last_checked.by == "ai_pair"
+    assert card.last_checked.by == "ai_audit"
 
 
 def test_fixture_ids_and_titles_are_obviously_fake():
@@ -484,6 +485,61 @@ def test_v10_does_not_match_inside_other_words(tmp_path):
     data = base()
     data["early_signals"][0]["text"] = "A fictional report on secure signalling and the Hopewell fictional site."
     assert check(tmp_path, data) == []
+
+
+# --- V16 and decided_by (the AI auditor) -----------------------------------
+
+
+def validate_in_cards_dir(tmp_path: Path, by: str, folder: str = "cards") -> list[Issue]:
+    data = base()
+    data["last_checked"] = {"date": dt.date(2026, 10, 1), "by": by}
+    write_card(tmp_path / folder, data)
+    _count, issues = cards.validate_paths(
+        [tmp_path / folder], today=TODAY, content_dir=tmp_path / "content", cards_dir=tmp_path / "cards"
+    )
+    return issues
+
+
+def test_last_checked_by_allows_ai_audit_and_founder_and_ai_pair_on_a_draft(tmp_path):
+    for by in ("ai_pair", "ai_audit", "founder"):
+        assert check(tmp_path / by, {**base(), "last_checked": {"date": dt.date(2026, 10, 1), "by": by}}) == []
+
+
+def test_last_checked_by_rejects_other_values(tmp_path):
+    issues = check(tmp_path, {**base(), "last_checked": {"date": dt.date(2026, 10, 1), "by": "editor"}})
+    assert rules(issues) == {"V1"} and issues[0].path == "last_checked.by"
+
+
+def test_v16_a_card_in_cards_with_ai_pair_is_rejected(tmp_path):
+    issues = validate_in_cards_dir(tmp_path, "ai_pair")
+    assert rules(issues) == {"V16"}
+    assert issues[0].path == "last_checked.by" and "ai_audit" in issues[0].message
+
+
+def test_v16_a_card_in_cards_with_ai_audit_or_founder_passes(tmp_path):
+    assert validate_in_cards_dir(tmp_path / "a", "ai_audit") == []
+    assert validate_in_cards_dir(tmp_path / "b", "founder") == []
+
+
+def test_v16_does_not_apply_to_a_draft(tmp_path):
+    assert validate_in_cards_dir(tmp_path, "ai_pair", folder="drafts") == []
+
+
+def test_changelog_entry_without_decided_by_is_rejected(tmp_path):
+    e = entry()
+    del e["decided_by"]
+    issues = changelog_in(tmp_path, [e])
+    assert rules(issues) == {"V1"} and issues[0].path == "[0].decided_by"
+
+
+def test_changelog_entry_with_decided_by_editor_is_rejected(tmp_path):
+    issues = changelog_in(tmp_path, [entry(decided_by="editor")])
+    assert rules(issues) == {"V1"} and issues[0].path == "[0].decided_by"
+
+
+def test_changelog_decided_by_accepts_the_four_values(tmp_path):
+    values = ["ai_pair", "ai_audit", "founder", "expert"]
+    assert changelog_in(tmp_path, [entry(decided_by=v) for v in values]) == []
 
 
 # --- V11 change log --------------------------------------------------------

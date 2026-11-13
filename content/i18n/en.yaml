@@ -20,7 +20,7 @@ banner.draft: 'Draft preview — not published'
 skip: 'Skip to main content'
 nav.aria: 'Main'
 tips.title: 'Explanations of the marked words on this page'
-footer.review: 'No medical or research expert has reviewed this content yet. It is checked by AI tools and by the founder. See <a href="{lroot}methods.html">Methods</a>.'
+footer.review: 'The content, including every evidence level, is drafted, checked and decided by AI tools. No medical or research expert has reviewed it. See <a href="{lroot}methods.html">Methods</a>.'
 footer.advice: 'This site describes the state of the evidence. It gives no treatment advice. Built {built}.'
 
 # --- shown on a translated page only (the English text is the reference for the translator) ---
@@ -108,6 +108,7 @@ card.working: 'Who is working on it'
 card.early: 'Early signals: not yet repeated'
 card.last_checked: 'Last checked {date} by {by}.'
 by.ai_pair: 'the AI review pair'
+by.ai_audit: 'the AI auditor'
 by.founder: 'the founder'
 
 # --- one study ---

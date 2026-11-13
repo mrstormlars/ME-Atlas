@@ -18,7 +18,7 @@ banner.draft: 'Forhåndsvisning av utkast — ikke publisert'
 skip: 'Hopp til hovedinnholdet'
 nav.aria: 'Hovedmeny'
 tips.title: 'Forklaringer av de merkede ordene på denne siden'
-footer.review: 'Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått dette innholdet ennå. Det er kontrollert av KI-verktøy og av grunnleggeren. Se <a href="{lroot}methods.html">Metode</a>.'
+footer.review: 'Innholdet, også hvert evidensnivå, utarbeides, kontrolleres og avgjøres av KI-verktøy. Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått det. Se <a href="{lroot}methods.html">Metode</a>.'
 footer.advice: 'Dette nettstedet beskriver status for evidensen. Det gir ingen behandlingsråd. Bygget {built}.'
 
 # --- bare på oversatte sider ---
@@ -106,6 +106,7 @@ card.working: 'Hvem som arbeider med den'
 card.early: 'Tidlige signaler: ikke gjentatt ennå'
 card.last_checked: 'Sist kontrollert {date} av {by}.'
 by.ai_pair: 'de to KI-agentene'
+by.ai_audit: 'KI-revisoren'
 by.founder: 'grunnleggeren'
 
 # --- én studie ---

@@ -464,7 +464,7 @@ def test_levels_badges_contested_marks_titles_and_numbers_come_from_the_english_
     assert "pmid:00000001" in meta and "Canadian Consensus Criteria (CCC)" in meta and "Kontrollert" in meta
     assert "Lavere hos pasienter" in meta and "sitert som [1]" in meta
     last = norm(nb.find(cls="last-checked").text())
-    assert last == "Sist kontrollert 2026-10-01 av de to KI-agentene."
+    assert last == "Sist kontrollert 2026-10-01 av KI-revisoren."
 
 
 def test_the_case_definition_quote_is_never_shown_and_a_sidecar_cannot_put_one_there(proj_tmp):
@@ -692,7 +692,7 @@ def test_the_norwegian_methods_page_falls_back_to_english_with_a_note(proj_tmp, 
     nb = page(out, "nb/methods.html")
     text = norm(nb.text())
     assert "Metodesiden er ikke oversatt ennå. Teksten under er den engelske originalen." in text
-    assert "No medical or research expert has reviewed this content yet." in text  # the English text
+    assert "No medical or research expert has reviewed this content." in text  # the English text
     assert norm(nb.find("h1").text()) == "Methods"
     assert "Metodesiden er ikke oversatt" not in norm(page(out, "methods.html").text())
 
@@ -895,7 +895,7 @@ def test_every_norwegian_page_has_navigation_footer_statement_build_date_and_one
     for path in nb_files(out):
         doc = parse(path.read_text(encoding="utf-8"))
         footer = norm(doc.find("footer").text())
-        assert "Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått dette innholdet ennå." in footer, path
+        assert "Ingen medisinsk eller forskningsfaglig ekspert har gjennomgått det." in footer, path
         assert "Bygget 2026-11-01" in footer and "ingen behandlingsråd" in footer, path
         assert len(doc.find_all("h1")) == 1 and doc.find("main") is not None, path
 

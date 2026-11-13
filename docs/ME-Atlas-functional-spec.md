@@ -8,7 +8,9 @@ Examples in this document are fictional ("Hypothesis A") and carry no real citat
 
 ## 1. Purpose and readers
 
-ME Atlas gives an honest, evidence-graded overview of the serious hypotheses about what causes ME/CFS. It describes the state of the evidence. It does not give treatment advice.
+ME Atlas aims to contribute to solving ME/CFS. It collects and grades what is known about the causes of ME/CFS and long COVID, shows how the hypotheses connect, and makes visible what has not been tested, so that researchers can see where the next study would matter and patients and carers can follow the state of the evidence. It describes the state of the evidence. It does not give treatment advice, and it makes no claim of discovery: it lists untested connections and never says that a hypothesis is promising or that a connection is new.
+
+Researchers and patients and carers are readers of equal weight. Plain language and low reading effort stay for everyone; the gaps page, the causal map and the null findings are the content aimed at researchers.
 
 Scope is ME/CFS first. Long COVID appears as a marker on a card where the evidence overlaps, because the two conditions may share some root causes. It is not a separate section in v1.
 
@@ -108,7 +110,7 @@ Separate tracks for mechanism, diagnosis and treatment were rejected because the
 
 A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it. Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts. Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured. A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs.
 
-- **Who decides:** the founder, as a tier 2 decision (see section 6), with the contradicting study linked on the card and the reason written in plain sentences, split into short paragraphs with their own sources when it needs more than two. AI may propose a conflict; it never sets one.
+- **Who decides:** the auditor, as a tier 2 decision (see section 6), with the contradicting study linked on the card and the reason written in plain sentences, split into short paragraphs with their own sources when it needs more than two. AI may propose a conflict; it never sets one.
 - **How it is shown:** the bar is filled up to the highest uncontested rung; the rung or rungs under dispute are drawn as a **hatched segment**. The card lists both sides.
 - **How it ends:** a contested mark is removed when the conflict is resolved (for example a larger study settles it), recorded on "What changed this week".
 
@@ -142,7 +144,7 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 - **Open questions** are empty boxes, never claims: a question sourced to a publication that asks it, or marked as the editorial team's own question.
 - **Convergence is counted, not judged.** A node with two or more incoming links from different cards is listed as a *candidate common mechanism*; a card with two or more links out as a *candidate root*. Nobody writes "the common cause is".
 - **Gaps are counted and listed, never judged.** Symptoms with no link, links not yet tested in patients (step 1) and what the next rung requires are shown as lists with counts; no gap is ranked, weighted or called important.
-- **Who decides:** setting a card's layer and adding or changing a link are founder decisions, like levels, badges and contested marks (section 6). AI may propose and the `card-reviewer` checks each link against its sources; it never sets either.
+- **Who decides:** setting a card's layer and adding or changing a link are tier 2 decisions taken by the auditor, like levels, badges and contested marks (section 6). AI may propose and the `card-reviewer` checks each link against its sources; it never sets either.
 
 ## 4. Pages
 
@@ -153,7 +155,7 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 
 ### Hypothesis card page
 
-- **Shows:** name; core claim in plain words; level, badges and contested state, with the reason for each; key supporting studies (link, sample size, case definition, year); contradicting studies; replication status; subgroups it may apply to; who is working on it; early signals; a small "Also studied in long COVID" label at the top of the card when at least one long COVID study that meets the inclusion rule points to the same mechanism; last checked (date, and whether by the AI review pair or by the founder).
+- **Shows:** name; core claim in plain words; level, badges and contested state, with the reason for each; key supporting studies (link, sample size, case definition, year); contradicting studies; replication status; subgroups it may apply to; who is working on it; early signals; a small "Also studied in long COVID" label at the top of the card when at least one long COVID study that meets the inclusion rule points to the same mechanism; last checked (date, and whether by the AI auditor or, after an overrule, by the founder).
 - **Early signals** come only from studies with a recognised case definition confirmed in the abstract or full text; a study whose case definition is unverified or not stated is not shown as an early signal. They appear only on the card, under the fixed heading "Early signals: not yet repeated", in a fixed sentence pattern ("A study of n=… found …"). They never appear on the front page, and words such as "promising", "breakthrough" or "hope" are not used.
 - **Does not show:** advice on what a patient should do; a verdict that a hypothesis is "right" or "wrong"; any sentence without a source link.
 
@@ -170,7 +172,7 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 
 ### Methods page
 
-- **Shows:** the evidence ladder and its draft status; the inclusion rule; the Bradford Hill mapping; the badge definitions; how contested evidence is decided; the editorial flow and its review tiers; the role of AI and how its work is checked; who makes human decisions; a plain statement that no medical or research expert has reviewed the content yet (until one has); known limits.
+- **Shows:** the evidence ladder and its draft status; the inclusion rule; the Bradford Hill mapping; the badge definitions; how contested evidence is decided; the editorial flow and its review tiers; the role of AI and how its work is checked; who decides (the AI auditor; the founder sets direction and may overrule); a plain statement that no medical or research expert has reviewed the content yet (until one has); known limits.
 - **Does not show:** private reviewer discussions; claims about accuracy that are not measured.
 
 ### Glossary page
@@ -191,29 +193,51 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 
 ## 6. Editorial flow
 
-The pipeline runs mostly on AI, with mechanical checks in code and a human for high-impact changes and disputes.
+The pipeline runs on AI, with mechanical checks in code. The founder sets the direction; no person decides the content of a card. The site says so openly (section 5 and the methods page).
+
+### Roles
+
+| Role | Who | Decides |
+| --- | --- | --- |
+| Drafting agent | `card-drafter`, `link-drafter`, `hypothesis-surveyor` | Nothing; proposes |
+| Review agent | `card-reviewer` | Whether a draft goes forward (two rounds) |
+| Auditor | `auditor`, an independent AI agent | Tier 2 and tier 3: levels, badges, contested marks, layer and links, preprint early signals, parked disputes, and a new hypothesis against the inclusion rule |
+| Founder | the founder | Direction: the rubric and its rules, the inclusion rule, the scope, removing a hypothesis, which sources are searched, the agents' prompts. May overrule any auditor decision, as a logged correction (`decided_by: founder`) |
+| Expert reviewer | vacant | Replaces the auditor when recruited |
+
+### Steps
 
 1. **Weekly fetch.** The pipeline fetches new papers from PubMed and Europe PMC and stores raw responses.
 2. **Drafting agent.** One AI agent classifies papers by hypothesis, extracts study data (sample size, case definition) and writes a draft card update. Each AI output keeps the source id it came from. Output goes to `drafts/` only.
-3. **Mechanical checks (code, not AI).** Every cited id exists in a fetched record; title, year, sample size and case definition match that record; every sentence has a source link. A draft that fails is sent back to the drafting agent.
-4. **Review agent.** A second, independent AI agent checks the draft against the sources, the inclusion rule and the ladder. It sees the draft and the source records, not the drafting agent's reasoning. Where possible it runs on a different model or prompt family, so the two do not share the same blind spots.
-5. **Second round.** If the review agent rejects the draft, the drafting agent gets one revised attempt, which is checked again (steps 3–4). If they still disagree after two rounds, the change goes to the **parking lot** for the founder.
-6. **Decision by tier.**
+3. **Mechanical checks (code, not AI).** Every cited id exists in a fetched record; title, year, sample size and case definition match that record; every sentence has a source link. A draft that fails is sent back to the drafting agent. No AI verdict overrides a failed mechanical check.
+4. **Review agent.** A second AI agent checks the draft against the sources, the inclusion rule and the ladder. It sees the draft and the source records, not the drafting agent's reasoning.
+5. **Second round.** If the review agent rejects the draft, the drafting agent gets one revised attempt, which is checked again (steps 3 and 4). If it is rejected again, the change goes to the **parking lot**: it is not applied and not sent to the auditor, and the report lists it as a dispute.
+6. **Audit and decision by tier.**
 
    | Tier | Change | Who decides |
    | --- | --- | --- |
-   | 1 | Adding a study to a card, factual text, change-log entry | Published automatically when the mechanical checks pass and both agents agree |
-   | 2 | Setting or changing a level, a badge or a contested mark; adding or removing a hypothesis | The founder, yes or no, in a weekly list |
-   | 3 | Anything still disputed after two agent rounds | The founder, from the parking lot. If unresolved, the lower level stands and the disagreement is noted on the card |
+   | 1 | Adding a study to a card, factual text, change-log entry | Applied when the mechanical checks pass and the drafting and review agents agree |
+   | 2 | Setting or changing a level, a badge or a contested mark; a card's layer and links; adding a hypothesis; any change that adds or cites a preprint | The auditor, accept or reject, after the checks and the review |
+   | 3 | Anything still disputed after two agent rounds | The auditor decides whether the dispute can be settled; if it is not, the card is unchanged and the lower level stands, with the disagreement noted on the card |
 
-   Changes that add or cite a preprint are tier 2 until the founder rules otherwise.
+   Changes that add or cite a preprint are tier 2: the auditor decides preprint changes. Removing a hypothesis stays with the founder.
 
-   **Calibration period:** for the first weeks the founder approves every change, including tier 1, to measure how often the agents are wrong. Tier 1 auto-publishing starts only when the founder rules the error rate acceptable, recorded in `docs/pm/DECISIONS.md`.
-7. **Publication.** Approved changes are published in the weekly site update. The card shows when it was last checked and whether by the AI review pair or by the founder.
-8. **Logging.** Every published change gets an entry on "What changed this week" (date, card, change, one-line reason, source link, and which tier decided it). The change log is public and kept permanently.
-9. **Corrections.** An error found later, including one reported by a reader, is corrected the same way and logged as a correction.
+   **What the auditor sees, and nothing else:** the proposed change (the diff of the card), the card as it stands, the cached source records the change cites, the rubric (sections 2 and 3 of this document) and `docs/card-format.md`. It does not see the drafting agent's reasoning, the review agent's findings or any earlier audit of the same change, and each audit starts in a fresh context.
 
-AI drafts and checks; a human decides every level, badge, contested mark and new hypothesis. The site states openly that content is AI-reviewed and not yet expert-reviewed.
+   **What the auditor writes:** one audit record per decision, validated by code: the decision (`accept`, `reject`, or `accept_lower` with the level it does accept), the rubric clause each part of the decision rests on, the source id and the verbatim quote behind every factual statement in its reasons, and what would change the decision. Code rejects a record with an unknown source id, a quote that is not found word for word in the cached record, or a decision part without a rubric clause. The auditor writes no card text.
+
+   **Conservative default.** A change is applied only when the mechanical checks passed, the review agent accepted the draft and, for a tier 2 change, the auditor accepted it. If the auditor rejects, or accepts only a lower level, the card is unchanged and the record says why. A dispute that is still open leaves the card unchanged.
+
+   **Consistency check.** For a sample of audited changes, a second auditor with a fresh context decides the same change: every level change, and one in five of the others, chosen by a script from a recorded seed. A second verdict that differs from the first leaves the card unchanged, is treated as a dispute and is counted. The count is reported with every weekly pull request; it is the measure of how reliable the auditor is.
+
+   **Independence, stated honestly.** The auditor shares a model family with the agents it audits and may share their blind spots. The independence that exists lies in what the auditor is shown, not in the model. The model of each agent is listed in `docs/pipeline.md`.
+
+   **Trial period:** for the first four weekly runs the founder reads the list of auditor decisions after the fact. The trial ends by a ruling in `docs/pm/DECISIONS.md`. The founder merges the weekly pull request as an operational step, without reviewing the content.
+7. **Publication.** Applied changes are published in the weekly site update. The card shows when it was last audited and by whom: the AI auditor, or the founder after an overrule.
+8. **Logging.** Every published change gets an entry on "What changed this week" (date, card, change, one-line reason, source link, the tier, and who decided it: the AI review pair, the AI auditor, the founder or, later, an expert). The change log is public and kept permanently.
+9. **Corrections.** An error found later is corrected the same way and logged as a correction. A founder overrule of an auditor decision is a correction with `decided_by: founder`.
+
+AI drafts, checks and audits; the founder sets the direction and the rubric. The site states openly that every level is decided by AI tools and that no medical or research expert has reviewed the content.
 
 ## 7. Out of scope for v1
 

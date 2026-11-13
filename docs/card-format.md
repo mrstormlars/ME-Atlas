@@ -75,9 +75,9 @@ The change log's `sources` (`cards/changelog.yaml`) is not part of a card and V1
 | `working_on_it` | List of `name` and `url` (research groups, funders). |
 | `early_signals` | List of sourced text. Unreplicated findings only. |
 | `studies` | List of studies (below). |
-| `last_checked` | `date` and `by` (`ai_pair` or `founder`). |
-| `layer` | Optional. Where the hypothesis sits on the causal map: `predisposition`, `trigger`, `mechanism` or `dysfunction`. A card without one is listed as "Not yet placed". A founder decision. |
-| `links` | Optional list of links out of this card (below). A founder decision. |
+| `last_checked` | `date` and `by`: `ai_pair` (the drafting and review agents; allowed on a draft only), `ai_audit` (the AI auditor, the value of an audited card) or `founder` (an overrule). A card in `cards/` must have `ai_audit` or `founder` (rule V16). After an audited change the pipeline sets `date` to the run date and `by` to `ai_audit`; a tier 1 only change leaves it as it is. |
+| `layer` | Optional. Where the hypothesis sits on the causal map: `predisposition`, `trigger`, `mechanism` or `dysfunction`. A card without one is listed as "Not yet placed". A tier 2 decision, taken by the auditor (functional spec section 6). |
+| `links` | Optional list of links out of this card (below). A tier 2 decision, taken by the auditor (functional spec section 6). |
 
 Unknown fields are errors. `level`, the numbers in `contested.rungs` and the change-log `tier` must be whole numbers: `true` and `2.0` are rejected (V1).
 
@@ -136,7 +136,7 @@ Links live on the upstream card only. Translations of link texts are card text (
 
 ## Change log entries
 
-`date`, `card` (slug of a file in `cards/`), `change`, `reason` (one line), `sources` (study ids) and `tier` (1, 2 or 3, see functional spec section 6).
+`date`, `card` (slug of a file in `cards/`), `change`, `reason` (one line), `sources` (study ids), `tier` (1, 2 or 3, see functional spec section 6) and `decided_by`: who decided the change, one of `ai_pair` (tier 1: the drafting and review agents), `ai_audit` (the AI auditor), `founder` (an overrule, logged as a correction) or `expert` (a medical or research expert, when one is recruited). `decided_by` is required; a missing value or any other value is rejected (V1). `pipeline pr` writes one entry per applied change on a card in `cards/`: `ai_audit` with the auditor's one-line reason for an audited (tier 2) change, `ai_pair` for a change with tier 1 operations only.
 
 ## Derived, not stored
 
@@ -164,6 +164,7 @@ Links live on the upstream card only. Translations of link texts are card text (
 | V13 | Case definition provenance: `unverified` has `null` source and quote; every other value has a source; the named definitions (CCC, ICC, IOM2015, Fukuda, Holmes1988, CDC_unspecified, Oxford) also have a quote. |
 | V14 | No "TODO" (whole word, any case) in text a reader sees: the `name`, any sourced text (core claim, level reason, contested reason, badge reasons, subgroups, early signals, link texts) or a study's `title`, `finding`, `group` or `case_definition_quote`. The message names the field. A TODO in a YAML comment is fine. |
 | V15 | A study with `preprint: true` must have `role: early_signal` (error at `studies[i].role`), and its id may not be a source of `level_reason` (any paragraph), `contested.reason`, `badges.diagnostic_marker.reason`, `badges.explains_pem.reason` a link, `core_claim` or a `subgroups` item (error at that path, e.g. `links[0].sources[0]`). A preprint can be cited only in `early_signals`, so it cannot set or contest a level, set a badge, carry a link or be the core claim or a subgroup (see "Where a preprint may be cited"). |
+| V16 | A card file in `cards/` has `last_checked.by` `ai_audit` or `founder`; `ai_pair` is allowed on a draft in `drafts/` only. It is checked when the file is validated as part of `cards/` (`cards validate`, the site build); a draft is not affected. |
 | M1 | `layer`, when present, is one of `predisposition`, `trigger`, `mechanism`, `dysfunction` (reported as a schema error on `layer`). |
 | M2 | Every link's `to` resolves: a card slug in the validated set (see `docs/map.md`), `symptom:<id>` in `content/symptoms.yaml`, `question:<id>` in `content/open-questions.yaml`. A malformed value such as `foo:bar`, or an entry marked `todo: verify`, is an error. |
 | M3 | A card does not link to itself. |
@@ -171,9 +172,9 @@ Links live on the upstream card only. Translations of link texts are card text (
 | M5 | A link with `support` `associated` or `directional` cites at least one study that is not a review (`design` not `other`) and whose case definition is not `none`, `other`, `unverified` or `Oxford`: "needs a study in an ME/CFS cohort with a recognised case definition". `proposed` has no such condition. |
 | M6 | The content files: `content/symptoms.yaml` (`id`, `name`, non-empty `sources`, or `todo: verify` instead) and `content/open-questions.yaml` (`id`, `layer`, `text`, and exactly one of non-empty `asked_by` or `editorial: true`, or `todo: verify`). Unique ids, no unknown keys, none of the banned words. A `todo: verify` entry is valid, left out of the build and the report, and printed as a warning. |
 
-The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10 and V12-V14 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
+The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10 and V12-V16 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
 
-What it does not check: that titles, years, sample sizes and case definitions match the PubMed record (a later task, needs the fetch script), that the level is right for the evidence, or that a founder approved a change.
+What it does not check: that titles, years, sample sizes and case definitions match the PubMed record (a later task, needs the fetch script), that the level is right for the evidence, or that the auditor accepted a change (the pipeline's audit gate and `record-audit` do that, see `docs/pipeline.md`).
 
 ## Fictional example
 
@@ -233,7 +234,7 @@ studies:
     finding: A study of n=12 patients found a fictional related change.
 last_checked:
   date: 2026-10-01
-  by: ai_pair
+  by: ai_audit
 ```
 
 Change log entry:
@@ -245,4 +246,5 @@ Change log entry:
   reason: A fictional new paper met the criteria.
   sources: [pmid:00000004]
   tier: 1
+  decided_by: ai_pair
 ```

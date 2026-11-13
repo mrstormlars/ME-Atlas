@@ -2,6 +2,26 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — AI auditor: three rulings before the first publication
+
+After the auditor's dry run on the neuroinflammation draft (it accepted the level, badges, layer and links, and rejected the card over two statements it could not find in the text it was given).
+
+- **Source text for the auditor.** The sources that carry a level, a badge or a contested mark are given to the auditor in full; the other sources as abstracts. Why: the context was cut at 12,000 characters per source, so the auditor rejected statements that stand further into the full text. A statement whose source is not in the cache (the dry run found one, on a published correction) is not a truncation problem: it is corrected in the draft through the normal drafting path.
+- **A lower level is reached through a new draft round (D3 stands).** When the auditor answers `accept_lower`, nothing is applied automatically; the drafting agent rewrites the level reasons at the lower level, and the result goes through review and audit again. Why: the auditor does not write card text, and applying only the number would leave reasons that argue for the higher level. The outcome is the one ruled earlier the same day: the card is published at the level the auditor accepts.
+- **A parked change never goes to the auditor (D2 stands).** A change the review agent rejected in two rounds leaves the card unchanged and is listed; no AI step overrules a rejection. This narrows the ruling below, which gave parked disputes to the auditor. Why: it is the most conservative reading. The founder may still overrule, as a logged correction.
+- To build before the first publication: the full-text rule, the redraft path, and two stale sentences (`docs/ME-Atlas-v1-plan.md` "a human approves every change", `docs/pipeline.md` on who decides retractions).
+
+## 2026-11-13 — AI auditor: contract decisions D1-D6 (steps 1-5 and 7 of the plan)
+
+Taken when the plan `docs/plan-ai-auditor-and-purpose.md` was turned into a contract; the plan left these open. They are the implementation rulings of the entry below, not changes to it.
+
+- **D1. Which changes are audited.** In a weekly run, every pair whose final round passed the mechanical checks, was accepted by the reviewer and contains at least one tier 2 operation. A pair with only tier 1 operations is applied on checks and review, as before, and is not audited. The audit decision covers the whole operations file: anything but `accept` means none of its operations is applied. Why: the founder's ruling moves tier 2 and tier 3 to the auditor and leaves tier 1 where it was; an operations file is applied as a unit, so it is decided as a unit.
+- **D2. Parked pairs.** A pair that was rejected twice, or failed the checks after a rejection, is never sent to the auditor and never applied; it is listed under disputes. No AI step overrides a review rejection. Why: the conservative default of the plan (a dispute leaves the card unchanged), and an auditor that could revive a rejected draft would weaken the second reader.
+- **D3. `accept_lower` is never applied automatically.** The auditor writes no card text, so the change stays as it is and the report lists the level the auditor accepts. A redraft at that level goes through the normal drafting path at most once; how that is done is decided with the first publication or a later run. Why: applying a lower level would need card text that nobody has drafted or reviewed.
+- **D4. Where `pr` writes.** An accepted (and, where D1 requires, audited) change is written to the card's base file, as the pipeline already picks it (`cards/<slug>.yaml` when it is the card in use, else `drafts/<slug>.yaml`). When the target is in `cards/`, `pr` appends a change-log entry per accepted pair to `cards/changelog.yaml` with `decided_by: ai_audit` (audited) or `ai_pair` (tier 1 only). `last_checked` records the last audit: an audited change on a card in `cards/` sets it to the run date with `by: ai_audit`; a tier 1 only change leaves it as it is. Why: `last_checked` must say who last decided, and a tier 1 change is not an audit.
+- **D5. Rubric clause.** Each part of an audit decision names `rubric`, a verbatim excerpt (at least 20 characters after normalisation) of functional spec section 2 or 3 as given in the context file, checked with the same narrow normalisation the citation check uses for quotes. Why: "grade only against the published rubric" has to be checkable by code, not by trust.
+- **D6. Consistency sample seed.** The run date string (`YYYY-MM-DD`) by default, overridable with `--seed`; the sample and its seed are written to `RUN/audit-sample.json`. Why: the sample must be reproducible and independent of anyone's choice of pairs.
+
 ## 2026-11-13 — The repository will be opened to the public
 
 - `mrstormlars/ME-Atlas` is to be made public, so the method can be checked and so that others can contribute through issues and pull requests. Why: the founder wants to ask the Norwegian ME Association and the medical research community for views and collaborators, and openness fits the project's principle of open methods. Plan: `docs/plan-open-repository.md`.

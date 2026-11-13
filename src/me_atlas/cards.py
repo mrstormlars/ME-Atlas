@@ -2,7 +2,7 @@
 
 Cards live in ``cards/<slug>.yaml``, drafts in ``drafts/<slug>.yaml`` (same schema) and the public
 change log in ``cards/changelog.yaml``. See ``docs/card-format.md`` for the field reference and the
-plain-English rules V1-V15.
+plain-English rules V1-V16.
 
 Command line::
 
@@ -150,7 +150,7 @@ class WorkingOnIt(_Model):
 
 class LastChecked(_Model):
     date: dt.date
-    by: Literal["ai_pair", "founder"]
+    by: Literal["ai_pair", "ai_audit", "founder"]
 
 
 class Study(_Model):
@@ -209,6 +209,9 @@ class ChangeLogEntry(_Model):
     reason: NonEmptyStr
     sources: list[StudyId]
     tier: StrictInt  # whole number only (V1); allowed values 1-3 are checked as rule V11
+    # Who decided the change: the AI drafting and review pair (tier 1 only), the AI auditor, the founder (an
+    # overrule, logged as a correction) or, later, an expert reviewer.
+    decided_by: Literal["ai_pair", "ai_audit", "founder", "expert"]
 
 
 # ---------------------------------------------------------------------------
@@ -314,8 +317,15 @@ def _supports_level2(study: Study) -> bool:
     )
 
 
-def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
-    """Return (rule, field path, message) for every cross-field rule the card breaks."""
+# Who may have last checked a card that is published in cards/ (rule V16). A draft may say "ai_pair".
+PUBLISHED_LAST_CHECKED_BY = ("ai_audit", "founder")
+
+
+def check_card(card: Card, file_stem: str, *, published: bool = False) -> list[tuple[str, str, str]]:
+    """Return (rule, field path, message) for every cross-field rule the card breaks.
+
+    ``published`` is true for a card file in ``cards/`` (not a draft): rule V16 applies to it.
+    """
     found: list[tuple[str, str, str]] = []
     by_id = {s.id: s for s in card.studies}
 
@@ -452,6 +462,16 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
                     )
                 )
 
+    # V16: a card in cards/ was last checked by the auditor or the founder, never by the review pair alone
+    if published and card.last_checked.by not in PUBLISHED_LAST_CHECKED_BY:
+        found.append(
+            (
+                "V16",
+                "last_checked.by",
+                f"a card in cards/ must have last_checked.by 'ai_audit' or 'founder', not '{card.last_checked.by}'",
+            )
+        )
+
     # M3, M4 (M1 is the schema's `layer` enum; M2 needs the other cards and lives in me_atlas.map)
     seen_to: set[str] = set()
     for i, link in enumerate(card.links):
@@ -504,8 +524,11 @@ def _read_yaml(path: Path) -> tuple[object, list[Issue]]:
         return None, [Issue("YAML", str(path), "", f"invalid YAML: {str(exc).splitlines()[0] if str(exc) else exc}")]
 
 
-def _parse_card(path: Path) -> tuple[Card | None, list[Issue]]:
-    """Parse and fully validate one card/draft file. Card is None if anything failed."""
+def _parse_card(path: Path, *, published: bool = False) -> tuple[Card | None, list[Issue]]:
+    """Parse and fully validate one card/draft file. Card is None if anything failed.
+
+    ``published`` marks a file in ``cards/``, where rule V16 (``last_checked.by``) also applies.
+    """
     data, issues = _read_yaml(path)
     if issues:
         return None, issues
@@ -516,7 +539,7 @@ def _parse_card(path: Path) -> tuple[Card | None, list[Issue]]:
         card = Card.model_validate(data)
     except ValidationError as exc:
         return None, _schema_issues(exc, file)
-    issues = [Issue(rule, file, p, msg) for rule, p, msg in check_card(card, path.stem)]
+    issues = [Issue(rule, file, p, msg) for rule, p, msg in check_card(card, path.stem, published=published)]
     return (None if issues else card), issues
 
 
@@ -588,6 +611,14 @@ def _yaml_files(directory: Path) -> list[Path]:
 # ---------------------------------------------------------------------------
 
 
+def in_directory(path: Path, directory: Path) -> bool:
+    """Whether the file sits directly in ``directory`` (compared as resolved paths)."""
+    try:
+        return path.resolve().parent == directory.resolve()
+    except OSError:
+        return False
+
+
 def validate_paths(
     paths: Sequence[Path],
     today: dt.date | None = None,
@@ -624,7 +655,7 @@ def validate_paths(
         if f.name == CHANGELOG_NAME:
             issues += validate_changelog_file(f, today)
         else:
-            card, file_issues = _parse_card(f)
+            card, file_issues = _parse_card(f, published=in_directory(f, cards_dir))
             issues += file_issues
             if card is not None:
                 parsed.append((str(f), card))
