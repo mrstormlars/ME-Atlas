@@ -1,0 +1,85 @@
+card: oxidative-nitrosative-stress
+decision: reject
+parts:
+  - decision_part: "The case definition the card gives for the Antwerp study (pmid:21455120), one of the two studies the level 2 rests on. The card labels it Fukuda and writes \"56 patients meeting the Fukuda definition\" in level_reason, but the record names only the CDC criteria with no version. Under the rubric this is the CDC-unspecified row, and the card must say so, as it already does for the Dundee study. The label cannot be read from the record, so the card is not accepted as written."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as \"does not require PEM\", ranked equal to Fukuda. The card quotes the sentence that names the CDC criteria."
+    evidence:
+      - source: pmid:21455120
+        quote: "The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention (CDC) criteria [29]."
+      - source: pmid:16085177
+        quote: "Forty-seven patients (18 males, 29 females, mean age 48 [19--63] years) who fulfilled the Centres for Disease Control classification for CFS and 34 healthy volunteers"
+  - decision_part: "The case definition of the Stanford study (pmid:40627396), described in level_reason as a study of patients meeting the Fukuda definition. The record says patients were diagnosed using three definitions together, not that they all met Fukuda. Fukuda may be kept as the lowest definition named, but the sentence as written is not what the record says."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:40627396
+        quote: "were diagnosed by a physician using the National Academy of Medicine (8), Fukuda (36), and Canadian Consensus criteria (37)."
+  - decision_part: "The level 2 itself. Once the case-definition wording is corrected, it would be supported: controlled studies in patients with a CDC case definition (an accepted definition) found higher oxidative-damage markers."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:16085177
+        quote: "Patients had significantly increased levels of isoprostanes (group 1, P=0.007; group 2, P=0.03, unpaired t test compared to controls)"
+      - source: pmid:21455120
+        quote: "Plasma peroxide concentrations were significantly higher in patients with ME/CFS than in normal controls."
+  - decision_part: "Not level 3. Each measure was found raised by one group only. The other isoprostane study is very small and states no case definition in its abstract."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:19422646
+        quote: "Six male CFS patients and six healthy controls performed an incremental exercise test to exhaustion and a submaximal exercise bout to exhaustion."
+      - source: pmid:27224647
+        quote: "Resting condition yielded higher d-ROMs, higher OSI, and lower BAP in patients with CFS than in healthy volunteers"
+  - decision_part: "No contested mark. The larger Novi Sad study, with the same definition and more than half the sample, contradicts the malondialdehyde result. The level does not rest on that result, and no comparable study contradicts the isoprostane or peroxide findings."
+    rubric: "Comparable quality means all three: the same or a stricter case definition"
+    evidence:
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345), when subdivided according to the level of MDA, a difference was found in the subgroup of high-level MDA (P=.034)."
+      - source: pmid:23185200
+        quote: "Twenty-four women aged 15-45 who fulfilled the diagnostic criteria for CFS with no comorbidities were recruited and were age matched to a control group of 19 healthy women."
+  - decision_part: "Not level 4. The Fukuda-defined placebo-controlled trial found no between-group difference and measured no oxidative-stress marker. The trial that reported lower lipoperoxides has no verified case definition."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:34444817
+        quote: "This was highlighted in the improvement in scores observed in the intragroup analysis, although no differences were found in the intergroup analysis."
+      - source: pmid:25386668
+        quote: "lipoperoxides (p<0.05) were significantly lower in blood mononuclear cells of the treated group"
+  - decision_part: "Diagnostic marker badge set to no: correct."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:21455120
+        quote: "The residualized plasma peroxide values showed no significant diagnostic performance for ME/CFS, where the area under the ROC curve was only 62.6%."
+      - source: pmid:40627396
+        quote: "Although the comparisons from the fPOP cohort are a small case study"
+  - decision_part: "Explains-PEM badge set to no: correct. The Dundee correlation uses a symptom score, not a symptom check after an exertion challenge."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:16085177
+        quote: "CFS symptoms correlated with isoprostane levels, but only in group 2 low CV risk CFS patients"
+  - decision_part: "Layer dysfunction: supported, since the card describes oxidative damage measured in blood."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:16085177
+        quote: "Oxidative stress levels are raised in chronic fatigue syndrome and are associated with clinical symptoms."
+  - decision_part: "The associated link to post-exertional neuroimmune exhaustion: supported. Both ends were measured in the same CDC-defined patients."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:16085177
+        quote: "isoprostanes correlated with; total symptom score P=0.005; joint pain P=0.002; postexertional malaise P=0.027, Pearson"
+  - decision_part: "The four proposed links (endothelial-dysfunction, hpa-axis-cortisol, autonomic-imbalance, sleep-disturbance): each source states the link in the direction the card gives."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:41516145
+        quote: "Endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion."
+      - source: pmid:27766535
+        quote: "activation of these pathways may underpin HPA axis hypofunction in ME/CFS"
+      - source: pmid:16610951
+        quote: "results suggest a common link between oxidative stress, immune system dysfunction and potassium imbalance in CFS patients leading to impaired sympatho-vagal balance strongly reflected in abnormal HRV"
+      - source: pmid:29759891
+        quote: "reciprocal interactions of immune, oxidative and nitrosative stress, and mitochondrial pathways may drive sleep abnormalities across potentially neuroprogressive disorders"
+  - decision_part: "The early signal from the Stanford study: the numbers and the sex difference match the record."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:40627396
+        quote: "Comparing 16 HC, 15 LC, and 15 ME/CFS donors"
+      - source: pmid:40627396
+        quote: "While ME/CFS females exhibit higher total ROS and mitochondrial calcium levels, males have normal ROS levels, with pronounced mitochondrial lipid oxidative damage."
+reasons_summary: "Level 2, both badges, the layer and the links match the records, but the card calls the Antwerp cohort Fukuda when its paper names only the CDC criteria with no version, and the Stanford cohort Fukuda when three definitions were used."
+would_change: "Accept once the Antwerp study (pmid:21455120) is recorded as CDC criteria, version not stated, both in its study entry and in level_reason, as is already done for Dundee, and the Stanford study (pmid:40627396) is described as diagnosed using NAM, Fukuda and CCC criteria. Other points to correct, though none decides the level: (1) the cities named for Dundee (pmid:16085177), Osaka (pmid:27224647) and Glasgow (pmid:19422646) are not in the cached records, and the full texts of pmid:16085177 and pmid:27224647 are not cached, so these labels cannot be checked; (2) \"in serum\" for the Osaka reactive oxygen metabolites is not in that abstract (full text not cached), so it is unverifiable; (3) both CoQ10 plus NADH trials give a ClinicalTrials.gov registration (NCT02063126 in the pmid:25386668 abstract, NCT03186027 in the pmid:34444817 full text), but the card has preregistered: null. If the full reference [29] of pmid:21455120 were shown to be the 1994 Fukuda definition, the Fukuda label could stand."
