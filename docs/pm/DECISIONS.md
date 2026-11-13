@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — Preprints: founder approves each; null results are shown
+
+- Every card change that comes from a preprint is tier 2: the founder approves each one. Why: nothing unreviewed should reach a card without a person having looked at it; the live check of the last 90 days found about two preprints a week, which the weekly review can absorb.
+- A preprint with a null result is shown like any other preprint early signal, with the same "not peer reviewed" label. It cannot contest a level. Why: leaving out null results would tilt the cards towards positive findings.
+- A preprint may be cited only under `early_signals` (validator rule V15; `docs/card-format.md` lists every sourced text). Preprints are recognised by the PubMed publication type "Preprint" and by the Europe PMC source `PPR`; a preprint with a published version, or with a newer version, is dropped (`docs/fetch.md`).
+- Not yet ruled: whether the preprints that two drafts left out before this ruling (comments in `drafts/inherited-genetic-risk.yaml` and `drafts/tryptophan-kynurenine-metabolism.yaml`) are reconsidered as early signals.
+
 ## 2026-11-13 — Query recall check: "CFS/ME" added to the PubMed query
 
 - `"CFS/ME"[Title/Abstract]` is added to block 1 of `config/pubmed_query.txt`. Hit count 9,403 before and 9,412 after (live, 2026-11-13). Why: the recall check (part A of `docs/plan-wider-sources.md`, results in `docs/fetch.md`) found 9 records the query missed, 7 of 9 about ME/CFS by their title.
