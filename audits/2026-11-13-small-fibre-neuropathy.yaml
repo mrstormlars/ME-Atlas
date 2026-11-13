@@ -1,0 +1,81 @@
+card: small-fibre-neuropathy
+decision: reject
+parts:
+  - decision_part: "The link to symptom:orthostatic-intolerance at step proposed, sourced only to the 2023 review pmid:37054777."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:37054777
+        quote: "Clinical overlap between PASC and myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) has been observed, with shared symptoms including intractable fatigue, postexertional malaise, and orthostatic intolerance."
+      - source: pmid:37054777
+        quote: "Cardiopulmonary exercise testing reveals perturbations related to systemic blood flow and ventilatory control associated with acute exercise intolerance in PASC, which are not typical of simple detraining."
+  - decision_part: "The level 1: the Boston study (ICC or IOM 2015) gives untested patient-control figures, so it counts as a first sign and not as level 2 support."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:41576003
+        quote: "The diagnosis of ME/CFS was based on myalgic encephalomyelitis international consensus criteria (ME-ICC) [26] or newer National Academy of Medicine diagnostic criteria [27]."
+      - source: pmid:41576003
+        quote: "SFN, any from biopsy,% 0.0 67.2 52.6 63.3 <0.001 0.0437 0.0787 0.499 54"
+      - source: pmid:41576003
+        quote: "Epidermal nerve fiber density at calf, fibers/mm 10.15 (2.25) 7.94 (3.46) 8.79 (3.55) 8.20 (4.00) <0.001 0.051 0.043 0.049 0.622 0"
+      - source: pmid:41576003
+        quote: "Electrochemical skin conductance, uS 82.96 (7.79) 77.70 (15.21) 75.76 (14.94) 80.07 (11.98) 0.004 0.02 0.138 0.003 0.299 79"
+      - source: pmid:41576003
+        quote: "Overalla ε2 ME/CFS-Long COVID b ME/CFS-hEDSb Long COVID -hEDSb"
+      - source: pmid:41576003
+        quote: "We are a referral center for dysautonomia, so we may not see a representative group of patients."
+      - source: pmid:41576003
+        quote: "The Long COVID and ME/CFS subjects were compared to a healthy control group from our autonomic research database at the University of Massachusetts [28]."
+  - decision_part: "Not level 2: the other controlled studies either have a null result (Fukuda) or a case definition that cannot be read as one recognised definition."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:42082542
+        quote: "For the ME/CFS group, patients had to meet the diagnostic criteria proposed by Fukuda28, which require severe fatigue disproportionate to activity lasting at least six months accompanied by at least four of the following symptoms: memory impairment, post-exertional malaise, unrefreshing sleep, arthralgia, headaches, sore throat, and/or lymph node tenderness."
+      - source: pmid:42082542
+        quote: "Palms ESC (µS) 71.42 (16.40) 66.23 (16.21) 72.68 (10.38) F = 2.29"
+      - source: pmid:42082542
+        quote: "Soles ESC (µS) 74.77(13.07) 70.53 (14.53) 70.65 (13.81) F = 0.67"
+      - source: pmid:39888240
+        quote: "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation."
+      - source: pmid:37968647
+        quote: "Patients diagnosed of ME/CFS should be previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time."
+      - source: pmid:33577778
+        quote: "results from 160 patients meeting ME/CFS criteria who had skin biopsy test results were compared with 36 control subjects."
+      - source: pmid:33577778
+        quote: "Among the 160 ME/CFS patient biopsies, 31% were consistent with SFN (epidermal innervation ≤5.0% of predicted; P < .0001)."
+  - decision_part: "Studies whose case definition cannot be verified are context only and do not set the level."
+    rubric: "Not accepted (see the inclusion rule)."
+    evidence:
+      - source: pmid:39888240
+        quote: "There were no statistically significant differences in any of them."
+      - source: pmid:39888240
+        quote: "might suggest that SFN is not an inherent characteristic of these diseases"
+      - source: pmid:39888240
+        quote: "ME/CFS patients exhibited lower N amplitude in CHEPs compared to HC"
+      - source: pmid:39888240
+        quote: "No statistically significant differences in autonomic small fiber function were found between groups."
+      - source: pmid:37968647
+        quote: "Response latency was larger in ME/CFS patients (686 ± 16), followed by post-COVID patients (676 ± 15), and finally by HC (552 ± 13) (Fig. 3)."
+      - source: pmid:37968647
+        quote: "No significant differences were found between groups in ESC on the Sudoscan."
+  - decision_part: "No contested mark: the Fukuda null result on skin conductance has a less strict case definition than the ICC/IOM study the level rests on."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42082542
+        quote: "Second, the diagnostic criteria used for ME/CFS were based on the Fukuda et al. definition."
+  - decision_part: "Diagnostic marker badge set to no."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:39888240
+        quote: "In ME/CFS patients, the variable that best discriminated between them and HC was also fiber tortuosity (AUC = 0.690; p = 0.032)."
+  - decision_part: "Explains PEM badge set to no."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33577778
+        quote: "Denervation severity did not correlate with exertional measures."
+  - decision_part: "Layer dysfunction."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:41576003
+        quote: "Skin biopsies, which provide direct evidence of peripheral nerve damage, confirmed the presence of SFN in both Long COVID and ME/CFS patients."
+reasons_summary: "Level 1, the contested mark, both badges and the layer match the records, but the orthostatic intolerance link rests on a review whose abstract does not state the link, so the card cannot be accepted as it stands."
+would_change: "The link is the only reason for rejecting. Its text says the 2023 review pmid:37054777 states that small fibre damage reduces venous tightening, as seen with blood pooling in POTS. That review was given as abstract only, and its abstract does not mention small fibre neuropathy, veins or blood pooling. The statement may be in the full text, but I cannot check it, so it cannot carry the link. The card would be accepted if the link were removed, or if it were sourced to a record whose title or abstract states the link. Other points: pmid:33577778 is a carrier with no cached full text, so its case definition ('meeting ME/CFS criteria') is unverifiable and correctly kept out of the level. If its full text names CCC, ICC or IOM 2015 and shows a controlled comparison of nerve fibre density, that could support level 2. In pmid:41576003, a published pairwise test of ME/CFS against healthy controls on skin biopsy SFN or calf nerve fibre density could also support level 2. A small wording point: the card says the earlier Bilbao study pmid:37968647 did not report heat-response amplitude for ME/CFS against controls. Its Table 3 gives one Bonferroni p-value for N amplitude without showing which pair it belongs to, so that sentence cannot be confirmed from the record. I was not handed any drafting reasoning, review findings or earlier audit."
