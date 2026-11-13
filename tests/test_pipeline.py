@@ -1842,6 +1842,10 @@ def test_record_review_accepts_the_doi_paper_and_rejects_a_pmid_name_for_it(doi_
 
 
 def test_end_to_end_one_pubmed_pair_and_one_doi_preprint_pair_both_accepted(doi_run: Env):
+    assert doi_run.cli("context", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    assert doi_run.cli("context", SLUG, PP_ID, fulltext=NO_FULLTEXT) == 0
+    assert (doi_run.run / "context" / f"{SLUG}-{NEW_PMID}.md").is_file()
+    assert (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").is_file()
     assert doi_run.apply("ops_add_study.json") == 0
     review_for(doi_run, f"pmid:{NEW_PMID}", NEW_PMID)
     assert doi_run.cli("record-review", SLUG, NEW_PMID) == 0
