@@ -1,0 +1,73 @@
+card: impaired-energy-production-after-exertion
+decision: reject
+parts:
+  - decision_part: "The level 3. A controlled CCC study of 84 patients carries rung 2, and an independent Fukuda group in Amsterdam reproduced the fall in oxygen uptake and work rate on the second test in a separate cohort. The level is supported."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+      - source: pmid:38965566
+        quote: "Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2"
+      - source: pmid:20937116
+        quote: "All patients fulfilled the criteria of Fukuda et al [1] for CFS/ME and reported the start of symptoms after an infectious disease."
+      - source: pmid:20937116
+        quote: "At the anaerobic threshold the group of patients performed worse and the controls improved."
+  - decision_part: "The contested mark on rung 3. The New York study is controlled, has more patients than the Amsterdam study and uses at least the same case definition, and it found no change on the second day. Marking rung 3 as contested is supported."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:42212259
+        quote: "maximal bicycle ergometer CPETs were performed on two consecutive days in 58 patients with ME/CFS"
+      - source: pmid:42212259
+        quote: "For ME/CFS and CON subjects, there were no significant changes in Peak VO2 between Day 1 and Day 2 studies"
+      - source: pmid:20937116
+        quote: "Female patients (n = 15) and controls (n = 15) performed a cardiopulmonary exercise test (CPET) by cycling at a continuously increased work rate till maximal exertion."
+  - decision_part: "Leaving rung 2 uncontested. This rests on reading the New York cohort as Fukuda only, which ranks below CCC. The New York sentence says the patients met 'both' definitions but names only one. A companion paper by the same authors, describing a cohort with the same age, sex split and control group, says those patients met the 2015 IOM definition, which ranks with CCC. If that holds, the New York study (a control group, and 53 to 58 patients against 84) is of comparable quality to the 84-patient study, and rung 2 would be contested too. The records do not let me tell which reading is right, so I cannot accept the uncontested rung 2."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42212259
+        quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+      - source: pmid:42212259
+        quote: "58 patients with ME/CFS (mean age 38.6 ± 9.6 years, Body Mass Index (BMI) 24.1 ± 3.3 kg/m2, 11 men and 47 women)"
+      - source: pmid:42212259
+        quote: "Five ME/CFS and six sedentary controls did not meet the American College of Sports Medicine (ACSM) criteria."
+      - source: pmid:41293716
+        quote: "The study included 57 patients with ME/CFS (F:M = 46:11) with an average age of 38.6 ± 9.6 years"
+      - source: pmid:41293716
+        quote: "The patients with ME/CFS were between the ages of 25 and 60 years and met the 2015 IOM case definition (22)."
+  - decision_part: "The link to question:closest-to-symptoms (proposed). The link text says the review notes that few studies have directly tested how the body's responses to exercise relate to post-exertional malaise. That statement is not in the review's title or abstract, which are all I was shown. The abstract says only that the mechanisms of the symptoms are poorly understood and describes commonalities between long COVID and ME/CFS. The source does not state the link as written, so the link is not supported."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:37054777
+        quote: "The mechanistic underpinnings of such symptoms are poorly understood."
+      - source: pmid:37054777
+        quote: "This review illustrates exercise pathophysiologic commonalities between PASC and ME/CFS that will help guide future diagnostics and treatment."
+  - decision_part: "The link to neuroinflammation (proposed). A systematic review states the chain from mitochondrial dysfunction to neuroinflammation. Supported at step 1."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:42051540
+        quote: "First, mitochondrial dysfunction and metabolic abnormalities may act as potential initiating factors in PEM, manifesting as impaired ATP synthesis, overproduction of reactive oxygen species (ROS), and the accumulation of metabolic byproducts."
+      - source: pmid:42051540
+        quote: "Subsequently, peripheral inflammation may be transmitted to the central nervous system through disruption of the blood-brain barrier and vagal nerve pathways, activating glial cells and initiating neuroinflammation."
+  - decision_part: "The diagnostic marker badge set to no. The cut-off and the classification were each derived within a single cohort, and no record tests either in a second, independent patient group. Supported."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:23813081
+        quote: "Follow-up classification analysis differentiated between groups with an overall accuracy of 95.1%."
+      - source: pmid:30871578
+        quote: "ROC curve analysis of the percentage change in WR at VT revealed decreases of - 6.3% to - 9.8% provided optimal sensitivity and specificity respectively for distinguishing between patients with ME/CFS and controls."
+      - source: pmid:42212259
+        quote: "The data do not support using the 2-day CPET protocol to define PEM or disability."
+  - decision_part: "The explains-PEM badge set to no. The second-test fall is itself the abnormality the hypothesis proposes, and no record relates it to symptoms after exertion in the same patients. Supported."
+    rubric: "a measured change that is itself the hypothesised abnormality (for example a fall in oxygen use on the second test) does not on its own explain PEM."
+    evidence:
+      - source: pmid:31161646
+        quote: "Although VO2peak decreased significantly in patients, the absolute change was too small, in our opinion, to indicate any major change in exercise tolerance or explain PEM."
+      - source: pmid:36984572
+        quote: "Detailed exercise test results of the 2-day CPET protocol will be reported separately."
+  - decision_part: "The layer dysfunction. The card describes a measured change in the body after exertion. Supported."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:38965566
+        quote: "The observable declines in post-exertional energy metabolism translate notably to a worsening of impairment status."
+reasons_summary: "Rejected: level 3 and the rung 3 contested mark are supported, but the link to question:closest-to-symptoms rests on a review statement not found in its record, and the records cannot settle whether the New York cohort met IOM 2015, which would also contest rung 2."
+would_change: "Two things would allow acceptance. First, a link source whose title or abstract (or a cached full text) states that few studies relate exercise responses to post-exertional malaise; failing that, the link to question:closest-to-symptoms is removed or re-sourced. Second, a way to settle the New York cohort's case definition. If pmid:42212259's own text confirms the cohort was Fukuda-only, rung 2 stays uncontested. If it met IOM 2015, as pmid:41293716 states for what appears to be the same cohort, contested.rungs should include rung 2. The badge statements resting on pmid:23813081 and pmid:28782878 match their abstracts. Their full texts are not cached, so nothing beyond the abstracts could be checked."
