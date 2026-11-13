@@ -1,0 +1,74 @@
+card: herpesvirus-reactivation
+decision: accept
+parts:
+  - decision_part: "The level 2: a controlled study in a Fukuda-defined cohort found markers of active HHV-6 and HHV-7 infection more often in patients than in controls, and the Fukuda flag is on the card."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "Two hundred patients [130 (65%) female and 70 (35%) male, mean age 38 ± 12] with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study"
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively)"
+      - source: pmid:36653846
+        quote: "Whereas markers of active infection/co-infection (virus genomic sequences in DNA from blood plasma) were detected in 45% (90/200) of the patients with ME/CFS and 8.7% (13/150) of the healthy individuals (p < 0.0001)."
+      - source: pmid:22927850
+        quote: "Active viral infection including concurrent infection was found in 64.8% (70/108) of patients and in 13.3% (12/90) of practically healthy persons."
+  - decision_part: "Not level 3: the earlier 108-patient study is by the same Riga group, and the independent London study measured salivary DNA load, which its authors read as persistent rather than recent infection, so it does not reproduce the active-infection finding in blood."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:22927850
+        quote: "This study is the continuation of research of HHV-6 and HHV-7 as triggering factors for ME/CFS [3]."
+      - source: pmid:34422848
+        quote: "indicating that these are longstanding, persistent infections rather than acute/recent infections."
+      - source: pmid:34422848
+        quote: "HHV-6B viral DNA concentrations were on average 6.2-fold higher in ME/CFS_SA patients than in HC: the differences were significant at months 1 (P = 0.039), 3 (P = 0.030), and 5 (P = 0.029), with a trend toward higher viral load across all time points (Figure 3E)."
+  - decision_part: "Not level 4: the antiviral trials have no verified case definition, the acyclovir trial found no difference, and the valganciclovir trial's main fatigue result was not statistically significant."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:2849717
+        quote: "Of the 24 patients who completed the trial, similar numbers improved with acyclovir therapy and with placebo (11 and 10, respectively)."
+      - source: pmid:23959519
+        quote: "VGCV patients experienced a greater improvement by MFI-20 at 9 months from baseline compared to placebo patients but this difference was not statistically significant."
+  - decision_part: "No contested mark: the Bulgarian Fukuda study that found no active HHV-6 infection had 58 patients, fewer than half of the 200 in the study carrying the level, and did not test HHV-7. The Atlanta study has no verified case definition. The Berlin CCC study is about EBV in throat washings and not the HHV-6/HHV-7 finding the level rests on."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:32129496
+        quote: "In the study were included 58 patients with ME/CFS and 50 healthy controls."
+      - source: pmid:32129496
+        quote: "No ME/CFS and control individuals with active CMV and HHV-6 infection were observed."
+      - source: pmid:10913395
+        quote: "We recruited 26 patients and 52 nonfatigued matched control subjects from Atlanta."
+      - source: pmid:28604802
+        quote: "EBER copies were detected in 42% (n = 21) of healthy donors and 30% (n = 15) of CFS patients (Fig 3B) revealing no significant difference in frequency (p = 0.37)."
+  - decision_part: "Diagnostic marker badge set to no: the dUTPase antibody findings come from one Ohio group, and neither study has a verified case definition."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:28303641
+        quote: "the ME/CFS cohort had higher anti-EBV-dUTPase antibodies than in both GWI patients (P = 0.0008) and controls (P < 0.0001)"
+      - source: pmid:41451845
+        quote: "The results of this study demonstrate a significant increase in dUTPase IgG antibodies to the herpesviruses Epstein-Barr virus (EBV), human herpesvirus-6 (HHV-6) and varicella zoster virus (VZV) in ME/CFS compared to healthy-controls (p < 0.001)."
+  - decision_part: "PEM badge set to no: the 108-patient Riga study recorded malaise after exertion as a symptom and through a fatigue questionnaire item, not by measuring PEM directly."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:22927850
+        quote: "Subfebrility, lymphadenopathy, malaise after exertion, muscle pain, multijoint pain, sleep disturbances, and headaches of new type were more frequent in patients with active viral infection/coinfection than in patients with latent infection and without infection."
+      - source: pmid:22927850
+        quote: "Severity of fatigue was evaluated by Fatigue Severity Scale (FSS) with maximal score of 72 points [25]."
+  - decision_part: "Layer mechanism: the card places reactivation of a lifelong infection as something that keeps the illness going, and a cited study states that reactivation may be a cause or a consequence of immune dysfunction."
+    rubric: "A card that could sit in two layers (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one layer and a link that expresses the other reading"
+    evidence:
+      - source: pmid:34422848
+        quote: "Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS."
+  - decision_part: "Links to flu-like symptoms and to post-exertional neuroimmune exhaustion at step associated: the Fukuda-defined Riga cohort measured active infection and these symptoms in the same patients and reports a relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:22927850
+        quote: "Definite relationship was observed between active betaherpesvirus infection and subfebrility, lymphadenopathy and malaise after exertion, and between active B19 infection and multijoint pain."
+      - source: pmid:22927850
+        quote: "Severe postexertional malaise corresponding to “Exercise brings on my fatigue” by FSS was detected in all patients"
+  - decision_part: "Link to endothelial dysfunction at step proposed, sourced to a peer-reviewed review."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:38675914
+        quote: "We suggest that the chronicity of ME/CFS symptoms and the multisystemic nature of the disease may be partly attributable to herpesvirus-induced endothelial maladaptation."
+reasons_summary: "Level 2 accepted: one Fukuda-defined controlled study found markers of active HHV-6/HHV-7 infection more often in patients than in controls; no independent replication, no verified-definition trial, no comparable contradicting study; both badges no; layer and links supported."
+would_change: "Would change: an independent group finding active HHV-6/HHV-7 infection in blood in a separate cohort with a recognised case definition (towards level 3); a controlled study with the same or a stricter case definition, at least 100 patients and a control group that finds no difference in active HHV-6/HHV-7 infection (contested mark); verified case definitions for the antiviral trials. I could not check these statements: 'non-randomised' for pmid:35102619 is not in its abstract (no full text cached), but the level does not depend on it. The early-signal counts 11 of 13 and 5 of 10 for pmid:40143349 are not in its abstract, which is the only part I was shown. Neither is a ground for this decision. The layer rule asks for a link that expresses the other reading (trigger, or consequence of immune dysfunction). This card has no such outgoing link. If the immune-dysfunction card has no incoming link to this one either, that link should be added."
