@@ -83,7 +83,6 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | `direction` | `lower`, `higher`, `no_difference`, `mixed`, `not_applicable`: patients compared with controls, on the card's measure. Required for every role, so a background study still shows which way it points. Use `not_applicable` when the source gives no patient-control comparison. |
 | `finding` | One neutral sentence: "A study of n=... found ...". |
 | `group` | Optional. A short label for the research group, taken from the fetched record (for example the last author and institution as PubMed gives them), or `null`/omitted. Not validated beyond being non-empty when present. Meant for the "independent group" test at level 3. |
-
 | `preprint` | Optional, default `false`. `true` marks a preprint (not peer reviewed): a `doi:` study taken from Europe PMC, or a `pmid:` study whose PubMed record has the publication type "Preprint" (checked by C8). A preprint can only be an early signal: see V15. |
 
 All of these are required except `group` and `preprint`; use `null` where the value is allowed to be unknown.
