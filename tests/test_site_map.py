@@ -288,6 +288,57 @@ def test_a_link_to_nothing_stops_the_build_with_its_rule_id(proj, tmp_path):
     assert not proj.out.exists()
 
 
+def test_a_published_card_may_link_to_a_draft_only_card_which_is_shown_as_text(proj, tmp_path):
+    content = map_content(tmp_path)
+    write_card(
+        proj.cards,
+        make_card(
+            "published-idea",
+            "Fictional published idea",
+            1,
+            layer="trigger",
+            links=[map_link("held-back-idea", "A fictional review proposes a link to the held-back idea.")],
+        ),
+    )
+    write_card(proj.drafts, make_card("held-back-idea", "Fictional held back idea", 1, layer="mechanism"))
+    result = proj.build(content_dir=content)
+    assert result.errors == []
+    assert (proj.out / "hypotheses" / "published-idea.html").is_file()
+    assert not (proj.out / "hypotheses" / "held-back-idea.html").exists()
+    for code, path in (("en", "map.html"), ("nb", "nb/map.html")):
+        doc = page(proj.out, path)
+        item = doc.find("article", id="card-published-idea").find("li")
+        text = norm(item.text())
+        assert "Fictional held back idea" in text, code
+        assert all("hypotheses/held-back" not in (a.get("href") or "") for a in item.find_all("a")), code
+    assert "(not yet published)" in norm(page(proj.out, "map.html").find("article", id="card-published-idea").text())
+    for html_file in proj.out.rglob("*.html"):
+        body = html_file.read_text(encoding="utf-8")
+        assert "held-back-idea" not in body, html_file  # no href, no node id, no edge in a drawing
+
+
+def test_a_link_to_a_slug_in_neither_folder_still_fails_when_a_draft_exists(proj, tmp_path):
+    content = map_content(tmp_path)
+    write_card(proj.cards, make_card("a-card", "Fictional a card", 1, links=[map_link("no-such-card", "Broken.")]))
+    write_card(proj.drafts, make_card("held-back-idea", "Fictional held back idea", 1))
+    result = proj.build(content_dir=content)
+    assert any("[M2]" in e and "no-such-card" in e for e in result.errors)
+    assert not any("held-back-idea" in e for e in result.errors)
+
+
+def test_with_drafts_a_link_to_a_draft_only_card_is_a_link(proj, tmp_path):
+    content = map_content(tmp_path)
+    write_card(
+        proj.cards,
+        make_card("published-idea", "Fictional published idea", 1, links=[map_link("held-back-idea", "Fictional.")]),
+    )
+    write_card(proj.drafts, make_card("held-back-idea", "Fictional held back idea", 1))
+    assert proj.build(drafts=True, content_dir=content).errors == []
+    item = page(proj.out, "map.html").find("article", id="card-published-idea").find("li")
+    assert [a.get("href") for a in item.find_all("a")][0] == "hypotheses/held-back-idea.html"
+    assert "not yet published" not in norm(item.text())
+
+
 def test_an_invalid_content_file_stops_the_build(proj, tmp_path):
     content = map_content(tmp_path, symptoms=[{"id": "x", "name": "Fictional x"}])
     write_card(proj.cards, make_card("a-card", "Fictional a card", 1))

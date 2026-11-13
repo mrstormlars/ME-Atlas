@@ -50,7 +50,7 @@
 {% if card.links %}
   <ul class="map-links">
 {% for lv in card.links %}
-    <li>{{ txt("map.to") }} <a href="{% if not lv.target_href.startswith('#') %}{{ lroot }}{% endif %}{{ lv.target_href }}">{{ mt(lv.target) }}</a>: {{ page.plain(lv.link, lv.link.text) }} — {{ txt("support." ~ lv.support) }}{% for n, href in lv.refs %} {{ page.ref_to(lroot ~ href, n) }}{% endfor %}{{ page.note(lv.link) }}</li>
+    <li>{{ txt("map.to") }} {% if lv.unpublished %}{{ mt(lv.target) }} ({{ txt("map.unpublished") }}){% else %}<a href="{% if not lv.target_href.startswith('#') %}{{ lroot }}{% endif %}{{ lv.target_href }}">{{ mt(lv.target) }}</a>{% endif %}: {{ page.plain(lv.link, lv.link.text) }} — {{ txt("support." ~ lv.support) }}{% for n, href in lv.refs %} {{ page.ref_to(lroot ~ href, n) }}{% endfor %}{{ page.note(lv.link) }}</li>
 {% endfor %}
   </ul>
 {% else %}
