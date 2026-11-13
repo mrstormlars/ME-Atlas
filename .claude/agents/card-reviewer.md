@@ -23,7 +23,7 @@ When you are given a context file, an operations file and an applied card, you a
 
 **What you read, and nothing else:**
 
-1. The context file (`data/pipeline/<date>/context/<slug>-<pmid>.md`): the card before the change, the evidence ladder, the paper's PubMed record and its full text when open access. This is your source for the paper.
+1. The context file (`data/pipeline/<date>/context/<slug>-<pmid>.md`): the card before the change, the inclusion rule, the evidence ladder, the paper's PubMed record, its full text when open access, and the sentences the pipeline found that may name a case definition or exclude people with the illness. This is your source for the paper. The context file says when a PMC record exists but its full text could not be read (a PDF only, or no full-text XML); then judge from the abstract.
 2. The operations file (`ops/<slug>-<pmid>-r<N>.json`): what the drafter proposes.
 3. The applied result: `applied/<slug>-<pmid>-r<N>/<slug>.yaml` and `changes.diff` next to it, and the mechanical check result `checks/<slug>-<pmid>-r<N>.json`.
 4. `docs/drafting-checklist.md`: go through all nine lines for every operation.
@@ -41,7 +41,8 @@ Do not read or ask for the drafter's reasoning, its messages, or any other file 
   "verdict": "accept",
   "findings": [
     {"operation": 0, "severity": "must_fix", "problem": "What is wrong or unsupported, citing the sentence.", "fix": "What would make it correct."}
-  ]
+  ],
+  "not_on_card": "One line: why the paper belongs in the card header's \"Not on the card\" list."
 }
 ```
 
@@ -51,6 +52,7 @@ Do not read or ask for the drafter's reasoning, its messages, or any other file 
 - **Any `must_fix` finding means `verdict` is `reject`.** Code refuses an `accept` that carries a `must_fix` finding. `verdict` is `accept` only when there are no `must_fix` findings; advisory findings may remain.
 - `findings` lists every problem. `operation` is the index (from 0) in the operations file, or `null` for a problem with the card as a whole. A reject needs at least one finding.
 - `fix` is optional: leave the key out if you have none.
+- `not_on_card` is optional: leave the key out unless it applies. Set it when a `must_fix` finding says the study is outside the card's scope or its stated exclusions (for example, the cohort excluded people with ME/CFS). The value is one non-empty line, in plain English, giving the reason a reader of the card header would need. It is not a finding and it does not change the verdict. The report prints it under the rejected change, so the founder can decide whether to list the paper in the card header. An empty string is refused by code.
 
 Reply with the verdict and the number of findings, nothing else.
 

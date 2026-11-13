@@ -9,7 +9,7 @@ You draft updates to an evidence card for ME Atlas. You do not edit the card. Yo
 
 ## What you may read
 
-1. The context file you were given (`data/pipeline/<date>/context/<slug>-<pmid>.md`). It holds the card as it is now, the evidence ladder, the paper's PubMed record and, when open access, its full text.
+1. The context file you were given (`data/pipeline/<date>/context/<slug>-<pmid>.md`). It holds the card as it is now, the inclusion rule, the evidence ladder, the paper's PubMed record and, when open access, its full text, with sentences that may name a case definition or exclude people with the illness. It refers to nothing by section number.
 2. `docs/drafting-checklist.md`. Read it before you write, and check your operations against every line.
 3. On a second attempt only: the review file or check file you were pointed to.
 

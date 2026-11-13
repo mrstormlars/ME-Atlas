@@ -59,7 +59,8 @@ def get_with_retries(
 ) -> httpx.Response:
     """GET with rate limiting; retries 429, 5xx and transport errors with exponential backoff.
 
-    Other 4xx responses are not retried. Failures raise ``error`` with a message that starts with ``label``.
+    Other 4xx responses are not retried; the raised error then carries the HTTP status as ``status_code``.
+    Failures raise ``error`` with a message that starts with ``label``.
     """
     attempts = max_retries + 1
     last = "no attempt made"
@@ -76,7 +77,9 @@ def get_with_retries(
                 header = response.headers.get("Retry-After", "")
                 retry_after = min(float(header), 60.0) if header.isdigit() else 0.0
             elif response.status_code >= 400:
-                raise error(f"{label} failed: HTTP {response.status_code} (not retried)")
+                failure = error(f"{label} failed: HTTP {response.status_code} (not retried)")
+                failure.status_code = response.status_code  # type: ignore[attr-defined]
+                raise failure
             else:
                 return response
         if attempt < attempts - 1:

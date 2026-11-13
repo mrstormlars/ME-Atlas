@@ -52,6 +52,16 @@ A number on a card can be right and still not appear as digits: the paper may wr
 
 Author names in `group`; the `finding` text against the source; sources named only in YAML comments; corrections and errata; cohort overlap; whether a retraction happened after the last fetch.
 
+## Placeholder full text, and the PMC id from PubMed
+
+A cached `<pmcid>.xml` is full text only if it has a real body. Europe PMC sometimes serves a placeholder for a preprint: a body of under 1,000 characters that says the full text is available as a PDF, or an article with no body text. The check never reads such a file as full text. C5 with `fulltext` then reports that there is no cached full text (the message says the file is a PDF placeholder), and C6 looks at the abstract only. The same test (`europepmc.is_placeholder_fulltext`) is used when the full text is fetched, so a placeholder is not written to the cache. No PDF is downloaded or read. `europepmc fulltext` and `casedef` print the status with the PMC id: `PMC record, full text is a PDF only (not read)` or `PMC record, no full-text XML in Europe PMC`. They read the PMC id from the cached PubMed record when Europe PMC has none. `casedef` and `pmcpage` mark sentences that may exclude people with the illness with `[exclusion]`.
+
+The PMC id used to find `<pmcid>.xml` and `<pmcid>.html` is the one in the cached Europe PMC lookup. When the lookup has none (Europe PMC can lack the id for a while after PubMed has it), the check uses the `pmcid` of the cached PubMed record. This is still offline.
+
+## The TODO rule is not a citation check
+
+"TODO" in text a reader sees (the card name, any sourced text, a study's `finding`) is the card validator's rule V14 (`docs/card-format.md`), not a citation check. Run `uv run python -m me_atlas.cards validate`. This check does not look for it.
+
 ## Tests
 
 `tests/test_citations.py` builds a fictional cache (PMIDs 9000000x, titles starting "Fictional", fictional PMCIDs) and fictional cards in a temporary directory. A test makes any HTTP client construction or request fail, to show the check stays offline.

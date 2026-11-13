@@ -102,6 +102,8 @@ class ReviewFile(_M):
     paper: StudyId
     verdict: Literal["accept", "reject"]
     findings: list[Finding]
+    # The reviewer's one-line reason to list the paper under "Not on the card" in the card header (optional).
+    not_on_card: NonEmptyStr | None = None
 
     @model_validator(mode="after")
     def _reject_needs_a_finding(self) -> ReviewFile:
@@ -416,42 +418,66 @@ class FullTextResult:
     note: str
 
 
-FullTextLoader = Callable[[str], FullTextResult]
+# Called with the PMID and, when the cached PubMed record has one, its PMC id.
+FullTextLoader = Callable[..., FullTextResult]
+
+
+def fulltext_note(status: str, pmcid: str | None) -> str:
+    """What the context file says about the full text of a paper, by the status ``get_fulltext`` gave."""
+    if status == europepmc.STATUS_OPEN_ACCESS:
+        return f"Europe PMC open access, {pmcid}"
+    if status == europepmc.STATUS_PDF_ONLY:
+        return f"a PMC record exists ({pmcid}), but its full text is a PDF only and it was not read"
+    if status == europepmc.STATUS_PMC_NO_XML:
+        return f"a PMC record exists ({pmcid}), and Europe PMC has no full-text XML for it"
+    return f"no open full text (Europe PMC: {europepmc.STATUS_TEXT[status]})"
 
 
 def live_fulltext_loader(cache_dir: Path) -> FullTextLoader:
     """Look the paper up in Europe PMC (cached) and read its open-access full text, if there is one."""
 
-    def load(pmid: str) -> FullTextResult:
+    def load(pmid: str, pmcid: str | None = None) -> FullTextResult:
         env = {**load_dotenv(), **os.environ}
         email = (env.get("CONTACT_EMAIL") or "").strip()
         if not email:
             return FullTextResult(None, "CONTACT_EMAIL is not set, so no full text was requested")
         client = europepmc.EuropePmcClient(email)
         try:
-            result = europepmc.get_fulltext(client, europepmc.EuropePmcCache(cache_dir), pmid)
+            result = europepmc.get_fulltext(client, europepmc.EuropePmcCache(cache_dir), pmid, pmcid=pmcid)
         except europepmc.EuropePmcError as exc:
             return FullTextResult(None, f"Europe PMC request failed: {exc}")
         finally:
             client.close()
+        note = fulltext_note(result.status, result.pmcid)
         if result.path is None:
-            return FullTextResult(
-                None, f"no open full text (Europe PMC: {europepmc.STATUS_TEXT[result.lookup.status]})"
-            )
-        return FullTextResult(result.path.read_bytes(), f"Europe PMC open access, {result.lookup.pmcid}")
+            return FullTextResult(None, note)
+        return FullTextResult(result.path.read_bytes(), note)
 
     return load
 
 
-def spec_section_3(spec_path: Path) -> str:
+def spec_section(spec_path: Path, number: int) -> str:
+    """Section ``number`` of the functional spec (from its ``## N.`` heading up to ``## N+1.``)."""
     try:
         text = spec_path.read_text(encoding="utf-8")
     except OSError as exc:
         raise PipelineError(f"cannot read the functional spec {spec_path}: {exc}") from exc
-    match = re.search(r"^## 3\. .*?(?=^## 4\. )", text, re.MULTILINE | re.DOTALL)
+    match = re.search(rf"^## {number}\. .*?(?=^## {number + 1}\. )", text, re.MULTILINE | re.DOTALL)
     if not match:
-        raise PipelineError(f"{spec_path} has no section '## 3.' followed by '## 4.'")
+        raise PipelineError(f"{spec_path} has no section '## {number}.' followed by '## {number + 1}.'")
     return match.group(0).strip()
+
+
+def _demote_headings(markdown: str) -> str:
+    """One heading level down, so a spec excerpt never adds a level-2 heading to the context file."""
+    lines, in_fence = [], False
+    for line in markdown.split(chr(10)):
+        if line.startswith("```"):
+            in_fence = not in_fence
+        elif not in_fence and re.match(r"#{1,5} ", line):
+            line = "#" + line
+        lines.append(line)
+    return chr(10).join(lines)
 
 
 def build_context(
@@ -461,7 +487,9 @@ def build_context(
     base = _base_card(cfg, slug)
     _load_card(base)
     record = _record(cfg, pmid)
-    full = loader(pmid)
+    full = loader(pmid, record.pmcid)
+    inclusion = _demote_headings(spec_section(cfg.spec_path, 2))
+    rubric = _demote_headings(spec_section(cfg.spec_path, 3))
 
     parts = [
         f"# Context: card `{slug}` and paper `pmid:{pmid}`",
@@ -475,11 +503,15 @@ def build_context(
         base.read_text(encoding="utf-8").rstrip("\n"),
         "```",
         "",
-        "## 2. The rubric (functional spec section 3)",
+        "## 2. The inclusion rule (functional spec section 2)",
         "",
-        spec_section_3(cfg.spec_path),
+        inclusion,
         "",
-        "## 3. The paper's PubMed record",
+        "## 3. The rubric (functional spec section 3)",
+        "",
+        rubric,
+        "",
+        "## 4. The paper's PubMed record",
         "",
         f"- id: `{record.id}`",
         f"- title: {record.title}",
@@ -493,7 +525,7 @@ def build_context(
         "",
         record.abstract or "(the record has no abstract)",
         "",
-        "## 4. Full text",
+        "## 5. Full text",
         "",
     ]
     if full.xml is None:
@@ -514,11 +546,23 @@ def build_context(
             parts.append(f"Not truncated ({total} characters).")
         parts += ["", text[:budget], ""]
         candidates = europepmc.find_case_definitions(full.xml)
-        parts += ["## 5. Sentences that may name a case definition (verbatim from the full text)", ""]
-        if candidates:
-            parts += [f"- [{c.section}] {c.sentence}" for c in candidates]
-            parts.append("")
-            parts.append("These only suggest; which definition a sentence means is for the drafter to decide.")
+        definitions = [c for c in candidates if c.kind == "definition"]
+        exclusions = [c for c in candidates if c.kind == "exclusion"]
+        parts += ["## 6. Sentences found in the full text (verbatim)", ""]
+        parts += ["### Sentences that may name a case definition", ""]
+        if definitions:
+            parts += [f"- [{c.section}] {c.sentence}" for c in definitions]
+            parts += ["", "These only suggest; which definition a sentence means is for the drafter to decide."]
+        else:
+            parts.append("None found.")
+        parts += ["", "### Sentences that may exclude people with the illness", ""]
+        if exclusions:
+            parts += [f"- [{c.section}] {c.sentence}" for c in exclusions]
+            parts += [
+                "",
+                "Check whether ME/CFS itself was what the study excluded. A cohort that excluded people with "
+                "ME/CFS is not an ME/CFS cohort.",
+            ]
         else:
             parts.append("None found.")
         parts.append("")
@@ -537,6 +581,25 @@ def _pmid_from_name(path: Path) -> str | None:
 
 def _citation_rows(issues: Sequence[citations.CitationIssue]) -> list[dict[str, str]]:
     return [{"study": i.study, "code": i.code, "level": i.level, "message": i.message} for i in issues]
+
+
+def _group_warnings(base_text: str, ops: OpsFile) -> list[str]:
+    """One warning for each added study without a ``group`` when every study already on the card has one.
+
+    ``group`` is optional in the card format, so this never fails a pair. A base card with no studies, or one
+    where any study lacks a group, gives no warning.
+    """
+    try:
+        studies = (yaml.safe_load(base_text) or {}).get("studies") or []
+    except yaml.YAMLError:
+        return []
+    if not studies or not all(isinstance(s, dict) and s.get("group") for s in studies):
+        return []
+    return [
+        f"study {op.study.id} has no group, but every study already on the card has one"
+        for op in ops.operations
+        if isinstance(op, AddStudy) and not op.study.group
+    ]
 
 
 def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, Any]:
@@ -575,6 +638,7 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
         "diff": None,
         "no_change": False,
         "tiers": {"1": 0, "2": 0},
+        "warnings": [],
     }
     base = _base_card(cfg, slug)
     base_text = base.read_text(encoding="utf-8")
@@ -582,6 +646,7 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
     new_text: str | None = None
     if ops is not None and not ops_errors:
         result["tiers"] = {str(t): sum(tier(o) == t for o in ops.operations) for t in (1, 2)}
+        result["warnings"] = _group_warnings(base_text, ops)
         if not ops.operations:
             result["no_change"] = True
         else:
@@ -687,7 +752,7 @@ class Round:
 class Outcome:
     slug: str
     pmid: str
-    status: Literal["accepted", "no_change", "parked", "skipped"]
+    status: Literal["accepted", "no_change", "withdrawn", "parked", "skipped"]
     note: str
     rounds: list[Round] = field(default_factory=list)
 
@@ -737,7 +802,15 @@ def collect_outcomes(cfg: Config) -> list[Outcome]:
             outcome.status = "parked" if rejected_before else "skipped"
             outcome.note = why
         elif not last.ops.operations:
-            outcome.status, outcome.note = "no_change", "the drafter proposed no change"
+            earlier = [r for r in rounds[:-1] if r.review and r.review.verdict == "reject"]
+            if earlier:
+                outcome.status = "withdrawn"
+                outcome.note = (
+                    f"the reviewer rejected the change in round {earlier[-1].n}; "
+                    f"the drafter then proposed no change in round {last.n}"
+                )
+            else:
+                outcome.status, outcome.note = "no_change", "the drafter proposed no change"
         elif last.review is None:
             outcome.status = "parked" if rejected_before else "skipped"
             outcome.note = "no review was recorded"
@@ -846,6 +919,23 @@ def _cell(text: object) -> str:
     return str(text).replace("|", "/").replace(chr(10), " ")
 
 
+def _rejection_lines(o: Outcome) -> list[str]:
+    """Report lines for the rejecting reviews of a pair: the reviewer's reason for "not on the card", then every
+    finding with its severity (must_fix first), problem and suggested fix in full."""
+    lines: list[str] = []
+    rejecting = [r for r in o.rounds if r.review and r.review.verdict == "reject"]
+    reasons = [r.review.not_on_card for r in rejecting if r.review and r.review.not_on_card]
+    if reasons:
+        lines.append(f"  - not on the card: {reasons[-1]}")
+    for r in rejecting:
+        assert r.review is not None
+        for f in by_severity(r.review.findings):
+            where = "card" if f.operation is None else f"operation {f.operation}"
+            fix = f" Suggested fix: {f.fix}" if f.fix else ""
+            lines.append(f"  - round {r.n}, {where} ({f.severity}): {f.problem}{fix}")
+    return lines
+
+
 def _window_text(prep: dict[str, Any]) -> str:
     if prep.get("since"):
         return f"the fetch window since {prep['since']}"
@@ -858,7 +948,9 @@ def build_report(cfg: Config) -> str:
     classify = _read_json(cfg.f("matches.json")) if cfg.f("matches.json").exists() else None
     classified = _read_json(cfg.f("classify.json")) if cfg.f("classify.json").exists() else {"papers": []}
     outcomes = collect_outcomes(cfg)
-    by_status = {s: [o for o in outcomes if o.status == s] for s in ("accepted", "no_change", "parked", "skipped")}
+    by_status = {
+        s: [o for o in outcomes if o.status == s] for s in ("accepted", "no_change", "withdrawn", "parked", "skipped")
+    }
 
     def base_data(slug: str) -> dict[str, Any]:
         return yaml.safe_load(_base_card(cfg, slug).read_text(encoding="utf-8"))
@@ -873,6 +965,7 @@ def build_report(cfg: Config) -> str:
         warnings = sum(1 for r in (last.checks or {}).get("citations", []) if r["level"] == citations.WARNING)
         if warnings:
             notes.append(f"{warnings} citation-check warning(s), see checks/")
+        notes += [f"warning: {w}" for w in (last.checks or {}).get("warnings", [])]
         for f in by_severity(last.review.findings):
             where = "the card" if f.operation is None else f"operation {f.operation}"
             notes.append(f"reviewer note ({f.severity}) on {where}: {f.problem}")
@@ -891,7 +984,8 @@ def build_report(cfg: Config) -> str:
         f"{prep['selected']} paper(s) selected from {_window_text(prep)} "
         f"({prep['skipped_processed']} skipped as already processed by an earlier run). "
         f"Proposed changes: {len(by_status['accepted'])} accepted by the reviewer, {len(by_status['parked'])} parked, "
-        f"{len(by_status['skipped'])} skipped, {len(by_status['no_change'])} with no change proposed.",
+        f"{len(by_status['skipped'])} skipped, {len(by_status['withdrawn'])} rejected and then withdrawn by the "
+        f"drafter, {len(by_status['no_change'])} with no change proposed.",
         "",
         "Draft changes only. Nothing here is published; merging this pull request puts the drafts on `main`, "
         "and moving a card into `cards/` is a separate founder decision.",
@@ -917,17 +1011,28 @@ def build_report(cfg: Config) -> str:
         lines.append("")
         for o in by_status["parked"]:
             lines.append(f"- **{o.slug}**, from {_paper_line(cfg, o.pmid)}: {o.note}")
-            for r in o.rounds:
-                if r.review and r.review.verdict == "reject":
-                    for f in by_severity(r.review.findings):
-                        where = "card" if f.operation is None else f"operation {f.operation}"
-                        fix = f" Suggested fix: {f.fix}" if f.fix else ""
-                        lines.append(f"  - round {r.n}, {where} ({f.severity}): {f.problem}{fix}")
+            lines += _rejection_lines(o)
             last = o.last
             if last is not None and last.ops is not None:
                 base = base_data(o.slug)
                 for op in last.ops.operations:
                     lines.append(f"  - proposed (round {last.n}): {describe_op(op, base)}")
+    else:
+        lines.append("None.")
+    lines += ["", "## Rejected by the reviewer, then withdrawn", ""]
+    if by_status["withdrawn"]:
+        lines.append(
+            "The reviewer rejected the change, and the drafter then proposed nothing. Nothing is applied. "
+            "The reviewer's findings and what the drafter proposed are kept here so the founder can see why."
+        )
+        lines.append("")
+        for o in by_status["withdrawn"]:
+            lines.append(f"- **{o.slug}**, from {_paper_line(cfg, o.pmid)}: {o.note}")
+            lines += _rejection_lines(o)
+            base = base_data(o.slug)
+            for r in o.rounds[:-1]:
+                if r.review and r.review.verdict == "reject" and r.ops is not None:
+                    lines += [f"  - proposed (round {r.n}): {describe_op(op, base)}" for op in r.ops.operations]
     else:
         lines.append("None.")
     lines += ["", "## Possible new hypotheses", ""]
@@ -1328,6 +1433,8 @@ def _dispatch(
             out(f"operations error: {line}")
         for line in result["validator"]:
             out(f"validator: {line}")
+        for line in result["warnings"]:
+            out(f"warning: {line}")
         for row in result["citations"]:
             if row["level"] == citations.ERROR and not row["preexisting"]:
                 out(f"citations: {row['study']}: {row['code']} ERROR: {row['message']}")

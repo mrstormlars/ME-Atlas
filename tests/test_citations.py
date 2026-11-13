@@ -40,8 +40,9 @@ def add_record(
     year: int | None = 2021,
     abstract: str | None = ABSTRACT,
     retracted: bool = False,
+    pmcid: str | None = None,
 ) -> None:
-    """Write a fictional PubMed record to <root>/pubmed/<pmid>.xml."""
+    """Write a fictional PubMed record to <root>/pubmed/<pmid>.xml (with the article's PMC id if ``pmcid``)."""
     pub_date = f"<PubDate><Year>{year}</Year></PubDate>" if year is not None else "<PubDate></PubDate>"
     paragraphs = ""
     if abstract is not None:
@@ -55,7 +56,13 @@ def add_record(
         f"<ArticleTitle>{escape(title or '')}</ArticleTitle>"
         f"<Abstract>{paragraphs}</Abstract>"
         f"<PublicationTypeList><PublicationType>Journal Article</PublicationType>{types}</PublicationTypeList>"
-        "</Article></MedlineCitation></PubmedArticle></PubmedArticleSet>"
+        "</Article></MedlineCitation>"
+        + (
+            f'<PubmedData><ArticleIdList><ArticleId IdType="pmc">{pmcid}</ArticleId></ArticleIdList></PubmedData>'
+            if pmcid
+            else ""
+        )
+        + "</PubmedArticle></PubmedArticleSet>"
     )
     if abstract is None:
         xml = xml.replace("<Abstract></Abstract>", "")
@@ -629,3 +636,65 @@ def test_c5_with_an_unreadable_cached_page_is_an_error_naming_pmcpage_refresh(tm
     c5 = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
     assert [i.level for i in c5] == ["ERROR"]
     assert "unreadable" in c5[0].message and "pmcpage" in c5[0].message and "--refresh" in c5[0].message
+
+
+# --- a placeholder is not full text (B5), and the PMC id from PubMed (B6) --------
+
+PLACEHOLDER_PARAGRAPHS = ("Full text is available as a PDF.", "Fictional enrolment: 77 fictional patients.")
+
+
+def test_c5_a_placeholder_xml_is_not_full_text(tmp_path, cache):
+    add_fulltext(cache, paragraphs=PLACEHOLDER_PARAGRAPHS)
+    study = make_study(case_definition_source="fulltext", case_definition_quote=PLACEHOLDER_PARAGRAPHS[0])
+    c5 = [i for i in check(tmp_path, cache, study) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"]
+    assert "no cached full text" in c5[0].message and "PDF" in c5[0].message
+
+
+def test_the_reader_reports_no_cached_full_text_for_a_placeholder(cache):
+    add_fulltext(cache, paragraphs=PLACEHOLDER_PARAGRAPHS)
+    result = citations.CacheReader(cache).fulltext(PMID)
+    assert isinstance(result, tuple) and "PDF" in result[0]
+
+
+def test_c6_sees_the_abstract_only_when_the_xml_is_a_placeholder(tmp_path, cache):
+    add_fulltext(cache, paragraphs=PLACEHOLDER_PARAGRAPHS)
+    c6 = [i for i in check(tmp_path, cache, make_study(n_patients=77)) if i.code == "C6"]
+    assert [("n_patients 77" in i.message) for i in c6] == [True]
+
+
+def add_lookup_without_pmcid(root: Path) -> None:
+    hit = {"id": PMID, "source": "MED", "pmid": PMID, "isOpenAccess": "N", "inPMC": "N"}
+    (root / "europepmc").mkdir(parents=True, exist_ok=True)
+    (root / "europepmc" / f"{PMID}.json").write_text(
+        json.dumps({"hitCount": 1, "resultList": {"result": [hit]}}), encoding="utf-8"
+    )
+
+
+def test_a_cached_xml_is_found_through_the_pubmed_records_pmc_id_when_the_lookup_has_none(tmp_path, cache):
+    add_record(cache, pmcid=PMCID)
+    add_lookup_without_pmcid(cache)
+    (cache / "europepmc" / f"{PMCID}.xml").write_text(
+        f"<article><body><sec><title>Methods</title><p>{FULLTEXT_ONLY_SENTENCE}</p></sec></body></article>",
+        encoding="utf-8",
+    )
+    study = make_study(case_definition_source="fulltext", case_definition_quote=FULLTEXT_ONLY_SENTENCE)
+    assert [i for i in check(tmp_path, cache, study) if i.code == "C5"] == []
+
+
+def test_without_a_pmc_id_in_either_place_the_lookup_without_pmcid_gives_no_full_text(tmp_path, cache):
+    add_lookup_without_pmcid(cache)
+    (cache / "europepmc" / f"{PMCID}.xml").write_text(
+        f"<article><body><p>{FULLTEXT_ONLY_SENTENCE}</p></body></article>", encoding="utf-8"
+    )
+    study = make_study(case_definition_source="fulltext", case_definition_quote=FULLTEXT_ONLY_SENTENCE)
+    c5 = [i for i in check(tmp_path, cache, study) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"]
+
+
+def test_the_pubmed_pmc_id_with_no_cached_xml_names_the_fetch_command(tmp_path, cache):
+    add_record(cache, pmcid=PMCID)
+    add_lookup_without_pmcid(cache)
+    c5 = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
+    assert [i.level for i in c5] == ["ERROR"]
+    assert PMCID in c5[0].message and f"europepmc fulltext {PMID}" in c5[0].message

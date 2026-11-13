@@ -6,7 +6,8 @@ Command line::
 
 With no paths, ``cards/`` and ``drafts/`` are checked. The check is offline: it reads only
 ``<cache>/pubmed/<pmid>.xml``, ``<cache>/europepmc/<pmid>.json`` and ``<cache>/europepmc/<pmcid>.xml`` (else the
-PMC article page ``<pmcid>.html``) and
+PMC article page ``<pmcid>.html``); the PMC id is the lookup's, else the PubMed record's. A cached XML that is
+only a PDF placeholder is not full text. The check
 never makes a network request. Missing records are fetched by hand with the command the error names.
 
 Checks per study (errors unless marked); the reference is ``docs/citation-check.md``:
@@ -34,6 +35,7 @@ from me_atlas.europepmc import (
     EuropePmcCache,
     EuropePmcError,
     article_text,
+    is_placeholder_fulltext,
     pmc_page_text,
     read_cached_lookup,
 )
@@ -161,21 +163,33 @@ class CacheReader:
         reading_page = False
         try:
             lookup = read_cached_lookup(self.epmc, pmid)
-            if lookup is None:
+            record = self.record(pmid)
+            # The PMC id from Europe PMC, else the one in the PubMed record (Europe PMC can lack it for a while).
+            pmcid = lookup.pmcid if lookup else None
+            from_pubmed = False
+            if pmcid is None and isinstance(record, PubMedRecord) and record.pmcid:
+                pmcid, from_pubmed = record.pmcid, True
+            if lookup is None and pmcid is None:
                 return (f"no cached full text (no Europe PMC lookup cached); run {hint}",)
-            if lookup.pmcid is None:
+            if pmcid is None:
                 return (
                     f"no cached full text (Europe PMC: {lookup.status.replace('_', ' ')}); {hint} cannot download it",
                 )
-            path = self.epmc.fulltext_path(lookup.pmcid)
+            placeholder = False
+            path = self.epmc.fulltext_path(pmcid)
             if path.is_file():
-                return article_text(path.read_bytes())
-            page = self.epmc.page_path(lookup.pmcid)
+                content = path.read_bytes()
+                if not is_placeholder_fulltext(content):
+                    return article_text(content)
+                placeholder = True  # not full text: a note that the text is a PDF, or no body at all
+            page = self.epmc.page_path(pmcid)
             if page.is_file():
                 reading_page = True
                 return pmc_page_text(page.read_bytes())
-            if lookup.open_access:
-                return (f"no cached full text ({lookup.pmcid} is not in the cache); run {hint}",)
+            if placeholder:
+                return (f"no cached full text ({pmcid} has only a PDF placeholder in Europe PMC, which is not read)",)
+            if from_pubmed or (lookup is not None and lookup.open_access):
+                return (f"no cached full text ({pmcid} is not in the cache); run {hint}",)
             reason = f"no cached full text (Europe PMC: {lookup.status.replace('_', ' ')}); {hint} cannot download it"
             if lookup.in_pmc:
                 reason += (

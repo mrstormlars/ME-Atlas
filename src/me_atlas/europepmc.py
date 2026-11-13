@@ -7,11 +7,16 @@ Command line::
     uv run python -m me_atlas.europepmc casedef --card drafts/<slug>.yaml
     uv run python -m me_atlas.europepmc pmcpage --card drafts/<slug>.yaml <pmid>...
 
-``fulltext`` looks each PMID up in Europe PMC and, for open-access records, downloads the full-text XML
-into ``data/cache/europepmc/<pmcid>.xml`` (the lookup itself is cached as ``<pmid>.json``). ``casedef``
-does the same and then prints the sentences of the methods section (or, if the article has none, of the
-whole body) that name a case definition. The finder only returns candidates: which definition a sentence
-means, and what goes on a card, is a human or agent judgement. Full text stays in the gitignored cache.
+``fulltext`` looks each PMID up in Europe PMC and downloads the full-text XML of records that have a real
+body into ``data/cache/europepmc/<pmcid>.xml`` (the lookup itself is cached as ``<pmid>.json``; a negative
+lookup is asked again after ``LOOKUP_MAX_AGE_DAYS``). The PMC id may come from Europe PMC or from the cached
+PubMed record. Statuses: ``open_access``, ``pdf_only`` (the XML is only a note that the text is a PDF; nothing
+is cached), ``pmc_no_xml`` (a PMC id is known and the full-text request answers HTTP 404), ``not_open_access``
+and ``not_found`` (no PMC id known). No PDF is downloaded or parsed. ``casedef`` does the same and then prints
+the sentences of the methods section (or, if the article has none, of the whole body) that name a case
+definition, and, marked ``[exclusion]``, sentences that exclude people with the illness. The finder only
+returns candidates: which definition a sentence means, and what goes on a card, is a human or agent
+judgement. Full text stays in the gitignored cache.
 
 ``pmcpage`` is for a cited study that has no open-access full text but is free to read on PubMed Central
 (the cached lookup gives a PMCID and ``inPMC`` "Y"; founder ruling 2026-11-08). It fetches the article page
@@ -43,6 +48,7 @@ import httpx
 
 from me_atlas.cards import load_card
 from me_atlas.http import RateLimiter, get_with_retries, load_dotenv
+from me_atlas.pubmed import ParseError, parse_xml
 
 # Endpoint URLs of the Europe PMC REST API. Confirmed against the live service on 2026-10-31 (plan step 7):
 # lookups and fullTextXML worked for 18 PMIDs cited on the first two draft cards.
@@ -60,9 +66,28 @@ DEFAULT_CACHE_ROOT = Path("data/cache")
 
 _PMCID_RE = re.compile(r"^PMC\d+$")
 
+# A cached lookup that found no open-access full text is asked again when its file is older than this:
+# Europe PMC can gain the PMC id or the full text after the first answer.
+LOOKUP_MAX_AGE_DAYS = 7
+
+# Statuses of a ``get_fulltext`` result.
+STATUS_OPEN_ACCESS = "open_access"
+STATUS_NOT_OPEN_ACCESS = "not_open_access"
+STATUS_NOT_FOUND = "not_found"
+STATUS_PDF_ONLY = "pdf_only"
+STATUS_PMC_NO_XML = "pmc_no_xml"
+
+# A "full text" whose body is only a note that the real text is a PDF (seen for a preprint on 2026-11-13).
+_PLACEHOLDER_MAX_CHARS = 1000
+_PLACEHOLDER_MARKER = "available as a pdf"
+
 
 class EuropePmcError(Exception):
     """A request to Europe PMC failed for good, or the response could not be understood."""
+
+
+class FullTextNotFoundError(EuropePmcError):
+    """The full-text request answered HTTP 404 (not retried): Europe PMC has no full-text XML for that PMC id."""
 
 
 # ---------------------------------------------------------------------------
@@ -127,7 +152,12 @@ class EuropePmcClient:
         """The raw full-text XML for one open-access PMCID."""
         if not _PMCID_RE.match(pmcid):
             raise EuropePmcError(f"not a PMCID: {pmcid!r}")
-        return self._get(self.fulltext_url.format(pmcid=pmcid), None, f"Europe PMC full text for {pmcid}").content
+        try:
+            return self._get(self.fulltext_url.format(pmcid=pmcid), None, f"Europe PMC full text for {pmcid}").content
+        except EuropePmcError as exc:
+            if getattr(exc, "status_code", None) == 404:
+                raise FullTextNotFoundError(str(exc)) from exc
+            raise
 
     def fetch_pmc_page(self, pmcid: str) -> bytes:
         """The raw HTML of the PMC article page for one PMCID."""
@@ -204,38 +234,92 @@ def parse_lookup(pmid: str, raw: bytes | str) -> Lookup:
     return Lookup(pmid, "not_open_access", pmcid, in_pmc)
 
 
+def is_placeholder_fulltext(xml: bytes | str) -> bool:
+    """True if a JATS article is not full text: no body text, or only a short note that it is a PDF.
+
+    The note is a body under 1,000 characters that contains "available as a PDF" (any case). Both the
+    lookup and the citation check use this, so a placeholder is never read as the text of a paper.
+    """
+    root = _parse_article(xml)
+    body = root if root.tag == "body" else root.find(".//body")
+    text = _text(body)
+    if not text:
+        return True
+    return len(text) < _PLACEHOLDER_MAX_CHARS and _PLACEHOLDER_MARKER in text.lower()
+
+
 @dataclass(frozen=True)
 class FullText:
+    """Result of ``get_fulltext``.
+
+    ``status``: open_access (``path`` holds real full text), pdf_only (the XML is a placeholder or has no body,
+    nothing cached), pmc_no_xml (a PMC id is known, Europe PMC has no full-text XML for it), not_open_access or
+    not_found (no PMC id known). ``pmcid`` is the PMC id used, from the lookup or from PubMed.
+    """
+
     lookup: Lookup
-    path: Path | None  # cached XML, only for open access
+    path: Path | None  # cached XML, only for real full text
     requests_made: int  # HTTP requests this call made (0 when everything came from the cache)
+    status: str = STATUS_NOT_FOUND
+    pmcid: str | None = None
 
 
-def get_fulltext(client: EuropePmcClient, cache: EuropePmcCache, pmid: str, *, refresh: bool = False) -> FullText:
-    """Look the PMID up (cached) and, if the record is open access, make sure its full text is cached.
+def _lookup_is_stale(path: Path, lookup: Lookup, now: Callable[[], float]) -> bool:
+    if lookup.open_access:
+        return False
+    return now() - path.stat().st_mtime > LOOKUP_MAX_AGE_DAYS * 86400
 
-    Nothing is requested for a record that is not open access, and nothing already cached is requested
-    again unless ``refresh`` is set.
+
+def get_fulltext(
+    client: EuropePmcClient,
+    cache: EuropePmcCache,
+    pmid: str,
+    *,
+    refresh: bool = False,
+    pmcid: str | None = None,
+    now: Callable[[], float] = time.time,
+) -> FullText:
+    """Look the PMID up (cached) and make sure real full text is cached when there is any.
+
+    ``pmcid`` is the PMC id from the PubMed record, for when Europe PMC's own record does not carry it yet.
+    A cached lookup is requested again when ``refresh`` is set, or when it found no open-access full text and
+    its file is older than ``LOOKUP_MAX_AGE_DAYS`` (``now`` is the clock, for tests). When a PMC id is known
+    but the lookup gives no open-access record, the full-text XML is requested once per call. The XML is cached
+    as ``<pmcid>.xml`` only when it has a real body; a placeholder gives ``pdf_only`` and nothing is written,
+    and HTTP 404 gives ``pmc_no_xml``. No PDF is downloaded.
     """
     requests = 0
     lookup_path = cache.lookup_path(pmid)
+    raw: bytes | None = None
     if lookup_path.is_file() and not refresh:
         raw = lookup_path.read_bytes()
-    else:
+        if _lookup_is_stale(lookup_path, parse_lookup(pmid, raw), now):
+            raw = None
+    if raw is None:
         raw = client.search_pmid(pmid)
         requests += 1
         parse_lookup(pmid, raw)  # raises before anything unreadable is cached
         cache.write(lookup_path, raw)
     lookup = parse_lookup(pmid, raw)
-    if not lookup.open_access or lookup.pmcid is None:
-        return FullText(lookup, None, requests)
-    xml_path = cache.fulltext_path(lookup.pmcid)
-    if refresh or not xml_path.is_file():
-        content = client.fetch_fulltext(lookup.pmcid)
-        requests += 1
-        _parse_article(content)  # raises before anything unreadable is cached
-        cache.write(xml_path, content)
-    return FullText(lookup, xml_path, requests)
+    known = lookup.pmcid or pmcid
+    if known is None:
+        return FullText(lookup, None, requests, lookup.status, None)
+    xml_path = cache.fulltext_path(known)
+    if xml_path.is_file() and not refresh:
+        try:
+            if not is_placeholder_fulltext(xml_path.read_bytes()):
+                return FullText(lookup, xml_path, requests, STATUS_OPEN_ACCESS, known)
+        except EuropePmcError:
+            pass  # an unreadable cached file is requested again
+    try:
+        content = client.fetch_fulltext(known)
+    except FullTextNotFoundError:
+        return FullText(lookup, None, requests + 1, STATUS_PMC_NO_XML, known)
+    requests += 1
+    if is_placeholder_fulltext(content):  # also raises before anything unreadable is cached
+        return FullText(lookup, None, requests, STATUS_PDF_ONLY, known)
+    cache.write(xml_path, content)
+    return FullText(lookup, xml_path, requests, STATUS_OPEN_ACCESS, known)
 
 
 def read_cached_lookup(cache: EuropePmcCache, pmid: str) -> Lookup | None:
@@ -436,7 +520,10 @@ CASE_DEFINITION_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
         r"\bIOM\b",
         r"\bSEID\b",
         r"\bsystemic exertion intolerance\b",
-        r"\bOxford\b",
+        # "Oxford" as a case definition, not as an affiliation, publisher, place or vendor.
+        r"(?<!University of )(?<!Univ\. of )(?<!Univ of )\bOxford\b"
+        r"(?!\s+(?:University|Instruments|Nanopore|Immunotec|Biomedica|Brookes|Press)\b)"
+        r"(?!,\s*(?:UK|U\.K\.|United Kingdom|England)\b)",
         r"\bSharpe\b",
         r"\bcase definitions?\b",
         r"\bdiagnostic criteria\b",
@@ -446,14 +533,25 @@ CASE_DEFINITION_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
 )
 
 
+# A sentence that excludes people with the illness itself: both an exclusion wording and the illness must be
+# there. Whether ME/CFS was what the study excluded is for the reader to check; the finder only lists it.
+EXCLUSION_WORDING = re.compile(r"\bexclu(?:d\w*|sion\w*)\b", re.IGNORECASE)
+ILLNESS_WORDING = re.compile(r"\b(?:ME/CFS|CFS|chronic fatigue syndrome|myalgic encephalomyelitis)\b", re.IGNORECASE)
+
+
 @dataclass(frozen=True)
 class CaseDefinitionCandidate:
-    """A sentence that may name a case definition. ``sentence`` is verbatim (whitespace collapsed)."""
+    """A sentence that may name a case definition, or may exclude people with the illness.
+
+    ``sentence`` is verbatim (whitespace collapsed). ``kind`` is "definition" (a case-definition wording) or
+    "exclusion" (an exclusion wording together with the illness); a sentence that is both gives two candidates.
+    """
 
     section: str  # title of the section the sentence is in ("body" for text outside any titled section)
     scope: str  # "methods" if found in a methods section, "body" if the article has none and the body was used
     sentence: str
     matched: tuple[str, ...]  # the matched wording as it appears in the sentence
+    kind: str = "definition"
 
 
 def _candidates(section: str, scope: str, paragraphs: Sequence[str]) -> list[CaseDefinitionCandidate]:
@@ -465,6 +563,11 @@ def _candidates(section: str, scope: str, paragraphs: Sequence[str]) -> list[Cas
                 matched += [m.group(0) for m in pattern.finditer(sentence)]
             if matched:
                 out.append(CaseDefinitionCandidate(section, scope, sentence, tuple(dict.fromkeys(matched))))
+            excluding = [m.group(0) for m in EXCLUSION_WORDING.finditer(sentence)]
+            illness = [m.group(0) for m in ILLNESS_WORDING.finditer(sentence)]
+            if excluding and illness:
+                words = tuple(dict.fromkeys(excluding + illness))
+                out.append(CaseDefinitionCandidate(section, scope, sentence, words, "exclusion"))
     return out
 
 
@@ -693,7 +796,18 @@ STATUS_TEXT = {
     "open_access": "open access",
     "not_open_access": "no open full text",
     "not_found": "not found in Europe PMC",
+    "pdf_only": "PMC record, full text is a PDF only (not read)",
+    "pmc_no_xml": "PMC record, no full-text XML in Europe PMC",
 }
+
+
+def _cached_pubmed_pmcid(cache: EuropePmcCache, pmid: str) -> str | None:
+    """The PMC id in the cached PubMed record of ``pmid``, or None (no record, or one that cannot be read)."""
+    path = cache.dir.parent / "pubmed" / f"{pmid}.xml"
+    try:
+        return parse_xml(path.read_bytes()).pmcid
+    except (OSError, ParseError):
+        return None
 
 
 PMC_OUTCOME_TEXT = {
@@ -710,6 +824,13 @@ def _pmid(text: str) -> str:
     if not value.isdigit():
         raise argparse.ArgumentTypeError(f"not a PMID (digits, optionally 'pmid:' first): {text!r}")
     return value
+
+
+def _print_candidates(candidates: Sequence[CaseDefinitionCandidate]) -> None:
+    for c in candidates:
+        mark = " [exclusion]" if c.kind == "exclusion" else ""
+        print(f"  [{c.section}{'' if c.scope == 'methods' else ', body'}]{mark} {c.sentence}")
+        print(f"    matched: {', '.join(c.matched)}")
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -786,10 +907,12 @@ def main(
     try:
         for pmid in pmids:
             try:
-                result = get_fulltext(client, cache, pmid, refresh=args.refresh)
-                line = f"pmid:{pmid}  {STATUS_TEXT[result.lookup.status]}"
-                if result.lookup.pmcid:
-                    line += f"  {result.lookup.pmcid}"
+                result = get_fulltext(
+                    client, cache, pmid, refresh=args.refresh, pmcid=_cached_pubmed_pmcid(cache, pmid)
+                )
+                line = f"pmid:{pmid}  {STATUS_TEXT[result.status]}"
+                if result.pmcid:
+                    line += f"  {result.pmcid}"
                 if args.command == "fulltext":
                     print(line + (f"  {result.path}" if result.path else ""))
                     continue
@@ -797,9 +920,7 @@ def main(
                 if result.path:
                     line += f"  {len(candidates)} candidate sentence(s)"
                 print(line)
-                for c in candidates:
-                    print(f"  [{c.section}{'' if c.scope == 'methods' else ', body'}] {c.sentence}")
-                    print(f"    matched: {', '.join(c.matched)}")
+                _print_candidates(candidates)
             except EuropePmcError as exc:
                 print(f"pmid:{pmid}  error: {exc}", file=sys.stderr)
                 exit_code = 1
@@ -844,9 +965,7 @@ def _pmcpage_main(args, env, transport, clock, sleep) -> int:
                     continue
                 candidates = find_case_definitions_in_page(result.path.read_bytes())
                 print(f"{line}  {result.path}  {len(candidates)} candidate sentence(s)")
-                for c in candidates:
-                    print(f"  [{c.section}{'' if c.scope == 'methods' else ', body'}] {c.sentence}")
-                    print(f"    matched: {', '.join(c.matched)}")
+                _print_candidates(candidates)
             except EuropePmcError as exc:
                 print(f"pmid:{pmid}  error: {exc}", file=sys.stderr)
                 exit_code = 1
