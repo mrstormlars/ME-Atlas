@@ -7,7 +7,7 @@ Reference for the founder and for agents. Code: `src/me_atlas/map.py` (content f
 - Cards may carry a `layer` and a list of `links` (sourced, on a three-step scale of their own).
 - Two small content files hold the symptom nodes and the open-question nodes.
 - `cards validate` checks all of it; `map report` prints the layers, the links and two convergence lists; the site builds a `map.html` page in English and Norwegian (lists, and the drawing described under "The drawing").
-- A `link-drafter` agent proposes a layer and links for one card; `card-reviewer` has a map mode that checks them. Setting a layer and adding a link are founder decisions (CLAUDE.md rule 2).
+- A `link-drafter` agent proposes a layer and links for one card; `card-reviewer` has a map mode that checks them. Setting a layer and adding a link are tier 2 changes that the independent auditor decides (CLAUDE.md rule 2, functional spec section 6); the founder may overrule as a logged correction.
 
 ## Commands
 
@@ -93,7 +93,7 @@ Above the lists, a section `gaps-summary` ("At a glance" / "Kort oppsummert") sh
 
 ## Out of scope
 
-- A pipeline subcommand that merges the proposals into a draft. For now the founder (or a chat session at the founder's request) copies an accepted layer and links into the draft by hand.
+- A pipeline subcommand that merges the proposals into a draft. For now a layer and links are copied into the draft by hand (the founder, or a chat session at the founder's request), and only once the auditor has accepted them.
 - Contested marks on links, subgroup-specific maps and automatic link proposals from the weekly run.
 - A principle that stays: nodes and gaps are counted, never weighted, scored or ranked (no "number of symptoms explained" score, no weights on link steps).
 - Done 2026-11-06: the first mapping (16 cards placed, 17 links, symptom list from the ICC 2011, four editorial open questions); rulings in DECISIONS. Done 2026-11-06: a second pass with the review full texts as plain text with numbered paragraphs (`data/pipeline/2026-11-06-map-pass2/reviews/`), six more proposed links. Still open: a verifiable IOM 2015 or CCC record for the symptom list. The drawn map (built, see "The drawing") had its own plan: `docs/plan-drawn-map.md`.

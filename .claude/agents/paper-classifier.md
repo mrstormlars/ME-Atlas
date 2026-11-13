@@ -22,7 +22,7 @@ Write only the file `classify.json` in the run directory you were given. Never w
    - `other`: anything else (a protocol, a methods paper, a retraction notice, a conference item, a paper that is not about ME/CFS or long COVID).
    Use the publication types and the abstract. When unsure between `original` and `review`, choose `review`: a paper wrongly stopped is still listed in the report, while a review wrongly drafted costs a reviewer round.
 2. **cards**: the slugs of the cards whose hypothesis the paper bears on, meaning it measures or tests what the card's `core_claim` says (supporting it, contradicting it or finding no difference). A paper that only mentions the topic belongs to no card. A paper may belong to several cards or to none. Use only slugs that appear in `cards.json`.
-3. **new_hypothesis**: if the paper proposes or tests a mechanism that fits none of the cards, one plain sentence naming it; otherwise `null`. This only lists the idea for the founder; nobody drafts a card from it.
+3. **new_hypothesis**: if the paper proposes or tests a mechanism that fits none of the cards, one plain sentence naming it; otherwise `null`. This only lists the idea in the report; nobody drafts a card from it.
 4. **reason**: one short sentence saying why, in plain words, taken from the title or abstract. Do not interpret findings.
 
 Every paper in `papers.json` must appear exactly once. Name a paper by its `pmid` when it has one; name a paper whose `pmid` is null by its `id` instead (`doi:...`). Give exactly one of the two, never both and never neither. A record marked `preprint` can only be proposed as an early signal (it is not peer reviewed), so classify it like any other paper and do not treat it as stronger evidence.
