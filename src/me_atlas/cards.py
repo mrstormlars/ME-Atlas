@@ -421,7 +421,11 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
     # V14: a TODO marker belongs in a YAML comment, not in text a reader sees
     reader_facing = [("name", card.name)]
     reader_facing += [(f"{path}.text", text.text) for path, text in _sourced_texts(card)]
-    reader_facing += [(f"studies[{i}].finding", st.finding) for i, st in enumerate(card.studies)]
+    for i, st in enumerate(card.studies):
+        for field in ("title", "finding", "group", "case_definition_quote"):
+            value = getattr(st, field)
+            if value is not None:
+                reader_facing.append((f"studies[{i}].{field}", value))
     for path, value in reader_facing:
         if _TODO_RE.search(value):
             found.append(("V14", path, "contains a TODO marker; settle it or move it to a YAML comment"))

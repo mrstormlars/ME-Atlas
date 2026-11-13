@@ -1189,6 +1189,32 @@ def test_v14_todo_in_reader_facing_text_is_an_error_naming_the_field(tmp_path, e
     assert [i.path for i in issues] == [path]
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("group", "Ponting CP (affiliation TODO: verify)"),
+        ("title", "A fictional title (TODO: verify)"),
+        ("case_definition_quote", "Patients met the fictional criteria. TODO: verify"),
+    ],
+)
+def test_v14_todo_in_other_free_text_study_fields_is_an_error(tmp_path, field, value):
+    data = base()
+    data["studies"][0][field] = value
+    issues = [i for i in check(tmp_path, data) if i.rule == "V14"]
+    assert [i.path for i in issues] == [f"studies[0].{field}"]
+
+
+def test_v14_todo_in_a_yaml_comment_next_to_group_is_accepted(tmp_path):
+    data = base()
+    data["studies"][0]["group"] = "Fictional Group"
+    path = write_card(tmp_path / "cards", data)
+    path.write_text(
+        path.read_text(encoding="utf-8").replace("group: Fictional Group", "group: Fictional Group  # TODO: verify", 1),
+        encoding="utf-8",
+    )
+    assert cards.validate_card_file(path) == []
+
+
 def test_v14_a_study_finding_with_todo_verify_fails(tmp_path):
     data = base()
     data["studies"][0]["finding"] = "A study of n=40 patients found a fictional difference (TODO: verify)."
