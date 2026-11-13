@@ -15,6 +15,7 @@ Command line::
     uv run python -m me_atlas.pipeline translation-plan [--lang nb]
     uv run python -m me_atlas.pipeline report
     uv run python -m me_atlas.pipeline pr [--dry-run] [--no-pr]
+    uv run python -m me_atlas.pipeline content-paths [--base main] [--head HEAD]
 
 Everything is kept in ``data/pipeline/<date>/`` (gitignored): see ``docs/pipeline.md`` for the layout.
 No step here calls an AI. Tests inject the fetch, the full-text loader and the subprocess runner.
@@ -2725,6 +2726,17 @@ def split_report(report: str, limit: int = GITHUB_BODY_LIMIT) -> list[str]:
 # The agents run on model aliases, so the trailer cannot name a model version.
 COMMIT_TRAILER = "Co-Authored-By: Claude <noreply@anthropic.com>"
 
+# The pipeline marker: a git trailer on every commit `pr` makes. `content-paths` reads it. It is plain text that anyone
+# can type, so it is a review aid and not a security boundary (docs/pipeline.md, "The content-path check").
+PIPELINE_MARKER_KEY = "ME-Atlas-Pipeline"
+PIPELINE_MARKER_VALUE = "weekly-run"
+PROTECTED_PATHS = ("cards/", "drafts/", "translations/", "audits/")
+_MARKER_LINE = re.compile(rf"^{PIPELINE_MARKER_KEY}: {PIPELINE_MARKER_VALUE} (\d{{4}}-\d{{2}}-\d{{2}})$")
+
+
+def pipeline_marker(date: str) -> str:
+    return f"{PIPELINE_MARKER_KEY}: {PIPELINE_MARKER_VALUE} {date}"
+
 
 def _op_headline(op: Any, base: dict[str, Any]) -> str:
     """A short, one-line change-log text for one operation (no card text)."""
@@ -2875,7 +2887,7 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
     message = (
         f"{title}\n\nAI-drafted from new PubMed papers, checked by the review agent and, for tier 2 changes, "
         "decided by the auditor; see the pull request for the report."
-        f"\n\n{COMMIT_TRAILER}"
+        f"\n\n{COMMIT_TRAILER}\n{pipeline_marker(str(prep['date']))}"
     )
 
     def step(cmd: list[str]) -> bool:
@@ -2950,6 +2962,84 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
         if not step(["gh", "pr", "comment", branch, "--body-file", str(path)]):
             return 1
     return 0
+
+
+# ---------------------------------------------------------------------------
+# Content-path check: protected content paths change only through the pipeline
+# ---------------------------------------------------------------------------
+
+
+def commit_is_marked(message: str) -> bool:
+    """True when the last paragraph of a commit message (not its only one) has the exact marker line with a real date.
+
+    The key, the word ``weekly-run`` and the single spaces must match exactly; the date must be a real ISO date.
+    """
+    paragraphs = [p for p in re.split(r"\n\s*\n", message.strip().replace("\r\n", "\n")) if p.strip()]
+    if len(paragraphs) < 2:
+        return False
+    for line in paragraphs[-1].split("\n"):
+        match = _MARKER_LINE.match(line)
+        if match:
+            try:
+                dt.date.fromisoformat(match.group(1))
+            except ValueError:
+                return False
+            return True
+    return False
+
+
+def _git(repo: Path, *args: str) -> str:
+    done = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, check=False)
+    if done.returncode != 0:
+        raise PipelineError(f"git {' '.join(args)} failed: {done.stderr.strip() or done.stdout.strip()}")
+    return done.stdout
+
+
+def _is_protected(path: str) -> bool:
+    return path.startswith(PROTECTED_PATHS)
+
+
+def check_content_paths(repo: Path, base: str, head: str) -> tuple[list[str], dict[str, list[str]]]:
+    """The files changed from the merge base of ``base`` and ``head`` to ``head``, and the offences.
+
+    The offences map each protected file to the unmarked commits that touch it. A non-merge commit in ``base..head``
+    without the marker that changes a protected path is an offence; so is a merge commit whose own combined diff (the
+    changes taken from neither parent) touches one. A marked commit is never an offence, whatever it changes.
+    """
+    merge_base = _git(repo, "merge-base", base, head).strip()
+    changed = [p for p in _git(repo, "diff", "--name-only", "--no-renames", "-z", merge_base, head).split("\0") if p]
+    offences: dict[str, list[str]] = {}
+    for sha in _git(repo, "rev-list", "--reverse", f"{base}..{head}").split():
+        parents = _git(repo, "show", "-s", "--format=%P", sha).split()
+        if len(parents) > 1:  # a merge commit: only what it changes on its own counts, and it cannot carry the marker
+            paths = _git(repo, "diff-tree", "-c", "--no-commit-id", "--name-only", "--no-renames", "-r", "-z", sha)
+        else:
+            if commit_is_marked(_git(repo, "show", "-s", "--format=%B", sha)):
+                continue
+            paths = _git(repo, "diff-tree", "--root", "--no-commit-id", "--name-only", "--no-renames", "-r", "-z", sha)
+        for path in sorted({q for q in paths.split("\0") if q and _is_protected(q)}):
+            offences.setdefault(path, []).append(sha)
+    return changed, offences
+
+
+def run_content_paths(repo: Path, base: str, head: str, out: Callable[[str], None] = print) -> int:
+    changed, offences = check_content_paths(repo, base, head)
+    protected = [q for q in changed if _is_protected(q)]
+    out(f"{len(changed)} file(s) changed from the merge base of {base} to {head}; {len(protected)} protected.")
+    if not offences:
+        if protected:
+            out("PASS: every protected path is changed only by commits marked as the pipeline's.")
+        else:
+            out("PASS: no protected content path is changed.")
+        return 0
+    out(f"FAIL: protected content paths ({', '.join(PROTECTED_PATHS)}) changed by commits without the marker:")
+    for path, shas in sorted(offences.items()):
+        out(f"  {path}")
+        for sha in shas:
+            subject = _git(repo, "show", "-s", "--format=%s", sha).strip()
+            out(f"    {sha[:10]} {subject}")
+    out(f"The marker is the trailer '{pipeline_marker('YYYY-MM-DD')}' (see docs/pipeline.md).")
+    return 1
 
 
 # ---------------------------------------------------------------------------
@@ -3089,6 +3179,14 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     pr.add_argument("--dry-run", action="store_true", help="print the commands; change nothing")
     pr.add_argument("--no-pr", action="store_true", help="branch and commit locally; do not push or open a PR")
+
+    cp = sub.add_parser(
+        "content-paths",
+        help="fail when a commit without the pipeline marker changes cards/, drafts/, translations/ or audits/",
+    )
+    cp.add_argument("--base", default=BASE_BRANCH, help="default: %(default)s")
+    cp.add_argument("--head", default="HEAD", help="default: %(default)s")
+    cp.add_argument("--repo", type=Path, default=Path("."), help="the git repository; default: the current folder")
     return parser
 
 
@@ -3149,6 +3247,8 @@ def main(
     args = _build_parser().parse_args(argv)
     date: dt.date | None = None
     try:
+        if args.command == "content-paths":
+            return run_content_paths(args.repo, args.base, args.head, out)
         if args.command == "prepare":
             date = args.date or today or dt.date.today()
             run_dir = args.run_dir or args.pipeline_dir / date.isoformat()

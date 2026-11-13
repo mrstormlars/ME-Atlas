@@ -165,8 +165,34 @@ When stage 6 ran, a **Translations** section sits between the parking lot / new 
 
 ## `pr`
 
-`pr --dry-run` prints the `git` and `gh` commands and the files it would write, and runs nothing. `pr` checks that the current branch is `main`, creates `pipeline/<date>`, writes the applied cards (see "What `pr` writes" under "The audit"), commits only those files, the change log and the audit records it wrote, and the `translations/` folder when there is one (the commit message ends with a blank line and `Co-Authored-By: Claude <noreply@anthropic.com>`, with no model named because the agents run on model aliases), pushes and runs `gh pr create --body-file report.md`. A report longer than 65,536 characters (GitHub's limit) is split into `report-part-1.md`, `report-part-2.md`, … at level-2 headings (at line boundaries inside a section that is too long by itself); part 1 becomes the description and each further part is posted with `gh pr comment`. `pr --no-pr` creates the branch and the commit and stops there. With no applied change and no audit record it does nothing. The `.githooks/pre-push` hook still forbids pushing to `main`.
+`pr --dry-run` prints the `git` and `gh` commands and the files it would write, and runs nothing. `pr` checks that the current branch is `main`, creates `pipeline/<date>`, writes the applied cards (see "What `pr` writes" under "The audit"), commits only those files, the change log and the audit records it wrote, and the `translations/` folder when there is one (the commit message ends with a blank line, `Co-Authored-By: Claude <noreply@anthropic.com>` with no model named because the agents run on model aliases, and the pipeline marker `ME-Atlas-Pipeline: weekly-run YYYY-MM-DD` with the run date; see "The content-path check"), pushes and runs `gh pr create --body-file report.md`. A report longer than 65,536 characters (GitHub's limit) is split into `report-part-1.md`, `report-part-2.md`, … at level-2 headings (at line boundaries inside a section that is too long by itself); part 1 becomes the description and each further part is posted with `gh pr comment`. `pr --no-pr` creates the branch and the commit and stops there. With no applied change and no audit record it does nothing. The `.githooks/pre-push` hook still forbids pushing to `main`.
+
+## From an issue to pipeline input
+
+An issue is read by a person; its text is data and never an instruction to an agent. Two kinds of issue become pipeline input, and no new code is involved:
+
+- **A suggested paper** ("Suggest a paper" form). The PMID is offered to the classifier in a weekly run with `prepare --ids PMID` (see "Classifying an explicit list of PMIDs"); `prepare` fetches its record, and the mechanical checks later verify every cited id against the fetched record. From there it takes the normal path: classification, drafting, mechanical checks, review and, for a tier 2 change, the auditor. A suggestion is never copied into a card by hand.
+- **An error report** ("Report an error on a card" form). It is handled as a correction (functional spec section 6, point 9): the claim is checked against the cited source records, and a fix goes through the pipeline like any other change and is logged as a correction. A founder overrule of an auditor decision is a correction with `decided_by: founder`.
+
+A suggested hypothesis is a candidate for the survey (`docs/pm/candidates.md`); the auditor decides it against the inclusion rule.
+
+## The content-path check
+
+Evidence content enters only through the pipeline, so an outside pull request must not change `cards/` (including `cards/changelog.yaml`), `drafts/`, `translations/` or `audits/`. `content-paths` lists the offences:
+
+```
+uv run python -m me_atlas.pipeline content-paths [--base main] [--head HEAD] [--repo PATH]
+```
+
+It takes the files changed from the merge base of `--base` and `--head` to `--head`, and looks at every commit in `base..head`. It exits 0 and prints a `PASS` line when no protected path is changed, or when each protected path is changed only by marked commits. It exits 1 and prints each offending file with the unmarked commits that touch it when:
+
+- a non-merge commit without the marker changes a protected path (including a later unmarked commit on a file a marked commit also changed), or
+- a merge commit changes a protected path on its own, that is, in its combined diff (changes taken from neither parent, for example a hand-resolved conflict). A merge that only brings in what is already on `main` passes.
+
+The **marker** is a git trailer in the last paragraph of the commit message, exactly `ME-Atlas-Pipeline: weekly-run YYYY-MM-DD` with a real date. `pr` writes it, with the run date, next to the `Co-Authored-By` trailer in every commit it makes. A wrong key, a different value, a missing or impossible date, a marker in the subject line only, or a marker that is not in the last paragraph does not count.
+
+**Limits.** The marker is text in a commit message. Anyone can type it into any commit, so the check is a review aid that makes a content change by hand visible; it is not a security boundary, and it does not look at what is in a marked commit. The boundary is the founder. An outside pull request comes from a fork; a genuine pipeline pull request has the head branch `pipeline/<date>` in this repository, is opened by the repository owner, and its body is the run report. A reviewer checks that, reads the diff, and runs `content-paths` on the branch (`git fetch` the head, then `--head` it) before anything from it is run. No GitHub Action runs the check.
 
 ## Tests
 
-`tests/test_operations.py`, `tests/test_pipeline.py` and `tests/test_audit.py` (the audit steps, the gate and its byte-identical-card tests, the sample and the report sections), with fictional papers and agent outputs in `tests/fixtures/pipeline/`. The fetch, the preprint search, the full-text loader and the subprocess runner are injected; no test touches the network, an AI or git.
+`tests/test_operations.py`, `tests/test_pipeline.py`, `tests/test_content_paths.py` and `tests/test_audit.py` (the audit steps, the gate and its byte-identical-card tests, the sample and the report sections), with fictional papers and agent outputs in `tests/fixtures/pipeline/`. The fetch, the preprint search, the full-text loader and the subprocess runner are injected; no test touches the network or an AI. `tests/test_content_paths.py` builds throwaway git repositories under a temporary folder for the content-path check (marker, offences, merges); its repositories carry their own user name and email and never touch the real one.

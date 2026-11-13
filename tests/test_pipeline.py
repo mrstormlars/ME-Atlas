@@ -645,6 +645,16 @@ def test_pr_copies_accepted_results_into_drafts_and_runs_the_commands_in_order(a
     assert data["studies"][-1]["id"] == "pmid:90000101"
 
 
+def test_pr_commit_message_carries_the_pipeline_marker_with_the_run_date(accepted: Env):
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    commit = next(c for c in runner.calls if c[:2] == ["git", "commit"])
+    message = commit[commit.index("-m") + 1]
+    assert message.rstrip().endswith("ME-Atlas-Pipeline: weekly-run 2026-11-01")
+    assert "Co-Authored-By: Claude <noreply@anthropic.com>" in message.split("\n\n")[-1]
+    assert pipeline.commit_is_marked(message)
+
+
 def test_pr_no_pr_commits_locally_without_pushing(accepted: Env):
     runner = FakeRunner(branch="feat/anything")
     assert accepted.cli("pr", "--no-pr", runner=runner) == 0
@@ -2175,12 +2185,14 @@ def test_the_preprint_line_says_a_change_that_adds_or_cites_a_preprint_is_tier_2
     assert "can only be an early signal" in line and "tier 2" in line and "the auditor decides" in line
 
 
-def test_the_commit_message_ends_with_a_blank_line_and_the_co_author_trailer(accepted: Env):
+def test_the_commit_message_ends_with_a_blank_line_the_co_author_trailer_and_the_pipeline_marker(accepted: Env):
     runner = FakeRunner()
     assert accepted.cli("pr", "--no-pr", runner=runner) == 0
     commit = next(c for c in runner.calls if c[:2] == ["git", "commit"])
     message = commit[commit.index("-m") + 1]
-    assert message.endswith("\n\nCo-Authored-By: Claude <noreply@anthropic.com>")
+    assert message.endswith(
+        "\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nME-Atlas-Pipeline: weekly-run 2026-11-01"
+    )
     assert message.startswith("Weekly pipeline 2026-11-01: 1 draft card update(s)")
 
 
