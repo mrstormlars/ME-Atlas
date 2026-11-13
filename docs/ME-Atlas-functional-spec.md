@@ -66,6 +66,8 @@ Down or held back: failed replications; a finding that rests only on a broad cas
 
 Volume is not evidence. The number of papers, citations or news items never moves a hypothesis.
 
+**Preprints.** A preprint (not peer reviewed) is an early signal and nothing more. It never moves a level, sets or changes a badge, creates or changes a contested mark, or supports a link, whatever it found, and it is shown with the fixed label "Preprint: not peer reviewed." When its published version appears in PubMed, the weekly report flags it so that the founder can replace the preprint with the published paper.
+
 ### Mapping to the Bradford Hill criteria
 
 | Bradford Hill criterion | Where it counts |
@@ -203,6 +205,8 @@ The pipeline runs mostly on AI, with mechanical checks in code and a human for h
    | 1 | Adding a study to a card, factual text, change-log entry | Published automatically when the mechanical checks pass and both agents agree |
    | 2 | Setting or changing a level, a badge or a contested mark; adding or removing a hypothesis | The founder, yes or no, in a weekly list |
    | 3 | Anything still disputed after two agent rounds | The founder, from the parking lot. If unresolved, the lower level stands and the disagreement is noted on the card |
+
+   Changes that add or cite a preprint are tier 2 until the founder rules otherwise.
 
    **Calibration period:** for the first weeks the founder approves every change, including tier 1, to measure how often the agents are wrong. Tier 1 auto-publishing starts only when the founder rules the error rate acceptable, recorded in `docs/pm/DECISIONS.md`.
 7. **Publication.** Approved changes are published in the weekly site update. The card shows when it was last checked and whether by the AI review pair or by the founder.

@@ -44,6 +44,22 @@ level_reason:
 
 The rules apply per paragraph: every source must be in `studies` (V3) and every paragraph needs at least one source (V4; at level 0 none is needed in `level_reason`). V8 looks at all paragraphs of `contested.reason` together: one `contradicts` study in any paragraph is enough. Error paths name the paragraph, for example `level_reason[1].sources`. `core_claim`, `subgroups` and `early_signals` stay single sourced texts.
 
+### Where a preprint may be cited
+
+A study with `preprint: true` may be cited **only in `early_signals`**. Every sourced text on a card, and whether a preprint may be a source there (rule V15):
+
+| Sourced text | Preprint as a source |
+| --- | --- |
+| `core_claim` | No (error at `core_claim.sources[i]`) |
+| `level_reason` (each paragraph) | No (`level_reason[i].sources[j]`, or `level_reason.sources[j]` for a single text) |
+| `contested.reason` (each paragraph) | No |
+| `badges.diagnostic_marker.reason`, `badges.explains_pem.reason` (each paragraph) | No |
+| `subgroups[i]` | No (`subgroups[i].sources[j]`) |
+| `links[i]` | No (`links[i].sources[j]`) |
+| `early_signals[i]` | Yes |
+
+The change log's `sources` (`cards/changelog.yaml`) is not part of a card and V15 does not check it; the code checks only the sourced texts above.
+
 ## Card fields
 
 | Field | Meaning |
@@ -83,8 +99,9 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | `direction` | `lower`, `higher`, `no_difference`, `mixed`, `not_applicable`: patients compared with controls, on the card's measure. Required for every role, so a background study still shows which way it points. Use `not_applicable` when the source gives no patient-control comparison. |
 | `finding` | One neutral sentence: "A study of n=... found ...". |
 | `group` | Optional. A short label for the research group, taken from the fetched record (for example the last author and institution as PubMed gives them), or `null`/omitted. Not validated beyond being non-empty when present. Meant for the "independent group" test at level 3. |
+| `preprint` | Optional, default `false`. `true` marks a preprint (not peer reviewed): a `doi:` study taken from Europe PMC, or a `pmid:` study whose PubMed record has the publication type "Preprint" (checked by C8). A preprint can only be an early signal: see V15. |
 
-All of these are required except `group`; use `null` where the value is allowed to be unknown.
+All of these are required except `group` and `preprint`; use `null` where the value is allowed to be unknown.
 
 ### Case definition provenance (format v2)
 
@@ -146,6 +163,7 @@ Links live on the upstream card only. Translations of link texts are card text (
 | V3, V4 (links) | Apply to every link too: each source is in the card's `studies` and there is at least one. Errors read `links[0].sources[0]`. |
 | V13 | Case definition provenance: `unverified` has `null` source and quote; every other value has a source; the named definitions (CCC, ICC, IOM2015, Fukuda, Holmes1988, CDC_unspecified, Oxford) also have a quote. |
 | V14 | No "TODO" (whole word, any case) in text a reader sees: the `name`, any sourced text (core claim, level reason, contested reason, badge reasons, subgroups, early signals, link texts) or a study's `finding`. The message names the field. A TODO in a YAML comment is fine. |
+| V15 | A study with `preprint: true` must have `role: early_signal` (error at `studies[i].role`), and its id may not be a source of `level_reason` (any paragraph), `contested.reason`, `badges.diagnostic_marker.reason`, `badges.explains_pem.reason` a link, `core_claim` or a `subgroups` item (error at that path, e.g. `links[0].sources[0]`). A preprint can be cited only in `early_signals`, so it cannot set or contest a level, set a badge, carry a link or be the core claim or a subgroup (see "Where a preprint may be cited"). |
 | M1 | `layer`, when present, is one of `predisposition`, `trigger`, `mechanism`, `dysfunction` (reported as a schema error on `layer`). |
 | M2 | Every link's `to` resolves: a card slug in the validated set (see `docs/map.md`), `symptom:<id>` in `content/symptoms.yaml`, `question:<id>` in `content/open-questions.yaml`. A malformed value such as `foo:bar`, or an entry marked `todo: verify`, is an error. |
 | M3 | A card does not link to itself. |

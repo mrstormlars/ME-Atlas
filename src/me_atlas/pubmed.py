@@ -88,6 +88,11 @@ class PubMedRecord(BaseModel):
     retracted: bool
     entry_date: str | None  # ISO date (the PubMed "entrez" history date)
 
+    @property
+    def preprint(self) -> bool:
+        """True if PubMed marks the record as a preprint (publication type "Preprint"). The journal is not used."""
+        return "Preprint" in self.publication_types
+
 
 _YEAR_RE = re.compile(r"\b(1[89]\d\d|20\d\d)\b")
 

@@ -6,6 +6,7 @@ Command line::
     uv run python -m me_atlas.europepmc casedef <pmid>...
     uv run python -m me_atlas.europepmc casedef --card drafts/<slug>.yaml
     uv run python -m me_atlas.europepmc pmcpage --card drafts/<slug>.yaml <pmid>...
+    uv run python -m me_atlas.europepmc preprint [--fulltext] <doi>...
 
 ``fulltext`` looks each PMID up in Europe PMC and downloads the full-text XML of records that have a real
 body into ``data/cache/europepmc/<pmcid>.xml`` (the lookup itself is cached as ``<pmid>.json``; a negative
@@ -27,12 +28,19 @@ scripts); the page is used to find and check the case-definition sentence and sa
 only if its ``citation_pmid`` is the PMID asked for and it has a main article body. Redirects are not
 followed, so a moved page is an error rather than a request to another site.
 
+``preprint`` fetches the Europe PMC record of a preprint by its DOI (``DOI:"<doi>" AND SRC:PPR``) and caches it
+under ``data/cache/europepmc/preprints/<PPR id>.json``, so a preprint can be cited on a card as a ``doi:`` study
+(``preprint: true``) and checked by ``me_atlas.citations``. ``--fulltext`` also looks for its open-access full
+text through ``get_fulltext``. ``EuropePmcClient.search_preprints`` searches preprints by first-indexed date for
+the weekly pipeline (see ``docs/fetch.md``, "Preprints (Europe PMC)").
+
 Environment (or ``.env``): ``CONTACT_EMAIL`` (required, sent in the User-Agent header).
 """
 
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import os
 import re
@@ -60,11 +68,21 @@ PMC_PAGE_URL = "https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/"
 EPMC_SEARCH_QUERY = "EXT_ID:{pmid} AND SRC:MED"
 EPMC_SEARCH_PARAMS: dict[str, str | int] = {"format": "json", "resultType": "lite", "pageSize": 5}
 
+# Preprints: Europe PMC source "PPR". The term block is kept in a config file and the code adds the filter.
+EPMC_PREPRINT_PARAMS: dict[str, str | int] = {"format": "json", "resultType": "core", "pageSize": 100}
+EPMC_PREPRINT_FILTER = "SRC:PPR"
+DEFAULT_PREPRINT_QUERY_FILE = Path("config/europepmc_preprint_query.txt")
+PREPRINT_DIRNAME = "preprints"
+# "Preprint of" is the type of the link from a preprint to its published version (source MED, id = PMID).
+PUBLISHED_LINK_TYPE = "Preprint of"
+PUBLISHED_LINK_SOURCE = "MED"
+
 TOOL_NAME = "me-atlas"
 RATE_LIMIT = 3
 DEFAULT_CACHE_ROOT = Path("data/cache")
 
 _PMCID_RE = re.compile(r"^PMC\d+$")
+_PPR_RE = re.compile(r"^PPR\d+$")
 
 # A cached lookup that found no open-access full text is asked again when its file is older than this:
 # Europe PMC can gain the PMC id or the full text after the first answer.
@@ -148,6 +166,53 @@ class EuropePmcClient:
         params = {"query": EPMC_SEARCH_QUERY.format(pmid=pmid), **EPMC_SEARCH_PARAMS}
         return self._get(self.search_url, params, f"Europe PMC search for pmid:{pmid}").content
 
+    def search_preprint_page(self, query: str, cursor: str) -> bytes:
+        """The raw JSON of one page of a preprint search (``cursor`` is "*" for the first page)."""
+        params = {"query": query, "cursorMark": cursor, **EPMC_PREPRINT_PARAMS}
+        return self._get(self.search_url, params, f"Europe PMC preprint search (cursor {cursor})").content
+
+    def search_preprint_doi(self, doi: str) -> bytes:
+        """The raw JSON search response for the preprint record with one DOI (``DOI:"<doi>" AND SRC:PPR``)."""
+        if '"' in doi:
+            raise EuropePmcError(f"not a DOI: {doi!r}")
+        params = {"query": f'DOI:"{doi}" AND {EPMC_PREPRINT_FILTER}', **EPMC_PREPRINT_PARAMS}
+        return self._get(self.search_url, params, f"Europe PMC preprint search for doi:{doi}").content
+
+    def search_preprints(
+        self,
+        since: dt.date,
+        until: dt.date,
+        *,
+        terms: str | None = None,
+        cache: EuropePmcCache | None = None,
+    ) -> list[PreprintRecord]:
+        """Every preprint first indexed from ``since`` to ``until`` (both included) that matches the terms.
+
+        The query is the term block (default: ``config/europepmc_preprint_query.txt``) plus
+        `` AND SRC:PPR AND FIRST_IDATE:[since TO until]``. Pages are read with ``cursorMark`` until all
+        ``hitCount`` records are read; the search also stops if the next cursor repeats or a page is empty.
+        With ``cache``, each raw page is written under ``<root>/europepmc/preprints/`` and each record as
+        ``<PPR id>.json``. Raises EuropePmcError if a page cannot be fetched or read.
+        """
+        query = preprint_query(since, until, terms)
+        found: dict[str, PreprintRecord] = {}
+        cursor = "*"
+        page_no = 0
+        while True:
+            raw = self.search_preprint_page(query, cursor)
+            hit_count, next_cursor, results = parse_search_page(raw)
+            page_no += 1
+            records = [parse_preprint(r) for r in results]
+            if cache is not None:
+                cache.write_preprint_page(since, until, page_no, raw)
+                for result in results:
+                    cache.write_preprint(result)
+            for record in records:
+                found.setdefault(record.ppr_id, record)
+            if not records or len(found) >= hit_count or not next_cursor or next_cursor == cursor:
+                return list(found.values())
+            cursor = next_cursor
+
     def fetch_fulltext(self, pmcid: str) -> bytes:
         """The raw full-text XML for one open-access PMCID."""
         if not _PMCID_RE.match(pmcid):
@@ -193,8 +258,29 @@ class EuropePmcCache:
         return self.dir / f"{pmcid}.html"
 
     def write(self, path: Path, content: bytes) -> None:
-        self.dir.mkdir(parents=True, exist_ok=True)
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(content)
+
+    @property
+    def preprint_dir(self) -> Path:
+        return self.dir / PREPRINT_DIRNAME
+
+    def preprint_path(self, ppr_id: str) -> Path:
+        """The cached raw record of one preprint: ``preprints/<PPR id>.json``."""
+        if not _PPR_RE.match(ppr_id):
+            raise ValueError(f"a preprint id must look like PPR123, got {ppr_id!r}")
+        return self.preprint_dir / f"{ppr_id}.json"
+
+    def write_preprint(self, result: Mapping[str, object]) -> None:
+        """Cache one raw record of a search result under its PPR id."""
+        ppr_id = str(result.get("id") or "")
+        self.write(
+            self.preprint_path(ppr_id), (json.dumps(result, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+        )
+
+    def write_preprint_page(self, since: dt.date, until: dt.date, page_no: int, raw: bytes) -> None:
+        """Cache one raw page of a preprint search as ``preprints/search-<since>_<until>-<n>.json``."""
+        self.write(self.preprint_dir / f"search-{since.isoformat()}_{until.isoformat()}-{page_no}.json", raw)
 
 
 @dataclass(frozen=True)
@@ -234,6 +320,190 @@ def parse_lookup(pmid: str, raw: bytes | str) -> Lookup:
     return Lookup(pmid, "not_open_access", pmcid, in_pmc)
 
 
+# ---------------------------------------------------------------------------
+# Preprints (source PPR)
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class PreprintVersion:
+    """One entry of a preprint's version list. Each version is its own PPR record with its own DOI."""
+
+    ppr_id: str
+    number: int
+
+
+@dataclass(frozen=True)
+class PublishedLink:
+    """A "Preprint of" link: the PubMed record (``pmid``) of the published article. ``note`` is Europe PMC's
+    own, e.g. "CrossRef Pre-print loader" or "Link created based on a title-first author match"."""
+
+    pmid: str
+    note: str | None
+
+
+@dataclass(frozen=True)
+class PreprintRecord:
+    """A Europe PMC preprint record, reduced to the fields later steps rely on."""
+
+    ppr_id: str
+    doi: str | None
+    title: str
+    abstract: str | None
+    year: int | None
+    first_index_date: str | None
+    server: str | None  # bookOrReportDetails.publisher
+    version_number: int | None
+    versions: tuple[PreprintVersion, ...]
+    published: tuple[PublishedLink, ...]
+    pmcid: str | None  # a PMC id from fullTextIdList, if any (the list also names the PPR id itself)
+    is_open_access: bool = False
+    in_pmc: bool = False
+
+    @property
+    def id(self) -> str:
+        """The study id of the preprint on a card (``doi:<doi>``); only for a record that has a DOI."""
+        if not self.doi:
+            raise ValueError(f"preprint {self.ppr_id} has no DOI")
+        return f"doi:{self.doi}"
+
+
+def preprint_term_block(path: Path = DEFAULT_PREPRINT_QUERY_FILE) -> str:
+    """The term block from the query file. Lines starting with ``#`` are comments."""
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError as exc:
+        raise EuropePmcError(f"cannot read the preprint query file {path}: {exc}") from exc
+    block = " ".join(s for line in text.splitlines() if (s := line.strip()) and not s.startswith("#"))
+    if not block:
+        raise EuropePmcError(f"the preprint query file {path} is empty")
+    return block
+
+
+def preprint_query(since: dt.date, until: dt.date, terms: str | None = None) -> str:
+    """The Europe PMC query: the term block, only preprints, first indexed from ``since`` to ``until``."""
+    block = terms if terms is not None else preprint_term_block()
+    return f"{block} AND {EPMC_PREPRINT_FILTER} AND FIRST_IDATE:[{since.isoformat()} TO {until.isoformat()}]"
+
+
+def parse_search_page(raw: bytes | str) -> tuple[int, str | None, list[dict]]:
+    """Read one page of a search response: (hitCount, nextCursorMark, the raw result records)."""
+    try:
+        data = json.loads(raw)
+        hit_count = int(data["hitCount"])
+        results = data["resultList"]["result"]
+    except (ValueError, KeyError, TypeError) as exc:
+        raise EuropePmcError("unreadable Europe PMC search response") from exc
+    if not isinstance(results, list) or not all(isinstance(r, dict) for r in results):
+        raise EuropePmcError("unreadable Europe PMC search response: resultList.result is not a list of records")
+    next_cursor = data.get("nextCursorMark")
+    return hit_count, str(next_cursor) if next_cursor else None, results
+
+
+def _int_or_none(value: object) -> int | None:
+    try:
+        return int(str(value))
+    except (TypeError, ValueError):
+        return None
+
+
+def parse_preprint(result: Mapping[str, object]) -> PreprintRecord:
+    """Read one raw record (a ``result`` of a core search). Raises EuropePmcError if it is not a preprint record."""
+    ppr_id = str(result.get("id") or "")
+    if result.get("source") != "PPR" or not _PPR_RE.match(ppr_id):
+        raise EuropePmcError(f"not a Europe PMC preprint record (source PPR, id PPR<digits>): id {ppr_id!r}")
+
+    def listed(key: str, inner: str) -> list:
+        outer = result.get(key)
+        items = outer.get(inner) if isinstance(outer, dict) else None
+        return items if isinstance(items, list) else []
+
+    versions = tuple(
+        PreprintVersion(str(v["id"]), n)
+        for v in listed("versionList", "version")
+        if isinstance(v, dict) and v.get("id") and (n := _int_or_none(v.get("versionNumber"))) is not None
+    )
+    published = tuple(
+        PublishedLink(str(c["id"]), str(c["note"]) if c.get("note") else None)
+        for c in listed("commentCorrectionList", "commentCorrection")
+        if isinstance(c, dict)
+        and c.get("type") == PUBLISHED_LINK_TYPE
+        and c.get("source") == PUBLISHED_LINK_SOURCE
+        and str(c.get("id") or "").isdigit()
+    )
+    pmcids = [str(i) for i in listed("fullTextIdList", "fullTextId") if _PMCID_RE.match(str(i))]
+    details = result.get("bookOrReportDetails")
+    publisher = details.get("publisher") if isinstance(details, dict) else None
+    doi = str(result.get("doi") or "").strip() or None
+    abstract = str(result.get("abstractText") or "").strip() or None
+    return PreprintRecord(
+        ppr_id=ppr_id,
+        doi=doi,
+        title=" ".join(str(result.get("title") or "").split()),
+        abstract=abstract,
+        year=_int_or_none(result.get("pubYear")),
+        first_index_date=str(result["firstIndexDate"]) if result.get("firstIndexDate") else None,
+        server=str(publisher) if publisher else None,
+        version_number=_int_or_none(result.get("versionNumber")),
+        versions=versions,
+        published=published,
+        pmcid=pmcids[0] if pmcids else None,
+        is_open_access=result.get("isOpenAccess") == "Y",
+        in_pmc=result.get("inPMC") == "Y",
+    )
+
+
+def read_cached_preprints(cache: EuropePmcCache) -> list[PreprintRecord]:
+    """Every preprint record in the cache (never a request). A file that cannot be read is skipped."""
+    found: list[PreprintRecord] = []
+    for path in sorted(cache.preprint_dir.glob("PPR*.json")) if cache.preprint_dir.is_dir() else []:
+        try:
+            found.append(parse_preprint(json.loads(path.read_bytes())))
+        except (OSError, ValueError, EuropePmcError):
+            continue
+    return found
+
+
+def read_cached_preprint(cache: EuropePmcCache, doi: str) -> PreprintRecord | None:
+    """The cached preprint record with this DOI (compared case-insensitively), or None. Never a request.
+
+    Raises EuropePmcError, naming both PPR ids, if two cached records have the same DOI.
+    """
+    wanted = doi.removeprefix("doi:").strip().lower()
+    found = [r for r in read_cached_preprints(cache) if r.doi and r.doi.lower() == wanted]
+    if len(found) > 1:
+        raise _ambiguous(doi, found)
+    return found[0] if found else None
+
+
+def _ambiguous(doi: str, records: Sequence[PreprintRecord]) -> EuropePmcError:
+    ids = " and ".join(r.ppr_id for r in records)
+    return EuropePmcError(f"two preprint records have the DOI {doi}: {ids}; decide which one is meant")
+
+
+def get_preprint(
+    client: EuropePmcClient, cache: EuropePmcCache, doi: str, *, refresh: bool = False
+) -> PreprintRecord | None:
+    """The preprint record for a DOI: from the cache, else searched (``DOI:"<doi>" AND SRC:PPR``) and cached.
+
+    Returns None if Europe PMC has no preprint record with that DOI (nothing is cached for a miss).
+    """
+    doi = doi.removeprefix("doi:").strip()
+    if not refresh and (cached := read_cached_preprint(cache, doi)) is not None:
+        return cached
+    raw = client.search_preprint_doi(doi)
+    _count, _cursor, results = parse_search_page(raw)
+    matches = []
+    for result in results:
+        record = parse_preprint(result)
+        if record.doi and record.doi.lower() == doi.lower():
+            cache.write_preprint(result)
+            matches.append(record)
+    if len(matches) > 1:
+        raise _ambiguous(doi, matches)
+    return matches[0] if matches else None
+
+
 def is_placeholder_fulltext(xml: bytes | str) -> bool:
     """True if a JATS article is not full text: no body text, or only a short note that it is a PDF.
 
@@ -270,18 +540,28 @@ def _lookup_is_stale(path: Path, lookup: Lookup, now: Callable[[], float]) -> bo
     return now() - path.stat().st_mtime > LOOKUP_MAX_AGE_DAYS * 86400
 
 
+def _preprint_lookup(record: PreprintRecord) -> Lookup:
+    """A ``Lookup`` made from a preprint's own record, so a preprint needs no second search for its PMC id."""
+    status = "open_access" if record.pmcid and record.is_open_access else "not_open_access"
+    return Lookup(record.ppr_id, status, record.pmcid, record.in_pmc)
+
+
 def get_fulltext(
     client: EuropePmcClient,
     cache: EuropePmcCache,
-    pmid: str,
+    pmid: str | None,
     *,
     refresh: bool = False,
     pmcid: str | None = None,
     now: Callable[[], float] = time.time,
+    preprint: PreprintRecord | None = None,
 ) -> FullText:
     """Look the PMID up (cached) and make sure real full text is cached when there is any.
 
     ``pmcid`` is the PMC id from the PubMed record, for when Europe PMC's own record does not carry it yet.
+    For a preprint with no PMID give ``preprint`` (its Europe PMC record, e.g. from ``read_cached_preprint``)
+    instead of ``pmid``: its PMC id comes from that record, no search is made, and the full text is handled
+    and cached exactly as below (statuses and ``<pmcid>.xml``).
     A cached lookup is requested again when ``refresh`` is set, or when it found no open-access full text and
     its file is older than ``LOOKUP_MAX_AGE_DAYS`` (``now`` is the clock, for tests). When a PMC id is known
     but the lookup gives no open-access record, the full-text XML is requested once per call. The XML is cached
@@ -289,18 +569,23 @@ def get_fulltext(
     and HTTP 404 gives ``pmc_no_xml``. No PDF is downloaded.
     """
     requests = 0
-    lookup_path = cache.lookup_path(pmid)
-    raw: bytes | None = None
-    if lookup_path.is_file() and not refresh:
-        raw = lookup_path.read_bytes()
-        if _lookup_is_stale(lookup_path, parse_lookup(pmid, raw), now):
-            raw = None
-    if raw is None:
-        raw = client.search_pmid(pmid)
-        requests += 1
-        parse_lookup(pmid, raw)  # raises before anything unreadable is cached
-        cache.write(lookup_path, raw)
-    lookup = parse_lookup(pmid, raw)
+    if preprint is not None:
+        lookup = _preprint_lookup(preprint)
+    else:
+        if pmid is None:
+            raise ValueError("get_fulltext needs a PMID or a preprint record")
+        lookup_path = cache.lookup_path(pmid)
+        raw: bytes | None = None
+        if lookup_path.is_file() and not refresh:
+            raw = lookup_path.read_bytes()
+            if _lookup_is_stale(lookup_path, parse_lookup(pmid, raw), now):
+                raw = None
+        if raw is None:
+            raw = client.search_pmid(pmid)
+            requests += 1
+            parse_lookup(pmid, raw)  # raises before anything unreadable is cached
+            cache.write(lookup_path, raw)
+        lookup = parse_lookup(pmid, raw)
     known = lookup.pmcid or pmcid
     if known is None:
         return FullText(lookup, None, requests, lookup.status, None)
@@ -826,6 +1111,13 @@ def _pmid(text: str) -> str:
     return value
 
 
+def _doi(text: str) -> str:
+    value = text.removeprefix("doi:").strip()
+    if not value.startswith("10.") or any(c.isspace() or c == '"' for c in value):
+        raise argparse.ArgumentTypeError(f"not a DOI (10.xxxx/..., optionally 'doi:' first): {text!r}")
+    return value
+
+
 def _print_candidates(candidates: Sequence[CaseDefinitionCandidate]) -> None:
     for c in candidates:
         mark = " [exclusion]" if c.kind == "exclusion" else ""
@@ -853,6 +1145,11 @@ def _build_parser() -> argparse.ArgumentParser:
     pmc.add_argument("--card", type=Path, required=True, help="the card or draft that cites these PMIDs")
     pmc.add_argument("--refresh", action="store_true", help="request again even if cached")
     pmc.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
+    pre = sub.add_parser("preprint", help="fetch and cache the Europe PMC record of preprints by DOI")
+    pre.add_argument("dois", nargs="+", type=_doi, metavar="DOI")
+    pre.add_argument("--fulltext", action="store_true", help="also cache open-access full text, if there is any")
+    pre.add_argument("--refresh", action="store_true", help="request again even if cached")
+    pre.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
     return parser
 
 
@@ -879,6 +1176,8 @@ def main(
     card_path: Path | None = getattr(args, "card", None)
     if args.command == "pmcpage":
         return _pmcpage_main(args, env, transport, clock, sleep)
+    if args.command == "preprint":
+        return _preprint_main(args, env, transport, clock, sleep)
     if bool(args.pmids) == bool(card_path):
         parser.error("give PMIDs or --card <path> (casedef only), but not both and not neither")
     if env is None:
@@ -923,6 +1222,45 @@ def main(
                 _print_candidates(candidates)
             except EuropePmcError as exc:
                 print(f"pmid:{pmid}  error: {exc}", file=sys.stderr)
+                exit_code = 1
+    finally:
+        client.close()
+    return exit_code
+
+
+def _preprint_main(args, env, transport, clock, sleep) -> int:
+    if env is None:
+        env = {**load_dotenv(), **os.environ}
+    email = (env.get("CONTACT_EMAIL") or "").strip()
+    if not email:
+        print("error: CONTACT_EMAIL is not set (see .env.example). Nothing was requested.", file=sys.stderr)
+        return 2
+    cache = EuropePmcCache(args.cache_dir)
+    client = EuropePmcClient(email, transport=transport, clock=clock, sleep=sleep)
+    exit_code = 0
+    try:
+        for doi in dict.fromkeys(args.dois):
+            try:
+                record = get_preprint(client, cache, doi, refresh=args.refresh)
+                if record is None:
+                    print(f"doi:{doi}  no preprint record in Europe PMC (SRC:PPR)", file=sys.stderr)
+                    exit_code = 1
+                    continue
+                version = f"v{record.version_number}" if record.version_number is not None else "version not stated"
+                print(f"doi:{doi}  {record.ppr_id}  {record.year}  {version}  {record.server or 'server not stated'}")
+                print(f"  {record.title}")
+                for link in record.published:
+                    print(f"  published version: pmid:{link.pmid} ({link.note or 'no note'})")
+                if args.fulltext:
+                    result = get_fulltext(client, cache, None, refresh=args.refresh, preprint=record)
+                    line = f"  full text: {STATUS_TEXT[result.status]}"
+                    print(
+                        line
+                        + (f"  {result.pmcid}" if result.pmcid else "")
+                        + (f"  {result.path}" if result.path else "")
+                    )
+            except EuropePmcError as exc:
+                print(f"doi:{doi}  error: {exc}", file=sys.stderr)
                 exit_code = 1
     finally:
         client.close()

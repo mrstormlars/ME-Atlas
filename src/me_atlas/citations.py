@@ -18,7 +18,12 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
 * C4 the record is not marked retracted
 * C5 the case-definition quote appears verbatim in the stated source (abstract or cached full text)
 * C6 (warning) ``n_patients`` and ``n_controls`` appear as numbers in the abstract or cached full text
-* C7 a DOI-only study id cannot be checked yet
+* C7 a DOI-only study id that is not a preprint cannot be checked yet
+* C8 ``preprint`` on the card agrees with the PubMed record (publication type "Preprint")
+
+A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
+(``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
+the shared ``<pmcid>.xml`` cache) and C6.
 """
 
 from __future__ import annotations
@@ -34,10 +39,12 @@ from me_atlas.cards import CHANGELOG_NAME, CardValidationError, Study, load_card
 from me_atlas.europepmc import (
     EuropePmcCache,
     EuropePmcError,
+    PreprintRecord,
     article_text,
     is_placeholder_fulltext,
     pmc_page_text,
     read_cached_lookup,
+    read_cached_preprints,
 )
 from me_atlas.pubmed import DEFAULT_CACHE_ROOT, ParseError, PubMedRecord, RawCache
 
@@ -51,7 +58,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C7, or LOAD when the file could not be read as a card
+    code: str  # C1..C8, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -127,6 +134,10 @@ def fulltext_fetch_hint(pmid: str) -> str:
     return f"uv run python -m me_atlas.europepmc fulltext {pmid}"
 
 
+def preprint_fetch_hint(doi: str) -> str:
+    return f"uv run python -m me_atlas.europepmc preprint {doi}"
+
+
 def pmcpage_fetch_hint(pmid: str) -> str:
     return f"uv run python -m me_atlas.europepmc pmcpage --card <card.yaml> {pmid}"
 
@@ -139,6 +150,39 @@ class CacheReader:
         self.epmc = EuropePmcCache(root)
         self._records: dict[str, PubMedRecord | str] = {}
         self._fulltexts: dict[str, str | tuple[str]] = {}
+        self._preprints: dict[str, list[PreprintRecord]] | None = None
+
+    def preprint(self, doi: str) -> PreprintRecord | None:
+        """The cached Europe PMC preprint record with this DOI (case-insensitive), or None."""
+        if self._preprints is None:
+            self._preprints = {}
+            for r in read_cached_preprints(self.epmc):
+                if r.doi:
+                    self._preprints.setdefault(r.doi.lower(), []).append(r)
+        found = self._preprints.get(doi.removeprefix("doi:").lower(), [])
+        if len(found) > 1:
+            ids = " and ".join(r.ppr_id for r in found)
+            raise EuropePmcError(f"two cached preprint records have the DOI {doi}: {ids}; decide which one is meant")
+        return found[0] if found else None
+
+    def preprint_fulltext(self, record: PreprintRecord) -> str | tuple[str]:
+        """The plain text of the cached full text of a preprint, or a 1-tuple holding the reason there is none.
+
+        The PMC id is the one in the preprint record; the XML is the shared ``<pmcid>.xml`` cache.
+        """
+        hint = f"`{preprint_fetch_hint(record.doi or record.ppr_id)} --fulltext`"
+        if record.pmcid is None:
+            return ("no cached full text (the Europe PMC preprint record has no PMC id)",)
+        try:
+            path = self.epmc.fulltext_path(record.pmcid)
+            if not path.is_file():
+                return (f"no cached full text ({record.pmcid} is not in the cache); run {hint}",)
+            content = path.read_bytes()
+            if is_placeholder_fulltext(content):
+                return (f"no cached full text ({record.pmcid} has only a PDF placeholder in Europe PMC, not read)",)
+            return article_text(content)
+        except (EuropePmcError, OSError) as exc:
+            return (f"cached full text is unreadable ({exc}); refresh it with {hint} --refresh",)
 
     def record(self, pmid: str) -> PubMedRecord | str:
         """The parsed record, or a string saying what is wrong: 'missing' or 'unreadable: <why>'."""
@@ -207,11 +251,17 @@ class CacheReader:
 
 
 def check_study(file: str, study: Study, cache: CacheReader) -> list[CitationIssue]:
-    """All issues for one study. C7 for DOI-only ids; otherwise C1-C6 against the cached record."""
+    """All issues for one study. C7 for DOI-only ids; otherwise C1-C6 against the cached record.
+
+    A ``doi:`` study with ``preprint: true`` is checked against the cached preprint record instead; a ``pmid:``
+    study also gets C8 (its ``preprint`` flag against the PubMed record).
+    """
 
     def issue(code: str, level: str, message: str) -> CitationIssue:
         return CitationIssue(file, study.id, code, level, message)
 
+    if study.id.startswith("doi:") and study.preprint:
+        return _check_preprint(study, cache, issue)
     if not study.id.startswith("pmid:"):
         return [issue("C7", ERROR, "DOI-only study ids cannot be checked yet; cite the study by PMID (pmid:<digits>)")]
     pmid = study.id.removeprefix("pmid:")
@@ -243,25 +293,75 @@ def check_study(file: str, study: Study, cache: CacheReader) -> list[CitationIss
     if record.retracted:
         issues.append(issue("C4", ERROR, "the PubMed record is marked retracted"))
 
-    issues += _check_quote(study, record, cache, issue)
-    issues += _check_sample_sizes(study, record, cache, issue)
+    if record.preprint and not study.preprint:
+        issues.append(
+            issue("C8", ERROR, 'the PubMed record has publication type "Preprint", but the study lacks preprint: true')
+        )
+    elif study.preprint and not record.preprint:
+        issues.append(
+            issue("C8", ERROR, 'preprint: true, but the PubMed record does not have publication type "Preprint"')
+        )
+
+    def full() -> str | tuple[str]:
+        return cache.fulltext(record.pmid)
+
+    issues += _check_quote(study, record.abstract, full, "PubMed", issue)
+    issues += _check_sample_sizes(study, record.abstract, full, issue)
     return issues
 
 
-def _check_quote(study, record, cache, issue) -> list[CitationIssue]:
+_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _check_preprint(study: Study, cache: CacheReader, issue) -> list[CitationIssue]:
+    """C1-C3, C5 and C6 for a ``doi:`` preprint study, against the cached Europe PMC preprint record."""
+    doi = study.id.removeprefix("doi:")
+    try:
+        record = cache.preprint(doi)
+    except EuropePmcError as exc:
+        return [issue("C1", ERROR, str(exc))]
+    if record is None:
+        return [issue("C1", ERROR, f"no cached Europe PMC preprint record; fetch it with `{preprint_fetch_hint(doi)}`")]
+    issues: list[CitationIssue] = []
+    if normalise_title(study.title) != normalise_title(record.title):
+        issues.append(
+            issue(
+                "C2",
+                ERROR,
+                f"title differs from the Europe PMC preprint record. Card: {study.title!r}. Record: {record.title!r}",
+            )
+        )
+    if record.year is None:
+        issues.append(issue("C3", ERROR, "record has no year; check by hand"))
+    elif study.year != record.year:
+        issues.append(
+            issue("C3", ERROR, f"year {study.year} differs from the Europe PMC preprint record ({record.year})")
+        )
+    # Europe PMC abstracts can carry HTML headings (<h4>); they are not part of the text a quote is taken from.
+    abstract = _collapse(_TAG_RE.sub(" ", record.abstract)) if record.abstract else None
+
+    def full() -> str | tuple[str]:
+        return cache.preprint_fulltext(record)
+
+    issues += _check_quote(study, abstract, full, "Europe PMC preprint", issue)
+    issues += _check_sample_sizes(study, abstract, full, issue)
+    return issues
+
+
+def _check_quote(study, abstract, full, record_name, issue) -> list[CitationIssue]:
     quote = study.case_definition_quote
     if quote is None:
         return []
     wanted = normalise_quote(quote)
     source = study.case_definition_source
     if source == "abstract":
-        if record.abstract is None:
-            return [issue("C5", ERROR, "source is the abstract but the PubMed record has no abstract")]
-        if wanted not in normalise_quote(record.abstract):
-            return [issue("C5", ERROR, "case_definition_quote is not verbatim in the PubMed abstract")]
+        if abstract is None:
+            return [issue("C5", ERROR, f"source is the abstract but the {record_name} record has no abstract")]
+        if wanted not in normalise_quote(abstract):
+            return [issue("C5", ERROR, f"case_definition_quote is not verbatim in the {record_name} abstract")]
         return []
     if source == "fulltext":
-        text = cache.fulltext(record.pmid)
+        text = full()
         if isinstance(text, tuple):
             return [issue("C5", ERROR, text[0])]
         if wanted not in normalise_quote(text):
@@ -276,18 +376,18 @@ def _check_quote(study, record, cache, issue) -> list[CitationIssue]:
     ]
 
 
-def _check_sample_sizes(study, record, cache, issue) -> list[CitationIssue]:
+def _check_sample_sizes(study, abstract, full, issue) -> list[CitationIssue]:
     sizes = [("n_patients", study.n_patients), ("n_controls", study.n_controls)]
     sizes = [(name, n) for name, n in sizes if n is not None]
     if not sizes:
         return []
     texts: list[str] = []
-    if record.abstract:
-        texts.append(record.abstract)
-    full = cache.fulltext(record.pmid)
+    if abstract:
+        texts.append(abstract)
     full_note = "the abstract"
-    if isinstance(full, str):
-        texts.append(full)
+    fulltext = full()
+    if isinstance(fulltext, str):
+        texts.append(fulltext)
         full_note = "the abstract or the cached full text"
     else:
         full_note = "the abstract (no cached full text)"

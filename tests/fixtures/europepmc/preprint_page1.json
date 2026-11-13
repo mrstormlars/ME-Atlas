@@ -1,0 +1,126 @@
+{
+  "version": "6.9",
+  "hitCount": 3,
+  "nextCursorMark": "CURSOR2",
+  "request": {
+    "queryString": "fictional",
+    "resultType": "core",
+    "cursorMark": "*",
+    "pageSize": 2,
+    "synonym": false
+  },
+  "resultList": {
+    "result": [
+      {
+        "id": "PPR9000001",
+        "source": "PPR",
+        "fullTextIdList": {
+          "fullTextId": [
+            "PPR9000001",
+            "PMC9000010"
+          ]
+        },
+        "doi": "10.99999/fictional.2026.001",
+        "title": "A fictional preprint of widget signalling in a made-up ME/CFS cohort",
+        "authorString": "Testperson A, Exempel C.",
+        "pubYear": "2026",
+        "abstractText": "This fictional abstract describes 40 invented patients and 35 invented controls. Patients met the 1994 Fukuda criteria. Widget levels were lower in patients.",
+        "pubTypeList": {
+          "pubType": [
+            "Preprint"
+          ]
+        },
+        "bookOrReportDetails": {
+          "publisher": "FictionRxiv",
+          "yearOfPublication": 2026
+        },
+        "isOpenAccess": "Y",
+        "inEPMC": "N",
+        "inPMC": "Y",
+        "firstPublicationDate": "2026-10-20",
+        "firstIndexDate": "2026-10-20",
+        "versionList": {
+          "version": [
+            {
+              "id": "PPR9000001",
+              "source": "PPR",
+              "versionNumber": 1,
+              "firstPublishDate": "2026-10-20",
+              "pubTypeList": {
+                "pubType": [
+                  "preprint"
+                ]
+              },
+              "hasEvaluations": "N"
+            }
+          ]
+        },
+        "versionNumber": 1
+      },
+      {
+        "id": "PPR9000002",
+        "source": "PPR",
+        "fullTextIdList": {
+          "fullTextId": [
+            "PPR9000002"
+          ]
+        },
+        "doi": "10.99999/fictional.2026.002",
+        "title": "A fictional preprint that has since been published",
+        "authorString": "Testperson A, Exempel C.",
+        "pubYear": "2026",
+        "abstractText": "A fictional abstract of 12 invented patients.",
+        "pubTypeList": {
+          "pubType": [
+            "Preprint"
+          ]
+        },
+        "bookOrReportDetails": {
+          "publisher": "FictionRxiv",
+          "yearOfPublication": 2026
+        },
+        "isOpenAccess": "N",
+        "inEPMC": "N",
+        "inPMC": "N",
+        "firstPublicationDate": "2026-09-01",
+        "firstIndexDate": "2026-09-01",
+        "versionList": {
+          "version": [
+            {
+              "id": "PPR9000002",
+              "source": "PPR",
+              "versionNumber": 1,
+              "firstPublishDate": "2026-09-01",
+              "pubTypeList": {
+                "pubType": [
+                  "preprint"
+                ]
+              },
+              "hasEvaluations": "N"
+            }
+          ]
+        },
+        "versionNumber": 1,
+        "commentCorrectionList": {
+          "commentCorrection": [
+            {
+              "source": "MED",
+              "id": "90000100",
+              "reference": "Fictional J Fatigue Res. 2026;1(1):1-2",
+              "type": "Preprint of",
+              "note": "CrossRef Pre-print loader",
+              "orderIn": 10001
+            },
+            {
+              "source": "MED",
+              "id": "90000101",
+              "type": "Comment in",
+              "note": "an unrelated link",
+              "orderIn": 10002
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

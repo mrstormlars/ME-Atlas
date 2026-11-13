@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import re
 import textwrap
+from collections.abc import Collection, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Annotated, Any, Literal
 
@@ -191,12 +192,45 @@ class OpsFile(_Op):
                 raise ValueError(
                     f"operations[{i}]: add_study may only add the paper '{self.paper}', not '{op.study.id}'"
                 )
+            if isinstance(op, AddStudy) and self.paper.startswith("doi:") and not op.study.preprint:
+                raise ValueError(
+                    f"operations[{i}]: a doi: paper is a preprint; its study '{op.study.id}' needs preprint: true"
+                )
         return self
 
 
-def tier(op: Operation) -> int:
-    """Tier of one operation (functional spec section 6): propose is tier 2, everything else tier 1."""
-    return 2 if isinstance(op, Propose) else 1
+def preprint_ids(ops: OpsFile | Sequence[Operation], card_data: Mapping[str, Any] | None = None) -> frozenset[str]:
+    """Ids of the studies marked ``preprint: true`` on the card (its parsed YAML) or added by these operations."""
+    found: set[str] = set()
+    studies = (card_data or {}).get("studies")
+    for s in studies if isinstance(studies, list) else []:
+        if isinstance(s, dict) and s.get("preprint") is True and isinstance(s.get("id"), str):
+            found.add(s["id"])
+    for op in ops.operations if isinstance(ops, OpsFile) else ops:
+        if isinstance(op, AddStudy) and op.study.preprint:
+            found.add(op.study.id)
+    return frozenset(found)
+
+
+def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
+    """Tier of one operation (functional spec section 6): propose is tier 2, everything else tier 1.
+
+    An operation that adds a study with ``preprint: true``, or cites a preprint study (one of ``preprints``:
+    see ``preprint_ids``) in its sources, is also tier 2: preprint changes are decided by the founder.
+    """
+    if isinstance(op, Propose):
+        return 2
+    if isinstance(op, AddStudy):
+        return 2 if op.study.preprint or op.study.id in preprints else 1
+    return 2 if any(src in preprints for src in op.sources) else 1
+
+
+def tiers(ops: OpsFile, card_data: Mapping[str, Any] | None = None) -> list[int]:
+    """The tier of every operation of an ops file. Every operation of a file for a ``doi:`` preprint is tier 2."""
+    if ops.paper.startswith("doi:"):
+        return [2] * len(ops.operations)
+    found = preprint_ids(ops, card_data)
+    return [tier(op, found) for op in ops.operations]
 
 
 def _format_errors(exc: ValidationError) -> str:
@@ -262,6 +296,8 @@ def render_study(study: Study, ci: int) -> list[str]:
     data = study.model_dump(mode="python")
     if data["group"] is None:
         del data["group"]
+    if not data["preprint"]:
+        del data["preprint"]
     lines: list[str] = []
     for n, (name, value) in enumerate(data.items()):
         head = " " * ci + "- " if n == 0 else " " * (ci + 2)
@@ -450,6 +486,8 @@ def _apply_study(lines: list[str], data: dict[str, Any], op: AddStudy) -> list[s
     entry = op.study.model_dump(mode="python")
     if entry["group"] is None:
         del entry["group"]
+    if not entry["preprint"]:
+        del entry["preprint"]
     studies.append(entry)
     loc = _locate(lines, ["studies"])
     inline = _inline_value(lines, loc)

@@ -11,7 +11,7 @@ Write only the file `classify.json` in the run directory you were given. Never w
 
 ## Input
 
-- `papers.json`: a list of papers. Each has `pmid`, `title`, `abstract` (may be null), `publication_types`, `year`, `journal`.
+- `papers.json`: a list of papers. Each has `id`, `pmid`, `title`, `abstract` (may be null), `publication_types`, `year`, `journal` and `preprint` (true or false). A preprint with no PMID has `pmid` null and `id` `doi:<doi>`.
 - `cards.json`: a list of cards. Each has `slug`, `name`, `core_claim`, `level`.
 
 ## What to decide, per paper
@@ -25,7 +25,7 @@ Write only the file `classify.json` in the run directory you were given. Never w
 3. **new_hypothesis**: if the paper proposes or tests a mechanism that fits none of the cards, one plain sentence naming it; otherwise `null`. This only lists the idea for the founder; nobody drafts a card from it.
 4. **reason**: one short sentence saying why, in plain words, taken from the title or abstract. Do not interpret findings.
 
-Every paper in `papers.json` must appear exactly once.
+Every paper in `papers.json` must appear exactly once. Name a paper by its `pmid` when it has one; name a paper whose `pmid` is null by its `id` instead (`doi:...`). Give exactly one of the two, never both and never neither. A record marked `preprint` can only be proposed as an early signal (it is not peer reviewed), so classify it like any other paper and do not treat it as stronger evidence.
 
 ## Output: `classify.json`
 
@@ -45,6 +45,6 @@ Exactly this shape, nothing else in the file:
 }
 ```
 
-`pmid` is a string of digits. `cards` is a list (empty if none). `article_type` is one of `original`, `review`, `other`. `new_hypothesis` is a string or `null`. Code checks the file (`record-classification`): a wrong type, an unknown slug, a repeated paper or a missing paper is rejected.
+`pmid` is a string of digits. For a paper with no PMID, write `"id": "doi:10.xxxx/..."` (copied from `papers.json`) in place of `pmid`. `cards` is a list (empty if none). `article_type` is one of `original`, `review`, `other`. `new_hypothesis` is a string or `null`. Code checks the file (`record-classification`): a wrong type, an unknown slug, a repeated paper or a missing paper is rejected.
 
 When you are done, reply with the number of papers you classified and nothing else.

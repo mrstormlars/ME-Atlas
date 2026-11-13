@@ -5,6 +5,9 @@
 <article class="study" id="{{ study_anchor(s.id) }}">
   <h4 class="study-title"><a href="{{ study_url(s.id) }}"{% if lang != default_lang %} lang="en"{% endif %} rel="noopener noreferrer">{{ s.title }}</a></h4>
   <p class="study-meta">{{ s.year }} · {{ s.id }} · <span class="sizes"><span class="n-patients">{% if s.n_patients is not none %}{{ t("study.patients", n=s.n_patients) }}{% else %}{{ t("study.patients_nr") }}{% endif %}</span>, <span class="n-controls">{% if s.n_controls is not none %}{{ t("study.controls", n=s.n_controls) }}{% elif s.design == "uncontrolled" %}{{ t("study.controls_none") }}{% else %}{{ t("study.controls_nr") }}{% endif %}</span></span> · {{ case_definition(s) }} · {{ txt("design." ~ s.design) }} · {{ txt("direction." ~ s.direction) }}{% if s.id in page.refs %} · {{ t("study.cited_as", n=page.refs[s.id]) }}{% endif %}</p>
+{% if s.preprint %}
+  <p class="small preprint-label">{{ txt("study.preprint") }}</p>
+{% endif %}
   <p class="finding">{{ page.finding(s) }}</p>
 </article>
 {% endmacro %}
@@ -113,7 +116,7 @@
 {% if card.early_signals %}
 <h2>{{ txt("card.early") }}</h2>
 {% for item in card.early_signals %}
-<p>{{ page.sourced(item) }}</p>
+<p>{{ page.sourced(item) }}{% if item.sources|select("in", preprint_ids)|list %} <span class="preprint-label">{{ txt("study.preprint") }}</span>{% endif %}</p>
 {% endfor %}
 {% endif %}
 

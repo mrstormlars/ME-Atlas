@@ -698,3 +698,155 @@ def test_the_pubmed_pmc_id_with_no_cached_xml_names_the_fetch_command(tmp_path, 
     c5 = [i for i in check(tmp_path, cache, make_study(case_definition_source="fulltext")) if i.code == "C5"]
     assert [i.level for i in c5] == ["ERROR"]
     assert PMCID in c5[0].message and f"europepmc fulltext {PMID}" in c5[0].message
+
+
+# --- preprints: a doi: study with preprint: true, and C8 ----------------------
+
+
+def check_pp(tmp_path: Path, cache_root: Path, study: dict) -> list[citations.CitationIssue]:
+    """Check ``study`` on a card that also has an ordinary study to carry the core claim (V15: a preprint cannot);
+    return only the issues of ``study``."""
+    add_record(cache_root, "90000050")
+    card = write_card(tmp_path / "drafts", [make_study("90000050"), study])
+    return [i for i in citations.check_paths([card], cache_root)[1] if i.study == study["id"]]
+
+
+PREPRINT_FIXTURES = Path(__file__).parent / "fixtures" / "europepmc"
+PREPRINT_DOI = "10.99999/fictional.2026.001"
+PREPRINT_PMCID = "PMC9000010"
+PREPRINT_QUOTE = "Patients met the 1994 Fukuda criteria."
+PREPRINT_TITLE = "A fictional preprint of widget signalling in a made-up ME/CFS cohort"
+
+
+def add_preprint(root: Path, index: int = 0, *, abstract: str | None = None) -> None:
+    """Cache one fictional Europe PMC preprint record (from the recorded-shape fixture) as the search would."""
+    page = json.loads((PREPRINT_FIXTURES / "preprint_page1.json").read_text(encoding="utf-8"))
+    result = page["resultList"]["result"][index]
+    if abstract is not None:
+        result["abstractText"] = abstract
+    folder = root / "europepmc" / "preprints"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{result['id']}.json").write_text(json.dumps(result), encoding="utf-8")
+
+
+def preprint_study(**over: object) -> dict:
+    fields: dict = {
+        "id": f"doi:{PREPRINT_DOI}",
+        "title": PREPRINT_TITLE,
+        "year": 2026,
+        "case_definition_quote": PREPRINT_QUOTE,
+        "n_patients": 40,
+        "n_controls": 35,
+        "role": "early_signal",
+        "preprint": True,
+    }
+    return make_study(**{**fields, **over})
+
+
+def test_a_correctly_cited_preprint_passes_against_the_cached_europe_pmc_record(tmp_path, cache):
+    add_preprint(cache)
+    assert check_pp(tmp_path, cache, preprint_study()) == []
+
+
+def test_a_preprint_with_a_wrong_title_fails_c2(tmp_path, cache):
+    add_preprint(cache)
+    issues = check_pp(tmp_path, cache, preprint_study(title="A fictional preprint of something else entirely"))
+    assert [i.code for i in issues] == ["C2"]
+    assert "Europe PMC preprint record" in issues[0].message
+
+
+def test_a_preprint_with_a_wrong_year_fails_c3(tmp_path, cache):
+    add_preprint(cache)
+    issues = check_pp(tmp_path, cache, preprint_study(year=2025))
+    assert [(i.code, i.level) for i in issues] == [("C3", "ERROR")]
+
+
+def test_a_preprint_with_a_wrong_doi_fails_c1_and_names_the_command_to_fetch_it(tmp_path, cache):
+    add_preprint(cache)
+    wrong = "10.99999/fictional.2026.999"
+    issues = check_pp(tmp_path, cache, preprint_study(id=f"doi:{wrong}"))
+    assert [i.code for i in issues] == ["C1"]
+    assert f"europepmc preprint {wrong}" in issues[0].message
+
+
+def test_the_doi_of_a_preprint_is_compared_case_insensitively(tmp_path, cache):
+    add_preprint(cache)
+    assert check_pp(tmp_path, cache, preprint_study(id=f"doi:{PREPRINT_DOI.upper()}")) == []
+
+
+def test_a_preprint_case_definition_quote_must_be_verbatim_in_the_record_abstract_c5(tmp_path, cache):
+    add_preprint(cache)
+    issues = check_pp(tmp_path, cache, preprint_study(case_definition_quote="Patients met the 1988 Holmes criteria."))
+    assert [i.code for i in issues] == ["C5"]
+
+
+def test_a_preprint_quote_from_the_full_text_is_read_through_the_shared_pmcid_xml_cache(tmp_path, cache):
+    add_preprint(cache)
+    sentence = "Fictional participants fulfilled the Oxford criteria."
+    folder = cache / "europepmc"
+    (folder / f"{PREPRINT_PMCID}.xml").write_text(
+        f"<article><body><sec><title>Methods</title><p>{sentence}</p></sec></body></article>", encoding="utf-8"
+    )
+    study = preprint_study(case_definition="Oxford", case_definition_source="fulltext", case_definition_quote=sentence)
+    assert check_pp(tmp_path, cache, study) == []
+    wrong = preprint_study(case_definition_source="fulltext", case_definition_quote="Never in the text.")
+    assert [i.code for i in check_pp(tmp_path, cache, wrong)] == ["C5"]
+
+
+def test_a_preprint_full_text_quote_with_no_cached_text_names_the_fetch_command(tmp_path, cache):
+    add_preprint(cache)
+    issues = check_pp(tmp_path, cache, preprint_study(case_definition_source="fulltext"))
+    assert [i.code for i in issues] == ["C5"]
+    assert f"europepmc preprint {PREPRINT_DOI} --fulltext" in issues[0].message
+
+
+def test_a_preprint_sample_size_missing_from_the_abstract_is_a_c6_warning(tmp_path, cache):
+    add_preprint(cache)
+    issues = check_pp(tmp_path, cache, preprint_study(n_patients=41))
+    assert [(i.code, i.level) for i in issues] == [("C6", "WARNING")]
+
+
+def test_a_doi_study_that_is_not_a_preprint_still_gets_c7_even_when_a_preprint_record_is_cached(tmp_path, cache):
+    add_preprint(cache)
+    issues = check_pp(tmp_path, cache, preprint_study(preprint=False))
+    assert [i.code for i in issues] == ["C7"]
+
+
+def mark_pubmed_record_as_preprint(root: Path, pmid: str = PMID) -> None:
+    path = root / "pubmed" / f"{pmid}.xml"
+    text = path.read_text(encoding="utf-8")
+    path.write_text(
+        text.replace(
+            "<PublicationType>Journal Article</PublicationType>",
+            "<PublicationType>Journal Article</PublicationType><PublicationType>Preprint</PublicationType>",
+        ),
+        encoding="utf-8",
+    )
+
+
+def test_c8_a_pubmed_preprint_cited_without_preprint_true_is_an_error(tmp_path, cache):
+    mark_pubmed_record_as_preprint(cache)
+    issues = check_pp(tmp_path, cache, make_study())
+    assert [(i.code, i.level) for i in issues] == [("C8", "ERROR")]
+    assert "lacks preprint: true" in issues[0].message
+
+
+def test_c8_preprint_true_on_a_study_whose_pubmed_record_is_not_a_preprint_is_an_error(tmp_path, cache):
+    issues = check_pp(tmp_path, cache, make_study(role="early_signal", preprint=True))
+    assert [(i.code, i.level) for i in issues] == [("C8", "ERROR")]
+    assert "does not have publication type" in issues[0].message
+
+
+def test_c8_a_pubmed_preprint_marked_preprint_true_passes(tmp_path, cache):
+    mark_pubmed_record_as_preprint(cache)
+    assert check_pp(tmp_path, cache, make_study(role="early_signal", preprint=True)) == []
+
+
+def test_two_cached_preprint_records_with_one_doi_are_reported_as_c1_naming_both(tmp_path, cache):
+    add_preprint(cache)
+    folder = cache / "europepmc" / "preprints"
+    first = json.loads((folder / "PPR9000001.json").read_text(encoding="utf-8"))
+    (folder / "PPR9000099.json").write_text(json.dumps({**first, "id": "PPR9000099"}), encoding="utf-8")
+    issues = check_pp(tmp_path, cache, preprint_study())
+    assert [i.code for i in issues] == ["C1"]
+    assert "PPR9000001 and PPR9000099" in issues[0].message

@@ -180,6 +180,30 @@ On the two post-viral terms, if every *unclear* record were counted as about ME/
 
 The sample is the first N ids of ESearch's default ordering, with no `sort` parameter. A live check on 2026-11-13 of the current query (first 100 ids, then their cached entry dates) showed the default order is roughly newest entry date first (the day the record entered PubMed): of 99 parsed records, 97 of 98 neighbouring pairs were in non-increasing entry-date order, and one pair was not (42551185, entered 2026-08-04, before 42568470, entered 2026-08-08). One id (42877512) did not appear in the EFetch response and was left out. The same query with `sort=pub_date` returned a different order (publication date; a paper's publication date can lie well after its entry date), and `sort=most recent` is not a valid ESearch sort (PubMed warned "Unknown sort schema 'most recent' ignored" and used the default). So "most recent" here means newest entry date, as elsewhere in this project, and only approximately. For every term with 20 or fewer added records the sample is all of them.
 
+## Preprints (Europe PMC)
+
+Preprints are taken in as labelled early signals (`docs/plan-wider-sources.md`, part B). PubMed holds only some of them, so the weekly `pipeline prepare` also searches Europe PMC. What was checked against live responses on 2026-11-13:
+
+- **Filter.** `SRC:PPR` in the Europe PMC REST search (`https://www.ebi.ac.uk/europepmc/webservices/rest/search`, `format=json`, `resultType=core`) returns only preprints: every hit has `source` "PPR", an id `PPR<digits>`, `pubTypeList.pubType` ["Preprint"] and no `pmid`.
+- **Date.** `FIRST_IDATE:[YYYY-MM-DD TO YYYY-MM-DD]` restricts by the date Europe PMC first indexed the record (`firstIndexDate` in the result). It is not the date the preprint was posted (`firstPublicationDate`).
+- **Terms.** Title and abstract terms are written `TITLE_ABS:"..."`. The term block is `config/europepmc_preprint_query.txt`: the five title/abstract terms of block 1 of the PubMed query (not its MeSH heading, which preprints do not have), joined by OR. A test fails if the two files list different terms. Code adds ` AND SRC:PPR AND FIRST_IDATE:[since TO until]`. The query `(TITLE_ABS:"myalgic encephalomyelitis" OR TITLE_ABS:"chronic fatigue syndrome" OR TITLE_ABS:"ME/CFS" OR TITLE_ABS:"CFS/ME" OR TITLE_ABS:"systemic exertion intolerance disease") AND SRC:PPR AND FIRST_IDATE:[2026-08-15 TO 2026-11-13]` had `hitCount` 27 on 2026-11-13. The same five terms unfielded (without `TITLE_ABS:`) gave 29; that response is the one used to shape the test fixtures.
+- **The published version.** A preprint that has been published carries `commentCorrectionList.commentCorrection[]` entries; the one that links forward has `type` "Preprint of", `source` "MED" and `id` = the PMID of the published article. Its `note` is "CrossRef Pre-print loader" or "Link created based on a title-first author match", so a link can be a title match and not a publisher declaration; the note is kept and shown. The link was present on 57 of 100 ME/CFS preprints first indexed in 2022.
+- **Versions.** `versionNumber` and `versionList.version[]` (`id`, `versionNumber`, `firstPublishDate`). Each version is its own PPR record with its own DOI.
+- **Full text.** `fullTextIdList.fullTextId` lists the record's own PPR id and, if the text is in PubMed Central, a PMC id; the code takes only an id that looks like `PMC<digits>`. `isOpenAccess` and `inPMC` are read too. Full text goes through `europepmc.get_fulltext`, with the same statuses and the same `<pmcid>.xml` cache as for a PubMed paper.
+- **The same paper from both sources.** PubMed marks a preprint with the publication type `<PublicationType UI="D000076942">Preprint</PublicationType>`; the journal title is not used. Example: pmid:42996068 has "Journal Article" and "Preprint" (journal "medRxiv : the preprint server for health sciences", DOI 10.64898/2026.10.19.26365953). Europe PMC has a PPR twin of it, PPR1347206, with no `pmid` and the same DOI. A preprint that PubMed has flows through the pipeline as the PubMed record (it keeps its PMID and is marked `preprint`); the PPR twin is dropped.
+
+**De-duplication in `pipeline prepare`.** The search covers the same window as the PubMed fetch (`--since` to the run date, or the last 14 days). Each record is dropped for the first of these reasons, and every drop is listed in `prepare.json` under `preprints` with its PPR id, DOI and reason; the counts (found, dropped per reason, offered) sit beside the list.
+
+1. `published`: it has a "Preprint of" link to a PubMed record (listed with the PMID, whether that PMID is in the PubMed cache, and the link's note).
+2. `in_pubmed`: its DOI (compared case-insensitively) is the DOI of a record in this run's PubMed window or in the PubMed cache.
+3. `superseded`: its version list names a higher version whose PPR id is also among this search's records.
+4. `no_doi`: it has no DOI.
+5. `processed`: an earlier finished run processed it (the ledger, keyed by PPR id), unless `--reprocess`.
+
+The survivors go into `papers.json` as `doi:<doi>` papers with no PMID (see `docs/pipeline.md`). A failed search fails `prepare`.
+
+**Cache layout.** Under `data/cache/europepmc/preprints/`: `search-<since>_<until>-<n>.json` (each raw page of a search), `PPR<digits>.json` (one raw record, whichever search or DOI lookup found it). `uv run python -m me_atlas.europepmc preprint <doi>...` fetches and caches the record of a DOI (`DOI:"<doi>" AND SRC:PPR`), which is how a preprint is cited on a card as a `doi:` study with `preprint: true`; `--fulltext` also looks for its open-access full text.
+
 ## Where the output goes
 
 Both are under `data/cache/`, which is gitignored and reproducible.
@@ -206,4 +230,4 @@ Manifest fields: `query`, `query_file`, `window` (mode, since, until; the date t
 
 ## Tests
 
-`tests/test_pubmed.py` uses hand-made fictional records in `tests/fixtures/pubmed/` (PMIDs 90000001 to 90000008; the `query-diff` tests use generated copies of one of them) and `httpx.MockTransport`. No network, no real sleeping (the rate limiter takes a fake clock). A live check against the real PubMed is a manual step, recorded in the pull request.
+`tests/test_pubmed.py` uses hand-made fictional records in `tests/fixtures/pubmed/` (PMIDs 90000001 to 90000008, and 90000009, a PubMed preprint; the `query-diff` tests use generated copies of one of them) and `httpx.MockTransport`. No network, no real sleeping (the rate limiter takes a fake clock). A live check against the real PubMed is a manual step, recorded in the pull request.

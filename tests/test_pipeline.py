@@ -15,6 +15,7 @@ import pytest
 import yaml
 
 from me_atlas import cards, pipeline, translations
+from me_atlas.europepmc import PreprintRecord as EuropePmcRecord
 from me_atlas.pipeline import FullTextResult
 
 REPO = Path(__file__).resolve().parents[1]
@@ -42,7 +43,10 @@ class Env:
         (self.cache / "pubmed").mkdir(parents=True)
         shutil.copy(FIXTURES / "pubmed" / "90000100.xml", self.cache / "pubmed" / "90000100.xml")
         self.fetch_calls: list[list[str]] = []
+        self.preprints: list[EuropePmcRecord] = []  # what the injected preprint search returns
+        self.preprint_calls: list[tuple[dt.date, dt.date]] = []
         self.window = ["90000101", "90000102", "90000103"]
+        self.extra_pubmed: list[str] = []  # further fixture records the fetch caches (they join the window if listed)
         self.out: list[str] = []
 
     @property
@@ -52,7 +56,7 @@ class Env:
     def fetch(self, argv):
         """Stands in for pubmed.main: caches three new records and writes a run manifest."""
         self.fetch_calls.append(list(argv))
-        for pmid in ("90000101", "90000102", "90000103"):
+        for pmid in ("90000101", "90000102", "90000103", *self.extra_pubmed):
             shutil.copy(FIXTURES / "pubmed" / f"{pmid}.xml", self.cache / "pubmed" / f"{pmid}.xml")
         runs = self.cache / "runs"
         runs.mkdir(exist_ok=True)
@@ -67,7 +71,12 @@ class Env:
         (runs / name).write_text(json.dumps(manifest), encoding="utf-8")
         return 0
 
-    def cli(self, *argv: str, fulltext=None, runner=None, fetch=None) -> int:
+    def preprint_search(self, since, until):
+        """Stands in for the Europe PMC preprint search; records the window it was asked for."""
+        self.preprint_calls.append((since, until))
+        return list(self.preprints)
+
+    def cli(self, *argv: str, fulltext=None, runner=None, fetch=None, preprint_search=None) -> int:
         command = argv[0]
         extra = ["--date", DATE.isoformat()] if command == "prepare" else ["--run-dir", str(self.run)]
         return pipeline.main(
@@ -88,12 +97,14 @@ class Env:
                 str(self.translations),
             ],
             fetch=fetch or self.fetch,
+            preprint_search=preprint_search or self.preprint_search,
             fulltext=fulltext,
             runner=runner,
             out=self.out.append,
         )
 
-    def prepare(self) -> None:
+    def prepare(self, extra_pubmed: list[str] | None = None) -> None:
+        self.extra_pubmed = extra_pubmed or []
         assert self.cli("prepare") == 0
 
     def classify(self, name: str = "classify_good.json") -> int:
@@ -1221,3 +1232,706 @@ def test_b4_without_a_pmc_id_anywhere_the_text_is_unchanged(ready: Env, monkeypa
     text, calls = run_live_context(ready, monkeypatch, "not_open_access", None)
     assert calls[0]["pmcid"] is None
     assert "no open full text (Europe PMC: no open full text)" in text
+
+
+# --- preprints (Europe PMC) -----------------------------------------------------
+
+PP_DOI = "10.99999/fictional.2026.001"  # the DOI of the PubMed fixture 90000110, a PubMed preprint
+PP_PUBMED_PREPRINT = "90000110"
+PP_RAW = {
+    "id": "PPR9000001",
+    "source": "PPR",
+    "doi": "10.99999/fictional.2026.010",
+    "title": "A fictional preprint of widget signalling",
+    "pubYear": "2026",
+    "abstractText": "Fictional abstract of 12 invented patients.",
+    "bookOrReportDetails": {"publisher": "FictionRxiv"},
+    "firstIndexDate": "2026-10-20",
+    "versionNumber": 1,
+    "versionList": {"version": [{"id": "PPR9000001", "versionNumber": 1}]},
+}
+
+
+def ppr(n: int = 1, **raw) -> EuropePmcRecord:
+    """A fictional Europe PMC preprint record; ``raw`` overrides fields of the raw JSON."""
+    from me_atlas.europepmc import parse_preprint
+
+    record = {
+        **PP_RAW,
+        "id": f"PPR90000{n:02d}",
+        "doi": f"10.99999/fictional.2026.0{n:02d}",
+        "versionList": {"version": [{"id": f"PPR90000{n:02d}", "versionNumber": 1}]},
+    }
+    record.update(raw)
+    return parse_preprint(record)
+
+
+def published_link(pmid: str = "90000100", note: str = "CrossRef Pre-print loader") -> dict:
+    return {
+        "commentCorrectionList": {
+            "commentCorrection": [{"source": "MED", "id": pmid, "type": "Preprint of", "note": note}]
+        }
+    }
+
+
+def offered(env: Env) -> list[str]:
+    return [p["ppr_id"] for p in load(env.run / "papers.json") if p.get("ppr_id")]
+
+
+def dropped(env: Env) -> dict[str, dict]:
+    return {d["ppr_id"]: d for d in load(env.run / "prepare.json")["preprints"]["dropped"]}
+
+
+def test_prepare_searches_preprints_over_the_weekly_window_or_the_since_date(env: Env):
+    env.prepare()
+    assert env.preprint_calls == [(DATE - dt.timedelta(days=14), DATE)]
+    assert env.cli("prepare", "--since", "2026-10-01", "--force") == 0
+    assert env.preprint_calls[1] == (dt.date(2026, 10, 1), DATE)
+
+
+def test_a_failed_preprint_search_fails_prepare_and_writes_nothing(env: Env, capsys):
+    from me_atlas.europepmc import EuropePmcError
+
+    def failing(since, until):
+        raise EuropePmcError("Europe PMC preprint search failed after 5 attempts")
+
+    assert env.cli("prepare", preprint_search=failing) == 1
+    assert "preprint search failed" in capsys.readouterr().err
+    assert not env.run.exists() or not any(env.run.iterdir())
+
+
+def test_a_preprint_with_a_published_version_is_dropped_whether_or_not_the_pmid_is_cached(env: Env):
+    env.preprints = [
+        ppr(1, **published_link("90000100", "CrossRef Pre-print loader")),
+        ppr(2, **published_link("90077777", "Link created based on a title-first author match")),
+        ppr(3),
+    ]
+    env.prepare()
+    assert offered(env) == ["PPR9000003"]  # the published ones are not in papers.json
+    found = dropped(env)
+    assert found["PPR9000001"]["reason"] == "published"
+    assert found["PPR9000001"]["doi"] == "10.99999/fictional.2026.001"
+    assert found["PPR9000001"]["published"] == [
+        {"pmid": "90000100", "in_pubmed_cache": True, "note": "CrossRef Pre-print loader"}
+    ]
+    assert found["PPR9000002"]["published"][0]["in_pubmed_cache"] is False
+    assert found["PPR9000002"]["published"][0]["note"] == "Link created based on a title-first author match"
+
+
+def test_a_preprint_whose_doi_is_in_this_runs_pubmed_window_is_dropped_in_favour_of_the_pubmed_record(env: Env):
+    env.window = ["90000101", "90000102", "90000103", PP_PUBMED_PREPRINT]
+    env.preprints = [ppr(1, doi=PP_DOI.upper()), ppr(2)]  # compared case-insensitively
+    env.prepare(extra_pubmed=[PP_PUBMED_PREPRINT])
+    assert offered(env) == ["PPR9000002"]
+    assert dropped(env)["PPR9000001"]["reason"] == "in_pubmed"
+    assert dropped(env)["PPR9000001"]["pmid"] == PP_PUBMED_PREPRINT
+    assert PP_PUBMED_PREPRINT in [p["pmid"] for p in load(env.run / "papers.json")]  # the PubMed record stays
+
+
+def test_a_preprint_whose_doi_is_only_in_the_pubmed_cache_is_dropped_too(env: Env):
+    shutil.copy(FIXTURES / "pubmed" / f"{PP_PUBMED_PREPRINT}.xml", env.cache / "pubmed")  # cached, not in the window
+    env.preprints = [ppr(1, doi=PP_DOI)]
+    env.prepare()
+    assert offered(env) == []
+    assert dropped(env)["PPR9000001"]["reason"] == "in_pubmed"
+
+
+def test_an_old_version_is_superseded_only_when_the_newer_one_is_in_the_same_search(env: Env):
+    versions = {"version": [{"id": "PPR9000001", "versionNumber": 1}, {"id": "PPR9000002", "versionNumber": 2}]}
+    v1 = ppr(1, versionList=versions, versionNumber=1)
+    v2 = ppr(2, versionList=versions, versionNumber=2)
+    env.preprints = [v1, v2]
+    env.prepare()
+    assert offered(env) == ["PPR9000002"]
+    assert dropped(env)["PPR9000001"]["reason"] == "superseded"
+    assert dropped(env)["PPR9000001"]["superseded_by"] == ["PPR9000002"]
+    env.preprints = [v1]  # version 2 is not among this search's records: version 1 is offered
+    assert env.cli("prepare", "--force") == 0
+    assert offered(env) == ["PPR9000001"]
+
+
+def test_a_preprint_without_a_doi_is_dropped(env: Env):
+    env.preprints = [ppr(1, doi=None), ppr(2)]
+    env.prepare()
+    assert offered(env) == ["PPR9000002"]
+    assert dropped(env)["PPR9000001"]["reason"] == "no_doi"
+    assert dropped(env)["PPR9000001"]["doi"] is None
+
+
+def test_a_preprint_an_earlier_finished_run_processed_is_dropped_unless_reprocess(env: Env):
+    env.preprints = [ppr(1)]
+    env.prepare()
+    assert offered(env) == ["PPR9000001"]
+    # a second prepare before any report offers it again (an aborted run can be repeated)
+    assert env.cli("prepare", "--force") == 0
+    assert offered(env) == ["PPR9000001"]
+    assert env.cli("report") == 0  # the ledger update
+    assert ledger(env)["PPR9000001"] == "2026-11-01"
+    assert env.cli("prepare", "--force") == 0
+    assert offered(env) == []
+    assert dropped(env)["PPR9000001"] == {
+        "ppr_id": "PPR9000001",
+        "doi": "10.99999/fictional.2026.001",
+        "reason": "processed",
+        "date": "2026-11-01",
+    }
+    assert env.cli("prepare", "--force", "--reprocess") == 0
+    assert offered(env) == ["PPR9000001"]
+
+
+def test_the_first_reason_that_applies_is_the_one_listed(env: Env):
+    env.preprints = [ppr(1, doi=None, **published_link())]  # published and without a DOI
+    env.prepare()
+    assert dropped(env)["PPR9000001"]["reason"] == "published"
+
+
+def test_a_surviving_preprint_is_a_paper_with_the_fields_of_a_preprint_with_no_pmid(env: Env):
+    env.preprints = [ppr(1)]
+    env.prepare()
+    paper = next(p for p in load(env.run / "papers.json") if p.get("ppr_id"))
+    assert paper == {
+        "id": "doi:10.99999/fictional.2026.001",
+        "pmid": None,
+        "doi": "10.99999/fictional.2026.001",
+        "title": "A fictional preprint of widget signalling",
+        "abstract": "Fictional abstract of 12 invented patients.",
+        "journal": "FictionRxiv",
+        "year": 2026,
+        "publication_types": ["Preprint"],
+        "entry_date": "2026-10-20",
+        "preprint": True,
+        "ppr_id": "PPR9000001",
+    }
+    summary = load(env.run / "prepare.json")["preprints"]
+    assert summary["counts"] == {
+        "found": 1,
+        "dropped": {"published": 0, "in_pubmed": 0, "duplicate_doi": 0, "superseded": 0, "no_doi": 0, "processed": 0},
+        "offered": 1,
+    }
+
+
+def test_prepare_counts_every_drop_reason(env: Env):
+    env.preprints = [ppr(1, **published_link()), ppr(2, doi=None), ppr(3), ppr(4, doi=None)]
+    env.prepare()
+    counts = load(env.run / "prepare.json")["preprints"]["counts"]
+    assert counts == {
+        "found": 4,
+        "dropped": {"published": 1, "in_pubmed": 0, "duplicate_doi": 0, "superseded": 0, "no_doi": 2, "processed": 0},
+        "offered": 1,
+    }
+    assert any("preprints: 4 found, 1 offered" in line for line in env.out)
+
+
+def test_every_pubmed_paper_carries_preprint_and_a_pubmed_preprint_keeps_its_pmid(env: Env):
+    env.window = ["90000101", "90000102", "90000103", PP_PUBMED_PREPRINT]
+    env.prepare(extra_pubmed=[PP_PUBMED_PREPRINT])
+    papers = {p["pmid"]: p for p in load(env.run / "papers.json")}
+    assert papers["90000101"]["preprint"] is False
+    assert papers[PP_PUBMED_PREPRINT]["preprint"] is True
+    assert papers[PP_PUBMED_PREPRINT]["id"] == f"pmid:{PP_PUBMED_PREPRINT}"
+    assert "ppr_id" not in papers[PP_PUBMED_PREPRINT]
+
+
+def test_a_ledger_written_before_preprints_reads_unchanged_and_keeps_its_order(env: Env):
+    env.pipeline.mkdir(parents=True)
+    legacy = {"processed": {"9": "2026-09-01", "90000101": "2026-10-01", "100": "2026-09-02"}}
+    (env.pipeline / "processed.json").write_text(json.dumps(legacy), encoding="utf-8")
+    cfg = pipeline.Config(env.run, env.cards, env.drafts, env.cache, SPEC, env.pipeline)
+    assert pipeline.read_ledger(cfg) == legacy["processed"]
+    env.preprints = [ppr(1)]
+    env.prepare()
+    assert env.cli("report") == 0
+    assert list(ledger(env)) == ["9", "100", "90000101", "90000102", "PPR9000001"]  # PMIDs by number, then PPR ids
+    assert ledger(env)["9"] == "2026-09-01"
+
+
+# --- cards that cite a preprint whose published version now exists ------------------
+
+
+def card_with_preprint(env: Env, doi: str = "10.99999/fictional.2026.001") -> None:
+    path = env.drafts / f"{SLUG}.yaml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    data["studies"].append(
+        {
+            "id": f"doi:{doi}",
+            "title": "A fictional preprint of widget signalling",
+            "year": 2026,
+            "cohort": "me_cfs",
+            "case_definition": "other",
+            "case_definition_source": "abstract",
+            "case_definition_quote": None,
+            "design": "uncontrolled",
+            "n_patients": 12,
+            "n_controls": None,
+            "measures_pem": False,
+            "preregistered": None,
+            "role": "early_signal",
+            "direction": "mixed",
+            "finding": "A preprint of n=12 patients reported a fictional change.",
+            "preprint": True,
+        }
+    )
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+
+def cache_preprint(env: Env, **raw) -> None:
+    record = {**PP_RAW, "doi": "10.99999/fictional.2026.001", **raw}
+    europepmc_cache = pipeline.europepmc.EuropePmcCache(env.cache)
+    europepmc_cache.write_preprint(record)
+
+
+def test_a_preprint_on_a_card_whose_cached_record_links_to_a_published_version_is_listed(env: Env):
+    card_with_preprint(env)
+    cache_preprint(env, **published_link("90000100", "Link created based on a title-first author match"))
+    env.prepare()
+    assert load(env.run / "prepare.json")["preprints_published"] == [
+        {
+            "card": SLUG,
+            "study": "doi:10.99999/fictional.2026.001",
+            "pmid": "90000100",
+            "note": "Link created based on a title-first author match",
+        }
+    ]
+    assert not (env.run / "ops").exists()  # no operation is written
+    assert any("now published" in line and "pmid:90000100" in line for line in env.out)
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    section = report.split("## Preprints on cards with a published version")[1].split("\n## ")[0]
+    assert "doi:10.99999/fictional.2026.001" in section and "pmid:90000100" in section and SLUG in section
+
+
+def test_a_preprint_on_a_card_with_no_published_version_is_not_listed(env: Env):
+    card_with_preprint(env)
+    cache_preprint(env)  # a cached record without a "Preprint of" link
+    env.prepare()
+    assert load(env.run / "prepare.json")["preprints_published"] == []
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    assert report.split("## Preprints on cards with a published version")[1].split("\n## ")[0].strip() == "None."
+
+
+def test_a_preprint_on_a_card_is_listed_from_this_runs_search_result_too(env: Env):
+    card_with_preprint(env)
+    env.preprints = [ppr(1, doi="10.99999/fictional.2026.001", **published_link("90000100"))]
+    env.prepare()
+    assert [r["pmid"] for r in load(env.run / "prepare.json")["preprints_published"]] == ["90000100"]
+
+
+def test_a_card_study_that_is_not_marked_preprint_is_never_listed(env: Env):
+    card_with_preprint(env)
+    path = env.drafts / f"{SLUG}.yaml"
+    path.write_text(path.read_text(encoding="utf-8").replace("preprint: true", "preprint: false"), encoding="utf-8")
+    cache_preprint(env, **published_link())
+    env.prepare()
+    assert load(env.run / "prepare.json")["preprints_published"] == []
+
+
+# --- classification of preprints ------------------------------------------------------
+
+
+def classify_with(env: Env, *entries: dict) -> int:
+    (env.run / "classify.json").write_text(json.dumps({"papers": list(entries)}), encoding="utf-8")
+    return env.cli("record-classification")
+
+
+def entry(key: str, value: str, cards: tuple[str, ...] = (SLUG,), article_type: str = "original", **extra) -> dict:
+    return {
+        key: value,
+        "cards": list(cards),
+        "article_type": article_type,
+        "new_hypothesis": None,
+        "reason": "A fictional reason.",
+        **extra,
+    }
+
+
+PP_ID = "doi:10.99999/fictional.2026.001"
+
+
+@pytest.fixture
+def with_preprint(env: Env) -> Env:
+    env.preprints = [ppr(1)]
+    env.prepare()
+    return env
+
+
+def both_pubmed_papers() -> list[dict]:
+    return [entry("pmid", NEW_PMID), entry("pmid", REVIEW_PMID, article_type="review")]
+
+
+def test_a_classification_may_name_a_preprint_by_id(with_preprint: Env):
+    assert classify_with(with_preprint, *both_pubmed_papers(), entry("id", PP_ID)) == 0
+
+
+def test_a_classification_with_both_pmid_and_id_is_rejected(with_preprint: Env, capsys):
+    code = classify_with(with_preprint, *both_pubmed_papers(), entry("id", PP_ID, pmid=NEW_PMID))
+    assert code == 1
+    assert "exactly one of 'pmid' or 'id'" in capsys.readouterr().err
+    assert not (with_preprint.run / "matches.json").exists()
+
+
+def test_a_classification_with_neither_pmid_nor_id_is_rejected(with_preprint: Env, capsys):
+    nameless = {k: v for k, v in entry("pmid", "1").items() if k != "pmid"}
+    assert classify_with(with_preprint, *both_pubmed_papers(), nameless) == 1
+    assert "exactly one of 'pmid' or 'id'" in capsys.readouterr().err
+
+
+def test_a_classification_with_an_id_not_in_papers_json_is_rejected(with_preprint: Env, capsys):
+    code = classify_with(with_preprint, *both_pubmed_papers(), entry("id", PP_ID), entry("id", "doi:10.99999/nope"))
+    assert code == 1
+    assert "papers[3] (id doi:10.99999/nope): not one of this run's papers" in capsys.readouterr().err
+
+
+def test_a_classification_that_repeats_a_preprint_is_rejected(with_preprint: Env, capsys):
+    code = classify_with(with_preprint, *both_pubmed_papers(), entry("id", PP_ID), entry("id", PP_ID))
+    assert code == 1
+    assert "classified more than once" in capsys.readouterr().err
+
+
+def test_a_classification_that_leaves_a_preprint_out_is_rejected(with_preprint: Env, capsys):
+    assert classify_with(with_preprint, *both_pubmed_papers()) == 1
+    assert f"papers not classified: {PP_ID}" in capsys.readouterr().err
+
+
+def test_a_classification_naming_a_preprint_by_pmid_is_rejected(with_preprint: Env, capsys):
+    assert classify_with(with_preprint, *both_pubmed_papers(), entry("pmid", "90000999")) == 1
+    assert "not one of this run's papers" in capsys.readouterr().err
+
+
+def test_a_run_with_only_pubmed_papers_still_reports_with_no_preprint_sections_filled(ready: Env):
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    heading = "Preprints on cards with a published version"
+    assert report.split(f"## {heading}")[1].split("\n## ")[0].strip() == "None."
+    assert "Preprints matched to a card" not in report
+    assert ledger(ready) == {"90000101": "2026-11-01", "90000102": "2026-11-01"}
+
+
+def test_reports_and_ledger_still_work_on_a_run_written_before_preprints(ready: Env):
+    prep = load(ready.run / "prepare.json")
+    del prep["preprints"], prep["preprints_published"]
+    (ready.run / "prepare.json").write_text(json.dumps(prep), encoding="utf-8")
+    papers = load(ready.run / "papers.json")
+    for p in papers:
+        del p["preprint"]
+    (ready.run / "papers.json").write_text(json.dumps(papers), encoding="utf-8")
+    assert ready.cli("report") == 0
+    assert "Preprints (Europe PMC)" not in (ready.run / "report.md").read_text(encoding="utf-8")
+    assert ledger(ready) == {"90000101": "2026-11-01", "90000102": "2026-11-01"}
+
+
+# --- the context file of a PubMed preprint, and tier 2 ----------------------------------
+
+
+def test_the_context_of_a_pubmed_preprint_says_it_is_one_and_states_the_rule(env: Env):
+    env.window = ["90000101", "90000102", "90000103", PP_PUBMED_PREPRINT]
+    env.prepare(extra_pubmed=[PP_PUBMED_PREPRINT])
+    assert (
+        env.cli("context", SLUG, PP_PUBMED_PREPRINT, fulltext=lambda pmid, pmcid=None: FullTextResult(None, "none"))
+        == 0
+    )
+    text = (env.run / "context" / f"{SLUG}-{PP_PUBMED_PREPRINT}.md").read_text(encoding="utf-8")
+    assert "- preprint: yes" in text
+    assert "**This paper is a preprint.**" in text
+    assert "`preprint: true` and `role: early_signal`" in text
+    assert "never be cited in a level reason, a contested reason, a badge reason or a link" in text
+
+
+def test_the_context_of_a_journal_article_does_not_mention_preprint_rules(ready: Env):
+    assert ready.cli("context", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    text = (ready.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+    assert "This paper is a preprint" not in text and "- preprint:" not in text
+
+
+# --- DOI-only preprints are drafted like PubMed papers (A1-A5, A7) -------------------
+
+PPR_KEY = "PPR9000001"
+PP_TITLE = "A fictional preprint of widget signalling"
+
+
+def doi_study(**over) -> dict:
+    study = {
+        "id": PP_ID,
+        "title": PP_TITLE,
+        "year": 2026,
+        "cohort": "me_cfs",
+        "case_definition": "other",
+        "case_definition_source": "abstract",
+        "case_definition_quote": None,
+        "design": "uncontrolled",
+        "n_patients": 12,
+        "n_controls": None,
+        "measures_pem": False,
+        "preregistered": None,
+        "role": "early_signal",
+        "direction": "mixed",
+        "finding": "A preprint of n=12 patients reported a fictional change.",
+        "preprint": True,
+    }
+    return {**study, **over}
+
+
+def doi_ops(study: dict | None = None) -> dict:
+    return {
+        "card": SLUG,
+        "paper": PP_ID,
+        "operations": [
+            {"op": "add_study", "study": study or doi_study()},
+            {
+                "op": "add_paragraph",
+                "field": "early_signals",
+                "text": "A fictional preprint of 12 patients reported a related change, not yet replicated.",
+                "sources": [PP_ID],
+            },
+        ],
+    }
+
+
+@pytest.fixture
+def doi_run(env: Env) -> Env:
+    """A run with the three PubMed papers and one DOI-only preprint (its record cached), both classified."""
+    env.preprints = [ppr(1)]
+    cache_preprint(env)
+    env.prepare()
+    assert classify_with(env, *both_pubmed_papers(), entry("id", PP_ID)) == 0
+    return env
+
+
+def put_doi_ops(env: Env, body: dict, n: int = 1) -> Path:
+    path = env.run / "ops" / f"{SLUG}-{PPR_KEY}-r{n}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(body), encoding="utf-8")
+    return path
+
+
+def doi_checks(env: Env, n: int = 1) -> dict:
+    return load(env.run / "checks" / f"{SLUG}-{PPR_KEY}-r{n}.json")
+
+
+NO_FULLTEXT = lambda pmid, pmcid=None, **kw: FullTextResult(None, "no full text in this test")  # noqa: E731
+
+
+@pytest.mark.parametrize(
+    "form", [PPR_KEY, PP_ID, PP_ID.upper().replace("DOI:", "doi:"), "doi:10.99999/FICTIONAL.2026.001"]
+)
+def test_every_accepted_form_of_a_doi_preprint_resolves_to_the_same_context_file(doi_run: Env, form: str):
+    assert doi_run.cli("context", SLUG, form, fulltext=NO_FULLTEXT) == 0
+    assert (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").is_file()
+
+
+@pytest.mark.parametrize("form", [NEW_PMID, f"pmid:{NEW_PMID}"])
+def test_a_pmid_still_resolves_in_both_forms(doi_run: Env, form: str):
+    assert doi_run.cli("context", SLUG, form, fulltext=NO_FULLTEXT) == 0
+    assert (doi_run.run / "context" / f"{SLUG}-{NEW_PMID}.md").is_file()
+
+
+@pytest.mark.parametrize("unknown", ["doi:10.99999/not.in.this.run", "PPR1234", "nonsense"])
+def test_an_unknown_doi_or_ppr_id_is_an_error_naming_it(doi_run: Env, capsys, unknown: str):
+    assert doi_run.cli("context", SLUG, unknown, fulltext=NO_FULLTEXT) == 1
+    assert unknown in capsys.readouterr().err
+
+
+def test_a_doi_of_a_paper_that_has_a_pmid_is_not_resolved_as_a_preprint(env: Env, capsys):
+    env.window = ["90000101", "90000102", "90000103", PP_PUBMED_PREPRINT]
+    env.prepare(extra_pubmed=[PP_PUBMED_PREPRINT])
+    assert env.cli("context", SLUG, f"doi:{PP_DOI}", fulltext=NO_FULLTEXT) == 1
+    assert "not a DOI-only preprint of this run" in capsys.readouterr().err
+
+
+def test_a_matched_doi_only_preprint_is_in_matches_with_its_id(doi_run: Env):
+    matches = load(doi_run.run / "matches.json")
+    assert {"slug": SLUG, "id": PP_ID} in matches["matches"]
+    assert {"slug": SLUG, "pmid": NEW_PMID} in matches["matches"]
+    assert "preprint_matches" not in matches
+
+
+def test_the_context_of_a_doi_preprint_is_built_from_its_cached_record(doi_run: Env):
+    assert doi_run.cli("context", SLUG, PPR_KEY, fulltext=NO_FULLTEXT) == 0
+    text = (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").read_text(encoding="utf-8")
+    assert f"paper `{PP_ID}`" in text and f"- id: `{PP_ID}`" in text
+    assert f"- title: {PP_TITLE}" in text
+    assert "- server: FictionRxiv" in text and "- year: 2026" in text
+    assert "- first indexed: 2026-10-20" in text and "- version: 1" in text
+    assert "Fictional abstract of 12 invented patients." in text
+    assert "**This paper is a preprint.**" in text and "`preprint: true` and `role: early_signal`" in text
+    assert "if neither states it, use `unverified`" in text
+    assert "No full text is available: no full text in this test" in text
+    assert "PubMed record" not in text
+
+
+def test_the_context_of_a_doi_preprint_with_full_text_has_the_text_and_the_case_definition_sentences(doi_run: Env):
+    xml = (FIXTURES / "agent" / "fulltext-90000101.xml").read_bytes()
+    seen = {}
+
+    def loader(pmid, pmcid=None, *, preprint=None):
+        seen["preprint"] = preprint
+        return FullTextResult(xml, "Europe PMC open access, PMC9000101")
+
+    assert doi_run.cli("context", SLUG, PPR_KEY, fulltext=loader) == 0
+    text = (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").read_text(encoding="utf-8")
+    assert seen["preprint"].ppr_id == PPR_KEY  # the full text is looked up through the preprint's record
+    assert "FULLTEXT-TAIL-MARKER" in text and "All fictional participants met the Fukuda criteria." in text
+
+
+def test_context_for_a_doi_preprint_without_a_cached_record_names_the_doi_and_the_command(env: Env, capsys):
+    env.preprints = [ppr(1)]
+    env.prepare()  # papers.json has it, the cache does not
+    assert env.cli("context", SLUG, PPR_KEY, fulltext=NO_FULLTEXT) == 1
+    err = capsys.readouterr().err
+    assert PP_DOI in err and f"europepmc preprint {PP_DOI}" in err
+
+
+def test_a_correct_ops_file_for_a_doi_preprint_passes_and_every_operation_is_tier_2(doi_run: Env):
+    path = put_doi_ops(doi_run, doi_ops())
+    assert doi_run.cli("apply", SLUG, str(path)) == 0
+    checks = doi_checks(doi_run)
+    assert checks["passed"] is True and checks["paper"] == PP_ID and checks["key"] == PPR_KEY
+    assert checks["tiers"] == {"1": 0, "2": 2}
+    assert checks["validator"] == []
+    assert [r for r in checks["citations"] if not r["preexisting"]] == []  # the card's old C1 is not new
+    applied = yaml.safe_load((doi_run.run / "applied" / f"{SLUG}-{PPR_KEY}-r1" / f"{SLUG}.yaml").read_text("utf-8"))
+    assert applied["studies"][-1]["id"] == PP_ID and applied["studies"][-1]["preprint"] is True
+
+
+def test_a_doi_preprint_study_with_role_supports_fails_v15(doi_run: Env):
+    path = put_doi_ops(doi_run, doi_ops(doi_study(role="supports")))
+    assert doi_run.cli("apply", SLUG, str(path)) == 1
+    assert any("V15" in line and "studies[" in line for line in doi_checks(doi_run)["validator"])
+
+
+def test_a_doi_preprint_study_with_a_wrong_title_fails_c2(doi_run: Env):
+    path = put_doi_ops(doi_run, doi_ops(doi_study(title="A different title entirely")))
+    assert doi_run.cli("apply", SLUG, str(path)) == 1
+    new = [r["code"] for r in doi_checks(doi_run)["citations"] if r["level"] == "ERROR" and not r["preexisting"]]
+    assert new == ["C2"]
+
+
+def test_a_doi_paper_whose_study_lacks_preprint_true_is_refused(doi_run: Env):
+    study = doi_study()
+    del study["preprint"]
+    path = put_doi_ops(doi_run, doi_ops(study))
+    assert doi_run.cli("apply", SLUG, str(path)) == 1
+    assert any("needs preprint: true" in e for e in doi_checks(doi_run)["ops_errors"])
+
+
+def test_an_ops_file_for_a_doi_not_in_this_run_is_refused(doi_run: Env):
+    body = doi_ops()
+    body["paper"] = "doi:10.99999/other"
+    body["operations"][0]["study"]["id"] = "doi:10.99999/other"
+    body["operations"][1]["sources"] = ["doi:10.99999/other"]
+    path = put_doi_ops(doi_run, body)
+    assert doi_run.cli("apply", SLUG, str(path)) == 1
+    assert any("not a DOI-only preprint of this run" in e for e in doi_checks(doi_run)["ops_errors"])
+
+
+def review_for(env: Env, paper: str, key: str) -> Path:
+    path = env.run / "review" / f"{SLUG}-{key}-r1.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"card": SLUG, "paper": paper, "verdict": "accept", "findings": []}), encoding="utf-8")
+    return path
+
+
+def test_record_review_accepts_the_doi_paper_and_rejects_a_pmid_name_for_it(doi_run: Env, capsys):
+    path = put_doi_ops(doi_run, doi_ops())
+    assert doi_run.cli("apply", SLUG, str(path)) == 0
+    review_for(doi_run, "pmid:90000999", PPR_KEY)
+    assert doi_run.cli("record-review", SLUG, PP_ID) == 1
+    assert f"expected '{PP_ID}'" in capsys.readouterr().err
+    review_for(doi_run, PP_ID, PPR_KEY)
+    assert doi_run.cli("record-review", SLUG, PPR_KEY) == 0
+
+
+def test_end_to_end_one_pubmed_pair_and_one_doi_preprint_pair_both_accepted(doi_run: Env):
+    assert doi_run.cli("context", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    assert doi_run.cli("context", SLUG, PP_ID, fulltext=NO_FULLTEXT) == 0
+    assert (doi_run.run / "context" / f"{SLUG}-{NEW_PMID}.md").is_file()
+    assert (doi_run.run / "context" / f"{SLUG}-{PPR_KEY}.md").is_file()
+    assert doi_run.apply("ops_add_study.json") == 0
+    review_for(doi_run, f"pmid:{NEW_PMID}", NEW_PMID)
+    assert doi_run.cli("record-review", SLUG, NEW_PMID) == 0
+    assert doi_run.cli("apply", SLUG, str(put_doi_ops(doi_run, doi_ops()))) == 0
+    review_for(doi_run, PP_ID, PPR_KEY)
+    assert doi_run.cli("record-review", SLUG, f"doi:{PP_DOI}") == 0
+
+    cfg = pipeline.Config(doi_run.run, doi_run.cards, doi_run.drafts, doi_run.cache, SPEC)
+    outcomes = pipeline.collect_outcomes(cfg)
+    assert {(o.pmid, o.paper_id, o.status) for o in outcomes} == {
+        (NEW_PMID, f"pmid:{NEW_PMID}", "accepted"),
+        (PPR_KEY, PP_ID, "accepted"),
+    }
+    final = yaml.safe_load(pipeline.final_card_texts(cfg, outcomes)[SLUG])
+    assert {s["id"] for s in final["studies"]} >= {f"pmid:{NEW_PMID}", PP_ID}
+    assert any(PP_ID in p["sources"] for p in final["early_signals"])
+
+    assert doi_run.cli("report") == 0
+    report = (doi_run.run / "report.md").read_text(encoding="utf-8")
+    tier2 = report.split("### Tier 2")[1].split("### Tier 1")[0]
+    tier1 = report.split("### Tier 1")[1].split("## Parking lot")[0]
+    assert f"[{PP_ID}](https://doi.org/{PP_DOI}) {PP_TITLE} (preprint, not peer reviewed)" in tier2
+    assert PP_ID not in tier1 and f"pmid:{NEW_PMID}" in tier1
+    assert "Preprints matched to a card" not in report
+    assert ledger_after_report(doi_run)["PPR9000001"] == "2026-11-01"
+
+
+def ledger_after_report(env: Env) -> dict:
+    return ledger(env)
+
+
+def test_two_accepted_doi_and_pubmed_pairs_on_one_target_are_parked_with_their_paper_ids(doi_run: Env):
+    cfg = pipeline.Config(doi_run.run, doi_run.cards, doi_run.drafts, doi_run.cache, SPEC)
+    accept_replacing(doi_run, "90000201")
+    path = put_doi_ops(
+        doi_run,
+        {
+            "card": SLUG,
+            "paper": PP_ID,
+            "operations": [
+                {
+                    "op": "add_study",
+                    "study": doi_study(),
+                },
+                {"op": "replace_paragraph", "field": "contested.reason", "index": 0, "text": "x.", "sources": [PP_ID]},
+            ],
+        },
+    )
+    for p, body in (
+        (cfg.checks_path(SLUG, PPR_KEY, 1), {"passed": True, "card": SLUG, "citations": []}),
+        (cfg.review_path(SLUG, PPR_KEY, 1), {"card": SLUG, "paper": PP_ID, "verdict": "accept", "findings": []}),
+    ):
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(body), encoding="utf-8")
+    assert path.is_file()
+    statuses = {o.paper_id: (o.status, o.note) for o in pipeline.collect_outcomes(cfg) if o.slug == SLUG}
+    assert statuses[PP_ID][0] == "parked" and "conflicts with pmid:90000201" in statuses[PP_ID][1]
+    assert statuses["pmid:90000201"][0] == "parked" and f"conflicts with {PP_ID}" in statuses["pmid:90000201"][1]
+
+
+# --- two preprint records with one DOI (A7) -------------------------------------------
+
+
+def test_two_records_with_one_doi_keep_the_highest_version_then_the_highest_ppr_number(env: Env):
+    a = ppr(1, doi="10.99999/dup", versionNumber=1)
+    b = ppr(2, doi="10.99999/DUP", versionNumber=2)
+    c = ppr(3, doi="10.99999/dup", versionNumber=2)
+    env.preprints = [a, b, c, ppr(4)]
+    env.prepare()
+    assert offered(env) == ["PPR9000003", "PPR9000004"]
+    found = dropped(env)
+    assert found["PPR9000001"] == {
+        "ppr_id": "PPR9000001",
+        "doi": "10.99999/dup",
+        "reason": "duplicate_doi",
+        "kept": "PPR9000003",
+    }
+    assert found["PPR9000002"]["reason"] == "duplicate_doi"
+    counts = load(env.run / "prepare.json")["preprints"]["counts"]
+    assert counts["dropped"]["duplicate_doi"] == 2 and counts["offered"] == 2
+
+
+def test_a_duplicate_doi_is_judged_after_published_and_in_pubmed(env: Env):
+    a = ppr(1, doi="10.99999/dup", versionNumber=5, **published_link())  # published: dropped for that reason first
+    b = ppr(2, doi="10.99999/dup", versionNumber=1)
+    env.preprints = [a, b]
+    env.prepare()
+    assert dropped(env)["PPR9000001"]["reason"] == "published"
+    assert offered(env) == ["PPR9000002"]  # the only record left with this DOI is kept

@@ -2,7 +2,7 @@
 
 Cards live in ``cards/<slug>.yaml``, drafts in ``drafts/<slug>.yaml`` (same schema) and the public
 change log in ``cards/changelog.yaml``. See ``docs/card-format.md`` for the field reference and the
-plain-English rules V1-V14.
+plain-English rules V1-V15.
 
 Command line::
 
@@ -172,6 +172,7 @@ class Study(_Model):
     direction: Literal["lower", "higher", "no_difference", "mixed", "not_applicable"]
     finding: NonEmptyStr
     group: NonEmptyStr | None = None
+    preprint: bool = False  # a preprint (id "doi:..."): not peer reviewed; early signal only (rule V15)
 
 
 class Card(_Model):
@@ -280,6 +281,22 @@ def _sourced_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
         yield f"subgroups[{i}]", t
     for i, t in enumerate(card.early_signals):
         yield f"early_signals[{i}]", t
+    for i, link in enumerate(card.links):
+        yield f"links[{i}]", link
+
+
+def _v15_cited_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
+    """The texts where a preprint may not be cited: every sourced text except ``early_signals``."""
+    yield "core_claim", card.core_claim
+    yield from _paragraphs_at("level_reason", card.level_reason)
+    if card.contested:
+        yield from _paragraphs_at("contested.reason", card.contested.reason)
+    for name in ("diagnostic_marker", "explains_pem"):
+        reason = getattr(card.badges, name).reason
+        if reason is not None:
+            yield from _paragraphs_at(f"badges.{name}.reason", reason)
+    for i, t in enumerate(card.subgroups):
+        yield f"subgroups[{i}]", t
     for i, link in enumerate(card.links):
         yield f"links[{i}]", link
 
@@ -408,6 +425,28 @@ def check_card(card: Card, file_stem: str) -> list[tuple[str, str, str]]:
     for path, value in reader_facing:
         if _TODO_RE.search(value):
             found.append(("V14", path, "contains a TODO marker; settle it or move it to a YAML comment"))
+
+    # V15: a preprint is an early signal and nothing else; it cannot carry a level, a contested mark, a badge or a link
+    for i, s in enumerate(card.studies):
+        if s.preprint and s.role != "early_signal":
+            found.append(
+                (
+                    "V15",
+                    f"studies[{i}].role",
+                    f"a preprint study can only have role 'early_signal', not '{s.role}'",
+                )
+            )
+    preprint_ids = {s.id for s in card.studies if s.preprint}
+    for path, text in _v15_cited_texts(card):
+        for i, src in enumerate(text.sources):
+            if src in preprint_ids:
+                found.append(
+                    (
+                        "V15",
+                        f"{path}.sources[{i}]",
+                        f"preprint study '{src}' cannot be cited here, only in early_signals",
+                    )
+                )
 
     # M3, M4 (M1 is the schema's `layer` enum; M2 needs the other cards and lives in me_atlas.map)
     seen_to: set[str] = set()

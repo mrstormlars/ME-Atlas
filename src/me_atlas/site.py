@@ -900,6 +900,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             card_note=card_note,
             name_in_english=lc.name_fallback and not default,
             groups=split_studies(card),
+            preprint_ids=frozenset(s.id for s in card.studies if s.preprint),
         )
     render("changes.html", "changes.html", txt0["page.changes"], entries=shared.entries, names=names)
     local_names, local_texts = shared.map_local.get(code, ({}, {}))

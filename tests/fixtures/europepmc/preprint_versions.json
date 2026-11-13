@@ -1,0 +1,106 @@
+{
+  "version": "6.9",
+  "hitCount": 2,
+  "nextCursorMark": "CURSOR9",
+  "request": {
+    "queryString": "fictional",
+    "resultType": "core",
+    "cursorMark": "*",
+    "pageSize": 2,
+    "synonym": false
+  },
+  "resultList": {
+    "result": [
+      {
+        "id": "PPR9000004",
+        "source": "PPR",
+        "fullTextIdList": {
+          "fullTextId": [
+            "PPR9000004"
+          ]
+        },
+        "doi": "10.99999/fictional.2026.004",
+        "title": "A fictional preprint with two versions",
+        "authorString": "Testperson A, Exempel C.",
+        "pubYear": "2026",
+        "abstractText": "First version.",
+        "pubTypeList": {
+          "pubType": [
+            "Preprint"
+          ]
+        },
+        "bookOrReportDetails": {
+          "publisher": "FictionRxiv",
+          "yearOfPublication": 2026
+        },
+        "isOpenAccess": "N",
+        "inEPMC": "N",
+        "inPMC": "N",
+        "firstPublicationDate": "2026-09-30",
+        "firstIndexDate": "2026-09-30",
+        "versionList": {
+          "version": [
+            {
+              "id": "PPR9000004",
+              "source": "PPR",
+              "versionNumber": 1,
+              "firstPublishDate": "2026-09-30"
+            },
+            {
+              "id": "PPR9000005",
+              "source": "PPR",
+              "versionNumber": 2,
+              "firstPublishDate": "2026-10-10"
+            }
+          ]
+        },
+        "versionNumber": 1
+      },
+      {
+        "id": "PPR9000005",
+        "source": "PPR",
+        "fullTextIdList": {
+          "fullTextId": [
+            "PPR9000005"
+          ]
+        },
+        "doi": "10.99999/fictional.2026.004v2",
+        "title": "A fictional preprint with two versions",
+        "authorString": "Testperson A, Exempel C.",
+        "pubYear": "2026",
+        "abstractText": "Second version.",
+        "pubTypeList": {
+          "pubType": [
+            "Preprint"
+          ]
+        },
+        "bookOrReportDetails": {
+          "publisher": "FictionRxiv",
+          "yearOfPublication": 2026
+        },
+        "isOpenAccess": "N",
+        "inEPMC": "N",
+        "inPMC": "N",
+        "firstPublicationDate": "2026-10-10",
+        "firstIndexDate": "2026-10-10",
+        "versionList": {
+          "version": [
+            {
+              "id": "PPR9000004",
+              "source": "PPR",
+              "versionNumber": 1,
+              "firstPublishDate": "2026-09-30"
+            },
+            {
+              "id": "PPR9000005",
+              "source": "PPR",
+              "versionNumber": 2,
+              "firstPublishDate": "2026-10-10"
+            }
+          ]
+        },
+        "versionNumber": 2
+      }
+    ]
+  }
+}
