@@ -23,10 +23,12 @@ When you are given a context file, an operations file and an applied card, you a
 
 **What you read, and nothing else:**
 
-1. The context file (`data/pipeline/<date>/context/<slug>-<pmid>.md`): the card before the change, the inclusion rule, the evidence ladder, the paper's PubMed record, its full text when open access, and the sentences the pipeline found that may name a case definition or exclude people with the illness. This is your source for the paper. The context file says when a PMC record exists but its full text could not be read (a PDF only, or no full-text XML); then judge from the abstract.
-2. The operations file (`ops/<slug>-<pmid>-r<N>.json`): what the drafter proposes.
-3. The applied result: `applied/<slug>-<pmid>-r<N>/<slug>.yaml` and `changes.diff` next to it, and the mechanical check result `checks/<slug>-<pmid>-r<N>.json`.
+1. The context file (`data/pipeline/<date>/context/<slug>-<key>.md`): the card before the change, the inclusion rule, the evidence ladder, the paper's PubMed record (or, for a preprint with no PMID, its Europe PMC record), its full text when open access, and the sentences the pipeline found that may name a case definition or exclude people with the illness. This is your source for the paper. The context file says when a PMC record exists but its full text could not be read (a PDF only, or no full-text XML); then judge from the abstract.
+2. The operations file (`ops/<slug>-<key>-r<N>.json`): what the drafter proposes.
+3. The applied result: `applied/<slug>-<key>-r<N>/<slug>.yaml` and `changes.diff` next to it, and the mechanical check result `checks/<slug>-<key>-r<N>.json`.
 4. `docs/drafting-checklist.md`: go through all nine lines for every operation.
+
+`<key>` is the PMID, or the PPR id of a preprint with no PMID; for that preprint the `paper` in your file is `doi:<doi>`, the same as in the operations file. You may resolve its DOI against Europe PMC as you may any identifier.
 
 Do not read or ask for the drafter's reasoning, its messages, or any other file under `data/pipeline/`. If you were handed any explanation from the drafter, ignore it and say so in the file. You may check identifiers against PubMed or Europe PMC as above, but judge the paper from the context file.
 

@@ -192,6 +192,10 @@ class OpsFile(_Op):
                 raise ValueError(
                     f"operations[{i}]: add_study may only add the paper '{self.paper}', not '{op.study.id}'"
                 )
+            if isinstance(op, AddStudy) and self.paper.startswith("doi:") and not op.study.preprint:
+                raise ValueError(
+                    f"operations[{i}]: a doi: paper is a preprint; its study '{op.study.id}' needs preprint: true"
+                )
         return self
 
 
@@ -219,6 +223,14 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
     if isinstance(op, AddStudy):
         return 2 if op.study.preprint or op.study.id in preprints else 1
     return 2 if any(src in preprints for src in op.sources) else 1
+
+
+def tiers(ops: OpsFile, card_data: Mapping[str, Any] | None = None) -> list[int]:
+    """The tier of every operation of an ops file. Every operation of a file for a ``doi:`` preprint is tier 2."""
+    if ops.paper.startswith("doi:"):
+        return [2] * len(ops.operations)
+    found = preprint_ids(ops, card_data)
+    return [tier(op, found) for op in ops.operations]
 
 
 def _format_errors(exc: ValidationError) -> str:

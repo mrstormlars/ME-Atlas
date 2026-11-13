@@ -49,8 +49,7 @@ from me_atlas.operations import (
     ReplaceParagraph,
     apply_operations,
     parse_ops,
-    preprint_ids,
-    tier,
+    tiers,
 )
 
 DEFAULT_PIPELINE_DIR = Path("data/pipeline")
@@ -252,6 +251,37 @@ def _record(cfg: Config, pmid: str) -> pubmed.PubMedRecord:
         raise PipelineError(f"the cached record for pmid:{pmid} is unreadable: {exc}") from exc
 
 
+def _run_papers(cfg: Config) -> list[dict[str, Any]]:
+    return _read_json(cfg.f("papers.json")) if cfg.f("papers.json").exists() else []
+
+
+def resolve_paper(cfg: Config, text: str) -> tuple[str, str]:
+    """A paper named on the command line as ``<pmid>``, ``pmid:<pmid>``, ``doi:<doi>`` or ``PPR<digits>``.
+
+    Returns (key, paper id): the key names the run files (the PMID digits, or the PPR id of a DOI-only preprint),
+    the paper id is ``pmid:<digits>`` or ``doi:<doi>``. A ``doi:`` or PPR id must be a preprint with no PMID in
+    this run's papers.json.
+    """
+    t = text.strip()
+    digits = t.removeprefix("pmid:")
+    if digits.isdigit():
+        return digits, f"pmid:{digits}"
+    if re.fullmatch(r"PPR\d+", t):
+        found = [p for p in _run_papers(cfg) if p.get("ppr_id") == t and not p.get("pmid")]
+    elif t.lower().startswith("doi:"):
+        found = [p for p in _run_papers(cfg) if not p.get("pmid") and p["id"].lower() == t.lower()]
+    else:
+        raise PipelineError(f"not a paper: {text!r} (use a PMID, pmid:<pmid>, doi:<doi> or a PPR id)")
+    if not found:
+        raise PipelineError(f"{t} is not a DOI-only preprint of this run ({cfg.f('papers.json')})")
+    return found[0]["ppr_id"], found[0]["id"]
+
+
+def _paper_id_of_key(cfg: Config, key: str) -> str:
+    """``pmid:<digits>`` for a PMID key, the ``doi:`` id of the preprint for a PPR key."""
+    return f"pmid:{key}" if key.isdigit() else resolve_paper(cfg, key)[1]
+
+
 # ---------------------------------------------------------------------------
 # prepare
 # ---------------------------------------------------------------------------
@@ -273,7 +303,7 @@ PAPER_FIELDS = (
     "preprint",
 )
 # Why a preprint was not offered, in the order the reasons are tried (docs/pipeline.md).
-PREPRINT_DROP_REASONS = ("published", "in_pubmed", "superseded", "no_doi", "processed")
+PREPRINT_DROP_REASONS = ("published", "in_pubmed", "duplicate_doi", "superseded", "no_doi", "processed")
 
 
 def paper_key(paper: dict[str, Any]) -> str:
@@ -321,15 +351,30 @@ def _pubmed_dois(cache: pubmed.RawCache) -> dict[str, str]:
     return found
 
 
-def _drop_reason(
-    r: europepmc.PreprintRecord,
-    *,
-    cache: pubmed.RawCache,
-    pubmed_dois: dict[str, str],
-    found_ids: set[str],
-    ledger: dict[str, str],
+def _ppr_number(ppr_id: str) -> int:
+    return int(ppr_id.removeprefix("PPR"))
+
+
+def _kept_per_doi(
+    records: Sequence[europepmc.PreprintRecord], *, cache: pubmed.RawCache, pubmed_dois: dict[str, str]
+) -> dict[str, str]:
+    """Lower-cased DOI to the PPR id kept when several records share it: the highest version number, then the
+    highest PPR number. Only records not already dropped as ``published`` or ``in_pubmed`` are compared."""
+    kept: dict[str, europepmc.PreprintRecord] = {}
+    for r in records:
+        if not r.doi or _early_drop(r, cache=cache, pubmed_dois=pubmed_dois) is not None:
+            continue
+        best = kept.get(r.doi.lower())
+        rank = (r.version_number or 0, _ppr_number(r.ppr_id))
+        if best is None or rank > (best.version_number or 0, _ppr_number(best.ppr_id)):
+            kept[r.doi.lower()] = r
+    return {doi: r.ppr_id for doi, r in kept.items()}
+
+
+def _early_drop(
+    r: europepmc.PreprintRecord, *, cache: pubmed.RawCache, pubmed_dois: dict[str, str]
 ) -> dict[str, Any] | None:
-    """Why a preprint is not offered (the first of ``PREPRINT_DROP_REASONS`` that applies), or None."""
+    """The ``published`` and ``in_pubmed`` reasons."""
     row: dict[str, Any] = {"ppr_id": r.ppr_id, "doi": r.doi}
     if r.published:
         links = [
@@ -338,6 +383,24 @@ def _drop_reason(
         return {**row, "reason": "published", "published": links}
     if r.doi and r.doi.lower() in pubmed_dois:
         return {**row, "reason": "in_pubmed", "pmid": pubmed_dois[r.doi.lower()]}
+    return None
+
+
+def _drop_reason(
+    r: europepmc.PreprintRecord,
+    *,
+    cache: pubmed.RawCache,
+    pubmed_dois: dict[str, str],
+    kept: dict[str, str],
+    found_ids: set[str],
+    ledger: dict[str, str],
+) -> dict[str, Any] | None:
+    """Why a preprint is not offered (the first of ``PREPRINT_DROP_REASONS`` that applies), or None."""
+    row: dict[str, Any] = {"ppr_id": r.ppr_id, "doi": r.doi}
+    if (early := _early_drop(r, cache=cache, pubmed_dois=pubmed_dois)) is not None:
+        return early
+    if r.doi and kept.get(r.doi.lower()) not in (None, r.ppr_id):
+        return {**row, "reason": "duplicate_doi", "kept": kept[r.doi.lower()]}
     newer = [v for v in r.versions if r.version_number is not None and v.number > r.version_number]
     if any(v.ppr_id in found_ids for v in newer):
         return {**row, "reason": "superseded", "superseded_by": [v.ppr_id for v in newer if v.ppr_id in found_ids]}
@@ -379,7 +442,10 @@ def _preprints_with_published_version(cfg: Config, found: Sequence[europepmc.Pre
             if not (study.preprint and study.id.startswith("doi:")):
                 continue
             doi = study.id.removeprefix("doi:")
-            record = fresh.get(doi.lower()) or europepmc.read_cached_preprint(cache, doi)
+            try:
+                record = fresh.get(doi.lower()) or europepmc.read_cached_preprint(cache, doi)
+            except europepmc.EuropePmcError:
+                continue  # two cached records with this DOI: the citation check reports it (C1)
             for link in record.published if record else ():
                 rows.append({"card": slug, "study": study.id, "pmid": link.pmid, "note": link.note})
     return rows
@@ -443,9 +509,10 @@ def prepare(
 
     pubmed_dois = _pubmed_dois(cache)
     found_ids = {r.ppr_id for r in found_preprints}
+    kept = _kept_per_doi(found_preprints, cache=cache, pubmed_dois=pubmed_dois)
     dropped: list[dict[str, Any]] = []
     for r in found_preprints:
-        why = _drop_reason(r, cache=cache, pubmed_dois=pubmed_dois, found_ids=found_ids, ledger=ledger)
+        why = _drop_reason(r, cache=cache, pubmed_dois=pubmed_dois, kept=kept, found_ids=found_ids, ledger=ledger)
         if why is None:
             papers.append(_preprint_paper(r))
         else:
@@ -545,7 +612,7 @@ def record_classification(cfg: Config, path: Path | None = None) -> dict[str, An
     if problems:
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
 
-    matches, preprint_matches, stopped, new_hypotheses = [], [], [], []
+    matches, stopped, new_hypotheses = [], [], []
     for item in parsed.papers:
         # The paper's name in the output: {"pmid": ...} for a PubMed paper, {"id": "doi:..."} for a preprint.
         ref = {"pmid": item.pmid} if item.pmid is not None else {"id": item.id}
@@ -555,23 +622,15 @@ def record_classification(cfg: Config, path: Path | None = None) -> dict[str, An
             stopped.append({**ref, "why": f"article type: {item.article_type}"})
         elif not item.cards:
             stopped.append({**ref, "why": "matches no card"})
-        elif item.pmid is not None:
-            matches += [{"slug": slug, "pmid": item.pmid} for slug in item.cards]
-        else:  # a preprint with no PMID is listed in the report, never drafted
-            preprint_matches += [{"slug": slug, "id": item.id} for slug in item.cards]
-    result = {
-        "matches": matches,
-        "preprint_matches": preprint_matches,
-        "stopped": stopped,
-        "new_hypotheses": new_hypotheses,
-    }
+        else:  # a pair is named by the paper's pmid, or by the doi: id of a preprint with no PMID
+            matches += [{"slug": slug, **ref} for slug in item.cards]
+    result = {"matches": matches, "stopped": stopped, "new_hypotheses": new_hypotheses}
     _write_json(cfg.f("matches.json"), result)
     _log(
         cfg,
         {
             "event": "record-classification",
             "matches": len(matches),
-            "preprint_matches": len(preprint_matches),
             "stopped": len(stopped),
         },
     )
@@ -589,7 +648,8 @@ class FullTextResult:
     note: str
 
 
-# Called with the PMID and, when the cached PubMed record has one, its PMC id.
+# Called with the PMID and, when the cached PubMed record has one, its PMC id; for a DOI-only preprint with its PPR
+# id, its PMC id and ``preprint=<its Europe PMC record>``.
 FullTextLoader = Callable[..., FullTextResult]
 
 
@@ -607,14 +667,18 @@ def fulltext_note(status: str, pmcid: str | None) -> str:
 def live_fulltext_loader(cache_dir: Path) -> FullTextLoader:
     """Look the paper up in Europe PMC (cached) and read its open-access full text, if there is one."""
 
-    def load(pmid: str, pmcid: str | None = None) -> FullTextResult:
+    def load(
+        pmid: str | None, pmcid: str | None = None, *, preprint: europepmc.PreprintRecord | None = None
+    ) -> FullTextResult:
         env = {**load_dotenv(), **os.environ}
         email = (env.get("CONTACT_EMAIL") or "").strip()
         if not email:
             return FullTextResult(None, "CONTACT_EMAIL is not set, so no full text was requested")
         client = europepmc.EuropePmcClient(email)
         try:
-            result = europepmc.get_fulltext(client, europepmc.EuropePmcCache(cache_dir), pmid, pmcid=pmcid)
+            result = europepmc.get_fulltext(
+                client, europepmc.EuropePmcCache(cache_dir), pmid, pmcid=pmcid, preprint=preprint
+            )
         except europepmc.EuropePmcError as exc:
             return FullTextResult(None, f"Europe PMC request failed: {exc}")
         finally:
@@ -651,22 +715,101 @@ def _demote_headings(markdown: str) -> str:
     return chr(10).join(lines)
 
 
+PREPRINT_RULE = (
+    "**This paper is a preprint.** It may only be added to the card as a study with `preprint: true` and "
+    "`role: early_signal`, and it may never be cited in a level reason, a contested reason, a badge "
+    "reason or a link."
+)
+_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _preprint_record(cfg: Config, key: str) -> europepmc.PreprintRecord:
+    """The cached Europe PMC record of a DOI-only preprint of this run (by PPR id); an error names the command."""
+    doi = _paper_id_of_key(cfg, key).removeprefix("doi:")
+    try:
+        record = europepmc.read_cached_preprint(europepmc.EuropePmcCache(cfg.cache_dir), doi)
+    except europepmc.EuropePmcError as exc:
+        raise PipelineError(str(exc)) from exc
+    if record is None:
+        raise PipelineError(
+            f"no cached Europe PMC preprint record for doi:{doi}; "
+            f"cache it with `uv run python -m me_atlas.europepmc preprint {doi}`"
+        )
+    return record
+
+
 def build_context(
-    cfg: Config, slug: str, pmid: str, loader: FullTextLoader, *, budget: int = FULLTEXT_CHAR_BUDGET
+    cfg: Config, slug: str, key: str, loader: FullTextLoader, *, budget: int = FULLTEXT_CHAR_BUDGET
 ) -> str:
-    """The one file the drafting and review agents read about a card and a paper. No drafter output in it."""
+    """The one file the drafting and review agents read about a card and a paper. No drafter output in it.
+
+    ``key`` is a PMID, or the PPR id of a DOI-only preprint, whose context is built only from its cached
+    Europe PMC record and its full text (through ``get_fulltext``).
+    """
     base = _base_card(cfg, slug)
     _load_card(base)
-    record = _record(cfg, pmid)
-    full = loader(pmid, record.pmcid)
+    if key.isdigit():
+        record = _record(cfg, key)
+        paper_id = f"pmid:{key}"
+        full = loader(key, record.pmcid)
+        record_lines = [
+            "## 4. The paper's PubMed record",
+            "",
+            f"- id: `{record.id}`",
+            f"- title: {record.title}",
+            f"- journal: {record.journal or 'not stated'}",
+            f"- year: {record.year if record.year is not None else 'not stated'}",
+            f"- doi: {record.doi or 'not stated'}",
+            f"- publication types: {', '.join(record.publication_types) or 'not stated'}",
+            f"- retracted: {'yes' if record.retracted else 'no'}",
+            *(
+                [
+                    "- preprint: yes (PubMed marks this record as a preprint). It is not peer reviewed.",
+                    "",
+                    PREPRINT_RULE,
+                ]
+                if record.preprint
+                else []
+            ),
+            "",
+            "Abstract:",
+            "",
+            record.abstract or "(the record has no abstract)",
+        ]
+    else:
+        pre = _preprint_record(cfg, key)
+        paper_id = pre.id
+        full = loader(pre.ppr_id, pre.pmcid, preprint=pre)
+        abstract = " ".join(_TAG_RE.sub(" ", pre.abstract).split()) if pre.abstract else None
+        record_lines = [
+            "## 4. The paper's Europe PMC preprint record",
+            "",
+            f"- id: `{paper_id}`",
+            f"- Europe PMC id: {pre.ppr_id}",
+            f"- title: {pre.title}",
+            f"- server: {pre.server or 'not stated'}",
+            f"- year: {pre.year if pre.year is not None else 'not stated'}",
+            f"- first indexed: {pre.first_index_date or 'not stated'}",
+            f"- version: {pre.version_number if pre.version_number is not None else 'not stated'}",
+            "- preprint: yes (not peer reviewed)",
+            "",
+            PREPRINT_RULE,
+            "",
+            "The case definition comes from the abstract or the full text below; if neither states it, use "
+            "`unverified`. Nothing else describes this paper.",
+            "",
+            "Abstract:",
+            "",
+            abstract or "(the record has no abstract)",
+        ]
     inclusion = _demote_headings(spec_section(cfg.spec_path, 2))
     rubric = _demote_headings(spec_section(cfg.spec_path, 3))
 
     parts = [
-        f"# Context: card `{slug}` and paper `pmid:{pmid}`",
+        f"# Context: card `{slug}` and paper `{paper_id}`",
         "",
         "Everything the drafting and review steps may rely on is in this file. Cite only the studies already on "
-        f"the card and `pmid:{pmid}`. If something is not here, write TODO: verify.",
+        f"the card and `{paper_id}`. If something is not here, write TODO: verify.",
         "",
         f"## 1. The card now (`{base}`)",
         "",
@@ -682,30 +825,7 @@ def build_context(
         "",
         rubric,
         "",
-        "## 4. The paper's PubMed record",
-        "",
-        f"- id: `{record.id}`",
-        f"- title: {record.title}",
-        f"- journal: {record.journal or 'not stated'}",
-        f"- year: {record.year if record.year is not None else 'not stated'}",
-        f"- doi: {record.doi or 'not stated'}",
-        f"- publication types: {', '.join(record.publication_types) or 'not stated'}",
-        f"- retracted: {'yes' if record.retracted else 'no'}",
-        *(
-            [
-                "- preprint: yes (PubMed marks this record as a preprint). It is not peer reviewed.",
-                "",
-                "**This paper is a preprint.** It may only be added to the card as a study with `preprint: true` and "
-                "`role: early_signal`, and it may never be cited in a level reason, a contested reason, a badge "
-                "reason or a link.",
-            ]
-            if record.preprint
-            else []
-        ),
-        "",
-        "Abstract:",
-        "",
-        record.abstract or "(the record has no abstract)",
+        *record_lines,
         "",
         "## 5. Full text",
         "",
@@ -757,7 +877,8 @@ def build_context(
 
 
 def _pmid_from_name(path: Path) -> str | None:
-    match = re.search(r"-(\d+)-r\d+$", path.stem)
+    """The paper key in an ops file name ``<slug>-<key>-r<N>``: a PMID, or the PPR id of a DOI-only preprint."""
+    match = re.search(r"-(\d+|PPR\d+)-r\d+$", path.stem)
     return match.group(1) if match else None
 
 
@@ -790,14 +911,21 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
     Writes ``checks/<slug>-<pmid>-r<n>.json`` and, when the operations applied, ``applied/<slug>-<pmid>-r<n>/``
     with the new card and a diff. The draft in ``drafts/`` is never touched. Returns the checks record.
     """
-    pmid = _pmid_from_name(ops_path)
+    pmid = _pmid_from_name(ops_path)  # the paper key: a PMID, or a PPR id
     ops: OpsFile | None = None
     ops_errors: list[str] = []
     raw: Any = None
+    paper_id: str | None = None
     try:
         raw = _read_json(ops_path)
         ops = parse_ops(raw)
-        pmid = ops.paper.removeprefix("pmid:") if ops.paper.startswith("pmid:") else pmid
+        if ops.paper.startswith("pmid:"):
+            pmid = ops.paper.removeprefix("pmid:")
+        else:
+            try:
+                pmid, paper_id = resolve_paper(cfg, ops.paper)
+            except PipelineError as exc:
+                ops_errors.append(str(exc))
         if ops.card != slug:
             ops_errors.append(f"the ops file is for card '{ops.card}', not '{slug}'")
     except (PipelineError, OperationError) as exc:
@@ -807,10 +935,13 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
             pmid = candidate if candidate.isdigit() else None
     if pmid is None:
         raise PipelineError("cannot tell which paper the ops file is for; " + "; ".join(ops_errors))
+    if paper_id is None:
+        paper_id = ops.paper if ops is not None and ops.paper.startswith("doi:") else f"pmid:{pmid}"
 
     result: dict[str, Any] = {
         "card": slug,
-        "paper": f"pmid:{pmid}",
+        "paper": paper_id,
+        "key": pmid,
         "round": n,
         "ops_file": str(ops_path),
         "ops_errors": ops_errors,
@@ -831,8 +962,8 @@ def apply_ops_file(cfg: Config, slug: str, ops_path: Path, n: int) -> dict[str, 
             base_data = yaml.safe_load(base_text)
         except yaml.YAMLError:
             base_data = None
-        preprints = preprint_ids(ops, base_data if isinstance(base_data, dict) else None)
-        result["tiers"] = {str(t): sum(tier(o, preprints) == t for o in ops.operations) for t in (1, 2)}
+        op_tiers = tiers(ops, base_data if isinstance(base_data, dict) else None)
+        result["tiers"] = {str(t): op_tiers.count(t) for t in (1, 2)}
         result["warnings"] = _group_warnings(base_text, ops)
         if not ops.operations:
             result["no_change"] = True
@@ -901,8 +1032,9 @@ def record_review(cfg: Config, slug: str, pmid: str, n: int) -> ReviewFile:
     problems = []
     if review.card != slug:
         problems.append(f"card is '{review.card}', expected '{slug}'")
-    if review.paper != f"pmid:{pmid}":
-        problems.append(f"paper is '{review.paper}', expected 'pmid:{pmid}'")
+    expected = _paper_id_of_key(cfg, pmid)
+    if review.paper != expected:
+        problems.append(f"paper is '{review.paper}', expected '{expected}'")
     ops_path = cfg.ops_path(slug, pmid, n)
     count: int | None = None
     try:
@@ -938,10 +1070,11 @@ class Round:
 @dataclass
 class Outcome:
     slug: str
-    pmid: str
+    pmid: str  # the paper key: a PMID, or the PPR id of a DOI-only preprint
     status: Literal["accepted", "no_change", "withdrawn", "parked", "skipped"]
     note: str
     rounds: list[Round] = field(default_factory=list)
+    paper_id: str = ""  # "pmid:<digits>" or "doi:<doi>"
 
     @property
     def last(self) -> Round | None:
@@ -972,9 +1105,13 @@ def collect_outcomes(cfg: Config) -> list[Outcome]:
     matches = _read_json(cfg.f("matches.json"))["matches"] if cfg.f("matches.json").exists() else []
     outcomes = []
     for match in matches:
-        slug, pmid = match["slug"], match["pmid"]
+        slug = match["slug"]
+        if "pmid" in match:
+            pmid, paper_id = match["pmid"], f"pmid:{match['pmid']}"
+        else:  # a DOI-only preprint: its file-name key is the PPR id from papers.json
+            pmid, paper_id = resolve_paper(cfg, match["id"])
         rounds = [r for n in range(1, MAX_ROUNDS + 1) if (r := _load_round(cfg, slug, pmid, n))]
-        outcome = Outcome(slug, pmid, "skipped", "", rounds)
+        outcome = Outcome(slug, pmid, "skipped", "", rounds, paper_id)
         last = outcome.last
         rejected_before = any(r.review and r.review.verdict == "reject" for r in rounds)
         if last is None:
@@ -1038,7 +1175,7 @@ def _park_conflicts(outcomes: list[Outcome]) -> None:
         ]
         if others:
             o.status = "conflict"  # type: ignore[assignment]
-            o.note = "conflicts with " + "; ".join(f"pmid:{p.pmid} on {' '.join(map(str, t))}" for p, t in others)
+            o.note = "conflicts with " + "; ".join(f"{p.paper_id} on {' '.join(map(str, t))}" for p, t in others)
     for o in outcomes:
         if o.status == "conflict":
             o.status = "parked"
@@ -1088,6 +1225,21 @@ def _paper_line(cfg: Config, pmid: str) -> str:
     except (FileNotFoundError, pubmed.ParseError):
         title = "(title not in the cache)"
     return f"[pmid:{pmid}](https://pubmed.ncbi.nlm.nih.gov/{pmid}/) {title}"
+
+
+def _outcome_line(cfg: Config, o: Outcome) -> str:
+    """The paper of a (card, paper) pair for the report: a PubMed link, or for a DOI-only preprint a link to
+    ``https://doi.org/<doi>`` with the title from the cached Europe PMC record."""
+    if o.pmid.isdigit():
+        return _paper_line(cfg, o.pmid)
+    doi = o.paper_id.removeprefix("doi:")
+    try:
+        record = europepmc.read_cached_preprint(europepmc.EuropePmcCache(cfg.cache_dir), doi)
+    except europepmc.EuropePmcError:
+        record = None
+    paper = next((p for p in _run_papers(cfg) if p.get("ppr_id") == o.pmid), None)
+    title = record.title if record else (paper["title"] if paper else "(title not in the cache)")
+    return f"[{o.paper_id}](https://doi.org/{doi}) {title} (preprint, not peer reviewed)"
 
 
 def _ref_line(cfg: Config, ref: dict[str, Any], papers: Sequence[dict[str, Any]]) -> str:
@@ -1179,10 +1331,10 @@ def build_report(cfg: Config) -> str:
             where = "the card" if f.operation is None else f"operation {f.operation}"
             notes.append(f"reviewer note ({f.severity}) on {where}: {f.problem}")
         touched: list[list[str]] = []
-        preprints = preprint_ids(last.ops, base)
-        for op in last.ops.operations:
-            target = tier2 if tier(op, preprints) == 2 else tier1
-            target.append(f"- **{o.slug}**, from {_paper_line(cfg, o.pmid)}: {describe_op(op, base)}")
+        op_tiers = tiers(last.ops, base)
+        for op, op_tier in zip(last.ops.operations, op_tiers, strict=True):
+            target = tier2 if op_tier == 2 else tier1
+            target.append(f"- **{o.slug}**, from {_outcome_line(cfg, o)}: {describe_op(op, base)}")
             if not any(target is t for t in touched):
                 touched.append(target)
         for target in touched:
@@ -1221,7 +1373,7 @@ def build_report(cfg: Config) -> str:
         )
         lines.append("")
         for o in by_status["parked"]:
-            lines.append(f"- **{o.slug}**, from {_paper_line(cfg, o.pmid)}: {o.note}")
+            lines.append(f"- **{o.slug}**, from {_outcome_line(cfg, o)}: {o.note}")
             lines += _rejection_lines(o)
             last = o.last
             if last is not None and last.ops is not None:
@@ -1238,7 +1390,7 @@ def build_report(cfg: Config) -> str:
         )
         lines.append("")
         for o in by_status["withdrawn"]:
-            lines.append(f"- **{o.slug}**, from {_paper_line(cfg, o.pmid)}: {o.note}")
+            lines.append(f"- **{o.slug}**, from {_outcome_line(cfg, o)}: {o.note}")
             lines += _rejection_lines(o)
             base = base_data(o.slug)
             for r in o.rounds[:-1]:
@@ -1252,17 +1404,6 @@ def build_report(cfg: Config) -> str:
         lines.append("No card is drafted for these. They are listed so the founder can decide whether to add one.")
         lines.append("")
         lines += [f"- {_ref_line(cfg, h, papers)}: {h['hypothesis']} ({h['reason']})" for h in hyp]
-    else:
-        lines.append("None.")
-    lines += ["", "## Preprints matched to a card (not drafted)", ""]
-    preprint_matches = classify.get("preprint_matches", []) if classify else []
-    if preprint_matches:
-        lines.append(
-            "A preprint with no PMID can only be an early signal. No drafting step handles it; the founder decides "
-            "whether to cite it. Fetch its record first: `uv run python -m me_atlas.europepmc preprint <doi>`."
-        )
-        lines.append("")
-        lines += [f"- **{m['slug']}**: {_ref_line(cfg, m, papers)}" for m in preprint_matches]
     else:
         lines.append("None.")
     lines += ["", "## Preprints on cards with a published version", ""]
@@ -1293,7 +1434,7 @@ def build_report(cfg: Config) -> str:
     else:
         lines.append("None.")
     lines += ["", "## Skipped", ""]
-    skipped = [f"- **{o.slug}**, {_paper_line(cfg, o.pmid)}: {o.note}" for o in by_status["skipped"]]
+    skipped = [f"- **{o.slug}**, {_outcome_line(cfg, o)}: {o.note}" for o in by_status["skipped"]]
     skipped += [
         f"- {_ref_line(cfg, s, papers)}: stopped, {s['why']}" for s in (classify["stopped"] if classify else [])
     ]
@@ -1428,14 +1569,14 @@ def subprocess_runner(cmd: Sequence[str]) -> tuple[int, str]:
 def final_card_texts(cfg: Config, outcomes: Sequence[Outcome]) -> dict[str, str]:
     """The text of each card after all its accepted operation files, applied in order of paper."""
     result: dict[str, str] = {}
-    for o in sorted((o for o in outcomes if o.status == "accepted"), key=lambda o: (o.slug, int(o.pmid))):
+    for o in sorted((o for o in outcomes if o.status == "accepted"), key=lambda o: (o.slug, _ledger_order(o.pmid))):
         assert o.last is not None and o.last.ops is not None
         text = result.get(o.slug) or _base_card(cfg, o.slug).read_text(encoding="utf-8")
         try:
             result[o.slug] = apply_operations(text, o.last.ops, validate=False)
         except OperationError as exc:
             raise PipelineError(
-                f"{o.slug}: accepted operations for pmid:{o.pmid} no longer apply together: {exc}"
+                f"{o.slug}: accepted operations for {o.paper_id} no longer apply together: {exc}"
             ) from exc
     for slug, text in result.items():
         with tempfile.TemporaryDirectory() as tmp:
@@ -1562,7 +1703,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     ctx = sub.add_parser("context", parents=[common], help="write the context file for one card and one paper")
     ctx.add_argument("slug")
-    ctx.add_argument("pmid", type=_pmid_arg)
+    ctx.add_argument("pmid", metavar="paper", help="a PMID, pmid:<pmid>, doi:<doi> or a PPR id (a DOI-only preprint)")
 
     app = sub.add_parser("apply", parents=[common], help="apply an operations file to a copy of the card and check it")
     app.add_argument("slug")
@@ -1571,7 +1712,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     rev = sub.add_parser("record-review", parents=[common], help="validate a review file")
     rev.add_argument("slug")
-    rev.add_argument("pmid", type=_pmid_arg)
+    rev.add_argument("pmid", metavar="paper", help="a PMID, pmid:<pmid>, doi:<doi> or a PPR id (a DOI-only preprint)")
     rev.add_argument("--round", type=int, choices=range(1, MAX_ROUNDS + 1), default=1)
 
     plan = sub.add_parser(
@@ -1688,15 +1829,15 @@ def _dispatch(
         result = record_classification(cfg)
         out(
             f"classification recorded: {len(result['matches'])} card/paper match(es), "
-            f"{len(result['preprint_matches'])} preprint match(es) (not drafted), "
             f"{len(result['stopped'])} stopped, "
             f"{len(result['new_hypotheses'])} possible new hypothesis(es)"
         )
         return 0
     if args.command == "context":
         loader = fulltext or live_fulltext_loader(cfg.cache_dir)
-        text = build_context(cfg, args.slug, args.pmid, loader)
-        path = cfg.f("context", f"{args.slug}-{args.pmid}.md")
+        key, _paper = resolve_paper(cfg, args.pmid)
+        text = build_context(cfg, args.slug, key, loader)
+        path = cfg.f("context", f"{args.slug}-{key}.md")
         _write_text(path, text)
         out(str(path))
         return 0
@@ -1714,14 +1855,15 @@ def _dispatch(
         for row in result["citations"]:
             if row["level"] == citations.ERROR and row["preexisting"]:
                 out(f"citations (already on the card, not blocking): {row['study']}: {row['code']}: {row['message']}")
-        out(f"checks: {cfg.checks_path(args.slug, result['paper'].removeprefix('pmid:'), args.round)}")
+        out(f"checks: {cfg.checks_path(args.slug, result['key'], args.round)}")
         if result["passed"]:
             out("PASSED" + (" (no change proposed)" if result["no_change"] else f"; applied card: {result['applied']}"))
             return 0
         out("FAILED")
         return 1
     if args.command == "record-review":
-        review = record_review(cfg, args.slug, args.pmid, args.round)
+        key, _paper = resolve_paper(cfg, args.pmid)
+        review = record_review(cfg, args.slug, key, args.round)
         out(f"review recorded: {review.verdict}, {len(review.findings)} finding(s)")
         return 0
     if args.command == "translation-plan":

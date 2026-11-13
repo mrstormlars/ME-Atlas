@@ -1303,3 +1303,15 @@ def test_v15_a_preprint_in_a_link_fails_at_that_link(tmp_path):
     data = with_preprint(base())
     data["links"] = [link(sources=(PREPRINT_ID,))]
     assert v15(check(tmp_path, data)) == ["links[0].sources[0]"]
+
+
+def test_v15_a_preprint_in_the_core_claim_fails(tmp_path):
+    data = with_preprint(base())
+    data["core_claim"]["sources"].append(PREPRINT_ID)
+    assert v15(check(tmp_path, data)) == ["core_claim.sources[1]"]
+
+
+def test_v15_a_preprint_in_a_subgroup_fails_at_that_subgroup(tmp_path):
+    data = with_preprint(base())
+    data["subgroups"].append({"text": "A fictional preprint reported a subgroup.", "sources": [PREPRINT_ID]})
+    assert v15(check(tmp_path, data)) == ["subgroups[1].sources[0]"]

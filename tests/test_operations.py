@@ -17,6 +17,7 @@ from me_atlas.operations import (
     parse_ops,
     preprint_ids,
     tier,
+    tiers,
 )
 
 FIXTURES = Path(__file__).parent / "fixtures" / "pipeline"
@@ -444,10 +445,20 @@ def test_a_paragraph_citing_a_preprint_already_on_the_card_is_tier_2():
     assert [tier(o, found) for o in parsed.operations] == [2, 1]
 
 
-def test_a_study_added_without_preprint_true_stays_tier_1_even_if_its_id_is_a_doi():
+def test_a_doi_paper_must_add_its_study_with_preprint_true():
     plain = {**copy.deepcopy(NEW_STUDY), "id": "doi:10.99999/fictional.plain"}
-    parsed = ops({"op": "add_study", "study": plain}, paper=plain["id"])
-    assert [tier(o, preprint_ids(parsed)) for o in parsed.operations] == [1]
+    with pytest.raises(OperationError, match="needs preprint: true"):
+        ops({"op": "add_study", "study": plain}, paper=plain["id"])
+
+
+def test_every_operation_of_a_file_for_a_doi_preprint_is_tier_2_even_one_citing_a_journal_paper():
+    parsed = preprint_ops(add_preprint_study(), add_par("early_signals", sources=["pmid:90000100"]))
+    assert tiers(parsed) == [2, 2]
+
+
+def test_tiers_of_a_pubmed_file_are_per_operation():
+    parsed = ops(add_study(), add_par("early_signals"), {"op": "propose", "target": "contested", "value": None})
+    assert tiers(parsed) == [1, 1, 2]
 
 
 def test_a_preprint_study_is_written_with_preprint_true_and_a_plain_study_without_the_key(tmp_path):

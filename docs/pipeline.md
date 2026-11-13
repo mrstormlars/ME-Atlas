@@ -21,10 +21,10 @@ The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is
 | # | Command | Who | Output in `data/pipeline/<date>/` |
 | --- | --- | --- | --- |
 | 1 | `prepare [--since] [--reprocess]` | code | `papers.json` (papers in the fetch window that no earlier run processed, and preprints that survive de-duplication), `cards.json` (slug, name, core claim), `prepare.json` (counts, newly retracted PMIDs cited on a card, the preprint counts and every dropped preprint with its reason, cards that cite a preprint with a published version) |
-| 2 | `paper-classifier` agent, then `record-classification` | haiku, code | `classify.json`, then `matches.json` (card/paper pairs to draft, `preprint_matches`, papers stopped, possible new hypotheses) |
-| 3 | `context <slug> <pmid>`, then `card-drafter` agent | code, sonnet | `context/<slug>-<pmid>.md`, `ops/<slug>-<pmid>-r<N>.json` |
-| 4 | `apply <slug> <ops> [--round N]` | code | `checks/...-r<N>.json`, `applied/<slug>-<pmid>-r<N>/<slug>.yaml` and `changes.diff` |
-| 5 | `card-reviewer` agent (pipeline mode), then `record-review <slug> <pmid> [--round N]` | opus, code | `review/<slug>-<pmid>-r<N>.json` |
+| 2 | `paper-classifier` agent, then `record-classification` | haiku, code | `classify.json`, then `matches.json` (card/paper pairs to draft, papers stopped, possible new hypotheses) |
+| 3 | `context <slug> <key>`, then `card-drafter` agent | code, sonnet | `context/<slug>-<key>.md`, `ops/<slug>-<key>-r<N>.json` |
+| 4 | `apply <slug> <ops> [--round N]` | code | `checks/...-r<N>.json`, `applied/<slug>-<key>-r<N>/<slug>.yaml` and `changes.diff` |
+| 5 | `card-reviewer` agent (pipeline mode), then `record-review <slug> <key> [--round N]` | opus, code | `review/<slug>-<key>-r<N>.json` |
 | 6 | `translation-plan [--lang nb]`, then `card-translator` agent, `card-reviewer` agent (translation mode) and `translations apply` | code, sonnet, opus, code | `final/<slug>.yaml`, `translate/<slug>.json`, `translation-plan.json`, `translated/<slug>.json`, `translation-review/<slug>.json`; writes `translations/nb/<slug>.yaml` |
 | 7 | `report` | code | `report.md` |
 | 8 | `pr [--dry-run] [--no-pr]` | code | copies accepted results into `drafts/`, branch `pipeline/<date>`, commit, push, `gh pr create` with `report.md` as the description |
@@ -46,16 +46,23 @@ The papers in the fetch window (`window_pmids` of the run manifest, cached or no
 | `published` | it has a "Preprint of" link to a PubMed record (the PMID, whether it is in the PubMed cache, and the link's note are listed) |
 | `in_pubmed` | its DOI (case-insensitive) is the DOI of a record in this run's PubMed window or in the PubMed cache |
 | `superseded` | a higher version, whose PPR id is in the same search, exists |
+| `duplicate_doi` | several records share this DOI (case-insensitive); the one with the highest version number, then the highest PPR number, is kept and the others are dropped (judged after `published` and `in_pubmed`; the row names the one kept) |
 | `no_doi` | no DOI, so it cannot be cited |
 | `processed` | the ledger has its PPR id (unless `--reprocess`) |
 
 Survivors are added to `papers.json` after the PubMed papers: `id` `doi:<doi>`, `pmid` null, `preprint` true, `ppr_id`, `journal` the preprint server, `publication_types` ["Preprint"] and `entry_date` the first index date. Every PubMed paper also has `preprint` (true for a PubMed record with the publication type "Preprint", such as pmid:42996068; that record keeps its PMID and flows as any other paper). The ledger holds a preprint under its PPR id, in the same file; PMIDs come first, in numeric order, so a ledger written before preprints reads unchanged.
 
-A classification names its paper by exactly one of `pmid` or `id` (`doi:<doi>`, for a preprint with no PMID); both, neither, an unknown id, a repeated paper and a missing paper are rejected. A DOI-only preprint that matches a card goes to `preprint_matches` (`{slug, id}`) in `matches.json`, not to `matches`: no step drafts it, and the report lists it under "Preprints matched to a card (not drafted)". A preprint that PubMed also holds is classified and drafted as a PubMed paper; its context file says it is a preprint and that it can only be added with `preprint: true` and `role: early_signal`.
+A classification names its paper by exactly one of `pmid` or `id` (`doi:<doi>`, for a preprint with no PMID); both, neither, an unknown id, a repeated paper and a missing paper are rejected. A DOI-only preprint that matches a card goes into `matches` as `{slug, id}` (a PubMed pair is `{slug, pmid}`) and is drafted, checked and reviewed like any other pair, with the differences below. A preprint that PubMed also holds is a PubMed paper; its context file says it is a preprint and that it can only be added with `preprint: true` and `role: early_signal`.
+
+**The paper key.** Every file of a pair is named `<slug>-<key>…` (`context/`, `ops/`, `checks/`, `review/`, `applied/`). The key is the PMID digits for a PubMed paper (unchanged) and the PPR id (`PPR<digits>`) for a DOI-only preprint, read from `papers.json`. `context`, `apply` and `record-review` take the paper as `<pmid>`, `pmid:<pmid>`, `doi:<doi>` or the PPR id and resolve it against this run's `papers.json`; a `doi:` or PPR id that is not a DOI-only preprint of this run is an error naming it. In an ops file and a review file the paper is `doi:<doi>`.
+
+**Context for a DOI-only preprint.** Built only from its cached Europe PMC record (`europepmc preprint <doi>` caches it; without it `context` stops and names the DOI and that command): id, Europe PMC id, title, server, year, first index date, version, abstract (HTML tags removed), the preprint rule, and the note that the case definition comes from the abstract or the full text, otherwise `unverified`. Full text goes through `get_fulltext(..., preprint=record)` with the same status notes as for a PubMed paper, and the same case-definition sentence lists when there is text.
+
+**Apply, review, report.** An ops file whose `paper` is `doi:<doi>` is checked like any other (validator including V15, citation check against the cached preprint record: C1, C2, C3, C5, C6); its `add_study` must have `preprint: true`, and every operation in it is tier 2. `record-review` expects `paper: "doi:<doi>"` for that pair. The report links the paper to `https://doi.org/<doi>` with the title from the cached record. Conflict parking and the final card text treat the pair as any other.
 
 A study marked `preprint: true` on a card or draft whose cached preprint record (or this run's search result) has a "Preprint of" link is listed in `prepare.json` under `preprints_published` and in the report under "Preprints on cards with a published version". No operation is written; the founder decides.
 
-**Tier 2.** An operation that adds a study with `preprint: true`, or cites a study marked `preprint: true` (on the card or in the same file) in its sources, is tier 2 (the founder approves), until the founder rules otherwise. `apply` counts it in `tiers` and the report lists it under tier 2.
+**Tier 2.** An operation that adds a study with `preprint: true`, or cites a study marked `preprint: true` (on the card or in the same file) in its sources, is tier 2; so is every operation of an ops file whose paper is a `doi:` preprint (the founder approves), until the founder rules otherwise. `apply` counts it in `tiers` and the report lists it under tier 2.
 
 ## The context file
 
@@ -99,7 +106,7 @@ Stage 6, after the reviews and before the report, keeps the Norwegian text in st
 3. **Parking lot**: changes still rejected after two rounds, with the reviewer's findings (severity shown, `must_fix` first) and what the drafter proposed. Accepted changes show the reviewer's remaining notes with their severity in the same way, and any `group` warnings from `apply`. The parking lot also shows `not_on_card` when the reviewer set it.
 4. **Rejected by the reviewer, then withdrawn**: pairs where round 1 was rejected and round 2 proposed nothing. For each: the round of the rejection, every finding of the rejecting review (severity shown, `must_fix` first, problem and suggested fix in full), what the drafter proposed in the rejected round, and the reviewer's `not_on_card` line when there is one. `None.` when there is no such pair. The summary sentence at the top counts these pairs on their own.
 5. **Possible new hypotheses**: papers that fit no card. No card is drafted.
-6. **Preprints matched to a card (not drafted)** and **Preprints on cards with a published version** (see "Preprints").
+6. **Preprints on cards with a published version** (see "Preprints"). A preprint pair that was drafted is in the tier lists above, always tier 2.
 7. **Retracted papers cited on cards.**
 8. **Skipped**: failed checks, no operations file, no review, papers stopped as reviews or off-topic.
 9. **Pre-existing problems on cards**: citation-check errors the card already had (they do not block a new paper).

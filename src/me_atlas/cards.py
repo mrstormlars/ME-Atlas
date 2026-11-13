@@ -286,7 +286,8 @@ def _sourced_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
 
 
 def _v15_cited_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
-    """The texts where a preprint may not be cited: level, contested and badge reasons, and links."""
+    """The texts where a preprint may not be cited: every sourced text except ``early_signals``."""
+    yield "core_claim", card.core_claim
     yield from _paragraphs_at("level_reason", card.level_reason)
     if card.contested:
         yield from _paragraphs_at("contested.reason", card.contested.reason)
@@ -294,6 +295,8 @@ def _v15_cited_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
         reason = getattr(card.badges, name).reason
         if reason is not None:
             yield from _paragraphs_at(f"badges.{name}.reason", reason)
+    for i, t in enumerate(card.subgroups):
+        yield f"subgroups[{i}]", t
     for i, link in enumerate(card.links):
         yield f"links[{i}]", link
 

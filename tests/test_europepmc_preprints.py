@@ -341,3 +341,39 @@ def test_a_preprint_without_a_pmc_id_is_not_open_access_and_nothing_is_requested
 def test_get_fulltext_needs_a_pmid_or_a_preprint(tmp_path):
     with pytest.raises(ValueError):
         get_fulltext(FakePpr().client(), EuropePmcCache(tmp_path), None)
+
+
+# --- two cached records with one DOI ------------------------------------------------------
+
+
+def _two_records_one_doi(tmp_path) -> EuropePmcCache:
+    cache = EuropePmcCache(tmp_path)
+    first = raw_records()[0]
+    second = {**first, "id": "PPR9000099", "doi": first["doi"].upper()}
+    cache.write_preprint(first)
+    cache.write_preprint(second)
+    return cache
+
+
+def test_a_doi_lookup_with_two_cached_records_raises_an_error_naming_both_ppr_ids(tmp_path):
+    cache = _two_records_one_doi(tmp_path)
+    for lookup in (
+        lambda: read_cached_preprint(cache, MAIN_DOI),
+        lambda: get_preprint(FakePpr().client(), cache, MAIN_DOI),
+    ):
+        with pytest.raises(EuropePmcError, match="PPR9000001 and PPR9000099"):
+            lookup()
+
+
+def test_a_search_by_doi_that_returns_two_records_raises_the_same_error(tmp_path):
+    server = FakePpr()
+    first = raw_records()[0]
+    page = {"hitCount": 2, "resultList": {"result": [first, {**first, "id": "PPR9000099"}]}}
+    client = EuropePmcClient(
+        EMAIL,
+        transport=httpx.MockTransport(lambda r: httpx.Response(200, json=page)),
+        clock=server.clock,
+        sleep=server.clock.sleep,
+    )
+    with pytest.raises(EuropePmcError, match="PPR9000001 and PPR9000099"):
+        get_preprint(client, EuropePmcCache(tmp_path), MAIN_DOI)

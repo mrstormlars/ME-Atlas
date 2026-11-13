@@ -150,13 +150,20 @@ class CacheReader:
         self.epmc = EuropePmcCache(root)
         self._records: dict[str, PubMedRecord | str] = {}
         self._fulltexts: dict[str, str | tuple[str]] = {}
-        self._preprints: dict[str, PreprintRecord] | None = None
+        self._preprints: dict[str, list[PreprintRecord]] | None = None
 
     def preprint(self, doi: str) -> PreprintRecord | None:
         """The cached Europe PMC preprint record with this DOI (case-insensitive), or None."""
         if self._preprints is None:
-            self._preprints = {r.doi.lower(): r for r in read_cached_preprints(self.epmc) if r.doi}
-        return self._preprints.get(doi.removeprefix("doi:").lower())
+            self._preprints = {}
+            for r in read_cached_preprints(self.epmc):
+                if r.doi:
+                    self._preprints.setdefault(r.doi.lower(), []).append(r)
+        found = self._preprints.get(doi.removeprefix("doi:").lower(), [])
+        if len(found) > 1:
+            ids = " and ".join(r.ppr_id for r in found)
+            raise EuropePmcError(f"two cached preprint records have the DOI {doi}: {ids}; decide which one is meant")
+        return found[0] if found else None
 
     def preprint_fulltext(self, record: PreprintRecord) -> str | tuple[str]:
         """The plain text of the cached full text of a preprint, or a 1-tuple holding the reason there is none.
@@ -309,7 +316,10 @@ _TAG_RE = re.compile(r"<[^>]+>")
 def _check_preprint(study: Study, cache: CacheReader, issue) -> list[CitationIssue]:
     """C1-C3, C5 and C6 for a ``doi:`` preprint study, against the cached Europe PMC preprint record."""
     doi = study.id.removeprefix("doi:")
-    record = cache.preprint(doi)
+    try:
+        record = cache.preprint(doi)
+    except EuropePmcError as exc:
+        return [issue("C1", ERROR, str(exc))]
     if record is None:
         return [issue("C1", ERROR, f"no cached Europe PMC preprint record; fetch it with `{preprint_fetch_hint(doi)}`")]
     issues: list[CitationIssue] = []

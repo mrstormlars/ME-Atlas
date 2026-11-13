@@ -465,12 +465,20 @@ def read_cached_preprints(cache: EuropePmcCache) -> list[PreprintRecord]:
 
 
 def read_cached_preprint(cache: EuropePmcCache, doi: str) -> PreprintRecord | None:
-    """The cached preprint record with this DOI (compared case-insensitively), or None. Never a request."""
+    """The cached preprint record with this DOI (compared case-insensitively), or None. Never a request.
+
+    Raises EuropePmcError, naming both PPR ids, if two cached records have the same DOI.
+    """
     wanted = doi.removeprefix("doi:").strip().lower()
-    for record in read_cached_preprints(cache):
-        if record.doi and record.doi.lower() == wanted:
-            return record
-    return None
+    found = [r for r in read_cached_preprints(cache) if r.doi and r.doi.lower() == wanted]
+    if len(found) > 1:
+        raise _ambiguous(doi, found)
+    return found[0] if found else None
+
+
+def _ambiguous(doi: str, records: Sequence[PreprintRecord]) -> EuropePmcError:
+    ids = " and ".join(r.ppr_id for r in records)
+    return EuropePmcError(f"two preprint records have the DOI {doi}: {ids}; decide which one is meant")
 
 
 def get_preprint(
@@ -485,12 +493,15 @@ def get_preprint(
         return cached
     raw = client.search_preprint_doi(doi)
     _count, _cursor, results = parse_search_page(raw)
+    matches = []
     for result in results:
         record = parse_preprint(result)
         if record.doi and record.doi.lower() == doi.lower():
             cache.write_preprint(result)
-            return record
-    return None
+            matches.append(record)
+    if len(matches) > 1:
+        raise _ambiguous(doi, matches)
+    return matches[0] if matches else None
 
 
 def is_placeholder_fulltext(xml: bytes | str) -> bool:
