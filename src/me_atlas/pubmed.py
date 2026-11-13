@@ -6,11 +6,15 @@ Command line::
     uv run python -m me_atlas.pubmed fetch --weekly      # last 14 days by entry date
     uv run python -m me_atlas.pubmed fetch --backfill    # the whole literature, no lower date
     uv run python -m me_atlas.pubmed fetch --ids 12345678 23456789 [--refresh]   # exactly these records
+    uv run python -m me_atlas.pubmed query-diff --term "CFS/ME" [--term ...] [--sample 20]
+    uv run python -m me_atlas.pubmed query-diff --cited-in drafts [--ids 12345678 ...]
 
 Every run except ``--ids`` searches PubMed with the query in ``config/pubmed_query.txt``, also asks which
 hits are retracted, downloads the records not yet cached into ``data/cache/pubmed/<pmid>.xml`` and writes
 a manifest to ``data/cache/runs/<timestamp>.json``. ``--ids`` downloads only the given PMIDs (no search,
-no retraction query), so a card can cite a paper the search query does not find. See ``docs/fetch.md``.
+no retraction query), so a card can cite a paper the search query does not find. ``query-diff`` checks the
+query's recall (terms it might miss, cited ids it does not return) and writes
+``data/cache/query-diff/<timestamp>.json``, never to ``runs/``. See ``docs/fetch.md``.
 
 Environment (or ``.env``): ``CONTACT_EMAIL`` (required, sent to NCBI) and ``NCBI_API_KEY`` (optional,
 raises the rate limit from 3 to 10 requests per second).
@@ -296,13 +300,24 @@ class PubMedClient:
             error=PubMedError,
         )
 
-    def search(self, term: str, *, mindate: dt.date | None = None, maxdate: dt.date | None = None) -> SearchResult:
-        """ESearch with the history server. Dates filter on the entry date (EDAT)."""
+    def search(
+        self,
+        term: str,
+        *,
+        mindate: dt.date | None = None,
+        maxdate: dt.date | None = None,
+        retmax: int | None = None,
+    ) -> SearchResult:
+        """ESearch with the history server. Dates filter on the entry date (EDAT).
+
+        ``retmax`` caps the ids returned (``count`` is still the full hit count). The ids come in PubMed's
+        default ESearch order, which is roughly newest entry date first (checked live, see docs/fetch.md).
+        """
         extra: dict[str, str | int] = {
             "term": term,
             "retmode": "json",
             "usehistory": "y",
-            "retmax": MAX_UIDS,
+            "retmax": MAX_UIDS if retmax is None else retmax,
         }
         if mindate or maxdate:
             extra["datetype"] = "edat"
@@ -589,6 +604,110 @@ def run_fetch_ids(
 
 
 # ---------------------------------------------------------------------------
+# Query recall check
+# ---------------------------------------------------------------------------
+
+DEFAULT_SAMPLE = 20
+IDS_BATCH_SIZE = 100
+_CITED_PMID_RE = re.compile(r"\bpmid:(\d+)\b")
+
+
+def term_search_string(term: str, query: str) -> str:
+    """Records with ``term`` in title/abstract that the query does not return."""
+    return f'"{term}"[Title/Abstract] NOT ({query})'
+
+
+def cited_pmids(directory: Path) -> list[str]:
+    """Every distinct ``pmid:<digits>`` in the YAML files under ``directory``, in numeric order."""
+    found: set[str] = set()
+    root = Path(directory)
+    for path in sorted([*root.rglob("*.yaml"), *root.rglob("*.yml")]):
+        found.update(_CITED_PMID_RE.findall(path.read_text(encoding="utf-8")))
+    return _pmid_sort(found)
+
+
+def _download_missing(client: PubMedClient, pmids: Sequence[str], cache: RawCache) -> None:
+    to_fetch = [p for p in pmids if not cache.has(p)]
+    wanted = set(to_fetch)
+    for article in client.fetch_articles(to_fetch):
+        pmid = _text(article.find("MedlineCitation/PMID"))
+        if pmid.isdigit() and pmid in wanted:
+            cache.write(pmid, article)
+
+
+def run_query_diff(
+    client: PubMedClient,
+    query: str,
+    cache: RawCache,
+    *,
+    terms: Sequence[str] = (),
+    ids: Sequence[str] = (),
+    sample: int = DEFAULT_SAMPLE,
+    now: Callable[[], dt.datetime] = lambda: dt.datetime.now(dt.UTC),
+    query_file: str = "",
+) -> tuple[dict[str, object], Path]:
+    """Count what candidate terms would add to the query, sample them, and check ids against the query.
+
+    Terms: ``"T"[Title/Abstract] NOT (query)``; up to ``sample`` of the hits, most recent first, are
+    downloaded into the record cache (cached ones are not downloaded again). Ids: the query restricted to
+    those ids is searched in batches; ids it does not return are outside the query. The result is written
+    to ``<cache>/query-diff/``, not ``runs/``.
+    """
+    started = now()
+    total = client.search(query, retmax=0)
+    term_results: list[dict[str, object]] = []
+    for term in dict.fromkeys(terms):
+        search_string = term_search_string(term, query)
+        result = client.search(search_string, retmax=sample)
+        sampled = result.ids[:sample]
+        if sampled:
+            _download_missing(client, sampled, cache)
+        term_results.append(
+            {
+                "term": term,
+                "search": search_string,
+                "count": result.count,
+                "sample_size": len(sampled),
+                "sample_pmids": sampled,
+                "warnings": result.warnings,
+            }
+        )
+
+    manifest: dict[str, object] = {
+        "timestamp": started.isoformat(),
+        "query_file": query_file,
+        "query": query,
+        "query_hits": total.count,
+        "order": "PubMed default ESearch order (roughly newest entry date first)",
+        "sample": sample,
+        "terms": term_results,
+    }
+    if ids:
+        asked = list(dict.fromkeys(ids))
+        inside: set[str] = set()
+        warnings: list[str] = []
+        for i in range(0, len(asked), IDS_BATCH_SIZE):
+            batch = asked[i : i + IDS_BATCH_SIZE]
+            restricted = f"({query}) AND ({' OR '.join(f'{p}[uid]' for p in batch)})"
+            result = client.search(restricted, retmax=len(batch))
+            inside.update(p for p in result.ids if p in batch)
+            warnings.extend(result.warnings)
+        manifest["ids_check"] = {
+            "ids": asked,
+            "inside_count": len(inside),
+            "outside": [p for p in asked if p not in inside],
+            "warnings": warnings,
+        }
+
+    timestamp = started.astimezone(dt.UTC).strftime("%Y%m%dT%H%M%SZ")
+    directory = cache.root / "query-diff"
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / f"{timestamp}.json"
+    path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return manifest, path
+
+
+# ---------------------------------------------------------------------------
 # Command line
 # ---------------------------------------------------------------------------
 
@@ -628,6 +747,18 @@ def _build_parser() -> argparse.ArgumentParser:
     fetch.add_argument("--refresh", action="store_true", help="re-download records even if cached")
     fetch.add_argument("--query-file", type=Path, default=DEFAULT_QUERY_FILE, help="default: %(default)s")
     fetch.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
+    diff = sub.add_parser(
+        "query-diff",
+        help="check the query's recall: what candidate terms would add, and which cited ids it does not return",
+    )
+    diff.add_argument("--term", action="append", default=[], metavar="TERM", help="candidate term (repeatable)")
+    diff.add_argument(
+        "--sample", type=int, default=DEFAULT_SAMPLE, help="records to download per term (default %(default)s)"
+    )
+    diff.add_argument("--ids", nargs="+", type=_pmid_arg, metavar="PMID", help="check these ids against the query")
+    diff.add_argument("--cited-in", type=Path, metavar="DIR", help="check every pmid:<digits> in the YAML files of DIR")
+    diff.add_argument("--query-file", type=Path, default=DEFAULT_QUERY_FILE, help="default: %(default)s")
+    diff.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
     return parser
 
 
@@ -644,7 +775,12 @@ def main(
     """Entry point. ``env`` is given by tests; otherwise ``.env`` and the process environment are used."""
     parser = _build_parser()
     args = parser.parse_args(argv)
-    if args.until and args.since is None:
+    if args.command == "query-diff":
+        if not (args.term or args.ids or args.cited_in):
+            parser.error("query-diff needs at least one of --term, --ids, --cited-in")
+        if args.sample < 1:
+            parser.error("--sample must be at least 1")
+    elif args.until and args.since is None:
         parser.error("--until can only be used with --since")
     if env is None:
         env = {**load_dotenv(), **os.environ}
@@ -657,6 +793,9 @@ def main(
             file=sys.stderr,
         )
         return 2
+
+    if args.command == "query-diff":
+        return _main_query_diff(args, email, env, transport, clock, sleep, now)
 
     if args.ids:
         return _main_ids(args, email, env, transport, clock, sleep, now)
@@ -699,6 +838,57 @@ def main(
     for warning in manifest["warnings"]:  # type: ignore[attr-defined]
         print(f"warning: PubMed says {warning}", file=sys.stderr)
     print(f"manifest: {path}")
+    return 0
+
+
+def _main_query_diff(
+    args: argparse.Namespace,
+    email: str,
+    env: Mapping[str, str],
+    transport: httpx.BaseTransport | None,
+    clock: Callable[[], float],
+    sleep: Callable[[float], None],
+    now: Callable[[], dt.datetime],
+) -> int:
+    client = PubMedClient(
+        email, (env.get("NCBI_API_KEY") or "").strip() or None, transport=transport, clock=clock, sleep=sleep
+    )
+    try:
+        query = read_query(args.query_file)
+        ids = list(args.ids or [])
+        if args.cited_in:
+            if not Path(args.cited_in).is_dir():
+                raise PubMedError(f"--cited-in: not a directory: {args.cited_in}")
+            ids.extend(cited_pmids(args.cited_in))
+        manifest, path = run_query_diff(
+            client,
+            query,
+            RawCache(args.cache_dir),
+            terms=args.term,
+            ids=ids,
+            sample=args.sample,
+            now=now,
+            query_file=str(args.query_file),
+        )
+    except PubMedError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        client.close()
+
+    print(f"query hits: {manifest['query_hits']}")
+    for item in manifest["terms"]:  # type: ignore[attr-defined]
+        print(f"{item['term']!r}: {item['count']} added, sample {item['sample_size']}")
+        for warning in item["warnings"]:
+            print(f"warning: PubMed says {warning} (term {item['term']!r})", file=sys.stderr)
+    check = manifest.get("ids_check")
+    if isinstance(check, dict):
+        print(f"ids checked: {len(check['ids'])}, outside the query: {len(check['outside'])}")
+        if check["outside"]:
+            print("outside: " + " ".join(check["outside"]))
+        for warning in check["warnings"]:
+            print(f"warning: PubMed says {warning} (ids check)", file=sys.stderr)
+    print(f"result: {path}")
     return 0
 
 
