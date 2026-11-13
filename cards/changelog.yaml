@@ -95,3 +95,25 @@
   - pmid:42196410
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-13
+  card: persistent-enterovirus-infection
+  change: First publication at level 0
+  reason: 'Level 0 accepted: the positive enterovirus studies have no stated or checked case definition,
+    and the two studies with CCC or CDC criteria found no enterovirus; both badges no, no contested mark,
+    layer mechanism, two links at step proposed.'
+  sources:
+  - pmid:1850635
+  - pmid:3404526
+  - pmid:17872383
+  - pmid:7775934
+  - pmid:42941838
+  - pmid:8863367
+  - pmid:8148439
+  - pmid:8777836
+  - pmid:7893870
+  - pmid:1433120
+  - pmid:7595406
+  - pmid:14570830
+  - pmid:8409778
+  tier: 2
+  decided_by: ai_audit

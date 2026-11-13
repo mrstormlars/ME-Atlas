@@ -1,0 +1,80 @@
+card: persistent-enterovirus-infection
+decision: accept
+parts:
+  - decision_part: "The level 0: the studies that found more enterovirus in patients have no stated or checked case definition, and the two studies with a recognised case definition found no enterovirus."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:1850635
+        quote: "SUBJECTS: 60 consecutive patients admitted to the institute with the postviral fatigue syndrome who had undergone extensive investigation to exclude other conditions."
+      - source: pmid:1850635
+        quote: "Overall, significantly more patients than controls had enteroviral RNA sequences in muscle (32/60, 53% v 6/41, 15%; odds ratio 6.7, 95% confidence interval 2.4 to 18.2)."
+      - source: pmid:3404526
+        quote: "skeletal muscle biopsy specimens from 96 patients who had suffered from the postviral fatigue syndrome myalgic encephalomyelitis for up to 20 years"
+      - source: pmid:17872383
+        quote: "165 consecutive patients with CFS underwent upper GI endoscopies and antrum biopsies."
+      - source: pmid:7775934
+        quote: "The serum of 88 chronic fatigue patients was screened for enteroviral specific sequences by polymerase chain reaction (PCR) assay."
+      - source: pmid:42941838
+        quote: "This cross-sectional study involved five controls and 15 ME subjects diagnosed using the Canadian Consensus Criteria [23]."
+      - source: pmid:42941838
+        quote: "When applied to a small number of blood samples from both ME patients and healthy controls, CATCH-EVseq detected no EV RNA, either in direct assays or after in vitro viral amplification."
+      - source: pmid:8863367
+        quote: "Altogether 34 patients with the chronic fatigue syndrome, according to criteria of the Centers for Disease Control, USA, were studied evenly over the seasons for the possible presence of a chronic enterovirus infection."
+      - source: pmid:8863367
+        quote: "We were unable to identify enteroviruses in any of these samples by any of these techniques."
+  - decision_part: "Level 2 is not reached: no controlled study with a recognised case definition supports the hypothesis; the later Glasgow muscle study did not repeat the earlier difference."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:8148439
+        quote: "Thirty-two (26.4%) of the biopsy specimens from the group of patients with CFS were positive, compared with 20 (19.8%) from the group of patients with OND, a difference that was not significant."
+      - source: pmid:8777836
+        quote: "none of the muscle samples from 34 patients contained detectable amounts of enteroviral RNA"
+      - source: pmid:7893870
+        quote: "No differences between 76 patients with disabling unexplained fatigue and 76 matched controls were found by serological or antigen testing."
+  - decision_part: "The card meets the inclusion rule: at least one peer-reviewed study with data from a cohort with a recognised case definition (CCC, and CDC criteria)."
+    rubric: "peer-reviewed study with data from an ME/CFS cohort defined by a recognised case definition"
+    evidence:
+      - source: pmid:42941838
+        quote: "This cross-sectional study involved five controls and 15 ME subjects diagnosed using the Canadian Consensus Criteria [23]."
+      - source: pmid:8863367
+        quote: "Altogether 34 patients with the chronic fatigue syndrome, according to criteria of the Centers for Disease Control, USA, were studied evenly over the seasons for the possible presence of a chronic enterovirus infection."
+  - decision_part: "No contested mark: at level 0 there is no rung and no supporting finding that a study could contradict."
+    rubric: "A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:8863367
+        quote: "Our study does not confirm evidence for persistent enterovirus infection in the chronic fatigue syndrome."
+  - decision_part: "Diagnostic marker badge no: no enterovirus marker has been tested in a second independent group with a stated case definition; the VP1 and neutralisation tests did not separate the groups."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:1433120
+        quote: "There was no significant difference in the numbers initially VP1 positive in the groups (11/34 and 7/34 positive in the chronic fatigue and major depression group respectively)."
+      - source: pmid:7595406
+        quote: "The Coxsackie B antibody neutralisation assay was not able to differentiate the CFS study group from the healthy comparison group, and thus the clinical relevance of this assay may be questioned."
+  - decision_part: "Explains PEM badge no: the only exercise study measured plasma lactate around one subanaerobic test, not symptoms after exertion, and the card is below level 2."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:14570830
+        quote: "On the day of biopsy, each CFS patient undertook a subanaerobic threshold exercise test (SATET)."
+      - source: pmid:14570830
+        quote: "Venous plasma lactate was measured immediately before and after exercise, and 30 minutes after testing."
+  - decision_part: "Layer mechanism: the hypothesis is a persisting infection that keeps the illness going, which is the perpetuating-mechanism question."
+    rubric: "Perpetuating mechanism | `mechanism` | Why does it not resolve?"
+    evidence:
+      - source: pmid:3404526
+        quote: "These data show that enterovirus RNA is present in skeletal muscle of some patients with postviral fatigue syndrome up to 20 years after onset of disease and suggest that a persistent virus infection has an aetiological role."
+  - decision_part: "Link to question:what-keeps-it-going at step proposed: a peer-reviewed study states the persistence proposal; its case definition is unverified, so it cannot carry a higher step."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:8409778
+        quote: "By analogy with enteroviral myocarditis, which can progress to a post-inflammatory disease with persistence of virus in myocardium and disposes to the rapid development of dilated cardiomyopathy, we propose that PFS syndrome may be a sequela of a previous inflammatory viral myopathy."
+      - source: pmid:8777836
+        quote: "These data provide no evidence of an enteroviral infection in muscle of patients with chronic fatigue syndrome, although this does not exclude a role of enterovirus in initiating the disease process."
+  - decision_part: "Link to impaired-energy-production-after-exertion at step proposed, not associated: the study states the link and measured both ends, but its case definition is not stated in the abstract."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:14570830
+        quote: "Nine of the 10 enterovirus positive cases were among the 28 SATET+ patients (32.1%), compared with only one (5%) of the 20 SATET- patients."
+      - source: pmid:14570830
+        quote: "There is an association between abnormal lactate response to exercise, reflecting impaired muscle energy metabolism, and the presence of enterovirus sequences in muscle in a proportion of CFS patients."
+reasons_summary: "Level 0 accepted: the positive enterovirus studies have no stated or checked case definition, and the two studies with CCC or CDC criteria found no enterovirus; both badges no, no contested mark, layer mechanism, two links at step proposed."
+would_change: "A full-text check that finds a recognised case definition (CCC, ICC, IOM 2015, Fukuda, Holmes 1988 or CDC criteria) in a controlled positive study such as pmid:1850635, pmid:8409778, pmid:7775934, pmid:7595406 or pmid:17872383 would put level 2 in question, and a verified definition in pmid:14570830 would allow the energy-production link to be reassessed at step associated. Unverifiable, not shown false: the place names in the level and badge reasons and link texts (London for pmid:3404526, pmid:8409778 and pmid:14570830; Glasgow for the serum studies pmid:7775934 and pmid:7595406; California for pmid:17872383; Liverpool for pmid:8777836; Nijmegen for pmid:7893870; Leeds for pmid:1433120; Stockholm for pmid:8863367) and 'with no control group' for pmid:8863367 are not in the abstracts, and no full text is cached for these carriers; the level, badges and links do not rest on them. The core claim's 'the blood' is not in its three cited sources (pmid:3404526, pmid:1850635, pmid:17872383); serum evidence is in pmid:7775934, which the core claim does not cite (a text matter, not a tier 2 decision). I was given no drafting, review or earlier audit reasoning."
