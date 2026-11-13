@@ -2097,3 +2097,30 @@ def test_pr_cuts_a_line_longer_than_the_limit_and_still_round_trips(accepted: En
     parts = [(accepted.run / f"report-part-{k}.md").read_text(encoding="utf-8") for k in range(1, n + 1)]
     assert n > 2 and all(len(p) <= 200 for p in parts)
     assert _unsplit(parts) == report
+
+
+# --- the default run folder ---------------------------------------------------
+
+
+def make_runs(root: Path, *names: str) -> None:
+    for name in names:
+        (root / name).mkdir(parents=True)
+        (root / name / "papers.json").write_text("[]", encoding="utf-8")
+
+
+def test_the_default_run_is_the_newest_exact_date_folder_not_a_livecheck_folder(tmp_path: Path):
+    make_runs(tmp_path, "2026-11-06", "2026-11-13", "2026-11-13-livecheck", "nb-first-run")
+    assert pipeline._latest_run(tmp_path) == tmp_path / "2026-11-13"
+
+
+def test_a_folder_that_is_not_a_valid_date_or_has_no_papers_json_is_never_the_default(tmp_path: Path):
+    make_runs(tmp_path, "2026-11-06", "2026-13-45")
+    (tmp_path / "2026-11-20").mkdir()  # a date, but no run in it
+    assert pipeline._latest_run(tmp_path) == tmp_path / "2026-11-06"
+
+
+def test_without_an_exact_date_run_the_default_fails_and_names_run_dir(tmp_path: Path, capsys):
+    make_runs(tmp_path, "2026-11-13-livecheck")
+    assert pipeline.main(["report", "--pipeline-dir", str(tmp_path)]) == 1
+    err = capsys.readouterr().err
+    assert "--run-dir" in err and "YYYY-MM-DD" in err

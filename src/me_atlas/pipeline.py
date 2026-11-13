@@ -1763,7 +1763,12 @@ def _pmid_arg(text: str) -> str:
 def _build_parser() -> argparse.ArgumentParser:
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--pipeline-dir", type=Path, default=DEFAULT_PIPELINE_DIR, help="default: %(default)s")
-    common.add_argument("--run-dir", type=Path, help="default: the newest run in --pipeline-dir")
+    common.add_argument(
+        "--run-dir",
+        type=Path,
+        help="default: the newest folder in --pipeline-dir named exactly YYYY-MM-DD that holds papers.json "
+        "(a folder with any other name is never chosen by default)",
+    )
     common.add_argument("--cards-dir", type=Path, default=Path("cards"), help="default: %(default)s")
     common.add_argument("--drafts-dir", type=Path, default=Path("drafts"), help="default: %(default)s")
     common.add_argument("--cache-dir", type=Path, default=Path("data/cache"), help="default: %(default)s")
@@ -1811,9 +1816,27 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def _latest_run(pipeline_dir: Path) -> Path:
-    runs = sorted(p for p in pipeline_dir.glob("*") if (p / "papers.json").is_file()) if pipeline_dir.is_dir() else []
+    """The newest folder of ``pipeline_dir`` named exactly as an ISO date (YYYY-MM-DD) that holds ``papers.json``.
+
+    A folder with any other name (``2026-11-13-livecheck``, ``nb-first-run``) is never the default; use ``--run-dir``.
+    """
+
+    def is_date(name: str) -> bool:
+        try:
+            return dt.date.fromisoformat(name).isoformat() == name
+        except ValueError:
+            return False
+
+    runs = (
+        sorted(p for p in pipeline_dir.iterdir() if is_date(p.name) and (p / "papers.json").is_file())
+        if pipeline_dir.is_dir()
+        else []
+    )
     if not runs:
-        raise PipelineError(f"no run in {pipeline_dir}; start one with `prepare`")
+        raise PipelineError(
+            f"no run in {pipeline_dir} whose folder is named YYYY-MM-DD and holds papers.json; "
+            "start one with `prepare`, or name the folder with `--run-dir`"
+        )
     return runs[-1]
 
 

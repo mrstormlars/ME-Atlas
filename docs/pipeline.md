@@ -31,7 +31,7 @@ The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is
 
 `log.jsonl` in the run directory records each `prepare`, `apply`, `record-classification` and `record-review` call. The whole directory is gitignored (`data/pipeline/`); the founder uses it to judge the agents' error rate before ending the calibration period.
 
-By default each command after `prepare` works on the newest run in `data/pipeline/`. Options on every command: `--run-dir`, `--pipeline-dir`, `--cards-dir`, `--drafts-dir`, `--cache-dir`, `--spec`, `--translations-dir`. `prepare` also takes `--date` (the name of the run directory, default today) and `--force` (start a run of the same date again).
+By default each command after `prepare` works on the newest run in `data/pipeline/`: the newest folder whose name is exactly a valid ISO date (`YYYY-MM-DD`) and which holds `papers.json`. A folder with any other name (`2026-11-13-livecheck`, `nb-first-run`) is never chosen by default; if no folder qualifies the command stops with a message naming `--run-dir`, which takes any folder. Options on every command: `--run-dir`, `--pipeline-dir`, `--cards-dir`, `--drafts-dir`, `--cache-dir`, `--spec`, `--translations-dir`. `prepare` also takes `--date` (the name of the run directory, default today) and `--force` (start a run of the same date again).
 
 ## What `prepare` selects
 
