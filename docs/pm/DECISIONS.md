@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — After the first live pipeline run: `group` stays optional, TODO rule V14
+
+- A study's `group` field stays optional. A missing `group` is a warning in `pipeline apply` and in the run report, and does not fail the pair. Why: 12 studies in 7 drafts lack it, so requiring it would be a format change; whether the warning should stop the tier 1 path is left for the ruling that ends the calibration period.
+- "TODO" in reader-facing text is rejected by a validator rule (V14, `docs/card-format.md`), not only by a pipeline check. Why: the live run's mechanical check passed a draft with "TODO: verify" in a finding; such text must never reach a reader, whatever path wrote it.
+
 ## 2026-11-13 — Wider sources: indirect evidence, preprints, bridge search pilot
 
 - A kind of evidence called "indirect" is introduced: sources whose population was not selected by an ME/CFS case definition (general human physiology, other conditions, long COVID without an ME/CFS definition). It may be shown on cards and the map but never moves a level, a badge, a contested mark or a link step. Why: the rubric requires an ME/CFS cohort; a mechanism shown elsewhere is a question for ME/CFS, not a finding about it.
