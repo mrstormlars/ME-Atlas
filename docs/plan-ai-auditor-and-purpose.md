@@ -9,7 +9,7 @@ Two changes of direction from the founder, on 2026-11-13:
 1. **The founder stops approving medical content.** The founder has no medical background, so the approval adds no medical judgement and is the bottleneck that keeps `cards/` empty. Until a competent person is recruited, an independent Opus instance acts as **auditor** and takes the content decisions the founder takes today. The founder pays for the work and sets its direction.
 2. **The purpose is raised:** ME Atlas aims to contribute to solving ME/CFS, by collecting and structuring what is known about its causal mechanisms so that researchers can see what is untested. The overview for patients and carers remains, as a sub-goal.
 
-This plan changes rules in `CLAUDE.md` and the functional spec, so every part below needs the founder's explicit ruling before it is implemented (last section).
+This plan changes rules in `CLAUDE.md` and the functional spec, and the founder ruled on every part on 2026-11-13 (last section). The rules change when this plan is implemented, not before.
 
 ## What does not change
 
@@ -101,11 +101,13 @@ Nothing is in `cards/` today. The drafts are audited one card at a time (the who
 - Other diseases; a slogan or rebranding.
 - Changing the rubric.
 
-## Founder ruling needed before implementation
+## Founder rulings (2026-11-13)
 
-- **The auditor takes over tier 2 and tier 3**, as in the roles table. Default: yes.
-- **New hypotheses:** the auditor decides them against the inclusion rule; removing one stays with the founder. Default: yes.
-- **First publication when the auditor does not accept a draft's level:** publish at the level the auditor accepts, or hold the card in `drafts/`. Default: publish at the accepted level, with the difference listed.
-- **Trial period** of four weekly runs with after-the-fact reading. Default: yes.
-- **Error reports:** which contact address goes on the methods page. No default; without one the line is left out.
-- **The purpose text** above, and no public slogan until the name is checked. Default: yes.
+The founder accepted every default ("Ja, alle standardene"); recorded in `docs/pm/DECISIONS.md`.
+
+- The auditor takes over tier 2 and tier 3, as in the roles table.
+- New hypotheses: the auditor decides them against the inclusion rule; removing one stays with the founder.
+- First publication: when the auditor does not accept a draft's level, the card is published at the level the auditor accepts, with the difference listed.
+- Trial period of four weekly runs with after-the-fact reading.
+- Error reports: no contact address has been given, so the error-report line is left out until the founder names one.
+- The purpose text above; no public slogan until the name is checked.
