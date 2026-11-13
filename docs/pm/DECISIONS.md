@@ -2,6 +2,17 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-13 — An AI auditor replaces founder approval of content; wider purpose
+
+- The founder stops approving medical content. Until a competent person is recruited, an independent Opus instance (the auditor) takes the tier 2 and tier 3 decisions: levels, badges, contested marks, layer and links, preprint early signals, parked disputes, and new hypotheses against the inclusion rule. Why: the founder has no medical background, so the approval added no medical judgement and kept `cards/` empty; the founder's role is to fund the work and set its direction.
+- The founder keeps: the rubric and its rules, the inclusion rule, the scope, the sources searched, the agents' prompts, and removing a hypothesis. The founder may overrule the auditor, as a logged correction.
+- Safeguards: the auditor sees only the change, the card, the cited cached records and the rubric; a change is applied only when the mechanical checks, the review agent and the auditor all accept it, and a dispute leaves the card unchanged; every level change and one in five other decisions is decided a second time by a fresh auditor and differences are counted; the site says that levels are decided by AI and that no expert has reviewed the content. Why: the auditor shares a model family with the agents it audits, so its independence lies in what it is shown, and its reliability has to be measured.
+- First publication: a draft whose level the auditor does not accept is published at the level the auditor accepts, with the difference listed. Levels the founder ruled earlier may therefore change.
+- Trial period: four weekly runs in which the founder reads the decisions after the fact. This replaces the calibration period of 2026-10-31. The founder still merges the weekly pull request.
+- Purpose: ME Atlas aims to contribute to solving ME/CFS; the overview for patients and carers remains as a sub-goal, and researchers become readers of equal weight. No public slogan until the name "Solve ME" has been checked against existing organisations. The order of work is unchanged: publish the cards, show them to researchers, then widen.
+- The preprint ruling below ("founder approves each") is superseded for content: preprint changes stay tier 2 and are decided by the auditor.
+- Takes effect when `docs/plan-ai-auditor-and-purpose.md` is implemented; until then `CLAUDE.md` rule 2 and spec section 6 stand as written. No contact address for error reports has been given yet.
+
 ## 2026-11-13 — Preprints: founder approves each; null results are shown
 
 - Every card change that comes from a preprint is tier 2: the founder approves each one. Why: nothing unreviewed should reach a card without a person having looked at it; the live check of the last 90 days found about two preprints a week, which the weekly review can absorb.
