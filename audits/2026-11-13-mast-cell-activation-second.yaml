@@ -1,0 +1,50 @@
+card: mast-cell-activation
+decision: reject
+parts:
+  - decision_part: "The level 2 basis: one controlled study in an ICC-defined cohort with a reported increase in a mast cell population."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:27362406
+        quote: "CFS/ME patients were classified according to the 2011 International Consensus Criteria."
+      - source: pmid:27362406
+        quote: "Moderately severe CFS/ME patients (n=12, mean age 39.25 ± SD3.52 years), severe CFS/ME patients (n=6, mean age 43.00 ± SD4.02 years) and healthy controls (n=13, mean age 42.69 ± SD3.87 years) were included in this study."
+      - source: pmid:27362406
+        quote: "We report significant increase of naïve MCs in moderate and severe CFS/ME patients compared with healthy controls."
+  - decision_part: "The contested mark set to null, and the card's ruling that the 2018 study is a different measure and does not contradict the level 2 finding."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29223146
+        quote: "A total of 11 International Consensus Criteria defined CFS/ME participants (40.42 ± 10.31), 9 World Health Organisation defined systemic mastocytosis (SM) participants (47.00 ± 10.37) and 12 healthy controls (HC) (36.36 ± 9.88) were included."
+      - source: pmid:29223146
+        quote: "MCP purity (CD117 and Lin2), maturity (CD34 and FcεRI), interaction receptors and ligands (CD154 and HLA-DR), and SM-specific (CD2 and CD25) markers were measured using flow cytometry."
+      - source: pmid:29223146
+        quote: "There were no significant differences in maturity MCPs, CD154, and CD2/CD25 expression between groups pre and post Poly I:C stimulation."
+      - source: pmid:27362406
+        quote: "We report significant increase of naïve MCs in moderate and severe CFS/ME patients compared with healthy controls."
+  - decision_part: "Whether the 2018 study contradicts the finding the level rests on: the records do not let the auditor tell, so the null contested mark cannot be accepted."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:29223146
+        quote: "There were no significant differences in maturity MCPs, CD154, and CD2/CD25 expression between groups pre and post Poly I:C stimulation."
+      - source: pmid:27362406
+        quote: "LSRFortessa X-20 Flow cytometry was used for the identification of phenotypic peripheral mast cell population in PBMCs using an exclusion marker Lin2 cocktail (anti-CD3, anti-CD14, anti-CD19, anti-CD20 and anti-CD56) and inclusion markers (CD117, CD34, FCεRI, chymase, HLA-DR and CD154) following comparative investigation."
+  - decision_part: "The link to symptom:orthostatic-intolerance at step associated (noted, not the ground of the decision)."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:41300853
+        quote: "The study cohort consists of 383 patients who visited the office of a neurologist in Vienna specializing in ME/CFS between March 2019 and April 2022 and who met the IOM diagnostic criteria for ME/CFS [31]."
+      - source: pmid:41300853
+        quote: "patient records were analyzed for the presence of recurrent symptoms of MCA in the following four organ systems: (1) cardiovascular system, with hypotension, tachycardia, syncope, or presyncope;"
+      - source: pmid:41300853
+        quote: "In the ME/CFS patient group with increased MCA, OI was significantly more prevalent in 70.3% of patients (n = 45), compared to 49.7% (n = 84) in the group without MCA (p = 0.005; Figure 4A)."
+      - source: pmid:41300853
+        quote: "laboratory testing was conducted in only 3.1% of the ME/CFS patients (n = 12)."
+  - decision_part: "The two badges set to false (these are supported)."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:27362406
+        quote: "This preliminary study investigates mast cell phenotypes from PBMCs in healthy controls."
+      - source: pmid:41300853
+        quote: "The primary objective of the here described studies was to identify clinically meaningful subgroups of ME/CFS patients based on self-reported symptoms, lifestyle factors, disease characteristics and already existing medical reports, rather than to perform biological validation."
+reasons_summary: "Rejected: level 2 rests on one ICC-defined controlled study (12 moderate, 6 severe patients, 13 controls), but a same-case-definition controlled study of 11 patients and 12 controls found no difference in mast cell progenitor maturity markers, and the records do not show that the two measures differ, so the null contested mark cannot be accepted."
+would_change: "Full texts of pmid:27362406 and pmid:29223146 (neither is cached) showing the denominator of the increased CD117+CD34+FcεRI-chymase- population and of the 2018 maturity measure. If they show different measures, contested: null at level 2 could be accepted. If they show the same measure, rung 2 should be marked contested with pmid:29223146 as a contradicting study. Unverifiable for the same reason: the card's institution labels ('Griffith University, Australia' for pmid:27362406, 'Harvard' for pmid:10884641, 'Washington, DC' for pmid:11570618), because no shown record text states them. Also unverifiable: the early-signal details for pmid:33996867 (infection confirmed by test in one patient, the laboratory reference range, tryptase normal in one patient), which go beyond its abstract, the only part given. Separately, the 'associated' link to orthostatic intolerance rests on mast cell activation judged partly from cardiovascular symptoms (hypotension, tachycardia, syncope) that overlap with the outcome, and mediators were tested in only 12 patients. A later audit should weigh whether this counts as measuring both ends. No drafting or review reasoning or earlier audit was supplied."
