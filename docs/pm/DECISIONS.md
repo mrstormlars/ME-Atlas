@@ -5,7 +5,7 @@ Append-only, newest first. One entry per ruling: date, decision, why.
 ## 2026-11-13 — Query recall check: "CFS/ME" added to the PubMed query
 
 - `"CFS/ME"[Title/Abstract]` is added to block 1 of `config/pubmed_query.txt`. Hit count 9,403 before and 9,412 after (live, 2026-11-13). Why: the recall check (part A of `docs/plan-wider-sources.md`, results in `docs/fetch.md`) found 9 records the query missed, 7 of 9 about ME/CFS by their title.
-- The four other candidate terms ("post-viral fatigue syndrome", "postviral fatigue syndrome", "post-infectious fatigue syndrome", "chronic fatigue immune dysfunction syndrome") were tested and not accepted (founder: "Bare CFS/ME"). Why: no sampled record of any of them names ME/CFS in its title or abstract.
+- The four other candidate terms ("post-viral fatigue syndrome", "postviral fatigue syndrome", "post-infectious fatigue syndrome", "chronic fatigue immune dysfunction syndrome") were tested and not accepted (founder: "Bare CFS/ME"). Why: no sampled record of any of them was judged to be about ME/CFS from its title and abstract (0 "yes" in each sample; the rest "unclear" or "no").
 - The query returns all 279 studies cited in `drafts/`. The 9 newly matched records are not ingested by this change.
 
 ## 2026-11-13 — After the first live pipeline run: `group` stays optional, TODO rule V14
