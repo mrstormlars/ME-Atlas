@@ -505,7 +505,7 @@ Refuted hypotheses are not candidates; they are listed with the reason in `docs/
   - pmid:8158191: unverified, n=30. Single-fibre EMG in 30 CFS patients and 30 controls showed abnormal jitter in 5 patients; the authors judged the differences too minor to suggest a neuromuscular cause.
 - Reviews: pmid:1794086
 - Meets inclusion rule on abstracts: no
-- Why: No abstract names a case definition. Small 1990s studies, unreplicated here. This is a rival to peripheral-muscle explanations; whether it is a mechanism hypothesis or belongs in the energy-production card's context.
+- Why: No abstract names a case definition. Small 1990s studies, unreplicated here. This is a rival to peripheral-muscle explanations; whether it is a mechanism hypothesis or belongs in the energy-production card's context is for the auditor to decide.
 - Status: candidate
 - Date: 2026-11-08
 
