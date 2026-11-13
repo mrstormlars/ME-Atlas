@@ -1,0 +1,98 @@
+card: infection-trigger
+decision: accept
+parts:
+  - decision_part: "The level 2 the card carries: RECOVER-Adult is a controlled study in a cohort classified with the IOM 2015 criteria and it found a higher rate of new ME/CFS after infection than in matched uninfected participants."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39804551
+        quote: "Incidence rate and prevalence of post-COVID-19 ME/CFS based on the 2015 Institute of Medicine ME/CFS clinical diagnostic criteria."
+      - source: pmid:39804551
+        quote: "The incidence rate of ME/CFS in participants followed from time of SARS-CoV-2 infection was 2.66 (95% CI 2.63-2.70) per 100 person-years while the rate in matched uninfected participants was 0.93 (95% CI 0.91-10.95) per 100 person-years: a hazard ratio of 4.93 (95% CI 3.62-6.71)."
+      - source: pmid:39804551
+        quote: "We used propensity score matching with replacement to minimize selection bias given differences in baseline characteristics between infected and uninfected participants."
+      - source: pmid:39804551
+        quote: "Among the 1439 uninfected participants, 847 (58.9%) had no matched acute infected participants, indicating substantial differences between the characteristics of the acutely infected and uninfected cohorts."
+  - decision_part: "The level 2 limits as the card states them: self-reported classification and the authors' own possible overestimation, which the level_reason reports."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:39804551
+        quote: "The ME/CFS clinical diagnostic criteria uses self-reported symptoms."
+      - source: pmid:39804551
+        quote: "There are limitations to this study that may have contributed to an overestimation of the number post-COVID-19 ME/CFS participants in RECOVER-Adult."
+  - decision_part: "Level 3 is not reached: the other study with a recognised case definition and a comparison group (INSPIRE) compared SARS-CoV-2 with other acute illnesses, not with no infection, and the CCC study had no comparison group, so no independent group has reproduced the RECOVER-Adult finding."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:39046739
+        quote: "By including COVID-19–negative individuals who presented with another acute infection–like illness, we could assess the differential risk of ME/CFS following SARS-CoV-2 infection compared with other uncharacterized acute illnesses."
+      - source: pmid:41901562
+        quote: "The lack of a control group does not allow a definite correlation between EBV serology and PCS."
+  - decision_part: "No contested mark (contested: null). INSPIRE uses the same case definition but its COVID-positive measurement (about 1840 weighted at three months) is under half of the 4515 infected participants in RECOVER-Adult, and its comparison group also had an acute illness, so it does not contradict a higher risk after infection than without infection."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:39046739
+        quote: "Weighted total participants, No.a 100 1740 96 1633"
+      - source: pmid:39046739
+        quote: "Our finding that ME/CFS-like illness was equally likely to occur after SARS-CoV-2 and unknown infection"
+      - source: pmid:39804551
+        quote: "The 4515 acute infected participants provided the opportunity to estimate the incidence of new post-COVID-19 ME/CFS cases."
+  - decision_part: "No contested mark from the other null studies. The network study used diagnosis codes, not a case definition. The UK primary care study and the German Q fever study have no case definition that can be read from the records (and the German study's 80 infected is far under half of 4515). None of them can be shown to be of comparable quality."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:42516718
+        quote: "Thus, given the lack of ubiquitous diagnostic criteria there is an increased risk of outcome misclassification."
+      - source: pmid:42516718
+        quote: "ME/CFS diagnoses in CPRD GOLD and CPRD Aurum had IRRs of 2.03 (1.50 to 2.74) and 0.89 (0.74 to 1.07), respectively"
+      - source: pmid:7752755
+        quote: "There were no differences in the proportions who met various criteria for chronic fatigue syndrome."
+      - source: pmid:34240822
+        quote: "A total of 80 patients and their 52 non-diseased household members from the former outbreak, were enrolled 6 years after the outbreak."
+  - decision_part: "Older follow-up studies and the Norwegian registry study kept out of the level, because their case definitions are unverified or they used a diagnosis code."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies"
+    evidence:
+      - source: pmid:26475444
+        quote: "Hazard ratios (HRs) of CFS/ME, as diagnosed in the specialist health care services (diagnostic code G93.3 in the International Classification of Diseases, Version 10), after influenza infection and/or vaccination were estimated using Cox proportional-hazards regression."
+      - source: pmid:9926075
+        quote: "The prevalence of CFS was 9-22% six months after glandular fever, compared with 0-6% following an ordinary URTI, with relative risks of 2.7-5.1."
+      - source: pmid:12145392
+        quote: "chronic fatigue syndrome (CFS) in 14 (19.4%) Q-exposed patients and three (4.2%) controls (p=0.003)"
+  - decision_part: "The card meets the inclusion rule: it has studies with a recognised case definition (IOM 2015 and CCC)."
+    rubric: "peer-reviewed study with data from an ME/CFS cohort defined by a recognised case definition"
+    evidence:
+      - source: pmid:41901562
+        quote: "Canadian Consensus Criteria were used for the diagnosis of ME/CFS."
+      - source: pmid:39804551
+        quote: "Incidence rate and prevalence of post-COVID-19 ME/CFS based on the 2015 Institute of Medicine ME/CFS clinical diagnostic criteria."
+  - decision_part: "Diagnostic marker badge false: the only markers measured were in one uncontrolled group of 15 to 18 people, with no second independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:41901562
+        quote: "Laboratory values showed increased GPCR AABs in 66.6% (12/18), possible EBV reactivation in 86.7% (13/15) and coagulation parameters suggesting inflammatory processes in 38.9% (7/18)."
+  - decision_part: "PEM badge false: RECOVER-Adult recorded PEM as a yes-or-no symptom with no frequency or severity measure, which does not measure PEM directly."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:39804551
+        quote: "Frequency and severity measures were not available for these symptoms; thus, all positive symptoms were considered qualifying."
+      - source: pmid:39804551
+        quote: "Post-exertional malaise was the most common ME/CFS symptom in infected participants (24.0%, 2830 of 11,785)."
+  - decision_part: "Layer trigger: the hypothesis is about what starts the illness."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:39804551
+        quote: "Myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) may occur after infection."
+      - source: pmid:16950834
+        quote: "Prospective cohort study following patients from the time of acute infection with Epstein-Barr virus (glandular fever), Coxiella burnetii (Q fever), or Ross River virus (epidemic polyarthritis)."
+  - decision_part: "The four links, all at step 1 (proposed): each has a peer-reviewed source that states the link, and none of them has a study in an ME/CFS cohort with a verified case definition that measured both ends."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:16950834
+        quote: "The syndrome was predicted largely by the severity of the acute illness rather than by demographic, psychological, or microbiological factors."
+      - source: pmid:33367564
+        quote: "At baseline, those who developed ME/CFS had more physical symptoms and immune irregularities, but not more psychological symptoms, than those who recovered."
+      - source: pmid:33889154
+        quote: "In patients with infection-triggered onset, the associations of low sCD26 with elevated autoantibodies (AAB) against alpha1 adrenergic (AR) and M3 muscarinic acetylcholine receptors (mAChR) point to a pathomechanism of infection-triggered autoimmune-mediated vascular and immunological dysregulation."
+      - source: pmid:39896874
+        quote: "Chronic fatigue and sleep disturbances in Long COVID are intricately linked to disruptions in circadian rhythms, driven by distinct molecular and cellular mechanisms triggered by SARS-CoV-2 infection."
+      - source: pmid:41598987
+        quote: "These findings suggest that Coxiella burnetii infection may trigger persistent autonomic dysfunction, potentially contributing to the development of ME/CFS and syncope in affected individuals."
+reasons_summary: "Level 2 rests on one controlled IOM 2015 study (RECOVER-Adult, hazard ratio 4.93 after SARS-CoV-2 against matched uninfected); it has not been replicated and no study of comparable quality contradicts it; both badges false; layer trigger and four proposed links are supported."
+would_change: "A study with an IOM 2015, CCC or ICC cohort, a comparison group without infection and at least half of RECOVER-Adult's 4515 infected participants that found no higher risk would make level 2 contested. An independent replication with a recognised case definition would support level 3. A correction to the RECOVER-Adult record, for example one showing the case definition was not applied as stated, would lower the level. Unverifiable statements: the level_reason calls pmid:33367564 a 'US' college cohort, and its abstract does not name the country. The UK Q fever finding (pmid:12145392) is described as 'among those examined in hospital', while the abstract says 'those more intensively studied'. Neither full text is cached, and the level does not rest on either statement. The case definitions of pmid:7752755 and pmid:34240822 are unverified. If either turned out to be equal to or stricter than IOM 2015, it would still have to meet the sample-size test before it could contest the level. Neither the drafting agent's reasoning nor the review findings were in the context file."

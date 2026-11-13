@@ -36,3 +36,26 @@
   - pmid:31957647
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-13
+  card: infection-trigger
+  change: First publication at level 2
+  reason: Level 2 rests on one controlled IOM 2015 study (RECOVER-Adult, hazard ratio 4.93 after SARS-CoV-2
+    against matched uninfected); it has not been replicated and no study of comparable quality contradicts
+    it; both badges false; layer trigger and four proposed links are supported.
+  sources:
+  - pmid:39804551
+  - pmid:39046739
+  - pmid:41901562
+  - pmid:42516718
+  - pmid:7752755
+  - pmid:34240822
+  - pmid:26475444
+  - pmid:9926075
+  - pmid:12145392
+  - pmid:16950834
+  - pmid:33367564
+  - pmid:33889154
+  - pmid:39896874
+  - pmid:41598987
+  tier: 2
+  decided_by: ai_audit

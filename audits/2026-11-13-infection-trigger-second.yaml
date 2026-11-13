@@ -1,0 +1,91 @@
+card: infection-trigger
+decision: accept
+parts:
+  - decision_part: "The level 2: a controlled study with a recognised case definition (RECOVER-Adult, IOM 2015 applied to self-reported symptoms) finds a higher rate of new ME/CFS after infection than in matched uninfected participants, with pre-existing ME/CFS excluded."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39804551
+        quote: "MEASUREMENTS: Incidence rate and prevalence of post-COVID-19 ME/CFS based on the 2015 Institute of Medicine ME/CFS clinical diagnostic criteria."
+      - source: pmid:39804551
+        quote: "RESULTS: The incidence rate of ME/CFS in participants followed from time of SARS-CoV-2 infection was 2.66 (95% CI 2.63-2.70) per 100 person-years while the rate in matched uninfected participants was 0.93 (95% CI 0.91-10.95) per 100 person-years: a hazard ratio of 4.93 (95% CI 3.62-6.71)."
+      - source: pmid:39804551
+        quote: "We included participants who had a study visit at least 6 months after infection and had no pre-existing ME/CFS"
+      - source: pmid:39804551
+        quote: "Among the 1439 uninfected participants, 847 (58.9%) had no matched acute infected participants, indicating substantial differences between the characteristics of the acutely infected and uninfected cohorts."
+      - source: pmid:39804551
+        quote: "There are limitations to this study that may have contributed to an overestimation of the number post-COVID-19 ME/CFS participants in RECOVER-Adult."
+  - decision_part: "Not level 3: no independent group has reproduced the higher risk after infection against an uninfected comparison in a cohort with an accepted, verified case definition. The CCC hospital-employee study has no control group; INSPIRE compares SARS-CoV-2 with other acute illnesses; the older follow-up studies have case definitions that are not yet checked."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:41901562
+        quote: "The lack of a control group does not allow a definite correlation between EBV serology and PCS."
+      - source: pmid:41901562
+        quote: "Under the assumption that HEs who were not included in the detailed assessment but reported persistent fatigue (n = 7, Table 1), as well as those who could not be contacted (n = 6, Table 1), might have met ME/CFS diagnostic criteria, the estimated incidence would range from 3.2% to 9.0% (7–20/221)."
+      - source: pmid:39046739
+        quote: "Participants were adults aged 18 to 64 years with acute symptoms suggestive of SARS-CoV-2 infection who received a US Food and Drug Administration-approved SARS-CoV-2 test at the time of illness and did not die or withdraw from the study by 3 months."
+      - source: pmid:9926075
+        quote: "The prevalence of CFS was 9-22% six months after glandular fever, compared with 0-6% following an ordinary URTI, with relative risks of 2.7-5.1."
+      - source: pmid:12145392
+        quote: "chronic fatigue syndrome (CFS) in 14 (19.4%) Q-exposed patients and three (4.2%) controls (p=0.003)"
+  - decision_part: "Case definitions of the context studies: the older follow-up studies are unverified and the registry and network studies use diagnosis codes, so none of them counts towards the level, as the card says."
+    rubric: "None stated, or not yet checked | Not accepted (see the inclusion rule)."
+    evidence:
+      - source: pmid:26475444
+        quote: "Hazard ratios (HRs) of CFS/ME, as diagnosed in the specialist health care services (diagnostic code G93.3 in the International Classification of Diseases, Version 10), after influenza infection and/or vaccination were estimated using Cox proportional-hazards regression."
+      - source: pmid:42516718
+        quote: "Thus, given the lack of ubiquitous diagnostic criteria there is an increased risk of outcome misclassification."
+      - source: pmid:16950834
+        quote: "Prolonged illness characterised by disabling fatigue, musculoskeletal pain, neurocognitive difficulties, and mood disturbance was evident in 29 (12%) of 253 participants at six months, of whom 28 (11%) met the diagnostic criteria for chronic fatigue syndrome."
+  - decision_part: "No contested mark: no contradicting study is of comparable quality. INSPIRE (IOM 2015, controlled) compares SARS-CoV-2 with another acute illness rather than with no infection, and its measurement (about 1840 positive at three months) is under half of RECOVER-Adult's 4515; the null studies (UK primary care, German Q fever, network health records) have unverified or no case definitions."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:39046739
+        quote: "Our finding that ME/CFS-like illness was equally likely to occur after SARS-CoV-2 and unknown infection"
+      - source: pmid:39046739
+        quote: "Additionally, the survey questions did not allow clear detection of the presence of chronic symptoms before participants’ acute index illness."
+      - source: pmid:39804551
+        quote: "acute infected, enrolled within 30 days of infection or enrolled as uninfected who became infected (n=4515)"
+      - source: pmid:7752755
+        quote: "There were no differences in the proportions who met various criteria for chronic fatigue syndrome."
+      - source: pmid:34240822
+        quote: "Also, there was no difference between both groups regarding fulfillment of CFS-defining criteria (n = 3 (3.8%; sero-positive) versus n = 2 (3.8%; sero-negative), p = 0.655)."
+      - source: pmid:42516718
+        quote: "Meta-analysed crude overall IRR after COVID-19 compared with after negative testing depicted IRRs of 1.02 (0.95 to 1.10), 1.01 (0.94 to 1.09), 0.98 (0.86 to 1.11), 1.48 (0.91 to 2.40), for POTS diagnoses, POTS symptoms, ME/CFS diagnoses and ME/CFS symptoms, respectively"
+  - decision_part: "Badge diagnostic_marker: no. The only marker measurements (autoantibodies, Epstein-Barr virus serology, clotting values) come from one small group without controls, not a second independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:41901562
+        quote: "Laboratory values showed increased GPCR AABs in 66.6% (12/18), possible EBV reactivation in 86.7% (13/15) and coagulation parameters suggesting inflammatory processes in 38.9% (7/18)."
+      - source: pmid:41901562
+        quote: "The lack of a control group does not allow a definite correlation between EBV serology and PCS."
+  - decision_part: "Badge explains_pem: no. RECOVER-Adult asked about post-exertional malaise as a single symptom item without frequency or severity, which is not a direct measurement of PEM."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:39804551
+        quote: "Frequency and severity measures were not available for these symptoms; thus, all positive symptoms were considered qualifying."
+      - source: pmid:39804551
+        quote: "Post-exertional malaise was the most common ME/CFS symptom in infected participants (24.0%, 2830 of 11,785)."
+  - decision_part: "Layer trigger: the card is about what starts the illness, an infection that comes before onset."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:39804551
+        quote: "ME/CFS is a diagnosable sequela that develops at an increased rate following SARS-CoV-2 infection."
+      - source: pmid:16950834
+        quote: "Prospective cohort study following patients from the time of acute infection with Epstein-Barr virus (glandular fever), Coxiella burnetii (Q fever), or Ross River virus (epidemic polyarthritis)."
+  - decision_part: "The four links, each at step proposed: each source is peer reviewed and states the link; none measured both ends in an ME/CFS cohort with a verified recognised case definition, so none reaches associated."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:16950834
+        quote: "The syndrome was predicted largely by the severity of the acute illness rather than by demographic, psychological, or microbiological factors."
+      - source: pmid:33367564
+        quote: "At baseline, those who developed ME/CFS had more physical symptoms and immune irregularities, but not more psychological symptoms, than those who recovered."
+      - source: pmid:33889154
+        quote: "In patients with infection-triggered onset, the associations of low sCD26 with elevated autoantibodies (AAB) against alpha1 adrenergic (AR) and M3 muscarinic acetylcholine receptors (mAChR) point to a pathomechanism of infection-triggered autoimmune-mediated vascular and immunological dysregulation."
+      - source: pmid:39896874
+        quote: "Chronic fatigue and sleep disturbances in Long COVID are intricately linked to disruptions in circadian rhythms, driven by distinct molecular and cellular mechanisms triggered by SARS-CoV-2 infection."
+      - source: pmid:41598987
+        quote: "These findings suggest that Coxiella burnetii infection may trigger persistent autonomic dysfunction, potentially contributing to the development of ME/CFS and syncope in affected individuals."
+      - source: pmid:41598987
+        quote: "Further longitudinal studies are needed to clarify pathophysiological mechanisms and clinical implications."
+reasons_summary: "Level 2 stands on one controlled IOM 2015 study (RECOVER-Adult, hazard ratio 4.93 against matched uninfected); no verified independent replication, no contradicting study of comparable quality, badges no, layer trigger and four proposed links match their sources."
+would_change: "Level 3 would need an independent controlled cohort with a verified accepted case definition (CCC, ICC, IOM 2015 or Fukuda) showing a higher rate after infection than without; verifying the case definitions of the glandular fever, Q fever, Dubbo or college mononucleosis studies could supply this. A contested mark would follow a controlled study with an equal or stricter case definition and at least about 2258 infected participants in the measurement finding no higher rate after infection than without. Unverifiable for lack of cached full text: the card's statement that the infectious mononucleosis cohort (pmid:33367564) was a US college cohort is not in its abstract; it does not bear on the level. The two badges would change only with a marker tested in a second independent patient group, or a level 2 study measuring PEM directly. I was not handed any drafting reasoning, review findings or earlier audit."
