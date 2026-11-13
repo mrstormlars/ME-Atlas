@@ -1935,3 +1935,97 @@ def test_a_duplicate_doi_is_judged_after_published_and_in_pubmed(env: Env):
     env.prepare()
     assert dropped(env)["PPR9000001"]["reason"] == "published"
     assert offered(env) == ["PPR9000002"]  # the only record left with this DOI is kept
+
+
+# --- pr: a report longer than GitHub's body limit ---------------------------
+
+
+def _set_report(env: Env, monkeypatch, text: str, limit: int) -> None:
+    monkeypatch.setattr(pipeline, "build_report", lambda cfg: text)
+    monkeypatch.setattr(pipeline, "GITHUB_BODY_LIMIT", limit)
+
+
+def _unsplit(parts: list[str]) -> str:
+    out = []
+    for k, part in enumerate(parts, start=1):
+        if k == 1:
+            out.append(part[: part[:-1].rfind("\n")])  # drop the added newline and the note line
+        else:
+            out.append(part.split("\n", 1)[1])
+    return "".join(out)
+
+
+def _long_report() -> str:
+    return "# Report\nintro\n" + "".join(f"## Section {i}\n" + "line of text\n" * 8 for i in range(12))
+
+
+def test_pr_splits_a_long_report_into_a_body_and_comments(accepted: Env, monkeypatch):
+    report = _long_report()
+    _set_report(accepted, monkeypatch, report, 300)
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    gh = [c for c in runner.calls if c[0] == "gh"]
+    assert gh[0][:3] == ["gh", "pr", "create"] and gh[0][-1].endswith("report-part-1.md")
+    comments = gh[1:]
+    assert len(comments) >= 1
+    for k, c in enumerate(comments, start=2):
+        assert c[:4] == ["gh", "pr", "comment", "pipeline/2026-11-01"] and c[-1].endswith(f"report-part-{k}.md")
+    paths = [accepted.run / f"report-part-{k}.md" for k in range(1, len(comments) + 2)]
+    parts = [p.read_text(encoding="utf-8") for p in paths]
+    assert all(len(p) <= 300 for p in parts)
+    assert f"continues in {len(comments)} comment(s) below" in parts[0]
+    assert parts[1].startswith(f"Report, part 2 of {len(parts)}\n")
+    assert _unsplit(parts) == report
+    assert (accepted.run / "report.md").read_text(encoding="utf-8") == report
+
+
+def test_pr_with_a_report_at_the_limit_posts_no_comment(accepted: Env, monkeypatch):
+    report = _long_report()
+    _set_report(accepted, monkeypatch, report, len(report))
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    gh = [c for c in runner.calls if c[0] == "gh"]
+    assert len(gh) == 1 and gh[0][-1].endswith("report.md")
+    assert not (accepted.run / "report-part-1.md").exists()
+
+
+def test_pr_cuts_a_section_longer_than_the_limit_at_line_boundaries(accepted: Env, monkeypatch):
+    report = "## Only\n" + "".join(f"row {i:03d}\n" for i in range(100))
+    _set_report(accepted, monkeypatch, report, 200)
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    n = len([c for c in runner.calls if c[0] == "gh"])
+    parts = [(accepted.run / f"report-part-{k}.md").read_text(encoding="utf-8") for k in range(1, n + 1)]
+    assert n > 2 and all(len(p) <= 200 for p in parts)
+    assert _unsplit(parts) == report
+
+
+def test_pr_returns_1_when_a_comment_fails(accepted: Env, monkeypatch):
+    _set_report(accepted, monkeypatch, _long_report(), 300)
+
+    def runner(cmd):
+        if cmd[:3] == ["gh", "pr", "comment"]:
+            return 1, "boom"
+        return (0, "main") if cmd[1] == "rev-parse" else (0, "")
+
+    assert accepted.cli("pr", runner=runner) == 1
+    assert any("exit code 1" in line for line in accepted.out)
+
+
+def test_pr_dry_run_prints_the_comment_commands_and_runs_none(accepted: Env, monkeypatch):
+    _set_report(accepted, monkeypatch, _long_report(), 300)
+    runner = FakeRunner()
+    assert accepted.cli("pr", "--dry-run", runner=runner) == 0
+    assert runner.calls == []
+    assert any(line.startswith("$ gh pr comment pipeline/2026-11-01 --body-file ") for line in accepted.out)
+
+
+def test_pr_cuts_a_line_longer_than_the_limit_and_still_round_trips(accepted: Env, monkeypatch):
+    report = "x" * 500 + "\n## B\nhi\n"
+    _set_report(accepted, monkeypatch, report, 200)
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    n = len([c for c in runner.calls if c[0] == "gh"])
+    parts = [(accepted.run / f"report-part-{k}.md").read_text(encoding="utf-8") for k in range(1, n + 1)]
+    assert n > 2 and all(len(p) <= 200 for p in parts)
+    assert _unsplit(parts) == report

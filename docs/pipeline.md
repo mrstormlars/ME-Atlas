@@ -27,7 +27,7 @@ The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is
 | 5 | `card-reviewer` agent (pipeline mode), then `record-review <slug> <key> [--round N]` | opus, code | `review/<slug>-<key>-r<N>.json` |
 | 6 | `translation-plan [--lang nb]`, then `card-translator` agent, `card-reviewer` agent (translation mode) and `translations apply` | code, sonnet, opus, code | `final/<slug>.yaml`, `translate/<slug>.json`, `translation-plan.json`, `translated/<slug>.json`, `translation-review/<slug>.json`; writes `translations/nb/<slug>.yaml` |
 | 7 | `report` | code | `report.md` |
-| 8 | `pr [--dry-run] [--no-pr]` | code | copies accepted results into `drafts/`, branch `pipeline/<date>`, commit, push, `gh pr create` with `report.md` as the description |
+| 8 | `pr [--dry-run] [--no-pr]` | code | copies accepted results into `drafts/`, branch `pipeline/<date>`, commit, push, `gh pr create` with `report.md` as the description (a report over GitHub's 65,536-character limit is split at `## ` headings into `report-part-k.md`: part 1 is the description, the rest are `gh pr comment`s) |
 
 `log.jsonl` in the run directory records each `prepare`, `apply`, `record-classification` and `record-review` call. The whole directory is gitignored (`data/pipeline/`); the founder uses it to judge the agents' error rate before ending the calibration period.
 
@@ -116,7 +116,7 @@ When stage 6 ran, a **Translations** section sits between the parking lot / new 
 
 ## `pr`
 
-`pr --dry-run` prints the `git` and `gh` commands and the files it would write, and runs nothing. `pr` checks that the current branch is `main`, creates `pipeline/<date>`, writes the accepted cards into `drafts/`, commits only those files and the `translations/` folder when there is one, pushes and runs `gh pr create --body-file report.md`. `pr --no-pr` creates the branch and the commit and stops there. With no accepted change it does nothing. The `.githooks/pre-push` hook still forbids pushing to `main`.
+`pr --dry-run` prints the `git` and `gh` commands and the files it would write, and runs nothing. `pr` checks that the current branch is `main`, creates `pipeline/<date>`, writes the accepted cards into `drafts/`, commits only those files and the `translations/` folder when there is one, pushes and runs `gh pr create --body-file report.md`. A report longer than 65,536 characters (GitHub's limit) is split into `report-part-1.md`, `report-part-2.md`, … at level-2 headings (at line boundaries inside a section that is too long by itself); part 1 becomes the description and each further part is posted with `gh pr comment`. `pr --no-pr` creates the branch and the commit and stops there. With no accepted change it does nothing. The `.githooks/pre-push` hook still forbids pushing to `main`.
 
 ## Tests
 
