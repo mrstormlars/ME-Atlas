@@ -1,0 +1,41 @@
+card: brain-and-brainstem-mri-changes
+decision: reject
+parts:
+  - decision_part: "The level 2 base: one controlled study in an ICC-defined group (pmid:34355438) on its own meets the level 2 description."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34355438
+        quote: "After these exclusions, 25 ME/CFS patients met Fukuda criteria (Fukuda, 1994), and 18 ME/CFS patients met ICC criteria (Carruthers et al., 2011)."
+      - source: pmid:34355438
+        quote: "Group comparisons between ME/CFSICC and HC detected significant clusters (a) with decreased axial diffusivity (p = .001) and mean diffusivity (p = .01) in the descending cortico-cerebellar tract in the midbrain and pons and (b) with increased transverse diffusivity in the medulla."
+  - decision_part: "The contested mark set to null. A study of comparable quality (pmid:40624094) contradicts the finding level 2 rests on, so the card cannot be published without a contested mark."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:40624094
+        quote: "ME/CFS patients were independently interviewed by two clinicians to confirm a CCC-consistent9 diagnosis of ME/CFS."
+      - source: pmid:40624094
+        quote: "For patients who met ICC Criteria, they found significantly decreased AD and MD in the midbrain and pons, and increased RD in the medulla compared with HCs."
+      - source: pmid:40624094
+        quote: "PI-ME/CFS participants showed significantly higher axial diffusivity (AD) in several association and projection fibres compared to HCs."
+      - source: pmid:40624094
+        quote: "projection fibres (left inferior cerebellar peduncle, middle cerebellar peduncle, left superior cerebellar peduncle, right superior corona radiata, right posterior corona radiata, right sagittal stratum, corticospinal tract, and left medial lemniscus)"
+      - source: pmid:40624094
+        quote: "No significant group differences were found for fractional anisotropy, mean diffusivity, or radial diffusivity."
+      - source: pmid:40624094
+        quote: "in contrast to previous studies that reported changes in these diffusion metrics in ME/CFS"
+  - decision_part: "Comparable quality of pmid:40624094: CCC is in the same top rank as ICC, it has a control group, and its 43 post-infectious patients plus 33 gradual-onset patients are well over half the 18 ICC patients of the level 2 study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:40624094
+        quote: "In this study, the diffusion MRI results were compared between PI-ME/CFS (n = 43) and matched HCs (n = 43) in the PI-ME/CFS group (Fig. 1), and between GO-ME/CFS (n = 33) and matched HCs (n = 33) in the GO-ME/CFS group."
+      - source: pmid:34355438
+        quote: "This is an exploratory study that reports significant results for the 18 ICC subjects available."
+  - decision_part: "A second comparable study, from the same group and with CCC or ICC patients, found no brainstem diffusion difference on whole-brain analysis. Since it is not independent, it does not decide the mark alone, but it does not support publishing the card uncontested either."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample"
+    evidence:
+      - source: pmid:42539798
+        quote: "37 ME/CFS participants were recruited after meeting the Canadian Consensus Criteria (CCC) (4) or International Consensus Criteria (ICC) (5) and had received a formal diagnosis of ME/CFS by a physician."
+      - source: pmid:42539798
+        quote: "Compared with healthy controls, individuals with ME/CFS showed microstructural alterations in the cingulum, supplementary motor areas, and parts of the corpus callosum (all p < 0.05)."
+reasons_summary: "Rejected: level 2 rests on one ICC diffusion study (n=18). A comparable CCC study (n=43 post-infectious) found higher, not lower, axial diffusivity in brainstem tracts and no mean diffusivity difference, yet the card has no contested mark."
+would_change: "The card could be accepted with a contested mark on rung 2 that cites pmid:40624094 and gives the reason in plain sentences. It could also be accepted without one if a record showed that pmid:40624094 measured something that does not bear on the midbrain and pons decrease in pmid:34355438 (for example, that its tract-based analysis did not cover that cluster). That second route would need a sentence in the records, not reasoning. I did not decide on the badges (diagnostic_marker false, explains_pem false), the layer (dysfunction) or the four symptom links one by one, because the missing contested mark is enough to reject. A redraft should be audited in full. No drafting or review reasoning was given to me."

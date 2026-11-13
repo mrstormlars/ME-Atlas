@@ -1,0 +1,77 @@
+card: brain-and-brainstem-mri-changes
+decision: reject
+parts:
+  - decision_part: "The level 2 on its own: a controlled study with a recognised case definition supports a brainstem diffusion difference."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34355438
+        quote: "After these exclusions, 25 ME/CFS patients met Fukuda criteria (Fukuda, 1994), and 18 ME/CFS patients met ICC criteria (Carruthers et al., 2011)."
+      - source: pmid:34355438
+        quote: "Group comparisons between ME/CFSICC and HC detected significant clusters (a) with decreased axial diffusivity (p = .001) and mean diffusivity (p = .01) in the descending cortico-cerebellar tract in the midbrain and pons and (b) with increased transverse diffusivity in the medulla."
+      - source: pmid:34355438
+        quote: "Voxel-based group comparisons between ME/CFSFukuda and HC did not detect significant clusters."
+  - decision_part: "The contested mark (card has contested: null). A controlled study of comparable quality contradicts the finding that level 2 rests on, so rung 2 should be marked contested and the card cannot be accepted without it."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:40624094
+        quote: "ME/CFS patients were independently interviewed by two clinicians to confirm a CCC-consistent9 diagnosis of ME/CFS."
+      - source: pmid:40624094
+        quote: "The PI-ME/CFS group consisted of 43 PI-ME/CFS participants"
+      - source: pmid:40624094
+        quote: "PI-ME/CFS participants showed significantly higher axial diffusivity (AD) in several association and projection fibres compared to HCs."
+      - source: pmid:40624094
+        quote: "projection fibres (left inferior cerebellar peduncle, middle cerebellar peduncle, left superior cerebellar peduncle, right superior corona radiata, right posterior corona radiata, right sagittal stratum, corticospinal tract, and left medial lemniscus)"
+      - source: pmid:40624094
+        quote: "No significant group differences were found for fractional anisotropy, mean diffusivity, or radial diffusivity."
+      - source: pmid:40624094
+        quote: "GO-ME/CFS participants exhibited significantly decreased AD in the corpus callosum."
+      - source: pmid:34355438
+        quote: "to the ventral pons middle cerebellar peduncle which crosses to the opposite side"
+      - source: pmid:34355438
+        quote: "This single cluster tracks fibres from the motor and premotor cortices which project to the cerebellum."
+  - decision_part: "Supporting the contest: the same group's later whole-brain diffusion study in a CCC/ICC cohort reports its ME/CFS differences outside the brainstem."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:42539798
+        quote: "37 ME/CFS participants were recruited after meeting the Canadian Consensus Criteria (CCC) (4) or International Consensus Criteria (ICC) (5) and had received a formal diagnosis of ME/CFS by a physician."
+      - source: pmid:42539798
+        quote: "Compared with healthy controls, individuals with ME/CFS showed microstructural alterations in the cingulum, supplementary motor areas, and parts of the corpus callosum (all p < 0.05)."
+  - decision_part: "Not at level 3: no independent group has reproduced the brainstem finding in a separate cohort; the independent volume finding is Fukuda-only and another measure, and two other cohorts found no volume difference."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:29021956
+        quote: "Participants were not selected according to any criteria other than fulfilling the Fukuda diagnostic criteria of CFS (Fukuda et al., 1994)."
+      - source: pmid:29021956
+        quote: "Reductions in WM volume in the patient group were seen primarily in the midbrain, pons and right temporal lobe."
+      - source: pmid:21560176
+        quote: "The total GM, WM and CSF volumes from VBM analysis showed no significant difference between the CFS and NC subjects."
+      - source: pmid:30497131
+        quote: "VBM did not find group differences in regional grey matter or white matter volumes."
+  - decision_part: "Badge diagnostic_marker: no (supported)."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:34355438
+        quote: "could potentially act as an imaging biomarker of abnormal pathophysiology in ME/CFS"
+  - decision_part: "Badge explains_pem: no (supported). The PEM study with an accepted case definition reports no symptom correlation; the one that links brain change to symptoms has an unverified case definition."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:34975370
+        quote: "Subjects had history and physical examinations to ensure their inclusion by meeting Fukuda (Fukuda et al., 1994) and Carruthers Canadian Consensus Criteria for CFS"
+      - source: pmid:34975370
+        quote: "The age and gender regressed BOLD values had no significant correlations with measures of fatigue, pain, tenderness, depression, and other subjective symptoms (all R < 0.3, data not shown)."
+      - source: pmid:28216087
+        quote: "Changes in brain activity were significantly related to symptoms for patients (p<0.05)."
+  - decision_part: "Layer dysfunction (supported): the card describes a measurable change in the body."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:34355438
+        quote: "DTI parameters are sensitive to microstructural changes in ME/CFSICC"
+  - decision_part: "Links at step associated (respiratory and cognitive): both ends measured in the same defined-cohort patients with a reported relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:36937672
+        quote: "In ME/CFS, we detected positive correlations between the pons and whole brainstem volumes with \"pain\" and negative correlations between the midbrain and whole brainstem volumes with \"breathing difficulty.\""
+      - source: pmid:34355438
+        quote: "For ME/CFSICC and HC, DTI parameter interaction-with-group regressions were abnormal for the clinical measures of information processing score, SF36 physical, sleep disturbance score and respiration rate in both grey and white matter regions."
+reasons_summary: "Level 2 rests on one ICC diffusion study, but an independent controlled CCC study with more patients found the opposite direction of axial diffusivity in the same brainstem tracts and no mean diffusivity difference, so rung 2 meets the contested rule and contested: null is not supported."
+would_change: "Accept would need rung 2 marked contested, with pmid:40624094 recorded as a contradicting study (and the same group's pmid:42539798 named), or a reason, quoted from the records, why pmid:40624094 is not of comparable quality or does not contradict the midbrain-pons finding. A further independent, controlled study in a CCC/ICC cohort that repeats lower axial and mean diffusivity in the midbrain and pons could later settle the conflict. Minor and unverifiable: the institutions named for pmid:25353054 (Stanford), pmid:15955487 (Nijmegen) and pmid:37331007 (Melbourne) do not appear in their abstract-only records (no full text cached), so the card should drop them or source them. The level does not depend on them. I was not handed any drafting, review or earlier audit material."
