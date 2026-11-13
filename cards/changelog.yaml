@@ -59,3 +59,19 @@
   - pmid:41598987
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-13
+  card: neuroinflammation
+  change: First publication at level 2
+  reason: Level 2 holds on one controlled CCC-consistent diffusion MRI study (67 vs 67), unreplicated
+    and indirect; the Fukuda PET null study is not of comparable quality, both badges no, layer and proposed
+    links match their sources.
+  sources:
+  - pmid:41834684
+  - pmid:42227214
+  - pmid:24665088
+  - pmid:30617782
+  - pmid:34815320
+  - pmid:34609538
+  - pmid:29759891
+  tier: 2
+  decided_by: ai_audit
