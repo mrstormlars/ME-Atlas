@@ -1,0 +1,70 @@
+card: autoimmunity-autoantibodies-b-cells
+decision: accept_lower
+accepted_level: 2
+parts:
+  - decision_part: "Level 2: the Swedish two-cohort study is a controlled study in patients with an accepted case definition (CCC, ICC and IOM 2015) and found higher receptor antibodies in patients than in matched controls."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "All patients at both Stora Skondal and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM criteria"
+      - source: pmid:34589868
+        quote: "Significant increases in autoantibody levels in ME patients compared to controls were found for M3 and M4 -receptors in both cohorts and β1, β2, M3 and M4-receptors in one cohort."
+      - source: pmid:34589868
+        quote: "No significant correlations were found between autoantibody levels and disease severity."
+  - decision_part: "The proposed level 3: the Spanish study (independent group, Fukuda, 59 patients, 36 controls) reproduced only the beta2 result, which the Swedish study found in one of its two cohorts, and did not reproduce the beta1, M3 and M4 results; the one positive result comes from an exploratory analysis without correction for multiple comparisons. Taken as a whole this is mostly a failed replication, so it does not meet the next rung."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:34589868
+        quote: "Our results revealed significantly increased levels of antibodies to M3 and M4 receptors in both patient cohorts and of antibodies to β1, β2, M3 and M4 receptors in one cohort."
+      - source: pmid:42082542
+        quote: "No significant differences were found in the titers of AAbs against muscarinic AChR or AdR α1 and β1 between groups."
+      - source: pmid:42082542
+        quote: "Patients with ME/CFS exhibited higher titers of this AAb compared to PCC patients and HCs (Fig. 1)."
+      - source: pmid:42082542
+        quote: "Given the exploratory nature of the study, no correction for multiple comparisons was applied, and results should therefore be interpreted with caution."
+      - source: pmid:42082542
+        quote: "Importantly, absolute differences in AAb titers between groups were modest, and substantial overlap was observed across PCC, ME/CFS, and HCs."
+  - decision_part: "Held back at level 2: the M4 result from the Swedish study went the other way in the Spanish study, where more controls than patients were above the test maker's cut-off."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample"
+    evidence:
+      - source: pmid:42082542
+        quote: "In ME/CFS patients, pathological results were observed for M4 AChR (18.6%), α1 (55.9%), β1 (16.9%), and β2 AdR (27.5%)."
+      - source: pmid:42082542
+        quote: "Among HCs, 58.3% showed pathological levels for M4 AChR and α1 receptors, 8.3% for β1, and 13.9% for β2 AdR."
+  - decision_part: "Level 4 is correctly not reached: the larger placebo-controlled rituximab trial in CCC patients found no effect."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:30934066
+        quote: "151 patients aged 18 to 65 years who had ME/CFS according to Canadian consensus criteria and had had the disease for 2 to 15 years."
+      - source: pmid:30934066
+        quote: "B-cell depletion using several infusions of rituximab over 12 months was not associated with clinical improvement in patients with ME/CFS."
+  - decision_part: "No contested mark: the Cornell null study's case definition is not verified, so on the rubric it cannot count as being of comparable quality."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:40141440
+        quote: "Unlike earlier reports, our analysis of 172 participants revealed no significant differences in autoantibody reactivities between ME/CFS patients and controls, including against GPCRs such as β-adrenergic receptors."
+  - decision_part: "Diagnostic marker badge no: no receptor antibody cut-off was validated in an independent cohort; in the Spanish study the manufacturer's cut-offs did not separate the groups."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:42082542
+        quote: "These thresholds are assay-specific and were not derived from the present study population."
+      - source: pmid:42082542
+        quote: "This suggests that the AAb profiles, while variable, do not significantly differentiate between the clinical groups in this dataset."
+  - decision_part: "Explains-PEM badge no: no study on the card measures PEM directly with an exertion test; the PEM change after immunoadsorption comes from a questionnaire in a study without a control group."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis."
+    evidence:
+      - source: pmid:39759581
+        quote: "Both frequency and severity of post-exertional symptoms significantly decreased after IA according to the DSQ-PEM."
+      - source: pmid:39759581
+        quote: "Limitations of this study include the small sample size and non-controlled study design."
+  - decision_part: "The links: the circulation link is at step 1 (proposed), sourced to a review; the HPA link and the autonomic link are at step 2 (associated), each from a study with a recognised case definition that measured both ends in the same patients."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:32247028
+        quote: "As both ß2AdR and M3 acetylcholine receptor are important vasodilators, we would expect their functional disturbance to result in vasoconstriction and hypoxemia."
+      - source: pmid:34254637
+        quote: "Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls."
+      - source: pmid:42082542
+        quote: "Additionally, AAbs against the β2 AdR correlated with a higher sympathovagal index (r = 0.45, p = 0.001)."
+reasons_summary: "Level 2 holds on the Swedish CCC/ICC/IOM study; level 3 is not supported, because the independent Spanish study reproduced only the beta2 result, in an uncorrected exploratory analysis, and did not reproduce the beta1, M3 and M4 results (M4 went the other way)."
+would_change: "Level 3 would be supported by an independent controlled study, using an accepted case definition, that reproduces the higher receptor antibodies (beta2, or M3 and M4) with the multiple comparisons accounted for. A check of the Cornell study's (pmid:40141440) case definition and patient count could make it a comparable-quality contradiction, which would bring a contested mark. Unverifiable statement: the level_reason calls the Bergen maintenance trial analysed in pmid:26399744 'open-label' and 'without a placebo group'; that study's abstract (full text not cached) names only the KTS-2 rituximab trial and maintenance treatment, so this cannot be checked. Minor: the diagnostic-marker reason says no study tests a cut-off from one cohort in a second group, but pmid:42082542 applied the manufacturer's predefined cut-offs. The value 'no' still stands. Also the Spanish table reports identical values for M3 and M4. A correction from the authors would need re-reading. I was not handed any drafting, review or earlier audit reasoning."
