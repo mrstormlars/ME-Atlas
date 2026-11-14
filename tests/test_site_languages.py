@@ -593,6 +593,24 @@ def test_a_stale_item_shows_english_with_the_note_and_is_listed_as_a_warning(pro
     assert card["slug"] == SLUG
 
 
+def test_an_item_whose_english_sources_changed_shows_english_with_the_note_and_a_stale_warning(proj_tmp):
+    card_with_sidecar(proj_tmp)
+    path = proj_tmp.root / "translations" / "nb" / f"{SLUG}.yaml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    data["items"]["core_claim"]["sources"] = ["pmid:00000002"]  # the hash is unchanged: only the sources differ
+    write_yaml(path, data)
+    result = proj_tmp.build()
+    assert result.errors == []
+    texts = claim_paragraphs(page(proj_tmp.out, f"nb/hypotheses/{SLUG}.html"))
+    assert len(texts) == 1 and texts[0].startswith(CLAIM) and note_after_claim(texts)
+    assert NB_CLAIM not in norm(page(proj_tmp.out, f"nb/hypotheses/{SLUG}.html").text())
+    assert (
+        f"[nb] {SLUG}: core_claim is stale (the English sources changed after it was translated)"
+        in result.translation_warnings
+    )
+    assert not any("left out" in w and "core_claim" in w for w in result.translation_warnings)
+
+
 def test_an_invalid_item_shows_english_with_the_note_and_the_reason_as_a_warning(proj_tmp):
     card = make_card(SLUG, "Fictional hypothesis", 2)
     write_card(proj_tmp.cards, card)

@@ -950,6 +950,20 @@ def test_translation_plan_lists_the_items_an_accepted_change_made_stale(ready: E
     assert ready.draft_text() == (FIXTURES / "drafts" / f"{SLUG}.yaml").read_text(encoding="utf-8")  # drafts untouched
 
 
+def test_translation_plan_lists_an_item_whose_english_sources_changed_as_stale(ready: Env):
+    write_norwegian(ready)
+    path = ready.translations / "nb" / f"{SLUG}.yaml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    data["items"]["core_claim"]["sources"] = ["pmid:90000999"]  # same hash and text; the English sources differ
+    path.write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
+    accept_replacing(ready, "90000201")
+    assert ready.cli("translation-plan") == 0
+    assert plan_items(ready) == {"core_claim": "already_stale", "contested_reason[0]": "made_stale"}
+    entry = load(ready.run / "translate" / f"{SLUG}.json")
+    item = next(i for i in entry["items"] if i["item"] == "core_claim")
+    assert item["sources"] == ["pmid:90000100"] and item["previous_translation"].startswith("NB ")
+
+
 def test_translation_plan_lists_items_the_change_added_as_new(accepted: Env):
     write_norwegian(accepted)
     assert accepted.cli("translation-plan") == 0

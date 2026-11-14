@@ -13,10 +13,11 @@ Item names (locators) are listed by ``english_items``. Levels, badges, roles, nu
 into a sidecar: the page takes them from the English card. An item is
 
 - **fresh**: its ``source_hash`` matches the English text and every check passes; the page shows it;
-- **stale**: the English text changed after the translation was made; the page shows English with a note;
+- **stale**: the English text, or the English item's ``sources``, changed after the translation was made (the hash
+  or the sources differ); the page shows English with a note;
 - **missing**: no translation yet; English with a note;
-- **invalid**: the hash matches but a check fails (sources, numbers, PMIDs, banned words); English with a note, and
-  ``check`` exits non-zero.
+- **invalid**: the hash and the sources match but a check fails (numbers, PMIDs, banned words); English with a note,
+  and ``check`` exits non-zero.
 
 Command line::
 
@@ -220,6 +221,10 @@ def check_item(english: EnglishItem, item: TItem, lang: str) -> list[str]:
     return problems
 
 
+STALE_TEXT = "the English text changed after it was translated"
+STALE_SOURCES = "the English sources changed after it was translated"
+
+
 @dataclass(frozen=True)
 class ItemResult:
     locator: str
@@ -258,6 +263,9 @@ def check_card(card: Card, sidecar: TFile | None, lang: str) -> CardCheck:
             result.items[locator] = ItemResult(locator, "missing")
         elif item.source_hash != text_hash(en.text):
             result.items[locator] = ItemResult(locator, "stale")
+        elif item.sources != en.sources:
+            # The text is unchanged but the English item cites other sources: out of date, like a changed text.
+            result.items[locator] = ItemResult(locator, "stale", (STALE_SOURCES,))
         else:
             problems = check_item(en, item, lang)
             result.items[locator] = ItemResult(locator, "invalid" if problems else "fresh", tuple(problems))
@@ -521,7 +529,7 @@ def run_check(
                     print(f"error: {lang}: {slug}: {r.locator}: {p}", file=sys.stderr)
                     errors += 1
             for r in result.of("stale"):
-                print(f"stale: {lang}: {slug}: {r.locator} (the English text changed after it was translated)")
+                print(f"stale: {lang}: {slug}: {r.locator} ({r.problems[0] if r.problems else STALE_TEXT})")
             missing = result.of("missing")
             if missing:
                 print(f"missing: {lang}: {slug}: {len(missing)} of {len(result.items)} item(s) not translated yet")
