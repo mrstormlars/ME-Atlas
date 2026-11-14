@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-14 — Two agreeing auditors override the founder's earlier card rulings; orchestrator defaults confirmed (founder rulings)
+
+- **The founder's earlier rulings about the content of a card no longer bind the audit.** The founder said: "Vi må se bort fra mine tidligere avgjørelser når det gjelder kortene. Når to revisorer er enige så overstyrer det mine tidligere avgjørelser." Where two auditors agree on a card, their decision stands over an earlier founder ruling on that card's content (a study's role, a level, a badge, a contested mark, a link). A correction may therefore change what such a ruling fixed, and a comment in a draft that records one is history, not a constraint. Why: the founder has no medical background and has handed the judgement of medical content to the auditor (entry "AI auditor and wider purpose", 2026-11-13). First case: `brain-and-brainstem-mri-changes`, where both audits want pmid:40624094 counted as contradicting with a contested mark, against a founder ruling of 2026-11-02 that kept it as context; the card may run without a new ruling. Unchanged: the founder still decides the rubric, the inclusion rule, the scope and the removal of a hypothesis, and may overrule the auditor from now on as a logged correction (`CLAUDE.md`, credibility rule 2).
+- **The orchestrator defaults of 2026-11-14 are confirmed.** The founder said: "Dine forslag til øktens standardvalg aksepteres." This is read as covering the defaults in the three entries below (cheaper whole-card audits; the two separate limits inside a correction round; correcting a held-back draft), except the one the founder already changed (a review reject gives one revised attempt). They are rulings from now on.
+
 ## 2026-11-14 — Cheaper whole-card audits before the twelve held-back drafts (founder rulings)
 
 The first publication used about 5.5M tokens on 40 whole-card audits; in 9 of 20 cards the first audit rejected, so the second could not change the outcome, and many rejects were for simple errors a reviewer can find. Three points were put to the founder, who answered: "Enig i alle punktene dine, gjør forberedelsene nå, men vent med å sette i gang selve kjøringene til jeg sier ifra."
