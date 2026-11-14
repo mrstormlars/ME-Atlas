@@ -2,6 +2,12 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-14 — Correcting a held-back draft: one revised attempt after a review reject (founder ruling)
+
+- **A correction the review agent rejects gets one revised attempt by the drafting agent before the round counts as used.** The founder's answer to "Skal en korreksjon som granskeren avviser, få ett nytt forsøk hos drafteren før runden regnes som brukt?" was "Ja, ett nytt forsøk". The drafter sees the reviewer's findings, as in the weekly path's second attempt; the revised correction passes the mechanical checks and the review agent again; a second reject ends the round and the card stays held back. Both attempts are kept in the trail (`audits/<date>-<slug>-C<k>-correction.yaml` and `...-correction-revised.yaml`). Why: the first live correction (reduced NK cell function) was rejected on two findings that a revision could answer, and the weekly path already gives a rejected draft one revised attempt.
+- This changes the default "a review reject ends the round" in the entry below (orchestrator defaults, 2026-11-14). The other defaults in that entry are still defaults awaiting the founder's confirmation.
+- Orchestrator default, for the founder to confirm: the retry after failed mechanical checks and the revised attempt after a review reject are separate limits, each used at most once per round, in either order.
+
 ## 2026-11-14 — Correcting a held-back draft: orchestrator defaults (founder to confirm)
 
 Defaults chosen when the correction path was built (`docs/pipeline.md`, "Correcting a held-back draft"). Each is the orchestrator's default, not a founder ruling; the founder confirms or changes them.
