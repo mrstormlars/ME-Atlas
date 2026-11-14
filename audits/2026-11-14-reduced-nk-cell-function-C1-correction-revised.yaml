@@ -1,0 +1,101 @@
+card: reduced-nk-cell-function
+round: 1
+answered:
+- 2026-11-13-reduced-nk-cell-function-second.yaml
+- 2026-11-13-reduced-nk-cell-function.yaml
+draft_sha256: 8f4e42dae7720d15025ff273a15079ebc46474d520f160282f4eb16aef59cf01
+operations:
+- op: update_study
+  id: pmid:20520837
+  set:
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were
+      drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after
+      they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1).
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'Controlled studies using the Fukuda definition, which does not require post-exertional malaise,
+    found lower NK cell killing in patients than in controls. Three come from one Australian research
+    group: one of 39 patients and 30 controls, and two of 95 and 65 patients, the second drawn from the
+    first''s cohort.'
+  sources:
+  - pmid:27099524
+  - pmid:21619669
+  - pmid:22571715
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: A fourth study, of 176 patients and 230 controls, used the CDC clinical diagnostic criteria without
+    naming a version, which the rubric ranks equal to Fukuda. It comes from a group in Miami with no authors
+    shared with the Australian group's 39-patient study; its last author co-authored the 95-patient study
+    with the Australian group, an indirect link. The card is at level 3 because an independent group found
+    the same result in a separate cohort.
+  sources:
+  - pmid:20520837
+  - pmid:27099524
+  - pmid:21619669
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: With 39 patients in that measurement, the Canadian Consensus Criteria study is of comparable quality
+    to the Australian group's Fukuda studies of 39 and 65 patients. It is not of comparable quality to
+    the Miami study of 176 patients.
+  sources:
+  - pmid:28694809
+  - pmid:27099524
+  - pmid:22571715
+  - pmid:20520837
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No study on this card reports NK cell killing validated as a diagnostic marker in a second, independent
+    patient group. A study of 176 patients and 230 controls using the CDC clinical diagnostic criteria
+    (version not named) found NK killing a good predictor of CFS status within its own cohort. A Canadian
+    Consensus Criteria study concluded the measures were not useful diagnostic markers, a multi-site study
+    concluded the assay was not ready for clinical use, and a family study found low antibody-dependent
+    NK killing also in relatives without the illness.
+  sources:
+  - pmid:20520837
+  - pmid:28694809
+  - pmid:37013608
+  - pmid:33777500
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: Four of the supporting studies (three using Fukuda, one the CDC clinical diagnostic criteria with
+    no version named) report no direct measure of post-exertional malaise, such as an exercise test repeated
+    on two consecutive days, in their abstracts or open full texts. The 65-patient study lists, among
+    its participants' symptoms, the share reporting weakness more than 24 hours after exercise; this is
+    a self-reported symptom, not a test.
+  sources:
+  - pmid:27099524
+  - pmid:20520837
+  - pmid:21619669
+  - pmid:22571715
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 0
+    severity: advisory
+    problem: 'Answers audit finding 1 (both audits, Part 1). The update_study is correct: the value is
+      CDC_unspecified, the source is fulltext, and the quote appears verbatim in the record of pmid:20520837,
+      which names neither Fukuda nor 1994. However, the YAML comment above the study still reads ''ref
+      1 is Fukuda et al. 1994 ... so this reads as Fukuda''. That contradicts the new value and rests
+      on a reference list that is not in the cached record. The first review raised this too. Readers
+      do not see the comment, and a correction operation cannot edit it.'
+    fix: When the card is next edited outside a correction, change the comment so it says the record names
+      the CDC clinical diagnostic criteria without a version and that the reference list is not in the
+      cached record.
+  - operation: 2
+    severity: advisory
+    problem: Answers audit finding 1 (the label 'A fourth Fukuda study'). The text matches the record
+      and the rubric ('ranks equal to Fukuda'), and nothing else changes. As the first review noted, the
+      sentence does not say that the CDC criteria, like Fukuda, do not require post-exertional malaise.
+      The rubric asks for that flag for CDC criteria where the version is not stated. This matters less
+      if the site shows the flag from the study's case_definition.
+    fix: Optionally add 'which, like Fukuda, does not require post-exertional malaise'.

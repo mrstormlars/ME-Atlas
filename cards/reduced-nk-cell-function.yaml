@@ -16,13 +16,15 @@ level_reason:
       malaise, found lower NK cell killing in patients than in controls. Three come from one
       Australian research group: one of 39 patients and 30 controls, and two of 95 and 65
       patients, the second drawn from the first's cohort.
-    sources: [pmid:27099524, pmid:21619669, pmid:22571715, pmid:20520837]
+    sources: ['pmid:27099524', 'pmid:21619669', 'pmid:22571715']
   - text: >-
-      A fourth Fukuda study, of 176 patients and 230 controls, comes from a group in Miami with no
-      authors shared with the Australian group's 39-patient study; its last author co-authored the
-      95-patient study with the Australian group, an indirect link. The card is at level 3 because
-      an independent group found the same result in a separate cohort.
-    sources: [pmid:20520837, pmid:27099524, pmid:21619669]
+      A fourth study, of 176 patients and 230 controls, used the CDC clinical diagnostic
+      criteria without naming a version, which the rubric ranks equal to Fukuda. It comes from a
+      group in Miami with no authors shared with the Australian group's 39-patient study; its
+      last author co-authored the 95-patient study with the Australian group, an indirect link.
+      The card is at level 3 because an independent group found the same result in a separate
+      cohort.
+    sources: ['pmid:20520837', 'pmid:27099524', 'pmid:21619669']
   - text: >-
       Against these findings, a study meeting the Canadian Consensus Criteria (48 patients and 52
       controls in the whole study; NK killing measured in 39 patients and 44 controls) found no
@@ -46,10 +48,10 @@ contested:
         controls in two cohorts analysed separately (24 vs 28 and 15 vs 16) and found no difference.
       sources: [pmid:28694809]
     - text: >-
-        With 39 patients in that measurement, the Canadian Consensus Criteria study is of comparable
-        quality to the Australian group's Fukuda studies of 39 and 65 patients, but not to its
-        95-patient study or to the Miami study of 176 patients.
-      sources: [pmid:28694809, pmid:27099524, pmid:22571715, pmid:21619669, pmid:20520837]
+        With 39 patients in that measurement, the Canadian Consensus Criteria study is of
+        comparable quality to the Australian group's Fukuda studies of 39 and 65 patients. It is
+        not of comparable quality to the Miami study of 176 patients.
+      sources: ['pmid:28694809', 'pmid:27099524', 'pmid:22571715', 'pmid:20520837']
     - text: >-
         Rung 3 rests on the Australian group's 39-patient study and the Miami study as findings
         from independent groups; it is contested because a study of comparable quality contradicts
@@ -70,13 +72,14 @@ badges:
     value: false
     reason:
       text: >-
-        No study on this card reports NK cell killing validated as a diagnostic marker in a second,
-        independent patient group. A Fukuda study of 176 patients and 230 controls found NK
-        killing a good predictor of CFS status within its own cohort. A Canadian Consensus
-        Criteria study concluded the measures were not useful diagnostic markers, a multi-site
-        study concluded the assay was not ready for clinical use, and a family study found low
-        antibody-dependent NK killing also in relatives without the illness.
-      sources: [pmid:20520837, pmid:28694809, pmid:37013608, pmid:33777500]
+        No study on this card reports NK cell killing validated as a diagnostic marker in a
+        second, independent patient group. A study of 176 patients and 230 controls using the
+        CDC clinical diagnostic criteria (version not named) found NK killing a good predictor
+        of CFS status within its own cohort. A Canadian Consensus Criteria study concluded the
+        measures were not useful diagnostic markers, a multi-site study concluded the assay was
+        not ready for clinical use, and a family study found low antibody-dependent NK killing
+        also in relatives without the illness.
+      sources: ['pmid:20520837', 'pmid:28694809', 'pmid:37013608', 'pmid:33777500']
   explains_pem:
     value: false
     # Checked: every abstract on this card, and the open full texts of 27099524 (PMC4821384), 20520837 (PMC2876037),
@@ -86,12 +89,13 @@ badges:
     # participants' questionnaire ("Clinical data were collected through self-administered questionnaires").
     reason:
       - text: >-
-          The four Fukuda studies that support the hypothesis report no direct measure of
-          post-exertional malaise, such as an exercise test repeated on two consecutive days, in
-          their abstracts or open full texts. The 65-patient study lists, among its participants'
-          symptoms, the share reporting weakness more than 24 hours after exercise; this is a
-          self-reported symptom, not a test.
-        sources: [pmid:27099524, pmid:20520837, pmid:21619669, pmid:22571715]
+          Four of the supporting studies (three using Fukuda, one the CDC clinical diagnostic
+          criteria with no version named) report no direct measure of post-exertional malaise,
+          such as an exercise test repeated on two consecutive days, in their abstracts or open
+          full texts. The 65-patient study lists, among its participants' symptoms, the share
+          reporting weakness more than 24 hours after exercise; this is a self-reported symptom,
+          not a test.
+        sources: ['pmid:27099524', 'pmid:20520837', 'pmid:21619669', 'pmid:22571715']
       - text: >-
           The two small supporting studies using a CDC definition whose version is not named report
           no direct measure of post-exertional malaise in their abstracts; no open full text was
@@ -145,9 +149,9 @@ studies:
     cohort: me_cfs
     # Full text (PMC2876037): "CDC clinical diagnostic criteria [1], [2]"; ref 1 is Fukuda et al. 1994 and ref 2 is
     # Reeves et al. 2003 on ambiguities in the 1994 definition, so this reads as Fukuda.
-    case_definition: Fukuda
+    case_definition: CDC_unspecified
     case_definition_source: fulltext
-    case_definition_quote: "Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1)."
+    case_definition_quote: Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1).
     design: controlled
     n_patients: 176
     n_controls: 230
@@ -477,5 +481,5 @@ links:
       herpesvirus step in patients.
     sources: [pmid:7476598]
 last_checked:
-  date: 2026-10-31
-  by: ai_pair
+  date: 2026-11-14
+  by: ai_audit
