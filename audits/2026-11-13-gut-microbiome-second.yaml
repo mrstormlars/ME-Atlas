@@ -1,0 +1,55 @@
+card: gut-microbiome
+decision: reject
+parts:
+  - decision_part: "The level 3. The cited records support it: a controlled CCC/Fukuda study found lower stool butyrate, and a group with no shared authors found lower stool butyrate in a separate IOM 2015 cohort. This part alone would be acceptable."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:36758522
+        quote: "The study included stool samples from 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS, and 91 healthy control individuals recruited from 5 sites in the United States (CA, NY, NV, UT, and FL)."
+      - source: pmid:36758522
+        quote: "In contrast, butyrate was lower in both ME/CFS subjects without sr-IBS and with sr-IBS compared with healthy controls without sr-IBS (Figure 3I)."
+      - source: pmid:36758522
+        quote: "Center for Infection and Immunity, Mailman School of Public Health, Columbia University, New York, NY 10032, USA"
+      - source: pmid:41387992
+        quote: "This case-control study included 80 subjects, comprising 40 patients with CFS and 40 age- and sex-matched HC."
+      - source: pmid:41387992
+        quote: "The concentrations of butyrate (q = 0.044), acetate (q = 0.032), isobutyrate (q = 0.039), and isovalerate (q = 0.008) were all significantly reduced in the CFS group, with isovalerate showing the strongest association."
+      - source: pmid:41387992
+        quote: "Affiliated Hospital of Shandong University of Traditional Chinese, Jinan, China"
+  - decision_part: "No contested mark (contested: null). The contradicting study on the card measured blood markers of the gut wall, not stool butyrate, and the Bulgarian study did not measure stool short-chain fatty acids, so no cited study contradicts the finding the rungs rest on."
+    rubric: "at least one study of comparable or higher quality contradicts the finding that supports it"
+    evidence:
+      - source: pmid:37396339
+        quote: "In contrast with the humoral immune responses towards the LPS and flagellin microbial antigens, plasma levels of neither LBP nor sCD14 acute-phase responses were significantly elevated in individuals with ME/CFS in comparison with healthy controls (Fig. 4a and b)."
+      - source: pmid:42351611
+        quote: "Integration with multi-omics data, such as fecal metabolomics for SCFA concentrations, is needed to confirm links between barrier breakdown and symptoms."
+  - decision_part: "Diagnostic marker badge set to no. Supported: the validation cohort came from the same research group and the same sites."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:36758522
+        quote: "While geographic diversity of sampling is distinctive to this study, both the primary cohort and external validation cohort were derived from individuals from the same five sites in the US."
+  - decision_part: "PEM badge set to no. Supported: the exertion study did not relate the gut or blood bacterial changes to symptoms in the same patients."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:26683192
+        quote: "Additionally, the small sample size precluded us from directly examining the associations between symptoms and changes to the gut and plasma microbiome."
+  - decision_part: "The proposed links to tryptophan-kynurenine-metabolism, neuroinflammation and oxidative-nitrosative-stress. Their texts (tryptophan and phenylalanine products, the blood-brain barrier and neuroinflammation, reactive oxygen and nitrogen molecules, the IBS subgroup, which comes first) cannot be matched to any sentence in the records of their only sources, pmid:41516296 and pmid:31330791. Both are given as abstracts only, and neither abstract states any of these links. Only the link to cognitive impairment is stated in the 41516296 abstract. The links are not shown to be supported."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "This consequently leads to translocation of microbial components, which further triggers an immune response and systemic inflammation complicating the clinical presentation of ME/CFS."
+      - source: pmid:41516296
+        quote: "Furthermore, in terms of the so-called gut-brain axis, microbiome changes may lead to distinct neurocognitive impairments observed in ME/CFS patients."
+      - source: pmid:31330791
+        quote: "This evidence is mostly comprised of disturbances to immunological and inflammatory pathways, autonomic and neurological dysfunction, abnormalities in muscle and mitochondrial function, shifts in metabolism, and gut physiology or gut microbiota disturbances."
+  - decision_part: "Case-definition records. pmid:19338686 is recorded as CCC, but the sentence the card quotes names no definition, and the reference it points to is not in the record. pmid:42351611 is recorded as unverified with no sample size, and level_reason calls its case definition not yet verified, yet its full text (a carrier) names the 2015 IOM criteria and gives 76 patients and 37 controls."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:19338686
+        quote: "Those adult patients aged 18–65 meeting the formal diagnostic criteria for CFS, according to published guidelines, [13] were further screened for inclusion based on suitability to complete a two month trial."
+      - source: pmid:42351611
+        quote: "Patients with ME/CFS were selected according to the 2015 Institute of Medicine/National Academy of Medicine diagnostic criteria [42], requiring core ME/CFS symptoms for at least 6 months with no alternative diagnosis."
+      - source: pmid:42351611
+        quote: "This cross-sectional case–control study included 163 participants: 76 patients with ME/CFS (17 males and 59 females), 50 patients with LC condition (13 males and 37 females), and 37 HC (11 males and 26 females)."
+reasons_summary: "Level 3, both badges at no and no contested mark are supported, but three proposed links cite reviews whose abstracts do not state them, and two case-definition records do not match their sources, so the card is not accepted as it stands."
+would_change: "Accept would need four changes. (1) The links to tryptophan-kynurenine-metabolism, neuroinflammation and oxidative-nitrosative-stress either removed or sourced to a record whose given text states each link; the full texts of pmid:41516296 and pmid:31330791 were not shown, so their link statements could not be checked. (2) pmid:19338686 recorded with a sentence that names its case definition, or as unverified. (3) pmid:42351611 recorded as IOM2015 with 76 patients and 37 controls, and the level_reason wording corrected. (4) The same for the study 'finding' texts of pmid:41516296 and pmid:31330791, which make claims not in their abstracts. For pmid:36758521 and pmid:23791918 no full text is cached; the card's statements about them match their abstracts and the level does not rest on them. A cited study of comparable quality finding no fall in stool butyrate would make level 3 contested. No drafting reasoning, review finding or earlier audit was used."

@@ -1,0 +1,51 @@
+card: reduced-nk-cell-function
+decision: reject
+parts:
+  - decision_part: "The case definition of the Miami study (pmid:20520837), recorded on the card as Fukuda and described in level_reason and the diagnostic_marker reason as a Fukuda study. This study is the sole support of rung 2 and one of the two studies rung 3 rests on. Its record names only the CDC clinical diagnostic criteria, without a version; it nowhere names 1994 or Fukuda, and the reference list is left out. The rubric has a separate category for this case, so the label Fukuda cannot be read from the record. On the ladder the two rank equal, so the level itself would not change, but a case definition the record does not support is a reason not to accept."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:20520837
+        quote: "Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1)."
+      - source: pmid:27099524
+        quote: "Patients were defined according to the 1994 Centers for Disease Control and Prevention criteria."
+  - decision_part: "The proposed level 3, apart from the case-definition label. A controlled Australian study and a controlled Miami study with no shared authors each found lower NK cell killing in patients than in controls, in separate cohorts. With the Miami study taken as CDC, version not stated (ranked equal to Fukuda), these records support rung 3."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:27099524
+        quote: "ME/CFS patients had a significant reduction in NK percentage lysis of target cells (17%±4.68%) compared with the unfatigued control group (31%±6.78%)."
+      - source: pmid:20520837
+        quote: "Cytotoxic function of NK cells for 176 CFS subjects was significantly lower than in the 230 controls."
+  - decision_part: "The contested mark on rung 3. A Canadian Consensus Criteria study (a stricter definition) with controls measured NK killing in 24 Stockholm and 15 Oslo patients and found no difference. That is at least half of the 39 patients in the Australian study that rung 3 needs, so the mark on rung 3 is supported. Measured against the 176 patients of the Miami study it is not comparable, so rung 2 stays uncontested on these records."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:28694809
+        quote: "All 48 patients fulfilled Canada 2003 (2) criteria for ME/CFS."
+      - source: pmid:28694809
+        quote: "Killing by NK cells from ME/CFS and healthy controls was similar at the examined effector to target ratios (Figure 2C)."
+      - source: pmid:28694809
+        quote: "An identical experiment with 15 and 16 of the Oslo patients and controls, respectively, was also performed."
+  - decision_part: "The contested reason says the Canadian Consensus Criteria study is not of comparable quality to the 95-patient study. That study's full text gives n = 71 for the cytotoxicity measurement, which may be fewer than 95 patients. If 71 or fewer patients were measured, 39 is at least half, and the statement would be wrong. The mark on rung 3 does not depend on this study, but the statement cannot be confirmed from the record."
+    rubric: "at least half the sample size of the study it contradicts"
+    evidence:
+      - source: pmid:21619669
+        quote: "NK and CD8+T (n = 71) cytotoxic activity measured as the ability of NK and CD8+T cells to effectively lyse K562 and P815 cells respectively was significantly decreased"
+  - decision_part: "Both badges set to no. Diagnostic marker: the Miami ROC result comes from its own cohort, not from a second, independent group, and the Canadian Consensus Criteria study found no use as a marker. Explains PEM: no study on the card measures PEM directly; the 65-patient study only lists a self-reported symptom."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:20520837
+        quote: "According to ROC analysis, NKCC was a good predictor of CFS status."
+      - source: pmid:28694809
+        quote: "These assessments of cytotoxic lymphocytes therefore do not provide useful biomarkers for the diagnosis of ME/CFS."
+      - source: pmid:22571715
+        quote: "Weakness >24 hours after exercise 93.8 9.5"
+  - decision_part: "The layer (dysfunction) and the two links at step 1 (proposed). Each link is stated in a peer-reviewed source."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:24068616
+        quote: "The common observation of reduced natural killer cell function in ME/cfs is a source of disrupted homeostasis and prolonged effector T cell survival."
+      - source: pmid:38970055
+        quote: "suggesting a role in ineffective pathogen clearance and potential virus persistence and autoimmunity development."
+      - source: pmid:7476598
+        quote: "The function of cytotoxic T cells, T helper cells, and NK cells is important in preventing reactivation of infections from Epstein-Barr virus, cytomegalovirus, and other herpesviruses."
+reasons_summary: "Rejected: the Miami study that rung 2 and rung 3 rest on is labelled Fukuda, but its record names only CDC criteria without a version; level 3 with the contested rung 3 is otherwise supported."
+would_change: "Relabel pmid:20520837 as CDC criteria, version not stated (in the study entry, level_reason and the diagnostic_marker reason), or cite a sentence in its record that names the 1994 definition. Also correct or qualify the claim that the Canadian Consensus Criteria study is not comparable to the 95-patient study (pmid:21619669 gives n = 71 for the measurement). With those fixed, level 3 with rung 3 contested and both badges at no would be acceptable on these records. Unverifiable, not shown false: pmid:8985207 has no cached full text, so its case definition and size cannot be checked; if its full text named a recognised definition and at least 88 patients measured, it could contest rung 2. The cohort overlap between pmid:22571715 and pmid:21619669 rests on a reference ([25]) that is not shown. The group affiliations given for pmid:7983659, pmid:8148445 and pmid:9683556 do not appear in their records. No drafting, review or earlier audit material was handed to me."

@@ -18,7 +18,7 @@ import json
 import re
 import shutil
 import sys
-from collections.abc import Sequence
+from collections.abc import Collection, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import quote
@@ -290,8 +290,33 @@ def _environment(content_dir: Path) -> Environment:
     )
 
 
+def _unpublished_cards(cards_dir: Path, drafts_dir: Path | None) -> dict[str, str]:
+    """Slug -> name of the cards that exist only in ``drafts/``. The public build shows a link to one of them as
+    text, not as a link (docs/map.md). The name is the draft's own; a draft that does not load gets its slug."""
+    if drafts_dir is not None:
+        return {}  # a draft build builds the drafts, so nothing is unpublished
+    folder = cards_dir.parent / "drafts"
+    if not folder.is_dir():
+        return {}
+    published = {p.stem for p in cardlib._yaml_files(cards_dir)} if cards_dir.is_dir() else set()
+    found: dict[str, str] = {}
+    for path in cardlib._yaml_files(folder):
+        if path.stem in published:
+            continue
+        try:
+            found[path.stem] = cardlib.load_card(path).name
+        except cardlib.CardValidationError:
+            found[path.stem] = path.stem.replace("-", " ")
+    return found
+
+
 def _check_inputs(
-    cards_dir: Path, drafts_dir: Path | None, glossary_path: Path, today: dt.date, content_dir: Path
+    cards_dir: Path,
+    drafts_dir: Path | None,
+    glossary_path: Path,
+    today: dt.date,
+    content_dir: Path,
+    unpublished: Collection[str] = (),
 ) -> tuple[list[str], Glossary | None]:
     problems: list[str] = []
     paths: list[Path] = [cards_dir]
@@ -301,7 +326,9 @@ def _check_inputs(
             paths += sorted(p for p in drafts_dir.glob("*.yaml") if p.name != cardlib.CHANGELOG_NAME)
         else:
             problems.append(f"{drafts_dir}: path does not exist")
-    _, issues = cardlib.validate_paths(paths, today, content_dir=content_dir, cards_dir=cards_dir)
+    _, issues = cardlib.validate_paths(
+        paths, today, content_dir=content_dir, cards_dir=cards_dir, extra_known_slugs=unpublished
+    )
     problems += [str(i) for i in issues]
     glossary: Glossary | None = None
     try:
@@ -399,6 +426,7 @@ class _Shared:
     entries: list[ChangeLogEntry]
     drafts: bool
     built: str
+    unpublished: dict[str, str] = field(default_factory=dict)  # slug -> name of the draft-only cards
     map_content: maplib.MapContent = field(default_factory=maplib.MapContent)
     map_local: dict[str, tuple[dict[str, str], dict[str, str]]] = field(default_factory=dict)
 
@@ -425,6 +453,7 @@ class LinkView:
     target: MapText
     target_href: str
     refs: tuple[tuple[int, str], ...]  # (number, href on the card page)
+    unpublished: bool = False  # the target is a draft-only card: shown as text, with no href
 
 
 @dataclass(frozen=True)
@@ -481,6 +510,7 @@ class _Namer:
     by_slug: dict[str, translations.LocalCard]
     local_names: dict[str, str]
     local_texts: dict[str, str]
+    unpublished: dict[str, str] = field(default_factory=dict)
 
     def local(self, table: dict[str, str], key: str, english: str) -> MapText:
         if self.default:
@@ -506,7 +536,7 @@ class _Namer:
         numbers: dict[str, int] = {}
         out: dict[int, tuple[tuple[int, str], ...]] = {}
         for i, link in enumerate(self.by_slug[slug].card.links):
-            if link.to not in self.graph.nodes:
+            if link.to not in self.graph.nodes and link.to not in self.unpublished:
                 continue
             for source in link.sources:
                 numbers.setdefault(source, len(numbers) + 1)
@@ -525,6 +555,7 @@ def _map_views(
     local_names: dict[str, str],
     local_texts: dict[str, str],
     draw_strings: map_draw.Strings,
+    unpublished: dict[str, str] | None = None,
 ) -> tuple[list[SectionView], list[ConvergenceView], list[ConvergenceView], Markup]:
     """The map page as one language shows it. Structure and counts come from the English cards; link texts and names
     come from the translated cards, symptom names and question texts from the language's content files. The last
@@ -532,7 +563,8 @@ def _map_views(
     default = code == DEFAULT_LANGUAGE
     graph = maplib.build_graph(english_cards, content)
     by_slug = {lc.card.slug: lc for lc in local_cards}
-    namer = _Namer(default, graph, by_slug, local_names, local_texts)
+    unpublished = unpublished or {}
+    namer = _Namer(default, graph, by_slug, local_names, local_texts, unpublished)
     local, name_of, href_of = namer.local, namer.name_of, namer.href_of
 
     english_by_slug = {c.slug: c for c in english_cards}
@@ -556,7 +588,11 @@ def _map_views(
             refs_of = namer.link_refs(node.key)
             views: list[LinkView] = []
             for i, link in enumerate(lc.card.links):
-                if i in refs_of:
+                if i in refs_of and link.to in unpublished:
+                    # A draft-only target: its name as text, no page, no edge (docs/map.md).
+                    target = MapText(unpublished[link.to], not default)
+                    views.append(LinkView(link, link.support, target, "", refs_of[i], unpublished=True))
+                elif i in refs_of:
                     views.append(LinkView(link, link.support, name_of(link.to), href_of(link.to), refs_of[i]))
             near = (
                 Markup(map_draw.render_neighbourhood(graph, node.key, info, draw_strings, f"near-{node.key}"))
@@ -916,7 +952,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         near_title=txt0["map.draw.near_title"],
     )
     sections, common, roots, whole = _map_views(
-        code, local_cards, shared.cards, shared.map_content, local_names, local_texts, draw_strings
+        code, local_cards, shared.cards, shared.map_content, local_names, local_texts, draw_strings, shared.unpublished
     )
     gaps = _gaps_view(code, local_cards, shared.cards, shared.map_content, local_names, local_texts)
     legend = LegendView({k: Markup(map_draw.legend_sample(k)) for k in map_draw.LINK_STYLES})
@@ -990,7 +1026,8 @@ def build(
     translations_dir = Path(translations_dir) if translations_dir is not None else cards_dir.parent / "translations"
     result = BuildResult()
 
-    problems, glossary = _check_inputs(cards_dir, drafts_dir, glossary_path, today, content_dir)
+    unpublished = _unpublished_cards(cards_dir, drafts_dir)
+    problems, glossary = _check_inputs(cards_dir, drafts_dir, glossary_path, today, content_dir, unpublished)
     if glossary is None:
         result.errors = problems
         return result
@@ -1042,6 +1079,7 @@ def build(
         entries=entries,
         drafts=drafts_dir is not None,
         built=today.isoformat(),
+        unpublished=unpublished,
         map_content=map_content,
         map_local=map_local,
     )

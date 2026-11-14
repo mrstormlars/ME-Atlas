@@ -167,6 +167,7 @@ map.unplaced_note: 'These hypotheses have no layer yet. Placing a hypothesis in 
 map.symptoms_intro: 'Symptoms are not hypotheses. Each one is taken from the case definitions that list it.'
 map.to: 'To'
 map.no_links: 'No links from this hypothesis yet.'
+map.unpublished: 'not yet published'
 map.listed_in: 'Listed in:'
 map.question_label: 'Open question'
 map.asked_in: 'Asked in:'

@@ -1,0 +1,78 @@
+card: inherited-genetic-risk
+decision: accept
+parts:
+  - decision_part: "The level 2: a controlled study in patients with a recognised case definition (the Oslo HLA study, CCC, 426 patients, 4511 controls) supports an inherited association."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32210306
+        quote: "We performed high resolution HLA -A, -B, -C, -DRB1, -DQB1 and -DPB1 genotyping by next generation sequencing in 426 adult, Norwegian ME/CFS patients, diagnosed according to the Canadian Consensus Criteria."
+      - source: pmid:32210306
+        quote: "HLA associations were assessed by comparing to 4511 healthy and ethnically matched controls."
+      - source: pmid:32210306
+        quote: "Interestingly, both C*07:04 and DQB1*03:03 remained significant after Bonferroni multiple test correction."
+      - source: pmid:32328064
+        quote: "Diagnosis of ME/CFS is based on Canadian Consensus Criteria (CCC) (28) and exclusion of other medical or neurological diseases that may cause fatigue."
+      - source: pmid:32328064
+        quote: "One-tailed t-tests were performed to test for increased frequency of the known autoimmunity risk alleles in ME/CFS patients."
+  - decision_part: "Not level 3: no independent group has reproduced the HLA finding in a separate cohort; the follow-up HLA and KIR studies come from the same Oslo group and draw on the same patient samples, and the DecodeME combinations come from one company with cases and controls from different studies."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:32210306
+        quote: "Taken together, our results need verification in independent cohorts."
+      - source: pmid:34403736
+        quote: "We have previously performed high resolution HLA genotyping and detected associations between ME/CFS and certain HLA class I and class II alleles."
+      - source: pmid:40897283
+        quote: "ME/CFS patient DNA samples were obtained as previously described (Lande et al., 2020; Hajdarevic et al., 2021)."
+      - source: pmid:42015188
+        quote: "Finally, formal confirmation that the double-refined signatures are broadly associated with disease (e.g., using the signature count approach) will require an independent cohort of people with ME and controls that are genotyped as part of the same study."
+  - decision_part: "Not level 4: no study on the card changes the proposed factor in a controlled experiment; all are association, family or twin studies."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:32210306
+        quote: "We discovered two independent HLA associations, tagged by the alleles HLA-C*07:04"
+  - decision_part: "Contested mark null: no study of comparable quality contradicts the Oslo HLA finding. The London HLA study that found no difference has 58 patients (less than half of 426) and no verified case definition; the Oslo genome-wide study has no verified case definition on the card."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it"
+    evidence:
+      - source: pmid:11422420
+        quote: "Fifty-eight patients were phenotyped for HLA A and B by microcytotoxicity and genotyped for HLA DRB, DQB and DPB by PCR oligoprobing, and the frequencies of antigens so assigned were compared with those from a control group of 134."
+      - source: pmid:35318112
+        quote: "Even so, we did not find any ME/CFS risk loci displaying genome-wide significance."
+  - decision_part: "The Nevada TRA finding is reported as not supported, after a larger CCC cohort failed to replicate it."
+    rubric: "Down or held back: failed replications"
+    evidence:
+      - source: pmid:26859813
+        quote: "In this pilot study, we consented a total of 80 subjects, consistent with the previous study of Smith et al.:27 42 cases with a confirmed diagnosis of ME/CFS and 38 healthy controls."
+      - source: pmid:35821115
+        quote: "No associations were observed in the Norwegian cohort, and there was no significant association with the two previously reported SNPs in any of the cohorts."
+  - decision_part: "Diagnostic marker badge false: the HLA variants have not been tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32210306
+        quote: "The proportion of individuals carrying one or both of these alleles was 19.2% in the patient group and 12.2% in the control group"
+      - source: pmid:32210306
+        quote: "Taken together, our results need verification in independent cohorts."
+  - decision_part: "Explains PEM badge false: no study on the card measures post-exertional malaise directly; the Oslo study used questionnaires."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:32210306
+        quote: "Clinical information was collected through questionnaires completed by patients or relatives."
+  - decision_part: "Layer predisposition: the card is about inherited risk, answering who is vulnerable."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:11702053
+        quote: "There were significantly higher rates of CFS in the relatives of CFS cases compared with the relatives of control subjects."
+  - decision_part: "Links at step 1 (proposed) to autoimmunity, reduced NK cell function and immune cell gene expression, each to a peer-reviewed source that states the link; none claims a relation measured at both ends in the same patients."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:32328064
+        quote: "This finding provides evidence that autoimmunity might play a role in ME/CFS with an infection-triggered onset."
+      - source: pmid:32328064
+        quote: "while there was no difference in B cell numbers"
+      - source: pmid:40897283
+        quote: "Our data support an involvement of NK cells in ME/CFS."
+      - source: pmid:40897283
+        quote: "If considering the study specific Bonferroni corrected significance threshold of 0.0007, only KIR3DL2*010 remains significant (p= 0.0005)."
+      - source: pmid:42196410
+        quote: "the findings revealed the downstream consequences of this genetic and epigenetic priming: chronic innate immune activation, CD8+ T cell exhaustion"
+reasons_summary: "Level 2 accepted: one CCC-defined controlled HLA study (426 patients, 4511 controls) supports an inherited association, not repeated by an independent group, no comparable contradicting study, both badges correctly no, layer and proposed links sourced."
+would_change: "An independent group reproducing HLA-C*07:04 or HLA-DQB1*03:03 (or another variant on the card) in a separate cohort with a recognised case definition would support level 3. A contradicting study with CCC/ICC/IOM 2015 patients, controls and at least 213 patients would support a contested mark. Unverifiable but not needed for any decision: the place labels 'London' (pmid:16049290, pmid:11422420), 'Brisbane' (pmid:15554358) and 'Cambridge' (pmid:11702053) are not in those abstracts, and their full texts are not cached; a correction would be wording only."

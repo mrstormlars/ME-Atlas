@@ -59,6 +59,8 @@ A link's `to` resolves when it is
 
 The resolution set for a card slug is the card files `cards validate` was given (a directory counts as all its `*.yaml` files, the change log excepted), **plus every card file in `cards/`** (the `--cards` directory) **when at least one directory was given**. So `cards validate drafts/` lets a draft link to a published card; `cards validate drafts/one.yaml` alone resolves against that one file only. The site build and `map report` validate exactly the cards they build together (published cards, with drafts replacing the cards of the same slug), so a link must resolve within that set. A file that fails its own validation still counts for resolution (by its file name), so one broken card does not make every link to it fail as well.
 
+**Public build and unpublished cards.** The public site build (no `--drafts`) builds `cards/` only, but a published card may link to a card that exists only in `drafts/` (held back after review or audit). Such a target counts as known, so it is not an M2 error. It is not a node: the map page shows the link as the target's name (the draft's `name`, or the slug with spaces if the draft does not load) followed by "(not yet published)", with the usual support label and numbered references, but with no `href`, and no edge is drawn or counted. A target in neither `cards/` nor `drafts/` is still an M2 error. With `--drafts` the draft is built and the link is an ordinary link.
+
 Not checked by code: that the cited study really measured both ends in the same patients, that it was an ME/CFS cohort (M5 looks at design and case definition only), that temporal order, an intervention or a mediation analysis is there. The `card-reviewer` map mode checks that.
 
 ## The page

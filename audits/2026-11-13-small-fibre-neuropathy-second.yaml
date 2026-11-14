@@ -1,0 +1,60 @@
+card: small-fibre-neuropathy
+decision: reject
+parts:
+  - decision_part: "The level 1. The Boston study uses ICC or IOM 2015 criteria and points towards small fibre damage, but it reports no test of ME/CFS against controls, its controls are historical and its patients come from a referral centre, so level 1 (first signs) is the rung the record supports."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:41576003
+        quote: "The diagnosis of ME/CFS was based on myalgic encephalomyelitis international consensus criteria (ME-ICC) [26] or newer National Academy of Medicine diagnostic criteria [27]."
+      - source: pmid:41576003
+        quote: "presence of SFN (67%/53%)"
+      - source: pmid:41576003
+        quote: "If an overall comparison was statistically significant, pairwise post hoc comparisons were performed using Dunn test [50] with the Benjamini-Hochberg adjustment for multiple comparisons [51]."
+      - source: pmid:41576003
+        quote: "We are a referral center for dysautonomia, so we may not see a representative group of patients."
+      - source: pmid:41576003
+        quote: "We also used historical controls."
+  - decision_part: "Level 2 is not reached. The Bilbao corneal and heat-test studies admit patients with a prior diagnosis that names no definition, and the earlier Boston biopsy study names no definition in the record given, so none of them is a controlled study with a recognised case definition that supports the hypothesis. The one Bilbao study with a verified Fukuda definition is about autoantibodies and its skin conductance result is null."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39888240
+        quote: "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation."
+      - source: pmid:37968647
+        quote: "Patients diagnosed of ME/CFS should be previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time."
+      - source: pmid:33577778
+        quote: "results from 160 patients meeting ME/CFS criteria who had skin biopsy test results were compared with 36 control subjects."
+      - source: pmid:42082542
+        quote: "Second, the diagnostic criteria used for ME/CFS were based on the Fukuda et al. definition."
+  - decision_part: "No contested mark (contested: null). The Bilbao null results come from Fukuda or unverified cohorts, which rank below the ICC or IOM 2015 cohort the level rests on, so none is of comparable quality."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42082542
+        quote: "For the ME/CFS group, patients had to meet the diagnostic criteria proposed by Fukuda28, which require severe fatigue disproportionate to activity lasting at least six months"
+      - source: pmid:39888240
+        quote: "The inconsistency in results across studies, including the present one, analyzing IVCCM variables in these pathologies might suggest that SFN is not an inherent characteristic of these diseases."
+  - decision_part: "Diagnostic marker badge set to no. Corneal tortuosity was tested in one group only, whose case definition is not verified."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:39888240
+        quote: "In ME/CFS patients, the variable that best discriminated between them and HC was also fiber tortuosity (AUC = 0.690; p = 0.032)."
+  - decision_part: "Explains-PEM badge set to no. No study on the card measures PEM directly, and the card is not at level 2. The badge statement is in the abstract of the carrier whose full text is not cached."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33577778
+        quote: "Denervation severity did not correlate with exertional measures."
+  - decision_part: "Layer set to dysfunction. Small fibre damage measured by biopsy, corneal imaging and evoked potentials is a measurable dysfunction."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:41576003
+        quote: "neuropathic assessment through skin biopsies for small fiber neuropathy (SFN)"
+  - decision_part: "The link to symptom:orthostatic-intolerance at step proposed is not accepted. Its only source, the 2023 review, is given abstract-only, and its title and abstract do not state any link between small fibre damage and orthostatic intolerance, so the statement the link rests on cannot be matched to the record. The link text also says no study on this card measured both ends in ME/CFS patients, but the Boston study took skin biopsies and recorded orthostatic lightheadedness during tilt in the same ME/CFS patients, and planned a model relating lightheadedness to its test domains."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:37054777
+        quote: "Hemodynamic and gas exchange derangements in PASC have substantial overlap with those observed with ME/CFS, suggestive of shared mechanisms."
+      - source: pmid:41576003
+        quote: "Orthostatic lightheadedness was observed in >65% of patients"
+      - source: pmid:41576003
+        quote: "The relationship between lightheadedness during head-up tilt (absent versus present) and QASAT domains was evaluated using the binary logistic regression model."
+reasons_summary: "Level 1, no contested mark, both badges set to no and the dysfunction layer are supported, but the proposed link to orthostatic intolerance rests on a review whose shown record does not state it, and its text wrongly says no study on the card measured both ends."
+would_change: "Accept if the link is re-sourced to a record that states the link in the text shown to the auditor (for example the sentence in pmid:37968647 that small fiber neuropathy has been suggested to be a possible mediator of POTS), or if the full text of pmid:37054777 containing the claimed statement is supplied, and if the link text is corrected to say that pmid:41576003 measured skin biopsies and orthostatic symptoms in the same ME/CFS patients and to report whether it found a relation. Can be checked only against the abstract and is not verified: the study-list finding for pmid:42286686 that heat evoked potential latencies shortened and that the authors name regression to the mean, which its abstract (abstract-only record) does not state. The explains-PEM statement drawn from pmid:33577778 is in its abstract, although its full text is not cached. A paired ME/CFS-against-control test of skin biopsy findings in an ICC, CCC or IOM 2015 cohort would bear on level 2. No drafting, review or earlier audit reasoning was given to this auditor."

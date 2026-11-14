@@ -1,0 +1,55 @@
+card: reduced-nk-cell-function
+decision: reject
+parts:
+  - decision_part: "The case definition of the Miami study (pmid:20520837), recorded on the card as Fukuda and named in level_reason and the explains_pem reason as 'A fourth Fukuda study' and 'The four Fukuda studies'. The record names the CDC criteria without a version (no 1994 or Fukuda in the cached full text), so it reads as CDC_unspecified, not Fukuda. The grade does not change, because CDC_unspecified ranks equal to Fukuda, but a case definition that cannot be read from the record is a reason not to accept."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:20520837
+        quote: "Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1)."
+      - source: pmid:27099524
+        quote: "Patients were defined according to the 1994 Centers for Disease Control and Prevention criteria."
+      - source: pmid:22571715
+        quote: "The CFS/ME group met the 1994 CDC criteria for CFS/ME and the control group consisted of non-fatigued volunteers."
+  - decision_part: "The level 3 itself. Apart from the case definition label above, rung 3 is supported: two groups with no shared authors found lower NK killing in separate cohorts."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:27099524
+        quote: "ME/CFS patients had a significant reduction in NK percentage lysis of target cells (17%±4.68%) compared with the unfatigued control group (31%±6.78%)."
+      - source: pmid:20520837
+        quote: "Cytotoxic function of NK cells for 176 CFS subjects was significantly lower than in the 230 controls."
+  - decision_part: "The contested mark on rung 3. It is supported: a CCC study with controls measured NK killing in 24 plus 15 patients, at least half the 39 patients of the Australian study, and found no difference. The card's statement that this study is not of comparable quality to the 95-patient study is not supported. That study reports NK cytotoxicity for n = 71, and 39 is more than half of 71. The sentence needs correcting, although rung 3 is contested either way."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:28694809
+        quote: "All patients fulfilled the Canada criteria for ME/CFS (2)."
+      - source: pmid:28694809
+        quote: "Killing by NK cells from ME/CFS and healthy controls was similar at the examined effector to target ratios (Figure 2C)."
+      - source: pmid:28694809
+        quote: "An identical experiment with 15 and 16 of the Oslo patients and controls, respectively, was also performed."
+      - source: pmid:21619669
+        quote: "NK and CD8+T (n = 71) cytotoxic activity measured as the ability of NK and CD8+T cells to effectively lyse K562 and P815 cells respectively was significantly decreased (p < 0.05) among the CFS/ME patients compared to the control subjects"
+      - source: pmid:37013608
+        quote: "The MCAM study enrolled participants from five specialty clinical sites located in the United States based on expert clinician diagnoses"
+  - decision_part: "The diagnostic_marker badge set to no. This is supported: no record reports the marker validated in a second, independent patient group, and two records conclude against diagnostic use."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:28694809
+        quote: "These assessments of cytotoxic lymphocytes therefore do not provide useful biomarkers for the diagnosis of ME/CFS."
+      - source: pmid:33777500
+        quote: "ROC tests indicated unsuitability of ADCC as a biomarker for CFS because of the low ADCC of family members without CFS."
+  - decision_part: "The explains_pem badge set to no. This is supported: the supporting studies report only a self-reported symptom, not a direct measure of PEM. The paragraph's label 'The four Fukuda studies' carries the case definition error from the first part."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:22571715
+        quote: "Weakness >24 hours after exercise"
+  - decision_part: "The layer (dysfunction) and the two links at step proposed. These are supported: each link has a peer-reviewed source that states it, and none is used to raise the level."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:24068616
+        quote: "The common observation of reduced natural killer cell function in ME/cfs is a source of disrupted homeostasis and prolonged effector T cell survival."
+      - source: pmid:38970055
+        quote: "Dysfunction of TRPM3 in natural killer (NK) cells, characterized by reduced calcium flux, has been observed in ME/CFS and PCS patients, suggesting a role in ineffective pathogen clearance and potential virus persistence and autoimmunity development."
+      - source: pmid:7476598
+        quote: "The function of cytotoxic T cells, T helper cells, and NK cells is important in preventing reactivation of infections from Epstein-Barr virus, cytomegalovirus, and other herpesviruses."
+reasons_summary: "Rejected: the level 3, the contested rung 3, both badges, the layer and the links are supported, but the Miami study is labelled Fukuda while its record names only the CDC criteria without a version, and one comparability sentence overlooks that the 95-patient study measured NK killing in n = 71."
+would_change: "Two corrections would allow acceptance. (1) Record pmid:20520837 as CDC_unspecified, quoting its sentence that names the CDC criteria, and change the 'Fukuda' wording in level_reason and the explains_pem reason to match. Fukuda would need a cached sentence from that record naming the 1994 criteria. (2) Correct or remove the contested.reason statement that the CCC study is not of comparable quality to the 95-patient study (pmid:21619669), since that study reports NK cytotoxicity for n = 71. Neither correction changes the level, the contested rung or the badges. Unverifiable statements, not used as grounds: pmid:8148445, pmid:9683556, pmid:7983659, pmid:8985207, pmid:33777500 and pmid:16731230 have no cached full text, so what their full texts say about PEM measurement or the number of patients measured cannot be checked. No drafting, review or earlier audit material was supplied."

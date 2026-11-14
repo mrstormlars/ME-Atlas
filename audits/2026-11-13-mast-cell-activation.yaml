@@ -1,0 +1,67 @@
+card: mast-cell-activation
+decision: accept_lower
+accepted_level: 1
+parts:
+  - decision_part: "The current level 2: whether the single supporting study is enough for rung 2 or is held back to rung 1 as a small study."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:27362406
+        quote: "CFS/ME patients were classified according to the 2011 International Consensus Criteria."
+      - source: pmid:27362406
+        quote: "This preliminary study investigates mast cell phenotypes from PBMCs in healthy controls."
+      - source: pmid:27362406
+        quote: "We report significant increase of naïve MCs in moderate and severe CFS/ME patients compared with healthy controls."
+  - decision_part: "The hold-back rule applied to the level: the only supporting study is very small, with 12 moderate and 6 severe patients against 13 controls, and is described by its authors as preliminary."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group;"
+    evidence:
+      - source: pmid:27362406
+        quote: "Peripheral MCs may be present in CFS/ME pathology however, further investigation to determine their role is required."
+      - source: pmid:29223146
+        quote: "This pilot investigation provides a novel methodology to characterise MCPs in a rapid, inexpensive and less invasive fashion."
+  - decision_part: "Why level 2 is not reached on the records: the rung's wording (a controlled study, recognised case definition) is met in form, but the study is a single, very small, preliminary one and no second controlled study supports it."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:29223146
+        quote: "There were no significant differences in maturity MCPs, CD154, and CD2/CD25 expression between groups pre and post Poly I:C stimulation."
+  - decision_part: "No contested mark: the later same-group study measured maturity markers within magnetically separated precursors, not the share of the population in PBMCs, so the records do not show that it contradicts the first finding."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:29223146
+        quote: "Following autoMACS magnetic separation, CD117+/Lin-MCPs were stimulated with Poly I:C for 24hr."
+      - source: pmid:29223146
+        quote: "There were no significant differences in maturity MCPs, CD154, and CD2/CD25 expression between groups pre and post Poly I:C stimulation."
+  - decision_part: "Level 4 not reached: the only controlled trial gave an antihistamine, found no benefit, and its case definition is not verified."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:8568124
+        quote: "No therapeutic benefit from terfenadine could be detected in terms of symptom amelioration, improved physical or social functioning, health perceptions, or mental health."
+  - decision_part: "The diagnostic marker badge set to no."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:29223146
+        quote: "A total of 11 International Consensus Criteria defined CFS/ME participants (40.42 ± 10.31), 9 World Health Organisation defined systemic mastocytosis (SM) participants (47.00 ± 10.37) and 12 healthy controls (HC) (36.36 ± 9.88) were included."
+  - decision_part: "The explains PEM badge set to no."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:27362406
+        quote: "HMGB1 and soluble RAGE expression in plasma was measured by sandwich ELISA assay."
+      - source: pmid:41300853
+        quote: "The primary objective of the here described studies was to identify clinically meaningful subgroups of ME/CFS patients based on self-reported symptoms, lifestyle factors, disease characteristics and already existing medical reports, rather than to perform biological validation."
+  - decision_part: "The layer dysfunction."
+    rubric: "Every node sits in exactly one layer, from root to experience:"
+    evidence:
+      - source: pmid:27362406
+        quote: "We report significant increase of naïve MCs in moderate and severe CFS/ME patients compared with healthy controls."
+  - decision_part: "The link to symptom:orthostatic-intolerance at step associated: an IOM 2015 cohort in which both ends were recorded in the same patients and a relation was reported, with the symptom overlap stated in the link text."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:41300853
+        quote: "The study cohort consists of 383 patients who visited the office of a neurologist in Vienna specializing in ME/CFS between March 2019 and April 2022 and who met the IOM diagnostic criteria for ME/CFS [31]."
+      - source: pmid:41300853
+        quote: "For the diagnoses of “OI”, “POTS”, and “OH”, a pathological result from a tilt table test or a Schellong/NASA 10 min lean test was required."
+      - source: pmid:41300853
+        quote: "In the ME/CFS patient group with increased MCA, OI was significantly more prevalent in 70.3% of patients (n = 45), compared to 49.7% (n = 84) in the group without MCA (p = 0.005; Figure 4A)."
+      - source: pmid:41300853
+        quote: "(1) cardiovascular system, with hypotension, tachycardia, syncope, or presyncope;"
+reasons_summary: "Level 2 rests on one very small, preliminary ICC study (12 moderate and 6 severe patients, 13 controls) with no second controlled support, so the rubric's small-study and very-small-sample hold-back supports level 1; badges, no contested mark, layer and link hold."
+would_change: "Level 2 would hold with a larger controlled study with a recognised case definition, or an independent controlled study, finding the same increase in blood mast cell populations. If the full text of pmid:29223146 shows that it measured the same population as a share of PBMCs and found no difference, that would be a contradiction of comparable quality and would bear on a contested mark. I could not check these statements, because the full texts are not cached and the records give no affiliations: the institutions named in level_reason (Griffith University, Harvard, Washington DC) for pmid:27362406, pmid:10884641 and pmid:11570618, and that pmid:27362406 counted the population among blood immune cells. The level does not depend on them. Early signal pmid:33996867 is shown as abstract only, and three statements in it are not in its abstract: infection confirmed by test in one patient, histamine judged against the laboratory reference range, and normal tryptase in one patient. These need checking against the full text. I was not handed any drafting, review or earlier audit reasoning."

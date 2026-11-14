@@ -1,0 +1,140 @@
+- date: 2026-11-13
+  card: circadian-rhythm-disruption
+  change: First publication at level 2
+  reason: Level 2 stands on one controlled ICC study (up to 94 patients) that found a weaker light-dark
+    cycle and lower, more fragmented activity; the supporting studies all come from one Barcelona group,
+    the no-difference studies are smaller with broader definitions, both badges are no, the layer is dysfunction,
+    and the three links match their steps.
+  sources:
+  - pmid:42399727
+  - pmid:36902264
+  - pmid:29874259
+  - pmid:9513740
+  - pmid:11318826
+  - pmid:21532961
+  - pmid:12213500
+  - pmid:8842569
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-13
+  card: autonomic-imbalance
+  change: First publication at level 3
+  reason: Level 3 accepted (lower resting high-frequency HRV in a UK cohort, reproduced in Spain and Russia),
+    rung 3 contested by an equal-quality Holmes 1988 study, rung 2 uncontested, both badges no, layer
+    dysfunction, three links at step 1.
+  sources:
+  - pmid:22670061
+  - pmid:31906988
+  - pmid:38251045
+  - pmid:24493300
+  - pmid:9505867
+  - pmid:9430800
+  - pmid:34970156
+  - pmid:41437251
+  - pmid:34073494
+  - pmid:23166694
+  - pmid:31957647
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-13
+  card: infection-trigger
+  change: First publication at level 2
+  reason: Level 2 rests on one controlled IOM 2015 study (RECOVER-Adult, hazard ratio 4.93 after SARS-CoV-2
+    against matched uninfected); it has not been replicated and no study of comparable quality contradicts
+    it; both badges false; layer trigger and four proposed links are supported.
+  sources:
+  - pmid:39804551
+  - pmid:39046739
+  - pmid:41901562
+  - pmid:42516718
+  - pmid:7752755
+  - pmid:34240822
+  - pmid:26475444
+  - pmid:9926075
+  - pmid:12145392
+  - pmid:16950834
+  - pmid:33367564
+  - pmid:33889154
+  - pmid:39896874
+  - pmid:41598987
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-13
+  card: neuroinflammation
+  change: First publication at level 2
+  reason: Level 2 holds on one controlled CCC-consistent diffusion MRI study (67 vs 67), unreplicated
+    and indirect; the Fukuda PET null study is not of comparable quality, both badges no, layer and proposed
+    links match their sources.
+  sources:
+  - pmid:41834684
+  - pmid:42227214
+  - pmid:24665088
+  - pmid:30617782
+  - pmid:34815320
+  - pmid:34609538
+  - pmid:29759891
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-13
+  card: inherited-genetic-risk
+  change: First publication at level 2
+  reason: 'Level 2 accepted: one CCC-defined controlled HLA study (426 patients, 4511 controls) supports
+    an inherited association, not repeated by an independent group, no comparable contradicting study,
+    both badges correctly no, layer and proposed links sourced.'
+  sources:
+  - pmid:32210306
+  - pmid:32328064
+  - pmid:34403736
+  - pmid:40897283
+  - pmid:42015188
+  - pmid:11422420
+  - pmid:35318112
+  - pmid:26859813
+  - pmid:35821115
+  - pmid:11702053
+  - pmid:42196410
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-13
+  card: persistent-enterovirus-infection
+  change: First publication at level 0
+  reason: 'Level 0 accepted: the positive enterovirus studies have no stated or checked case definition,
+    and the two studies with CCC or CDC criteria found no enterovirus; both badges no, no contested mark,
+    layer mechanism, two links at step proposed.'
+  sources:
+  - pmid:1850635
+  - pmid:3404526
+  - pmid:17872383
+  - pmid:7775934
+  - pmid:42941838
+  - pmid:8863367
+  - pmid:8148439
+  - pmid:8777836
+  - pmid:7893870
+  - pmid:1433120
+  - pmid:7595406
+  - pmid:14570830
+  - pmid:8409778
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-13
+  card: tryptophan-kynurenine-metabolism
+  change: First publication at level 3
+  reason: 'Level 3, contested at rung 3, is supported: Padova and an independent Columbia cohort (both
+    CCC) found a higher kynurenic acid to kynurenine ratio, Uppsala (CCC/ICC/IOM, n=38) did not mark that
+    ratio as different, and both badges correctly stay no.'
+  sources:
+  - pmid:34423789
+  - pmid:34829952
+  - pmid:40903540
+  - pmid:39302151
+  - pmid:25227994
+  - pmid:34090138
+  - pmid:15982993
+  - pmid:11352361
+  - pmid:20384451
+  - pmid:42325052
+  - pmid:35821534
+  - pmid:26667000
+  tier: 2
+  decided_by: ai_audit

@@ -1,0 +1,73 @@
+card: herpesvirus-reactivation
+decision: reject
+parts:
+  - decision_part: "The level 2 itself: a controlled study in a Fukuda cohort found active HHV-6 plus HHV-7 infection (viral DNA in cell-free plasma) only in patients. On its own this meets rung 2, and the Fukuda definition is flagged on the card as not requiring PEM."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study"
+      - source: pmid:36653846
+        quote: "Nested PCR (nPCR) was used to amplify HHV-6A/B, HHV-7, and B19V-specific genomic sequences in the DNA isolated from the peripheral blood (a marker of persistent infection) and cell-free blood plasma (a marker of an active infection)."
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively), distinctly indicating the involvement of the active co-infection in the development of ME/CFS."
+      - source: pmid:22927850
+        quote: "Single HHV-7 28/108 10/90"
+  - decision_part: "Not level 3: the London study is by an independent group, but it measured viral DNA load in saliva, which its authors read as persistent infection. It did not reproduce the plasma finding of active infection that rung 2 rests on."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:34422848
+        quote: "HHV-6B viral DNA concentrations were on average 6.2-fold higher in ME/CFS_SA patients than in HC: the differences were significant at months 1 (P = 0.039), 3 (P = 0.030), and 5 (P = 0.029)"
+      - source: pmid:34422848
+        quote: "indicating that these are longstanding, persistent infections rather than acute/recent infections."
+  - decision_part: "contested: null cannot be accepted. The London study (Canadian Consensus and/or CDC-1994 case definitions, with healthy controls) screened stored plasma from UK ME/CFS Biobank participants by ddPCR for active replication. It found HHV-7 in no plasma sample and HHV-6A or HHV-6B in only one or two subjects. That is the same marker the level 2 rests on, and the result goes the other way. The card says only that this study 'does not repeat the finding of active infection in blood' and never weighs the plasma result as a possible contradiction. The record does not say how many of the 189 screened samples came from ME/CFS patients: up to 132 patients were tested by serology, alongside 76 controls and 27 people with MS. So I cannot tell whether the measurement reaches half of the 200 patients in the Riga study. Because I cannot tell, contested: null is not accepted."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:34422848
+        quote: "were re-assessed by clinical research staff to ensure compliance with the Canadian Consensus (22) and/or CDC-1994"
+      - source: pmid:34422848
+        quote: "Previously (18), concentrations of IgG antibodies against HSV-1, HSV-2, VZV, EBV, CMV and HHV-6 in plasma samples from 132 people with ME/CFS, 76 HC participants and 27 people with multiple sclerosis (MS) in the UKMEB were measured by ELISA."
+      - source: pmid:34422848
+        quote: "were screened by ddPCR to detect potential active (lytic) replication of any of the nine HHVs."
+      - source: pmid:34422848
+        quote: "HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative (Table 1)."
+  - decision_part: "The sample-size test for a contested mark counts the patients in the measurement that bears on the finding. For the London plasma screen the record does not give that number, so a redraft has to settle it from the record before the mark can be decided."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:36653846
+        quote: "Whereas markers of active infection/co-infection (virus genomic sequences in DNA from blood plasma) were detected in 45% (90/200) of the patients with ME/CFS and 8.7% (13/150) of the healthy individuals (p < 0.0001)."
+  - decision_part: "The layer 'mechanism' is set, but no link on the card expresses the other reading (reactivation as a consequence of immune dysfunction, or as a trigger), and the card never writes out that ambiguity. A peer-reviewed source that states it is on the card."
+    rubric: "gets one layer and a link that expresses the other reading; the ambiguity is written out, not hidden."
+    evidence:
+      - source: pmid:34422848
+        quote: "Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS."
+  - decision_part: "The Bulgarian study does not contest level 2. It has 58 patients, fewer than half of the 200 in the Riga study, it found no active HHV-6 infection, and it did not test HHV-7. The card's handling of it is correct."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:32129496
+        quote: "In the study were included 58 patients with ME/CFS and 50 healthy controls."
+      - source: pmid:32129496
+        quote: "No ME/CFS and control individuals with active CMV and HHV-6 infection were observed."
+  - decision_part: "The diagnostic_marker badge set to false is correct. The dUTPase antibody findings come from one group, and the case definitions are not verified."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:28303641
+        quote: "while the ME/CFS cohort had higher anti-EBV-dUTPase antibodies than in both GWI patients (P = 0.0008) and controls (P < 0.0001)"
+      - source: pmid:41451845
+        quote: "The results of this study demonstrate a significant increase in dUTPase IgG antibodies to the herpesviruses Epstein-Barr virus (EBV), human herpesvirus-6 (HHV-6) and varicella zoster virus (VZV) in ME/CFS compared to healthy-controls (p < 0.001)."
+  - decision_part: "The explains_pem badge set to false is correct. The Riga study recorded malaise after exertion as a symptom and did no exertion challenge."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis."
+    evidence:
+      - source: pmid:22927850
+        quote: "Subfebrility, lymphadenopathy, malaise after exertion, muscle pain, multijoint pain, sleep disturbances, and headaches of new type were more frequent in patients with active viral infection/coinfection than in patients with latent infection and without infection."
+  - decision_part: "The links to flu-like symptoms and to post-exertional malaise at step 'associated' are supported: a Fukuda cohort measured both ends in the same patients and reports a relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:22927850
+        quote: "Definite relationship was observed between active betaherpesvirus infection and subfebrility, lymphadenopathy and malaise after exertion"
+  - decision_part: "The link to endothelial dysfunction at step 'proposed' is supported by a review that states it."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:38675914
+        quote: "We suggest that the chronicity of ME/CFS symptoms and the multisystemic nature of the disease may be partly attributable to herpesvirus-induced endothelial maladaptation."
+reasons_summary: "Rejected: level 2 is supported, but contested: null leaves out the London study's plasma screen (almost no HHV-6 or HHV-7 found), which may contradict it, and the layer's other reading is not written out."
+would_change: "A redraft that reports the London plasma ddPCR screen (pmid:34422848), states from the record how many ME/CFS patients it covered, and on that basis either sets a contested mark on rung 2 or gives a sourced reason why the screen does not meet comparable quality; and that writes out the trigger or consequence-of-immune-dysfunction reading of the layer with a sourced link (for example to pmid:34422848), or shows that such a link exists. Unverifiable, not shown false: the level_reason says pmid:35102619 did not report whether symptoms changed, but only its abstract is cached, so the full text may report symptoms. The level does not depend on this. The early-signal counts for pmid:40143349 (11 of 13 patients, 5 of 10 controls) and its CCC quote are not in the abstract I was given. They do not bear on the level but should be checked. I was not handed any drafting, review or earlier audit reasoning."

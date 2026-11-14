@@ -1,0 +1,59 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+decision: reject
+parts:
+  - decision_part: "The level 2 the card carries. It is supported: one controlled study with a Fukuda-defined cohort and healthy controls found a larger fall in blood flow to the brain on tilt in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32140630
+        quote: "All patients met the Fukuda criteria for CFS, and 70% met the criteria for ME."
+      - source: pmid:32140630
+        quote: "We also studied 44 healthy controls (HC)."
+      - source: pmid:32140630
+        quote: "End-tilt CBF reduction was 7% in HC versus 26% in the overall ME/CFS group, 24% in patients with a normal HR/BP response, 28% in those with dOH, and 29% in POTS patients (all P < .0005)."
+  - decision_part: "Level 3 not reached. This is correct: the New York tilt studies have case definitions that are not yet verified, and the independent Fukuda-defined New Jersey study measured breathing and circulation on standing, not blood flow to the brain."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:25277740
+        quote: "HUT caused CBFv to decrease 8.7% in control subjects but fell 22.5% in CFS."
+      - source: pmid:17263876
+        quote: "Assess blood pressure, heart rate, respiratory rate, end tidal CO2 and visual analog scales for orthostatic symptoms when supine and when standing for 8 minutes without moving legs."
+  - decision_part: "Level 4 not reached. This is correct: the placebo-controlled fludrocortisone trial found no difference, and the compression-stocking trial (16 patients) names no specific case definition."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:11150109
+        quote: "Using an intention-to-treat analysis, 7 subjects (14%) treated with fludrocortisone experienced at least a 15-point improvement in their wellness scores compared with 5 (10%) among placebo recipients (P =.76)."
+      - source: pmid:35056360
+        quote: "All patients underwent an extensive history and physical examination to confirm that they satisfied the criteria for the diagnosis of CFS or ME and to exclude other conditions that could account for the diagnosis."
+  - decision_part: "No contested mark. This is correct: the one study that found no difference in brain blood flow velocity on tilt has a case definition that is not yet verified, and it has 26 patients, fewer than half of the 429 in the study that carries the level."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:12593133
+        quote: "Transcranial Doppler monitoring of middle cerebral artery (MCA) CBFV was performed during 3-stage HUT prospectively in 26 patients with CFS and 23 healthy controls."
+  - decision_part: "The explains_pem badge reason. This part is not supported, and it is the ground for rejection. The value false is right, because the study found no relation between the fall in brain blood flow and the change in symptoms. But the reason says the patients met both the Fukuda definition and the International Consensus Criteria, and the study entry records ICC. The record's case-definition sentence names neither definition; it gives only reference numbers, and the reference list is not in the record. The stated case definition cannot be read from the record."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:33585505
+        quote: "ME/CFS was considered present if participants met both the criteria for CFS (1) and ME (3), taking the exclusion criteria into account."
+      - source: pmid:33585505
+        quote: "No significant relations were found between the reduction in percentage of CBF and NRS for pain, fatigue, or concentration at all time points assessed (data not shown)."
+  - decision_part: "The diagnostic_marker badge set to false. This is correct: the 13% cut-off comes from one clinic's controls, and the authors themselves say other groups have to replicate the method."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32140630
+        quote: "Using a lower limit of normal of 2SD of CBF reduction in HC (13% reduction), 82% of patients with normal HR/BP response, 98% with dOH and 100% with POTS showed an abnormal CBF reduction."
+      - source: pmid:32140630
+        quote: "Finally, the use of extracranial Doppler flow to measure cerebral blood flow has to be replicated by others and in different patient groups."
+  - decision_part: "The link to symptom:orthostatic-intolerance at the associated step. This is correct: a Fukuda-defined controlled study measured orthostatic symptoms and brain blood flow in the same patients and reports a relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:32140630
+        quote: "There was a linear correlation of summed OI symptoms with the degree of CBF reduction at mid-tilt (P < .0005)."
+      - source: pmid:32140630
+        quote: "The second method was included from August 2013 on."
+  - decision_part: "The layer dysfunction. This is correct: the hypothesis concerns a measured change in the body, the fall in blood flow to the brain on tilt."
+    rubric: "The first four layers hold hypothesis cards."
+    evidence:
+      - source: pmid:32140630
+        quote: "CBF measurements were made at mid-tilt and end-tilt."
+reasons_summary: "Level 2, the badges' values, no contested mark, the layer and the link are supported, but the explains_pem reason and the study entry give pmid:33585505 a Fukuda plus ICC case definition that its record does not name, so the card is not accepted as it stands."
+would_change: "This becomes acceptable if the explains_pem badge reason stops calling the pmid:33585505 cohort Fukuda plus International Consensus Criteria, and its study entry is changed to a value the record supports (for example none, since the sentence names no definition), or if a quote is supplied from that paper's text that names the definitions. Nothing else on the card blocks acceptance. Also check, without it deciding this audit: pmid:33050553 is recorded as naming no case definition, yet its full text says disease severity was scored by the International Consensus Criteria; the two Dutch papers should be classified the same way. Unverifiable but not needed for any decision: the case definitions of pmid:22180650, pmid:25277740, pmid:12006954 and pmid:12593133 (no full text cached). Verifying them could later bear on level 3 or a contested mark. In particular, if pmid:12593133 turned out to use a definition of equal or higher rank, it would still be below half the sample of pmid:32140630."

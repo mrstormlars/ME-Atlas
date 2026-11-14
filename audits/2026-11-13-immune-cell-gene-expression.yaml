@@ -1,0 +1,83 @@
+card: immune-cell-gene-expression
+decision: reject
+parts:
+  - decision_part: "The level 2: controlled studies in cohorts with a recognised case definition found blood immune-cell genes expressed differently; no independent replication of a specific finding, so level 3 is not reached."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39435656
+        quote: "Participants with ME/CFS were included according to Canadian Consensus Criteria."
+      - source: pmid:39435656
+        quote: "A total of 14 genes was selected as differentially expressed between patients with ME/CFS compared with HC (Table 4 and Figure 2, A and B)."
+      - source: pmid:39621903
+        quote: "all ME subjects fulfilled the IOM and Canadian Consensus Criteria for diagnosis (82)."
+      - source: pmid:39621903
+        quote: "In ME TM, we observed increased expression of multiple key regulators of T cell exhaustion, including the TF EOMES, and the IRs SLAMF6 and SLAMF7 (Fig. 2 D and E)"
+      - source: pmid:30791746
+        quote: "Twenty-seven gene transcripts were increased 1.5- to sixfold and six decreased three- to sixfold in the patient group ( P < 0.01)."
+  - decision_part: "Level 3 is not met: the exhaustion reading points different ways across the card's studies, and no independent group reproduced a specific finding."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:39435656
+        quote: "The abundance of exhausted CD8 cells was significantly lower in ME/CFS compared with HC (Padj = 0.0147)."
+      - source: pmid:41822518
+        quote: "In contrast, no significant difference in T cell exhaustion status was observed between groups when assessed using expression of exhaustion-associated genes"
+  - decision_part: "The contested mark on rung 2 is supported in substance: a controlled study with the Canadian case definition and 25 patients found no differentially expressed genes, and a blinded Fukuda study of 64 patients found none of the 44 earlier genes different."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:28172519
+        quote: "we enrolled 25 CFS patients who met the Canadian case definition [19]"
+      - source: pmid:28172519
+        quote: "No differentially expressed genes (DEGs) were found to be significant when CFS or ADCLS cases were compared to controls."
+      - source: pmid:21479222
+        quote: "The diagnosis of CFS was based on the Fukuda criteria and this diagnosis was made by CFS clinical experts."
+      - source: pmid:21479222
+        quote: "However, no significant difference is observed between the means for any of these genes in the test set (Welch 2-sample t-test, all P>0.01)."
+      - source: pmid:18462164
+        quote: "Genes showing differential expression were further analyzed in 55 patients with CFS/ME and 75 healthy blood donors, using quantitative polymerase chain reaction."
+  - decision_part: "The first contested paragraph says the 2017 RNA-seq paper cites the 2011 International Consensus Criteria for its Canadian case definition. The reference list is not in the record, and the record uses the same reference number for a methods paper by Brown et al, so the statement cannot be matched and the record points against it."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:28172519
+        quote: "we enrolled 25 CFS patients who met the Canadian case definition [19]"
+      - source: pmid:28172519
+        quote: "using the parameters specified by Brown et al [19] to extract CDR3 TCR data"
+  - decision_part: "The third contested paragraph says the twin study pooled CFS and idiopathic chronic fatigue, and that the paper cites its criteria to Fukuda 1994 and a 2003 paper. The record shows a planned analysis of CFS-only female pairs as well, and the cited references are not in the record."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:19503787
+        quote: "As inclusion of males could increase noise, the second planned analysis compared 39 female pairs with CFS or ICF and the third planned analysis compared the 28 pairs of female twins with CFS."
+      - source: pmid:19503787
+        quote: "Discordance was defined as one twin meeting criteria for either idiopathic chronic fatigue (ICF, 12 pairs) or CFS (32 pairs) [1], [2]"
+  - decision_part: "The last level_reason paragraph calls the dataset that the long COVID study re-analysed 'the US single-cell data'. The record names it only by a reference number, so the statement cannot be matched."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:41822518
+        quote: "we re-analyzed an independent, publicly available scRNA-seq dataset comparing PBMC gene expression profiles from individuals with ME/CFS and healthy controls (19)."
+  - decision_part: "Diagnostic marker badge set to no: the 44-gene list did not hold up in a new blinded sample set."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:21479222
+        quote: "Thus, although the reporter genes could be used (either by profile score or, to a lesser extent, individually) to classify CFS in the original study, they are not robust in a new sample population."
+      - source: pmid:39394558
+        quote: "In addition, data from the GSE214284 database confirmed higher ESRRA expression in the monocyte cell types of male ME/CFS patients."
+  - decision_part: "Explains-PEM badge set to no: the two studies that related expression to PEM used a broad definition or stated none in the paper itself."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:28494812
+        quote: "A broad case definition of CFS was applied, requiring 3 months of unexplained, disabling chronic/relapsing fatigue of new onset, whereas no accompanying symptoms were necessary."
+      - source: pmid:38232699
+        quote: "Similar correlations were observed with other metrics, including general health, Short Form (SF)-36 Physical Component Summary scores,51 and PEM severity"
+  - decision_part: "Layer dysfunction and the proposed link to post-exertional symptoms: a peer-reviewed study states the link as a proposal."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:39621903
+        quote: "We propose that following induction by further stimuli such as an exercise challenge, these cells fail to upregulate effector programs, and instead become terminally exhausted, potentially contributing to inflammation and PEM (Fig. 5)."
+  - decision_part: "The early signals: a study of 4 patients and a long COVID study of 5 patients are listed as small and unreplicated."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:39394558
+        quote: "single-cell RNA sequencing (scRNA-seq) of peripheral blood mononuclear cells (PBMCs) was used to decipher the immunometabolic profile in 4 ME/CFS patients and 4 heathy controls."
+      - source: pmid:41822518
+        quote: "Freshly isolated PBMCs from ten individuals, five LC patients with ME/CFS and five recovered individuals (R) following acute SARS-CoV-2 infection without any LC symptoms, were processed for scRNAseq."
+reasons_summary: "Level 2, the rung-2 contested mark, both badges at no, the dysfunction layer and the proposed link match the records, but three statements in the reasons cannot be matched to them or are contradicted, so the card is held back."
+would_change: "Correct or remove three statements and the card could be accepted at level 2 with the contested mark: (1) in contested.reason[0], that pmid:28172519 cites the 2011 International Consensus Criteria (the reference list is not in the record, and the record uses reference [19] for Brown et al); keep it only with a cached record showing reference 19, otherwise say only that it names the Canadian case definition; (2) in contested.reason[2], that pmid:19503787 cites Fukuda 1994 and a 2003 paper (not verifiable) and that its analysis only pooled CFS with idiopathic chronic fatigue (the record also reports a CFS-only analysis of 28 female pairs); (3) in level_reason[3], that pmid:41822518 re-analysed 'the US' single-cell data (the record names the dataset only as reference 19). Also note that pmid:39621903 says the scRNA-seq atlas cohort of pmid:38232699 met the IOM and Canadian criteria. That does not change the badges, because the study measuring PEM directly would still have to be checked against the badge test. No drafting or review reasoning was supplied to this audit."

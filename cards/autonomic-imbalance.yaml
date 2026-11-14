@@ -490,8 +490,8 @@ studies:
       steps were lower than with placebo (not significant), and the authors concluded it is not clinically
       useful.
 last_checked:
-  date: 2026-11-08
-  by: ai_pair
+  date: 2026-11-13
+  by: ai_audit
 # Causal map (founder ruling 2026-11-08): layer `dysfunction`, answering "what goes wrong in the body?". The card
 # grades a measured abnormality (heart rate variability, baroreflex, catecholamines), like the orthostatic card.
 # Other reading: a perpetuating mechanism. 24493300's authors suggest the raised sympathetic activity may instead be

@@ -1,0 +1,64 @@
+card: hpa-axis-cortisol
+decision: reject
+parts:
+  - decision_part: "The level 2. Supported: a controlled study with a CDC-defined cohort (accepted like Fukuda) found blunted ACTH and cortisol release after CRH, and a second controlled study with Fukuda, Canadian and IOM criteria found lower ACTH and cortisol. This part alone would stand."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:9669518
+        quote: "A sample of 14 patients with CDC-diagnosed CFS were compared with 14 healthy volunteers."
+      - source: pmid:9669518
+        quote: "The release of ACTH was significantly attenuated in the CFS group (P < 0.005), as was the release of cortisol (P < 0.05)."
+      - source: pmid:34254637
+        quote: "Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls."
+  - decision_part: "Not level 3 and not level 4. No independent group reproduced the blunted CRH response, a later controlled CCC/ICC/IOM study found no difference in absolute steroid levels, and the main measure of the hydrocortisone trial did not differ from placebo. Correct as stated on the card."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:11502777
+        quote: "ACTH responses to human CRH, the insulin stress test, and D- fenfluramine were similar for patient and control groups."
+      - source: pmid:40713801
+        quote: "No significant differences in absolute steroid levels were observed between the ME/CFS and control groups, either in the combined cohort or within gender-stratified groups."
+      - source: pmid:9757853
+        quote: "The number of patients showing improvement on the Wellness scale was 19 (54.3%) of 35 placebo recipients vs 20 (66.7%) of 30 hydrocortisone recipients (P =.31)."
+      - source: pmid:12829200
+        quote: "There were no differences between treatment and placebo in patient-reported fatigue"
+  - decision_part: "The contested mark on rung 2 and the level_reason wording behind it. The mark is defensible on the comparable-quality rule (CDC criteria in both, controls, 37 against 14 patients), but the card states twice that the London study gave 'the same CRH test' as the Dinan study. The records contradict this: the Dinan study gave 100 microg ovine CRH and the London study gave human CRH. A factual statement in the level and contested reasons that the records contradict is a reason not to accept."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:9669518
+        quote: "ACTH and cortisol responses were measured following the administration of 100 microg ovine CRH."
+      - source: pmid:11502777
+        quote: "We measured ACTH and cortisol responses to human CRH, the insulin stress test, and D-fenfluramine in 37 medication-free patients with CDC-defined chronic fatigue syndrome but no comorbid psychiatric disorders and 28 healthy controls."
+      - source: pmid:11502777
+        quote: "These differences were significant when ACTH responses were controlled."
+  - decision_part: "The level_reason sentence on the Austria and Chile study: 'after correction for multiple testing, cortisol was not among the hormones that differed between groups'. That holds for the three-group test only. The paper reports the pairwise comparisons as BH-adjusted, and in that analysis cortisol was lower in men with mild or moderate illness. As written, the card suggests the men's result did not survive correction, which the full text does not show."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:38724880
+        quote: "Following correction for multiple testing, only circulating levels of 11-deoxycortisol (p = 0.049) and 17α-hydroxyprogesterone (p = 0.049) in females and progesterone (p = 0.005) in males showed significant differences among our three groups"
+      - source: pmid:38724880
+        quote: "Additionally, the BH procedure was utilized to determine the statistical significance of potential differences when comparing two independent groups (Table S4)."
+      - source: pmid:38724880
+        quote: "Using the same statistical approach in our male cohort, ME/CFSmm displayed lower circulating levels of cortisol (p = 0.0260) and corticosterone (p = 0.0109) compared to HC."
+  - decision_part: "The three proposed links (symptom:sleep-disturbance, symptom:cognitive-impairment, question:what-keeps-it-going). Step 1 needs a source that states the link. Only the abstracts of the two reviews are given, and neither mentions the HPA axis, cortisol, sleep or concentration. The link texts cannot be matched to any sentence in the records, so the links are not shown to meet step 1."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:41516296
+        quote: "This review offers the readers a broad perspective on the topic on ME/CFS, with a particular emphasis on the interplay between the gut microbiome and disease mechanisms."
+      - source: pmid:31330791
+        quote: "It is possible that these threads are together entangled as parts of an underlying molecular pathology reflecting a far-reaching homeostatic shift."
+  - decision_part: "Both badges set to no. Correct: the low-dose ACTH cut-off was not confirmed by a second group, and no cited study measures PEM directly and links it to cortisol."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:9713562
+        quote: "Using an incremental cortisol of > 250 nmol/l as an arbitrary cutoff point, two (10%) of the healthy subjects and nine (45%) of the CFS subjects failed the test on this basis"
+      - source: pmid:10594524
+        quote: "There were no significant differences in baseline cortisol or cortisol responses between patients and controls."
+      - source: pmid:11150897
+        quote: "There were no differences in basal hormone levels before exercise."
+  - decision_part: "The layer dysfunction. Supported: the hypothesis is a measured hormone abnormality in patients."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:9669518
+        quote: "The release of ACTH was significantly attenuated in the CFS group (P < 0.005), as was the release of cortisol (P < 0.05)."
+reasons_summary: "Rejected: level 2 and the contested mark are supported, but the card says the two CRH studies used the same test (ovine versus human CRH in the records), misstates the multiple-testing result for men in the Austria and Chile study, and has three links that cannot be matched to the review abstracts."
+would_change: "Accept once the card (1) stops calling the London CRH test the same as the Dinan test (human versus ovine CRH), (2) says the lower cortisol in men with mild or moderate illness was significant on the BH-adjusted pairwise comparison and not on the three-group test, and (3) supports each link with a sentence I can be shown, either by giving the reviews' full text as carriers or by citing a source whose abstract states the HPA-sleep, HPA-concentration and HPA-perpetuation links (or by removing the links). Unverifiable because the full text is not cached: 'King's College London' and 'London' for pmid:11502777 and pmid:10594524, and 'from Oxford' for pmid:9494707. These institutions are not in the abstracts or metadata given; the authors and the absence of shared authors can be checked. I was not handed any drafting reasoning, review findings or earlier audit."

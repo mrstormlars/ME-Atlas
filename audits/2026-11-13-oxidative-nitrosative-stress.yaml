@@ -1,0 +1,50 @@
+card: oxidative-nitrosative-stress
+decision: reject
+parts:
+  - decision_part: "The case definition of the Antwerp study (pmid:21455120), a level carrier, recorded as Fukuda and stated in level_reason as 56 patients meeting the Fukuda definition."
+    rubric: "None stated, or not yet checked | Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:21455120
+        quote: "The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention (CDC) criteria [29]."
+      - source: pmid:21455120
+        quote: "Blood was collected from 56 patients with ME/CFS and 37 normal volunteers."
+  - decision_part: "What the Antwerp sentence does support: CDC criteria with the version not stated."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:21455120
+        quote: "The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention (CDC) criteria [29]."
+  - decision_part: "The current level 2, resting on two controlled studies with CDC-named cohorts."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:16085177
+        quote: "Forty-seven patients (18 males, 29 females, mean age 48 [19--63] years) who fulfilled the Centres for Disease Control classification for CFS and 34 healthy volunteers (13 males, 21 females, 46 [19--63] years) were enrolled in the study."
+      - source: pmid:16085177
+        quote: "Patients had significantly increased levels of isoprostanes (group 1, P=0.007; group 2, P=0.03, unpaired t test compared to controls)"
+      - source: pmid:21455120
+        quote: "Plasma peroxide concentrations were significantly higher in patients with ME/CFS than in normal controls."
+  - decision_part: "Level 3 not reached: the only other isoprostane study is small, its case definition is not given in the abstract, and it shares authors with the Dundee study."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:19422646
+        quote: "Six male CFS patients and six healthy controls performed an incremental exercise test to exhaustion and a submaximal exercise bout to exhaustion."
+      - source: pmid:19422646
+        quote: "F(2)-isoprostanes were higher (P<0.05) in CFS patients at rest and this difference persisted immediately and 24 h post-exercise."
+  - decision_part: "No contested mark: the conflicting malondialdehyde study contradicts a finding that does not carry the level."
+    rubric: "A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345), when subdivided according to the level of MDA, a difference was found in the subgroup of high-level MDA (P=.034)."
+  - decision_part: "Badge diagnostic_marker false."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:21455120
+        quote: "The residualized plasma peroxide values showed no significant diagnostic performance for ME/CFS, where the area under the ROC curve was only 62.6%."
+      - source: pmid:40627396
+        quote: "Although the comparisons from the fPOP cohort are a small case study, these findings demonstrate a Precision Medicine approach for helping potentially diagnose and treat ME/CFS (Fig. 7F), especially in female donors."
+  - decision_part: "Badge explains_pem false, and the associated link to symptom:post-exertional-neuroimmune-exhaustion."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:16085177
+        quote: "CFS symptoms correlated with isoprostane levels, but only in group 2 low CV risk CFS patients (isoprostanes correlated with; total symptom score P=0.005; joint pain P=0.002; postexertional malaise P=0.027, Pearson)."
+reasons_summary: "Level 2 is supported, but the card records the Antwerp level-carrier study as Fukuda while its record only names CDC criteria without a version, so the card cannot be accepted as it stands."
+would_change: "Recode pmid:21455120 as CDC_unspecified and change the level_reason wording from 'meeting the Fukuda definition' to the CDC criteria with the version not named. Reference [29], which might show the Fukuda version, was not in the record I was given. With that fixed, the level 2, the null contested mark, both false badges, the layer and the links look supportable on the records. Two more points. The abstracts of pmid:27224647 (a carrier with no cached full text) do not say the d-ROMs and BAP were measured in serum, so 'in serum' cannot be checked and should be dropped or confirmed from the full text. The 'same clinic' description of pmid:21119582 could not be checked from its abstract either. Neither statement carries the level. A cohort meeting a confirmed recognised definition, from an independent group, that repeats one of the measures would be needed for level 3."

@@ -1,0 +1,41 @@
+card: gut-microbiome
+decision: reject
+parts:
+  - decision_part: "The level 3: lower stool butyrate in a controlled CCC/Fukuda cohort, reproduced by an independent group in a separate IOM 2015 cohort. This part is supported by the records."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:36758522
+        quote: "The study included stool samples from 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS, and 91 healthy control individuals recruited from 5 sites in the United States (CA, NY, NV, UT, and FL)."
+      - source: pmid:36758522
+        quote: "In contrast, butyrate was lower in both ME/CFS subjects without sr-IBS and with sr-IBS compared with healthy controls without sr-IBS (Figure 3I)."
+      - source: pmid:41387992
+        quote: "This case-control study included 80 subjects, comprising 40 patients with CFS and 40 age- and sex-matched HC."
+      - source: pmid:41387992
+        quote: "After FDR adjustment, fecal levels of acetate, butyrate, isobutyrate, and isovalerate remained significantly lower in the CFS group (all q < 0.05)."
+      - source: pmid:41387992
+        quote: "Other genera such as Alistipes, Faecalibacterium, and Subdoligranulum also exhibited reductions before multiple-testing correction, but these did not remain significant thereafter (all q > 0.05)."
+  - decision_part: "No contested mark: the largest other cohort with a recognised definition (the Bulgarian IOM 2015 study) did not measure stool short-chain fatty acids, so it does not contradict the lower stool butyrate the rungs rest on."
+    rubric: "Comparable quality means all three: the same or a stricter case definition"
+    evidence:
+      - source: pmid:42351611
+        quote: "Integration with multi-omics data, such as fecal metabolomics for SCFA concentrations, is needed to confirm links between barrier breakdown and symptoms."
+  - decision_part: "The proposed links to tryptophan-kynurenine-metabolism, neuroinflammation and oxidative-nitrosative-stress: the statements they rest on cannot be matched to the records given. Both reviews are given as abstract only; neither abstract mentions tryptophan, neuroinflammation or the blood-brain barrier, or reactive oxygen or nitrogen molecules. Only the link to cognitive impairment is stated in an abstract."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "Furthermore, in terms of the so-called gut-brain axis, microbiome changes may lead to distinct neurocognitive impairments observed in ME/CFS patients."
+      - source: pmid:41516296
+        quote: "This consequently leads to translocation of microbial components, which further triggers an immune response and systemic inflammation complicating the clinical presentation of ME/CFS."
+      - source: pmid:31330791
+        quote: "This evidence is mostly comprised of disturbances to immunological and inflammatory pathways, autonomic and neurological dysfunction, abnormalities in muscle and mitochondrial function, shifts in metabolism, and gut physiology or gut microbiota disturbances."
+  - decision_part: "The Bulgarian study (pmid:42351611) is recorded as case definition unverified with sample sizes null, and level_reason calls its case definition not yet verified, but its cached full text names IOM 2015 and gives 76 patients and 37 controls; the card does not record the definition the source states."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:42351611
+        quote: "Patients with ME/CFS were selected according to the 2015 Institute of Medicine/National Academy of Medicine diagnostic criteria [42], requiring core ME/CFS symptoms for at least 6 months with no alternative diagnosis."
+      - source: pmid:42351611
+        quote: "This cross-sectional case–control study included 163 participants: 76 patients with ME/CFS (17 males and 59 females), 50 patients with LC condition (13 males and 37 females), and 37 HC (11 males and 26 females)."
+      - source: pmid:42351611
+        quote: "Shannon diversity did not differ across HC, ME/CFS, and LC groups (Kruskal–Wallis H = 0.66, p = 0.72), and the same was observed for Pielou’s evenness (H = 0.67, p = 0.72)."
+reasons_summary: "Level 3 on lower stool butyrate is supported, but three proposed links rest on review statements not found in the records given, and the Bulgarian study's IOM 2015 definition and sample sizes are misrecorded as unverified."
+would_change: "Accept would follow if (1) the links to tryptophan-kynurenine-metabolism, neuroinflammation and oxidative-nitrosative-stress were sourced to a record whose given text states each link (for pmid:41516296 and pmid:31330791 only the abstracts were given, and they do not state these links; the statements are unverifiable here, not shown false), or the links were removed; and (2) pmid:42351611 were recorded as IOM2015 with its quote and n=76 patients and 37 controls, and level_reason were corrected to match. The level itself would change only with a comparable-quality study finding no lower stool butyrate, or a correction to pmid:36758522 or pmid:41387992. Carrier pmid:36758521 has no cached full text; the card's statements about it match its abstract, and the level does not rest on it. This audit traced the level rungs, the contested mark and the links against the records; it did not re-trace every sentence of the blood-marker, badge and diversity paragraphs against the carriers' full texts. No drafting, review or earlier audit material was supplied."

@@ -1,0 +1,92 @@
+card: autonomic-imbalance
+decision: accept
+parts:
+  - decision_part: "The level 3: lower resting high-frequency (parasympathetic) heart rate variability found in a Fukuda cohort and reproduced by two other groups with no shared authors, in separate cohorts (Fukuda; Fukuda plus CCC plus IOM 2015)."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:22670061
+        quote: "Heart rate and non-invasive continuous blood pressure measurements (task force monitor) at rest and on standing were performed in CFS (Fukuda n = 68) and matched controls (n = 68) to derive high frequency (HF; parasympathetic) and low frequency (LF; sympathetic) heart rate variability (HRV), systolic (SBPV) and diastolic (DBPV) blood pressure variability."
+      - source: pmid:22670061
+        quote: "At rest, LF-HRV (sympathetic) was significantly increased in CFS compared to controls, while parasympathetic markers were significantly reduced (P = 0.006)."
+      - source: pmid:31906988
+        quote: "In this case-control study, 45 female patients who met the 1994 CDC/Fukuda definition for CFS/ME and 25 age- and gender-matched healthy controls underwent HRV recording-resting state tests."
+      - source: pmid:31906988
+        quote: "HRV analysis for the frequency domain revealed significantly lower values for the parameters (LF, Fig. 2a, p = 0.011; HF, Fig. 2b, p < 0.001; HFnu Fig. 2c, p = 0.001), and higher LF/HF index (Fig. 2d, p = 0.014) in CFS/ME patients than in healthy controls."
+      - source: pmid:38251045
+        quote: "Patients with ME/CFS were included in the study if they met all three of the most commonly used sets of ME/CFS diagnostic criteria (Fukuda et al. (1994) CFS criteria [11], the Canadian Consensus criteria of ME/CFS (2003) [12] and the US Institute of Medicine, now called the National Academy of Medicine (IOM/NAM), criteria (2015) [13])."
+      - source: pmid:38251045
+        quote: "The total power and power of low-frequency and high-frequency of RR interval variability at rest as well as baroreflex sensitivity were significantly lower both in PCC and ME/CFS patients compared to healthy controls."
+  - decision_part: "Level 4 is not reached: the one controlled intervention lowered sympathetic outflow without improving the outcome."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:24493300
+        quote: "Low-dose clonidine attenuates sympathetic outflow and systemic inflammation in CFS but has a concomitant negative effect on physical activity; thus, sympathetic and inflammatory enhancement may be compensatory mechanisms."
+      - source: pmid:24493300
+        quote: "Low-dose clonidine is not clinically useful in CFS."
+  - decision_part: "The contested mark on rung 3: a controlled Holmes 1988 study of 38 patients, at least half the size of the Fukuda studies of 68 and 45 that rung 3 needs, found no major change in RR-interval variability."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:9505867
+        quote: "We performed office and 24 h ambulatory BP recordings in 38 subjects (age, 34.8 +/- 8.0 years) who fulfilled the Holmes criteria for CFS and in 38 healthy control subjects (age 35.6 +/- 10.5 years), as well as short-term beat-to-beat BP and RR-interval recordings for 10 min in supine and standing position, and calculated spectral indices."
+      - source: pmid:9505867
+        quote: "Analysis of RR-interval variability could not detect major alterations in autonomic function in CFS."
+      - source: pmid:9505867
+        quote: "Heart rate was consistently higher (P < 0.01) in CFS patients, based on both office (77 +/- 12 compared with 68 +/- 12 beats min-1) and 24 h ambulatory recordings (77 +/- 12 compared with 67 +/- 15 beats min-1)."
+  - decision_part: "Rung 2 is not contested: it can rest on the controlled study whose patients also met CCC and IOM 2015, and a Holmes 1988 study has a broader case definition, so it is not of comparable quality against that study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:38251045
+        quote: "Patients with ME/CFS were included in the study if they met all three of the most commonly used sets of ME/CFS diagnostic criteria (Fukuda et al. (1994) CFS criteria [11], the Canadian Consensus criteria of ME/CFS (2003) [12] and the US Institute of Medicine, now called the National Academy of Medicine (IOM/NAM), criteria (2015) [13])."
+      - source: pmid:9505867
+        quote: "We performed office and 24 h ambulatory BP recordings in 38 subjects (age, 34.8 +/- 8.0 years) who fulfilled the Holmes criteria for CFS and in 38 healthy control subjects (age 35.6 +/- 10.5 years), as well as short-term beat-to-beat BP and RR-interval recordings for 10 min in supine and standing position, and calculated spectral indices."
+  - decision_part: "The diagnostic marker badge set to no: each threshold or classifier was derived and tested within its own cohort only."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:22670061
+        quote: "Achieving all of these differentiated between CFS and controls with 77% sensitivity and 53% specificity."
+      - source: pmid:38251045
+        quote: "The most optimal model, in our view, was based on HF HRV during spontaneous breathing and showed a sensitivity of 81.3% and specificity of 79.4% for the differentiation of ME/CFS patients from HCs (with a cut-off of 286.95 ms2)."
+      - source: pmid:34970156
+        quote: "Receiver operator characteristic curve analysis of HRR revealed an area under the curve of 74.8% (p=0.02) on Day One of testing, with a HRR of 34.5bpm maximising sensitivity (63%) and specificity (40%) suggesting while HRR values are altered in ME/CFS patients, low sensitivity and specificity limit its potential usefulness as a biomarker of the condition."
+      - source: pmid:41437251
+        quote: "To prevent data leakage, subject-level stratified splitting was used: 20% of participants were held out as a final test set, while the remaining 80% underwent 5-fold cross-validation."
+      - source: pmid:41437251
+        quote: "The single-center retrospective design limits generalizability; future multi-center validation, including COVID-19-related CFS cases, is needed."
+  - decision_part: "The explains-PEM badge set to no: the one study that measured PEM with tests on two consecutive days found no heart rate measure that changed with it, and the study comparing patients with and without PEM was uncontrolled and not significant after correction."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis."
+    evidence:
+      - source: pmid:34970156
+        quote: "Heart rate markers of autonomic function were unchanged in ME/CFS patients in the presence of post-exertional malaise, induced by maximal CPET on consecutive days."
+      - source: pmid:34970156
+        quote: "This suggests that HR-based measures of autonomic function appear to be unaffected by post-exertional malaise and cannot therefore contribute to this aspect of ME/CFS diagnosis."
+      - source: pmid:34073494
+        quote: "However, none of the between group differences were significant after FDR correction, and therefore conclusions should be treated with caution and replicated in further studies."
+  - decision_part: "The layer dysfunction: the hypothesis is a measured shift in heart rate variability and baroreflex function, which is something that goes wrong in the body, not a predisposition, trigger or perpetuating mechanism."
+    rubric: "Measurable dysfunction | `dysfunction` | What goes wrong in the body?"
+    evidence:
+      - source: pmid:31906988
+        quote: "Heart rate variability (HRV) is an objective, non-invasive tool to assessing autonomic dysfunction in chronic fatigue syndrome/myalgic encephalomyelitis (CFS/ME)."
+      - source: pmid:38251045
+        quote: "Indicators of baroreflex regulation (baroreflex effectiveness index and baroreflex sensitivity) were additionally determined at rest."
+  - decision_part: "The three links (to sleep disturbance, cognitive impairment and orthostatic intolerance / cerebral blood flow) at step proposed: each is stated in a peer-reviewed source, and none has a within-patient relation in a study with a verified case definition that would carry step 2."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:38251045
+        quote: "Therefore, baroreflex dysfunction possibly contributes to the reduction in cerebral blood flow, which has been reported in ME/CFS and PCC [5]."
+      - source: pmid:31957647
+        quote: "Poorer self-reported wellbeing and sleep quality was associated with reduced parasympathetic signaling during deeper sleep, but not during wake before sleep, rapid eye movement sleep, or with the proportion of time spent in SWS."
+      - source: pmid:31906988
+        quote: "Pearson correlation coefficients (r) between HRV parameters (both time- and frequency-domains) and self-reported measures in the sample"
+      - source: pmid:23166694
+        quote: "To further evaluate the relative importance of HRV in cognitive performance, multiple regression modelling was performed using the condition (CFS or control), baseline HR (a covariate of HRV) and HRV, baseline reported mental and physical fatigue levels, fatigue related somatic symptoms (SOMA scores), and reported levels of psychological distress (K10 scores) as predictors of cognitive performance outcomes (total response time, and spatial working memory performance)."
+      - source: pmid:23166694
+        quote: "Patients with CFS showed no deficits in performance accuracy, but were significantly slower than healthy controls."
+  - decision_part: "Why step 2 (associated) is not given to the sleep and cognition links: the sleep study with a within-patient relation has an unverified case definition, and the Fukuda study and the cognition study report the relation for patients and controls together."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:31957647
+        quote: "Twenty-four patients with medically diagnosed CFS, and 24 matched healthy control individuals participated."
+      - source: pmid:23166694
+        quote: "As disease status was not an independent predictor, this suggests a broader role for low HRV in mental flexibility in general [15]–[17], [30]."
+reasons_summary: "Level 3 stands on lower resting high-frequency heart rate variability in three cohorts from three groups with no shared authors; rung 3 is contested by a Holmes 1988 study of 38 patients; both badges no; layer dysfunction; three links at step proposed."
+would_change: "The level would drop or rung 2 would also be contested if a controlled study with CCC, ICC or IOM 2015 patients and at least 17 patients found no lower resting high-frequency heart rate variability. The contested mark would end if a larger study settled the conflict with pmid:9505867. The diagnostic badge would change only if a marker were tested in a second, independent patient group, and the PEM badge only if a level-2 study linked an autonomic measure to symptoms after exertion in the same patients. Level 4 needs a controlled intervention on autonomic balance that changes the outcome. Statements I could not check, which no decision here depends on: the countries the card gives for pmid:22670061 (UK), pmid:9505867 (Belgian), pmid:9430800 (US), pmid:29246267 (Finland) and pmid:31957647 (Australia) are not in those records (no affiliations; pmid:22670061 and pmid:9505867 are carriers with no cached full text). The Fukuda label on pmid:23166694 rests on 'the international diagnostic criteria for CFS [1]', and the reference list was left out of its record, so it should be checked against reference [1] or relabelled. This study supports neither the level nor any badge or mark, and it carries only a step-1 link, where no case definition is required. No drafting or review reasoning or earlier audit was handed to me."

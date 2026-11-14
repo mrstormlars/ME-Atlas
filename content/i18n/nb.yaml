@@ -165,6 +165,7 @@ map.unplaced_note: 'Disse hypotesene har ikke noe lag ennå. Å plassere en hypo
 map.symptoms_intro: 'Symptomer er ikke hypoteser. Hvert symptom er hentet fra diagnosekriteriene som lister det.'
 map.to: 'Til'
 map.no_links: 'Ingen lenker fra denne hypotesen ennå.'
+map.unpublished: 'ikke publisert ennå'
 map.listed_in: 'Oppført i:'
 map.question_label: 'Åpent spørsmål'
 map.asked_in: 'Stilt i:'

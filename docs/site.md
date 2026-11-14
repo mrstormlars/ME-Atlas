@@ -17,7 +17,7 @@ The site is built in every language that has a file in `content/i18n/`: English 
 - The build validates every input card (the same rules as `uv run python -m me_atlas.cards validate`), the change log and the glossary first. If anything fails it prints every problem, exits with code 1 and writes nothing (an earlier build stays as it was).
 - The output directory is emptied before each build. A directory that is not empty and not a previous build (no `.me-atlas-build` marker file) is never deleted; the build stops instead.
 - The citation check (`me_atlas.citations`) is not part of the build; it needs the local cache.
-- Without `--drafts` only `cards/` is read, and an invalid draft does not matter. With `--drafts` a draft replaces the card with the same slug, every page gets the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. A draft build is shared only as the private preview below, never as the public site.
+- Without `--drafts` only `cards/` is read, and an invalid draft does not matter. The one exception: a published card may link to a card that exists only in `drafts/` (held back). The public build shows that link on the map page as the target's name followed by "(not yet published)", with no link and no page, and leaves it out of the map; a target in neither folder is still an M2 error. With `--drafts` a draft replaces the card with the same slug, every page gets the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. A draft build is shared only as the private preview below, never as the public site.
 - Unused glossary terms are printed as `warning:` lines. They do not fail the build.
 
 ## Private preview on Azure

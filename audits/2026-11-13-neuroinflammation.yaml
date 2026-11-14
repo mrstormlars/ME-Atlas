@@ -1,0 +1,80 @@
+card: neuroinflammation
+decision: accept
+parts:
+  - decision_part: "The level 2: it rests on one controlled diffusion MRI study in a CCC-consistent cohort, presented as unreplicated and as an indirect measure, with the published correction reflected."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:41834684
+        quote: "Diffusion MRI data from 67 ME/CFS patients (median age, 38; and 54 women) and 67 rigorously matched healthy controls (HCs) (median age 38; and 52 women) were analysed."
+      - source: pmid:41834684
+        quote: "ME/CFS patients were interviewed by two clinicians to confirm a Canadian Consensus Criteria (CCC)"
+      - source: pmid:41834684
+        quote: "This study provides in vivo evidence of white matter neuroinflammation in ME/CFS"
+      - source: pmid:41834684
+        quote: "it is still an indirect measure of neuroinflammation and does not differentiate between specific inflammatory cell types or processes"
+      - source: pmid:42227214
+        quote: "Suggests cell shape change or a chronic depletion of microglia"
+      - source: pmid:42227214
+        quote: "suggest active inflammatory processes involving edema and cell shape change or a chronic depletion of microglia"
+  - decision_part: "The smaller studies with an unverified case definition (PET n=9, MRS n=15) are described but not counted towards the level."
+    rubric: "None stated, or not yet checked | Not accepted (see the inclusion rule)."
+    evidence:
+      - source: pmid:24665088
+        quote: "Activation of microglia or astrocytes is related to neuroinflammation."
+      - source: pmid:30617782
+        quote: "most notably elevated CHO/CR in the left anterior cingulate (p < 0.001)"
+  - decision_part: "No contested mark: the Fukuda PET study that found no difference is not of comparable quality to the CCC study the level rests on (lower-ranked case definition, 9 patients against 67)."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:34815320
+        quote: "after a uniform workup according to the Fukuda 1994 criteria for CFS"
+      - source: pmid:34815320
+        quote: "The study population consisted of patients with CFS (n = 9), patients with QFS (n = 10), and healthy subjects (HSs) (n = 9)."
+      - source: pmid:34815320
+        quote: "No statistically significant differences in BPND were found for patients with CFS or patients with QFS compared with HSs."
+  - decision_part: "The 7 Tesla MRS study is correctly described as Fukuda-defined context finding lower myo-inositol."
+    rubric: "Fukuda | Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:34609538
+        quote: "We studied 22 CFS patients and 13 healthy controls"
+      - source: pmid:34609538
+        quote: "also met Centers for Disease Control and Prevention (CDC) criteria for CFS (Fukuda et al. 1994)"
+      - source: pmid:34609538
+        quote: "would be consistent with glial dysfunction"
+  - decision_part: "Diagnostic marker badge set to no: the diffusion indices are proposed as possible biomarkers but not tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:41834684
+        quote: "may serve as sensitive biomarkers for neuroinflammation in ME/CFS"
+  - decision_part: "PEM badge set to no: no cited study measures post-exertional malaise directly; the measures reported are questionnaires on fatigue, mood, health, sleep and disability."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:41834684
+        quote: "Participants completed standardised questionnaires (Shan et al. 2022), namely Hospital Anxiety and Depression Scale (HADS)"
+      - source: pmid:34815320
+        quote: "All subjects were asked to fill out questionnaires"
+      - source: pmid:34609538
+        quote: "We also measured fatigue with the Chalder Fatigue Scale (ChFS)"
+      - source: pmid:30617782
+        quote: "completed fatigue and mood symptom questionnaires"
+  - decision_part: "Layer dysfunction: the card's evidence is measured brain changes in patients."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:41834684
+        quote: "ME/CFS patients exhibited widespread white matter abnormalities"
+  - decision_part: "Links to cognitive impairment and pain at step proposed: a peer-reviewed study states the correlation, but its case definition is unverified, so it cannot carry step 2."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:24665088
+        quote: "positively correlated with cognitive impairment score"
+      - source: pmid:24665088
+        quote: "positively correlated with pain score"
+  - decision_part: "Link to circadian rhythm disruption at step proposed, sourced to a review that states it."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:29759891
+        quote: "which may influence the expression of key circadian regulators"
+      - source: pmid:29759891
+        quote: "This review will focus on chronic fatigue syndrome, bipolar disorder, and multiple sclerosis as exemplars"
+reasons_summary: "Level 2 holds on one controlled CCC-consistent diffusion MRI study (67 vs 67), unreplicated and indirect; the Fukuda PET null study is not of comparable quality, both badges no, layer and proposed links match their sources."
+would_change: "An independent study of comparable quality (CCC, ICC or IOM 2015, controlled, at least 34 patients) that fails to find the white matter differences would make level 2 contested; an independent replication would be needed for level 3. Verifying the case definitions of pmid:24665088 and pmid:30617782 from full text (not cached; statements beyond their abstracts were treated as unverifiable) could change their roles and the step of the symptom links. A retraction or further correction of pmid:41834684 would require re-assessing the level. I was handed no drafting, review or earlier audit reasoning."
