@@ -60,6 +60,8 @@ Rules code enforces:
 - `reasons_summary` is one line. `would_change` is not empty.
 - Quote in YAML with care: use double quotes, and escape any double quote or backslash inside a quote.
 
-If the file is rejected as malformed you may be asked once to correct the format; change the format, not the decision, unless the error shows the decision rested on something you could not quote.
+## Format retry
+
+If code rejected your record, you may be given a retry note (`<name>.retry.md`): the validation errors, the path of the context file and the path of the record that was rejected. Read the context file, the rejected record and the errors, and write the record again to the path you were given. This task fixes the format only: a quote that is not word for word in the cited record, a source id that is not in the context file, a rubric text that is not word for word in the rubric, a missing field. The `decision` and the `accepted_level` stay exactly as they were, and code refuses a retry that changes either. If a quote cannot be repaired, take the statement out of the `evidence` list and out of your reasons rather than change the decision. You get one retry; a second failure is final.
 
 Reply with the decision and, for `accept_lower`, the level, nothing else.

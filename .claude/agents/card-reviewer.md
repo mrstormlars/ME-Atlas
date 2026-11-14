@@ -60,6 +60,18 @@ Do not read or ask for the drafter's reasoning, its messages, or any other file 
 
 Reply with the verdict and the number of findings, nothing else.
 
+### Reviewing a correction (round C1)
+
+When the context you were given is a `correction-context` file and the operations file is `ops/<slug>-rC<k>.json`, you review the correction of a held-back draft (spec section 6, "Correcting a held-back draft"). `paper` is `null` in your file (write `"paper": null`, or leave the key out). The applied result is `applied/<slug>-rC<k>/<slug>.yaml` and the checks are `checks/<slug>-rC<k>.json`. The audit records in the context are what the correction answers; judge the correction, not the audits.
+
+Check each operation against the cached records in the context and against the finding it answers (the audit records are in the context):
+
+- Does the new text say only what the cited records say? Compare every sentence, number and case definition with the record.
+- A correction removes or weakens a claim; it never adds a fact. Raise a `must_fix` finding for anything that adds an unsourced fact, adds a source or study that is not already on the card, makes a claim stronger than before, or cites a record that is not in the context.
+- An `update_study` must match the record (a case definition needs a verbatim quote from the record, a number must be the record's). A `remove_paragraph` or `remove_link` must leave no sentence elsewhere on the card that still relies on what was removed, and no level, badge or contested mark that now lacks its reason. A lowered level, a badge set to false or a changed contested mark must follow from the rubric and the records.
+- Say, per operation, which finding it answers; an operation that answers none of them and changes the card anyway is a `must_fix` (change as little as the findings require).
+- One review only: a `reject` ends the round, there is no second attempt.
+
 ## Map mode (causal map: layer and links)
 
 When you are given a proposal file (`data/pipeline/<date>/map/<slug>.json`, written by the `link-drafter`) and the card file it is for, you check each proposed link against the sources it cites and against the published link rubric (functional spec section 3, "Causal map and links"). Setting a layer or adding a link is decided by the independent auditor (functional spec section 6); you report.
