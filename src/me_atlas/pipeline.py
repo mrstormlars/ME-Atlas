@@ -2802,31 +2802,41 @@ def redraft_plan(
 _AUDIT_FILE_SUFFIX = r"(-second|-L|-L-second|-C[1-9]\d*|-C[1-9]\d*-second)?"
 
 
-def whole_card_audit_files(cfg: Config, slug: str) -> list[Path]:
-    """The whole-card audit records of ``slug`` in ``audits/``: ``<date>-<slug>`` followed by exactly one of the
-    known suffixes (``-second``, ``-L``, ``-L-second``, ``-C<k>``, ``-C<k>-second``) and ``.yaml``. A longer slug that
-    starts with this one never matches. A trail record (``-C<k>-correction``) is not an audit record."""
-    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}{_AUDIT_FILE_SUFFIX}\.yaml$")
+def _records_of_card(cfg: Config, slug: str, pattern: re.Pattern[str], *, whole_card: bool) -> list[Path]:
+    """The files of ``audits/`` whose name matches ``pattern`` and whose ``card`` field is ``slug``.
+
+    Names can collide between slugs (``foo`` and a card ``foo-second``), so the ``card`` field decides. A matching
+    file that is not readable YAML, is not a mapping or has no ``card`` is not skipped and not counted: it is an error
+    naming the file, so a broken record cannot open a path to audit the draft again.
+    """
     found: list[Path] = []
     for path in sorted(cfg.audits_dir.glob("*.yaml")) if cfg.audits_dir.is_dir() else []:
         if not pattern.match(path.name):
             continue
         try:
             raw = yaml.safe_load(path.read_text(encoding="utf-8"))
-        except (OSError, yaml.YAMLError):
-            raw = None
-        if isinstance(raw, dict) and (raw.get("card") != slug or raw.get("paper") is not None):
-            continue  # a record of another card whose slug merely ends like a suffix, or a pair record
+        except (OSError, yaml.YAMLError) as exc:
+            raise PipelineError(f"{path} cannot be read ({str(exc).splitlines()[0]}); fix or remove it first") from exc
+        if not isinstance(raw, dict) or not isinstance(raw.get("card"), str):
+            raise PipelineError(f"{path} is not a record with a `card` field; fix or remove it first")
+        if raw["card"] != slug or (whole_card and raw.get("paper") is not None):
+            continue  # the record of another card whose slug ends like a suffix, or a pair record
         found.append(path)
     return found
 
 
+def whole_card_audit_files(cfg: Config, slug: str) -> list[Path]:
+    """The whole-card audit records of ``slug`` in ``audits/``: ``<date>-<slug>`` followed by exactly one of the
+    known suffixes (``-second``, ``-L``, ``-L-second``, ``-C<k>``, ``-C<k>-second``) and ``.yaml``, whose ``card`` is
+    ``slug``. A trail record (``-C<k>-correction``) is not an audit record. A broken matching file is an error."""
+    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}{_AUDIT_FILE_SUFFIX}\.yaml$")
+    return _records_of_card(cfg, slug, pattern, whole_card=True)
+
+
 def correction_trails(cfg: Config, slug: str) -> list[Path]:
-    """The trail records of the correction rounds already recorded for ``slug``."""
+    """The trail records of the correction rounds already recorded for ``slug`` (name and ``card`` field)."""
     pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-C[1-9]\d*-correction\.yaml$")
-    return (
-        [p for p in sorted(cfg.audits_dir.glob("*.yaml")) if pattern.match(p.name)] if cfg.audits_dir.is_dir() else []
-    )
+    return _records_of_card(cfg, slug, pattern, whole_card=False)
 
 
 def _first_publication_refusal(cfg: Config, slug: str) -> str | None:
@@ -3542,9 +3552,10 @@ def _pair_hold_reasons(
     first: AuditRecord | None, second: AuditRecord | None, first_why: str | None, second_why: str | None
 ) -> list[str]:
     """B2: why a pair of audits does not go on, or [] when both are valid and decide the same thing (and that is not
-    a reject). The text does not depend on which audit said what: the two decisions are named in alphabetical order."""
+    a reject). The text does not depend on which audit said what: the two decisions are named in alphabetical order,
+    without saying which audit gave which."""
     if first is None and second is None:
-        return [f"no valid first audit: {first_why}"]
+        return [f"no valid first audit: {first_why}; no valid second audit: {second_why}"]
     if first is None or second is None:
         valid, why = (second, first_why) if first is None else (first, second_why)
         assert valid is not None
@@ -3555,7 +3566,7 @@ def _pair_hold_reasons(
         return ["both audits decided reject"]
     if not _same_audit(first, second):
         a, b = sorted((_audit_label(first), _audit_label(second)))
-        return [f"the two audits differ (first: {a}, second: {b})"]
+        return [f"the two audits differ: one decided {a}, the other {b}"]
     return []
 
 

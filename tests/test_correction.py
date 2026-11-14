@@ -253,7 +253,7 @@ def test_correction_plan_refuses_without_an_audit_record_and_a_longer_slug_is_no
 
 def test_correction_plan_refuses_a_round_beyond_the_limit(corr: Corr):
     assert pipeline.MAX_CORRECTION_ROUNDS == 1
-    (corr.audits / f"{PUB_DATE}-{SLUG}-C1-correction.yaml").write_text("card: x\n", encoding="utf-8")
+    (corr.audits / f"{PUB_DATE}-{SLUG}-C1-correction.yaml").write_text(f"card: {SLUG}\n", encoding="utf-8")
     assert corr.plan() == 1
     assert not corr.dir.exists()
 
@@ -344,7 +344,7 @@ def test_a_second_attempt_leaves_no_applied_text_of_the_first(corr: Corr):
 
 
 def test_apply_refuses_a_second_correction_round_beyond_the_limit(corr: Corr, capsys):
-    (corr.audits / f"{PUB_DATE}-{SLUG}-C1-correction.yaml").write_text("card: x\n", encoding="utf-8")
+    (corr.audits / f"{PUB_DATE}-{SLUG}-C1-correction.yaml").write_text(f"card: {SLUG}\n", encoding="utf-8")
     assert corr.apply() == 1
     assert "correction round C1 is not allowed" in capsys.readouterr().err
 
@@ -504,7 +504,7 @@ def test_a_reject_after_a_correction_holds_the_card_back_and_names_the_last_roun
 def test_audits_that_differ_after_a_correction_hold_the_card_back(corr: Corr):
     corr.round_to_audits(whole("accept"), whole("reject"))
     assert corr.publish() == 0
-    held(corr, "the two audits differ (first: accept, second: reject)", BASE + BOTH + TRAIL)
+    held(corr, "the two audits differ: one decided accept, the other reject", BASE + BOTH + TRAIL)
 
 
 def test_two_agreeing_accept_lower_after_a_correction_hold_the_card_back_with_no_round_l(corr: Corr):
@@ -607,11 +607,11 @@ def test_a_later_date_names_the_correction_files_with_that_date(corr: Corr):
 def test_an_existing_target_is_never_overwritten_and_nothing_is_written(corr: Corr, target, capsys):
     corr.round_to_audits()
     path = corr.audits / f"{PUB_DATE}-{SLUG}{target}.yaml"
-    path.write_text("earlier: record\n", encoding="utf-8")
+    path.write_text(f"card: {SLUG}\nearlier: record\n", encoding="utf-8")
     names = corr.names()
     assert corr.publish() == 1
     assert "never overwritten" in capsys.readouterr().err
-    assert path.read_text(encoding="utf-8") == "earlier: record\n" and corr.names() == names
+    assert path.read_text(encoding="utf-8") == f"card: {SLUG}\nearlier: record\n" and corr.names() == names
     assert corr.draft.exists() and not corr.card.exists() and not corr.pub.log.exists()
     assert not (corr.dir / "publication-report.md").exists()
 
@@ -704,16 +704,16 @@ def reason_of(pub: Pub, first: dict | None, second: dict | None) -> str:
 @pytest.mark.parametrize(
     "a, b, expected",
     [
-        (whole("reject"), whole("accept"), "the two audits differ (first: accept, second: reject)"),
+        (whole("reject"), whole("accept"), "the two audits differ: one decided accept, the other reject"),
         (
             whole("reject"),
             whole("accept_lower", accepted_level=1),
-            "the two audits differ (first: accept_lower at level 1, second: reject)",
+            "the two audits differ: one decided accept_lower at level 1, the other reject",
         ),
         (
             whole("accept"),
             whole("accept_lower", accepted_level=1),
-            "the two audits differ (first: accept, second: accept_lower at level 1)",
+            "the two audits differ: one decided accept, the other accept_lower at level 1",
         ),
         (whole("reject"), whole("reject"), "both audits decided reject"),
     ],
@@ -863,3 +863,79 @@ def ready(env: Env) -> Env:
     env.prepare()
     assert env.classify() == 0
     return env
+
+
+# --- review findings: slug collisions, broken records, neutral wording, both records missing --------------
+
+
+def _cfg(pub: Pub) -> pipeline.Config:
+    return pipeline.Config(
+        pub.dir, pub.env.cards, pub.env.drafts, pub.env.cache, pipeline.DEFAULT_SPEC, audits_dir=pub.audits
+    )
+
+
+@pytest.mark.parametrize("suffix", ["-second", "-L", "-C1"])
+def test_a_record_of_a_card_whose_slug_ends_like_a_suffix_is_not_counted_for_the_shorter_slug(pub: Pub, suffix):
+    pub.audits.mkdir()
+    longer = f"{SLUG}{suffix}"
+    (pub.audits / f"2026-11-13-{longer}.yaml").write_text(yaml.safe_dump(whole() | {"card": longer}), encoding="utf-8")
+    cfg = _cfg(pub)
+    assert pipeline.whole_card_audit_files(cfg, SLUG) == []
+    # and the reverse: the record of SLUG is not counted for the longer slug
+    own = pub.audits / f"2026-11-14-{SLUG}{suffix}.yaml"
+    own.write_text(yaml.safe_dump(whole()), encoding="utf-8")
+    assert pipeline.whole_card_audit_files(cfg, SLUG) == [own]
+    assert pipeline.whole_card_audit_files(cfg, longer) == [pub.audits / f"2026-11-13-{longer}.yaml"]
+
+
+def test_a_longer_card_whose_record_is_named_like_a_suffix_does_not_block_the_first_publication(pub: Pub):
+    pub.audits.mkdir()
+    for suffix in ("-second", "-L", "-C1"):
+        longer = f"{SLUG}{suffix}"
+        (pub.audits / f"2026-11-13-{longer}.yaml").write_text(
+            yaml.safe_dump(whole() | {"card": longer}), encoding="utf-8"
+        )
+    pub.audits_of_card(whole(), whole())  # audit-plan --card must not refuse
+    assert pub.publish() == 0 and pub.card.exists()
+
+
+def test_a_trail_record_of_another_card_is_not_counted(pub: Pub):
+    pub.audits.mkdir()
+    (pub.audits / f"2026-11-13-{SLUG}-C1-correction.yaml").write_text(
+        yaml.safe_dump({"card": "another-card"}), encoding="utf-8"
+    )
+    assert pipeline.correction_trails(_cfg(pub), SLUG) == []
+    own = pub.audits / f"2026-11-14-{SLUG}-C1-correction.yaml"
+    own.write_text(yaml.safe_dump({"card": SLUG}), encoding="utf-8")
+    assert pipeline.correction_trails(_cfg(pub), SLUG) == [own]
+
+
+@pytest.mark.parametrize("content", ["card: [unclosed\n", "just a string\n", "decision: accept\n"])
+def test_a_broken_record_in_audits_is_a_refusal_naming_the_file_not_a_skip(pub: Pub, capsys, content):
+    pub.audits.mkdir()
+    bad = pub.audits / f"2026-11-13-{SLUG}-second.yaml"
+    bad.write_text(content, encoding="utf-8")
+    with pytest.raises(pipeline.PipelineError, match=bad.name):
+        pipeline.whole_card_audit_files(_cfg(pub), SLUG)
+    trail = pub.audits / f"2026-11-13-{SLUG}-C1-correction.yaml"
+    trail.write_text(content, encoding="utf-8")
+    with pytest.raises(pipeline.PipelineError, match=trail.name):
+        pipeline.correction_trails(_cfg(pub), SLUG)
+    # the commands refuse and write nothing: the draft cannot be audited again around a broken record
+    assert pub.main("audit-plan", "--card", SLUG, "--out", str(pub.dir)) == 1
+    assert bad.name in capsys.readouterr().err and not (pub.dir / "audit-context").exists()
+    assert pub.publish() == 1 and not pub.card.exists() and not (pub.dir / "publication-report.md").exists()
+    assert pub.main("correction-plan", SLUG, "--out", str(pub.dir / "c")) == 1 and not (pub.dir / "c").exists()
+
+
+def test_both_records_missing_or_invalid_are_both_named(pub: Pub):
+    pub.dir.mkdir()
+    assert pub.publish("--dry-run") == 0
+    line = next(x for x in pub.report().splitlines() if x.startswith("Held back: "))
+    assert f"no audit record {SLUG}.yaml" in line and f"no audit record {SLUG}-second.yaml" in line
+    bad = whole()
+    bad["parts"][0]["evidence"][0]["quote"] = "A sentence that is not in the cached record."
+    pub.audits_of_card(bad, bad)
+    assert pub.publish("--dry-run") == 0
+    line = next(x for x in pub.report().splitlines() if x.startswith("Held back: "))
+    assert line.count("is not found word for word") == 2
