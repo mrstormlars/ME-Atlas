@@ -66,6 +66,8 @@ How to resolve a finding:
 - A finding that the records settle in the card's favour needs no change: leave it. Do not change what no finding asks for.
 - Every other rule above holds: neutral wording, no treatment advice, mark the unreplicated, nothing in the file but card content.
 
+The revised attempt: if the reviewer rejects your correction you get one revised attempt, once. You are given the same `correction-context` file, your first-attempt ops file (`ops/<slug>-rC<k>.json`) and the review file (`review/<slug>-rC<k>.json`, findings with their severity). Fix every `must_fix` finding the same way as above: from the records shown, or by removing or weakening the claim, never by adding a fact. The revised file is applied to the draft, not to your first result, so it must hold every operation you still want, not only the changes. Write it to the path you were given (`.../ops/<slug>-rC<k>-revised.json`) and reply with the path only. There is no further attempt.
+
 ## The file you write
 
 One JSON object. The code rejects any key not listed here.

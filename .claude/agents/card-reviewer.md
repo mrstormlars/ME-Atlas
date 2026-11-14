@@ -70,7 +70,7 @@ Check each operation against the cached records in the context and against the f
 - A correction removes or weakens a claim; it never adds a fact. Raise a `must_fix` finding for anything that adds an unsourced fact, adds a source or study that is not already on the card, makes a claim stronger than before, or cites a record that is not in the context.
 - An `update_study` must match the record (a case definition needs a verbatim quote from the record, a number must be the record's). A `remove_paragraph` or `remove_link` must leave no sentence elsewhere on the card that still relies on what was removed, and no level, badge or contested mark that now lacks its reason. A lowered level, a badge set to false or a changed contested mark must follow from the rubric and the records.
 - Say, per operation, which finding it answers; an operation that answers none of them and changes the card anyway is a `must_fix` (change as little as the findings require).
-- One review only: a `reject` ends the round, there is no second attempt.
+- A `reject` of the first attempt gives the drafter one revised attempt (`ops/<slug>-rC<k>-revised.json`). You review that revised attempt as you review any second attempt of the weekly path: you are given the context file, the revised operations file, its applied result (`applied/<slug>-rC<k>-revised/<slug>.yaml`) and checks (`checks/<slug>-rC<k>-revised.json`), and the review of the first attempt (`review/<slug>-rC<k>.json`) so you can see whether its findings are resolved; judge the revised attempt on its own merits too, and write `review/<slug>-rC<k>-revised.json`. A second `reject` ends the round; there is no third attempt.
 
 ## Map mode (causal map: layer and links)
 
