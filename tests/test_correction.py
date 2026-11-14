@@ -71,6 +71,18 @@ class Corr:
         path.write_text(json.dumps({"card": SLUG, "verdict": verdict, "findings": findings}), encoding="utf-8")
         return self.main("record-review", SLUG, "--round", "C1", "--run-dir", str(self.dir))
 
+    def card_review(self, verdict: str = "accept", revised: bool = False) -> int:
+        """The whole-card review of the attempt: the card-reviewer's file, then record-review --card-review."""
+        tag = "C1-revised" if revised else "C1"
+        path = self.dir / "review" / f"{SLUG}-card-{tag}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        findings = [] if verdict == "accept" else [{"operation": None, "severity": "must_fix", "problem": "A problem."}]
+        path.write_text(
+            json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
+        )
+        more = ["--revised"] if revised else []
+        return self.main("record-review", SLUG, "--card-review", "--round", "C1", *more, "--run-dir", str(self.dir))
+
     def audit_plan(self) -> int:
         return self.main("audit-plan", "--card", SLUG, "--round", "C1", "--out", str(self.dir))
 
@@ -89,6 +101,7 @@ class Corr:
         assert self.plan() == 0
         assert self.apply(ops_kw.get("data")) == 0
         assert self.review() == 0
+        assert self.card_review() == 0
         assert self.audit_plan() == 0
         self.write_audit(first if first is not None else whole())
         self.write_audit(second if second is not None else whole(), second=True)
@@ -373,7 +386,7 @@ def test_record_review_validates_the_round_c1_review(corr: Corr):
 
 
 def test_the_audit_context_equals_the_first_publication_context_of_the_corrected_text(corr: Corr, tmp_path: Path):
-    assert corr.apply() == 0 and corr.review() == 0 and corr.audit_plan() == 0
+    assert corr.apply() == 0 and corr.review() == 0 and corr.card_review() == 0 and corr.audit_plan() == 0
     context = (corr.dir / "audit-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
     corrected = (corr.dir / "applied" / f"{SLUG}-rC1" / f"{SLUG}.yaml").read_text(encoding="utf-8")
     # The same text given to the first-publication function (with empty audits/) gives the same file, byte for byte.
@@ -411,7 +424,7 @@ def test_the_audit_context_is_refused_unless_the_checks_passed_and_the_review_ac
 
 
 def test_round_c_audit_records_are_validated_and_accept_lower_must_be_below_the_corrected_level(corr: Corr, capsys):
-    assert corr.apply() == 0 and corr.review() == 0 and corr.audit_plan() == 0
+    assert corr.apply() == 0 and corr.review() == 0 and corr.card_review() == 0 and corr.audit_plan() == 0
     corr.write_audit(whole())
     assert corr.record_audit() == 0
     corr.write_audit(whole("accept_lower", accepted_level=2), second=True)  # the corrected card is at level 2
@@ -463,7 +476,10 @@ def test_publish_after_a_correction_publishes_the_corrected_text_and_writes_the_
         f"{PUB_DATE}-{SLUG}.yaml",
     ]
     trail = corr.trail()
-    assert list(trail) == ["card", "round", "answered", "draft_sha256", "operations", "checks", "review"]
+    keys = ["card", "round", "answered", "draft_sha256", "operations", "checks", "review", "card_review", "audits_run"]
+    assert list(trail) == keys
+    assert trail["card_review"] == {"verdict": "accept", "findings": []}
+    assert trail["audits_run"] == [f"{PUB_DATE}-{SLUG}-C1.yaml", f"{PUB_DATE}-{SLUG}-C1-second.yaml"]
     assert trail["card"] == SLUG and trail["round"] == 1
     assert trail["answered"] == [f"{PUB_DATE}-{SLUG}-second.yaml", f"{PUB_DATE}-{SLUG}.yaml"]
     assert trail["draft_sha256"] == hashlib.sha256(before).hexdigest()
@@ -732,8 +748,10 @@ def test_one_valid_reject_and_one_missing_record_name_both_facts_in_either_order
     three = reason_of(Pub(env, tmp_path / "three"), whole("reject"), bad)
     four = reason_of(Pub(env, tmp_path / "four"), bad, whole("reject"))
     prefix = "Held back: one audit decided reject and the other audit record is missing or invalid: "
-    assert one.startswith(prefix) and two.startswith(prefix) and three.startswith(prefix) and four.startswith(prefix)
-    assert f"no audit record {SLUG}-second.yaml" in one and f"no audit record {SLUG}.yaml" in two
+    # S1: a first reject with no second audit run is a complete outcome (it no longer says the second is missing).
+    assert one == f"Held back: {pipeline.SEQUENTIAL_REJECT}"
+    assert two.startswith(prefix) and three.startswith(prefix) and four.startswith(prefix)
+    assert f"no audit record {SLUG}.yaml" in two
 
 
 # --- B3: the format retry of an invalid audit record ------------------------------------------------------

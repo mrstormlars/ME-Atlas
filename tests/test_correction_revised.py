@@ -54,6 +54,10 @@ def review_revised(c: Corr, verdict: str = "accept") -> int:
     return c.main("record-review", SLUG, "--round", "C1", "--revised", "--run-dir", str(c.dir))
 
 
+def card_review_revised(c: Corr, verdict: str = "accept") -> int:
+    return c.card_review(verdict, revised=True)
+
+
 def first_rejected(c: Corr, ops: dict | None = None) -> None:
     assert c.plan() == 0 and c.apply(ops) == 0 and c.review("reject") == 0
 
@@ -201,7 +205,8 @@ def test_audit_plan_uses_the_revised_attempt_and_refuses_while_it_is_pending(cor
     assert corr.audit_plan() == 1 and "revised attempt is pending" in capsys.readouterr().err
     assert apply_revised(corr) == 0
     assert corr.audit_plan() == 1 and "no valid review" in capsys.readouterr().err
-    assert review_revised(corr) == 0 and corr.audit_plan() == 0
+    assert review_revised(corr) == 0 and corr.audit_plan() == 1  # the whole-card review is missing
+    assert card_review_revised(corr) == 0 and corr.audit_plan() == 0
     context = (corr.dir / "audit-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
     assert "A fictional small study reported a related change" not in context  # the revised removal
     assert "used the Fukuda criteria, which are accepted at every" in context  # the first removal is not in it
@@ -211,7 +216,7 @@ def test_audit_plan_uses_the_revised_attempt_and_refuses_while_it_is_pending(cor
 
 def full_revised(c: Corr, first=None, second=None) -> None:
     first_rejected(c)
-    assert apply_revised(c) == 0 and review_revised(c) == 0 and c.audit_plan() == 0
+    assert apply_revised(c) == 0 and review_revised(c) == 0 and card_review_revised(c) == 0 and c.audit_plan() == 0
     c.write_audit(first if first is not None else whole())
     c.write_audit(second if second is not None else whole(), second=True)
 
@@ -236,7 +241,9 @@ def test_publish_after_a_revised_attempt_publishes_its_text_and_writes_both_trai
     )
     first = corr.trail()
     revised = yaml.safe_load((corr.audits / f"{PUB_DATE}-{SLUG}-C1-correction-revised.yaml").read_text("utf-8"))
-    assert list(revised) == list(first) and first["review"]["verdict"] == "reject"
+    # the first attempt was rejected in the correction review, so it has no whole-card review (no card_review key)
+    assert list(revised) == [*list(first)[:-1], "card_review", "audits_run"]
+    assert first["review"]["verdict"] == "reject" and first["audits_run"] == []
     assert first["operations"] == [CONTESTED_LAST] and revised["operations"] == [EARLY_SIGNAL]
     assert revised["review"] == {"verdict": "accept", "findings": []} and revised["checks"]["passed"] is True
     assert revised["draft_sha256"] == first["draft_sha256"]
@@ -273,7 +280,8 @@ def test_the_round_then_continues_and_the_first_trail_is_not_written_again(corr:
     assert corr.publish() == 0
     trail = corr.audits / f"{PUB_DATE}-{SLUG}-C1-correction.yaml"
     before = trail.read_bytes()
-    assert apply_revised(corr) == 0 and review_revised(corr) == 0 and corr.audit_plan() == 0
+    assert apply_revised(corr) == 0 and review_revised(corr) == 0 and card_review_revised(corr) == 0
+    assert corr.audit_plan() == 0
     corr.write_audit(whole())
     corr.write_audit(whole(), second=True)
     assert corr.publish(date=LATER) == 0
@@ -295,7 +303,8 @@ def test_a_trail_in_the_format_of_the_first_version_is_an_open_round_and_the_run
     assert corr.main("correction-plan", SLUG, "--out", str(other)) == 1
     assert "round C1 is open: the revised attempt is pending" in capsys.readouterr().err
     assert not other.exists()
-    assert apply_revised(corr) == 0 and review_revised(corr) == 0 and corr.audit_plan() == 0
+    assert apply_revised(corr) == 0 and review_revised(corr) == 0 and card_review_revised(corr) == 0
+    assert corr.audit_plan() == 0
     corr.write_audit(whole())
     corr.write_audit(whole(), second=True)
     before = trail.read_bytes()

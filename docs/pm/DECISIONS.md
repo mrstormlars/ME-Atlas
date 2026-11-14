@@ -2,6 +2,28 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-14 — Two agreeing auditors override the founder's earlier card rulings; orchestrator defaults confirmed (founder rulings)
+
+- **The founder's earlier rulings about the content of a card no longer bind the audit.** The founder said: "Vi må se bort fra mine tidligere avgjørelser når det gjelder kortene. Når to revisorer er enige så overstyrer det mine tidligere avgjørelser." Where two auditors agree on a card, their decision stands over an earlier founder ruling on that card's content (a study's role, a level, a badge, a contested mark, a link). A correction may therefore change what such a ruling fixed, and a comment in a draft that records one is history, not a constraint. Why: the founder has no medical background and has handed the judgement of medical content to the auditor (entry "AI auditor and wider purpose", 2026-11-13). First case: `brain-and-brainstem-mri-changes`, where both audits want pmid:40624094 counted as contradicting with a contested mark, against a founder ruling of 2026-11-02 that kept it as context; the card may run without a new ruling. Unchanged: the founder still decides the rubric, the inclusion rule, the scope and the removal of a hypothesis, and may overrule the auditor from now on as a logged correction (`CLAUDE.md`, credibility rule 2).
+- **The orchestrator defaults of 2026-11-14 are confirmed.** The founder said: "Dine forslag til øktens standardvalg aksepteres." This is read as covering the defaults in the three entries below (cheaper whole-card audits; the two separate limits inside a correction round; correcting a held-back draft), except the one the founder already changed (a review reject gives one revised attempt). They are rulings from now on.
+
+## 2026-11-14 — Cheaper whole-card audits before the twelve held-back drafts (founder rulings)
+
+The first publication used about 5.5M tokens on 40 whole-card audits; in 9 of 20 cards the first audit rejected, so the second could not change the outcome, and many rejects were for simple errors a reviewer can find. Three points were put to the founder, who answered: "Enig i alle punktene dine, gjør forberedelsene nå, men vent med å sette i gang selve kjøringene til jeg sier ifra."
+
+1. **Whole-card audits run one after the other; the second runs only if the first does not reject.** A valid first `reject` holds the card back on its own. `accept` and `accept_lower` still need the second audit, and publishing still needs two valid, agreeing audits; the strictness for publishing is unchanged. The second auditor never sees the first record. Applies to first publications and to correction rounds.
+2. **The `card-reviewer` reads the whole card before the auditors get it.** In a correction round, after the correction review accepts, a whole-card review pass (case-definition labels against the cached records, every link and claim against its cited source, the contested mark) must accept before audits are allowed. It works from the cached records, not the auditors' full-text context.
+3. **Small batches, simplest findings first.** The twelve held-back drafts run three at a time in the order in `docs/pm/STATUS.md`; the founder stops between batches. No run starts until the founder says so.
+
+Orchestrator defaults inside these rulings, for the founder to confirm:
+
+- A first audit record that fails validation twice (after its one format retry) holds the card back without a second audit; the final invalid record is kept in `audits/` as `<date>-<slug>[-C<k>]-invalid.yaml`, so the draft counts as audited (it is not audited again unchanged) and a correction round closed this way counts as used.
+- A correction round closed by a single valid reject counts as used, like one closed by two audits.
+- Whole-card review findings count as review findings inside the same round: if the revised attempt is unused, a whole-card review reject triggers it (the drafter answers its `must_fix` findings, and the revision goes through checks, the correction review and a fresh whole-card review); if it is used, the card stays held back with no audit and the round counts as used.
+- A missing or invalid whole-card review is an operator's missed step, not an agent's decision: `publish-card` refuses and writes nothing, and the round stays open.
+- The whole-card review gate applies to correction rounds only; the first publication of a new draft does not have it yet.
+- The `card-reviewer` stays on Opus for both review passes.
+
 ## 2026-11-14 — Correcting a held-back draft: one revised attempt after a review reject (founder ruling)
 
 - **A correction the review agent rejects gets one revised attempt by the drafting agent before the round counts as used.** The founder's answer to "Skal en korreksjon som granskeren avviser, få ett nytt forsøk hos drafteren før runden regnes som brukt?" was "Ja, ett nytt forsøk". The drafter sees the reviewer's findings, as in the weekly path's second attempt; the revised correction passes the mechanical checks and the review agent again; a second reject ends the round and the card stays held back. Both attempts are kept in the trail (`audits/<date>-<slug>-C<k>-correction.yaml` and `...-correction-revised.yaml`). Why: the first live correction (reduced NK cell function) was rejected on two findings that a revision could answer, and the weekly path already gives a rejected draft one revised attempt.
