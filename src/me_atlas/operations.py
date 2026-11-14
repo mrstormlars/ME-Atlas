@@ -10,6 +10,13 @@ Operations:
 * ``replace_paragraph`` replace paragraph ``index`` of such a field
 * ``propose``           set the level, the contested mark or a badge (tier 2: the founder decides)
 
+Three more operations exist only for the correction of a held-back draft (a correction round, see
+``docs/pipeline.md``); ``apply`` refuses them in any other round:
+
+* ``update_study``      change fields of an existing study (not ``id``, not ``preprint``)
+* ``remove_paragraph``  remove paragraph ``index`` of a sourced-text field
+* ``remove_link``       remove the link whose target is ``to``
+
 Sourced-text fields: ``level_reason``, ``contested.reason``, ``badges.diagnostic_marker.reason``,
 ``badges.explains_pem.reason`` (one sourced text or a list of paragraphs), and ``subgroups`` and
 ``early_signals`` (lists of sourced texts, one per item).
@@ -102,25 +109,29 @@ class Paragraph(_TextOp):
     """One sourced paragraph, as used inside ``propose``."""
 
 
+def provenance_problem(s: Study) -> str | None:
+    """The case-definition provenance rule shared by ``add_study`` and ``update_study``; None when it holds."""
+    if s.case_definition == "unverified":
+        if s.case_definition_source is not None or s.case_definition_quote is not None:
+            return "an 'unverified' case definition must have null source and null quote"
+    elif s.case_definition_source is None:
+        return f"case_definition '{s.case_definition}' needs case_definition_source (abstract or fulltext)"
+    if s.case_definition in RECOGNISED_CASE_DEFINITIONS and s.case_definition_quote is None:
+        return (
+            f"case_definition '{s.case_definition}' needs case_definition_quote, "
+            "the verbatim sentence from the source that states it"
+        )
+    return None
+
+
 class AddStudy(_Op):
     op: Literal["add_study"]
     study: Study
 
     @model_validator(mode="after")
     def _provenance(self) -> AddStudy:
-        s = self.study
-        if s.case_definition == "unverified":
-            if s.case_definition_source is not None or s.case_definition_quote is not None:
-                raise ValueError("an 'unverified' case definition must have null source and null quote")
-        elif s.case_definition_source is None:
-            raise ValueError(
-                f"case_definition '{s.case_definition}' needs case_definition_source (abstract or fulltext)"
-            )
-        if s.case_definition in RECOGNISED_CASE_DEFINITIONS and s.case_definition_quote is None:
-            raise ValueError(
-                f"case_definition '{s.case_definition}' needs case_definition_quote, "
-                "the verbatim sentence from the source that states it"
-            )
+        if (problem := provenance_problem(self.study)) is not None:
+            raise ValueError(problem)
         return self
 
 
@@ -133,6 +144,42 @@ class ReplaceParagraph(_TextOp):
     op: Literal["replace_paragraph"]
     field: ParagraphField
     index: Annotated[int, Field(strict=True, ge=0)]
+
+
+_UNSETTABLE_STUDY_FIELDS = ("id", "preprint")
+
+
+class UpdateStudy(_Op):
+    """Correction rounds only: change fields of the study ``id``. ``set`` maps Study field names to new values."""
+
+    op: Literal["update_study"]
+    id: StudyId
+    set: Annotated[dict[str, Any], Field(min_length=1)]
+
+    @field_validator("set")
+    @classmethod
+    def _known_fields(cls, value: dict[str, Any]) -> dict[str, Any]:
+        for name in value:
+            if name in _UNSETTABLE_STUDY_FIELDS:
+                raise ValueError(f"'{name}' of a study cannot be set")
+            if name not in Study.model_fields:
+                raise ValueError(f"'{name}' is not a field of a study")
+        return value
+
+
+class RemoveParagraph(_Op):
+    """Correction rounds only: remove paragraph ``index`` of a sourced-text field."""
+
+    op: Literal["remove_paragraph"]
+    field: ParagraphField
+    index: Annotated[int, Field(strict=True, ge=0)]
+
+
+class RemoveLink(_Op):
+    """Correction rounds only: remove the link whose target is ``to``."""
+
+    op: Literal["remove_link"]
+    to: NonEmptyStr
 
 
 class Propose(_Op):
@@ -175,7 +222,11 @@ class Propose(_Op):
         return self
 
 
-Operation = Annotated[AddStudy | AddParagraph | ReplaceParagraph | Propose, Field(discriminator="op")]
+Operation = Annotated[
+    AddStudy | AddParagraph | ReplaceParagraph | Propose | UpdateStudy | RemoveParagraph | RemoveLink,
+    Field(discriminator="op"),
+]
+CORRECTION_ONLY_OPS = ("update_study", "remove_paragraph", "remove_link")
 
 
 class OpsFile(_Op):
@@ -221,10 +272,14 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
     An operation that adds a study with ``preprint: true``, or cites a preprint study (one of ``preprints``:
     see ``preprint_ids``) in its sources, is also tier 2: preprint changes are decided by the founder.
     """
-    if isinstance(op, Propose):
-        return 2
+    if isinstance(op, (Propose, RemoveLink)):
+        return 2  # a link is part of the causal map: decided like a level (spec section 6)
     if isinstance(op, AddStudy):
         return 2 if op.study.preprint or op.study.id in preprints else 1
+    if isinstance(op, UpdateStudy):
+        return 2 if op.id in preprints else 1
+    if isinstance(op, RemoveParagraph):
+        return 1
     return 2 if any(src in preprints for src in op.sources) else 1
 
 
@@ -294,6 +349,13 @@ def _render_items(paras: list[dict[str, Any]], ci: int) -> list[str]:
 _FOLD_STUDY_FIELDS = ("finding",)
 
 
+def _study_field_lines(name: str, value: Any, head: str, ci: int) -> list[str]:
+    """One study field as lines; ``head`` is what precedes the key on its first line."""
+    if name in _FOLD_STUDY_FIELDS and isinstance(value, str) and value == _collapse(value) and len(value) > 60:
+        return [f"{head}{name}: >-", *_folded(value, ci + 4)]
+    return [f"{head}{name}: {_scalar(value)}"]
+
+
 def render_study(study: Study, ci: int) -> list[str]:
     """A study as the lines of a list item whose ``-`` is at column ``ci``."""
     data = study.model_dump(mode="python")
@@ -304,11 +366,7 @@ def render_study(study: Study, ci: int) -> list[str]:
     lines: list[str] = []
     for n, (name, value) in enumerate(data.items()):
         head = " " * ci + "- " if n == 0 else " " * (ci + 2)
-        if name in _FOLD_STUDY_FIELDS and isinstance(value, str) and value == _collapse(value) and len(value) > 60:
-            lines.append(f"{head}{name}: >-")
-            lines += _folded(value, ci + 4)
-        else:
-            lines.append(f"{head}{name}: {_scalar(value)}")
+        lines += _study_field_lines(name, value, head, ci)
     return lines
 
 
@@ -550,6 +608,113 @@ def _apply_propose(lines: list[str], data: dict[str, Any], op: Propose) -> list[
     return _set_reason(lines, [*base, "reason"], paras)
 
 
+def _list_item_starts(lines: list[str], loc: _Loc, what: str) -> tuple[int, list[int]]:
+    """The column of the items of a block-style list and the line each item starts on."""
+    inline = _inline_value(lines, loc)
+    if inline in ("null", "~", "[]"):
+        return 0, []
+    if inline:
+        raise OperationError(f"{what} is written on one line (flow style) and cannot be edited by splice")
+    first = _first_content(lines, loc)
+    if first is None or not lines[first].lstrip().startswith("- "):
+        raise OperationError(f"{what} is not written as a list of items and cannot be edited by splice")
+    ci = _indent(lines[first])
+    return ci, [k for k in range(first, loc.end) if _indent(lines[k]) == ci and lines[k].lstrip().startswith("- ")]
+
+
+def _item_range(lines: list[str], loc: _Loc, starts: list[int], ci: int, index: int) -> tuple[int, int]:
+    a = starts[index]
+    b = starts[index + 1] if index + 1 < len(starts) else loc.end
+    # blank lines and comments at the item's own column before the next item belong to the next item
+    while b - 1 > a and (
+        not lines[b - 1].strip() or (_indent(lines[b - 1]) <= ci and lines[b - 1].lstrip().startswith("#"))
+    ):
+        b -= 1
+    return a, b
+
+
+def _apply_update_study(lines: list[str], data: dict[str, Any], op: UpdateStudy) -> list[str]:
+    studies = data.get("studies")
+    if not isinstance(studies, list):
+        raise OperationError("the card has no studies list")
+    index = next((i for i, s in enumerate(studies) if isinstance(s, dict) and s.get("id") == op.id), None)
+    if index is None:
+        raise OperationError(f"study id '{op.id}' is not on this card")
+    try:
+        study = Study.model_validate({**studies[index], **op.set})
+    except ValidationError as exc:
+        raise OperationError(f"the updated study does not validate:\n{_format_errors(exc)}") from exc
+    if (problem := provenance_problem(study)) is not None:
+        raise OperationError(problem)
+    dumped = study.model_dump(mode="python")
+    for name in op.set:
+        studies[index][name] = dumped[name]
+        loc = _locate(lines, ["studies"])
+        ci, starts = _list_item_starts(lines, loc, "studies")
+        a, b = _item_range(lines, loc, starts, ci, index)
+        key = re.compile(rf"^(?: {{{ci + 2}}}|{' ' * ci}- ){re.escape(name)}:(?:\s|$)")
+        j = next((k for k in range(a, b) if key.match(lines[k])), None)
+        if j is None:
+            last = max(k for k in range(a, b) if lines[k].strip())
+            lines = [
+                *lines[: last + 1],
+                *_study_field_lines(name, dumped[name], " " * (ci + 2), ci),
+                *lines[last + 1 :],
+            ]
+            continue
+        end = _block_end(lines, j, ci + 2, b)
+        head = " " * ci + "- " if j == a else " " * (ci + 2)
+        lines = [*lines[:j], *_study_field_lines(name, dumped[name], head, ci), *lines[end:]]
+    return lines
+
+
+def _apply_remove_paragraph(lines: list[str], data: dict[str, Any], op: RemoveParagraph) -> list[str]:
+    parent, key = _get(data, op.field)
+    current = parent.get(key)
+    paras = _as_list(current)
+    if op.index >= len(paras):
+        raise OperationError(
+            f"paragraph index {op.index} is out of range for {op.field} "
+            f"({len(paras)} paragraph{'s' if len(paras) != 1 else ''}; indexes start at 0)"
+        )
+    remaining = [*paras[: op.index], *paras[op.index + 1 :]]
+    empty_text = "[]"
+    if not remaining:
+        if op.field == "level_reason":
+            raise OperationError("level_reason cannot be left empty")
+        if op.field == "contested.reason":
+            raise OperationError("contested.reason cannot be left empty while the card has a contested mark")
+        if op.field.startswith("badges."):
+            badge = op.field.split(".")[1]
+            if data["badges"][badge].get("value") is True:
+                raise OperationError(f"{op.field} cannot be left empty while the badge is true")
+            empty_text = "null"
+    parent[key] = remaining if remaining else (None if empty_text == "null" else [])
+    loc = _locate(lines, op.field.split("."))
+    if not remaining:
+        return _replace_lines(lines, loc, [" " * loc.indent + f"{loc.key}: {empty_text}"])
+    ci, starts = _list_item_starts(lines, loc, op.field)
+    if not starts:
+        raise OperationError(f"{op.field} is written as one sourced text, which has one paragraph")
+    a, b = _item_range(lines, loc, starts, ci, op.index)
+    return lines[:a] + lines[b:]
+
+
+def _apply_remove_link(lines: list[str], data: dict[str, Any], op: RemoveLink) -> list[str]:
+    links = data.get("links")
+    index = next((i for i, x in enumerate(links or []) if isinstance(x, dict) and x.get("to") == op.to), None)
+    if index is None:
+        raise OperationError(f"the card has no link to '{op.to}'")
+    assert isinstance(links, list)
+    del links[index]
+    loc = _locate(lines, ["links"])
+    if not links:
+        return _replace_lines(lines, loc, [f"{loc.key}: []"])
+    ci, starts = _list_item_starts(lines, loc, "links")
+    a, b = _item_range(lines, loc, starts, ci, index)
+    return lines[:a] + lines[b:]
+
+
 def _validation_problems(data: dict[str, Any]) -> list[str]:
     try:
         card = Card.model_validate(data)
@@ -585,6 +750,12 @@ def apply_operations(text: str, operations: list[Operation] | OpsFile, *, valida
                 lines = _apply_study(lines, data, op)
             elif isinstance(op, (AddParagraph, ReplaceParagraph)):
                 lines = _apply_paragraph(lines, data, op)
+            elif isinstance(op, UpdateStudy):
+                lines = _apply_update_study(lines, data, op)
+            elif isinstance(op, RemoveParagraph):
+                lines = _apply_remove_paragraph(lines, data, op)
+            elif isinstance(op, RemoveLink):
+                lines = _apply_remove_link(lines, data, op)
             else:
                 lines = _apply_propose(lines, data, op)
         except OperationError as exc:
