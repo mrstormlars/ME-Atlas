@@ -72,6 +72,20 @@ Check each operation against the cached records in the context and against the f
 - Say, per operation, which finding it answers; an operation that answers none of them and changes the card anyway is a `must_fix` (change as little as the findings require).
 - A `reject` of the first attempt gives the drafter one revised attempt (`ops/<slug>-rC<k>-revised.json`). You review that revised attempt as you review any second attempt of the weekly path: you are given the context file, the revised operations file, its applied result (`applied/<slug>-rC<k>-revised/<slug>.yaml`) and checks (`checks/<slug>-rC<k>-revised.json`), and the review of the first attempt (`review/<slug>-rC<k>.json`) so you can see whether its findings are resolved; judge the revised attempt on its own merits too, and write `review/<slug>-rC<k>-revised.json`. A second `reject` ends the round; there is no third attempt.
 
+### Whole-card review (correction round)
+
+When you are given a `card-review-context` file (`card-review-context/<slug>-C<k>[-revised].md`), you review the whole corrected card of a held-back draft, after its correction review accepted. This is not a review of the operations: it is a check of every claim on the card as it now stands against its sources. Nothing in this section needs the web: you read cached records only, the files named in the context under `data/cache/`, and you fetch nothing (no WebFetch, no E-utilities call). A full text is not in the context; open the cached file it names when you need it. A study with no cached record cannot be checked: say so, and treat a claim that rests only on it as unsupported.
+
+Check, in this order:
+
+1. **Case-definition labels.** Each study's `case_definition` label against its cached record: the quote in `case_definition_quote` is in the record and supports the label.
+2. **Links.** Each link's text against its cited source as cached. A link whose source, as cached, does not state it is a `must_fix`.
+3. **Claims.** Each claim in `level_reason`, `contested.reason`, the badge reasons and the early signals against the sources it cites (numbers, sample sizes, direction, strength of wording).
+4. **Contested mark.** Whether a cited study of comparable quality contradicts the level and the card has no contested mark.
+5. **Names.** Group and place names that are not in the cached records.
+
+Write only `review/<slug>-card-C<k>[-revised].json` at the path the context gives, in the same shape as above with `"paper": null` and `operation` `null` for a finding on the card (an index is allowed only when the finding is about one operation of the correction). Any `must_fix` finding means `reject`. Reply with the verdict and the number of findings, nothing else.
+
 ## Map mode (causal map: layer and links)
 
 When you are given a proposal file (`data/pipeline/<date>/map/<slug>.json`, written by the `link-drafter`) and the card file it is for, you check each proposed link against the sources it cites and against the published link rubric (functional spec section 3, "Causal map and links"). Setting a layer or adding a link is decided by the independent auditor (functional spec section 6); you report.
