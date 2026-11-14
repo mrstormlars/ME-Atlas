@@ -1,0 +1,128 @@
+card: reduced-nk-cell-function
+round: 1
+answered:
+- 2026-11-13-reduced-nk-cell-function-second.yaml
+- 2026-11-13-reduced-nk-cell-function.yaml
+draft_sha256: 8f4e42dae7720d15025ff273a15079ebc46474d520f160282f4eb16aef59cf01
+operations:
+- op: update_study
+  id: pmid:20520837
+  set:
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were
+      drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after
+      they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1).
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'Controlled studies using the Fukuda definition, which does not require post-exertional malaise,
+    found lower NK cell killing in patients than in controls. Three come from one Australian research
+    group: one of 39 patients and 30 controls, and two of 95 and 65 patients, the second drawn from the
+    first''s cohort.'
+  sources:
+  - pmid:27099524
+  - pmid:21619669
+  - pmid:22571715
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: A fourth study, of 176 patients and 230 controls, used the CDC clinical diagnostic criteria without
+    naming a version, which the rubric ranks equal to Fukuda. It comes from a group in Miami with no authors
+    shared with the Australian group's 39-patient study; its last author co-authored the 95-patient study
+    with the Australian group, an indirect link. The card is at level 3 because an independent group found
+    the same result in a separate cohort.
+  sources:
+  - pmid:20520837
+  - pmid:27099524
+  - pmid:21619669
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: With 39 patients in that measurement, the Canadian Consensus Criteria study is of comparable quality
+    to the Australian group's Fukuda studies of 39 and 65 patients, and to its 95-patient study, whose
+    NK cytotoxicity result is reported for n = 71 (39 is more than half of 71). It is not of comparable
+    quality to the Miami study of 176 patients.
+  sources:
+  - pmid:28694809
+  - pmid:27099524
+  - pmid:22571715
+  - pmid:21619669
+  - pmid:20520837
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No study on this card reports NK cell killing validated as a diagnostic marker in a second, independent
+    patient group. A study of 176 patients and 230 controls using the CDC clinical diagnostic criteria
+    (version not named) found NK killing a good predictor of CFS status within its own cohort. A Canadian
+    Consensus Criteria study concluded the measures were not useful diagnostic markers, a multi-site study
+    concluded the assay was not ready for clinical use, and a family study found low antibody-dependent
+    NK killing also in relatives without the illness.
+  sources:
+  - pmid:20520837
+  - pmid:28694809
+  - pmid:37013608
+  - pmid:33777500
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: The four supporting studies with a recognised case definition (three using Fukuda, one the CDC
+    clinical diagnostic criteria with no version named) report no direct measure of post-exertional malaise,
+    such as an exercise test repeated on two consecutive days, in their abstracts or open full texts.
+    The 65-patient study lists, among its participants' symptoms, the share reporting weakness more than
+    24 hours after exercise; this is a self-reported symptom, not a test.
+  sources:
+  - pmid:27099524
+  - pmid:20520837
+  - pmid:21619669
+  - pmid:22571715
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 3
+    severity: must_fix
+    problem: 'This answers audit finding 2 (the 95-patient comparability sentence), but it does more than
+      remove or weaken the wrong claim. It reverses it into a new, stronger claim and adds a fact that
+      was not on the card: ''and to its 95-patient study, whose NK cytotoxicity result is reported for
+      n = 71 (39 is more than half of 71)''. A correction may not add a fact or strengthen a claim. The
+      record also does not say that n = 71 counts patients. The full text of pmid:21619669 reads ''NK
+      and CD8+T (n = 71) cytotoxic activity ... was significantly decreased ... among the CFS/ME patients
+      compared to the control subjects'', which could also mean all participants measured. So ''39 is
+      more than half of 71'' reads 71 as a patient count that the record does not state.'
+    fix: 'Remove the wrong claim without adding a new one, for example: ''With 39 patients in that measurement,
+      the Canadian Consensus Criteria study is of comparable quality to the Australian group''s Fukuda
+      studies of 39 and 65 patients. It is not of comparable quality to the Miami study of 176 patients.''
+      Drop pmid:21619669 from the sources if the sentence no longer mentions that study.'
+  - operation: 5
+    severity: must_fix
+    problem: 'This answers audit finding 1 (the ''four Fukuda studies'' label), but the new opening, ''The
+      four supporting studies with a recognised case definition (three using Fukuda, one the CDC clinical
+      diagnostic criteria with no version named)'', is wrong against the card. The card has six supporting
+      studies with an accepted case definition. pmid:8148445 and pmid:9683556 are also CDC_unspecified,
+      which the rubric accepts like Fukuda. The card itself counts CDC_unspecified as recognised: its
+      third explains_pem paragraph calls the 21-patient CDC_unspecified study (pmid:7983659) one of ''the
+      two studies with a recognised case definition''. The next paragraph also covers the two small CDC
+      studies separately.'
+    fix: 'Identify the four studies without the ''recognised case definition'' qualifier, for example:
+      ''Four of the supporting studies (three using Fukuda, one the CDC clinical diagnostic criteria with
+      no version named) report no direct measure ...'', or ''The four larger supporting studies (...)''.'
+  - operation: 0
+    severity: advisory
+    problem: The update_study is correct. The value is CDC_unspecified, the source is fulltext, and the
+      quote is verbatim from the full text of PMC2876037. However, the YAML comment above the study still
+      reads 'ref 1 is Fukuda et al. 1994 ... so this reads as Fukuda'. That contradicts the new value,
+      and both audits note that the cached record leaves out the reference list. The comment is not shown
+      to readers, but it rests on content that is not in the cached record.
+    fix: Change the comment so it says the record names the CDC clinical diagnostic criteria without a
+      version and that the reference list is not in the cached record.
+  - operation: 2
+    severity: advisory
+    problem: This answers audit finding 1 for level_reason, and it is correct against the record and the
+      rubric ('ranks equal to Fukuda'). Before, the Miami study took the 'does not require post-exertional
+      malaise' flag from paragraph 0 by being called a Fukuda study. The new paragraph does not say that
+      the CDC criteria do not require PEM, a flag the rubric asks for with CDC criteria where the version
+      is not stated. This matters less if the site shows the flag from the study's case_definition.
+    fix: Optionally add 'which, like Fukuda, does not require post-exertional malaise' to the sentence.

@@ -7,8 +7,9 @@ Command line::
     uv run python -m me_atlas.pipeline prepare [--since YYYY-MM-DD]
     uv run python -m me_atlas.pipeline record-classification
     uv run python -m me_atlas.pipeline context <slug> <pmid>
-    uv run python -m me_atlas.pipeline apply <slug> <ops file> [--round 1|2]
-    uv run python -m me_atlas.pipeline record-review <slug> <pmid> [--round 1|2]
+    uv run python -m me_atlas.pipeline apply <slug> <ops file> [--round 1|2|L|C<k>]
+    uv run python -m me_atlas.pipeline record-review <slug> <pmid> [--round 1|2|L|C<k>]
+    uv run python -m me_atlas.pipeline correction-plan <slug> --out DIR
     uv run python -m me_atlas.pipeline audit-plan <slug> <pmid> | --card <slug> [--out DIR]
     uv run python -m me_atlas.pipeline record-audit <slug> <pmid> [--second] | --card <slug> --file PATH
     uv run python -m me_atlas.pipeline audit-sample [--seed S]
@@ -24,8 +25,10 @@ No step here calls an AI. Tests inject the fetch, the full-text loader and the s
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import difflib
+import hashlib
 import json
 import math
 import os
@@ -48,12 +51,16 @@ from me_atlas import cards, citations, europepmc, pubmed, translations
 from me_atlas.cards import CHANGELOG_NAME, NonEmptyStr, Slug, StudyId
 from me_atlas.http import load_dotenv
 from me_atlas.operations import (
+    CORRECTION_ONLY_OPS,
     AddParagraph,
     AddStudy,
     OperationError,
     OpsFile,
     Propose,
+    RemoveLink,
+    RemoveParagraph,
     ReplaceParagraph,
+    UpdateStudy,
     apply_operations,
     parse_ops,
     tiers,
@@ -67,6 +74,8 @@ MAX_ROUNDS = 2
 # The one redraft after an auditor's accept_lower (E3): files carry "L" where a round carries 1 or 2. It counts neither
 # as round 1 nor as round 2 and allows no further round.
 REDRAFT = "L"
+# The correction of a held-back draft (rounds C1, C2, ...): at most this many rounds per card (contract A3).
+MAX_CORRECTION_ROUNDS = 1
 Round_ = int | str
 # A rubric excerpt in an audit record must be at least this long after normalisation (contract decision D5).
 MIN_RUBRIC_CHARS = 20
@@ -79,6 +88,25 @@ PreprintId = Annotated[str, StringConstraints(pattern=r"^doi:10\.\S+$")]
 
 class PipelineError(Exception):
     """A step cannot continue; the message says what to fix."""
+
+
+def is_correction_round(n: object) -> bool:
+    """Whether a round value is a correction round: ``C1``, ``C2``, ..."""
+    return isinstance(n, str) and re.fullmatch(r"C[1-9]\d*", n) is not None
+
+
+def correction_number(n: str) -> int:
+    """The k of ``C<k>`` (also of ``C<k>-revised`` and ``C<k>-revised-attempt1``)."""
+    match = re.match(r"C([1-9]\d*)", n)
+    assert match is not None, n
+    return int(match.group(1))
+
+
+def _round_tag(redraft: bool | str | None) -> str:
+    """The part of a file name that names the round of an audit: ``-L`` (the redraft), ``-C1`` (a correction)."""
+    if not redraft:
+        return ""
+    return f"-{REDRAFT}" if redraft is True else f"-{redraft}"
 
 
 # ---------------------------------------------------------------------------
@@ -206,18 +234,23 @@ class Config:
         """``docs/card-format.md``, next to the functional spec."""
         return self.spec_path.parent / "card-format.md"
 
-    def audit_context_path(self, slug: str, key: str | None = None, redraft: bool = False) -> Path:
+    def audit_context_path(self, slug: str, key: str | None = None, redraft: bool | str = False) -> Path:
         """``audit-context/<slug>-<key>.md`` for a change; ``audit-context/<slug>.md`` for a whole-card audit.
 
-        The audit of the redraft (round L) adds ``-L`` to the name."""
-        return self.f("audit-context", f"{_stem(slug, key)}{'-L' if redraft else ''}.md")
+        The audit of the redraft (round L) adds ``-L`` to the name, that of a correction round ``-C<k>``."""
+        return self.f("audit-context", f"{_stem(slug, key)}{_round_tag(redraft)}.md")
 
-    def audit_path(self, slug: str, key: str | None, second: bool = False, redraft: bool = False) -> Path:
+    def audit_path(self, slug: str, key: str | None, second: bool = False, redraft: bool | str = False) -> Path:
         """The record the auditor writes for a change; the consistency run writes ``...-second.yaml``.
 
-        The audit of the redraft (round L) is ``<slug>-<key>-L.yaml`` (whole card: ``<slug>-L.yaml``)."""
-        name = f"{_stem(slug, key)}{'-L' if redraft else ''}{'-second' if second else ''}.yaml"
+        The audit of the redraft (round L) is ``<slug>-<key>-L.yaml`` (whole card: ``<slug>-L.yaml``); that of a
+        correction round ``<slug>-C<k>.yaml``."""
+        name = f"{_stem(slug, key)}{_round_tag(redraft)}{'-second' if second else ''}.yaml"
         return self.f("audit", name)
+
+    def correction_context_path(self, slug: str, k: int) -> Path:
+        """What `correction-plan` writes for the drafter: ``correction-context/<slug>-C<k>.md``."""
+        return self.f("correction-context", f"{slug}-C{k}.md")
 
     def redraft_context_path(self, slug: str, key: str | None = None) -> Path:
         """What `redraft-plan` writes for the drafter: ``redraft-context/<slug>-<key>.md`` (whole card: no key)."""
@@ -1057,8 +1090,223 @@ def redraft_ops_problems(ops: OpsFile, accepted_level: int | None, paper: str | 
     return found
 
 
+def _check_applied(
+    cfg: Config, slug: str, base: Path, base_text: str, new_text: str, out_dir: Path, result: dict[str, Any]
+) -> None:
+    """Write the applied card and its diff against ``base_text``, then run the card validator and the citations check
+    on it; the findings go into ``result``."""
+    card_path = out_dir / f"{slug}.yaml"
+    _write_text(card_path, new_text)
+    diff = "".join(
+        difflib.unified_diff(
+            base_text.splitlines(keepends=True),
+            new_text.splitlines(keepends=True),
+            fromfile=f"{base}",
+            tofile=f"applied/{slug}.yaml",
+        )
+    )
+    _write_text(out_dir / "changes.diff", diff)
+    result["applied"] = str(card_path)
+    result["diff"] = str(out_dir / "changes.diff")
+    # The copy sits alone in applied/; link targets (M2) resolve against the cards and drafts of the run.
+    link_targets = {
+        p.stem
+        for directory in (cfg.drafts_dir, cfg.cards_dir)
+        if directory.is_dir()
+        for p in directory.glob("*.yaml")
+        if p.name != CHANGELOG_NAME
+    }
+    _count, validator_issues = cards.validate_paths([card_path], extra_known_slugs=link_targets)
+    result["validator"] = [str(i) for i in validator_issues]
+    _count, cite_issues = citations.check_paths([card_path], cfg.cache_dir)
+    with tempfile.TemporaryDirectory() as tmp:
+        baseline_path = Path(tmp) / f"{slug}.yaml"
+        baseline_path.write_text(base_text, encoding="utf-8", newline="\n")
+        _count, base_issues = citations.check_paths([baseline_path], cfg.cache_dir)
+    known = {(i.study, i.code, i.message) for i in base_issues}
+    rows = _citation_rows(cite_issues)
+    for row in rows:
+        row["preexisting"] = (row["study"], row["code"], row["message"]) in known
+    result["citations"] = rows
+
+
+def _finish_checks(cfg: Config, result: dict[str, Any], ops_errors: list[str], pmid: str | None, n: Round_) -> None:
+    """Decide ``passed`` from the findings in ``result``, write ``checks/...json`` and log the call."""
+    # A C9 issue (the group names no author of the record) is only a warning in `citations check`, but a new one
+    # fails the pair here, so a drafter cannot add an author name that the record does not support.
+    new_errors = [
+        r for r in result["citations"] if not r["preexisting"] and (r["level"] == citations.ERROR or r["code"] == "C9")
+    ]
+    result["citation_errors"] = len(new_errors)
+    result["passed"] = not ops_errors and not result["validator"] and not new_errors
+    _write_json(cfg.checks_path(result["card"], pmid, n), result)
+    _log(
+        cfg,
+        {"event": "apply", "card": result["card"], "paper": result["paper"], "round": n, "passed": result["passed"]},
+    )
+
+
+def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
+    """A2: what the operations file of a correction round may hold. Empty when it holds nothing else.
+
+    No paper; at least one operation; only ``replace_paragraph``, ``remove_paragraph``, ``update_study``,
+    ``remove_link`` and ``propose``; a ``propose`` on ``level`` only to a value lower than the draft's, on a badge only
+    to false, on ``contested`` freely. Nothing that adds a study or a paragraph: a correction removes or weakens a
+    claim, it never adds a fact.
+    """
+    found: list[str] = []
+    if ops.paper is not None:
+        found.append(f"a correction names no paper, this file names {ops.paper!r}")
+    if not ops.operations:
+        found.append("a correction needs at least one operation")
+    for i, op in enumerate(ops.operations):
+        if isinstance(op, (AddStudy, AddParagraph)):
+            found.append(
+                f"operations[{i}] is {op.op}: a correction may hold replace_paragraph, remove_paragraph, "
+                "update_study, remove_link and propose only (it never adds a fact)"
+            )
+        elif isinstance(op, Propose):
+            if op.target == "level" and not (isinstance(op.value, int) and op.value < draft_level):
+                found.append(
+                    f"operations[{i}] proposes level {op.value}: a correction may only lower the level "
+                    f"(the draft's is {draft_level})"
+                )
+            elif op.target in ("diagnostic_marker", "explains_pem") and op.value is not False:
+                found.append(
+                    f"operations[{i}] proposes {op.target} {op.value}: a correction may only set a badge to false"
+                )
+    return found
+
+
+def _draft_problem(cfg: Config, slug: str, base: str) -> str | None:
+    """R8: the revised attempt applies to the draft the first attempt was applied to. Checked from what exists: the
+    first attempt's operations applied to the draft must give its applied text, and a trail of the round in
+    ``audits/`` must carry the draft's sha256. None when no check fails."""
+    draft_path = cfg.drafts_dir / f"{slug}.yaml"
+    draft_bytes = draft_path.read_bytes()
+    first = _load_round(cfg, slug, "", base)
+    applied = cfg.applied_dir(slug, None, base) / f"{slug}.yaml"
+    if first is not None and first.ops is not None and applied.is_file():
+        try:
+            same = apply_operations(draft_bytes.decode("utf-8"), first.ops, validate=False) == applied.read_text(
+                encoding="utf-8"
+            )
+        except OperationError:
+            same = False
+        if not same:
+            return "the draft is not the one the first attempt was applied to (it changed since)"
+    for path in correction_trails(cfg, slug):
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if (
+            isinstance(data, dict)
+            and data.get("round") == correction_number(base)
+            and data.get("draft_sha256") != _sha256(draft_bytes)
+        ):
+            return f"the draft is not the one {path.name} records (its sha256 differs)"
+    return None
+
+
+def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revised: bool = False) -> dict[str, Any]:
+    """`apply --round C<k> [--revised]`: apply a correction's operations to the draft and run the checks (A2, A4).
+
+    Writes ``checks/<slug>-rC<k>.json`` and ``applied/<slug>-rC<k>/`` as for other rounds. At most two attempts after
+    failed checks: a second is allowed only after a failed first one, whose ops and checks files are kept as
+    ``...-attempt1``. After a review reject the drafter gets one revised attempt (``--revised``, files
+    ``...-rC<k>-revised...``), which has its own check retry unless the first attempt's was used. The draft in
+    ``drafts/`` is never touched.
+    """
+    base = n
+    if revised:
+        n = f"{base}-revised"
+    k = correction_number(n)
+    draft = cfg.drafts_dir / f"{slug}.yaml"
+    if (cfg.cards_dir / f"{slug}.yaml").exists():
+        raise PipelineError(f"{cfg.cards_dir / f'{slug}.yaml'} exists: only a held-back draft can be corrected")
+    if not draft.is_file():
+        raise PipelineError(f"no draft {draft} to correct")
+    used, _open = correction_round_state(cfg, slug)
+    if k != used + 1 or k > MAX_CORRECTION_ROUNDS:
+        raise PipelineError(
+            f"correction round {base} is not allowed: the next round is C{used + 1}, "
+            f"and a card gets at most {MAX_CORRECTION_ROUNDS} correction round(s)"
+        )
+    expected = cfg.ops_path(slug, None, n)
+    if ops_path.resolve() != expected.resolve():
+        raise PipelineError(f"the ops file of correction round {n} must be {expected}")
+    if revised:
+        first_round = _load_round(cfg, slug, "", base)
+        if first_round is None or first_round.review is None or first_round.review.verdict != "reject":
+            raise PipelineError(
+                f"a revised attempt needs the first attempt's review of round {base}, and it must say reject"
+            )
+        if problem := _draft_problem(cfg, slug, base):
+            raise PipelineError(problem)
+    checks_file = cfg.checks_path(slug, None, n)
+    first_checks = cfg.checks_path(slug, None, f"{n}-attempt1")
+    first_ops = cfg.ops_path(slug, None, f"{n}-attempt1")
+    attempt = 1
+    if checks_file.exists():
+        if first_checks.exists():
+            raise PipelineError(f"both attempts of correction round {n} are used; there is no third")
+        if _read_json(checks_file).get("passed"):
+            raise PipelineError(f"correction round {n} passed its checks; it is not applied a second time")
+        if revised and cfg.checks_path(slug, None, f"{base}-attempt1").exists():
+            raise PipelineError(
+                f"the retry after failed checks of round {base} was used by the first attempt; "
+                "a revised attempt that fails the checks ends the round"
+            )
+        checks_file.replace(first_checks)  # the first attempt failed; keep its record, this is the second
+        shutil.rmtree(cfg.applied_dir(slug, None, n), ignore_errors=True)
+        attempt = 2
+
+    ops: OpsFile | None = None
+    ops_errors: list[str] = []
+    draft_text = draft.read_text(encoding="utf-8")
+    try:
+        ops = parse_ops(_read_json(ops_path))
+        if ops.card != slug:
+            ops_errors.append(f"the ops file is for card '{ops.card}', not '{slug}'")
+        ops_errors += correction_ops_problems(ops, _load_card(draft).level)
+    except (PipelineError, OperationError) as exc:
+        ops_errors.append(str(exc))
+    result: dict[str, Any] = {
+        "card": slug,
+        "paper": None,
+        "key": None,
+        "round": n,
+        "attempt": attempt,
+        "ops_file": str(ops_path),
+        "ops_errors": ops_errors,
+        "validator": [],
+        "citations": [],
+        "applied": None,
+        "diff": None,
+        "no_change": False,
+        "tiers": {"1": 0, "2": 0},
+        "warnings": [],
+    }
+    new_text: str | None = None
+    if ops is not None and not ops_errors:
+        op_tiers = tiers(ops, yaml.safe_load(draft_text))
+        result["tiers"] = {str(t): op_tiers.count(t) for t in (1, 2)}
+        try:
+            new_text = apply_operations(draft_text, ops, validate=False)
+        except OperationError as exc:
+            ops_errors.append(str(exc))
+        else:
+            if new_text == draft_text:
+                ops_errors.append("the correction changes nothing: the applied text equals the draft")
+                new_text = None
+    if new_text is not None:
+        _check_applied(cfg, slug, draft, draft_text, new_text, cfg.applied_dir(slug, None, n), result)
+    _finish_checks(cfg, result, ops_errors, None, n)
+    if attempt == 1 and not result["passed"] and ops_path.is_file():
+        shutil.copyfile(ops_path, first_ops)  # the drafter rewrites the ops file for attempt 2; keep the first
+    return result
+
+
 def apply_ops_file(
-    cfg: Config, slug: str, ops_path: Path, n: Round_, *, audit_file: Path | None = None
+    cfg: Config, slug: str, ops_path: Path, n: Round_, *, audit_file: Path | None = None, revised: bool = False
 ) -> dict[str, Any]:
     """Validate and apply one ops file to a copy of the card; run the validator and the citations check.
 
@@ -1069,6 +1317,10 @@ def apply_ops_file(
     pair, enforces E4 (`redraft_ops_problems`) against the first audit's ``accepted_level`` and diffs the result
     against the card. A whole-card redraft names no paper (``audit_file`` is then the first audit's record).
     """
+    if revised and not is_correction_round(n):
+        raise PipelineError("--revised is only for a correction round (--round C<k>)")
+    if is_correction_round(n):
+        return apply_correction_ops(cfg, slug, ops_path, str(n), revised=revised)
     redraft = n == REDRAFT
     pmid = _pmid_from_name(ops_path)
     ops: OpsFile | None = None
@@ -1093,6 +1345,11 @@ def apply_ops_file(
                 ops_errors.append(str(exc))
         if ops.card != slug:
             ops_errors.append(f"the ops file is for card '{ops.card}', not '{slug}'")
+        ops_errors += [
+            f"operations[{i}] is {op.op}: only a correction round (--round C<k>) may use it"
+            for i, op in enumerate(ops.operations)
+            if op.op in CORRECTION_ONLY_OPS
+        ]
     except (PipelineError, OperationError) as exc:
         ops_errors.append(str(exc))
         if redraft and isinstance(raw, dict) and raw.get("paper") is None:
@@ -1180,50 +1437,8 @@ def apply_ops_file(
                 ops_errors.append(str(exc))
 
     if new_text is not None:
-        out_dir = cfg.applied_dir(slug, pmid, n)
-        card_path = out_dir / f"{slug}.yaml"
-        _write_text(card_path, new_text)
-        diff = "".join(
-            difflib.unified_diff(
-                base_text.splitlines(keepends=True),
-                new_text.splitlines(keepends=True),
-                fromfile=f"{base}",
-                tofile=f"applied/{slug}.yaml",
-            )
-        )
-        _write_text(out_dir / "changes.diff", diff)
-        result["applied"] = str(card_path)
-        result["diff"] = str(out_dir / "changes.diff")
-        # The copy sits alone in applied/; link targets (M2) resolve against the cards and drafts of the run.
-        link_targets = {
-            p.stem
-            for directory in (cfg.drafts_dir, cfg.cards_dir)
-            if directory.is_dir()
-            for p in directory.glob("*.yaml")
-            if p.name != CHANGELOG_NAME
-        }
-        _count, validator_issues = cards.validate_paths([card_path], extra_known_slugs=link_targets)
-        result["validator"] = [str(i) for i in validator_issues]
-        _count, cite_issues = citations.check_paths([card_path], cfg.cache_dir)
-        with tempfile.TemporaryDirectory() as tmp:
-            baseline_path = Path(tmp) / f"{slug}.yaml"
-            baseline_path.write_text(base_text, encoding="utf-8", newline="\n")
-            _count, base_issues = citations.check_paths([baseline_path], cfg.cache_dir)
-        known = {(i.study, i.code, i.message) for i in base_issues}
-        rows = _citation_rows(cite_issues)
-        for row in rows:
-            row["preexisting"] = (row["study"], row["code"], row["message"]) in known
-        result["citations"] = rows
-
-    # A C9 issue (the group names no author of the record) is only a warning in `citations check`, but a new one
-    # fails the pair here, so a drafter cannot add an author name that the record does not support.
-    new_errors = [
-        r for r in result["citations"] if not r["preexisting"] and (r["level"] == citations.ERROR or r["code"] == "C9")
-    ]
-    result["citation_errors"] = len(new_errors)
-    result["passed"] = not ops_errors and not result["validator"] and not new_errors
-    _write_json(cfg.checks_path(slug, pmid, n), result)
-    _log(cfg, {"event": "apply", "card": slug, "paper": result["paper"], "round": n, "passed": result["passed"]})
+        _check_applied(cfg, slug, base, base_text, new_text, cfg.applied_dir(slug, pmid, n), result)
+    _finish_checks(cfg, result, ops_errors, pmid, n)
     return result
 
 
@@ -1384,6 +1599,7 @@ def build_audit_context(
     loader: FullTextLoader,
     *,
     redraft: bool = False,
+    card_text_from: Path | None = None,
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -1391,10 +1607,15 @@ def build_audit_context(
     takes the diff's place). With ``redraft`` the change is the one redraft (round L) after an ``accept_lower``: the
     diff of its applied result against the card (E5). Nothing the drafter or the reviewer wrote, and no earlier
     audit, is in it.
+
+    ``card_text_from`` (a whole-card audit only) takes the card text from that file instead of the card file, and
+    nothing else changes: the context is built exactly as for the card file, so it does not show that the text is a
+    correction. The card is still named by the card file's path.
     """
     base = _base_card(cfg, slug)
-    base_card = _load_card(base)
-    base_text = strip_yaml_comments(base.read_text(encoding="utf-8"))
+    source = card_text_from if card_text_from is not None and key is None and not redraft else base
+    base_card = _load_card(source)
+    base_text = strip_yaml_comments(source.read_text(encoding="utf-8"))
     study_ids = [s.id for s in base_card.studies]
     carriers = carrier_ids(base_card)
     if key is not None or redraft:
@@ -1535,11 +1756,12 @@ def _record_quote_text(reader: citations.CacheReader, study_id: str, *, abstract
     return "\n".join(pieces)
 
 
-def _proposed_level(cfg: Config, slug: str, key: str | None, redraft: bool = False) -> int:
+def _proposed_level(cfg: Config, slug: str, key: str | None, redraft: bool | str = False) -> int:
     """The level an accept_lower must be below: the level in the last applied result of a change (the redraft's
-    applied result in round L), or the card's own for a whole-card audit."""
+    applied result in round L, the corrected card's in a correction round), or the card's own for a whole-card
+    audit."""
     if redraft:
-        path = cfg.applied_dir(slug, key, REDRAFT) / f"{slug}.yaml"
+        path = cfg.applied_dir(slug, key, REDRAFT if redraft is True else redraft) / f"{slug}.yaml"
     elif key is not None:
         path = cfg.applied_dir(slug, key, _last_applied_round(cfg, slug, key)) / f"{slug}.yaml"
     else:
@@ -1547,8 +1769,45 @@ def _proposed_level(cfg: Config, slug: str, key: str | None, redraft: bool = Fal
     return _load_card(path).level
 
 
+def _sibling(path: Path, ending: str) -> Path:
+    """``<name>.yaml`` to ``<name><ending>`` beside it (``.invalid-1.yaml``, ``.retry.md``)."""
+    return path.with_name(path.stem + ending)
+
+
+def _retry_problem(source: Path, record: AuditRecord) -> str | None:
+    """B3: a record written after a format retry may not change the answer of the invalid one beside it."""
+    invalid = _sibling(source, ".invalid-1.yaml")
+    if not invalid.is_file():
+        return None
+    try:
+        earlier = yaml.safe_load(invalid.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return None
+    if not isinstance(earlier, dict) or earlier.get("decision") not in AUDIT_DECISIONS:
+        return None
+    if earlier["decision"] != record.decision:
+        return (
+            f"a format retry cannot change the answer: the invalid record decided {earlier['decision']}, "
+            f"this one decides {record.decision}"
+        )
+    level = earlier.get("accepted_level")
+    if level is not None and level != record.accepted_level:
+        return (
+            f"a format retry cannot change the answer: the invalid record accepted level {level}, "
+            f"this one {record.accepted_level}"
+        )
+    return None
+
+
 def validate_audit_record(
-    cfg: Config, raw: Any, *, slug: str, key: str | None, source: Path, context_path: Path, redraft: bool = False
+    cfg: Config,
+    raw: Any,
+    *,
+    slug: str,
+    key: str | None,
+    source: Path,
+    context_path: Path,
+    redraft: bool | str = False,
 ) -> AuditRecord:
     """Check an audit record against its context file and the cache; raise PipelineError listing every problem.
 
@@ -1607,19 +1866,36 @@ def validate_audit_record(
                 problems.append(f"{where}: no cached record for {ev.source} to check the quote against")
             elif citations.normalise_quote(ev.quote) not in citations.normalise_quote(text):
                 problems.append(f"{where}.quote is not found word for word in the cached record of {ev.source}")
+    if not problems and (conflict := _retry_problem(source, record)) is not None:
+        problems.append(conflict)
     if problems:
         raise PipelineError(f"{source} is not valid:\n" + "\n".join(problems))
     return record
 
 
+def _missing_record_note(path: Path) -> str:
+    """Why there is no audit record at ``path``: never written, or it failed validation (once or twice)."""
+    if _sibling(path, ".invalid-2.yaml").is_file():
+        return (
+            f"the record {path.name} failed validation twice "
+            f"(the format retry is used; {_sibling(path, '.invalid-2.yaml').name})"
+        )
+    if _sibling(path, ".invalid-1.yaml").is_file():
+        return (
+            f"the record {path.name} failed validation and no format retry was recorded "
+            f"({_sibling(path, '.invalid-1.yaml').name})"
+        )
+    return f"no audit record {path.name}"
+
+
 def load_audit(
-    cfg: Config, slug: str, key: str, *, second: bool = False, redraft: bool = False
+    cfg: Config, slug: str, key: str, *, second: bool = False, redraft: bool | str = False
 ) -> tuple[AuditRecord | None, str | None]:
     """The valid audit record of a change (of its redraft, round L, with ``redraft``), or (None, why it is missing
     or invalid)."""
     path = cfg.audit_path(slug, key, second, redraft)
     if not path.is_file():
-        return None, f"no audit record {path.name}"
+        return None, _missing_record_note(path)
     try:
         raw = yaml.safe_load(path.read_text(encoding="utf-8"))
         record = validate_audit_record(
@@ -1646,12 +1922,18 @@ def record_audit(
     second: bool = False,
     file: Path | None = None,
     out_dir: Path | None = None,
-    redraft: bool = False,
+    redraft: bool | str = False,
+    retry: bool = False,
 ) -> AuditRecord:
     """Validate the record the auditor wrote and log it. A change is ``slug`` and ``key`` (the file is
     ``audit/<slug>-<key>.yaml``, or ``...-second.yaml``); a whole card is ``slug`` with ``key`` None and ``file``.
     With ``redraft`` the record is the audit of the redraft (round L): ``audit/<slug>-<key>-L.yaml`` and the
-    context ``audit-context/<slug>-<key>-L.md``."""
+    context ``audit-context/<slug>-<key>-L.md``; ``redraft="C1"`` is the audit of correction round C1.
+
+    A record that fails validation is kept as ``<name>.invalid-1.yaml`` and ``<name>.retry.md`` is written (B3): one
+    format retry follows (``retry=True``, implied when ``invalid-1`` exists); its failure is final
+    (``<name>.invalid-2.yaml``).
+    """
     if key is not None:
         path = file or cfg.audit_path(slug, key, second, redraft)
         context_path = cfg.audit_context_path(slug, key, redraft)
@@ -1659,16 +1941,39 @@ def record_audit(
         if file is None:
             raise PipelineError("a whole-card audit needs --file PATH (the record the auditor wrote)")
         path = file
-        context_path = (out_dir or cfg.run_dir) / "audit-context" / f"{slug}{'-L' if redraft else ''}.md"
+        context_path = (out_dir or cfg.run_dir) / "audit-context" / f"{slug}{_round_tag(redraft)}.md"
+    invalid1, invalid2, retry_note = (_sibling(path, e) for e in (".invalid-1.yaml", ".invalid-2.yaml", ".retry.md"))
+    if invalid2.exists():
+        raise PipelineError(f"{path.name} failed validation twice ({invalid2.name}); the format retry is used")
+    if retry and not invalid1.exists():
+        raise PipelineError(f"--retry needs an earlier invalid record ({invalid1.name}); there is none")
+    retry = retry or invalid1.exists()  # a record rewritten after a failed one is the format retry
     try:
-        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        text = path.read_text(encoding="utf-8")
     except FileNotFoundError as exc:
         raise PipelineError(f"{path} does not exist") from exc
-    except (OSError, yaml.YAMLError) as exc:
-        raise PipelineError(f"{path} is not readable YAML: {exc}") from exc
-    record = validate_audit_record(
-        cfg, raw, slug=slug, key=key, source=path, context_path=context_path, redraft=redraft
-    )
+    except OSError as exc:
+        raise PipelineError(f"{path} is not readable: {exc}") from exc
+    try:
+        try:
+            raw = yaml.safe_load(text)
+        except yaml.YAMLError as exc:
+            raise PipelineError(f"{path} is not readable YAML: {exc}") from exc
+        record = validate_audit_record(
+            cfg, raw, slug=slug, key=key, source=path, context_path=context_path, redraft=redraft
+        )
+    except PipelineError as exc:
+        if retry:
+            path.replace(invalid2)
+            raise PipelineError(
+                f"{exc}\nThe format retry failed too: the record is kept as {invalid2.name}; final"
+            ) from exc
+        path.replace(invalid1)
+        _write_text(retry_note, _retry_text(path, invalid1, context_path, str(exc)))
+        raise PipelineError(
+            f"{exc}\nThe record is moved to {invalid1.name}; the instructions for the format retry are in "
+            f"{retry_note.name}"
+        ) from exc
     if key is not None:
         _log(
             cfg,
@@ -1677,11 +1982,34 @@ def record_audit(
                 "card": slug,
                 "paper": record.paper,
                 "second": second,
-                "round": REDRAFT if redraft else None,
+                "round": _round_tag(redraft).removeprefix("-") or None,
                 "decision": record.decision,
             },
         )
     return record
+
+
+def _retry_text(path: Path, invalid: Path, context_path: Path, errors: str) -> str:
+    """``<name>.retry.md``: what the auditor reads for its one format retry."""
+    return "\n".join(
+        [
+            f"# Format retry for {path.name}",
+            "",
+            "The record below did not pass validation. Fix the format only: the decision and the accepted level stay "
+            "as they are, and so does your reading of the card. Write the corrected record to "
+            f"`{path}` (the same path as before).",
+            "",
+            f"- audit context: `{context_path}`",
+            f"- the invalid record: `{invalid}`",
+            "",
+            "## Validation errors",
+            "",
+            "```",
+            errors,
+            "```",
+            "",
+        ]
+    )
 
 
 def _is_level_change(ops: OpsFile) -> bool:
@@ -1776,7 +2104,7 @@ def _gate(cfg: Config, o: Outcome, sampled: set[tuple[str, str]]) -> None:
 
 @dataclass
 class Round:
-    n: int
+    n: Round_
     ops: OpsFile | None
     ops_problem: str | None
     checks: dict[str, Any] | None
@@ -1840,7 +2168,7 @@ class Outcome:
         )
 
 
-def _load_round(cfg: Config, slug: str, pmid: str, n: int) -> Round | None:
+def _load_round(cfg: Config, slug: str, pmid: str, n: Round_) -> Round | None:
     ops_path = cfg.ops_path(slug, pmid, n)
     if not ops_path.exists():
         return None
@@ -2007,14 +2335,19 @@ def _park_conflicts(outcomes: list[Outcome]) -> None:
             o.note = "not applied, " + o.note
 
 
-def _check_failure_summary(checks: dict[str, Any]) -> str:
+def _check_error_lines(checks: dict[str, Any]) -> list[str]:
+    """What failed in a checks record, one line each: operation errors, validator issues, new citation errors."""
     bits = list(checks.get("ops_errors", [])) + list(checks.get("validator", []))
     bits += [
         f"{r['study']} {r['code']}: {r['message']}"
         for r in checks.get("citations", [])
         if (r["level"] == "ERROR" or r.get("code") == "C9") and not r.get("preexisting")
     ]
-    return "; ".join(b.replace("\n", " ") for b in bits) or "unknown"
+    return [b.replace("\n", " ") for b in bits]
+
+
+def _check_failure_summary(checks: dict[str, Any]) -> str:
+    return "; ".join(_check_error_lines(checks)) or "unknown"
 
 
 def describe_op(op: Any, base: dict[str, Any]) -> str:
@@ -2028,6 +2361,12 @@ def describe_op(op: Any, base: dict[str, Any]) -> str:
         return f"Add a paragraph to `{op.field}` (sources {', '.join(op.sources)}): {op.text}"
     if isinstance(op, ReplaceParagraph):
         return f"Replace paragraph {op.index} of `{op.field}` (sources {', '.join(op.sources)}): {op.text}"
+    if isinstance(op, UpdateStudy):
+        return f"Update study `{op.id}`: " + ", ".join(f"{k} = {v!r}" for k, v in op.set.items())
+    if isinstance(op, RemoveParagraph):
+        return f"Remove paragraph {op.index} of `{op.field}`"
+    if isinstance(op, RemoveLink):
+        return f"Remove the link to `{op.to}`"
     assert isinstance(op, Propose)
     paragraphs = " ".join(f"{p.text} [{', '.join(p.sources)}]" for p in op.reason or [])
     if op.target == "level":
@@ -2508,6 +2847,243 @@ def redraft_plan(
 
 
 # ---------------------------------------------------------------------------
+# Correcting a held-back draft: correction-plan and the files of a correction round
+# ---------------------------------------------------------------------------
+
+_AUDIT_FILE_SUFFIX = r"(-second|-L|-L-second|-C[1-9]\d*|-C[1-9]\d*-second)?"
+
+
+def _records_of_card(cfg: Config, slug: str, pattern: re.Pattern[str], *, whole_card: bool) -> list[Path]:
+    """The files of ``audits/`` whose name matches ``pattern`` and whose ``card`` field is ``slug``.
+
+    Names can collide between slugs (``foo`` and a card ``foo-second``), so the ``card`` field decides. A matching
+    file that is not readable YAML, is not a mapping or has no ``card`` is not skipped and not counted: it is an error
+    naming the file, so a broken record cannot open a path to audit the draft again.
+    """
+    found: list[Path] = []
+    for path in sorted(cfg.audits_dir.glob("*.yaml")) if cfg.audits_dir.is_dir() else []:
+        if not pattern.match(path.name):
+            continue
+        try:
+            raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except (OSError, yaml.YAMLError) as exc:
+            raise PipelineError(f"{path} cannot be read ({str(exc).splitlines()[0]}); fix or remove it first") from exc
+        if not isinstance(raw, dict) or not isinstance(raw.get("card"), str):
+            raise PipelineError(f"{path} is not a record with a `card` field; fix or remove it first")
+        if raw["card"] != slug or (whole_card and raw.get("paper") is not None):
+            continue  # the record of another card whose slug ends like a suffix, or a pair record
+        found.append(path)
+    return found
+
+
+def whole_card_audit_files(cfg: Config, slug: str) -> list[Path]:
+    """The whole-card audit records of ``slug`` in ``audits/``: ``<date>-<slug>`` followed by exactly one of the
+    known suffixes (``-second``, ``-L``, ``-L-second``, ``-C<k>``, ``-C<k>-second``) and ``.yaml``, whose ``card`` is
+    ``slug``. A trail record (``-C<k>-correction``) is not an audit record. A broken matching file is an error."""
+    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}{_AUDIT_FILE_SUFFIX}\.yaml$")
+    return _records_of_card(cfg, slug, pattern, whole_card=True)
+
+
+def correction_trails(cfg: Config, slug: str) -> list[Path]:
+    """The trail records of the correction rounds already recorded for ``slug`` (name and ``card`` field)."""
+    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-C[1-9]\d*-correction\.yaml$")
+    return _records_of_card(cfg, slug, pattern, whole_card=False)
+
+
+def _revised_trails(cfg: Config, slug: str) -> list[Path]:
+    """The trail records of revised attempts (``...-C<k>-correction-revised.yaml``) of ``slug``."""
+    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-C[1-9]\d*-correction-revised\.yaml$")
+    return _records_of_card(cfg, slug, pattern, whole_card=False)
+
+
+def _trail_round(path: Path) -> int:
+    match = re.search(r"-C([1-9]\d*)-correction", path.name)
+    assert match is not None, path.name
+    return int(match.group(1))
+
+
+def correction_round_state(cfg: Config, slug: str) -> tuple[int, int | None]:
+    """R7: (the number of correction rounds used, the number of an open round or None) from the trails in ``audits/``.
+
+    A round is used when its trail shows it closed: a revised trail exists, or the first attempt's trail has a review
+    verdict other than reject (accept, or none because the checks failed: then no revised attempt is possible). A
+    first-attempt trail whose review verdict is reject with no revised trail is an open round: the revised attempt is
+    pending and the round is not used. A trail that does not let code decide counts as used.
+    """
+    revised = {_trail_round(p) for p in _revised_trails(cfg, slug)}
+    used, open_round = 0, None
+    for path in correction_trails(cfg, slug):
+        k = _trail_round(path)
+        if k in revised:
+            continue
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        review = data.get("review") if isinstance(data, dict) else None
+        verdict = review.get("verdict") if isinstance(review, dict) and "verdict" in review else "undecidable"
+        if verdict == "reject":
+            open_round = k
+        else:
+            used += 1
+    return used + len(revised), open_round
+
+
+def _first_publication_refusal(cfg: Config, slug: str) -> str | None:
+    """A9: a draft that already has a whole-card audit record is not audited again unchanged."""
+    existing = whole_card_audit_files(cfg, slug)
+    if not existing:
+        return None
+    return (
+        f"{slug} already has whole-card audit record(s) in {cfg.audits_dir} "
+        f"({', '.join(p.name for p in existing)}). The same draft is not audited again: correct it "
+        f'(`correction-plan {slug} --out DIR`, docs/pipeline.md, "Correcting a held-back draft")'
+    )
+
+
+CORRECTION_LIMITS = (
+    "Limits of a correction (the code enforces them). The ops file has `paper` null and at least one operation, and "
+    "may hold `replace_paragraph`, `remove_paragraph`, `update_study`, `remove_link` and `propose` only. A `propose` "
+    "on `level` may only lower the level (the value must be lower than the draft's); a `propose` on a badge may only "
+    "set it to false; a `propose` on `contested` may add, change or remove the mark. No `add_study` and no "
+    "`add_paragraph`. `update_study` takes `id` and `set` (a map of study fields; not `id`, not `preprint`); a "
+    "recognised case definition needs `case_definition_source` and `case_definition_quote`, `unverified` needs both "
+    "null. `remove_paragraph` takes `field` and `index` and cannot leave `level_reason` empty, nor "
+    "`contested.reason` while the card is contested, nor a true badge without a reason. `remove_link` takes `to`. "
+    "A finding that cannot be resolved from the records shown below is resolved by removing or weakening the claim, "
+    "never by adding a fact: do not cite anything that is not in the records of section 4."
+)
+
+
+def build_correction_context(cfg: Config, slug: str, k: int, loader: FullTextLoader) -> str:
+    """What the drafter reads for correction round ``k``: the draft, every audit record of it, the cited cached
+    records (carriers in full, the rest as abstracts), spec sections 2 and 3 and the limits of a correction."""
+    draft = cfg.drafts_dir / f"{slug}.yaml"
+    card = _load_card(draft)
+    carriers = carrier_ids(card)
+    records: list[str] = []
+    for study_id in dict.fromkeys(s.id for s in card.studies):
+        try:
+            records += _audit_record_lines(cfg, study_id, loader, study_id in carriers)
+        except PipelineError:
+            records += [
+                f"### Not cached: {study_id}",
+                "",
+                "No cached record. Do not cite anything about it, and take nothing from it into the card.",
+                "",
+            ]
+    audit_parts: list[str] = []
+    for path in whole_card_audit_files(cfg, slug):
+        audit_parts += [f"### {path.name}", ""]
+        try:
+            audit = AuditRecord.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")))
+        except (OSError, yaml.YAMLError, ValidationError) as exc:
+            audit_parts += [f"(this record cannot be read: {str(exc).splitlines()[0]})", ""]
+            continue
+        audit_parts += [*_audit_lines(audit), ""]
+    parts = [
+        f"# Correction context (round C{k}): the held-back draft `{slug}`",
+        "",
+        f"The independent audits of this draft did not accept it. You write the correction (round C{k}, the only one) "
+        f'as a JSON operations file, `ops/{slug}-rC{k}.json`, with `card` "{slug}" and `paper` null. '
+        + CORRECTION_LIMITS,
+        "",
+        "## 1. The draft as it stands",
+        "",
+        "```yaml",
+        draft.read_text(encoding="utf-8").rstrip("\n"),
+        "```",
+        "",
+        "## 2. The audit records of this draft",
+        "",
+        *audit_parts,
+        "## 3. Where the correction is limited",
+        "",
+        CORRECTION_LIMITS,
+        "",
+        "## 4. Cited records",
+        "",
+        *(records or ["The card cites no study.", ""]),
+        "## 5. The inclusion rule (functional spec section 2)",
+        "",
+        _demote_headings(spec_section(cfg.spec_path, 2)),
+        "",
+        "## 6. The rubric (functional spec section 3)",
+        "",
+        _demote_headings(spec_section(cfg.spec_path, 3)),
+        "",
+    ]
+    return "\n".join(parts)
+
+
+def correction_plan(cfg: Config, slug: str, loader: FullTextLoader) -> Path:
+    """`correction-plan`: write ``correction-context/<slug>-C<k>.md`` for the drafter of a held-back draft.
+
+    Refuses, writing nothing, when the card is already in ``cards/``, the draft is missing, ``audits/`` has no audit
+    record of the slug, or the round would exceed ``MAX_CORRECTION_ROUNDS``.
+    """
+    if (cfg.cards_dir / f"{slug}.yaml").exists():
+        raise PipelineError(f"{cfg.cards_dir / f'{slug}.yaml'} exists: only a held-back draft is corrected")
+    if not (cfg.drafts_dir / f"{slug}.yaml").is_file():
+        raise PipelineError(f"no draft {cfg.drafts_dir / f'{slug}.yaml'} to correct")
+    if not whole_card_audit_files(cfg, slug):
+        raise PipelineError(f"{cfg.audits_dir} holds no whole-card audit record of {slug}: nothing to correct")
+    used, open_round = correction_round_state(cfg, slug)
+    if open_round is not None:
+        raise PipelineError(
+            f"round C{open_round} is open: the revised attempt is pending (apply it with `--revised`); "
+            "a new round is not started"
+        )
+    k = 1 + used
+    if k > MAX_CORRECTION_ROUNDS:
+        raise PipelineError(
+            f"{slug} has used its {MAX_CORRECTION_ROUNDS} correction round(s); the card stays held back and is "
+            "listed for the founder"
+        )
+    text = build_correction_context(cfg, slug, k, loader)
+    path = cfg.correction_context_path(slug, k)
+    _write_text(path, text)
+    _log_card_run(cfg, {"event": "correction-plan", "card": slug, "round": f"C{k}"})
+    return path
+
+
+def _log_card_run(cfg: Config, event: dict[str, Any]) -> None:
+    cfg.run_dir.mkdir(parents=True, exist_ok=True)
+    _log(cfg, event)
+
+
+def last_attempt_tag(cfg: Config, slug: str, n: str) -> str:
+    """R3: the attempt that goes on: the revised attempt (``C<k>-revised``) when its ops file exists, else the first."""
+    return f"{n}-revised" if cfg.ops_path(slug, None, f"{n}-revised").is_file() else n
+
+
+def audit_plan_correction(cfg: Config, slug: str, n: str, loader: FullTextLoader, out_dir: Path | None) -> Path:
+    """`audit-plan --card <slug> --round C<k>`: the whole-card audit context of the corrected draft.
+
+    Built by the function that builds the first-publication context, from the applied text of the last attempt (the
+    revised one when there is one), so it shows nothing of the correction. Refused unless that attempt's checks passed
+    and its review says accept.
+    """
+    tag = last_attempt_tag(cfg, slug, n)
+    checks_file = cfg.checks_path(slug, None, tag)
+    if not checks_file.is_file():
+        raise PipelineError(f"no checks for correction round {tag} ({checks_file}); run `apply --round {n}` first")
+    checks = _read_json(checks_file)
+    if not checks.get("passed"):
+        raise PipelineError(f"correction round {tag} did not pass its checks: {_check_failure_summary(checks)}")
+    r = _load_round(cfg, slug, "", tag)
+    if r is None or r.review is None:
+        raise PipelineError(f"correction round {tag} has no valid review; run `record-review --round {n}` first")
+    if r.review.verdict != "accept":
+        pending = " (a revised attempt is pending: apply it with --revised)" if tag == n else ""
+        raise PipelineError(f"the reviewer rejected correction round {tag}; it is not audited{pending}")
+    applied = cfg.applied_dir(slug, None, tag) / f"{slug}.yaml"
+    if not applied.is_file():
+        raise PipelineError(f"no applied text {applied}; run `apply --round {n}` first")
+    text = build_audit_context(cfg, slug, None, loader, card_text_from=applied)
+    path = (out_dir or cfg.run_dir) / "audit-context" / f"{slug}-{n}.md"
+    _write_text(path, text)
+    return path
+
+
+# ---------------------------------------------------------------------------
 # translation-plan
 # ---------------------------------------------------------------------------
 
@@ -2747,6 +3323,12 @@ def _op_headline(op: Any, base: dict[str, Any]) -> str:
         return f"Added a paragraph to {op.field}"
     if isinstance(op, ReplaceParagraph):
         return f"Replaced paragraph {op.index} of {op.field}"
+    if isinstance(op, UpdateStudy):
+        return f"Updated study {op.id}"
+    if isinstance(op, RemoveParagraph):
+        return f"Removed paragraph {op.index} of {op.field}"
+    if isinstance(op, RemoveLink):
+        return f"Removed the link to {op.to}"
     assert isinstance(op, Propose)
     if op.target == "level":
         return f"Proposed level {base.get('level')} -> {op.value}"
@@ -2760,6 +3342,10 @@ def _op_sources(op: Any) -> list[str]:
         return [op.study.id]
     if isinstance(op, (AddParagraph, ReplaceParagraph)):
         return list(op.sources)
+    if isinstance(op, UpdateStudy):
+        return [op.id]
+    if isinstance(op, (RemoveParagraph, RemoveLink)):
+        return []
     assert isinstance(op, Propose)
     return [s for p in op.reason or [] for s in p.sources]
 
@@ -2988,15 +3574,17 @@ class CardPublication:
     would_text: str | None  # the card text the audits give, for the report (also when held back, if there is one)
     would_level: int | None
     draft_text: str
+    round_tag: str | None = None  # "C1" for the publication after a correction round; None for a first publication
+    open_round: bool = False  # the first attempt was rejected in review and the revised attempt is pending
 
 
 def _load_card_audit(
-    cfg: Config, slug: str, *, second: bool, redraft: bool
+    cfg: Config, slug: str, *, second: bool, redraft: bool | str
 ) -> tuple[AuditRecord | None, Path, str | None]:
     """The valid whole-card audit record in the run folder, or (None, path, why it is missing or invalid)."""
     path = cfg.audit_path(slug, None, second, redraft)
     if not path.is_file():
-        return None, path, f"no audit record {path.name}"
+        return None, path, _missing_record_note(path)
     try:
         raw = yaml.safe_load(path.read_text(encoding="utf-8"))
         record = validate_audit_record(
@@ -3058,6 +3646,32 @@ def _published_card_problems(cfg: Config, slug: str, text: str) -> list[str]:
     return [str(i).replace(str(path), f"{slug}.yaml") for i in issues if i.file == str(path)]
 
 
+def _audit_label(record: AuditRecord) -> str:
+    return record.decision if record.accepted_level is None else f"{record.decision} at level {record.accepted_level}"
+
+
+def _pair_hold_reasons(
+    first: AuditRecord | None, second: AuditRecord | None, first_why: str | None, second_why: str | None
+) -> list[str]:
+    """B2: why a pair of audits does not go on, or [] when both are valid and decide the same thing (and that is not
+    a reject). The text does not depend on which audit said what: the two decisions are named in alphabetical order,
+    without saying which audit gave which."""
+    if first is None and second is None:
+        return [f"no valid first audit: {first_why}; no valid second audit: {second_why}"]
+    if first is None or second is None:
+        valid, why = (second, first_why) if first is None else (first, second_why)
+        assert valid is not None
+        if valid.decision == "reject":
+            return [f"one audit decided reject and the other audit record is missing or invalid: {why}"]
+        return [f"no valid {'first' if first is None else 'second'} audit: {why}"]
+    if first.decision == second.decision == "reject":
+        return ["both audits decided reject"]
+    if not _same_audit(first, second):
+        a, b = sorted((_audit_label(first), _audit_label(second)))
+        return [f"the two audits differ: one decided {a}, the other {b}"]
+    return []
+
+
 def whole_card_outcome(cfg: Config, slug: str, date: str) -> CardPublication:
     """Decide the first publication of a draft from the whole-card audit records in ``cfg.run_dir``.
 
@@ -3086,14 +3700,12 @@ def whole_card_outcome(cfg: Config, slug: str, date: str) -> CardPublication:
 
     first = records.get("", (None, None))[1]
     second = records.get("-second", (None, None))[1]
-    if first is None:
-        return held(f"no valid first audit: {problems['']}")
-    if first.decision == "reject":
-        return held("the audit decided reject")
-    if second is None:
-        return held(f"no valid second audit: {problems['-second']}")
-    if not _same_audit(first, second):
-        return held("the two audits differ")
+    if reasons := _pair_hold_reasons(first, second, problems.get(""), problems.get("-second")):
+        pub.reasons += reasons
+        return pub
+    assert first is not None and second is not None
+    if first.decision == "reject":  # unreachable: two valid and equal rejects are held back above
+        return held("both audits decided reject")
     if first.decision == "accept":
         text = _set_last_checked(draft_text, date, "ai_audit")
         pub.deciding, pub.would_text = first, text
@@ -3141,6 +3753,79 @@ def whole_card_outcome(cfg: Config, slug: str, date: str) -> CardPublication:
     return _finish(cfg, pub, text)
 
 
+def correction_outcome(cfg: Config, slug: str, date: str, tag: str) -> CardPublication:
+    """Decide the publication of a draft after correction round ``tag`` (``C1``) from the round's files only.
+
+    Published only when A2 holds, the checks passed, the review says accept, the applied text is what the operations
+    give when applied to the current draft, both audits of the corrected text are valid and say accept, and the text
+    validates as a card in ``cards/``. Anything else holds the card back with the reasons and no text; two agreeing
+    ``accept_lower`` hold it back too (there is no round L after a correction).
+    """
+    draft_path = cfg.drafts_dir / f"{slug}.yaml"
+    draft_text = draft_path.read_text(encoding="utf-8")
+    draft_card = _load_card(draft_path)
+    records: dict[str, tuple[Path, AuditRecord]] = {}
+    problems: dict[str, str] = {}
+    for suffix, second in ((f"-{tag}", False), (f"-{tag}-second", True)):
+        record, path, why = _load_card_audit(cfg, slug, second=second, redraft=tag)
+        if record is not None:
+            records[suffix] = (path, record)
+        elif why is not None:
+            problems[suffix] = why
+    pub = CardPublication(slug, date, False, None, [], records, None, None, None, draft_text, tag)
+
+    def held(reason: str) -> CardPublication:
+        pub.reasons.append(reason)
+        return pub
+
+    attempt = last_attempt_tag(cfg, slug, tag)  # R3: the revised attempt when there is one
+    r = _load_round(cfg, slug, "", attempt)
+    if r is None:
+        return held("no correction recorded: there is no ops file")
+    applied_path = cfg.applied_dir(slug, None, attempt) / f"{slug}.yaml"
+    if applied_path.is_file():
+        pub.would_text = applied_path.read_text(encoding="utf-8")
+    if r.ops is None:
+        return held(f"correction failed checks: {r.ops_problem}")
+    if ops_problems := correction_ops_problems(r.ops, draft_card.level):
+        return held("correction failed checks: " + "; ".join(ops_problems))
+    if r.checks is None or not r.checks.get("passed"):
+        why = _check_failure_summary(r.checks) if r.checks is not None else "it was never applied (no check result)"
+        return held(f"correction failed checks: {why}")
+    if r.review is None:
+        return held("correction rejected in review: no review was recorded")
+    if r.review.verdict != "accept":
+        if attempt == tag:
+            pub.open_round = True
+            return held(f"correction rejected in review; the revised attempt is pending (round {tag} is not used yet)")
+        return held("correction rejected in review")
+    if not applied_path.is_file():
+        return held("correction failed checks: its applied text is missing")
+    try:
+        rederived = apply_operations(draft_text, r.ops, validate=False)
+    except OperationError as exc:
+        return held(f"correction failed checks: its operations do not apply to the draft: {exc}")
+    if rederived != pub.would_text:
+        return held("correction failed checks: its applied text does not match its operations")
+    if rederived == draft_text:
+        return held("correction failed checks: the correction changes nothing")
+    first = records.get(f"-{tag}", (None, None))[1]
+    second = records.get(f"-{tag}-second", (None, None))[1]
+    if reasons := _pair_hold_reasons(first, second, problems.get(f"-{tag}"), problems.get(f"-{tag}-second")):
+        pub.reasons += reasons
+        return pub
+    assert first is not None and second is not None
+    if first.decision == "accept_lower":
+        pub.would_level = first.accepted_level
+        return held(
+            f"the audits of the corrected draft agree on accept_lower (level {first.accepted_level}); "
+            "there is no further redraft after a correction"
+        )
+    text = _set_last_checked(rederived, date, "ai_audit")
+    pub.deciding = first
+    return _finish(cfg, pub, text)
+
+
 def _finish(cfg: Config, pub: CardPublication, text: str) -> CardPublication:
     """The audits agree: publish ``text`` unless it does not validate as a card in ``cards/``."""
     if issues := _published_card_problems(cfg, pub.slug, text):
@@ -3154,7 +3839,7 @@ def _publication_differences(pub: CardPublication) -> tuple[list[tuple[str, str,
     """The fields that differ between the draft and what is published (or, held back, what the audits give), and a
     note on where the second column comes from."""
     if pub.would_text is not None:
-        note = "what is published" if pub.published else "what the audits would give, from the redraft"
+        note = "what is published" if pub.published else "what the audits would give, from the redraft or correction"
         return _fact_differences(pub.draft_text, _card_facts(pub.would_text)), note
     if pub.would_level is not None:
         note = "the level the audits accept; the other fields would come from a redraft that does not exist"
@@ -3166,12 +3851,18 @@ def _publication_differences(pub: CardPublication) -> tuple[list[tuple[str, str,
 def _publication_report(pub: CardPublication) -> str:
     diffs, note = _publication_differences(pub)
     final = _card_facts(pub.text)["level"] if pub.text is not None else None
-    lines = [f"# First publication of {pub.slug}", ""]
+    after = f" after correction round {correction_number(pub.round_tag)}" if pub.round_tag else ""
+    lines = [f"# First publication of {pub.slug}{after}", ""]
     if pub.published:
         lines.append(f"Outcome: published at level {final} ({pub.date}).")
     else:
         lines.append("Outcome: held back. The draft stays in `drafts/`; no card is written.")
         lines += [f"Held back: {reason}" for reason in pub.reasons]
+        if pub.round_tag and not pub.open_round and correction_number(pub.round_tag) >= MAX_CORRECTION_ROUNDS:
+            lines.append(
+                f"Correction rounds used: {correction_number(pub.round_tag)} of {MAX_CORRECTION_ROUNDS}; "
+                "the card stays held back and is listed for the founder."
+            )
     lines += [
         "",
         "## Differences between the draft and what is published" if pub.published else "## What the audits would give",
@@ -3193,6 +3884,9 @@ def _publication_report(pub: CardPublication) -> str:
     lines += ["", "## The audits", ""]
     names = {"": "First audit", "-second": "Second audit", "-L": "First audit of the redraft"}
     names["-L-second"] = "Second audit of the redraft"
+    if pub.round_tag:
+        names[f"-{pub.round_tag}"] = "First audit of the corrected draft"
+        names[f"-{pub.round_tag}-second"] = "Second audit of the corrected draft"
     if not pub.records:
         lines.append("No valid audit record.")
     for suffix, (path, record) in pub.records.items():
@@ -3213,6 +3907,8 @@ def publication_changelog(cfg: Config, pub: CardPublication) -> tuple[Path, str]
     assert pub.published and pub.text is not None and pub.deciding is not None
     final = _card_facts(pub.text)
     change = f"First publication at level {final['level']}"
+    if pub.round_tag:
+        change += f" after correction round {correction_number(pub.round_tag)}"
     names = {"level": "level", "contested": "contested mark", "diagnostic_marker.value": "diagnostic_marker badge"}
     names["explains_pem.value"] = "explains_pem badge"
     for field_name, was, _now in _fact_differences(pub.draft_text, final):
@@ -3242,22 +3938,130 @@ def publication_changelog(cfg: Config, pub: CardPublication) -> tuple[Path, str]
     return path, text
 
 
-def run_publish_card(cfg: Config, slug: str, date: str, *, dry_run: bool, out: Callable[[str], None] = print) -> int:
+def _sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def correction_trail(cfg: Config, slug: str, tag: str, draft_bytes: bytes, answered: list[Path]) -> dict[str, Any]:
+    """The trail record of a correction round (A8): what the round answered and what it did, in the order of the
+    contract; the card, the round, the audit files it answered, the draft's sha256 before the correction, the
+    operations, the checks result and the review."""
+    ops_file = cfg.ops_path(slug, None, tag)
+    operations: Any = None
+    try:
+        raw = json.loads(ops_file.read_text(encoding="utf-8"))
+        operations = raw.get("operations") if isinstance(raw, dict) else None
+    except (OSError, ValueError):
+        operations = None
+    checks_file = cfg.checks_path(slug, None, tag)
+    checks: dict[str, Any] = {"passed": None, "errors": ["there is no checks record"]}
+    if checks_file.is_file():
+        try:
+            record = json.loads(checks_file.read_text(encoding="utf-8"))
+            checks = {"passed": bool(record.get("passed")), "errors": _check_error_lines(record)}
+        except (OSError, ValueError, AttributeError):
+            checks = {"passed": None, "errors": ["the checks record is not readable"]}
+    review: dict[str, Any] = {"verdict": None, "findings": []}
+    r = _load_round(cfg, slug, "", tag)
+    if r is not None and r.review is not None:
+        review = {"verdict": r.review.verdict, "findings": [f.model_dump(mode="json") for f in r.review.findings]}
+    return {
+        "card": slug,
+        "round": correction_number(tag),
+        "answered": [p.name for p in answered],
+        "draft_sha256": _sha256(draft_bytes),
+        "operations": operations,
+        "checks": checks,
+        "review": review,
+    }
+
+
+def run_publish_card(
+    cfg: Config,
+    slug: str,
+    date: str,
+    *,
+    dry_run: bool,
+    out: Callable[[str], None] = print,
+    round_: str | None = None,
+) -> int:
     """`publish-card`: decide, write ``publication-report.md`` and, when both audits allow it, move the draft into
-    ``cards/``. Exit 0 for a decision (published or held back), 1 for a refusal (nothing written)."""
+    ``cards/``. Exit 0 for a decision (published or held back), 1 for a refusal (nothing written).
+
+    With ``round_`` ``C<k>`` the decision is about the draft after that correction round, from the round's files; the
+    audit records and a trail record of the round are copied to ``audits/`` whatever the decision.
+    """
     card_path = cfg.cards_dir / f"{slug}.yaml"
     draft_path = cfg.drafts_dir / f"{slug}.yaml"
     if card_path.exists():
         raise PipelineError(f"{card_path} already exists; a card is published once")
     if not draft_path.is_file():
         raise PipelineError(f"no draft {draft_path} to publish")
-    pub = whole_card_outcome(cfg, slug, date)
-    copies = [(path, cfg.audits_dir / f"{date}-{slug}{suffix}.yaml") for suffix, (path, _record) in pub.records.items()]
+    answered: list[Path] = []
+    trails: list[tuple[Path, dict[str, Any]]] = []
+    if round_ is None:
+        pub = whole_card_outcome(cfg, slug, date)
+        copies = [
+            (path, cfg.audits_dir / f"{date}-{slug}{suffix}.yaml") for suffix, (path, _record) in pub.records.items()
+        ]
+    else:
+        if not is_correction_round(round_):
+            raise PipelineError(f"publish-card --round takes a correction round (C1, C2, ...), not {round_!r}")
+        k = correction_number(round_)
+        used, _open = correction_round_state(cfg, slug)
+        if k != used + 1 or k > MAX_CORRECTION_ROUNDS:
+            raise PipelineError(
+                f"correction round {round_} is not allowed: the next round is C{used + 1}, and a card gets at most "
+                f"{MAX_CORRECTION_ROUNDS} correction round(s)"
+            )
+        if not cfg.ops_path(slug, None, round_).is_file():
+            raise PipelineError(f"no correction recorded: {cfg.ops_path(slug, None, round_)} does not exist")
+        revised_tag = f"{round_}-revised"
+        has_revised = cfg.ops_path(slug, None, revised_tag).is_file()
+        if has_revised:
+            first_round = _load_round(cfg, slug, "", round_)
+            if first_round is None or first_round.review is None or first_round.review.verdict != "reject":
+                raise PipelineError(f"a revised attempt of round {round_} needs a first attempt rejected in review")
+            if problem := _draft_problem(cfg, slug, round_):
+                raise PipelineError(problem)
+        answered = [p for p in whole_card_audit_files(cfg, slug) if not re.search(rf"-C{k}(-second)?\.yaml$", p.name)]
+        pub = correction_outcome(cfg, slug, date, round_)
+        copies = [
+            (path, cfg.audits_dir / f"{date}-{slug}{suffix}.yaml") for suffix, (path, _record) in pub.records.items()
+        ]
+        draft_bytes = draft_path.read_bytes()
+        # R6: the first attempt's trail is written once; an existing one (any date) must say the same.
+        first_trail = correction_trail(cfg, slug, round_, draft_bytes, answered)
+        existing_first = [t for t in correction_trails(cfg, slug) if _trail_round(t) == k]
+        if existing_first:
+            earlier = yaml.safe_load(existing_first[0].read_text(encoding="utf-8"))
+            keys = ("card", "round", "draft_sha256", "operations")
+            same = isinstance(earlier, dict) and all(earlier.get(x) == first_trail[x] for x in keys)
+            same = same and (earlier.get("review") or {}).get("verdict") == first_trail["review"]["verdict"]
+            if not same:
+                raise PipelineError(
+                    f"{existing_first[0]} exists and differs from the first attempt in this run folder; "
+                    "an audit record is never overwritten"
+                )
+        else:
+            trails.append((cfg.audits_dir / f"{date}-{slug}-{round_}-correction.yaml", first_trail))
+        if has_revised:
+            if existing := [t for t in _revised_trails(cfg, slug) if _trail_round(t) == k]:
+                raise PipelineError(f"{existing[0]} already exists; an audit record is never overwritten")
+            trails.append(
+                (
+                    cfg.audits_dir / f"{date}-{slug}-{round_}-correction-revised.yaml",
+                    correction_trail(cfg, slug, revised_tag, draft_bytes, answered),
+                )
+            )
     changelog = publication_changelog(cfg, pub) if pub.published else None
+    targets = [dest for _src, dest in copies] + [dest for dest, _data in trails]
     if not dry_run:
-        for _src, dest in copies:
+        for dest in targets:
             if dest.exists():
                 raise PipelineError(f"{dest} already exists; an audit record is never overwritten")
+    if round_ is None and (refusal := _first_publication_refusal(cfg, slug)) is not None:
+        raise PipelineError(refusal)
     report = _publication_report(pub)
     _write_text(cfg.f(PUBLICATION_REPORT), report)
     out(report.rstrip("\n"))
@@ -3272,6 +4076,8 @@ def run_publish_card(cfg: Config, slug: str, date: str, *, dry_run: bool, out: C
     for src, dest in copies:
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, dest)
+    for dest, data in trails:
+        _write_text(dest, yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=100))
     out(f"The commit must end with the trailer: {pipeline_marker(date)}")
     return 0
 
@@ -3367,12 +4173,22 @@ def _date(text: str) -> dt.date:
 
 
 def _round_arg(text: str) -> int | str:
-    """A round on the command line: 1, 2, or L (the one redraft after an accept_lower)."""
+    """A round on the command line: 1, 2, L (the one redraft after an accept_lower) or C<k> (a correction round)."""
     if text.upper() == REDRAFT:
         return REDRAFT
     if text in ("1", "2"):
         return int(text)
-    raise argparse.ArgumentTypeError(f"{text!r} is not a round: use 1, 2 or {REDRAFT}")
+    if is_correction_round(text.upper()):
+        return text.upper()
+    raise argparse.ArgumentTypeError(f"{text!r} is not a round: use 1, 2, {REDRAFT} or C1, C2, ...")
+
+
+def _audit_round_arg(text: str) -> str:
+    """A round of an audit: L or C<k>."""
+    value = _round_arg(text)
+    if not isinstance(value, str):
+        raise argparse.ArgumentTypeError(f"{text!r} is not a round of an audit: use {REDRAFT} or C1, C2, ...")
+    return value
 
 
 def _pmid_arg(text: str) -> str:
@@ -3432,8 +4248,15 @@ def _build_parser() -> argparse.ArgumentParser:
     app = sub.add_parser("apply", parents=[common], help="apply an operations file to a copy of the card and check it")
     app.add_argument("slug")
     app.add_argument("ops", type=Path)
-    app.add_argument("--round", type=_round_arg, default=1, help="1, 2, or L (the redraft after accept_lower)")
+    app.add_argument(
+        "--round", type=_round_arg, default=1, help="1, 2, L (the redraft after accept_lower) or C<k> (a correction)"
+    )
     app.add_argument("--audit", type=Path, help="with --round L for a whole card: the first audit's record")
+    app.add_argument(
+        "--revised",
+        action="store_true",
+        help="with --round C<k>: the one revised attempt after the reviewer rejected the first attempt",
+    )
 
     rev = sub.add_parser("record-review", parents=[common], help="validate a review file")
     rev.add_argument("slug")
@@ -3443,7 +4266,10 @@ def _build_parser() -> argparse.ArgumentParser:
         metavar="paper",
         help="a PMID, pmid:<pmid>, doi:<doi> or a PPR id (a DOI-only preprint); left out for a whole-card redraft",
     )
-    rev.add_argument("--round", type=_round_arg, default=1, help="1, 2, or L (the redraft after accept_lower)")
+    rev.add_argument(
+        "--round", type=_round_arg, default=1, help="1, 2, L (the redraft after accept_lower) or C<k> (a correction)"
+    )
+    rev.add_argument("--revised", action="store_true", help="with --round C<k>: the review of the revised attempt")
 
     aplan = sub.add_parser(
         "audit-plan", parents=[common], help="write the auditor's context file for one change or one whole card"
@@ -3453,7 +4279,9 @@ def _build_parser() -> argparse.ArgumentParser:
     aplan.add_argument("--card", metavar="SLUG", help="audit the whole card instead of one change")
     aplan.add_argument("--out", type=Path, help="with --card: write <OUT>/audit-context/<slug>.md (default: the run)")
     aplan.add_argument(
-        "--round", choices=[REDRAFT], help="L: audit the redraft after an accept_lower (a fresh context)"
+        "--round",
+        type=_audit_round_arg,
+        help="L: audit the redraft after an accept_lower; C<k>: audit the corrected draft (with --card)",
     )
 
     arec = sub.add_parser("record-audit", parents=[common], help="validate an audit record")
@@ -3463,7 +4291,16 @@ def _build_parser() -> argparse.ArgumentParser:
     arec.add_argument("--file", type=Path, help="with --card: the record the auditor wrote")
     arec.add_argument("--second", action="store_true", help="the consistency run (audit/<slug>-<key>-second.yaml)")
     arec.add_argument("--out", type=Path, help="with --card: the folder audit-plan --out wrote to")
-    arec.add_argument("--round", choices=[REDRAFT], help="L: the audit of the redraft after an accept_lower")
+    arec.add_argument(
+        "--round",
+        type=_audit_round_arg,
+        help="L: the audit of the redraft after an accept_lower; C<k>: of a correction",
+    )
+    arec.add_argument(
+        "--retry",
+        action="store_true",
+        help="validate the one format retry of a record that failed validation (the decision may not change)",
+    )
 
     rplan = sub.add_parser(
         "redraft-plan",
@@ -3475,6 +4312,14 @@ def _build_parser() -> argparse.ArgumentParser:
     rplan.add_argument("--card", metavar="SLUG", help="redraft a whole card (needs --audit)")
     rplan.add_argument("--audit", type=Path, help="with --card: the first audit's record (accept_lower)")
     rplan.add_argument("--out", type=Path, help="with --card: write <OUT>/redraft-context/<slug>.md (default: the run)")
+
+    cplan = sub.add_parser(
+        "correction-plan",
+        parents=[common],
+        help="write the drafter's context for the correction of a held-back draft (--out DIR)",
+    )
+    cplan.add_argument("slug")
+    cplan.add_argument("--out", type=Path, help="write <OUT>/correction-context/<slug>-C<k>.md (default: --run-dir)")
 
     asam = sub.add_parser("audit-sample", parents=[common], help="choose the pairs that need a second audit")
     asam.add_argument("--seed", help="default: the run date (YYYY-MM-DD)")
@@ -3500,6 +4345,11 @@ def _build_parser() -> argparse.ArgumentParser:
     pc.add_argument("slug")
     pc.add_argument("--date", type=_date, metavar="YYYY-MM-DD", help="default: today")
     pc.add_argument("--dry-run", action="store_true", help="write only DIR/publication-report.md")
+    pc.add_argument(
+        "--round",
+        type=_round_arg,
+        help="C<k>: publish (or hold back) after correction round C<k>, from that round's files",
+    )
 
     cp = sub.add_parser(
         "content-paths",
@@ -3553,6 +4403,15 @@ def live_preprint_search(cache_dir: Path) -> PreprintSearch:
     return search
 
 
+def _use_utf8_console() -> None:
+    """B1: the printed reports hold characters (β, ≥) that a cp1252 console cannot write; write UTF-8 instead."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            with contextlib.suppress(OSError, ValueError):
+                reconfigure(encoding="utf-8", errors="replace")
+
+
 def main(
     argv: Sequence[str] | None = None,
     *,
@@ -3565,6 +4424,7 @@ def main(
 ) -> int:
     """Entry point. The fetch, the preprint search, the full-text loader and the subprocess runner are given by
     tests."""
+    _use_utf8_console()
     args = _build_parser().parse_args(argv)
     date: dt.date | None = None
     try:
@@ -3578,6 +4438,10 @@ def main(
                 raise PipelineError("publish-card needs --run-dir DIR (the folder audit-plan --card --out made)")
             date = args.date or today or dt.date.today()
             run_dir = args.run_dir
+        elif args.command == "correction-plan":
+            if not (args.out or args.run_dir):
+                raise PipelineError("correction-plan needs --out DIR")
+            run_dir = args.out or args.run_dir
         elif (
             args.command in ("audit-plan", "record-audit", "redraft-plan")
             and args.card
@@ -3660,7 +4524,7 @@ def _dispatch(
         out(str(path))
         return 0
     if args.command == "apply":
-        result = apply_ops_file(cfg, args.slug, args.ops, args.round, audit_file=args.audit)
+        result = apply_ops_file(cfg, args.slug, args.ops, args.round, audit_file=args.audit, revised=args.revised)
         for line in result["ops_errors"]:
             out(f"operations error: {line}")
         for line in result["validator"]:
@@ -3673,7 +4537,7 @@ def _dispatch(
         for row in result["citations"]:
             if row["level"] == citations.ERROR and row["preexisting"]:
                 out(f"citations (already on the card, not blocking): {row['study']}: {row['code']}: {row['message']}")
-        out(f"checks: {cfg.checks_path(args.slug, result['key'] or None, args.round)}")
+        out(f"checks: {cfg.checks_path(args.slug, result['key'] or None, result['round'])}")
         if result["passed"]:
             out("PASSED" + (" (no change proposed)" if result["no_change"] else f"; applied card: {result['applied']}"))
             return 0
@@ -3681,12 +4545,17 @@ def _dispatch(
         return 1
     if args.command == "record-review":
         if args.pmid is None:
-            if args.round != REDRAFT:
-                raise PipelineError("name the paper (a whole-card review exists only for the redraft, --round L)")
+            if args.round != REDRAFT and not is_correction_round(args.round):
+                raise PipelineError(
+                    "name the paper (a whole-card review exists only for the redraft, --round L, and for a "
+                    "correction, --round C<k>)"
+                )
             key = None
         else:
             key, _paper = resolve_paper(cfg, args.pmid)
-        review = record_review(cfg, args.slug, key, args.round)
+        if args.revised and not is_correction_round(args.round):
+            raise PipelineError("--revised is only for a correction round (--round C<k>)")
+        review = record_review(cfg, args.slug, key, f"{args.round}-revised" if args.revised else args.round)
         out(f"review recorded: {review.verdict}, {len(review.findings)} finding(s)")
         return 0
     if args.command == "audit-plan":
@@ -3694,11 +4563,18 @@ def _dispatch(
         if args.card:
             if args.slug or args.pmid:
                 raise PipelineError("give either <slug> <paper> or --card <slug>, not both")
+            if is_correction_round(args.round):
+                out(str(audit_plan_correction(cfg, args.card, args.round, loader, args.out)))
+                return 0
+            if not args.round and (refusal := _first_publication_refusal(cfg, args.card)) is not None:
+                raise PipelineError(refusal)
             text = build_audit_context(cfg, args.card, None, loader, redraft=bool(args.round))
             path = (args.out or cfg.run_dir) / "audit-context" / f"{args.card}{'-L' if args.round else ''}.md"
         else:
             if not (args.slug and args.pmid):
                 raise PipelineError("give <slug> <paper>, or --card <slug>")
+            if is_correction_round(args.round):
+                raise PipelineError("a correction round is audited for a whole card only: use --card <slug>")
             key, _paper = resolve_paper(cfg, args.pmid)
             text = build_audit_context(cfg, args.slug, key, loader, redraft=bool(args.round))
             path = cfg.audit_context_path(args.slug, key, bool(args.round))
@@ -3710,13 +4586,24 @@ def _dispatch(
             if args.slug or args.pmid:
                 raise PipelineError("give either <slug> <paper> or --card <slug> --file PATH, not both")
             record = record_audit(
-                cfg, args.card, None, second=args.second, file=args.file, out_dir=args.out, redraft=bool(args.round)
+                cfg,
+                args.card,
+                None,
+                second=args.second,
+                file=args.file,
+                out_dir=args.out,
+                redraft=args.round or False,
+                retry=args.retry,
             )
         else:
             if not (args.slug and args.pmid):
                 raise PipelineError("give <slug> <paper>, or --card <slug> --file PATH")
+            if is_correction_round(args.round):
+                raise PipelineError("a correction round is audited for a whole card only: use --card <slug>")
             key, _paper = resolve_paper(cfg, args.pmid)
-            record = record_audit(cfg, args.slug, key, second=args.second, file=args.file, redraft=bool(args.round))
+            record = record_audit(
+                cfg, args.slug, key, second=args.second, file=args.file, redraft=args.round or False, retry=args.retry
+            )
         level = f" (accepted level {record.accepted_level})" if record.accepted_level is not None else ""
         out(f"audit recorded: {record.decision}{level}, {len(record.parts)} part(s)")
         return 0
@@ -3733,9 +4620,13 @@ def _dispatch(
             path = redraft_plan(cfg, args.slug, key, loader)
         out(str(path))
         return 0
+    if args.command == "correction-plan":
+        loader = fulltext or live_fulltext_loader(cfg.cache_dir)
+        out(str(correction_plan(cfg, args.slug, loader)))
+        return 0
     if args.command == "publish-card":
         assert date is not None
-        return run_publish_card(cfg, args.slug, date.isoformat(), dry_run=args.dry_run, out=out)
+        return run_publish_card(cfg, args.slug, date.isoformat(), dry_run=args.dry_run, out=out, round_=args.round)
     if args.command == "audit-sample":
         sample = audit_sample(cfg, args.seed)
         out(

@@ -253,7 +253,7 @@ def test_the_differences_list_every_changed_field_and_nothing_else(pub: Pub):
 def test_a_reject_holds_the_card_back_and_still_copies_the_records(pub: Pub):
     pub.audits_of_card(whole("reject"), whole("reject"))
     assert pub.publish() == 0
-    pub.assert_held_back("the audit decided reject")
+    pub.assert_held_back("both audits decided reject")
     assert pub.audit_names() == [f"{PUB_DATE}-{SLUG}-second.yaml", f"{PUB_DATE}-{SLUG}.yaml"]
     assert "the audits give no card text" in pub.report()
 

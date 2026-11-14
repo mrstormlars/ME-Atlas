@@ -138,3 +138,26 @@
   - pmid:26667000
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-14
+  card: reduced-nk-cell-function
+  change: First publication at level 3 after correction round 1
+  reason: Level 3 holds on independent Australian (Fukuda) and Miami (CDC) controlled studies; rung 3
+    is correctly contested by a comparable CCC study; both badges no, layer dysfunction and two proposed
+    links match their sources.
+  sources:
+  - pmid:27099524
+  - pmid:20520837
+  - pmid:21619669
+  - pmid:22571715
+  - pmid:28694809
+  - pmid:7983659
+  - pmid:37013608
+  - pmid:8985207
+  - pmid:9683556
+  - pmid:8148445
+  - pmid:33777500
+  - pmid:24068616
+  - pmid:38970055
+  - pmid:7476598
+  tier: 2
+  decided_by: ai_audit

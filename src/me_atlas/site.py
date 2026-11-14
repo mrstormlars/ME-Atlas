@@ -781,7 +781,7 @@ def _gaps_view(
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:
     out = [f"[{code}] {m}" for m in check.errors]
     out += [
-        f"[{code}] {slug}: {r.locator} is stale (the English text changed after it was translated)"
+        f"[{code}] {slug}: {r.locator} is stale ({r.problems[0] if r.problems else translations.STALE_TEXT})"
         for r in check.of("stale")
     ]
     out += [f"[{code}] {slug}: {r.locator} left out: {p}" for r in check.of("invalid") for p in r.problems]

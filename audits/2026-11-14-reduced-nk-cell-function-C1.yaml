@@ -1,0 +1,110 @@
+card: reduced-nk-cell-function
+decision: accept
+parts:
+  - decision_part: "The level 3: a controlled Fukuda study from the Griffith University group and a controlled CDC-criteria study from a Miami group with no shared authors, in separate cohorts, both found lower NK cell killing in patients than in controls."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:27099524
+        quote: "ME/CFS patients had a significant reduction in NK percentage lysis of target cells (17%±4.68%) compared with the unfatigued control group (31%±6.78%)."
+      - source: pmid:27099524
+        quote: "School of Medical Science, Menzies Health Institute Queensland, Griffith University, Gold Coast, QLD, Australia"
+      - source: pmid:20520837
+        quote: "Cytotoxic function of NK cells for 176 CFS subjects was significantly lower than in the 230 controls."
+      - source: pmid:20520837
+        quote: "Department of Medicine, University of Miami Miller School of Medicine, Miami, Florida, United States of America"
+  - decision_part: "The case definitions behind the level: 1994 CDC (Fukuda) for the Australian studies and CDC criteria with no version named for the Miami study, both ranked equal to Fukuda and recorded with the sentence they were read from."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:27099524
+        quote: "Patients were defined according to the 1994 Centers for Disease Control and Prevention criteria."
+      - source: pmid:20520837
+        quote: "Chronic fatigue syndrome patients (age 18 to 60, mean age 44; 83% female) were drawn from the University of Miami Miller School of Medicine CFS and Immunodeficiency Clinic after they were diagnosed with CFS using the CDC clinical diagnostic criteria [1], [2] (Table 1)."
+      - source: pmid:21619669
+        quote: "Participants for the present project were grouped into CFS/ME, or non-fatigued control groups based on the CDC 1994 case definition symptom criteria."
+      - source: pmid:22571715
+        quote: "The CFS/ME group met the 1994 CDC criteria for CFS/ME and the control group consisted of non-fatigued volunteers."
+  - decision_part: "The contested mark on rung 3: the Canadian Consensus Criteria study (stricter definition, controls, NK killing measured in 24 plus 15 patients) found no difference and is of comparable quality to the 39-patient and 65-patient Australian studies, though not to the 176-patient Miami study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:28694809
+        quote: "Forty-eight patients from two independent cohorts fulfilling the Canada 2003 criteria for ME/CFS were evaluated with respect to cytotoxic lymphocyte phenotype and function."
+      - source: pmid:28694809
+        quote: "Killing by NK cells from ME/CFS and healthy controls was similar at the examined effector to target ratios (Figure 2C)."
+      - source: pmid:28694809
+        quote: "24 patients and 28 controls for the Stockholm substudy and, 22 patients and 24 controls [15 patients and 16 controls for (E,F)] for the Oslo substudy, are included in the analyses."
+      - source: pmid:28694809
+        quote: "An identical experiment with 15 and 16 of the Oslo patients and controls, respectively, was also performed."
+      - source: pmid:22571715
+        quote: "The participants in the study comprised 65 (47.2 ± 11.5 years) CFS/ME participants and 21 (45.2 ± 9.3 years) non-fatigued controls."
+  - decision_part: "Which studies rung 3 needs: the 95-patient Australian study has the Miami last author as a co-author, so it is not cleanly independent of the Miami study, and the 65-patient study draws on an existing Australian cohort; rung 3 therefore needs a study that the Canadian Consensus Criteria study contradicts, while rung 2 rests on the uncontradicted Miami study."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:21619669
+        quote: "Critically reviewed paper: SMMG, KJA, MVD, DRS, NGK."
+      - source: pmid:21619669
+        quote: "Miami Veterans Affairs Medical Center, Miami, FL, USA"
+      - source: pmid:20520837
+        quote: "Wrote the paper: MAAF NGK."
+      - source: pmid:22571715
+        quote: "Participants for this study were comprised of CFS/ME patients and non-fatigued controls recruited from an existing cohort in Queensland and New South Wales, Australia [25]."
+  - decision_part: "The other studies that found no difference: the 21-patient CDC-criteria study counts on the contradicting side, while the multi-site study and the 1997 case-control study name no case definition and are correctly kept as context only."
+    rubric: "Without one we cannot tell whether the patients had ME/CFS."
+    evidence:
+      - source: pmid:7983659
+        quote: "Twenty-one patients fulfilling the Centers for Disease Control criteria for CFS were compared to 21 age and sex matched controls."
+      - source: pmid:7983659
+        quote: "All other variables were similar in the 2 groups."
+      - source: pmid:37013608
+        quote: "The MCAM study enrolled participants from five specialty clinical sites located in the United States based on expert clinician diagnoses"
+      - source: pmid:37013608
+        quote: "no statistically significant differences between patients with ME/CFS and HC (p-value = 0.79)"
+      - source: pmid:8985207
+        quote: "In this study, no differences were found in white blood cell numbers; immune complex, complement, or serum immunoglobulin levels; delayed type hypersensitivity and allergic responses; NK cell function; and proliferative responses to mitogens and antigens."
+  - decision_part: "The two small supporting studies, described as small and without full text, whose card statements match their abstracts."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:9683556
+        quote: "NK activity of the affected immediate family members (cases, n = 8) was significantly lower (P = 0.006, two-sided) than that of the concurrently tested normal controls."
+      - source: pmid:8148445
+        quote: "In none of the 20 patients with CFIDS was the NK cell activity > 100 LU."
+  - decision_part: "The diagnostic marker badge set to no: NK killing predicted CFS status only within one cohort, and the independent tests concluded it was not a useful or ready diagnostic marker."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:20520837
+        quote: "According to ROC analysis, NKCC was a good predictor of CFS status."
+      - source: pmid:28694809
+        quote: "These assessments of cytotoxic lymphocytes therefore do not provide useful biomarkers for the diagnosis of ME/CFS."
+      - source: pmid:37013608
+        quote: "These results indicate this assay is not ready for clinical implementation"
+      - source: pmid:33777500
+        quote: "ROC tests indicated unsuitability of ADCC as a biomarker for CFS because of the low ADCC of family members without CFS."
+  - decision_part: "The explains PEM badge set to no: no study on the card measures post-exertional malaise directly; the 65-patient study only lists a self-reported symptom."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:22571715
+        quote: "Weakness >24 hours after exercise 93.8 9.5"
+      - source: pmid:28694809
+        quote: "A central feature of ME/CFS is post-exertional exhaustion (4, 58)."
+  - decision_part: "The layer: measurable dysfunction, since the card is about a measured loss of NK cell killing in blood."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:20520837
+        quote: "NK cell function was measured with a bioassay, using K562 cells and (51)Cr release."
+  - decision_part: "The proposed link to autoimmunity-autoantibodies-b-cells, sourced to two reviews that state reduced NK function or NK TRPM3 dysfunction as a route to autoimmunity."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:24068616
+        quote: "Here we review the potential sources of autoimmunity which are observed in people with ME/cfs."
+      - source: pmid:24068616
+        quote: "The common observation of reduced natural killer cell function in ME/cfs is a source of disrupted homeostasis and prolonged effector T cell survival."
+      - source: pmid:38970055
+        quote: "Dysfunction of TRPM3 in natural killer (NK) cells, characterized by reduced calcium flux, has been observed in ME/CFS and PCS patients, suggesting a role in ineffective pathogen clearance and potential virus persistence and autoimmunity development."
+  - decision_part: "The proposed link to herpesvirus-reactivation, sourced to a 1995 hypothesis paper that states NK function is important in preventing herpesvirus reactivation."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:7476598
+        quote: "The function of cytotoxic T cells, T helper cells, and NK cells is important in preventing reactivation of infections from Epstein-Barr virus, cytomegalovirus, and other herpesviruses."
+      - source: pmid:7476598
+        quote: "Reactivation of one or more of these viruses could lead to the expression of the flu-like symptoms in the CFS."
+reasons_summary: "Level 3 holds on independent Australian (Fukuda) and Miami (CDC) controlled studies; rung 3 is correctly contested by a comparable CCC study; both badges no, layer dysfunction and two proposed links match their sources."
+would_change: "A comparable-quality study (same or stricter case definition, controls, at least 88 patients measured) that finds no difference would contest rung 2 as well; a study of at least 48 patients measured that contradicts the 95-patient study, or a showing that the Miami and Australian groups share the cohort, would change the level or the contested mark. A study validating NK killing as a marker in a second independent cohort with a stated case definition would change the diagnostic badge, and a level-2 study measuring PEM directly and linking it to NK function would change the PEM badge. The statements on studies without cached full text (pmid:8148445, pmid:9683556, pmid:7983659, pmid:33777500, pmid:8985207, pmid:16731230) were checked only against their abstracts; none of the level, badges or contested mark depends on a statement outside those abstracts. If the journal of pmid:7476598 is shown not to have used peer review for that paper, the herpesvirus link would lack a peer-reviewed source and should be removed. I was not handed any drafting, review or earlier audit reasoning."

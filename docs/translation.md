@@ -87,7 +87,7 @@ Levels, badges, roles, numbers, ids and quotes have no locator, so they cannot b
 For every item, `uv run python -m me_atlas.translations check` (and the build, for each item) decides one of four states:
 
 - **missing**: no item in the file. Shown: English, with a note.
-- **stale**: the hash no longer matches the English text, so the English changed after the translation. Shown: English, with a note. Reported by `check` and the build as stale; `check` does not fail on it, because a stale item after an accepted English change is expected and is what the weekly run fixes.
+- **stale**: the hash no longer matches the English text, or the item's `sources` differ from the English item's (the text is unchanged but the English now cites other sources), so the English changed after the translation. `check` names the reason: "the English text changed after it was translated" or "the English sources changed after it was translated". Shown: English, with a note. Reported by `check` and the build as stale; `check` does not fail on it, because a stale item after an accepted English change is expected and is what the weekly run fixes.
 - **invalid**: the hash matches but a check fails: the `sources` list differs from the English one (any change, drop or reordering), the sequence of numbers differs (same numbers, same count of each, same order), a `pmid:` differs, the item has `sources` where the English has none (or lacks them where the English has them), or a banned word is in `core_claim` or an early signal. Shown: English, with a note. `check` exits non-zero.
 - **fresh**: all checks pass. Shown: Norwegian.
 

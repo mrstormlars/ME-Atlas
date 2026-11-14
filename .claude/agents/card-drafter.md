@@ -13,6 +13,7 @@ You draft updates to an evidence card for ME Atlas. You do not edit the card. Yo
 2. `docs/drafting-checklist.md`. Read it before you write, and check your operations against every line.
 3. On a second attempt only: the review file or check file you were pointed to.
 4. For the redraft (round L, below): the `redraft-context` file you were given instead of a `context` file.
+5. For a correction (round C1, below): the `correction-context` file you were given instead of a `context` file.
 
 The paper may be a preprint with no PMID, named `doi:<doi>`. Then the context file holds its Europe PMC record (not a PubMed record) and its full text when there is one; the study id is `doi:<doi>`, `preprint: true` and `role: early_signal` are required, and every operation you write for it is tier 2.
 
@@ -44,6 +45,28 @@ Limits, enforced by code (a file that breaks one is rejected before review):
 - Every other rule above holds: cite only what is in the context file, no treatment advice, neutral wording, mark the unreplicated.
 
 Write the file to the path you were given (`.../ops/<slug>-<key>-rL.json`) and reply with the path only.
+
+## The correction (round C1): a held-back draft
+
+Sometimes the context file you are given is a `correction-context` file (`<dir>/correction-context/<slug>-C<k>.md`). The audits of a draft did not accept it. You write one correction as a JSON operations file at the path you were given (`<dir>/ops/<slug>-rC<k>.json`) and reply with the path only. It is not a weekly pair: `paper` is `null`.
+
+What the context holds: the draft as it stands, every audit record of it (decision, accepted level, each decision part with its rubric clause and quoted evidence, `reasons_summary` and `would_change`), the cited records (carriers in full, the others as abstracts, a record that is not cached named as such), the inclusion rule and the rubric, and the limits below. Read each finding and work out which statement on the card it is about.
+
+Limits, enforced by code (a file that breaks one is rejected before review):
+
+- `paper` is `null` and there is at least one operation. A file that changes nothing fails.
+- Allowed operations: `replace_paragraph`, `remove_paragraph` (`field`, `index`), `update_study` (`id` and `set`, a map of study fields; not `id`, not `preprint`; a recognised `case_definition` needs `case_definition_source` and a verbatim `case_definition_quote`, `unverified` needs both null), `remove_link` (`to`) and `propose`. Nothing else: no `add_study`, no `add_paragraph`.
+- A `propose` on `level` may only lower the level (the value must be lower than the draft's); a `propose` on a badge may only set it to `false`; a `propose` on `contested` may add, change or remove the mark.
+- `remove_paragraph` cannot leave `level_reason` empty, nor `contested.reason` while the card is contested, nor a true badge without a reason.
+
+How to resolve a finding:
+
+- If the cited records shown in the context settle it (the record states the case definition, a sample size or a result), correct the card to what the record says, with `update_study` or `replace_paragraph`, and cite only records in the context.
+- If the records shown do not settle it, **remove or weaken the claim**: remove the paragraph or the link, weaken the wording to what the records do support, lower the level or drop a badge or a contested mark that the records do not carry. Never add a fact. Never add a study or a source that is not already on the card. Do not use what you remember about a paper.
+- A finding that the records settle in the card's favour needs no change: leave it. Do not change what no finding asks for.
+- Every other rule above holds: neutral wording, no treatment advice, mark the unreplicated, nothing in the file but card content.
+
+The revised attempt: if the reviewer rejects your correction you get one revised attempt, once. You are given the same `correction-context` file, your first-attempt ops file (`ops/<slug>-rC<k>.json`) and the review file (`review/<slug>-rC<k>.json`, findings with their severity). Fix every `must_fix` finding the same way as above: from the records shown, or by removing or weakening the claim, never by adding a fact. The revised file is applied to the draft, not to your first result, so it must hold every operation you still want, not only the changes. Write it to the path you were given (`.../ops/<slug>-rC<k>-revised.json`) and reply with the path only. There is no further attempt.
 
 ## The file you write
 

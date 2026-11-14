@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pytest
 import yaml
+from pydantic import ValidationError
 
 from me_atlas import cards as cardlib
 from me_atlas import translations as tr
@@ -147,26 +148,52 @@ def invalid(card, locator: str, **changes) -> tuple[str, ...]:
     return result.items[locator].problems
 
 
-def test_a_changed_sources_list_is_invalid(card):
-    problems = invalid(card, "core_claim", sources=["pmid:00000002"])
-    assert any("sources" in p and "differ" in p for p in problems)
+def sources_problems(card, locator: str, **changes) -> tuple[list[str], tr.ItemResult]:
+    """Change the sources of one translated item (keeping its hash): what `check_item` says, and the card check."""
+    side = sidecar_for(card)
+    item = side.items[locator].model_copy(update=changes)
+    side.items[locator] = item
+    en = tr.english_items(card)[locator]
+    return tr.check_item(en, item, "nb"), tr.check_card(card, side, "nb").items[locator]
 
 
-def test_a_dropped_source_is_invalid(card):
-    assert any("sources" in p for p in invalid(card, "level_reason[0]", sources=["pmid:00000001"]))
+def test_a_changed_sources_list_makes_the_item_stale_with_its_own_reason(card):
+    problems, result = sources_problems(card, "core_claim", sources=["pmid:00000002"])
+    assert any("sources" in p and "differ" in p for p in problems)  # the guard of `apply` is unchanged
+    assert result.status == "stale" and result.problems == (tr.STALE_SOURCES,)
 
 
-def test_a_source_list_in_another_order_is_invalid(card):
-    assert any("sources" in p for p in invalid(card, "level_reason[0]", sources=["pmid:00000002", "pmid:00000001"]))
+def test_a_dropped_source_is_stale(card):
+    problems, result = sources_problems(card, "level_reason[0]", sources=["pmid:00000001"])
+    assert any("sources" in p for p in problems) and result.status == "stale"
 
 
-def test_missing_sources_on_a_sourced_item_are_invalid(card):
-    assert any("'sources' is missing" in p for p in invalid(card, "core_claim", sources=None))
+def test_a_source_list_in_another_order_is_stale(card):
+    problems, result = sources_problems(card, "level_reason[0]", sources=["pmid:00000002", "pmid:00000001"])
+    assert any("sources" in p for p in problems) and result.status == "stale"
 
 
-def test_sources_on_an_item_that_has_none_are_an_extra_field(card):
-    problems = invalid(card, "name", sources=["pmid:00000001"])
-    assert any("has none on the English card" in p for p in problems)
+def test_missing_sources_on_a_sourced_item_are_stale(card):
+    problems, result = sources_problems(card, "core_claim", sources=None)
+    assert any("'sources' is missing" in p for p in problems) and result.status == "stale"
+
+
+def test_sources_on_an_item_that_has_none_are_stale(card):
+    problems, result = sources_problems(card, "name", sources=["pmid:00000001"])
+    assert any("has none on the English card" in p for p in problems) and result.status == "stale"
+
+
+def test_equal_sources_leave_the_item_fresh_and_a_stale_text_keeps_its_own_reason(card):
+    side = sidecar_for(card)
+    assert tr.check_card(card, side, "nb").items["core_claim"].status == "fresh"
+    side.items["core_claim"] = side.items["core_claim"].model_copy(update={"source_hash": "d" * 64})
+    result = tr.check_card(card, side, "nb").items["core_claim"]
+    assert result.status == "stale" and result.problems == ()
+
+
+def test_a_finding_has_no_sources_so_a_wrong_number_is_still_invalid(card):
+    _problems, result = sources_problems(card, "studies[pmid:00000001].finding", text="NB n=99 pasienter.")
+    assert result.status == "invalid"  # no sources on a finding: the number check still applies
 
 
 def test_a_number_added_is_invalid(card):
@@ -614,14 +641,24 @@ def test_check_fails_on_a_changed_number_and_names_the_item(project, capsys):
     assert "studies[pmid:00000001].finding" in err and "numbers differ" in err and "FAILED" in err
 
 
-def test_check_fails_on_changed_sources_a_wrong_pmid_and_an_extra_item(project, capsys):
+def test_check_reports_changed_sources_as_stale_and_still_fails_on_an_extra_item(project, capsys):
     side = sidecar_for(project.card)
     side.items["core_claim"] = side.items["core_claim"].model_copy(update={"sources": ["pmid:00000002"]})
     side.items["subgroups[3]"] = side.items["subgroups[0]"]
     project.put(side)
     assert project.run("check") == 1
-    err = capsys.readouterr().err
-    assert "core_claim" in err and "sources" in err and "subgroups[3]" in err
+    captured = capsys.readouterr()
+    assert f"stale: nb: {SLUG}: core_claim (the English sources changed after it was translated)" in captured.out
+    assert "subgroups[3]" in captured.err
+
+
+def test_check_does_not_fail_on_changed_sources_alone(project, capsys):
+    side = sidecar_for(project.card)
+    side.items["core_claim"] = side.items["core_claim"].model_copy(update={"sources": ["pmid:00000002"]})
+    project.put(side)
+    assert project.run("check") == 0
+    out = capsys.readouterr().out
+    assert "(the English sources changed after it was translated)" in out and "OK:" in out
 
 
 def test_check_reports_a_stale_item_without_failing(project, capsys):
@@ -898,8 +935,9 @@ def test_a_link_translation_whose_numbers_differ_is_reported_as_invalid(tmp_path
     assert any("numbers differ" in p for p in problems)
 
 
-def test_a_link_translation_with_other_sources_is_invalid(tmp_path):
-    assert any("sources" in p for p in invalid(card_with_links(tmp_path), "links[1]", sources=["pmid:00000001"]))
+def test_a_link_translation_with_other_sources_is_stale(tmp_path):
+    problems, result = sources_problems(card_with_links(tmp_path), "links[1]", sources=["pmid:00000001"])
+    assert any("sources" in p for p in problems) and result.status == "stale"
 
 
 def test_a_fresh_link_translation_is_used_and_a_missing_one_falls_back(tmp_path):
@@ -920,3 +958,19 @@ def test_a_stale_link_translation_is_stale_when_the_english_text_changes(tmp_pat
     changed["links"] = [card.links[0].model_dump(), {**card.links[1].model_dump(), "text": "A changed link."}]
     result = tr.check_card(load_card_from(changed, tmp_path), side, "nb")
     assert status(result, "links[1]") == "stale" and status(result, "links[0]") == "fresh"
+
+
+def test_a_translator_cannot_supply_sources_and_check_item_still_rejects_other_sources(project, tmp_path):
+    # `translations apply` takes the sources from the English card; a translated file with its own is malformed
+    with pytest.raises(ValidationError):
+        tr.TranslatedFile.model_validate(
+            {"slug": SLUG, "lang": "nb", "items": [{"item": "core_claim", "text": "x", "sources": ["pmid:00000002"]}]}
+        )
+    en = tr.english_items(project.card)["core_claim"]
+    bad = tr.TItem(text="NB " + en.text, source_hash=tr.text_hash(en.text), sources=["pmid:00000002"])
+    assert any("differ from the English" in p for p in tr.check_item(en, bad, "nb"))
+    out = tmp_path / "translated.json"
+    out.write_text(json.dumps({"slug": SLUG, "lang": "nb", "items": [{"item": "core_claim", "text": "NB"}]}), "utf-8")
+    assert project.run("apply", SLUG, str(out)) == 0
+    data = yaml.safe_load(project.sidecar_path.read_text(encoding="utf-8"))
+    assert data["items"]["core_claim"]["sources"] == en.sources  # always the English item's
