@@ -2,6 +2,19 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-14 — Correcting a held-back draft: orchestrator defaults (founder to confirm)
+
+Defaults chosen when the correction path was built (`docs/pipeline.md`, "Correcting a held-back draft"). Each is the orchestrator's default, not a founder ruling; the founder confirms or changes them.
+
+- **One correction round per card** (`MAX_CORRECTION_ROUNDS = 1`). After it the card stays held back and is listed for the founder. Why: an audit is never re-run on an unchanged draft, and repeated rounds would let drafting keep trying until an auditor agrees.
+- **The auditors of a corrected draft see exactly what a first-publication auditor sees**: the whole corrected card, comments stripped, its cached records, spec sections 2 and 3 and the card format. No earlier audit, finding or correction, and nothing that says the card was corrected. Why: the second pair of audits must be as independent as the first.
+- **What a correction may do**: replace or remove a paragraph, change fields of an existing study (`update_study`), remove a link, lower the level, set a badge to false, add, change or remove the contested mark. It may not add a study or a paragraph, raise a level or set a badge to true. Why: a correction answers audit findings by removing, weakening or relabelling; it never adds a fact. Re-sourcing a link to another cached record is not an operation yet; such a link is removed.
+- **Inside the round**: the drafter gets a second attempt only when the first fails the mechanical checks (the failed files are kept as `-attempt1`); a review reject ends the round. Why: checks are mechanical; a reviewer's reject is a content verdict and should not be argued away.
+- **No redraft at a lower level (round L) after a correction.** Two agreeing `accept_lower` audits of a corrected draft hold the card back. Why: the correction itself may lower the level, and round L would be a second drafting round.
+- **The trail** of a correction round is `audits/<date>-<slug>-C<k>-correction.yaml` (operations, check result, review verdict and findings, the audit files it answered, the draft's hash), next to its audit records `-C<k>.yaml` and `-C<k>-second.yaml`. It is written also when the round ends before the audits, so the round counts. `drafts/<slug>.yaml` stays unchanged unless the corrected card is published.
+- **A first publication is refused** for a draft that already has a whole-card audit in `audits/`; such a draft can only go through the correction path.
+- **Format retry** of an invalid audit record: one retry by a fresh auditor that sees its context, its invalid record and the errors, and must keep the same decision and level; a second failure is final.
+
 ## 2026-11-13 — Opening the repository: preparation rulings
 
 Phase 1 of `docs/plan-open-repository.md`, prepared while the repository is private.
