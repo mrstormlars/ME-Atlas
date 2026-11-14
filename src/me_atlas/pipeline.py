@@ -4057,7 +4057,7 @@ def correction_outcome(cfg: Config, slug: str, date: str, tag: str) -> CardPubli
             return held(f"correction rejected in review; the revised attempt is pending (round {tag} is not used yet)")
         return held("correction rejected in review")
     card_review = _load_card_review(cfg, slug, attempt)
-    if card_review is None:
+    if card_review is None:  # run_publish_card refuses this case before it gets here
         return held("whole-card review missing: no valid whole-card review of the last attempt was recorded")
     if card_review.verdict != "accept":
         if attempt == tag:
@@ -4361,6 +4361,17 @@ def run_publish_card(
                     cfg.audits_dir / f"{date}-{slug}-{round_}-correction-revised.yaml",
                     correction_trail(cfg, slug, revised_tag, draft_bytes, answered, audits_run),
                 )
+            )
+    if round_ is not None:
+        attempt = last_attempt_tag(cfg, slug, round_)
+        last = _load_round(cfg, slug, "", attempt)
+        accepted = last is not None and last.review is not None and last.review.verdict == "accept"
+        if accepted and _load_card_review(cfg, slug, attempt) is None:
+            # A skipped step of the operator, not an agent decision: it must not use up the round.
+            raise PipelineError(
+                f"the whole-card review of correction round {attempt} is missing or not valid; run "
+                f"`card-review-plan {slug} --round {round_}{' --revised' if attempt != round_ else ''} --out DIR`, "
+                "the card-reviewer, then `record-review --card-review`; the round stays open"
             )
     if first_suffix not in pub.records and (
         pending := _pending_retry(cfg.audit_path(slug, None, False, round_ or False))

@@ -459,15 +459,22 @@ def test_a_revised_attempt_is_refused_when_both_reviews_of_the_first_attempt_acc
     assert "must say reject" in capsys.readouterr().err
 
 
-def test_publish_card_holds_back_without_a_whole_card_review_and_still_copies_the_audits(corr: Corr):
+@pytest.mark.parametrize("state", ["missing", "invalid"])
+def test_publish_card_refuses_without_a_valid_whole_card_review_and_writes_nothing(corr: Corr, capsys, state):
     corr.round_to_audits()
-    (corr.dir / "review" / f"{SLUG}-card-C1.json").unlink()
-    assert corr.publish() == 0
-    corr.assert_held_back(
-        "whole-card review missing: no valid whole-card review of the last attempt was recorded", corr.pub.draft_bytes
-    )
-    assert pipeline.correction_round_state(_cfg(corr), SLUG) == (1, None)
-    assert "card_review" not in corr.trail()
+    review = corr.dir / "review" / f"{SLUG}-card-C1.json"
+    if state == "missing":
+        review.unlink()
+    else:
+        review.write_text(json.dumps({"card": SLUG, "verdict": "accept", "findings": [], "extra": 1}), "utf-8")
+    names = corr.names()
+    assert corr.publish() == 1
+    err = capsys.readouterr().err
+    assert "card-review-plan" in err and "record-review --card-review" in err and "round stays open" in err
+    assert corr.names() == names and not (corr.dir / "publication-report.md").exists()
+    assert corr.draft.exists() and not corr.card.exists() and not corr.pub.log.exists()
+    assert pipeline.correction_round_state(_cfg(corr), SLUG) == (0, None)  # not used
+    assert corr.card_review() == 0 and corr.publish() == 0 and corr.card.exists()  # and the round goes on
 
 
 def test_a_first_attempt_card_review_reject_leaves_the_round_open_and_the_trail_records_it(corr: Corr):
