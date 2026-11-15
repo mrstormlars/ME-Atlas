@@ -161,3 +161,20 @@
   - pmid:7476598
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: endothelial-dysfunction
+  change: First publication at level 3 after correction round 1
+  reason: 'Level 3 holds: a CCC-defined Berlin study and an independent Bergen group in a separate CCC
+    cohort both found reduced endothelial function; no comparable contradiction, no controlled intervention,
+    both badges correctly no.'
+  sources:
+  - pmid:32154656
+  - pmid:33829023
+  - pmid:36730360
+  - pmid:25455721
+  - pmid:29426834
+  - pmid:35317812
+  - pmid:42625188
+  - pmid:33671082
+  tier: 2
+  decided_by: ai_audit

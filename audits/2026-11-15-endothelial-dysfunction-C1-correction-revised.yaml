@@ -1,0 +1,165 @@
+card: endothelial-dysfunction
+round: 1
+answered:
+- 2026-11-13-endothelial-dysfunction-second.yaml
+- 2026-11-13-endothelial-dysfunction.yaml
+draft_sha256: 87c6dfef3ce81aff809a2ce09af5250e717d86d019e91903101646cce98f21ba
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: level_reason paragraph 2 (sources pmid:33829023, pmid:32154656) says post-occlusive reactive
+      hyperaemia is "the measure closest to the Berlin index". Neither cached source says this. pmid:33829023
+      describes PORH as a skin blood-flow measure of small vessels ("endothelial function affecting both
+      large and small vessels"). pmid:32154656 measured the reactive hyperaemia index by finger tonometry
+      (EndoPAT2000). Neither paper compares the two methods. The phrase is the drafter's own reasoning,
+      and it makes the level-3 repeat read as closer than the sources show.
+    fix: 'Delete "the measure closest to the Berlin index", or say only what the records state, for example:
+      "The rise in skin blood flow after blood flow to the arm was briefly stopped (post-occlusive reactive
+      hyperaemia), a measure of small-vessel function, was lower in 39 patients than in 30 healthy people."
+      Keep the sentence that says the two groups used different methods.'
+  - operation: null
+    severity: must_fix
+    problem: 'links[0] (to orthostatic-intolerance-cerebral-blood-flow, source pmid:41516145) says "endothelial
+      dysfunction, driven by oxidative and nitrosative stress and by autoantibody-mediated receptor interference,
+      may explain orthostatic intolerance". The cached abstract says: "Endothelial dysfunction driven
+      by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may
+      explain orthostatic intolerance and impaired perfusion." In the source, autoantibody-mediated receptor
+      interference is a second explanation alongside endothelial dysfunction, not a cause of it. The link
+      text makes it a driver of endothelial dysfunction, which the source does not say. The study''s own
+      `finding` field quotes the source correctly ("along with").'
+    fix: 'Follow the source: "A 2025 review proposes that endothelial dysfunction driven by oxidative
+      and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic
+      intolerance and impaired perfusion in ME/CFS; this source does not report patient data linking the
+      two."'
+  - operation: null
+    severity: advisory
+    problem: pmid:36730360 case_definition_quote ("The study did not report any significant differences
+      in outcome measures between the rituximab and placebo groups, thus refuting the hypothesis that
+      B-cell depletion could be beneficial for ME/CFS patients selected on Canadian consensus criteria.")
+      is in the cached full text and supports CCC. It describes the parent RituxME trial's result rather
+      than this substudy's inclusion, and the substudy points to the main trial article for inclusion
+      criteria.
+    fix: Optionally use the full text's "no support for a beneficial role of rituximab in ME/CFS diagnosed
+      according to Canadian criteria", or keep the current quote; the label CCC stands.
+  - operation: null
+    severity: advisory
+    problem: level_reason paragraph 6 (pmid:29426834) says twice that the study used the Fukuda definition
+      with post-exertional malaise required ("using the Fukuda definition with post-exertional malaise
+      required" and "The authors applied the Fukuda definition with post-exertional malaise required").
+      Both statements match the cached full text; the repeat only lengthens the paragraph.
+    fix: Drop the first mention and keep the sentence that also reports the authors' statement that this
+      corresponds to the 2011 International Consensus Criteria.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'A later study from Bergen, Norway, with no authors shared with the Berlin study, tested patients
+    meeting the Canadian Consensus Criteria with two other methods. The rise in skin blood flow after
+    blood flow to the arm was briefly stopped (post-occlusive reactive hyperaemia) was lower in 39 patients
+    than in 30 healthy people. Widening of the arm artery (flow-mediated dilation) was lower in 35 patients
+    than in 66 healthy women (median 5.9% against 7.7%); this control group was all women, while 78% of
+    the patients were women. The card is at level 3 because this independent group found reduced endothelial
+    function in a separate cohort. The repeat is partial: the two groups used different methods, and the
+    paper says it had no designated control group of its own, but used healthy people from two other studies
+    by the same authors.'
+  sources:
+  - pmid:33829023
+  - pmid:32154656
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: Against these findings, a study from California of 24 patients and 24 sedentary controls found
+    no statistically significant difference in the reactive hyperaemia index at rest (p = 0.07), during
+    recovery or 18 hours after an exercise test. The authors applied the Fukuda definition with post-exertional
+    malaise required and say this corresponds to the International Consensus Criteria; the card records
+    Fukuda. Fukuda ranks below the Canadian Consensus Criteria on the published ladder, so this study
+    does not contest the level. A study from New Zealand using the International Consensus Criteria found
+    no difference in arterial stiffness between patients and controls at rest; arterial stiffness is a
+    different measure from the widening tested above.
+  sources:
+  - pmid:29426834
+  - pmid:33671082
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'No study on this card tracks symptoms after an exertion challenge and links them to endothelial
+    function or clotting in the same patients. Two studies measured vessel function after an exercise
+    test, without tracking symptoms: one found no difference in the reactive hyperaemia index 18 hours
+    later, and one found that arterial stiffness 48 hours later fell within the control group but not
+    within the patient group (7 each at 48 hours); its table gives a between-group p value of 0.21 for
+    the augmentation index at 48 hours.'
+  sources:
+  - pmid:29426834
+  - pmid:33671082
+- op: remove_link
+  to: orthostatic-intolerance-cerebral-blood-flow
+- op: update_study
+  id: pmid:41516145
+  set:
+    finding: A review of the biological network underlying ME/CFS; it proposes that endothelial dysfunction
+      driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference,
+      may explain orthostatic intolerance and impaired perfusion. Not evidence for the level.
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 4
+    severity: advisory
+    problem: 'This op resolves the first review''s must_fix: the reader-facing `finding` of pmid:41516145
+      no longer says it is cited on the map, and the remaining sentence matches the cached abstract (''Endothelial
+      dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor
+      interference, may explain orthostatic intolerance and impaired perfusion''). With the link removed
+      (op 3), nothing on the card cites this review now. The YAML header (''on the card as a context study,
+      cited by the link to orthostatic-intolerance-cerebral-blood-flow'') and the comment above the study
+      entry (''a record cited by a link on the map'') are stale. The header also lists reviews as not
+      on the card, and the only reason for this exception was the link. These are internal comments, not
+      reader-facing text, and a correction cannot remove a study.'
+    fix: The founder may want to update the two comments, or drop the review from `studies` and list it
+      under 'Not on the card', the next time the card is edited outside a correction.
+  - operation: 2
+    severity: advisory
+    problem: 'This op answers audit 2026-11-13-endothelial-dysfunction-second Part 5. The first review''s
+      advisory is resolved: the clause now reads ''for the augmentation index at 48 hours'', which matches
+      pmid:33671082 Table 2 (AIx75, ME/CFS 48 h against CTRL 48 h, Post 17.0 against 9.4, p = 0.21). It
+      does add a number that the card did not have before, but the number comes from a cited record in
+      the context and replaces a statement that the record contradicts.'
+    fix: None needed.
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: level_reason (Bergen paragraph) says '78% of the patients were women' right after '35 patients'.
+      The cached full text of pmid:33829023 gives 78% for all 40 trial participants ('All 40 trial participants
+      consented ... A majority (78%) was female'), not for the 35 with flow-mediated dilation measured.
+    fix: Write '78% of the 40 trial participants were women'.
+  - operation: null
+    severity: advisory
+    problem: The group fields for pmid:16479189 and pmid:12950326 say 'University of Dundee, Scotland'.
+      Their own cached records give only 'Vascular Diseases Research Unit, University Department of Medicine,
+      Ninewells Hospital ... Dundee, UK'. 'University of Dundee' and 'Scotland' come from the records
+      of the same group's other papers on the card (pmid:18031285, pmid:25455721), so the names are in
+      the cached records, but not in these two.
+    fix: Optionally use the wording of each paper's own record ('Ninewells Hospital and Medical School,
+      Dundee, UK').
+  - operation: null
+    severity: advisory
+    problem: The early signal calls plasminogen activator inhibitor-1 'a protein that slows the breakdown
+      of clots'. That gloss is not in the cached record of pmid:38600563. It is a plain-language explanation,
+      not a finding.
+    fix: Keep it if glossary-style explanations are allowed, or move it to the glossary.
+  - operation: null
+    severity: advisory
+    problem: level_reason says the Stellenbosch patients were 'described only as diagnosed for more than
+      six months'. The cached full text of pmid:36015078 also says they completed an International Consensus
+      Criteria-based questionnaire to score severity. That questionnaire was not an inclusion criterion,
+      so the 'none' label stands, but 'only' leaves this out.
+    fix: Say 'included if diagnosed for more than six months; an International Consensus Criteria-based
+      questionnaire was used to score severity, not to select patients'.
+audits_run:
+- 2026-11-15-endothelial-dysfunction-C1.yaml
+- 2026-11-15-endothelial-dysfunction-C1-second.yaml
