@@ -632,3 +632,105 @@ def test_a_classification_is_not_read_for_another_round_or_slug(corr: Corr, monk
     assert pipeline._exception_classes(cfg, SLUG, 1) is not None
     assert pipeline._exception_classes(cfg, SLUG, 2) is None
     assert pipeline._exception_classes(cfg, "another-card", 1) is None
+
+
+# --- gaps found in the evaluation of the valve ------------------------------------------------------------------
+
+
+def _with(change):
+    """An ``apply_operations`` that applies the operations as usual and then makes ``change`` to the data."""
+    real = pipeline.apply_operations
+
+    def apply(text, ops, **kw):
+        data = yaml.safe_load(real(text, ops, **kw))
+        change(data)
+        return yaml.safe_dump(data, sort_keys=False)
+
+    return apply
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        lambda d: d.update(level=3),
+        lambda d: d["studies"][0].update(n_patients=21),
+        lambda d: d["studies"][0].update(role="contradicts"),
+        lambda d: d["badges"]["explains_pem"].update(value=not d["badges"]["explains_pem"]["value"]),
+        lambda d: d.update(layer="trigger"),
+    ],
+)
+def test_the_guard_refuses_by_comparison_when_a_permitted_operation_changes_a_structured_field(change, monkeypatch):
+    """The operation is a permitted kind on a named target, so only the free-text-blanked comparison can refuse it."""
+    assert guard(REMOVE_EARLY)[0] is not None  # the same ops file passes when the code leaves the rest alone
+    monkeypatch.setattr(pipeline, "apply_operations", _with(change))
+    text, problems = guard(REMOVE_EARLY)
+    assert text is None
+    assert problems == ["the fix changes more than free text (a structured field differs); nothing applied"]
+
+
+def two_parts(decision: str, first: tuple[str | None, str | None], second: tuple[str | None, str | None]):
+    """A valid audit record with two objecting parts and their (class, target); parts that carry no class are None."""
+    data = whole(decision)
+    data["parts"] = [data["parts"][0], data["parts"][0]]
+    record = AuditRecord.model_validate(data)
+    return record, [first, second]
+
+
+def test_a_reject_that_mixes_a_wording_part_with_a_decisive_part_keeps_the_valve_closed():
+    accept = AuditRecord.model_validate(whole())
+    wording = (("wording", EARLY), ("decisive", None))
+    mixed, classes = two_parts("reject", *wording)
+    assert pipeline._audit_valve_findings([("a", mixed, classes), ("b", accept, [(None, None)])]) is None
+    mixed, classes = two_parts("reject", *reversed(wording))
+    assert pipeline._audit_valve_findings([("a", accept, [(None, None)]), ("b", mixed, classes)]) is None
+    only, classes = two_parts("reject", ("wording", EARLY), ("wording", "level_reason[0]"))
+    found = pipeline._audit_valve_findings([("a", only, classes), ("b", accept, [(None, None)])])
+    assert found is not None and len(found) == 2  # the same record with two wording parts keeps it open
+
+
+def test_a_reject_that_mixes_a_wording_part_with_an_unclassified_part_keeps_the_valve_closed():
+    accept = AuditRecord.model_validate(whole())
+    mixed, classes = two_parts("reject", ("wording", EARLY), (None, None))
+    assert pipeline._audit_valve_findings([("a", mixed, classes), ("b", accept, [(None, None)])]) is None
+    mixed, classes = two_parts("reject", (None, None), ("wording", EARLY))
+    assert pipeline._audit_valve_findings([("a", accept, [(None, None)]), ("b", mixed, classes)]) is None
+
+
+def test_a_valve_text_changed_after_valve_apply_holds_the_audit_stage_card_back(corr: Corr):
+    audit_round(corr, wording_reject(), whole())
+    whole_fix(corr, "audit", "audit", ["first.parts[0]"], REMOVE_EARLY)
+    stored = pipeline.Config.valve_text_path(_cfg(corr), SLUG, "audit")
+    stored.write_text(stored.read_text(encoding="utf-8").replace("lower", "higher", 1), encoding="utf-8")
+    draft = corr.draft.read_bytes()
+    assert corr.publish() == 0
+    corr.assert_held_back("correction failed checks: the wording fix does not match its operations", draft)
+
+
+def test_a_valve_text_changed_after_valve_apply_holds_the_review_stage_card_back(corr: Corr):
+    assert corr.plan() == 0 and corr.apply() == 0 and write_review(corr, [finding()]) == 0
+    whole_fix(corr, "correction-review", "correction-review", ["findings[0]"], REWORD_CONTESTED)
+    stored = _cfg(corr).valve_text_path(SLUG, "correction-review")
+    text = stored.read_text(encoding="utf-8")
+    assert CONTESTED_TEXT in text
+    stored.write_text(text.replace("no clear difference", "a clear difference"), encoding="utf-8")
+    assert corr.main("card-review-plan", SLUG, "--round", "C1", "--out", str(corr.dir)) == 0
+    assert write_review(corr, [], card=True, verdict="accept") == 0
+    assert corr.audit_plan() == 0
+    corr.write_audit(whole())
+    corr.write_audit(whole(), second=True)
+    draft = corr.draft.read_bytes()
+    assert corr.publish() == 0
+    corr.assert_held_back("correction failed checks: a wording fix does not match its operations", draft)
+
+
+def test_valve_apply_fails_a_number_that_no_cited_record_has_and_passes_one_that_it_has(corr: Corr, capsys):
+    """C10 is an error for newly applied text (the contested text of this study says 100 patients, as its record)."""
+    bad = REWORD_CONTESTED | {"text": "A fictional study of 7777 patients found no clear difference."}
+    assert corr.plan() == 0 and corr.apply() == 0 and write_review(corr, [finding()]) == 0
+    write_valve(corr, "correction-review", bad)
+    assert valve(corr, "valve-apply", "correction-review") == 1
+    err = capsys.readouterr().err
+    assert "C10" in err and "the number 7777" in err
+    assert not (corr.dir / "valve" / f"{SLUG}-correction-review" / f"{SLUG}.yaml").exists()
+    write_valve(corr, "correction-review", REWORD_CONTESTED)
+    assert valve(corr, "valve-apply", "correction-review") == 0
