@@ -178,3 +178,24 @@
   - pmid:33671082
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: immune-cell-gene-expression
+  change: First publication at level 2 after correction round 1
+  reason: 'Level 2 contested at rung 2 is supported: CCC-defined controlled studies found altered immune-cell
+    gene expression, comparable-quality studies found none, and neither badge nor the PEM link meets its
+    test.'
+  sources:
+  - pmid:39435656
+  - pmid:39621903
+  - pmid:30791746
+  - pmid:41822518
+  - pmid:16049284
+  - pmid:28172519
+  - pmid:21479222
+  - pmid:18462164
+  - pmid:19503787
+  - pmid:39394558
+  - pmid:38232699
+  - pmid:28494812
+  tier: 2
+  decided_by: ai_audit

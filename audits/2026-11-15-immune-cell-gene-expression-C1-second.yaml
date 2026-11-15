@@ -1,0 +1,95 @@
+card: immune-cell-gene-expression
+decision: accept
+parts:
+  - decision_part: "The level 2: controlled studies in CCC-defined cohorts found blood immune-cell gene expression different from controls."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39435656
+        quote: "Participants with ME/CFS were included according to Canadian Consensus Criteria."
+      - source: pmid:39435656
+        quote: "A total of 14 genes was selected as differentially expressed between patients with ME/CFS compared with HC"
+      - source: pmid:39621903
+        quote: "ME and healthy sedentary control participants were identified by experienced medical doctors, and all ME subjects fulfilled the IOM and Canadian Consensus Criteria for diagnosis (82)."
+      - source: pmid:39621903
+        quote: "In ME TM, we observed increased expression of multiple key regulators of T cell exhaustion, including the TF EOMES, and the IRs SLAMF6 and SLAMF7"
+      - source: pmid:30791746
+        quote: "Twenty-seven gene transcripts were increased 1.5- to sixfold and six decreased three- to sixfold in the patient group ( P < 0.01)."
+    class: none
+  - decision_part: "Level 3 is not reached: the findings differ between groups and no specific finding has been reproduced by an independent group; the exhaustion reading is inconsistent across studies."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:39435656
+        quote: "The abundance of exhausted CD8 cells was significantly lower in ME/CFS compared with HC (Padj = 0.0147)."
+      - source: pmid:41822518
+        quote: "In contrast, no significant difference in T cell exhaustion status was observed between groups when assessed using expression of exhaustion-associated genes"
+      - source: pmid:16049284
+        quote: "This profile suggests T cell activation and perturbation of neuronal and mitochondrial function."
+      - source: pmid:39435656
+        quote: "This current pilot investigation is not without limitations."
+    class: none
+  - decision_part: "The contested mark on rung 2: a blinded whole-blood RNA-seq study of 25 CCC patients and 25 controls found no differentially expressed genes, and a blinded Fukuda test set of 64 patients found none of 44 earlier genes different; both meet the comparable-quality test against the studies they contradict."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:28172519
+        quote: "Briefly, we enrolled 25 CFS patients who met the Canadian case definition [19]"
+      - source: pmid:28172519
+        quote: "No differentially expressed genes (DEGs) were found to be significant when CFS or ADCLS cases were compared to controls."
+      - source: pmid:28172519
+        quote: "Samples were collected at patient enrollment and not during acute symptom flares."
+      - source: pmid:21479222
+        quote: "This comprised PBMC samples from 64 CFS patients and 64 healthy volunteers."
+      - source: pmid:21479222
+        quote: "The diagnosis of CFS was based on the Fukuda criteria and this diagnosis was made by CFS clinical experts."
+      - source: pmid:21479222
+        quote: "However, no significant difference is observed between the means for any of these genes in the test set (Welch 2-sample t-test, all P>0.01)."
+      - source: pmid:19503787
+        quote: "Discordance was defined as one twin meeting criteria for either idiopathic chronic fatigue (ICF, 12 pairs) or CFS (32 pairs) [1], [2]"
+    class: none
+  - decision_part: "The diagnostic marker badge stays no: the 44-gene classifier did not hold in a new blinded set, and the ESRRA check used a dataset whose paper states no case definition."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:21479222
+        quote: "However, when assessed on a new, blinded 128 sample test set only 58% of samples were predicted correctly."
+      - source: pmid:39394558
+        quote: "In addition, data from the GSE214284 database confirmed higher ESRRA expression in the monocyte cell types of male ME/CFS patients."
+      - source: pmid:38232699
+        quote: "Analyzed single cell and bulk RNA seq data [GEO SuperSeries Accession]: [GSE214284]"
+      - source: pmid:39621903
+        quote: "consisting of 28 patients and 30 sedentary controls at baseline and after symptom provocation (10)"
+      - source: pmid:38232699
+        quote: "from a cohort of 30 patients and 28 controls, matched for sex and BMI"
+    class: none
+  - decision_part: "The explains PEM badge stays no: the two studies that relate expression to PEM symptoms in the same patients have no stated case definition or a broad one."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:38232699
+        quote: "Similar correlations were observed with other metrics, including general health, Short Form (SF)-36 Physical Component Summary scores,51 and PEM severity (Figures S5D–S5F)."
+      - source: pmid:28494812
+        quote: "A broad case definition of CFS was applied, requiring 3 months of unexplained, disabling chronic/relapsing fatigue of new onset, whereas no accompanying symptoms were necessary."
+      - source: pmid:28494812
+        quote: "Also, an association with symptoms of post-exertional malaise was demonstrated."
+    class: none
+  - decision_part: "The link to post-exertional malaise at step proposed: a peer-reviewed study states the proposed link."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:39621903
+        quote: "We propose that following induction by further stimuli such as an exercise challenge, these cells fail to upregulate effector programs, and instead become terminally exhausted, potentially contributing to inflammation and PEM (Fig. 5)."
+    class: none
+  - decision_part: "The layer dysfunction: the card describes a measured change in blood immune cells."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:30791746
+        quote: "To gain insight into the pathophysiology of ME/CFS in New Zealand, we examined the transcriptomes of peripheral blood mononuclear cells by RNA-seq analysis"
+    class: none
+  - decision_part: "The two very small single-cell studies are kept as early signals, not as level evidence."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:39394558
+        quote: "single-cell RNA sequencing (scRNA-seq) of peripheral blood mononuclear cells (PBMCs) was used to decipher the immunometabolic profile in 4 ME/CFS patients and 4 heathy controls"
+      - source: pmid:41822518
+        quote: "Freshly isolated PBMCs from ten individuals, five LC patients with ME/CFS and five recovered individuals (R) following acute SARS-CoV-2 infection without any LC symptoms, were processed for scRNAseq."
+      - source: pmid:41822518
+        quote: "we observed a significantly higher exhaustion score in LC patients (Figure 5E)"
+    class: none
+reasons_summary: "Level 2 rests on controlled CCC studies, rung 2 is contested by a comparable CCC study with no differentially expressed genes, both badges stay no, and the layer, link and early signals match the records."
+would_change: "An independent group reproducing a specific expression finding in a separate cohort with a recognised case definition would bear on level 3; a larger study settling the conflict with pmid:28172519 would bear on the contested mark. Statements about pmid:18462164 and pmid:16049284 were checked against their abstracts only (full text not cached); every card statement about them is in the abstracts, so none rests on unverifiable text."
