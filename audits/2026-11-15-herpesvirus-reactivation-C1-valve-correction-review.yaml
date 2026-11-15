@@ -1,0 +1,44 @@
+card: herpesvirus-reactivation
+round: 1
+stage: correction-review
+attempt: C1
+classification:
+- finding: findings[0]
+  class: wording
+  target: level_reason[7]
+  problem: 'The new text says HHV-6 or HHV-7 DNA in blood cells is what ''the Riga papers define as a
+    marker of persistent (latent) infection''. The Riga papers do not say ''latent'' here. 36653846 says
+    DNA from peripheral blood is ''a marker of persistent infection'' and describes ''persistent infection/co-infection
+    in a latent and active phase''. 22927850 says PBL DNA and cell-free plasma are ''markers of persistent
+    and active infection, resp.'', and defines latent infection as ''persistent infection and without
+    markers of active viral infection''. In the Riga definitions, blood-cell DNA is present in both the
+    latent and the active phase, so the parenthesis ''(latent)'' equates two things the sources keep apart.
+    The rest of the operation is supported: the Atlanta abstract gives 26 patients, 52 recruited and 50
+    analysed controls, no virus isolated, no significant differences, and the quoted conclusion about
+    active or latent infection. This answers the -pre finding on level_reason[7].'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: Some studies whose case definitions are not yet verified found no difference. A study of 26 patients
+    and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone's blood cells
+    and found no significant difference in HHV-6 or HHV-7 DNA in blood cells, which the Riga papers define
+    as a marker of persistent infection, with DNA in cell-free plasma as the marker of active infection.
+    The Atlanta authors concluded that they found no evidence that active or latent infection with these
+    viruses was associated with chronic fatigue syndrome. A multicentre search for viral genetic material
+    in blood, stool and saliva found no consistent differences between patients and controls other than
+    fewer anelloviruses in patients.
+  sources:
+  - pmid:10913395
+  - pmid:37526404
+  - pmid:22927850
+  - pmid:36653846
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: '''(latent)'' is removed. The sentence now says blood-cell DNA is a marker of persistent infection
+      and cell-free plasma DNA a marker of active infection, as the cached full texts state (PMC9847171,
+      PMC3426163). Nothing else changed except the sources line.'
