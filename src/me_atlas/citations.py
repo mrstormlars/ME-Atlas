@@ -464,12 +464,44 @@ def _check_sample_sizes(study, abstract, full, issue) -> list[CitationIssue]:
 # C10: numbers in free text (docs/citation-check.md, "Numbers in free text")
 # ---------------------------------------------------------------------------
 
-_WORD_LIST = (
-    "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen "
-    "eighteen nineteen twenty"
+_UNIT_WORDS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+_TEEN_WORDS = [
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+]
+_TENS_WORDS = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+_WORD_NUMBERS = {w: str(i) for i, w in enumerate(_UNIT_WORDS, start=1)}
+_WORD_NUMBERS |= {w: str(i) for i, w in enumerate(_TEEN_WORDS, start=10)}
+_WORD_NUMBERS |= {w: str(i * 10) for i, w in enumerate(_TENS_WORDS, start=2)}
+# One to ninety-nine; a tens word may take a unit after a hyphen or a space (``twenty-eight``, ``forty two``).
+# "hundred" forms are not read.
+_WORD_NUMBER_RE = re.compile(
+    r"\b(?:("
+    + "|".join(_TENS_WORDS)
+    + r")(?:[-\s]+("
+    + "|".join(_UNIT_WORDS)
+    + r"))?|("
+    + "|".join(_TEEN_WORDS + _UNIT_WORDS)
+    + r"))\b",
+    re.IGNORECASE,
 )
-_WORD_NUMBERS = {w: str(i) for i, w in enumerate(_WORD_LIST.split(), start=1)}
-_WORD_NUMBER_RE = re.compile(r"\b(" + "|".join(_WORD_NUMBERS) + r")\b", re.IGNORECASE)
+
+
+def _word_number(m: re.Match[str]) -> str:
+    tens, unit, plain = m.groups()
+    if plain:
+        return _WORD_NUMBERS[plain.casefold()]
+    value = int(_WORD_NUMBERS[tens.casefold()])
+    return str(value + int(_WORD_NUMBERS[unit.casefold()])) if unit else str(value)
+
 
 # Digits attached to letters (IL-6, COVID-19, CD4, COMPASS-31, SF-36, IOM2015, G93.3) or to a following capital
 # (5-HT), or to a chemical prefix (3-hydroxykynurenine) are names, not quantities.
@@ -550,13 +582,13 @@ def free_text_numerals(text: str) -> tuple[list[str], list[str]]:
 
 
 def source_number_tokens(text: str) -> set[str]:
-    """Every number a source text states, canonical, plus ``one``..``twenty`` written as words."""
+    """Every number a source text states, canonical, plus ``one``..``ninety-nine`` written as words."""
     text = _normalise_numbers_text(text)
     found = {m.group(0) for m in _SPACED_THOUSANDS_RE.finditer(text)}
     tokens = {canonical_number(re.sub(r"[ \u00a0\u2009\u202f]", "", t)) for t in found}
     masked = _mask(text, [_ATTACHED_RE])
     tokens |= {canonical_number(t) for t in _NUMERAL_RE.findall(masked)}
-    tokens |= {_WORD_NUMBERS[m.group(1).casefold()] for m in _WORD_NUMBER_RE.finditer(masked)}
+    tokens |= {_word_number(m) for m in _WORD_NUMBER_RE.finditer(masked)}
     return tokens
 
 

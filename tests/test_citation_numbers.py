@@ -117,6 +117,26 @@ def test_word_numbers_in_the_card_are_not_checked_but_the_source_counts_both_for
 # --- derivations --------------------------------------------------------------------------------------------
 
 
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("Thirty patients with CFS were enrolled.", "30"),
+        ("twenty-eight patients", "28"),
+        ("twenty eight patients", "28"),
+        ("Forty-two patients. Forty two more.", "42"),
+        ("ninety-nine cases", "99"),
+    ],
+)
+def test_source_word_numbers_up_to_ninety_nine(text, expected):
+    assert expected in source_number_tokens(text)
+
+
+def test_a_tens_word_does_not_make_its_digits_match_alone():
+    tokens = source_number_tokens("Thirty patients")
+    assert tokens.isdisjoint({"3", "13"})
+    assert "30" in tokens
+
+
 def test_a_derivation_that_holds_vouches_for_the_result_and_checks_the_operands():
     assert free_text_numerals("78 (= 40 + 38) patients in all") == (["40", "38"], [])
     assert free_text_numerals("a gain of 12 (= 50 - 38)") == (["50", "38"], [])
