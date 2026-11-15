@@ -50,7 +50,7 @@ def attempt(c: Corr, suffix: str, review: str = "accept", card: str | None = "ac
     ops_file.write_text(json.dumps(ops), encoding="utf-8")
     flag = FLAGS[suffix]
     assert c.main("apply", SLUG, str(ops_file), "--round", "C1", *flag, "--run-dir", str(c.dir)) == 0
-    bad = [{"operation": 0, "severity": "must_fix", "problem": "A problem."}]
+    bad = [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
     review_file = c.dir / "review" / f"{SLUG}-rC1{suffix}.json"
     review_file.parent.mkdir(parents=True, exist_ok=True)
     review_file.write_text(
@@ -58,7 +58,11 @@ def attempt(c: Corr, suffix: str, review: str = "accept", card: str | None = "ac
     )
     assert c.main("record-review", SLUG, "--round", "C1", *flag, "--run-dir", str(c.dir)) == 0
     if review == "accept" and card is not None:
-        found = [] if card == "accept" else [{"operation": None, "severity": "must_fix", "problem": "A problem."}]
+        found = (
+            []
+            if card == "accept"
+            else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+        )
         card_file = c.dir / "review" / f"{SLUG}-card-C1{suffix}.json"
         card_file.write_text(
             json.dumps({"card": SLUG, "paper": None, "verdict": card, "findings": found}), encoding="utf-8"
@@ -121,7 +125,12 @@ def test_record_review_pre_validates_like_the_other_whole_card_review(corr: Corr
     assert corr.pre_review("reject") == 0
     assert "whole-card review recorded: reject, 1 finding(s)" in corr.env.out[-1]  # either verdict is valid
     path = corr.dir / "review" / f"{SLUG}-card-C1-pre.json"
-    must_fix = {"operation": None, "severity": "must_fix", "problem": "A link that its source does not state."}
+    must_fix = {
+        "operation": None,
+        "severity": "must_fix",
+        "class": "decisive",
+        "problem": "A link that its source does not state.",
+    }
     base = {"card": SLUG, "paper": None, "verdict": "reject", "findings": [must_fix]}
 
     def run(data: dict, *extra: str) -> int:

@@ -61,7 +61,11 @@ class Corr:
         path = folder / "review" / f"{SLUG}-card-C{k}-pre.json"
         path.parent.mkdir(parents=True, exist_ok=True)
         if findings is None:
-            findings = [] if verdict == "accept" else [{"operation": None, "severity": "must_fix", "problem": "P."}]
+            findings = (
+                []
+                if verdict == "accept"
+                else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "P."}]
+            )
         path.write_text(
             json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
         )
@@ -88,7 +92,11 @@ class Corr:
     def review(self, verdict: str = "accept") -> int:
         path = self.dir / "review" / f"{SLUG}-rC1.json"
         path.parent.mkdir(parents=True, exist_ok=True)
-        findings = [] if verdict == "accept" else [{"operation": 0, "severity": "must_fix", "problem": "A problem."}]
+        findings = (
+            []
+            if verdict == "accept"
+            else [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+        )
         path.write_text(json.dumps({"card": SLUG, "verdict": verdict, "findings": findings}), encoding="utf-8")
         return self.main("record-review", SLUG, "--round", "C1", "--run-dir", str(self.dir))
 
@@ -97,7 +105,11 @@ class Corr:
         tag = "C1-revised" if revised else "C1"
         path = self.dir / "review" / f"{SLUG}-card-{tag}.json"
         path.parent.mkdir(parents=True, exist_ok=True)
-        findings = [] if verdict == "accept" else [{"operation": None, "severity": "must_fix", "problem": "A problem."}]
+        findings = (
+            []
+            if verdict == "accept"
+            else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+        )
         path.write_text(
             json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
         )
@@ -558,7 +570,9 @@ def test_a_review_reject_holds_the_card_back_and_the_trail_records_the_finding(c
     held(corr, "correction rejected in review", BASE + TRAIL)
     assert corr.trail()["review"] == {
         "verdict": "reject",
-        "findings": [{"operation": 0, "severity": "must_fix", "problem": "A problem.", "fix": None}],
+        "findings": [
+            {"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+        ],
     }
 
 

@@ -412,7 +412,12 @@ def test_record_review_validates_the_card_review_file(corr: Corr, capsys):
     assert corr.card_review() == 0
     assert "whole-card review recorded: accept, 0 finding(s)" in corr.env.out[-1]
     path = corr.dir / "review" / f"{SLUG}-card-C1.json"
-    must_fix = {"operation": None, "severity": "must_fix", "problem": "A link that its source does not state."}
+    must_fix = {
+        "operation": None,
+        "severity": "must_fix",
+        "class": "decisive",
+        "problem": "A link that its source does not state.",
+    }
 
     def run(data: dict) -> int:
         path.write_text(json.dumps(data), encoding="utf-8")
@@ -490,7 +495,9 @@ def test_a_first_attempt_card_review_reject_leaves_the_round_open_and_the_trail_
     assert "Correction rounds used" not in corr.report()
     assert corr.trail()["card_review"] == {
         "verdict": "reject",
-        "findings": [{"operation": None, "severity": "must_fix", "problem": "A problem.", "fix": None}],
+        "findings": [
+            {"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+        ],
     }
     assert corr.trail()["audits_run"] == []
     assert pipeline.correction_round_state(_cfg(corr), SLUG) == (0, 1)
