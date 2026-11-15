@@ -1,0 +1,89 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+decision: accept
+parts:
+  - decision_part: "The level 2: one controlled study with a recognised case definition (Fukuda, 70% also ICC) found a larger fall in blood flow to the brain on tilt in patients than in controls."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32140630
+        quote: "All patients met the Fukuda criteria for CFS, and 70% met the criteria for ME."
+      - source: pmid:32140630
+        quote: "We also studied 44 healthy controls (HC)."
+      - source: pmid:32140630
+        quote: "End-tilt CBF reduction was 7% in HC versus 26% in the overall ME/CFS group, 24% in patients with a normal HR/BP response, 28% in those with dOH, and 29% in POTS patients (all P < .0005)."
+    class: none
+  - decision_part: "Not level 3: the sitting study is from the same clinic, and the paper that carries the level itself says its method still has to be replicated by others."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:32140630
+        quote: "From October 2012 to January 2018, 714 consecutive patients visited the outpatient clinic of the Stichting CardioZorg, Hoofddorp, the Netherlands, because of a suspicion of ME/CFS."
+      - source: pmid:33050553
+        quote: "From June 2011 to January 2018, 801 patients with the suspicion of ME/CFS visited the outpatient clinic of the Stichting CardioZorg."
+      - source: pmid:32140630
+        quote: "Finally, the use of extracranial Doppler flow to measure cerebral blood flow has to be replicated by others and in different patient groups."
+    class: none
+  - decision_part: "The transcranial Doppler and near-infrared studies from other groups are recorded as unverified case definitions and are not counted for or against the level; their records give no case definition."
+    rubric: "Not accepted (see the inclusion rule)."
+    evidence:
+      - source: pmid:25277740
+        quote: "HUT caused CBFv to decrease 8.7% in control subjects but fell 22.5% in CFS."
+      - source: pmid:12593133
+        quote: "The CBFV did not differ between groups in the supine posture, at 1 or 5 minutes after upright tilt, at 5 or 1 minute before the end of the test, or at termination of the test."
+      - source: pmid:12006954
+        quote: "We studied 28 patients (age, 10 to 22 years) and 20 healthy control subjects (age, 6 to 27 years)."
+    class: none
+  - decision_part: "No contested mark: the Wichita study (Fukuda, controlled) enrolled 58 patients, less than half of the 429 in the study that carries level 2, and did not report blood flow to the brain; the Johns Hopkins transcranial Doppler study has 26 patients and an unverified case definition."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:16378795
+        quote: "Fifty-eight subjects who fulfilled criteria of the 1994 chronic fatigue syndrome research case definition and 55 healthy controls participated in a 2-day inpatient evaluation."
+      - source: pmid:32140630
+        quote: "429 ME/CFS patients were studied: 247 had a normal heart rate (HR) and blood pressure (BP) response to HUT, 62 had delayed orthostatic hypotension (dOH), and 120 had postural orthostatic tachycardia syndrome (POTS)."
+      - source: pmid:12593133
+        quote: "Transcranial Doppler monitoring of middle cerebral artery (MCA) CBFV was performed during 3-stage HUT prospectively in 26 patients with CFS and 23 healthy controls."
+    class: none
+  - decision_part: "Not level 4: the placebo-controlled fludrocortisone trial found no difference, the tilt-training trial found no difference in fatigue at 4 weeks, and the stockings crossover study (16 patients) names no case definition and measured no symptom outcome."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:11150109
+        quote: "Using an intention-to-treat analysis, 7 subjects (14%) treated with fludrocortisone experienced at least a 15-point improvement in their wellness scores compared with 5 (10%) among placebo recipients (P =.76)."
+      - source: pmid:19912315
+        quote: "There was no significant difference in fatigue between groups at 4 weeks (mean difference 1.4, 95% CI: -13.5 to 16.2), but there was a trend towards improvement in fatigue at 6 months."
+      - source: pmid:35056360
+        quote: "All patients underwent an extensive history and physical examination to confirm that they satisfied the criteria for the diagnosis of CFS or ME and to exclude other conditions that could account for the diagnosis."
+      - source: pmid:35056360
+        quote: "Compared to the test with the stockings off, the mean percentage reduction in cardiac output during the test with compression stockings on was lower, 15 (4)% versus 27 (6)% (p < 0.0001), as was the mean percentage CBF reduction, 14 (4)% versus 25 (5)% (p < 0.0001)."
+    class: none
+  - decision_part: "diagnostic_marker false: the 13% cut-off was set and applied in one clinic's patients; the only other cohort with the same measure comes from the same clinic."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32140630
+        quote: "Using a lower limit of normal of 2SD of CBF reduction in HC (13% reduction), 82% of patients with normal HR/BP response, 98% with dOH and 100% with POTS showed an abnormal CBF reduction."
+      - source: pmid:33050553
+        quote: "From June 2011 to January 2018, 801 patients with the suspicion of ME/CFS visited the outpatient clinic of the Stichting CardioZorg."
+    class: none
+  - decision_part: "explains_pem false: the one study that tracked symptoms for days after a tilt found no relation between the fall in blood flow to the brain and those symptoms."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:33585505
+        quote: "No significant relations were found between the reduction in percentage of CBF and NRS for pain, fatigue, or concentration at all time points assessed (data not shown)."
+      - source: pmid:33585505
+        quote: "In HC only, the NRS for fatigue decreased significantly (p = 0.004)."
+    class: none
+  - decision_part: "Layer dysfunction: the card's claim is a measured fall in blood flow to the brain under orthostatic stress."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:32140630
+        quote: "During HUT, extracranial Doppler measurements demonstrate that CBF is reduced in ME/CFS patients with POTS, dOH, and even in those without HR/BP abnormalities."
+    class: none
+  - decision_part: "Link to symptom:orthostatic-intolerance at step associated: one Fukuda-defined controlled study measured orthostatic symptoms and blood flow to the brain in the same patients and reported a relation; the later null result for pain, fatigue and concentration is stated in the link text."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:32140630
+        quote: "There was a linear correlation of summed OI symptoms with the degree of CBF reduction at mid-tilt (P < .0005)."
+      - source: pmid:32140630
+        quote: "The second method was included from August 2013 on."
+      - source: pmid:33585505
+        quote: "No significant relations were found between the reduction in percentage of CBF and NRS for pain, fatigue, or concentration at all time points assessed (data not shown)."
+    class: none
+reasons_summary: "Level 2 rests on one Fukuda-defined controlled study of 429 patients; not repeated by an independent group with a verified case definition, no contradiction of comparable size, both badges no, layer and associated link supported."
+would_change: "An independent group with a verified case definition repeating the fall in blood flow to the brain (level 3), or a comparably defined controlled study with at least 215 patients finding no fall (contested mark). Statements that cannot be checked because the full text is not cached, and that the level, badges and link do not need: the institution labels 'Osaka Medical College' (pmid:12006954), 'Johns Hopkins Medical Institutions' (pmid:12593133) and 'New York Medical College' (pmid:22180650, pmid:25277740) are not in those abstracts, and 'Johns Hopkins University School of Medicine' for pmid:7674527 is supported only by Rowe's 2020 affiliation in pmid:32140630. Verifying the case definitions of pmid:22180650, pmid:25277740, pmid:12006954 and pmid:12593133 could change the level-3 or contested assessment."

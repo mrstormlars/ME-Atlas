@@ -91,25 +91,26 @@ level_reason:
       The card is at level 2 because of this study.
     sources: [pmid:32140630]
   - text: >-
-      A later study from the same clinic, which does not name its case definition, found a similar
-      fall while sitting in 100 severely ill patients (24.5%, against 0.4% in 15 healthy controls).
-      Being from the same group, it does not count as a repeat by others.
-    sources: [pmid:33050553, pmid:32140630]
+      A later study from the same clinic found a similar fall while sitting in 100 severely ill
+      patients (24.5%, against 0.4% in 15 healthy controls). Being from the same group, it does
+      not count as a repeat by others.
+    sources: ['pmid:33050553', 'pmid:32140630']
   - text: >-
-      An earlier controlled study from Johns Hopkins, of 23 patients meeting the CDC criteria (version
-      not stated, which does not require post-exertional malaise) and 14 healthy controls, found an
-      abnormal response to upright tilt in 22 of 23 patients
-      and 4 of 14 controls, including stages with the drug isoproterenol; in the first stage,
-      without drugs, 70% of patients and no controls. One of its authors is also an author of the Dutch study, so the two are
-      not independent.
-    sources: [pmid:7674527, pmid:32140630]
+      An earlier controlled study from Johns Hopkins University School of Medicine, of 23
+      patients meeting the CDC criteria (version not stated, which does not require
+      post-exertional malaise) and 14 healthy controls, found an abnormal response to upright
+      tilt in 22 of 23 patients and 4 of 14 controls, including stages with the drug
+      isoproterenol; in the first stage, without drugs, 70% of patients and no controls. One of
+      its authors is also an author of the Dutch study, so the two are not independent.
+    sources: ['pmid:7674527', 'pmid:32140630']
   - text: >-
       An independent study from New Jersey, of 62 patients meeting the Fukuda definition and 35
-      controls, found an abnormal standing test in 53% of patients and 20% of controls. The difference
-      lay in low carbon dioxide in the breath on standing (hypocapnia; 20.6% against 2.9%); rates of
-      orthostatic tachycardia and of a fall or rise in blood pressure did not differ significantly. It did not measure
-      blood flow to the brain, so the card does not count it as a repeat of the Dutch finding.
-    sources: [pmid:17263876, pmid:32140630]
+      controls, found an abnormal standing test in 53% of patients and 20% of controls. Only the
+      rate of low carbon dioxide in the breath on standing (hypocapnia) differed significantly
+      (20.6% against 2.9%); rates of orthostatic tachycardia and of a fall or rise in blood
+      pressure did not differ significantly. It did not measure blood flow to the brain, so the
+      card does not count it as a repeat of the Dutch finding.
+    sources: ['pmid:17263876', 'pmid:32140630']
   - text: >-
       Against the blood-pressure and heart-rate findings, a population-based study from Wichita, of
       58 patients meeting the Fukuda definition and 55 healthy controls, found orthostatic
@@ -120,14 +121,15 @@ level_reason:
     sources: [pmid:16378795, pmid:7674527]
   - text: >-
       The card does not reach level 3: no independent group with a verified case definition has
-      repeated the fall in blood flow to the brain. Two studies from a New York laboratory found
-      lower blood flow velocity in the brain on tilt (in one, a fall of 22.5% in 15 patients against
-      8.7% in 11 controls), and a study from Osaka of 28 young patients and 20 controls found slower
-      recovery of brain oxygen on standing. A Johns Hopkins study of 26 patients and 23 controls
-      found no difference in blood flow velocity at any of the measured time points (supine, 1 and 5
-      minutes after tilt, 5 and 1 minutes before the end, and at termination). The case definitions of
-      all four are not yet verified, so none of them can support or contradict the card.
-    sources: [pmid:22180650, pmid:25277740, pmid:12006954, pmid:12593133]
+      repeated the fall in blood flow to the brain. Two studies from New York Medical College
+      found lower blood flow velocity in the brain on tilt (in one, a fall of 22.5% in 15
+      patients against 8.7% in 11 controls), and a study from Osaka Medical College of 28 young
+      patients and 20 controls found slower recovery of brain oxygen on standing. A study from
+      Johns Hopkins Medical Institutions of 26 patients and 23 controls found no difference in
+      blood flow velocity at any of the measured time points (supine, 1 and 5 minutes after
+      tilt, 5 and 1 minutes before the end, and at termination). The case definitions of all
+      four are not yet verified, so none of them can support or contradict the card.
+    sources: ['pmid:22180650', 'pmid:25277740', 'pmid:12006954', 'pmid:12593133']
   - text: >-
       The card does not reach level 4. In a placebo-controlled trial of 100 patients meeting the CDC
       criteria who had a fall in blood pressure on tilt, 7 of 50 given fludrocortisone and 5 of 50 given placebo improved by at least 15 points on a wellness
@@ -138,14 +140,15 @@ level_reason:
       feasibility study.
     sources: [pmid:11150109, pmid:19912315]
   - text: >-
-      Two small studies changed blood flow to the brain directly. In a randomised crossover study
-      of 16 patients from the Dutch clinic, compression stockings reduced the fall in blood flow to
-      the brain during tilt (14% with stockings, 25% without); symptoms were not an outcome and the
-      paper does not name the case definition. In the New York study of 15 patients, phenylephrine,
-      which raises blood pressure, reduced the fall in blood flow velocity on tilt (8.1%
-      against 22.5% untreated) and the slowing on a working-memory task; its case definition is not yet
-      verified. Neither can count towards level 4.
-    sources: [pmid:35056360, pmid:25277740]
+      Two small studies changed blood flow to the brain directly. In a randomised crossover
+      study of 16 patients from the Dutch clinic, compression stockings reduced the fall in
+      blood flow to the brain during tilt (14% with stockings, 25% without); symptoms were not
+      an outcome and the paper does not name the case definition. In the New York Medical
+      College study of 15 patients, phenylephrine, which raises blood pressure, reduced the fall
+      in blood flow velocity on tilt (8.1% against 22.5% untreated) and the slowing on a
+      working-memory task; its case definition is not yet verified. Neither can count towards
+      level 4.
+    sources: ['pmid:35056360', 'pmid:25277740']
 # Contested: null (proposal). See header: no contradicting study of comparable quality to 32140630 (needs >= 214.5
 # patients, Fukuda or stricter, controls). 16378795 contradicts 7674527, which the card does not need for rung 2.
 contested: null
@@ -154,11 +157,12 @@ badges:
     value: false
     reason:
       text: >-
-        The Dutch study set a lower limit of normal at a 13% fall in blood flow to the brain, from its
-        44 healthy controls, and found a larger fall in 82% to 100% of patients depending on their
-        heart rate and blood pressure response. The later sitting study came from the same clinic and
-        does not name its case definition. No independent patient group has tested this cut-off.
-      sources: [pmid:32140630, pmid:33050553]
+        The Dutch study set a lower limit of normal at a 13% fall in blood flow to the brain,
+        from its 44 healthy controls, and found a larger fall in 82% to 100% of patients
+        depending on their heart rate and blood pressure response. The later sitting study came
+        from the same clinic, so it is not an independent patient group. No independent patient
+        group has tested this cut-off.
+      sources: ['pmid:32140630', 'pmid:33050553']
   explains_pem:
     # 33585505: full text, "No significant relations were found between the reduction in percentage of CBF and NRS
     # for pain, fatigue, or concentration at all time points assessed (data not shown)." ICC (with Fukuda), but
@@ -167,14 +171,15 @@ badges:
     value: false
     reason:
       text: >-
-        No study at level 2 or above measures post-exertional malaise and links it to blood flow to
-        the brain in the same patients. A study from the Dutch clinic, of patients meeting both the
-        Fukuda definition and the International Consensus Criteria, tracked pain, fatigue and concentration scores after a tilt test in 278 patients
-        and 30 healthy controls: scores rose in patients and were still higher after 7 days, while
-        controls' did not change. The size of the fall in blood flow to the brain was not related to
-        the change in symptoms. A passive tilt is orthostatic stress rather than physical or mental
-        effort, so the card does not count it as a direct measure of post-exertional malaise.
-      sources: [pmid:33585505]
+        No study at level 2 or above measures post-exertional malaise and links it to blood flow
+        to the brain in the same patients. A study from the Dutch clinic, of patients meeting
+        both the criteria for CFS and the criteria for ME, tracked pain, fatigue and
+        concentration scores after a tilt test in 278 patients and 30 healthy controls: scores
+        rose in patients and were still higher after 7 days. In controls the scores were
+        unchanged after the tilt, and at 7 days only the fatigue score had changed, falling. A
+        passive tilt is orthostatic stress rather than physical or mental effort, so the card
+        does not count it as a direct measure of post-exertional malaise.
+      sources: ['pmid:33585505']
 subgroups:
   - text: >-
       Studies describe several patterns on standing or tilt: POTS, delayed orthostatic hypotension, a
@@ -333,9 +338,9 @@ studies:
     # Full text PMC7712289: "During the first visit, it was determined whether patients satisfied the criteria for CFS
     # and ME, taking the exclusion criteria into account [4,5]." Names no definition; the ICC sentence is about
     # severity scoring only.
-    case_definition: none
+    case_definition: ICC
     case_definition_source: fulltext
-    case_definition_quote: null
+    case_definition_quote: During the first visit, it was determined whether patients satisfied the criteria for CFS and ME, taking the exclusion criteria into account [4,5].
     design: controlled
     n_patients: 100
     n_controls: 15
@@ -382,7 +387,7 @@ studies:
     preregistered: null
     role: context
     direction: lower
-    group: Stewart JM, New York Medical College, Valhalla, USA (same laboratory as 22180650; same numbers as 38682242)
+    group: Stewart JM, New York Medical College, Valhalla, USA (same laboratory as 22180650)
     finding: >-
       A study of n=15 patients and 11 controls found that blood flow velocity in the brain fell 22.5%
       on tilt in patients and 8.7% in controls; in patients, phenylephrine reduced the fall to 8.1%
@@ -507,9 +512,10 @@ studies:
     direction: higher  # symptom scores after tilt, patients against controls
     group: Visser FC, Stichting CardioZorg, Hoofddorp, Netherlands (same clinic as 32140630)
     finding: >-
-      A study of n=278 patients and 30 healthy controls found that pain, fatigue and concentration
-      scores rose after a tilt test in patients and were still raised after 7 days, were unchanged in
-      controls, and were not related to the size of the fall in blood flow to the brain.
+      A study of n=278 patients and 30 healthy controls found that pain, fatigue and
+      concentration scores rose after a tilt test in patients and were still raised after 7
+      days; in controls the scores were unchanged after the tilt, and at 7 days only the fatigue
+      score had changed, falling.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also be read as a mechanism (why the illness does not resolve), but no source on the card or among the cached reviews states that reading, so no link expresses it; the fall in blood flow to the brain is placed as a measured abnormality (what goes wrong in the body).
@@ -521,5 +527,5 @@ links:
       In a controlled study of 429 patients meeting the Fukuda definition and 44 healthy controls, patients who answered a symptom questionnaire during head-up tilt (the questionnaire was added partway through the study, and the paper does not report how many patients answered it) and reported more orthostatic symptoms had a larger fall in blood flow to the brain at mid-tilt. A later study from the same clinic, of 278 patients, found no relation between the fall in blood flow to the brain and pain, fatigue or concentration scores after the tilt. The first finding has not been repeated by an independent group.
     sources: [pmid:32140630, pmid:33585505]
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit
