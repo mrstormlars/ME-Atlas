@@ -1,0 +1,213 @@
+card: oxidative-nitrosative-stress
+round: 3
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-oxidative-nitrosative-stress-second.yaml
+- 2026-11-13-oxidative-nitrosative-stress.yaml
+draft_sha256: 32823622223a59d74f502d30cb058f9d399bb442c12c4e4bde7963930c5f2b1b
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: The Antwerp study (pmid:21455120), one of the two studies level 2 rests on, is labelled Fukuda
+      and level_reason[0] says '56 patients meeting the Fukuda definition'. The case_definition_quote
+      reads only 'The diagnosis "ME/CFS" was made using the Centres for Disease Control and Prevention
+      (CDC) criteria [29].' The quote names no version, so it does not support the Fukuda label on its
+      own. Both audit records rejected the card on this point. (Reference 29 in the cached full text PMC3539515
+      is Fukuda K et al., Ann Intern Med 1994, but the card neither quotes nor cites that reference entry.)
+    fix: 'Follow the audits. Set case_definition to CDC_unspecified and write it in level_reason[0] the
+      way the Dundee study is written: ''56 patients meeting the CDC criteria (version not named)''. The
+      other choice is to keep Fukuda and add the reference-list entry (ref 29 = Fukuda K, 1994) to the
+      quote, but two audits have already rejected the Fukuda label. Level 2 still holds either way, because
+      the rubric accepts CDC-unspecified like Fukuda.'
+    class: decisive
+    targets:
+    - studies[pmid:21455120].case_definition
+    - level_reason[0]
+  - operation: null
+    severity: must_fix
+    problem: level_reason[1] calls the Stanford study (pmid:40627396) one of the 'controlled studies of
+      patients meeting the Fukuda definition'. The cached full text says patients 'were diagnosed by a
+      physician using the National Academy of Medicine (8), Fukuda (36), and Canadian Consensus criteria
+      (37)'. That names three definitions together; it does not say every patient met Fukuda. Audit second.yaml
+      part 1 objects to this sentence.
+    fix: 'Describe the Stanford cohort as the record does: diagnosed using the National Academy of Medicine,
+      Fukuda and Canadian Consensus criteria. For example, take it out of the ''meeting the Fukuda definition''
+      clause and add ''(patients diagnosed using the NAM, Fukuda and Canadian Consensus criteria)''. The
+      study label can stay Fukuda as the lowest definition named.'
+    class: decisive
+    targets:
+    - level_reason[1]
+  - operation: null
+    severity: must_fix
+    problem: level_reason[5] says the NADH crossover trial (pmid:10071523) 'did not measure oxidative
+      stress either'. The cached record is an abstract only. It names 'laboratory studies' without listing
+      them and does not say that oxidative stress went unmeasured, so the claim cannot be checked against
+      the record.
+    fix: Write 'its abstract reports no oxidative-stress measure', or remove the clause.
+    class: wording
+    target: level_reason[5]
+    targets:
+    - level_reason[5]
+  - operation: null
+    severity: must_fix
+    problem: The group field of pmid:21552194 reads 'Maes M / Bosmans E, Maes Clinics'. The cached record
+      (abstract only) gives the affiliation as 'Piyavate Hospital, Bangkok, Thailand' and does not contain
+      'Maes Clinics'. A group or place name that is not in the cached record is a must_fix.
+    fix: Use the record's affiliation ('Maes M / Bosmans E, Piyavate Hospital, Bangkok, Thailand'), or
+      name only the authors and keep the shared-author note.
+    class: decisive
+    targets:
+    - studies[pmid:21552194].group
+  - operation: null
+    severity: advisory
+    problem: badge_reasons.diagnostic_marker[0] gives the non-significant ROC result for plasma peroxides
+      (AUC 62.6%). The abstract of pmid:21455120 also says 'Both biomarkers contributed significantly
+      in discriminating' (linear discriminant analysis). Neither result was tested in a second cohort,
+      so the badge is not affected.
+    fix: Optionally add that a combined discriminant analysis in the same cohort was significant but was
+      not tested in a second group.
+operations:
+- op: update_study
+  id: pmid:21455120
+  set:
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention
+      (CDC) criteria [29].
+- op: update_study
+  id: pmid:21552194
+  set:
+    group: Maes M / Bosmans E, Piyavate Hospital, Bangkok, Thailand (shares authors with 21455120 and
+      20010505)
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study from Dundee, Scotland, with 47 patients meeting the CDC criteria (version not named) and
+    34 healthy volunteers enrolled (the number measured is not stated) found higher blood levels of isoprostanes,
+    a marker of oxidative damage to fats, in patients, both in those with and in those without cardiovascular
+    risk factors. A study of 56 patients meeting the CDC criteria (version not named) and 37 healthy controls,
+    outpatients of the Maes Clinics in Antwerp, Belgium, found higher plasma peroxides in patients. Neither
+    version of the CDC criteria requires post-exertional malaise. The card is at level 2 because of these
+    two controlled studies, which used different measures.
+  sources:
+  - pmid:16085177
+  - pmid:21455120
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'Other controlled studies found higher oxidative-stress markers, each on a different measure:
+    malondialdehyde and protein carbonyls in 24 women meeting the 1994 CDC definition against 19 healthy
+    women in Novi Sad, Serbia; reactive oxygen metabolites in a study from Osaka of patients diagnosed
+    by the Fukuda 1994 criteria, whose abstract does not give the numbers; and reactive oxygen species
+    inside lymphocytes in 15 patients against 16 controls at Stanford, where the difference was found
+    in women but not in men. The Stanford patients were diagnosed using the National Academy of Medicine,
+    Fukuda and Canadian Consensus criteria; which definition each patient met is not stated. Because the
+    measures differ, none of these is a repeat of another, and each is unreplicated.'
+  sources:
+  - pmid:23185200
+  - pmid:27224647
+  - pmid:40627396
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'The card does not reach level 4: no controlled trial in patients with a confirmed recognised
+    case definition has lowered an oxidative-stress measure and improved the illness. A placebo-controlled
+    trial of coenzyme Q10 plus NADH in 73 patients reported less fatigue than with placebo and lower lipid
+    peroxides in blood cells of the treated group (the abstract does not say whether against placebo or
+    against baseline), but its case definition is not yet verified. A larger placebo-controlled trial
+    of the same combination from the same unit, in 207 women meeting the Fukuda definition, did not measure
+    oxidative stress and reported that fatigue scores changed in parallel in the two groups. A crossover
+    trial of NADH alone in 26 patients meeting the CDC criteria reports no oxidative-stress measure in
+    its abstract.'
+  sources:
+  - pmid:25386668
+  - pmid:34444817
+  - pmid:10071523
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 0
+    severity: advisory
+    problem: Answers audit second.yaml part 1, audit first parts 1-2 and pre-review finding 1. The CDC_unspecified
+      label and the quote match the cached full text PMC3539515 ('The diagnosis "ME/CFS" was made using
+      the Centres for Disease Control and Prevention (CDC) criteria [29].'). The rubric accepts CDC-unspecified
+      like Fukuda, so level 2 still rests on two accepted-definition controlled studies (pmid:16085177,
+      pmid:21455120). The YAML comments (header lines 19-20 and line 231 above the study entry) still
+      describe the Fukuda reading; they are not reader-facing but now disagree with the label.
+    fix: Update those comments to CDC_unspecified when the card is next edited.
+  - operation: 1
+    severity: advisory
+    problem: 'Answers pre-review finding 4 and resolves the earlier review''s must_fix on this operation:
+      ''Piyavate Hospital, Bangkok, Thailand'' is the record''s affiliation, and ''shares authors with
+      21455120 and 20010505'' matches the author facts (5 and 6 shared authors). Side effect: the group
+      field of pmid:27766535 still says 21552194 is ''listed there as Maes M / Bosmans E, Maes Clinics,
+      Antwerp, Belgium'', which is no longer true for 21552194. That field is not among this round''s
+      targets, so the correction could not change it; it states nothing false about a source (Maes M is
+      an author of all three).'
+    fix: When the card is next edited, change the pmid:27766535 group note to say only that Maes M is
+      also an author of 21455120, 20010505 and 21552194.
+  - operation: 2
+    severity: advisory
+    problem: 'Answers audit second.yaml part 1, audit first part 1 and pre-review finding 1, and resolves
+      the earlier review''s must_fix: the Antwerp clause now reads ''outpatients of the Maes Clinics in
+      Antwerp, Belgium'', as in PMC3539515, and no longer implies the Dundee group. 47 v 34 enrolled and
+      56 v 37 match the records; Dundee is in the pmid:16085177 affiliation; the PEM sentence is the flag
+      the rubric requires for CDC criteria. No problem found.'
+    fix: null
+  - operation: 3
+    severity: advisory
+    problem: Answers audit second.yaml part 2 and pre-review finding 2. '24 women meeting the 1994 CDC
+      definition against 19 healthy women' matches PMC3506242 and the abstract of pmid:23185200; 'Fukuda
+      1994 criteria' matches the pmid:27224647 abstract and drops the unverifiable 'in serum'; the Stanford
+      sentence matches PMC12280928 (15 v 16, NAM, Fukuda and Canadian Consensus criteria, higher ROS in
+      females, normal in males). Place names are in the records' affiliations. No problem found.
+    fix: null
+  - operation: 4
+    severity: advisory
+    problem: 'Answers pre-review finding 3: ''reports no oxidative-stress measure in its abstract'' only
+      weakens the claim and matches the abstract-only record of pmid:10071523 (26 patients, CDC criteria).
+      73 patients and the lipoperoxide result (pmid:25386668), and 207 women meeting the 1994 CDC/Fukuda
+      definition with FIS-40 scores evolving in parallel (PMC8399248), match the records. No problem found.'
+    fix: null
+  - operation: null
+    severity: advisory
+    problem: 'Carried over from audit second.yaml would_change: both coenzyme Q10 plus NADH trials give
+      a ClinicalTrials.gov registration (NCT02063126 in the pmid:25386668 abstract; NCT03186027 for pmid:34444817),
+      but the card has preregistered: null. Not among this round''s targets; does not bear on the level.'
+    fix: null
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'The group of pmid:16085177 reads ''Belch JJ, Ninewells Hospital and Medical School, University
+      of Dundee, Scotland''. The cached PubMed record gives one affiliation: ''Vascular Diseases Research
+      Unit, The Institute of Cardiovascular Research, Ninewells Hospital and Medical School, Dundee, Scotland
+      DD1 9SY, UK.'' The institution name ''University of Dundee'' is not in the record (only an e-mail
+      domain points to it). The checklist treats a group or place name that is not in the cached record
+      as a must_fix.'
+    fix: Write the group as the record gives it, for example 'Belch JJ, Vascular Diseases Research Unit,
+      Ninewells Hospital and Medical School, Dundee, Scotland', and drop 'University of Dundee'.
+    class: decisive
+    targets:
+    - studies[pmid:16085177].group
+  - operation: null
+    severity: advisory
+    problem: links[2] says the 2017 review proposes that the pathways 'may underpin the low cortisol and
+      reduced activity of the stress-hormone (HPA) axis'. The abstract of pmid:27766535 speaks of 'lowered
+      baseline glucocorticoid levels' and 'HPA axis hypofunction'. Cortisol is a glucocorticoid, so the
+      meaning holds, but the record's own term is closer.
+    fix: Optionally write 'low baseline glucocorticoid (stress-hormone) levels' to match the abstract.
+  - operation: null
+    severity: advisory
+    problem: pmid:16610951 is recorded with cohort 'me_cfs', but its abstract describes 'subjects with
+      unexplained fatigue and nonfatigued control participants'. links[3] already states this limit, so
+      a reader of the link is not misled.
+    fix: Optionally note in the study's finding that participants had unexplained fatigue, not a stated
+      ME/CFS diagnosis.
+audits_run: []
