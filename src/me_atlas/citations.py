@@ -486,7 +486,14 @@ _CITATION_YEAR_RE = re.compile(
     r"|\b(?:19|20)\d{2}\s+(?:CDC|IOM|Institute of Medicine|Fukuda|Holmes|Canadian|International Consensus|ICC|CCC)\b"
 )
 # A rung or level of the rubric ("level 3", "rungs 2 and 3"): it refers to the rubric, not to a source.
-_RUBRIC_RE = re.compile(r"\b(?:levels?|rungs?|steps?)\s+\d+(?:\s*(?:,|and|or|to|-)\s*\d+)*", re.IGNORECASE)
+# Rungs run 0 to 5, so only a number in that range is skipped, also when joined in a list; a joined number
+# followed by a counted noun ("level 3, 4 patients") is a count and stays checked.
+_RUBRIC_NOUNS = r"(?:patients?|controls?|participants?|people|persons?|women|men|cases?|subjects?|cohorts?|studies|%)"
+_RUBRIC_RE = re.compile(
+    r"\b(?:levels?|rungs?|steps?)\s+[0-5](?!\d)"
+    rf"(?:\s*(?:,|and|or|to|-)\s*[0-5](?![\d%])(?!\s*{_RUBRIC_NOUNS}(?!\w)))*",
+    re.IGNORECASE,
+)
 _ORDINAL_RE = re.compile(r"\b\d+(?:st|nd|rd|th)\b")
 _NUMERAL_RE = re.compile(r"(?<![\w.])(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?|(?<![\w.])\.\d+")
 _SPACED_THOUSANDS_RE = re.compile(r"(?<![\d.])\d{1,3}(?:[ \u00a0\u2009\u202f]\d{3})+(?![\d.,]\d)")

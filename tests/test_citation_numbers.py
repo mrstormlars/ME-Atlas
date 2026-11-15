@@ -86,6 +86,24 @@ def test_names_ids_citation_years_rubric_numbers_and_ordinals_are_skipped(text):
     assert numerals(text) == []
 
 
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("level 3 and 47", ["47"]),
+        ("level 3, 47 patients", ["47"]),
+        ("step 2 to 47", ["47"]),
+        ("level 3, 4 patients", ["4"]),
+        ("level 3 and 4", []),
+        ("levels 2 and 3", []),
+        ("rungs 2-3", []),
+        ("level 2", []),
+        ("level 47", ["47"]),
+    ],
+)
+def test_only_rubric_numbers_0_to_5_are_skipped_after_level_rung_step(text, expected):
+    assert numerals(text) == expected
+
+
 def test_a_year_in_prose_and_a_plain_quantity_are_checked():
     assert numerals("in 2019, 40 patients and 6 months") == ["2019", "40", "6"]
 

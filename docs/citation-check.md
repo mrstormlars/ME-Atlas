@@ -77,7 +77,7 @@ Founder ruling 2026-11-15 (`docs/pm/DECISIONS.md`, the valve entry, "Numbers"). 
 - Ranges and pairs: `18-65`, `18–65`, `18 to 65`, `18 and 65` check `18` and `65` separately.
 - Minus signs and negative numbers: `-0.8` and `−0.8` check `0.8`. The sign is not compared.
 - A number inside a name or an identifier is skipped. The skip patterns: `pmid:`, `doi:`, `pmcid:` and `PPR` ids and any DOI; `PMC<digits>`; a year in a citation string (`Smith et al. (2019)`, `Smith (2019)`, `Fukuda 1994`, `2015 IOM criteria`, `2003 Canadian ...`); letters directly followed by digits (`COMPASS-31`, `IL-6`, `CD4`, `SF-36`, `COVID-19`, `IOM2015`, ICD codes such as `G93.3`); a digit before a capital (`5-HT`); a chemical prefix (`3-hydroxykynurenine`).
-- Rubric numbers: `level 3`, `rungs 2 and 3`, `step 1` refer to the rubric, not to a source, and are skipped.
+- Rubric numbers: `level 3`, `rungs 2 and 3`, `step 1` refer to the rubric, not to a source, and are skipped. Only 0 to 5 counts (the rungs); a joined number outside that range (`level 3 and 47`, `step 2 to 47`) or followed by a counted noun (`level 3, 4 patients`) is still checked.
 - Ordinals (`3rd`, `21st`) are skipped.
 
 **Word numbers.** In the card, numbers written as words (`two`, `twelve`, `half`) are **not checked**: `one` and `two` are too common as plain words (`one study`) for a low-noise rule. The source side counts both forms: a source that writes `twelve` (one to twenty) matches `12` on the card.
