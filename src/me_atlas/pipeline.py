@@ -1558,7 +1558,12 @@ def _reject(cfg: Config, slug: str, tag: str) -> Reject | None:
     return "whole-card review", _decisive_count(card_review.findings)
 
 
-def _revision_state(rejects: Sequence[Reject | None]) -> tuple[bool, str | None]:
+# Written into every trail by the code of DECISIONS 2026-11-15/16: the round ran under the falling-decisive-count rule.
+# A round whose trails lack it ran under the one-revision-per-kind rule (at most three attempts) and stays as it was.
+REVISION_RULE = "falling-decisive"
+
+
+def _revision_state(rejects: Sequence[Reject | None], falling: bool = True) -> tuple[bool, str | None]:
     """The rejects of the attempts of a round so far (the last attempt last): (whether the next attempt is open, why
     the round ends). Open when fewer than ``MAX_REVISIONS`` revisions exist and the last attempt was rejected, and
     either no earlier attempt was rejected by the same review, or the decisive findings of this reject are fewer than
@@ -1567,6 +1572,9 @@ def _revision_state(rejects: Sequence[Reject | None]) -> tuple[bool, str | None]
     if not rejects or rejects[-1] is None:
         return False, None
     kind, count = rejects[-1]
+    if not falling:  # a round run before the rule: one revision per kind, at most -revised2
+        used = any(r is not None and r[0] == kind for r in rejects[:-1])
+        return (False, "the revision of that kind is used") if used or len(rejects) >= 3 else (True, None)
     if len(rejects) - 1 >= MAX_REVISIONS:
         return False, f"all {MAX_REVISIONS} revisions are used"
     earlier = [r[1] for r in rejects[:-1] if r is not None and r[0] == kind]
@@ -3460,7 +3468,11 @@ def correction_round_state(cfg: Config, slug: str) -> tuple[int, int | None]:
         legacy = not (isinstance(data[0], dict) and "pre_card_review" in data[0])
         rejects = [_trail_reject(d) for d in data]
         # an older round had one revised attempt, whatever the kind
-        pending = (rejects[-1] is not None and attempts == [0]) if legacy else _revision_pending(rejects)
+        if legacy:
+            pending = rejects[-1] is not None and attempts == [0]
+        else:
+            falling = any(isinstance(d, dict) and d.get("revision_rule") == REVISION_RULE for d in data)
+            pending = _revision_state(rejects, falling)[0]
         if pending:
             open_round = k
         else:
@@ -5526,6 +5538,7 @@ def correction_trail(
     trail: dict[str, Any] = {
         "card": slug,
         "round": correction_number(tag),
+        "revision_rule": REVISION_RULE,
         "answered": [p.name for p in answered],
         "draft_sha256": _sha256(draft_bytes),
     }

@@ -588,7 +588,17 @@ def test_publish_after_a_correction_publishes_the_corrected_text_and_writes_the_
         f"{PUB_DATE}-{SLUG}.yaml",
     ]
     trail = corr.trail()
-    keys = ["card", "round", "answered", "draft_sha256", "pre_card_review", "operations", "checks", "review"]
+    keys = [
+        "card",
+        "round",
+        "revision_rule",
+        "answered",
+        "draft_sha256",
+        "pre_card_review",
+        "operations",
+        "checks",
+        "review",
+    ]
     assert list(trail) == [*keys, "card_review", "audits_run"]
     assert trail["pre_card_review"] == {"verdict": "accept", "findings": []}
     assert trail["card_review"] == {"verdict": "accept", "findings": []}

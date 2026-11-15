@@ -453,3 +453,33 @@ def test_c4_one_new_round_for_each_of_the_seven_and_a_third_for_oxidative_nitros
     assert pipeline.max_correction_rounds("oxidative-nitrosative-stress") == 3
     assert pipeline.max_correction_rounds("small-fibre-neuropathy") == 2
     assert pipeline.max_correction_rounds("a-card-that-was-never-corrected") == 1
+
+
+# --- rounds run before the falling-decisive rule stay as they were ----------------------------------------------------
+
+
+def test_a_round_closed_under_the_old_rule_stays_used_and_the_same_trails_of_a_new_round_stay_open(corr: Corr):
+    from test_pre_review import state, trail
+
+    def reject(n: int) -> dict:
+        return {
+            "pre_card_review": {"verdict": "accept", "findings": []},
+            "review": {
+                "verdict": "reject",
+                "findings": [{"severity": "must_fix", "class": "decisive", "problem": f"P{i}"} for i in range(n)],
+            },
+        }
+
+    files = {"C1-correction": trail(**reject(2)), "C1-correction-revised": trail(**reject(1))}
+    assert state(corr, **files) == (1, None)  # the revision of that kind was used: the round is closed
+    assert pipeline.correction_round_state(pipeline_cfg(corr), SLUG)[0] == 1  # so the next round is C2
+    marked = {k: v | {"revision_rule": pipeline.REVISION_RULE} for k, v in files.items()}
+    assert state(corr, **marked) == (0, 1)  # 2 decisive, then 1: the next revision is open
+    marked["C1-correction-revised"] = marked["C1-correction-revised"] | reject(2)
+    assert state(corr, **marked) == (1, None)  # not fewer: closed
+
+
+def test_every_trail_written_by_the_code_carries_the_revision_rule(corr: Corr):
+    corr.round_to_audits()
+    assert corr.publish() == 0
+    assert corr.trail()["revision_rule"] == pipeline.REVISION_RULE
