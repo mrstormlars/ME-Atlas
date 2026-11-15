@@ -1,0 +1,334 @@
+card: oxidative-nitrosative-stress
+round: 2
+answered:
+- 2026-11-13-oxidative-nitrosative-stress-second.yaml
+- 2026-11-13-oxidative-nitrosative-stress.yaml
+draft_sha256: 32823622223a59d74f502d30cb058f9d399bb442c12c4e4bde7963930c5f2b1b
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'core_claim says reactive species are ''damaging fats, proteins and other molecules'', citing
+      pmid:16085177 and pmid:21455120. Neither cached record mentions proteins or ''other molecules'':
+      16085177 reports isoprostanes and oxidised LDL ''indicative of a FR attack on lipids'', and 21455120
+      reports plasma peroxides and oxLDL antibodies. Protein damage (protein carbonyls) appears only in
+      pmid:23185200, which core_claim does not cite.'
+    fix: Limit the claim to what the cited records state, e.g. 'damaging fats and contributing to the
+      illness'. Or, if proteins stay, cite pmid:23185200 (already on the card) for them and drop 'other
+      molecules'.
+  - operation: null
+    severity: must_fix
+    problem: The Osaka study (pmid:27224647) is described as measuring markers 'in serum' in level_reason[1]
+      ('reactive oxygen metabolites in serum'), in level_reason[4] ('antioxidant potential in serum was
+      lower') and in studies[pmid:27224647].finding ('in serum in patients'). The cached record (no full
+      text cached) never says serum, plasma or blood. It names only d-ROMs, BAP and OSI.
+    fix: Remove 'in serum' in all three places (e.g. 'reactive oxygen metabolites (d-ROMs)', 'biological
+      antioxidant potential (BAP)').
+  - operation: null
+    severity: must_fix
+    problem: level_reason[5] says the NADH crossover trial (pmid:10071523) 'did not measure oxidative
+      stress either'. Only the abstract is cached, and it says 'Medical history, physical examination,
+      laboratory studies, and questionnaire were obtained at baseline, 4, 8, and 12 weeks' without naming
+      the laboratory studies. Whether oxidative stress was measured cannot be confirmed from the record.
+    fix: Say instead 'its abstract reports no oxidative-stress measure'.
+  - operation: null
+    severity: must_fix
+    problem: level_reason[6] reports that ubiquinol 'reported improvement in several symptoms' (pmid:27125909)
+      but does not label the result as unreplicated (credibility rule 3). It also does not say why it
+      is on an oxidative-stress card or that the abstract reports no oxidative-stress measure. As written
+      it reads as an efficacy statement for a supplement. By contrast, the CoQ10 plus NADH result next
+      to it is balanced by the larger trial.
+    fix: Add that the result is not yet repeated and that the abstract reports no oxidative-stress measure,
+      so the trial does not bear on level 4. Or fold it into level_reason[5] with the same caveats.
+  - operation: null
+    severity: must_fix
+    problem: studies[pmid:21552194].group says 'Maes M / Bosmans E, Maes Clinics'. The cached record's
+      only affiliation is 'Piyavate Hospital, Bangkok, Thailand'. 'Maes Clinics' is not in the record.
+      Also, the group of pmid:27766535 says 21552194 is 'listed there as Maes M / Bosmans E, Maes Clinics,
+      Antwerp, Belgium', which does not match the 21552194 entry itself (no Antwerp).
+    fix: Use a name in the record (e.g. 'Maes M / Bosmans E, Piyavate Hospital, Bangkok, Thailand (same
+      authors as 21455120, 20010505)'), and make the cross-reference in pmid:27766535's group match it.
+  - operation: null
+    severity: must_fix
+    problem: studies[pmid:16085177].group names 'University of Dundee'. The cached record's affiliation
+      is 'Vascular Diseases Research Unit, The Institute of Cardiovascular Research, Ninewells Hospital
+      and Medical School, Dundee, Scotland'. The university is not named; only the e-mail domain dundee.ac.uk
+      hints at it.
+    fix: Write 'Belch JJ, Ninewells Hospital and Medical School, Dundee, Scotland'.
+  - operation: null
+    severity: advisory
+    problem: 'Level check: level 2 is supported. pmid:16085177 (CDC criteria, version not stated, accepted
+      like Fukuda) and pmid:21455120 (Fukuda via ref. 29 = Fukuda 1994 in the full text) are controlled
+      studies with a recognised definition. Level 3 hinges on how ''the finding'' is read. level_reason[2]
+      reads it as ''the same result on the same measure'', which the rubric does not spell out. Read broadly
+      (''raised markers of oxidative damage to fats''), Dundee (isoprostanes), Antwerp (plasma peroxides)
+      and Novi Sad (MDA) are independent groups with the same direction. But then the 40-patient Fukuda
+      MDA study from the same clinic (pmid:21119582, no overall difference, P=.345) would be a comparable-quality
+      contradiction, and the card would need a contested mark. The card''s narrow reading is internally
+      consistent (no contested mark needed because the level does not rest on MDA). The auditor should
+      confirm the reading, and the same reading must apply to both the level and the contested mark.'
+    fix: Optionally rephrase level_reason[2] to make clear this is the card's reading of 'the finding'
+      (the same marker), not an extra criterion.
+  - operation: null
+    severity: advisory
+    problem: 'Several group fields pair the last author with the first author''s affiliation, which is
+      the only affiliation in the record: pmid:16085177 (Belch JJ), pmid:22281935 (Mathew SJ), pmid:19906518
+      (Treasaden IH), pmid:25386668 (Alegre J), pmid:10071523 (Bellanti JA). The names and places are
+      each in the record, but the record does not tie the last author to that institution. pmid:40627396
+      ''Stanford University School of Medicine, USA'' for Davis MM: his listed affiliations are Stanford
+      University (Institute of Immunity, Transplantation and Infection; HHMI), and ''USA'' is not written.'
+    fix: Either follow the convention used for pmid:41516145 (name the first author with the affiliation)
+      or keep it, accepting it as a stated house convention.
+  - operation: null
+    severity: advisory
+    problem: level_reason[5] says 'A crossover trial of NADH alone in 26 patients'. The record says 'Twenty-six
+      eligible patients ... completed the study', so enrolment may have been larger.
+    fix: Write '26 patients who completed the trial'.
+  - operation: null
+    severity: advisory
+    problem: 'badges.diagnostic_marker reason cites the Antwerp ROC result (AUC 62.6%, not significant,
+      confirmed in full text PMC3539515). The abstract of the same paper says ''Both biomarkers contributed
+      significantly in discriminating between patients with ME/CFS and normal controls'' (combined discriminant
+      analysis). A reader checking the abstract may see this as selective. The badge value false is correct
+      either way: there is no independent validation cohort.'
+    fix: Optionally add that the combined discriminant analysis was significant in the same cohort but
+      was not tested in a second group.
+  - operation: null
+    severity: advisory
+    problem: badges.explains_pem reason is accurate, but pmid:19422646 (Glasgow, 6 v 6) measured isoprostanes
+      immediately and 24 h after an exercise bout. It did not track symptoms, so it does not qualify.
+      Naming it would show readers that it was considered.
+    fix: 'Optionally add one clause: the Glasgow study measured isoprostanes after exercise but its abstract
+      reports no symptom tracking.'
+  - operation: null
+    severity: advisory
+    problem: links[2] says the review proposes oxidative pathways 'may underpin the low cortisol'. The
+      cached abstract of pmid:27766535 says 'lowered baseline glucocorticoid levels'; 'cortisol' appears
+      only as a search keyword.
+    fix: Write 'low glucocorticoid levels' or 'low baseline glucocorticoid (stress-hormone) levels'.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:16610951] has cohort me_cfs, but the record describes 'subjects with unexplained
+      fatigue and nonfatigued control participants' (111 women). No ME/CFS cohort is defined. links[3]
+      already states this caveat.
+    fix: Consider a cohort label that reflects unexplained fatigue, if the data model allows it.
+  - operation: null
+    severity: advisory
+    problem: 'Case-definition labels: pmid:40627396 is labelled Fukuda, but its quote says patients were
+      diagnosed using NAM, Fukuda and Canadian Consensus criteria. Fukuda is the conservative (lowest)
+      reading and acceptable. pmid:21455120 is labelled Fukuda on a quote that names only ''CDC criteria
+      [29]''. Reference 29 in the cached full text is Fukuda et al. 1994, so the label holds, but the
+      quote alone does not show it.'
+    fix: Optionally note in the quote or source that ref. 29 is Fukuda 1994.
+operations:
+- op: update_study
+  id: pmid:21455120
+  set:
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention
+      (CDC) criteria [29].
+- op: update_study
+  id: pmid:16085177
+  set:
+    group: Kennedy G (first author), Belch JJ (last author)
+- op: update_study
+  id: pmid:23185200
+  set:
+    group: Tomic S / Maric D, Clinic for Infectious Diseases, Clinical Center Vojvodina, Novi Sad, Serbia
+- op: update_study
+  id: pmid:27224647
+  set:
+    group: Fukuda S / Kuratsune H (first and last authors; Watanabe Y is also an author of 27125909)
+    finding: A study comparing patients with healthy controls at rest (numbers not given in the abstract)
+      found higher reactive oxygen metabolites (d-ROMs) and lower biological antioxidant potential (BAP)
+      in patients.
+- op: update_study
+  id: pmid:40627396
+  set:
+    group: Davis MM (last author), Stanford University
+- op: update_study
+  id: pmid:21119582
+  set:
+    group: Brkic S / Turkulov V, Clinic for Infectious Diseases, Clinical Center Vojvodina, Novi Sad,
+      Serbia
+- op: update_study
+  id: pmid:19422646
+  set:
+    group: Nimmo MA (last author; shares authors Kennedy G, Hill A, Belch JJ with 16085177)
+- op: update_study
+  id: pmid:21552194
+  set:
+    group: Maes M / Bosmans E, Piyavate Hospital, Bangkok, Thailand (shares authors with 21455120, 20010505)
+- op: update_study
+  id: pmid:27125909
+  set:
+    group: Watanabe Y (same author as 27224647)
+- op: update_study
+  id: pmid:27766535
+  set:
+    group: Maes M, IMPACT Strategic Research Centre, Deakin University, Geelong, Australia, with first
+      author Morris G, Llanelli, UK (Maes M is also an author of 21455120, 20010505 and 21552194 on this
+      card)
+- op: replace_paragraph
+  field: core_claim
+  index: 0
+  text: The hypothesis proposes that in people with ME/CFS reactive oxygen or nitrogen species outweigh
+    the body's antioxidant defences, damaging fats and contributing to the illness.
+  sources:
+  - pmid:16085177
+  - pmid:21455120
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study of 47 patients meeting the CDC criteria (version not named) and 34 healthy volunteers
+    enrolled (the number measured is not stated) found higher blood levels of isoprostanes, a marker of
+    oxidative damage to fats, in patients, both in those with and in those without cardiovascular risk
+    factors. A study from Antwerp of 56 patients diagnosed using the CDC criteria (version not named)
+    and 37 healthy controls found higher plasma peroxides in patients. The card is at level 2 because
+    of these two controlled studies, which used different measures. Both used CDC criteria with the version
+    not named, which does not require PEM.
+  sources:
+  - pmid:16085177
+  - pmid:21455120
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'Other controlled studies found higher oxidative-stress markers, each on a different measure:
+    malondialdehyde and protein carbonyls in 24 women meeting the 1994 CDC definition (recorded as Fukuda)
+    against 19 in Novi Sad, Serbia; reactive oxygen metabolites (d-ROMs) in a study of patients diagnosed
+    by the Fukuda 1994 criteria, whose abstract does not give the numbers; and reactive oxygen species
+    inside lymphocytes in 15 patients against 16 controls in a study at Stanford, where patients were
+    diagnosed using the National Academy of Medicine, Fukuda and Canadian Consensus criteria (Fukuda recorded
+    as the least strict named) and the difference was found in women but not in men. Because the measures
+    differ, none of these is a repeat of another, and each is unreplicated.'
+  sources:
+  - pmid:23185200
+  - pmid:27224647
+  - pmid:40627396
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'The card does not reach level 3. It reads "the finding" as the same marker: no independent group
+    has found the same result on the same measure in a separate cohort with a confirmed recognised case
+    definition. The only other isoprostane study, of 6 patients and 6 controls, also found higher levels
+    at rest, but its case definition is not yet verified. It shares three authors with the first isoprostane
+    study, so it would not count as an independent repeat even with a verified definition.'
+  sources:
+  - pmid:19422646
+  - pmid:16085177
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: 'Malondialdehyde results conflict. An earlier study of 40 women meeting the 1994 CDC diagnostic
+    criteria (recorded as Fukuda) and 40 healthy women found no overall difference between the groups;
+    the authors report a difference only after dividing patients by malondialdehyde level, and title the
+    paper as showing elevated lipid peroxidation. The two studies share three authors (Brkic S, Tomic
+    S, Maric D). The earlier study is larger than the 24-patient study that found higher levels and uses
+    the same recorded definition, so under the rubric the malondialdehyde finding cannot carry a level.
+    Whether the patients of the two studies overlap is not stated. They may also have used different methods:
+    the 24-patient study used an ELISA test for malondialdehyde bound to proteins (OxiSelect MDA Adduct
+    ELISA), and the abstract of the earlier study does not give its method. The card''s level does not
+    rest on this finding.'
+  sources:
+  - pmid:21119582
+  - pmid:23185200
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: Measures of antioxidant defences are mixed. In studies with a recognised definition, biological
+    antioxidant potential (BAP) was lower at rest in the d-ROMs study, while glutathione in lymphocytes
+    was higher in both sexes in the Stanford study (in men, in two of the three cell types tested). In
+    studies whose case definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients than
+    in 22 controls; whole-blood glutathione peroxidase activity did not differ between 40 patients and
+    24 controls; glutathione in the brain was lower in 15 patients than in 13 healthy volunteers in one
+    study and did not differ in another of 26 people in all.
+  sources:
+  - pmid:27224647
+  - pmid:40627396
+  - pmid:20010505
+  - pmid:21552194
+  - pmid:22281935
+  - pmid:19906518
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'The card does not reach level 4: no controlled trial in patients with a confirmed recognised
+    case definition has lowered an oxidative-stress measure and improved the illness. A placebo-controlled
+    trial of coenzyme Q10 plus NADH in 73 patients reported less fatigue than with placebo and lower lipid
+    peroxides in blood cells of the treated group (the abstract does not say whether against placebo or
+    against baseline), but its case definition is not yet verified. A larger placebo-controlled trial
+    of the same combination from the same unit, in 207 women meeting the Fukuda definition, did not measure
+    oxidative stress and reported that fatigue scores changed in parallel in the two groups. A crossover
+    trial of NADH alone in 26 patients who completed it, meeting the CDC criteria, reports no oxidative-stress
+    measure in its abstract.'
+  sources:
+  - pmid:25386668
+  - pmid:34444817
+  - pmid:10071523
+- op: replace_paragraph
+  field: level_reason
+  index: 6
+  text: A placebo-controlled trial of ubiquinol, the reduced form of coenzyme Q10, in 43 patients (31
+    completed) reported improvement in several symptoms. This is a single result that has not been repeated.
+    Its case definition is not yet verified, and its abstract reports no oxidative-stress measure, so
+    it does not bear on level 4.
+  sources:
+  - pmid:27125909
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No study on this card tests a cut-off from one patient group in a second, independent group. In
+    the Antwerp study the two markers together discriminated patients from controls within the same cohort,
+    but this was not tested in a second group, and plasma peroxides alone did not separate patients from
+    controls well (area under the curve 62.6%, not significant). The Stanford group's further test was
+    a small case study of three people from a family cohort, studied by the same group.
+  sources:
+  - pmid:21455120
+  - pmid:40627396
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: No study on this card tracks symptoms after an exertion challenge and links them to oxidative
+    stress in the same patients. The study of 47 patients and 34 healthy volunteers correlated isoprostane
+    levels with a post-exertional malaise symptom score, in the low-risk subgroup only; a symptom score
+    is not a direct measure of post-exertional malaise. The study of 6 patients and 6 controls measured
+    isoprostanes after an exercise bout, but its abstract reports no symptom tracking.
+  sources:
+  - pmid:16085177
+  - pmid:19422646
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 14
+    severity: must_fix
+    problem: 'level_reason[3] now says ''The two studies share three authors (Brkic S, Tomic S, Maric
+      D).'' The cached PubMed records list a fourth person in both studies. pmid:21119582 lists ''Novakov
+      Mikic, Aleksandra (A)'' and pmid:23185200 lists ''Mikic, Aleksandra Novakov (AN)'', so the full
+      name is the same. The number three is not what the records show. The revision added this sentence,
+      so it adds a number the records do not support. All other findings of the first review are resolved:
+      the group for pmid:21119582 now names Brkic S as first author and Turkulov V as last, and core_claim
+      is limited to fats with its existing sources.'
+    fix: Write 'The two studies share authors (Brkic S, Tomic S, Maric D and Novakov Mikic A, listed as
+      Mikic AN in the later record)', or 'share at least three authors (Brkic S, Tomic S, Maric D)', or
+      drop the sentence as the first attempt did.
+    class: decisive
+  - operation: 8
+    severity: advisory
+    problem: 'The group for pmid:27125909 says ''Watanabe Y (same author as 27224647)''. This is true:
+      Watanabe Y is an author of both. But ''same author as'' reads oddly, and Fukuda S and Kuratsune
+      H are also authors of both records.'
+    fix: Write 'Watanabe Y (last author; Fukuda S, Kuratsune H and Watanabe Y are also authors of 27224647)'.
+  - operation: null
+    severity: advisory
+    problem: The C10 error on links[4] is still there and marked preexisting. The link says 'the 2017
+      review' (pmid:27766535) but cites only pmid:29759891. links[2] also still says 'low cortisol', where
+      the abstract of pmid:27766535 says 'lowered baseline glucocorticoid levels'. No operation answers
+      either point; neither was a must_fix in this round.
+    fix: In a later round, cite pmid:27766535 on links[4] or drop the year, and write 'low glucocorticoid
+      levels' in links[2].
+audits_run: []
