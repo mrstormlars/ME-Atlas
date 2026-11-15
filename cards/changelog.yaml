@@ -199,3 +199,20 @@
   - pmid:28494812
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: gut-microbiome
+  change: First publication at level 3 after correction round 1
+  reason: 'Level 3 stands: lower stool butyrate in a CCC/Fukuda US cohort was reproduced by an independent
+    group in an IOM 2015 cohort in China; no trial changes the illness, no contradiction of the butyrate
+    finding, both badges correctly no.'
+  sources:
+  - pmid:36758522
+  - pmid:41387992
+  - pmid:37516837
+  - pmid:19338686
+  - pmid:37396339
+  - pmid:36758521
+  - pmid:28441964
+  - pmid:26683192
+  tier: 2
+  decided_by: ai_audit

@@ -1,0 +1,69 @@
+card: gut-microbiome
+decision: accept
+parts:
+  - decision_part: "Rung 2 of the level: the 106-patient controlled study with a recognised case definition found lower stool butyrate, also after stratifying by irritable bowel syndrome."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36758522
+        quote: "The study included stool samples from 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS, and 91 healthy control individuals recruited from 5 sites in the United States (CA, NY, NV, UT, and FL)."
+      - source: pmid:36758522
+        quote: "In contrast, butyrate was lower in both ME/CFS subjects without sr-IBS and with sr-IBS compared with healthy controls without sr-IBS (Figure 3I)."
+      - source: pmid:36758522
+        quote: "The results indicate that both deficient acetate and butyrate are associated with ME/CFS with or without sr-IBS, while deficient propionate is only found in ME/CFS subjects with sr-IBS."
+    class: none
+  - decision_part: "Rung 3 of the level (the card's level 3): an unrelated group in Jinan, China, using the 2015 IOM criteria, found lower stool butyrate and acetate after correction for multiple testing; the card correctly says Faecalibacterium did not survive that correction."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:41387992
+        quote: "This case-control study included 80 subjects, comprising 40 patients with CFS and 40 age- and sex-matched HC."
+      - source: pmid:41387992
+        quote: "The inclusion criteria for the case group were based on the"
+      - source: pmid:41387992
+        quote: "After FDR adjustment, fecal levels of acetate, butyrate, isobutyrate, and isovalerate remained significantly lower in the CFS group (all q < 0.05)."
+      - source: pmid:41387992
+        quote: "Other genera such as Alistipes, Faecalibacterium, and Subdoligranulum also exhibited reductions before multiple-testing correction, but these did not remain significant thereafter (all q > 0.05)."
+    class: none
+  - decision_part: "The card does not reach level 4: both cited trials are small, and neither shows that changing gut bacteria changes the illness; the probiotic trial's group-by-time interaction is not significant."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:37516837
+        quote: "FMT was safe but did not relieve symptoms or improve the HRQOL of patients with CFS."
+      - source: pmid:19338686
+        quote: "X Interaction 1 .452 .513 1 .125 .729"
+      - source: pmid:41387992
+        quote: "the cross-sectional design precludes causal inference"
+    class: none
+  - decision_part: "No contested mark: the conflicting results on the card (diversity, LPS-binding protein and soluble CD14) concern findings the rungs do not rest on, and no cited study of comparable quality reports stool butyrate that is not lower."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:42351611
+        quote: "Alpha-diversity did not differ significantly among groups, whereas beta-diversity analyses showed small but significant disease-associated community differences with broad overlap between cohorts."
+      - source: pmid:36758522
+        quote: "These results indicate that alpha diversity differences are associated with sr-IBS rather than ME/CFS"
+      - source: pmid:37396339
+        quote: "plasma levels of neither LBP nor sCD14 acute-phase responses were significantly elevated in individuals with ME/CFS in comparison with healthy controls"
+    class: none
+  - decision_part: "Diagnostic marker badge set to no: the classifier's validation cohort was recruited from the same US sites by the same group, so it cannot be shown to be an independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:36758522
+        quote: "recruited and sampled years earlier from our Chronic Fatigue Initiative (CFI) study"
+      - source: pmid:36758522
+        quote: "both the primary cohort and external validation cohort were derived from individuals from the same five sites in the US."
+    class: none
+  - decision_part: "PEM badge set to no: the exercise cohort of 9 patients (Fukuda only) measured gut-barrier markers after exertion but did not link them to symptoms after exertion."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:37396339
+        quote: "In line with these results, individuals with ME/CFS, but not healthy controls, exhibited elevated circulating levels of LPS (P = 0.008) (Fig. 5c)."
+      - source: pmid:37396339
+        quote: "the relatively small sample size and the use of only the Fukuda criteria for recruitment, are noteworthy limitations."
+    class: none
+  - decision_part: "Layer mechanism with no links: the cited studies frame the butyrate deficit as something that may keep symptoms going, not as a trigger or predisposition, and no link is proposed."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:36758522
+        quote: "Nonetheless, even if deficient butyrate-producing capacity is a consequence rather than a direct cause of symptoms, such a deficiency could both exacerbate ME/CFS-specific symptoms or potentiate the risk for the development of additional health-related issues."
+    class: none
+reasons_summary: "Level 3 is supported: lower stool butyrate in a 106-patient Fukuda+CCC study, repeated by an unrelated IOM 2015 group in China; no contested mark, both badges correctly no, no level 4 trial."
+would_change: "A controlled study of comparable case definition and at least half the sample size that finds stool butyrate not lower in patients would make the rung contested. A finding that the Chinese cohort overlaps the US group, or a correction of its butyrate result, would remove rung 3. A controlled trial in which changing gut bacteria changes the illness would be needed for level 4. Not checked in full text by this auditor: the details on pmid:26683192, pmid:36758521, pmid:23791918 and pmid:28441964 in the card's context paragraphs; they do not carry the level."
