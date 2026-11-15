@@ -420,6 +420,7 @@ def test_c6_thousands_forms_match_the_plain_number(tmp_path, cache, form):
         case_definition_quote=None,
         case_definition="unverified",
         case_definition_source=None,
+        finding="A fictional result.",
     )
     assert check(tmp_path, cache, study) == []
 
