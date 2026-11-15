@@ -1,0 +1,368 @@
+card: herpesvirus-reactivation
+round: 1
+answered:
+- 2026-11-13-herpesvirus-reactivation-second.yaml
+- 2026-11-13-herpesvirus-reactivation.yaml
+draft_sha256: 9ba2233505ed6a969add486718abc22b3f8432dae0ba4e8bf2b99d7662670395
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[3] says: ''The authors read the viral DNA as longstanding, persistent infection
+      rather than acute or recent infection.'' In the cached full text (PMC8378328, Discussion), the same
+      sentence calls detection of HHV DNA in saliva ''evidence of virus reactivation and shedding''. It
+      contrasts longstanding infection with acute or recent (primary) infection, not reactivation with
+      latency. The abstract also says the results are ''in accordance with the hypothesis that pathogenesis
+      is related to herpesvirus reactivation state''. As written, a reader would take the authors to be
+      reading the saliva DNA as latent rather than active, and this is one of the reasons the card gives
+      for not reaching level 3.'
+    fix: 'Quote the authors accurately, for example: ''The authors describe saliva DNA as evidence of
+      reactivation and shedding, and say that, because it matched viral DNA in earlier blood samples,
+      these are longstanding infections rather than acute or recent ones.'' Then base the level-3 reasoning
+      on the measurement differences (saliva DNA load, subgroup and time-point differences), not on this
+      sentence.'
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[3] ends with ''does not repeat the finding of active infection in blood''.
+      This reads as if the London study did not look at blood. In fact, as a screening step, it tested
+      plasma by ddPCR in 189 selected UK ME/CFS Biobank samples (ME/CFS, healthy controls and MS) and
+      found that ''HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from
+      one or two subjects and the remaining HHVs always negative'' (PMC8378328, Results, Table 1). HHV-7
+      was never found in plasma. Plasma DNA is the very marker the level-2 finding rests on: Riga 2023
+      found active infection by plasma DNA in 45% of patients and 8.7% of controls. The card leaves this
+      result out. The text does not give how many ME/CFS patients were in the plasma screen, so whether
+      it is of comparable quality (half of 200 patients) cannot be judged from the cached record. On the
+      cited evidence the card supports level 2: a controlled Fukuda study, Riga 2023 with n=200, whose
+      double active HHV-6 and HHV-7 result is unreplicated by an independent group. The auditor decides
+      the level and any contested mark.'
+    fix: Add a sentence, sourced to pmid:34422848, saying that the study's plasma screen of selected Biobank
+      samples rarely found HHV DNA (HHV-6A or HHV-6B in one or two people, HHV-7 in none), and that the
+      paper does not give the number of ME/CFS patients in that screen. Replace 'does not repeat the finding'
+      with wording that says this.
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[5] calls pmid:35102619 ''a non-randomised study'' and says it ''reported how
+      often the viruses became undetectable in blood, not whether symptoms changed''. The cached record
+      is the abstract only. The abstract does not say whether allocation was randomised: it says only
+      that ''The control group consisted of similar patients with ME/CFS (n = 63) not taking any antiviral
+      drugs''. It also does not show that the paper leaves symptoms out; only the abstract does. The study''s
+      own finding field correctly says ''symptoms are not reported in the abstract''.'
+    fix: Write 'A study of 192 treated patients ... compared with 63 untreated patients (the abstract
+      does not say how patients were allocated) reported in its abstract how often the viruses became
+      undetectable in blood; the abstract does not report symptoms.'
+  - operation: null
+    severity: must_fix
+    problem: level_reason[7] says that HHV-6 or HHV-7 DNA in blood cells is something 'this card treats
+      as a marker of latent rather than active infection'. That is the card's own reasoning, and it plays
+      down a contradicting study with no source. The Atlanta abstract (pmid:10913395) itself concludes
+      'We found no evidence that active or latent infection with HHV-6A, HHV-6B, HHV-7 ... is associated
+      with chronic fatigue syndrome.'
+    fix: Source the marker definition to the Riga papers, which define viral DNA in peripheral blood leukocytes
+      as a marker of persistent (latent) infection and DNA in cell-free plasma as a marker of active infection
+      (pmid:22927850, pmid:36653846). Also state the Atlanta authors' own conclusion, which covers active
+      infection (virus isolation was negative in everyone).
+  - operation: null
+    severity: must_fix
+    problem: badges.diagnostic_marker.reason says 'No marker on this card has been tested in a second,
+      independent patient group with a verified case definition.' Plasma viral DNA, the marker behind
+      level 2, was tested in other patient groups with accepted definitions. The Bulgarian Fukuda cohort
+      (pmid:32129496) found HHV-6 DNA in plasma in 1 of 58 patients and 0 of 50 controls (P = 1.00); its
+      full text says it 'did not observe any significant differences' in antibody positivity. The London
+      study (pmid:34422848, Canadian Consensus Criteria and/or Fukuda) rarely found HHV DNA in plasma.
+      The marker was tested and not confirmed. The badge value (false) stands, but its reason misstates
+      why.
+    fix: 'Write ''No marker on this card has been confirmed in a second, independent patient group with
+      a verified case definition'', and add one sentence: plasma HHV-6 DNA was found in 1 of 58 patients
+      in the Bulgarian Fukuda study (pmid:32129496). Keep the Ohio dUTPase sentences.'
+  - operation: null
+    severity: must_fix
+    problem: 'subgroups[0] says ''The antiviral trials selected patients by their antibodies to Epstein-Barr
+      virus or HHV-6.'' That holds for the two cited trials (pmid:2849717, pmid:23959519). The card has
+      two more antiviral studies: pmid:35102619 selected patients by blood leukocyte PCR, not antibodies,
+      and the pmid:18019402 abstract says only ''EBV subset'' without naming the selection test. The sentence
+      claims more than its sources.'
+    fix: Write 'Two antiviral trials selected patients by their antibodies to Epstein-Barr virus or HHV-6.'
+  - operation: null
+    severity: must_fix
+    problem: In links[1], the London part says the study of '30 patients' found 'a negative correlation
+      with HHV-6B during acute illness episodes'. In the full text (PMC8378328), that correlation (PEM
+      r = -0.647) comes from the sick-day samples of the seven patients who reported an acute illness
+      or worsening of symptoms (one mildly or moderately affected, six severely affected), not from all
+      30. Also, 'found no positive correlation between HHV-6B or HHV-7 DNA levels and a questionnaire
+      score for post-exertional malaise' is not stated in the text. It is inferred from PEM not being
+      among the domains the paper lists as correlated, and the per-domain results are in supplementary
+      tables that are not cached.
+    fix: Write '... did not report a positive correlation between HHV-6B or HHV-7 DNA levels in saliva
+      and a questionnaire score for post-exertional malaise, and, in samples from 7 patients during acute
+      illness episodes, reported a negative correlation between HHV-6B and that score.'
+  - operation: null
+    severity: advisory
+    problem: level_reason[0] and the pmid:36653846 finding say the paper 'gives no counts' for active
+      double HHV-6 and HHV-7 infection. The cached text gives none, but Fig. 4b shows frequencies (%)
+      that cannot be read from the cache.
+    fix: Write 'the text gives no counts for it'.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[1] leaves out that the 2012 Riga study (Table 1, PMC3426163) found the same
+      double result with counts: active dual HHV-6 + HHV-7 infection in 10 of 108 patients and 0 of 90
+      controls (plus triple HHV-6 + HHV-7 + B19 in 4 and 0). This is the same group''s earlier version
+      of the level-2 finding, not a replication, and stating it would make that clear.'
+    fix: Add the 10 of 108 versus 0 of 90 count, and say that it comes from the same group.
+  - operation: null
+    severity: advisory
+    problem: The glosses 'parvovirus B19 (not a herpesvirus)' (level_reason[0], pmid:36653846 finding)
+      and 'anelloviruses (a family of viruses that are not herpesviruses)' (level_reason[7]) are not stated
+      in the cited records. They are general knowledge and are correct, but they are unsourced.
+    fix: Keep them if general virology glosses are allowed. Otherwise write 'parvovirus B19' and 'anelloviruses'
+      without the gloss.
+  - operation: null
+    severity: advisory
+    problem: 'Group names: the pmid:22927850 group says ''Rasa S is an author of both'', but the 2023
+      record lists ''Rasa-Dzelzkaleja S''. That they are the same person is an inference. Krumina A and
+      Murovska M appear in both author lists. The pmid:37526404 group names ''Lipkin WI'', but the record
+      gives ''Ian Lipkin W''.'
+    fix: Write 'Krumina A and Murovska M are authors of both', and use the record's form of the Lipkin
+      name or say it differs.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study from Riga, Latvia, of 200 patients meeting the Fukuda definition, which does not require
+    post-exertional malaise, and 150 healthy controls looked for viral DNA in cell-free blood plasma,
+    which the authors use as a marker of active infection. Active double HHV-6 and HHV-7 infection was
+    found only in patients (p < 0.0001); the text gives no counts for it. Markers of active HHV-6, HHV-7
+    or parvovirus B19 infection together were found in 45% of patients and 8.7% of controls. The card
+    is at level 2 because of the herpesvirus-only result of this study. No independent group has repeated
+    it, so it is unreplicated.
+  sources:
+  - pmid:36653846
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: An earlier study by the same Riga group, of 108 patients meeting the 1994 CDC (Fukuda) definition
+    and 90 healthy controls, found active HHV-6, HHV-7 or parvovirus B19 infection in 70 of 108 patients
+    and 12 of 90 controls. Active HHV-7 infection alone was found in 28 patients and 10 controls, active
+    dual HHV-6 and HHV-7 infection in 10 of 108 patients and 0 of 90 controls, and the paper reports HHV-6
+    in plasma in 16 of 108 patients. This is the same group's earlier version of the level-2 finding,
+    not a replication. The two Riga studies may share patients; the papers do not say.
+  sources:
+  - pmid:22927850
+  - pmid:36653846
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: 'A study from London, with no authors shared with the Riga studies, measured herpesvirus DNA in
+    saliva every month for six months in 30 patients from the UK ME/CFS Biobank (16 severely, 14 mildly
+    or moderately affected), meeting the Canadian Consensus Criteria and/or the Fukuda definition, and
+    16 healthy controls in the saliva measurements (the abstract says 14 controls). It found higher HHV-6B
+    and HHV-7 DNA levels in saliva: HHV-6B was higher in the 16 severely affected patients than in controls
+    at three of six monthly time points, and HHV-7 was higher in the mildly or moderately affected patients
+    at two time points, with trends at the others. Epstein-Barr virus and herpes simplex virus 1 did not
+    differ. The authors describe the saliva DNA as evidence of reactivation and shedding, and say these
+    are longstanding, persistent infections rather than acute or recent ones. As a screening step, the
+    study also tested plasma from 189 selected Biobank samples by ddPCR and rarely found herpesvirus DNA:
+    HSV-2, HHV-6A and HHV-6B in one or two subjects and the remaining herpesviruses, HHV-7 among them,
+    always negative. Plasma DNA is the marker the Riga level-2 finding rests on. The cited record does
+    not give how many ME/CFS patients were in the plasma screen, so whether it is of comparable quality
+    to the 200-patient Riga study cannot be judged from it, and no contested mark is set. The card does
+    not reach level 3: the saliva measurement is a DNA load with differences only in subgroups at a few
+    time points, and the plasma screen did not find the Riga plasma result.'
+  sources:
+  - pmid:34422848
+  - pmid:36653846
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: A third randomised trial, of valacyclovir in a subset of patients with Epstein-Barr virus markers,
+    reported a larger rise in an activity score with valacyclovir than with placebo; its abstract gives
+    no sample size or statistical test. A study of 192 patients the authors classed as having reactivated
+    HHV-6 or HHV-7 infection by PCR of blood white cells, given valaciclovir, valganciclovir or artesunate,
+    compared with 63 untreated patients (the abstract does not say how patients were allocated), reported
+    in its abstract how often the viruses became undetectable in blood; the abstract does not report symptoms.
+  sources:
+  - pmid:18019402
+  - pmid:35102619
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: Some studies whose case definitions are not yet verified found no difference. A study of 26 patients
+    and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone's blood cells
+    and found no significant difference in HHV-6 or HHV-7 DNA in blood cells, which the Riga papers define
+    as a marker of persistent (latent) infection, with DNA in cell-free plasma as the marker of active
+    infection. The Atlanta authors concluded that they found no evidence that active or latent infection
+    with these viruses was associated with chronic fatigue syndrome. A multicentre search for viral genetic
+    material in blood, stool and saliva found no consistent differences between patients and controls
+    other than fewer anelloviruses in patients.
+  sources:
+  - pmid:10913395
+  - pmid:37526404
+  - pmid:22927850
+  - pmid:36653846
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No marker on this card has been confirmed in a second, independent patient group with a verified
+    case definition. Plasma HHV-6 DNA was found in 1 of 58 patients in the Bulgarian Fukuda study. Antibodies
+    against the Epstein-Barr virus dUTPase were higher in patients in two studies by the same Ohio group;
+    the later study also found higher antibodies against the HHV-6 and varicella zoster virus dUTPases.
+    Both studies have case definitions not yet verified.
+  sources:
+  - pmid:28303641
+  - pmid:41451845
+  - pmid:32129496
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: Two antiviral trials selected patients by their antibodies to Epstein-Barr virus or HHV-6. In
+    the London saliva study, HHV-6B was higher mainly in severely affected patients.
+  sources:
+  - pmid:2849717
+  - pmid:23959519
+  - pmid:34422848
+- op: update_study
+  id: pmid:36653846
+  set:
+    finding: A study of n=200 patients and 150 healthy controls found active double HHV-6 and HHV-7 infection
+      only in patients (p < 0.0001, the text gives no counts), and markers of active HHV-6, HHV-7 or parvovirus
+      B19 infection together in 45% of patients and 8.7% of controls.
+- op: update_study
+  id: pmid:22927850
+  set:
+    group: Murovska M, Riga Stradins University, Riga, Latvia (same group as 36653846; Krumina A and Murovska
+      M are authors of both)
+- op: remove_link
+  to: symptom:post-exertional-neuroimmune-exhaustion
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 4
+    severity: must_fix
+    problem: 'The new text says HHV-6 or HHV-7 DNA in blood cells is what ''the Riga papers define as
+      a marker of persistent (latent) infection''. The Riga papers do not say ''latent'' here. 36653846
+      says DNA from peripheral blood is ''a marker of persistent infection'' and describes ''persistent
+      infection/co-infection in a latent and active phase''. 22927850 says PBL DNA and cell-free plasma
+      are ''markers of persistent and active infection, resp.'', and defines latent infection as ''persistent
+      infection and without markers of active viral infection''. In the Riga definitions, blood-cell DNA
+      is present in both the latent and the active phase, so the parenthesis ''(latent)'' equates two
+      things the sources keep apart. The rest of the operation is supported: the Atlanta abstract gives
+      26 patients, 52 recruited and 50 analysed controls, no virus isolated, no significant differences,
+      and the quoted conclusion about active or latent infection. This answers the -pre finding on level_reason[7].'
+    fix: Write 'which the Riga papers define as a marker of persistent infection, with DNA in cell-free
+      plasma as the marker of active infection', without '(latent)'.
+    class: wording
+    target: level_reason[7]
+  - operation: 2
+    severity: advisory
+    problem: 'Operation 2 answers audit 1 Parts 3 and 4 and the -pre findings on level_reason[3]. Each
+      sentence matches the cached full text (PMC8378328): ''detection of HHV DNA in saliva (evidence of
+      virus reactivation and shedding)''; ''longstanding, persistent infections rather than acute/recent
+      infections''; plasma ddPCR screen (n = 189, Figure 2) of samples selected by IgG titre; ''HSV-2,
+      HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative'';
+      Table 1 lists HHV-7 plasma as 0 positive. Table 1 does not give the number of ME/CFS patients in
+      the plasma screen, so the statement that the record does not give it is correct. However, the first
+      audit held that contested: null cannot be accepted while that number is unknown. The correction
+      keeps null on the same ground and writes it out. Under the rubric, a study is comparable only with
+      at least half the sample size; that cannot be shown from the record, so the evidence does not establish
+      a contested mark, but it does not rule one out either. The auditor decides. For the auditor''s information,
+      Table 1 attributes the HHV-6A and HHV-6B plasma positives to healthy controls (''HC (1)'', ''HC
+      (2)''), and the samples were selected by high IgG titre rather than drawn as a case-control comparison.'
+    fix: None needed for the text; the contested decision rests with the auditor.
+  - operation: null
+    severity: advisory
+    problem: Audit 1 Part 5 (the layer's other reading, reactivation as a trigger or as a consequence
+      of immune dysfunction, which pmid:34422848 states, is not written out on the card and has no link)
+      is not answered by any operation. The only place it appears is a YAML comment, which readers do
+      not see. A correction cannot add a link or a paragraph, so this has to go through the map path or
+      a founder ruling. It is not a defect of the operations, but the auditor who raised it may hold the
+      card back again for it.
+    fix: Route the other-reading link through the map path (link-drafter, map review, audit).
+  - operation: 9
+    severity: advisory
+    problem: 'remove_link answers the -pre finding on links[1]: the London clause misattributed a 7-patient
+      sick-day correlation to all 30 patients and inferred a non-correlation that the text does not state.
+      The correction format has no operation to reword a link, so removal is the smallest change available,
+      and it only removes claims. No other sentence, badge or level on the card rests on this link; the
+      explains_pem reason cites 22927850 independently. Note that the Riga half of the link (FSS item,
+      1994 CDC definition, step ''associated'') was accepted by both audits and is lost with it.'
+    fix: If wanted, re-propose a Riga-only link through the map path.
+  - operation: 1
+    severity: advisory
+    problem: 'Operation 1 adds a count to the card: dual HHV-6 + HHV-7 in 10/108 patients and 0/90 controls.
+      It is sourced (22927850 Table 1, ''Dual HHV-6 + HHV-7 10/108 0/90''), comes from a study already
+      on the card, and is labelled as the same group''s earlier result, not a replication, so it does
+      not strengthen the level. It answers an advisory -pre finding. All other numbers in the paragraph
+      match the record.'
+    fix: null
+  - operation: null
+    severity: advisory
+    problem: 'Checked, no problem found. Op 0 and op 7 (36653846: 200/150 Fukuda; 45% vs 8.7%; double
+      active only in patients, p < 0.0001; ''the text gives no counts''; the parvovirus gloss is removed)
+      answer the -pre advisories. Op 3 (35102619) matches the abstract''s 192 cases and 63 untreated controls;
+      it no longer says ''non-randomised'' or that symptoms were not reported in the paper. Op 5 (32129496
+      Table 3: plasma HHV-6 DNA 1/58 patients, 0/50 controls; ''confirmed'' replaces ''tested'') answers
+      the -pre finding on the badge reason; the badge stays false. Op 6 (''Two antiviral trials'') answers
+      the subgroups finding. Op 8: Krumina A and Murovska M are in both Riga author lists. No new study
+      is added, all added sources are already on the card, and the checks passed.'
+    fix: null
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[5] opens with ''A third randomised trial'', which implies the two trials in
+      level_reason[4] were both randomised. The Montoya abstract (23959519) says ''randomized 2:1'', but
+      the Straus abstract (2849717) says only ''double-blind, placebo-controlled study'' and does not
+      say the treatment order was randomised. The Lerner abstract (18019402) itself does say ''blinded-random
+      placebo-controlled trial'', so the sentence is right about Lerner. Nothing on the card depends on
+      this: the trials do not count towards a level.'
+    fix: Write 'A third placebo-controlled trial, randomised according to its abstract, ...' or simply
+      'A third placebo-controlled trial ...'.
+  - operation: null
+    severity: advisory
+    problem: The finding for pmid:10913395 says lymphocyte PCR is 'a marker of latent infection in this
+      card's scope'. 'In this card's scope' is the card's own framing, not a source. The 2023 Riga full
+      text (PMC9847171) does call 'virus genomic sequences in DNA from peripheral blood leukocytes' markers
+      of latent infection/co-infection, but it also calls blood DNA 'a marker of persistent infection'.
+      level_reason[7] now uses 'persistent', so the card says it two different ways.
+    fix: 'Match level_reason[7]: ''(which the Riga papers use as a marker of persistent infection)''.'
+  - operation: null
+    severity: advisory
+    problem: 'The ''other reading'' of the layer is still not written on the card: reactivation as a consequence
+      of immune dysfunction rather than a mechanism. pmid:34422848 states it (''Herpesvirus reactivation
+      might be a cause or consequence of dysregulated immune function seen in ME/CFS''). Section 3 of
+      the functional spec asks for that ambiguity to be written out as a link. A correction cannot add
+      a link, so this belongs on the map path. It is not a defect in any claim the card now makes.'
+    fix: Propose the other-reading link through the link-drafter, map review and audit.
+  - operation: null
+    severity: advisory
+    problem: 'Checked against the cached records, no problem found. Case-definition quotes for 36653846,
+      22927850, 34422848, 32129496, 28604802 and 40143349 are in the full texts and support the labels
+      (34422848 says ''Canadian Consensus and/or CDC-1994''; Fukuda is the lower of the two and is the
+      right label). Numbers match: 36653846 has 200/150, 45% vs 8.7% (90/200, 13/150), and double HHV-6A/B
+      + HHV-7 only in patients (p < 0.0001) with no count in the text. 22927850 Table 1 has 70/108 vs
+      12/90, single HHV-7 28/108 vs 10/90, dual 10/108 vs 0/90, and plasma HHV-6 in 16 patients (2+10+4).
+      32129496 has active HHV-6 0/58 and 0/50, plasma HHV-6 1/58, plasma EBV 24.1% vs 4%, and active EBV
+      in 12 patients and 1 control. 34422848 has 16 SA, 14 MM and 16 HC in saliva (the abstract says 14);
+      HHV-6B is higher in SA at months 1, 3 and 5; HHV-7 is higher in MM at months 4 and 5 with trends
+      at the others; there is no HSV/EBV difference; the plasma screen has n = 189 with HHV-7 always negative
+      and gives no ME/CFS count. 28604802 has throat washings at 30% vs 42%, p = 0.37. 40143349 has 11/13
+      vs 5/10. All trial abstracts (2849717, 23959519, 18019402, 35102619), 10913395, 37526404, 28303641,
+      41451845 and 38675914 match the card''s wording. The link to symptom:flu-like-symptoms is supported
+      by 22927850 Table 3 and the results text (lymphadenopathy 2/2, 21/28, 8/10 and 10/19 in the active
+      HHV groups vs 11/38 latent or none, with no test for this comparison), with both ends measured in
+      the same Fukuda cohort. The endothelial link quotes the 2024 review''s abstract. Contested null
+      is consistent with the rubric: 32129496 has fewer than half of 200 patients, 10913395 and 37526404
+      have unverified case definitions, 28604802 concerns EBV only, and the plasma-screen count in 34422848
+      is unknown. All group and place names are in the cached affiliations. Level 2 rests on one Fukuda
+      controlled study and is labelled unreplicated, with no treatment advice.'
+    fix: null
+audits_run:
+- 2026-11-15-herpesvirus-reactivation-C1.yaml
+valve:
+  correction-review:
+    file: 2026-11-15-herpesvirus-reactivation-C1-valve-correction-review.yaml
+    passed: true

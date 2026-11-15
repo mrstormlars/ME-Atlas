@@ -1,0 +1,61 @@
+card: herpesvirus-reactivation
+decision: reject
+parts:
+  - decision_part: "The level 2 rests on a controlled Fukuda study of 200 patients and 150 controls in which active double HHV-6 and HHV-7 infection was found only in patients; the card flags that Fukuda does not require PEM and calls the finding unreplicated."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study"
+      - source: pmid:36653846
+        quote: "active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively)"
+      - source: pmid:36653846
+        quote: "Whereas markers of active infection/co-infection (virus genomic sequences in DNA from blood plasma) were detected in 45% (90/200) of the patients with ME/CFS and 8.7% (13/150) of the healthy individuals (p < 0.0001)."
+    class: none
+  - decision_part: "Level 3 is not reached: the independent London study measured saliva DNA loads, and its plasma screen did not find the plasma HHV-7 DNA that the Riga finding rests on."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:34422848
+        quote: "HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative (Table 1)."
+      - source: pmid:34422848
+        quote: "HHV-6B viral DNA concentrations were on average 6.2-fold higher in ME/CFS_SA patients than in HC: the differences were significant at months 1 (P = 0.039), 3 (P = 0.030), and 5 (P = 0.029)"
+    class: none
+  - decision_part: "No contested mark: the Bulgarian study has 58 patients, under half of 200, and the number of ME/CFS patients in the London plasma screen cannot be read from the record, so comparable quality is not shown."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:32129496
+        quote: "In the study were included 58 patients with ME/CFS and 50 healthy controls."
+      - source: pmid:34422848
+        quote: "plasma samples from 132 people with ME/CFS, 76 HC participants and 27 people with multiple sclerosis (MS) in the UKMEB were measured by ELISA"
+      - source: pmid:34422848
+        quote: "were screened by ddPCR to detect potential active (lytic) replication of any of the nine HHVs"
+    class: none
+  - decision_part: "Diagnostic marker badge no: plasma HHV-6 DNA, the marker of active infection, was not found in the second, partly independent Fukuda cohort."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32129496
+        quote: "No ME/CFS and control individuals with active CMV and HHV-6 infection were observed."
+    class: none
+  - decision_part: "Explains-PEM badge no: post-exertional malaise was recorded only as a symptom, not measured by an exertion challenge."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:22927850
+        quote: "Definite relationship was observed between active betaherpesvirus infection and subfebrility, lymphadenopathy and malaise after exertion"
+    class: none
+  - decision_part: "early_signals[0] (repeated in studies[pmid:40143349].finding) states that Epstein-Barr virus was shed in sputum by 11 of 13 patients and 5 of 10 controls; these counts cannot be matched to the only record shown for pmid:40143349, its abstract, which gives a significantly higher EBV level but no counts."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:40143349
+        quote: "We found that ME/CFS patients released EBV at a significantly higher level compared to controls (p = 0.0256)."
+      - source: pmid:40143349
+        quote: "HHV6 was present in ~50% of all participants at the same level."
+    class: decisive
+  - decision_part: "Layer and links: the card sits in the mechanism layer, but no link expresses the other reading (reactivation as trigger, or as a consequence of immune dysfunction) and the ambiguity is not written out, although the cited records state it."
+    rubric: "A card that could sit in two layers (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one layer and a link that expresses the other reading; the ambiguity is written out, not hidden."
+    evidence:
+      - source: pmid:34422848
+        quote: "Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS."
+      - source: pmid:32129496
+        quote: "Another possibility is that patients with ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction."
+    class: decisive
+reasons_summary: "Level 2, no contested mark and both badges no are supported, but the early signal's sputum counts cannot be checked against the record shown, and no link expresses the other layer reading the rubric requires for this hypothesis."
+would_change: "Accept if the sputum counts (11 of 13, 5 of 10) are removed from early_signals[0] and studies[pmid:40143349].finding or shown in a record the auditor can see, and a sourced link (for example to an immune-dysfunction or trigger node) writes out the trigger or consequence reading of the layer. A count of ME/CFS patients of at least 100 in the London plasma screen (pmid:34422848) would make it a candidate contradicting study and could set a contested mark on rung 2. Several carriers have no cached full text (pmid:2849717, pmid:23959519, pmid:18019402, pmid:35102619, pmid:10913395, pmid:37526404, pmid:28303641, pmid:41451845); the card's statements about them match their abstracts and their case definitions stay unverified, so they carry no level. No drafting, review or earlier audit material was handed to this auditor."

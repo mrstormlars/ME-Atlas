@@ -1,0 +1,39 @@
+card: small-fibre-neuropathy
+round: 1
+answered:
+- 2026-11-13-small-fibre-neuropathy-second.yaml
+- 2026-11-13-small-fibre-neuropathy.yaml
+draft_sha256: 3cb63898cc0d39c94b4b45b318660109b78395ea261e9a2d9db42f1277391e89
+operations:
+- op: remove_link
+  to: symptom:orthostatic-intolerance
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 0
+    severity: must_fix
+    problem: 'The remove_link of symptom:orthostatic-intolerance answers the only rejecting finding of
+      both audits (Part 7 of the second audit, Part 1 of the first) and is itself correct: the link''s
+      sole source, pmid:37054777, is abstract-only in the context and its abstract does not mention small
+      fibre neuropathy, veins or blood pooling. But the removal leaves a reader-facing sentence that still
+      relies on what was removed. The study entry for pmid:37054777 keeps the finding: "A review of exercise
+      pathophysiology in ME/CFS and long COVID that also discusses small fibre neuropathy and blood pooling
+      on standing in POTS. Cited on the map as the source of a proposed link, not as evidence for the
+      level." The card no longer has that link, so the second sentence is now false. The first sentence
+      repeats the claim the auditors could not match to the record: the cached record is abstract-only
+      and says nothing about small fibre neuropathy, blood pooling or POTS.'
+    fix: 'Add an update_study on pmid:37054777 that weakens its finding to what the abstract states, for
+      example: "A review of exercise pathophysiology in ME/CFS and long COVID (post-acute sequelae of
+      SARS-CoV-2), which describes overlapping blood flow and gas exchange changes on exercise testing
+      in the two conditions. Kept as context, not as evidence for the level." Also correct case_definition_source
+      (it says fulltext, but the record is abstract-only) if the operation allows it.'
+  - operation: null
+    severity: advisory
+    problem: 'The YAML comment above layer ("Other reading: ... (pmid:37054777, pmid:33577778)") still
+      cites pmid:37054777 for small fibre damage as a form of dysautonomia upstream of shunting, which
+      its abstract does not state. It is a comment, not reader-facing text.'
+    fix: Drop pmid:37054777 from that comment, or note that the statement is not in the cached abstract.
+audits_run: []

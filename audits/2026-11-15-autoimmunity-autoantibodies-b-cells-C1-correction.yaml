@@ -1,0 +1,361 @@
+card: autoimmunity-autoantibodies-b-cells
+round: 1
+answered:
+- 2026-11-13-autoimmunity-autoantibodies-b-cells-second.yaml
+- 2026-11-13-autoimmunity-autoantibodies-b-cells.yaml
+draft_sha256: bb16c4b307b6d41b993ee435a386f66040295ff5e93b606ece04f8ae68dbc49b
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: level_reason[0] ends 'The card is at level 2 because of this study.' The card's level is
+      3. A reader sees a level 3 bar and a sentence saying the card is at level 2. The Swedish study (pmid:34589868,
+      CCC/ICC/IOM, 48 patients, 24 controls) is the level 2 base, and level_reason[2] gives the reason
+      for level 3, but this sentence as written contradicts the card's level.
+    fix: Reword to say what the study supports, for example 'This controlled study in a defined group
+      is the basis for level 2.', or remove the sentence.
+  - operation: null
+    severity: must_fix
+    problem: level_reason[2] says 'The paper's table reports identical values in patients and controls
+      for M3 and M4.' The cached full text (PMC13334049, Table 1) does not show that. It gives M3R Aab
+      ME/CFS 9.28 (8.77) against HCs 11.75 (17.69), and M4R Aab ME/CFS 9.28 (8.77) against HCs 11.75 (17.69).
+      Patients and controls differ. What is identical is the M3 row and the M4 row, for both patients
+      and controls. The sentence misreads the table.
+    fix: Either state what the table shows ('the paper's table gives the same values for the M3 and M4
+      rows, in patients and in controls') or remove the sentence.
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[4] says ''With a stricter case definition, a placebo group and more patients
+      (151 against 30), this trial settles the question against the 30-patient trial''. ''A placebo group''
+      presents the placebo group as an advantage over the 30-patient trial, but that trial was also placebo-controlled:
+      its record (pmid:22039471) says ''double-blind, placebo-controlled phase II study'', and level_reason[3]
+      says so too. ''Settles the question'' is the card''s own judgement. The cached abstract of pmid:30934066
+      says only that B-cell depletion ''was not associated with clinical improvement''. It also says the
+      trial used several infusions over 12 months, while the earlier trial gave two. This is a different
+      regimen, which the wording ''settles'' hides.'
+    fix: Remove 'a placebo group' from the comparison (keep CCC against Fukuda and 151 against 30). Replace
+      'settles the question against' with wording the record supports, for example 'did not confirm the
+      benefit seen in the 30-patient trial'. Optionally note the different regimen (two infusions against
+      induction plus four maintenance infusions over 12 months).
+  - operation: null
+    severity: must_fix
+    problem: level_reason[6] and studies[pmid:26399744].finding call the source of the 25 patients 'an
+      open-label Bergen rituximab maintenance trial without a placebo group'. The only cached record for
+      pmid:26399744 is the PubMed abstract (no full text cached). It says only 'from Bergen with pre-
+      and post-treatment samples from 25 patients treated within the KTS-2 rituximab trial' and 'patients
+      receiving rituximab maintenance treatment'. 'Open-label' and 'without a placebo group' are not in
+      any cached record cited for this claim.
+    fix: Remove 'open-label' and 'without a placebo group', or replace them with the record's words ('25
+      patients treated within the KTS-2 rituximab trial, receiving rituximab maintenance treatment').
+      Keep the design out unless a cached record states it.
+  - operation: null
+    severity: must_fix
+    problem: 'badge_reasons.diagnostic_marker[0] says ''no study on this card tests a cut-off from one
+      cohort in a second, independent patient group.'' The cached full text of pmid:42082542 says pathological
+      levels were defined by ''the reference cut-off values provided by the manufacturer (CellTrend GmbH),
+      based on their internal validation datasets. These thresholds are assay-specific and were not derived
+      from the present study population.'' So the Spanish study did apply a cut-off from outside its own
+      cohort, and it did not separate patients from controls: β2 27.5% against 13.9%, M4 18.6% against
+      58.3%, and α1 55.9% against 58.3%. The badge value (false) still holds, but the stated reason is
+      contradicted by the record.'
+    fix: Say instead that the Spanish study applied the test maker's cut-off, derived outside the study
+      population, in its cohort, and that it did not separate patients from controls (with the percentages
+      already given). Keep the value false.
+  - operation: null
+    severity: must_fix
+    problem: subgroups[0] says 'The antibody and immunoadsorption studies focus on patients whose illness
+      began after an infection and who have raised β2 receptor antibodies.' Only the immunoadsorption
+      studies selected on this. pmid:29543914 says '10 patients with post-infectious CFS/ME and elevated
+      ß2 autoantibodies', and pmid:39759581 says '20 post-COVID ME/CFS patients found to have elevated
+      β2 adrenergic autoantibodies'. The antibody study cited in the same item, pmid:34589868, recruited
+      all patients meeting CCC/ICC/IOM at two clinics, with no selection on onset or antibody level. The
+      Spanish and Berlin antibody studies did not select on these either.
+    fix: Limit the first sentence to the immunoadsorption studies (pmid:29543914, pmid:39759581), for
+      example 'The immunoadsorption studies included only patients whose illness began after an infection
+      (after COVID-19 in one) and who had raised β2 receptor antibodies.'
+  - operation: null
+    severity: must_fix
+    problem: early_signals[1] says '6 had marked improvement in physical function, alongside a fall in
+      IgG levels, and 4 had no significant change.' The cached abstract of pmid:40703261 says the 'relative
+      reduction of serum IgG levels was 54% in six patients with clinical improvement, and 40% among four
+      with no benefit'. IgG also fell in the patients who did not improve. As written, the sentence reads
+      as if the IgG fall went only with improvement. The card's own study finding for this paper gives
+      both figures.
+    fix: Add the non-responders, for example '... 6 had marked improvement and 4 had no significant change;
+      IgG fell by 54% in those who improved and by 40% in those who did not. Not yet repeated.'
+  - operation: null
+    severity: must_fix
+    problem: 'working_on_it[0] (''IA-PACS-CFS: sham-controlled trial of immunoadsorption (NCT05710770),
+      Charité-Universitätsmedizin Berlin'') has no cached record named in the context. The trial name,
+      the registry number, ''sham-controlled'' and the institution cannot be checked. The nearest cited
+      record, pmid:39759581, mentions only a future ''randomized controlled trial (RCT) with sham apheresis'',
+      with no name or NCT number.'
+    fix: Source the entry to a cached record that states the name, NCT number, design and site, and name
+      that record in the card, or remove the entry.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] says 'The groups were not matched for sex (analyses were adjusted for age
+      and sex)'. The cached full text of pmid:42082542 says 'the sample was not matched for age and sex'.
+    fix: Write 'not matched for age and sex'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[0] uses 'Gothenburg cohort'. The cached record and full text of pmid:34589868
+      use 'Göteborg' and 'Gottfries clinic'. It is the same city under its English name, so the meaning
+      does not change.
+    fix: Optionally use 'the Göteborg (Gottfries Clinic) cohort' to match the record.
+  - operation: null
+    severity: advisory
+    problem: 'Level and contested mark, for the auditor. Level 2 is clearly supported by pmid:34589868
+      (CCC/ICC/IOM, controlled, 48 patients). Level 3 rests on the Spanish study (pmid:42082542, Fukuda,
+      controlled, 59 patients, authors independent), which found higher β2 antibodies (overall F=3.15,
+      p=0.046; post hoc p about 0.03; no correction for multiple comparisons; described as exploratory).
+      The finding it repeats was significant in only one Swedish cohort of 24 patients, and both studies
+      used CellTrend ELISAs. The rubric does not exclude a test from the same supplier, so level 3 is
+      arguable under the ladder as written, but the replication is thin. The card states this. On the
+      contested mark: the Spanish study does not reproduce the Swedish M3/M4 finding, but Fukuda ranks
+      below CCC, so it is not of comparable quality to that study. The Cornell study (pmid:40141440, 172
+      participants, no difference) has an unverified case definition and no patient count, so it cannot
+      contest yet. If its case definition is later verified as CCC, ICC or IOM, it would likely be of
+      comparable quality and the contested question should be reopened. contested: null is consistent
+      with the rubric as the records stand.'
+    fix: 'No change needed now. Consider verifying the Cornell case definition and patient count (TODO:
+      verify).'
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:22039471] has role 'supports' although its primary end point (fatigue at 3 months)
+      was negative, per its record, and the larger CCC trial (pmid:30934066, role 'contradicts') found
+      no benefit. The card text says both of these things, so a reader is not misled, but the role label
+      reads more positively than the trial's own primary result.
+    fix: Optionally consider 'context' for the 30-patient trial, or keep 'supports' and leave the limits
+      in level_reason[3] and [4] as they are.
+operations:
+- op: propose
+  target: level
+  value: 2
+  reason:
+  - text: A study from Sweden measured antibodies against adrenergic and muscarinic receptors in the blood
+      of two cohorts of 24 patients, all meeting the Canadian Consensus Criteria, the International Consensus
+      Criteria and the 2015 IOM criteria, and of 24 matched healthy controls. Antibodies against the M3
+      and M4 muscarinic receptors were higher than controls' in both cohorts; antibodies against the β1
+      and β2 adrenergic receptors were higher in the Göteborg (Gottfries Clinic) cohort only, whose samples
+      the paper reports were collected earlier and analysed separately. Levels did not correlate with
+      disease severity. This controlled study in a defined group is the basis for level 2.
+    sources:
+    - pmid:34589868
+  - text: An earlier study from Berlin of 268 patients and 108 healthy controls, whose case definition
+      is not yet verified, found higher antibodies against the β2, M3 and M4 receptors in patients. It
+      shares two authors with the Swedish study. A study of 60 patients and 30 healthy controls, also
+      with the case definition not yet verified, found higher antibodies against the M1 muscarinic receptor,
+      using a different test.
+    sources:
+    - pmid:26399744
+    - pmid:12851722
+  - text: 'A study from Spain, with no authors shared with the Swedish study, measured the same kinds
+      of antibodies with a test from the same supplier in 59 patients meeting the Fukuda definition, which
+      does not require post-exertional malaise, and 36 healthy controls. Antibodies against the β2 adrenergic
+      receptor were higher in patients than in controls. Average antibody levels against the M1 to M4
+      muscarinic receptors and the α1 and β1 adrenergic receptors did not differ; the share of people
+      above the test maker''s cut-off differed for M3 and M4, and for M4 more controls than patients were
+      above it. The paper''s table gives the same values for the M3 and M4 rows, in patients and in controls.
+      The sample was not matched for age and sex (analyses were adjusted for age and sex), the authors
+      describe the study as exploratory, and they made no correction for multiple comparisons. The card
+      is held at level 2 and not level 3: this independent group reproduced only the β2 result, which
+      the Swedish study found in one of its two cohorts, and did not reproduce the higher M3 and M4 antibodies.
+      Both studies used a test from the same supplier. The finding is unreplicated beyond this single
+      partial repeat.'
+    sources:
+    - pmid:42082542
+    - pmid:34589868
+  - text: In a randomised, double-blind trial from Bergen, Norway, 30 patients meeting the Fukuda definition
+      received rituximab, a drug that removes B cells, or saline placebo, 15 in each group. At the trial's
+      predefined primary end point, fatigue three months after treatment, there was no difference between
+      groups. Lasting improvement in self-reported fatigue was seen in 10 of 15 patients given rituximab
+      and 2 of 15 given placebo (p = 0.003), and fatigue scores differed between groups 6 to 10 months
+      after treatment.
+    sources:
+    - pmid:22039471
+  - text: A larger randomised, double-blind trial by the same Bergen group, of 151 patients meeting the
+      Canadian Consensus Criteria (77 given rituximab, 74 placebo; infusions over 12 months, follow-up
+      24 months), found no difference between groups in response rate (26.0% with rituximab, 35.1% with
+      placebo), in fatigue over 24 months or in any secondary end point. It did not confirm the benefit
+      seen in the 30-patient trial. The two trials differ in case definition (Canadian Consensus Criteria
+      against Fukuda), in size (151 against 30) and in regimen (two infusions two weeks apart in the smaller
+      trial, several infusions over 12 months in the larger one). In the larger controlled trial, B-cell
+      depletion was not associated with clinical improvement, so the card does not reach level 4.
+    sources:
+    - pmid:30934066
+    - pmid:22039471
+  - text: Rituximab removes B cells rather than the antibodies themselves. The authors of the 30-patient
+      trial suggest that improvement starting months after B cells were removed may fit a gradual clearing
+      of autoantibodies.
+    sources:
+    - pmid:22039471
+    - pmid:30934066
+  - text: In 25 patients treated within the KTS-2 rituximab trial, receiving rituximab maintenance treatment,
+      analysed in the Berlin study, raised β2 and M4 receptor antibodies fell, among patients who achieved
+      prolonged B-cell depletion, in those who responded but not in those who did not.
+    sources:
+    - pmid:26399744
+  - text: Treatments that lower antibody levels have otherwise been studied without a placebo group, so
+      they cannot count towards level 4. In 10 patients with raised β2 receptor antibodies, immunoadsorption
+      (filtering antibodies out of the blood) lowered these antibodies in 9, and 7 reported improvement
+      during treatment. In 20 patients whose ME/CFS followed COVID-19, the same Berlin group reported
+      a mean rise of 17.75 points in a physical function score after immunoadsorption. In 10 women given
+      daratumumab, a drug that targets antibody-producing plasma cells, 6 improved markedly and 4 had
+      no significant change.
+    sources:
+    - pmid:29543914
+    - pmid:39759581
+    - pmid:40703261
+  - text: Against the antibody findings, a study of 172 participants, whose case definition is not yet
+      verified, measured antibodies against a large panel of human proteins and found no significant differences
+      between patients and controls, including against β-adrenergic receptors.
+    sources:
+    - pmid:40141440
+  - text: Studies of B cells themselves are mixed. One study of 33 patients and 24 healthy controls found
+      more naive and transitional B cells and fewer plasmablasts in patients; a second, sharing an author,
+      found no difference in the classical B-cell groups in 38 patients and 32 controls, but differences
+      in a B-cell surface marker (CD24) and in one memory B-cell group.
+    sources:
+    - pmid:23480187
+    - pmid:26646713
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: 'Receptor antibody levels have been compared with controls in separate cohorts, with mixed results,
+    and no study on this card has validated a cut-off in a second, independent patient group. In the Swedish
+    study, 25% of controls and 79% and 91% of patients had at least one receptor antibody above the controls''
+    90th percentile. The Spanish study applied the test maker''s cut-off, which was not derived from its
+    own study population, and it did not separate patients from controls: 27.5% of patients and 13.9%
+    of controls had β2 receptor antibodies above it, 18.6% of patients against 58.3% of controls had M4
+    receptor antibodies above it, and 55.9% of patients against 58.3% of controls had α1 receptor antibodies
+    above it. The Cornell study found no differences.'
+  sources:
+  - pmid:34589868
+  - pmid:42082542
+  - pmid:40141440
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: 'The immunoadsorption studies included only patients whose illness began after an infection (after
+    COVID-19 in one) and who had raised β2 receptor antibodies. The Swedish study included all patients
+    meeting its criteria at two clinics, without selecting on antibody level: 79% and 91% of patients
+    in its two cohorts, and 25% of controls, had at least one raised receptor antibody.'
+  sources:
+  - pmid:29543914
+  - pmid:39759581
+  - pmid:34589868
+- op: replace_paragraph
+  field: early_signals
+  index: 1
+  text: A study of n=10 women, without a control group, found that after the plasma-cell-targeting drug
+    daratumumab 6 had marked improvement in physical function and 4 had no significant change; IgG fell
+    by 54% in those who improved and by 40% in those who did not. Not yet repeated.
+  sources:
+  - pmid:40703261
+- op: update_study
+  id: pmid:26399744
+  set:
+    finding: A study of n=268 patients and 108 healthy controls found higher antibodies against the β2,
+      M3 and M4 receptors in patients and no difference for α adrenergic, dopamine, serotonin, angiotensin
+      and endothelin receptors; in 25 patients treated within the KTS-2 rituximab trial, receiving rituximab
+      maintenance treatment, raised β2 and M4 receptor antibodies fell, among those achieving prolonged
+      B-cell depletion, in responders but not in non-responders.
+- op: update_study
+  id: pmid:12851722
+  set:
+    group: Amino N
+- op: update_study
+  id: pmid:40141440
+  set:
+    group: Hanson MR
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 2
+    severity: must_fix
+    problem: This operation answers review finding 6. Its new second sentence says 'The Swedish study
+      included all patients meeting its criteria at two clinics, without selecting on antibody level'.
+      The cached full text of pmid:34589868 does not say this. It says 'All patients at both Stora Skondal
+      and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria
+      and the IOM criteria' and 'In total, 48 patients were included, 24 from each clinic respectively'.
+      That means every included patient met the criteria. It does not mean every patient who met the criteria
+      was included. The paper also says nothing about selecting or not selecting on antibody level. The
+      sentence misreads the record and adds a fact, which a correction may not do.
+    fix: 'Drop the added clause and keep the record''s figures, for example: ''In the Swedish study, 79%
+      and 91% of patients in its two cohorts, and 25% of controls, had at least one raised receptor antibody.''
+      The first sentence (limited to the immunoadsorption studies) is correct and can stay.'
+    class: wording
+    target: subgroups[0]
+  - operation: 1
+    severity: must_fix
+    problem: This operation answers review finding 5. The rewritten reason still ends 'The Cornell study
+      found no differences.' The cached record for pmid:40141440 is the abstract only (full text not cached;
+      HTTP 500), and its author list and abstract do not name Cornell. The second audit flagged this place
+      name as unverifiable. This same correction removes 'from Cornell' from level_reason[8] and the Cornell
+      affiliation from the study's group (operation 6) for that reason, but leaves the name in the badge
+      reason.
+    fix: Name the study by what the record states, for example 'The study of 172 participants found no
+      differences.'
+    class: wording
+    target: badge_reasons.diagnostic_marker[0]
+  - operation: null
+    severity: advisory
+    problem: 'Review finding 8 (working_on_it[0]: the trial name ''IA-PACS-CFS'', NCT05710770, ''sham-controlled''
+      and Charité-Universitätsmedizin Berlin) is not answered. No cached record in this context states
+      these details (the card''s header comment names pmid:38454468, which is not among the records in
+      section 4). The correction operations cannot change working_on_it (remove_paragraph covers only
+      level_reason, contested.reason, the badge reasons, subgroups and early_signals), so this is not
+      a failure of this correction.'
+    fix: 'Raise it with the founder outside this correction: cache and cite the protocol record (pmid:38454468)
+      or the registry entry, or remove the entry.'
+  - operation: 0
+    severity: advisory
+    problem: 'The lowered level is consistent with the rubric and the records. Level 2 rests on pmid:34589868
+      (CCC/ICC/IOM 2015, controlled, 48 patients, 24 controls). The independent Spanish study (pmid:42082542,
+      Fukuda, 59 patients, 36 controls) reproduced only the β2 result, in an exploratory analysis without
+      correction for multiple comparisons. It did not reproduce β1, M3 or M4, and for M4 more controls
+      than patients were above the cut-off. This matches the first audit''s accept_lower to 2. The other
+      edits check out against the records: Göteborg (Gottfries Clinic); the M3/M4 table rows; ''not matched
+      for age and sex''; ''two infusions two weeks apart'' (pmid:22039471 full text) against ''several
+      infusions over 12 months'' (pmid:30934066 abstract); the KTS-2 wording (pmid:26399744 abstract);
+      IgG 54% against 40% (pmid:40703261); the α1 figures 55.9% against 58.3% (pmid:42082542); and the
+      group names Amino N and Hanson MR (author lists). I was not handed any drafter reasoning.'
+    fix: null
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: level_reason[6] and studies[pmid:26399744].finding say "In 25 patients treated within the
+      KTS-2 rituximab trial, receiving rituximab maintenance treatment", which can read as all 25 receiving
+      maintenance treatment. The cached abstract says only that samples from 25 KTS-2 patients were analysed
+      and that the decline was seen "in patients receiving rituximab maintenance treatment achieving prolonged
+      B-cell depletion". It does not say that all 25 received maintenance.
+    fix: 'Write: "Of 25 patients from the KTS-2 rituximab trial whose samples were analysed in the Berlin
+      study, among those receiving rituximab maintenance treatment who achieved prolonged B-cell depletion,
+      raised β2 and M4 receptor antibodies fell in those who responded but not in those who did not."'
+  - operation: null
+    severity: advisory
+    problem: links[1] says "antibodies against pituitary tissue" and "hypothalamus tissue". The cached
+      abstract of pmid:34254637 names antipituitary (APA) and antihypothalamic (AHA) antibodies detected
+      by immunofluorescence and does not use the word "tissue". The meaning is unchanged.
+    fix: Write "antibodies against the pituitary" and "antibodies against the hypothalamus", as in the
+      study's finding.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:32247028] has no group field, unlike every other study on the card. The record
+      lists Wirth K (Sanofi-Aventis Deutschland, Frankfurt) and Scheibenbogen C (Charité, Berlin).
+    fix: Add a group from the record, for example "Scheibenbogen C, Charité, Berlin, Germany (same group
+      as 26399744, 29543914, 39759581)".
+audits_run:
+- 2026-11-15-autoimmunity-autoantibodies-b-cells-C1.yaml
+- 2026-11-15-autoimmunity-autoantibodies-b-cells-C1-second.yaml
+valve:
+  correction-review:
+    file: 2026-11-15-autoimmunity-autoantibodies-b-cells-C1-valve-correction-review.yaml
+    passed: true

@@ -1,0 +1,200 @@
+card: immune-cell-gene-expression
+round: 1
+answered:
+- 2026-11-13-immune-cell-gene-expression.yaml
+draft_sha256: be3840347aa272c29ed091c3965b5ad52c35b083be2de96c1065fc8cb501a946
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: Study pmid:28494812 has group 'Wyller VB, Oslo University Hospital'. In the cached PubMed
+      record and full text (PMC5426002), Wyller VB is affiliated only with 'Department of Paediatrics
+      and Adolescent Health, Akershus University Hospital, Lørenskog, Norway' and 'Division of Medicine
+      and Laboratory Sciences, Medical Faculty, University of Oslo'. Oslo University Hospital is the affiliation
+      of other authors (Anesthesiology and Critical Care; Microbiology), not of the named group lead.
+    fix: Change the group to 'Wyller VB, Akershus University Hospital / University of Oslo', the affiliations
+      the record gives for this author.
+  - operation: null
+    severity: must_fix
+    problem: Study pmid:19503787 has case_definition 'other' with case_definition_quote null. The contested
+      reason says the paper cites its criteria to the 1994 Fukuda definition and a 2003 paper on it, so
+      the full text (PMC2688030) has a sentence the label is read from, and the card does not quote it.
+      Checklist line 1 needs a quote in the record that supports the label.
+    fix: Set case_definition_quote to the full-text sentence 'Discordance was defined as one twin meeting
+      criteria for either idiopathic chronic fatigue (ICF, 12 pairs) or CFS (32 pairs) [1], [2] ...' (refs
+      1 and 2 are Fukuda 1994 and Reeves 2003). Keep 'other', since 12 of 44 met only idiopathic chronic
+      fatigue and the analysis pooled both groups.
+  - operation: null
+    severity: must_fix
+    problem: 'badge_reasons.diagnostic_marker says the paper behind GSE214284 (pmid:38232699, which deposits
+      GSE214284) ''does not state its case definition, so the check does not meet the badge''s test''.
+      badge_reasons.explains_pem, links[0] and the study''s ''none'' label rest on the same point. That
+      is true of 38232699''s own text, which names no definition. But another study on the card, pmid:39621903
+      (full text PMC11648872), says ''The study populations for the scRNA-seq atlas and this project were
+      collected as part of the NIH-funded Cornell Collaborative ME/CFS Center, as previously described
+      (10). ... all ME subjects fulfilled the IOM and Canadian Consensus Criteria''. Its ref 10 is Vu
+      et al., i.e. 38232699. The card does not say this, and the badge and link reasons depend on it.
+      The two records also give that cohort differently: 38232699 says 30 patients and 28 controls; 39621903
+      says 28 patients and 30 controls.'
+    fix: 'Make the card say why 39621903''s statement does or does not give the case definition for the
+      38232699 / GSE214284 cohort. One way: the sentence may refer only to 39621903''s own project, and
+      38232699 itself names no definition, so it is not counted. Reword the diagnostic_marker and explains_pem
+      reasons and links[0] to rest on that stated reason, or leave the decision to the auditor without
+      claiming more than the records say. Note the 30/28 versus 28/30 difference, or avoid relying on
+      it.'
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[2]: ''found genes expressed differently and confirmed them by PCR: 16 genes
+      in a study of 25 patients and 25 controls''. In pmid:16049284 the 25 patients and 25 controls were
+      the microarray screen; the PCR confirmation used fresh samples whose number the abstract does not
+      give (the card''s own study finding says so). The sentence reads as if PCR was done in the 25/25.'
+    fix: 'For example: ''a microarray study of 25 patients and 25 controls, with 16 genes confirmed by
+      PCR in fresh samples''.'
+  - operation: null
+    severity: advisory
+    problem: 'subgroups[0]: ''different scores on a quality-of-life questionnaire and different severity''.
+      The pmid:18462164 abstract says ''distinct differences in Medical Outcomes Survey Short Form-36
+      scores, clinical phenotypes, and severity''. The gloss drops ''clinical phenotypes'' and names the
+      SF-36 only loosely.'
+    fix: 'For example: ''with different scores on a health survey (SF-36), clinical features and severity''.'
+  - operation: null
+    severity: advisory
+    problem: 'badge_reasons.diagnostic_marker: ''A study of 4 patients checked one candidate gene (ESRRA)''.
+      The full text of pmid:39394558 also enrolled ''10 vs. 10 subjects ... for further validation of
+      the primary findings''. Its 4 vs 4 is the single-cell discovery set only.'
+    fix: 'For example: ''A single-cell study of 4 patients (with a further 10 patients and 10 controls
+      for validation) checked ...'', or keep 4 and say it is the single-cell set.'
+operations:
+- op: replace_paragraph
+  field: contested.reason
+  index: 0
+  text: A study of whole blood from 25 patients and 25 matched controls found no genes expressed significantly
+    differently. Samples were taken at enrolment, not during symptom flares. The paper says its patients
+    met the Canadian case definition, which is accepted at every rung. It had a control group and at least
+    half as many patients as each of the studies above that used the Canadian Consensus Criteria and as
+    the first UK study, so it is of comparable quality to them.
+  sources:
+  - pmid:28172519
+- op: replace_paragraph
+  field: contested.reason
+  index: 2
+  text: A study of 44 pairs of identical twins, in which one twin was ill and the other well, also found
+    no difference in any transcript in blood leukocytes. The ill twins had chronic fatigue syndrome in
+    32 pairs or idiopathic chronic fatigue in 12 pairs, so its case definition is recorded as other, and
+    it does not count towards the contested mark.
+  sources:
+  - pmid:19503787
+- op: update_study
+  id: pmid:19503787
+  set:
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: Discordance was defined as one twin meeting criteria for either idiopathic
+      chronic fatigue (ICF, 12 pairs) or CFS (32 pairs) [1], [2]
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'A New Zealand study of 10 patients meeting the Canadian Consensus Criteria and 10 controls found
+    27 transcripts higher and 6 lower in patients, with the top ones related to inflammation. Two UK studies
+    using CDC criteria (version not named), which do not require post-exertional malaise, found genes
+    expressed differently: a microarray study of 25 patients and 25 controls, with 16 genes confirmed
+    by PCR in fresh samples, and a study that screened 25 patients and 50 blood donors by microarray and
+    confirmed 88 genes by PCR in 55 patients and 75 controls. The first read its pattern as T-cell activation.'
+  sources:
+  - pmid:30791746
+  - pmid:16049284
+  - pmid:18462164
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: 'The card is at level 2. Each group found some genes expressed differently, but the genes and
+    pathways differ from study to study: T-cell activation, inflammation, lower interferon and immunoglobulin
+    genes, and T-cell exhaustion. No independent group has repeated a specific finding in a separate cohort,
+    so each is unreplicated. The exhaustion reading is not consistent across the card''s own studies:
+    the Australian study estimated fewer exhausted CD8+ T cells in patients, and a long COVID study that
+    re-analysed a public single-cell dataset found no difference in T-cell exhaustion.'
+  sources:
+  - pmid:39435656
+  - pmid:30791746
+  - pmid:39621903
+  - pmid:16049284
+  - pmid:18462164
+  - pmid:41822518
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: Two checks in a second group of patients have been made. A gene list from two earlier studies
+    by one group was tested on a new, blinded set of samples by the same group and did not separate patients
+    from controls. A single-cell study of 4 patients and 4 controls checked one candidate gene (ESRRA)
+    in the public dataset GSE214284 and found it higher in monocytes of male patients. The paper behind
+    that dataset names no case definition in its own text. Another study says its project and single-cell
+    atlas came from the same research centre and that its patients met the IOM and Canadian criteria,
+    but this card does not carry a definition from one paper to another, and the two papers give the cohort's
+    size differently (30 patients and 28 controls in one, 28 and 30 in the other), so the check is not
+    counted towards the badge's test.
+  sources:
+  - pmid:21479222
+  - pmid:39394558
+  - pmid:38232699
+  - pmid:39621903
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'Two studies related blood-cell gene expression to post-exertional malaise in the same patients:
+    one found that the share of altered monocytes rose with its severity, the other an association with
+    its symptoms. One names no case definition in its own text (another study describes the criteria for
+    a cohort from the same research centre, but this card does not carry a definition across papers) and
+    the other used a broad one, so neither meets the badge''s test.'
+  sources:
+  - pmid:38232699
+  - pmid:28494812
+  - pmid:39621903
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: A 2008 UK study grouped 55 patients into 7 subtypes by their gene expression, with different scores
+    on a health survey (SF-36), clinical features and severity. This grouping has not been repeated.
+  sources:
+  - pmid:18462164
+- op: update_study
+  id: pmid:28494812
+  set:
+    group: Wyller VB, Akershus University Hospital / University of Oslo
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 1
+    severity: advisory
+    problem: 'Answers audit part 5: the unverifiable citation to Fukuda 1994 and a 2003 paper and the
+      claim that the analysis only pooled both groups are removed, and every remaining statement is in
+      the record. The paragraph does not mention the record''s third planned analysis (''the 28 pairs
+      of female twins with CFS''), which also found results that ''did not deviate from those expected
+      by chance''. The reason for not counting still holds, because no CFS definition is named in the
+      text (only references [1], [2]).'
+    fix: Optionally add that a CFS-only analysis of 28 female pairs also found no difference, and that
+      the text names no definition for the CFS twins.
+  - operation: null
+    severity: advisory
+    problem: 'Review finding 3 also named links[0]. Its sentence ''one did not state a case definition''
+      is still accurate for pmid:38232699''s own text, but it does not carry the qualification the badge
+      reasons now give: pmid:39621903 says the atlas cohort from the same centre met the IOM and Canadian
+      criteria. No operation touches the link, so the meaning is unchanged and nothing is wrong against
+      the records.'
+    fix: In a later round, align the link text with the badge reasons, for example 'one names no case
+      definition in its own text'.
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: level_reason[3] says the long COVID study's re-analysis of a public single-cell dataset 'found
+      no difference in T-cell exhaustion'; the cached record (pmid:41822518) says idiopathic ME/CFS patients
+      showed no 'signs of T cell exhaustion'. The meaning is the same, but the wording is not the record's.
+    fix: Optionally write 'found no signs of T-cell exhaustion', which is the record's wording.
+audits_run:
+- 2026-11-15-immune-cell-gene-expression-C1.yaml
+- 2026-11-15-immune-cell-gene-expression-C1-second.yaml

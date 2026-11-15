@@ -468,3 +468,41 @@ def test_a_preprint_study_is_written_with_preprint_true_and_a_plain_study_withou
     assert "    preprint: true" in new
     plain = apply_operations(card_text(), ops(add_study()), validate=False)
     assert "preprint" not in plain
+
+
+# --- core_claim: reworded by a correction or a valve fix, never removed, never given a new source -----------------
+
+
+def test_replace_core_claim_changes_only_its_lines():
+    old = card_text().splitlines()
+    new = apply_operations(card_text(), ops(rep_par("core_claim", 0, "A reworded claim."), paper=None), validate=False)
+    assert yaml.safe_load(new)["core_claim"] == {"text": "A reworded claim.", "sources": ["pmid:90000100"]}
+    after = new.splitlines()
+    start = old.index("core_claim:")
+    end = old.index("level: 2")  # the key after core_claim
+    tail = len(old) - end
+    assert after[:start] == old[:start] and after[len(after) - tail :] == old[end:]  # the rest is byte-identical
+
+
+def test_replace_core_claim_refuses_any_index_but_0():
+    with pytest.raises(OperationError, match="only valid index is 0"):
+        ops(rep_par("core_claim", 1), paper=None)
+
+
+def test_replace_core_claim_refuses_a_new_source():
+    with pytest.raises(OperationError, match="no new source"):
+        apply_operations(
+            card_text(), ops(rep_par("core_claim", 0, sources=["pmid:90000104"]), paper=None), validate=False
+        )
+
+
+def test_remove_paragraph_refuses_core_claim():
+    op = {"op": "remove_paragraph", "field": "core_claim", "index": 0}
+    with pytest.raises(OperationError, match="core_claim cannot be removed"):
+        apply_operations(card_text(), ops(op, paper=None), validate=False)
+
+
+def test_add_paragraph_refuses_core_claim_and_replacing_it_is_tier_2():
+    with pytest.raises(OperationError):
+        ops(add_par("core_claim"))
+    assert tier(ops(rep_par("core_claim", 0), paper=None).operations[0]) == 2

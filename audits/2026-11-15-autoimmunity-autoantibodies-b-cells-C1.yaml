@@ -1,0 +1,99 @@
+card: autoimmunity-autoantibodies-b-cells
+decision: accept
+parts:
+  - decision_part: "The card's level 2: a controlled study in a cohort meeting CCC, ICC and IOM 2015 criteria found higher receptor antibodies than in matched controls."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "All patients at both Stora Skondal and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM criteria (Carruthers et al., 2003; Carruthers et al., 2011; Institute of Medicine, 2015)."
+      - source: pmid:34589868
+        quote: "Significant increases in autoantibody levels in ME patients compared to controls were found for M3 and M4 -receptors in both cohorts and β1, β2, M3 and M4-receptors in one cohort."
+      - source: pmid:34589868
+        quote: "No significant correlations were found between autoantibody levels and disease severity."
+    class: none
+  - decision_part: "Level 3 is not reached: the only independent repeat, in a Fukuda cohort, reproduced the β2 result but not the M3 and M4 results found in both Swedish cohorts, was exploratory without correction for multiple comparisons, and a further study found no differences."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample"
+    evidence:
+      - source: pmid:42082542
+        quote: "No significant differences were found in the titers of AAbs against muscarinic AChR or AdR α1 and β1 between groups."
+      - source: pmid:42082542
+        quote: "Patients with ME/CFS exhibited higher titers of this AAb compared to PCC patients and HCs (Fig. 1)."
+      - source: pmid:42082542
+        quote: "Given the exploratory nature of the study, no correction for multiple comparisons was applied, and results should therefore be interpreted with caution."
+      - source: pmid:42082542
+        quote: "For the ME/CFS group, patients had to meet the diagnostic criteria proposed by Fukuda28"
+      - source: pmid:40141440
+        quote: "our analysis of 172 participants revealed no significant differences in autoantibody reactivities between ME/CFS patients and controls, including against GPCRs such as β-adrenergic receptors."
+    class: none
+  - decision_part: "Level 4 is not reached: the larger placebo-controlled B-cell depletion trial found no benefit, the smaller one was negative at its primary end point, and antibody-lowering treatments were uncontrolled."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:30934066
+        quote: "B-cell depletion using several infusions of rituximab over 12 months was not associated with clinical improvement in patients with ME/CFS."
+      - source: pmid:22039471
+        quote: "The primary end-point, defined as effect on self-reported Fatigue score 3 months after intervention, was negative."
+      - source: pmid:39759581
+        quote: "Limitations of this study include the small sample size and non-controlled study design."
+      - source: pmid:40703261
+        quote: "No definite conclusions should be drawn before a randomized study has been performed."
+    class: none
+  - decision_part: "No contested mark: the study that did not find the M3 and M4 rise used the Fukuda definition, which ranks below the CCC, ICC and IOM criteria of the supporting study, and the panel study with no differences has no case definition on record."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42082542
+        quote: "Second, the diagnostic criteria used for ME/CFS were based on the Fukuda et al. definition."
+      - source: pmid:34589868
+        quote: "All patients at both Stora Skondal and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM criteria (Carruthers et al., 2003; Carruthers et al., 2011; Institute of Medicine, 2015)."
+    class: none
+  - decision_part: "Diagnostic marker badge no: no cut-off has been validated in a second independent group; the second group used the manufacturer's cut-off and did not separate patients from controls."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:42082542
+        quote: "These thresholds are assay-specific and were not derived from the present study population."
+      - source: pmid:42082542
+        quote: "Although the analysis captured underlying patterns in AAbs distribution, no clear separation between PCC, ME/CFS, and HCs was observed."
+      - source: pmid:42082542
+        quote: "Among HCs, 58.3% showed pathological levels for M4 AChR and α1 receptors, 8.3% for β1, and 13.9% for β2 AdR."
+      - source: pmid:34589868
+        quote: "In total 25% of controls, 79% of SK-patients and 91% of GC patients had at least one increased receptor autoantibody."
+    class: none
+  - decision_part: "Explains PEM badge no: no study measures PEM directly with an exertion challenge; questionnaire scores did not correlate with antibody levels, and the PEM questionnaire change after immunoadsorption comes from an uncontrolled study."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:34589868
+        quote: "Using corrected p-value of 0.001, due to multiple comparisons, no significant correlations were found between antibody levels and any questionnaire scores."
+      - source: pmid:39759581
+        quote: "The DSQ-PEM is designed for diagnostic purposes, and not validated for tracking changes in PEM in a clinical trial."
+    class: none
+  - decision_part: "Layer mechanism: the card's sources describe an ongoing antibody-driven process after onset, which fits the perpetuating-mechanism layer."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:22039471
+        quote: "The delayed responses starting from 2-7 months after Rituximab treatment, in spite of rapid B-cell depletion, suggests that CFS is an autoimmune disease and may be consistent with the gradual elimination of autoantibodies preceding clinical responses."
+    class: none
+  - decision_part: "Link to orthostatic-intolerance-cerebral-blood-flow at step proposed, sourced to a review that states it."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:32247028
+        quote: "As both ß2AdR and M3 acetylcholine receptor are important vasodilators, we would expect their functional disturbance to result in vasoconstriction and hypoxemia."
+      - source: pmid:32247028
+        quote: "Muscular and cerebral hypoperfusion has been shown in ME/CFS in various studies and correlated with fatigue."
+    class: none
+  - decision_part: "Link to hpa-axis-cortisol at step associated: both ends measured in the same patients of a cohort with recognised case definitions, with a reported relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:34254637
+        quote: "Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls."
+      - source: pmid:34254637
+        quote: "Both AHA and/or APA at high titers were associated with hypothalamic/pituitary dysfunction"
+    class: none
+  - decision_part: "Link to autonomic-imbalance at step associated: receptor antibodies and heart rate variability measured in the same Fukuda-defined patients, with a reported correlation; the limits are written out."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:42082542
+        quote: "Additionally, AAbs against the β2 AdR correlated with a higher sympathovagal index (r = 0.45, p = 0.001)."
+      - source: pmid:42082542
+        quote: "Another important limitation is that medication use was not systematically controlled for in the analyses."
+    class: none
+reasons_summary: "Level 2 rests on a controlled CCC/ICC/IOM study; the independent Fukuda repeat reproduced only the β2 result, controlled B-cell depletion did not help, no comparable contradiction, both badges no, layer and links match their sources."
+would_change: "An independent controlled study in a CCC, ICC or IOM 2015 cohort reproducing the M3 and M4 (or β2) antibody rise would support level 3; a study of comparable quality finding no difference would make the level contested; a placebo-controlled antibody-lowering trial such as NCT05710770 could bear on level 4. The full texts of pmid:30934066, pmid:26399744, pmid:12851722, pmid:40141440, pmid:23480187 and pmid:26646713 were not cached; every card statement resting on them was matched to their abstracts, and the case definitions of pmid:26399744, pmid:12851722 and pmid:40141440 stay unverified, so none of them carries the level."

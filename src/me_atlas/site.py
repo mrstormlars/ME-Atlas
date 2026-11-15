@@ -780,6 +780,7 @@ def _gaps_view(
 
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:
     out = [f"[{code}] {m}" for m in check.errors]
+    out += [f"[{code}] {slug}: {loc} is obsolete (the English item was removed)" for loc in check.obsolete]
     out += [
         f"[{code}] {slug}: {r.locator} is stale ({r.problems[0] if r.problems else translations.STALE_TEXT})"
         for r in check.of("stale")

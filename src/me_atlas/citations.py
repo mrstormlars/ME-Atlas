@@ -21,6 +21,8 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
 * C7 a DOI-only study id that is not a preprint cannot be checked yet
 * C8 ``preprint`` on the card agrees with the PubMed record (publication type "Preprint")
 * C9 (warning) a non-null ``group`` names at least one author of the record (last name and first initial)
+* C10 every numeral in a free-text item occurs in a source the item cites, or equals a structured field of one
+  (a warning, an error where ``numbers_level`` is ERROR: the checks of newly applied texts)
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -34,6 +36,7 @@ import re
 import unicodedata
 from collections.abc import Sequence
 from dataclasses import dataclass
+from decimal import Decimal
 from pathlib import Path
 
 from me_atlas.cards import CHANGELOG_NAME, CardValidationError, Study, load_card
@@ -48,6 +51,7 @@ from me_atlas.europepmc import (
     read_cached_preprints,
 )
 from me_atlas.pubmed import DEFAULT_CACHE_ROOT, ParseError, PubMedRecord, RawCache
+from me_atlas.translations import english_items
 
 ERROR = "ERROR"
 WARNING = "WARNING"
@@ -59,7 +63,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C9, or LOAD when the file could not be read as a card
+    code: str  # C1..C10, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -152,6 +156,7 @@ class CacheReader:
         self._records: dict[str, PubMedRecord | str] = {}
         self._fulltexts: dict[str, str | tuple[str]] = {}
         self._preprints: dict[str, list[PreprintRecord]] | None = None
+        self._number_tokens: dict[str, set[str] | None] = {}
 
     def preprint(self, doi: str) -> PreprintRecord | None:
         """The cached Europe PMC preprint record with this DOI (case-insensitive), or None."""
@@ -455,7 +460,231 @@ def _check_sample_sizes(study, abstract, full, issue) -> list[CitationIssue]:
     return issues
 
 
-def check_file(path: Path, cache: CacheReader) -> list[CitationIssue]:
+# ---------------------------------------------------------------------------
+# C10: numbers in free text (docs/citation-check.md, "Numbers in free text")
+# ---------------------------------------------------------------------------
+
+_UNIT_WORDS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+_TEEN_WORDS = [
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+]
+_TENS_WORDS = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+_WORD_NUMBERS = {w: str(i) for i, w in enumerate(_UNIT_WORDS, start=1)}
+_WORD_NUMBERS |= {w: str(i) for i, w in enumerate(_TEEN_WORDS, start=10)}
+_WORD_NUMBERS |= {w: str(i * 10) for i, w in enumerate(_TENS_WORDS, start=2)}
+# One to ninety-nine; a tens word may take a unit after a hyphen or a space (``twenty-eight``, ``forty two``).
+# "hundred" forms are not read.
+_WORD_NUMBER_RE = re.compile(
+    r"\b(?:("
+    + "|".join(_TENS_WORDS)
+    + r")(?:[-\s]+("
+    + "|".join(_UNIT_WORDS)
+    + r"))?|("
+    + "|".join(_TEEN_WORDS + _UNIT_WORDS)
+    + r"))\b",
+    re.IGNORECASE,
+)
+
+
+def _word_number(m: re.Match[str]) -> str:
+    tens, unit, plain = m.groups()
+    if plain:
+        return _WORD_NUMBERS[plain.casefold()]
+    value = int(_WORD_NUMBERS[tens.casefold()])
+    return str(value + int(_WORD_NUMBERS[unit.casefold()])) if unit else str(value)
+
+
+# Digits attached to letters (IL-6, COVID-19, CD4, COMPASS-31, SF-36, IOM2015, G93.3) or to a following capital
+# (5-HT), or to a chemical prefix (3-hydroxykynurenine) are names, not quantities.
+_ATTACHED_RE = re.compile(
+    r"(?<![\d.])[^\W\d_]+-?\d+(?:\.\d+)?|(?<!\w)\d+-(?=[A-Z]{1,3}\b)"
+    r"|(?<![\w.])\d+(?:,\d+)*-(?:hydroxy|methoxy|methyl|amino|nitro|oxo|keto|phospho)\w*"
+)
+_SOURCE_ID_RE = re.compile(r"\b(?:pmid|doi|pmcid|ppr)\s*:\s*\S+|\b10\.\d{4,9}/\S+|\b(?:PMC|PPR)\d+", re.IGNORECASE)
+# A year inside a citation string: "Smith et al. (2019)", "Smith (2019)", "Fukuda 1994".
+_CITATION_YEAR_RE = re.compile(
+    r"\b[A-Z][\w'-]+(?:\s+et al\.?,?)?\s*\((?:19|20)\d{2}[a-z]?\)"
+    r"|\bet al\.?,?\s*\(?(?:19|20)\d{2}[a-z]?\)?"
+    r"|\b(?:Fukuda|Holmes|IOM|CCC|ICC|Oxford|CDC|NICE)\s+\(?(?:19|20)\d{2}\)?"
+    r"|\b(?:19|20)\d{2}\s+(?:CDC|IOM|Institute of Medicine|Fukuda|Holmes|Canadian|International Consensus|ICC|CCC)\b"
+)
+# A rung or level of the rubric ("level 3", "rungs 2 and 3"): it refers to the rubric, not to a source.
+# Rungs run 0 to 5, so only a number in that range is skipped, also when joined in a list; a joined number
+# followed by a counted noun ("level 3, 4 patients") is a count and stays checked.
+_RUBRIC_NOUNS = r"(?:patients?|controls?|participants?|people|persons?|women|men|cases?|subjects?|cohorts?|studies|%)"
+_RUBRIC_RE = re.compile(
+    r"\b(?:levels?|rungs?|steps?)\s+[0-5](?!\d)"
+    rf"(?:\s*(?:,|and|or|to|-)\s*[0-5](?![\d%])(?!\s*{_RUBRIC_NOUNS}(?!\w)))*",
+    re.IGNORECASE,
+)
+_ORDINAL_RE = re.compile(r"\b\d+(?:st|nd|rd|th)\b")
+_NUMERAL_RE = re.compile(r"(?<![\w.])(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?|(?<![\w.])\.\d+")
+_SPACED_THOUSANDS_RE = re.compile(r"(?<![\d.])\d{1,3}(?:[ \u00a0\u2009\u202f]\d{3})+(?![\d.,]\d)")
+# "78 (= 40 + 38)": a number with its derivation right after it; only sums and differences of plain numbers.
+_DERIVATION_RE = re.compile(r"(?P<res>\d[\d,]*(?:\.\d+)?)\s*(?:%|percent)?\s*\(=\s*(?P<expr>[^()]*)\)", re.IGNORECASE)
+_EXPR_RE = re.compile(r"\d[\d,]*(?:\.\d+)?(?:\s*[+-]\s*\d[\d,]*(?:\.\d+)?)+")
+
+
+def canonical_number(token: str) -> str:
+    """A numeral as compared: no thousands commas, a leading zero for ``.05``, no leading zeros. Sign, ``%`` and
+    unit are not part of it; trailing zeros are kept (``0.50`` is not ``0.5``)."""
+    whole, dot, frac = token.replace(",", "").partition(".")
+    return (whole.lstrip("0") or "0") + dot + frac
+
+
+def _normalise_numbers_text(text: str) -> str:
+    return unicodedata.normalize("NFKC", text).translate(_DASH_TABLE)
+
+
+def _mask(text: str, patterns: Sequence[re.Pattern[str]]) -> str:
+    for pattern in patterns:
+        text = pattern.sub(" ", text)
+    return text
+
+
+def free_text_numerals(text: str) -> tuple[list[str], list[str]]:
+    """(the numerals of ``text`` to check, derivation problems). Numerals are canonical, in order, once each."""
+    text = _normalise_numbers_text(text)
+    problems: list[str] = []
+
+    def derivation(match: re.Match[str]) -> str:
+        expr = match.group("expr")
+        if not _EXPR_RE.fullmatch(expr.strip()):
+            problems.append(f"the derivation (= {expr.strip()}) is not a sum or difference of plain numbers")
+            return " "
+        parts = re.findall(r"[+-]?\s*\d[\d,]*(?:\.\d+)?", expr)
+        total = Decimal(0)
+        for part in parts:
+            value = Decimal(part.replace(",", "").replace(" ", "").lstrip("+"))
+            total += value
+        result = Decimal(match.group("res").replace(",", ""))
+        if total != result:
+            problems.append(
+                f"{match.group('res')} (= {expr.strip()}) is wrong: the operands give {total.normalize():f}"
+            )
+        return f" {expr} "  # the operands are numerals like any other; the result is vouched for by the sum
+
+    text = _DERIVATION_RE.sub(derivation, text)
+    text = _mask(text, [_SOURCE_ID_RE, _CITATION_YEAR_RE, _RUBRIC_RE, _ORDINAL_RE, _ATTACHED_RE])
+    seen: dict[str, None] = {}
+    for token in _NUMERAL_RE.findall(text):
+        seen[canonical_number(token)] = None
+    return list(seen), problems
+
+
+def source_number_tokens(text: str) -> set[str]:
+    """Every number a source text states, canonical, plus ``one``..``ninety-nine`` written as words."""
+    text = _normalise_numbers_text(text)
+    found = {m.group(0) for m in _SPACED_THOUSANDS_RE.finditer(text)}
+    tokens = {canonical_number(re.sub(r"[ \u00a0\u2009\u202f]", "", t)) for t in found}
+    masked = _mask(text, [_ATTACHED_RE])
+    tokens |= {canonical_number(t) for t in _NUMERAL_RE.findall(masked)}
+    tokens |= {_word_number(m) for m in _WORD_NUMBER_RE.finditer(masked)}
+    return tokens
+
+
+def _record_text(cache: CacheReader, study_id: str) -> str | None:
+    """Title, abstract and cached full text of the record of ``study_id``; None when there is no record."""
+    parts: list[str] = []
+    if study_id.startswith("pmid:"):
+        pmid = study_id.removeprefix("pmid:")
+        record = cache.record(pmid)
+        if isinstance(record, str):
+            return None
+        parts += [record.title, record.abstract or ""]
+        full = cache.fulltext(pmid)
+        if isinstance(full, str):
+            parts.append(full)
+    elif study_id.startswith("doi:"):
+        try:
+            preprint = cache.preprint(study_id)
+        except EuropePmcError:
+            return None
+        if preprint is None:
+            return None
+        parts += [preprint.title, _TAG_RE.sub(" ", preprint.abstract or "")]
+        full = cache.preprint_fulltext(preprint)
+        if isinstance(full, str):
+            parts.append(full)
+    else:
+        return None
+    return "\n".join(parts)
+
+
+def _source_tokens(cache: CacheReader, card, study_id: str) -> set[str] | None:
+    """The numbers a cited study offers: those of its record, and its structured fields (year, n_patients,
+    n_controls). None when there is neither a record nor a study on the card."""
+    if study_id not in cache._number_tokens:
+        text = _record_text(cache, study_id)
+        tokens = source_number_tokens(text) if text is not None else None
+        for study in card.studies:
+            if study.id == study_id:
+                tokens = (tokens or set()) | {
+                    canonical_number(str(v)) for v in (study.year, study.n_patients, study.n_controls) if v is not None
+                }
+        cache._number_tokens[study_id] = tokens
+    return cache._number_tokens[study_id]
+
+
+_FINDING_RE = re.compile(r"^studies\[(.+)\]\.finding$")
+
+
+def check_numbers(file: str, card, cache: CacheReader, level: str = WARNING) -> list[CitationIssue]:
+    """C10: every numeral of every free-text item occurs in a source the item cites, or equals a structured field
+    of one. A paragraph's sources are its own ``sources``; a study's ``finding`` cites its own study.
+
+    The issue is keyed by the kind of item and the words around the number, not by the paragraph's index, so a
+    problem that was on the card before a change is still the same problem after a paragraph is removed.
+    """
+    issues: list[CitationIssue] = []
+    for locator, item in english_items(card).items():
+        if locator == "name":
+            continue
+        kind = re.sub(r"\[\d+\]", "", locator)
+        match = _FINDING_RE.match(locator)
+        sources = [match.group(1)] if match else list(item.sources or [])
+        numerals, problems = free_text_numerals(item.text)
+        for problem in problems:
+            issues.append(CitationIssue(file, kind, "C10", level, problem))
+        available: set[str] = set()
+        for source in sources:
+            available |= _source_tokens(cache, card, source) or set()
+        for numeral in numerals:
+            if numeral in available:
+                continue
+            context = _context(item.text, numeral)
+            issues.append(
+                CitationIssue(
+                    file,
+                    kind,
+                    "C10",
+                    level,
+                    f"the number {numeral} ({context}) does not occur in the cited source(s) "
+                    f"{', '.join(sources) or '(none)'} nor equal year, n_patients or n_controls of one",
+                )
+            )
+    return issues
+
+
+def _context(text: str, numeral: str) -> str:
+    """A few words around the first place ``numeral`` appears in ``text``, for the message."""
+    flat = " ".join(text.split())
+    for found in _NUMERAL_RE.finditer(_normalise_numbers_text(flat)):
+        if canonical_number(found.group(0)) == numeral:
+            return "…" + flat[max(0, found.start() - 25) : found.end() + 25].strip() + "…"
+    return "…"
+
+
+def check_file(path: Path, cache: CacheReader, numbers_level: str = WARNING) -> list[CitationIssue]:
     """All issues for one card or draft file. A file that cannot be loaded is one or more LOAD errors."""
     file = str(path)
     try:
@@ -474,11 +703,17 @@ def check_file(path: Path, cache: CacheReader) -> list[CitationIssue]:
     issues: list[CitationIssue] = []
     for study in card.studies:
         issues += check_study(file, study, cache)
+    issues += check_numbers(file, card, cache, numbers_level)
     return issues
 
 
-def check_paths(paths: Sequence[Path], cache_root: Path) -> tuple[int, list[CitationIssue]]:
-    """Check files and directories. Returns (number of files checked, all issues)."""
+def check_paths(
+    paths: Sequence[Path], cache_root: Path, numbers_level: str = WARNING
+) -> tuple[int, list[CitationIssue]]:
+    """Check files and directories. Returns (number of files checked, all issues).
+
+    ``numbers_level`` is the level of a C10 issue: WARNING for what is published or drafted already, ERROR for a
+    text that has just been applied (a correction round, a valve fix, the weekly pipeline)."""
     cache = CacheReader(cache_root)
     files: list[Path] = []
     issues: list[CitationIssue] = []
@@ -490,7 +725,7 @@ def check_paths(paths: Sequence[Path], cache_root: Path) -> tuple[int, list[Cita
         else:
             issues.append(CitationIssue(str(p), "(whole file)", "LOAD", ERROR, "path does not exist"))
     for f in files:
-        issues += check_file(f, cache)
+        issues += check_file(f, cache, numbers_level)
     return len(files), issues
 
 

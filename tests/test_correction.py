@@ -51,8 +51,33 @@ class Corr:
     def main(self, *argv: str) -> int:
         return pipeline.main([*argv, *self.env.dir_args], fulltext=_loader(), out=self.env.out.append)
 
-    def plan(self) -> int:
-        return self.main("correction-plan", SLUG, "--out", str(self.dir))
+    def pre_review(
+        self, verdict: str = "accept", k: int = 1, folder: Path | None = None, findings: list | None = None
+    ) -> int:
+        """The whole-card review of the unchanged draft: card-review-plan --pre, the reviewer's file, record-review."""
+        folder = folder or self.dir
+        if code := self.main("card-review-plan", SLUG, "--pre", "--round", f"C{k}", "--out", str(folder)):
+            return code
+        path = folder / "review" / f"{SLUG}-card-C{k}-pre.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if findings is None:
+            findings = (
+                []
+                if verdict == "accept"
+                else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "P."}]
+            )
+        path.write_text(
+            json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
+        )
+        args = ["record-review", SLUG, "--card-review", "--pre", "--round", f"C{k}", "--run-dir", str(folder)]
+        return self.main(*args)
+
+    def plan(self, folder: Path | None = None) -> int:
+        """The pre-drafting review (an accept, unless one is recorded already) and then correction-plan."""
+        folder = folder or self.dir
+        if not (folder / "review" / f"{SLUG}-card-C1-pre.json").exists() and self.pre_review(folder=folder) != 0:
+            return 1  # the pre-drafting review was refused
+        return self.main("correction-plan", SLUG, "--out", str(folder))
 
     def write_ops(self, data: dict | None = None, attempt: str = "") -> Path:
         path = self.dir / "ops" / f"{SLUG}-rC1{attempt}.json"
@@ -67,7 +92,11 @@ class Corr:
     def review(self, verdict: str = "accept") -> int:
         path = self.dir / "review" / f"{SLUG}-rC1.json"
         path.parent.mkdir(parents=True, exist_ok=True)
-        findings = [] if verdict == "accept" else [{"operation": 0, "severity": "must_fix", "problem": "A problem."}]
+        findings = (
+            []
+            if verdict == "accept"
+            else [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+        )
         path.write_text(json.dumps({"card": SLUG, "verdict": verdict, "findings": findings}), encoding="utf-8")
         return self.main("record-review", SLUG, "--round", "C1", "--run-dir", str(self.dir))
 
@@ -76,7 +105,11 @@ class Corr:
         tag = "C1-revised" if revised else "C1"
         path = self.dir / "review" / f"{SLUG}-card-{tag}.json"
         path.parent.mkdir(parents=True, exist_ok=True)
-        findings = [] if verdict == "accept" else [{"operation": None, "severity": "must_fix", "problem": "A problem."}]
+        findings = (
+            []
+            if verdict == "accept"
+            else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+        )
         path.write_text(
             json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
         )
@@ -156,6 +189,16 @@ def corr(pub: Pub, tmp_path: Path) -> Corr:
         ({"op": "remove_paragraph", "field": "early_signals", "index": 0}, "remove_paragraph"),
         ({"op": "update_study", "id": "pmid:90000100", "set": {"year": 2019}}, "update_study"),
         ({"op": "remove_link", "to": "somewhere"}, "remove_link"),
+        (
+            {
+                "op": "replace_paragraph",
+                "field": "core_claim",
+                "index": 0,
+                "text": "A reworded fictional claim.",
+                "sources": ["pmid:90000100"],
+            },
+            "replace_paragraph of core_claim",
+        ),
     ],
 )
 def test_a_normal_round_rejects_a_correction_only_operation_and_names_it(env: Env, operation, name, capsys):
@@ -193,6 +236,11 @@ def test_a_correction_names_no_paper():
 def test_a_correction_needs_at_least_one_operation():
     empty = parse_ops({"card": SLUG, "paper": None, "operations": []})
     assert any("at least one operation" in p for p in pipeline.correction_ops_problems(empty, 2))
+
+
+def test_a_correction_may_reword_core_claim():
+    claim = {"op": "replace_paragraph", "field": "core_claim", "index": 0, "text": "T.", "sources": [CITED]}
+    assert problems(claim) == []
 
 
 def test_a_correction_may_not_add_a_study_or_a_paragraph():
@@ -476,8 +524,9 @@ def test_publish_after_a_correction_publishes_the_corrected_text_and_writes_the_
         f"{PUB_DATE}-{SLUG}.yaml",
     ]
     trail = corr.trail()
-    keys = ["card", "round", "answered", "draft_sha256", "operations", "checks", "review", "card_review", "audits_run"]
-    assert list(trail) == keys
+    keys = ["card", "round", "answered", "draft_sha256", "pre_card_review", "operations", "checks", "review"]
+    assert list(trail) == [*keys, "card_review", "audits_run"]
+    assert trail["pre_card_review"] == {"verdict": "accept", "findings": []}
     assert trail["card_review"] == {"verdict": "accept", "findings": []}
     assert trail["audits_run"] == [f"{PUB_DATE}-{SLUG}-C1.yaml", f"{PUB_DATE}-{SLUG}-C1-second.yaml"]
     assert trail["card"] == SLUG and trail["round"] == 1
@@ -536,7 +585,9 @@ def test_a_review_reject_holds_the_card_back_and_the_trail_records_the_finding(c
     held(corr, "correction rejected in review", BASE + TRAIL)
     assert corr.trail()["review"] == {
         "verdict": "reject",
-        "findings": [{"operation": 0, "severity": "must_fix", "problem": "A problem.", "fix": None}],
+        "findings": [
+            {"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+        ],
     }
 
 

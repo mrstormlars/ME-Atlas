@@ -161,3 +161,91 @@
   - pmid:7476598
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: endothelial-dysfunction
+  change: First publication at level 3 after correction round 1
+  reason: 'Level 3 holds: a CCC-defined Berlin study and an independent Bergen group in a separate CCC
+    cohort both found reduced endothelial function; no comparable contradiction, no controlled intervention,
+    both badges correctly no.'
+  sources:
+  - pmid:32154656
+  - pmid:33829023
+  - pmid:36730360
+  - pmid:25455721
+  - pmid:29426834
+  - pmid:35317812
+  - pmid:42625188
+  - pmid:33671082
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-15
+  card: immune-cell-gene-expression
+  change: First publication at level 2 after correction round 1
+  reason: 'Level 2 contested at rung 2 is supported: CCC-defined controlled studies found altered immune-cell
+    gene expression, comparable-quality studies found none, and neither badge nor the PEM link meets its
+    test.'
+  sources:
+  - pmid:39435656
+  - pmid:39621903
+  - pmid:30791746
+  - pmid:41822518
+  - pmid:16049284
+  - pmid:28172519
+  - pmid:21479222
+  - pmid:18462164
+  - pmid:19503787
+  - pmid:39394558
+  - pmid:38232699
+  - pmid:28494812
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-15
+  card: gut-microbiome
+  change: First publication at level 3 after correction round 1
+  reason: 'Level 3 stands: lower stool butyrate in a CCC/Fukuda US cohort was reproduced by an independent
+    group in an IOM 2015 cohort in China; no trial changes the illness, no contradiction of the butyrate
+    finding, both badges correctly no.'
+  sources:
+  - pmid:36758522
+  - pmid:41387992
+  - pmid:37516837
+  - pmid:19338686
+  - pmid:37396339
+  - pmid:36758521
+  - pmid:28441964
+  - pmid:26683192
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-15
+  card: autoimmunity-autoantibodies-b-cells
+  change: First publication at level 2 after correction round 1 and a wording fix; the draft had level
+    3
+  reason: Level 2 rests on a controlled CCC/ICC/IOM study; the independent Fukuda repeat reproduced only
+    the β2 result, controlled B-cell depletion did not help, no comparable contradiction, both badges
+    no, layer and links match their sources.
+  sources:
+  - pmid:34589868
+  - pmid:42082542
+  - pmid:40141440
+  - pmid:30934066
+  - pmid:22039471
+  - pmid:39759581
+  - pmid:40703261
+  - pmid:32247028
+  - pmid:34254637
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-15
+  card: small-fibre-neuropathy
+  change: First publication at level 1 after correction round 2
+  reason: 'Level 1 is supported: the one study with a recognised definition (ICC/NAM, n=170) reports no
+    ME/CFS-versus-control test and uses historical controls. Other controlled cohorts are prior-diagnosis
+    or Fukuda. No contested mark, both badges no, layer dysfunction.'
+  sources:
+  - pmid:41576003
+  - pmid:37968647
+  - pmid:39888240
+  - pmid:33577778
+  - pmid:42082542
+  tier: 2
+  decided_by: ai_audit

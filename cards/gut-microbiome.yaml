@@ -79,14 +79,14 @@ level_reason:
       more than one study.
     sources: [pmid:27338587, pmid:28441964, pmid:36758522]
   - text: >-
-      Studies disagree on gut bacterial diversity. The Cornell study and the Chinese study found lower
-      diversity. A Polish study of 25 patients (Fukuda) and 16 controls found fewer bacterial types
-      (lower richness) but no significant difference in diversity or evenness. In the 106-patient
-      study, diversity was lower in the simple comparison, but after adjustment this was tied to
-      irritable bowel syndrome rather than ME/CFS. A Bulgarian study whose
-      case definition is not yet verified found no difference in diversity within samples, but small
-      differences in overall make-up.
-    sources: [pmid:27338587, pmid:41387992, pmid:41006438, pmid:36758522, pmid:42351611]
+      Studies disagree on gut bacterial diversity. The Cornell study and the Chinese study found
+      lower diversity. A Polish study of 25 patients (Fukuda) and 16 controls found fewer
+      bacterial types (lower richness) but no significant difference in diversity or evenness.
+      In the 106-patient study, diversity was lower in the simple comparison, but after
+      adjustment this was tied to irritable bowel syndrome rather than ME/CFS. A Bulgarian study
+      of 76 patients meeting the 2015 IOM criteria and 37 controls found no difference in
+      diversity within samples, but small differences in overall make-up.
+    sources: ['pmid:27338587', 'pmid:41387992', 'pmid:41006438', 'pmid:36758522', 'pmid:42351611']
   - text: >-
       Other studies report different bacteria. A study of Norwegian and Belgian patients (case
       definition not yet verified) found more Alistipes in Norwegian patients, while the Chinese study
@@ -97,15 +97,16 @@ level_reason:
       and lower butyrate in blood.
     sources: [pmid:23791918, pmid:41387992, pmid:36758521]
   - text: >-
-      Blood markers of bacterial products crossing the gut wall give mixed results. The Cornell study
-      found higher LPS (a bacterial toxin), LPS-binding protein and soluble CD14 in patients, and a
-      Spanish study of 30 patients meeting the International Consensus Criteria and 26 controls found
-      higher LPS, soluble CD14 and zonulin-1. A Columbia University study of 131 patients meeting both the
-      Fukuda and Canadian criteria and 86 controls found neither LPS-binding protein nor soluble CD14
-      significantly raised, but found more antibodies against LPS and flagellin and more FABP2, a
-      marker of damage to gut lining cells, which the Cornell study had found not significantly raised.
+      Blood markers of bacterial products crossing the gut wall give mixed results. The Cornell
+      study found higher LPS (a bacterial toxin), LPS-binding protein and soluble CD14 in
+      patients, and a Spanish study of 30 patients meeting the International Consensus Criteria
+      and 26 controls found higher LPS, soluble CD14 and zonulin-1. A separate Columbia
+      University study (Alaedini A) of 131 patients meeting both the Fukuda and Canadian
+      criteria and 86 controls found neither LPS-binding protein nor soluble CD14 significantly
+      raised, but found more antibodies against LPS and flagellin and more FABP2, a marker of
+      damage to gut lining cells, which the Cornell study had found not significantly raised.
       The level does not rest on these blood markers; the rungs rest on lower stool butyrate.
-    sources: [pmid:27338587, pmid:37744357, pmid:37396339, pmid:36758522, pmid:41387992]
+    sources: ['pmid:27338587', 'pmid:37744357', 'pmid:37396339', 'pmid:36758522', 'pmid:41387992']
   - text: >-
       No controlled trial on this card shows that changing gut bacteria changes the illness, so the card
       does not reach level 4. In a randomised trial of 39 patients, a probiotic raised Lactobacillus and
@@ -141,11 +142,14 @@ badges:
     value: false
     reason:
       - text: >-
-          The 106-patient study tested its bacterial classifier in a second cohort of 50 patients and 50
-          controls that the same research group had collected years earlier at the same US sites; the
-          authors write that both cohorts came from the same five sites and that a wider geographic range
-          is needed. No study on this card from another research group tests the marker.
-        sources: [pmid:36758522, pmid:28441964]
+          The 106-patient study tested its bacterial classifier in a second cohort of 50
+          patients and 50 controls recruited and sampled years earlier, which its authors call
+          an independent external validation cohort. Both cohorts came from four of the same
+          five US sites, and several of the same clinicians are authors on both papers (Levine
+          S, Bateman L, Klimas NG, Montoya JG, Peterson DL); neither paper says whether any
+          patient is in both cohorts, so the cohorts cannot be shown to be independent patient
+          groups.
+        sources: ['pmid:36758522', 'pmid:28441964']
       - text: >-
           Other studies on the card classified patients and controls within their own cohort only: the
           Cornell study with bacteria and blood markers, the Polish study with gut bacteria, and the
@@ -166,11 +170,17 @@ badges:
           repeated.
         sources: [pmid:26683192]
       - text: >-
-          A Columbia University exercise cohort of 9 patients and 7 controls, recruited under the Fukuda
-          criteria only, found that LPS-binding protein and soluble CD14 rose after exercise in controls
-          (P = 0.007, P = 0.008); in patients LPS-binding protein did not rise significantly and soluble
-          CD14 rose more modestly (P = 0.021). The paper does not relate these changes to symptoms.
-        sources: [pmid:37396339]
+          An exercise cohort of 9 patients and 7 controls, recruited under the Fukuda criteria
+          only and collected at the Marshfield Clinic and the University of Wisconsin-Madison,
+          was analysed in the same paper as the 131-patient study. LPS-binding protein and
+          soluble CD14 rose after exercise in controls (P = 0.007, P = 0.008); in patients
+          LPS-binding protein did not rise significantly and soluble CD14 rose more modestly (P
+          = 0.021). LPS in blood rose after exercise in patients (P = 0.008) but not in
+          controls, and IgM antibodies to LPS rose in patients (P = 0.004). The paper does not
+          relate these changes to symptoms. Both exercise cohorts come from the Marshfield
+          Clinic and the University of Wisconsin-Madison; the papers do not say whether any
+          participant is in both.
+        sources: ['pmid:37396339', 'pmid:26683192']
 subgroups:
   - text: >-
       Irritable bowel syndrome may mark a subgroup. In a study of 50 patients and 50 controls, the
@@ -359,11 +369,13 @@ studies:
     direction: mixed
     group: Alaedini A, Columbia University, New York, USA (Vernon SD also on 36758522 and 26683192; Shukla SK and Cook DB also on 26683192)
     finding: >-
-      A study of n=131 patients and 86 healthy controls found no significant rise in LPS-binding protein
-      or soluble CD14, but higher antibodies against LPS and flagellin and higher FABP2, a marker of gut
-      lining damage, in patients; in a separate group of 9 patients and 7 controls, LPS-binding protein
-      and soluble CD14 rose after exercise in controls (P = 0.007, P = 0.008), while in patients
-      LPS-binding protein did not rise significantly and soluble CD14 rose more modestly (P = 0.021).
+      A study of n=131 patients and 86 healthy controls found no significant rise in LPS-binding
+      protein or soluble CD14, but higher antibodies against LPS and flagellin and higher FABP2,
+      a marker of gut lining damage, in patients; in a separate group of 9 patients and 7
+      controls, LPS-binding protein and soluble CD14 rose after exercise in controls (P = 0.007,
+      P = 0.008), while in patients LPS-binding protein did not rise significantly and soluble
+      CD14 rose more modestly (P = 0.021). LPS in blood rose after exercise in patients (P =
+      0.008) but not in controls, and IgM antibodies to LPS rose in patients (P = 0.004).
   # --- early signal ---
   - id: pmid:26683192
     title: Changes in Gut and Plasma Microbiome following Exercise Challenge in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
@@ -421,7 +433,7 @@ studies:
     preregistered: null
     role: context
     direction: mixed  # some groups higher (Lactonifactor, Alistipes), several Firmicutes lower
-    group: De Meirleir K, R.E.D Laboratories, Zellik, Belgium (affiliation from first author)
+    group: Frémont M, R.E.D Laboratories, Zellik, Belgium (last author De Meirleir K)
     finding: >-
       A study of n=43 patients and 36 healthy controls from Belgium and Norway found more Lactonifactor
       and Alistipes and less of several Firmicutes in Norwegian patients than Norwegian controls, with a
@@ -430,21 +442,24 @@ studies:
     title: Comparative Gut Microbiome Alterations in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Long COVID-19 Syndrome.
     year: 2026
     cohort: me_cfs  # also has a long COVID group; the card cites it for the ME/CFS comparison
-    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: Patients with ME/CFS were selected according to the 2015 Institute of Medicine/National Academy of Medicine diagnostic criteria [42], requiring core ME/CFS symptoms for at least 6 months with no alternative diagnosis.
     design: controlled
-    n_patients: null  # not stated in the abstract
-    n_controls: null
+    n_patients: 76
+    n_controls: 37
     measures_pem: false
     preregistered: null
     role: context
     direction: mixed  # no difference in alpha diversity; small beta-diversity differences
     group: Ivanov IN, Bulgaria (Maes M is a co-author)
     finding: >-
-      A study of patients with ME/CFS, patients with long COVID and healthy controls found no significant
-      difference in diversity within samples, small differences in overall make-up of gut bacteria with
-      broad overlap, and more Sutterella and less Lachnospiraceae in both patient groups.
+      A study of 76 patients with ME/CFS meeting the 2015 IOM criteria, 50 patients with long
+      COVID and 37 healthy controls found no significant difference in diversity within samples,
+      small differences in overall make-up of gut bacteria with broad overlap, and more
+      Sutterella and less Lachnospiraceae in both patient groups. Its full text reports that
+      affective, cognitive and gastrointestinal symptom scores showed weaker or less stable
+      associations with gut bacteria than fatigue scores did.
   - id: pmid:37516837
     title: "Randomized, double-blinded, placebo-controlled pilot study: efficacy of faecal microbiota transplantation on chronic fatigue syndrome."
     year: 2023
@@ -473,9 +488,9 @@ studies:
     # "[13]" = Carruthers BM et al., "Myalgic encephalomyelitis/chronic fatigue syndrome: Clinical working case
     # definition, diagnostic and treatment protocols" (CCC 2003), full text PMC2664325 reference list. Recorded CCC
     # from the reference number. TODO: verify — founder to confirm the reading.
-    case_definition: CCC
-    case_definition_source: fulltext
-    case_definition_quote: "Those adult patients aged 18–65 meeting the formal diagnostic criteria for CFS, according to published guidelines, [13] were further screened for inclusion based on suitability to complete a two month trial."
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
     design: intervention_controlled
     n_patients: 35  # 39 randomised; "Thirty five CFS patients ... completed" (19 probiotic, 16 placebo, Table 2)
     n_controls: null  # no healthy controls; both arms are patients
@@ -506,7 +521,10 @@ studies:
     role: context
     direction: not_applicable
     finding: >-
-      A review of gut microbiome research in ME/CFS; it says it cannot be said whether gut changes precede, cause or follow the immune or metabolic changes, and proposes gut-brain-axis routes to neurocognitive symptoms and to tryptophan products made by gut bacteria. Cited on the map as the source of proposed links, not as evidence for the level.
+      A review of gut microbiome research in ME/CFS; its abstract says that microbiome changes
+      may lead to distinct neurocognitive impairments through the gut-brain axis, and that
+      translocation of microbial components triggers an immune response and systemic
+      inflammation. Context only, not evidence for the level.
   # Added 2026-11-06 (founder ruling, causal map second pass): a review cited by a link on the map, kept as context.
   - id: pmid:31330791
     title: "Pathological Mechanisms Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
@@ -523,38 +541,16 @@ studies:
     role: context
     direction: not_applicable
     finding: >-
-      A 2019 review of proposed disease mechanisms in ME/CFS; it states that the causal links between the affected systems are unknown and cannot be discerned from clinical correlation alone. Cited on the map as the source of proposed links, not as evidence for the level.
+      A 2019 review of proposed disease mechanisms in ME/CFS; its abstract lists disturbances to
+      immunological and inflammatory pathways, autonomic and neurological dysfunction,
+      abnormalities in muscle and mitochondrial function, shifts in metabolism, and gut
+      physiology or gut microbiota disturbances. Context only, not evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also sit in the dysfunction layer (what goes wrong in the body); a 2025 review says it cannot be said whether gut changes precede, cause or follow immune or metabolic changes (pmid:41516296), and no source given here states a link that expresses the dysfunction reading.
 # Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 layer: mechanism
-links:
-  - to: symptom:gastrointestinal-symptoms
-    support: associated
-    text: >-
-      A study of n=106 patients meeting both the Fukuda and Canadian criteria and 91 healthy controls found self-reported irritable bowel syndrome in 35 patients and 3 controls. Lower diversity within samples (evenness and Shannon diversity) was found only in patients with irritable bowel syndrome, differences in the overall make-up of gut bacteria were not tied to it, and stool butyrate was lower in patients with and without it. An earlier study of n=50 patients and 50 controls from the same research group also found that gut bacteria differed between patients with and without irritable bowel syndrome. Both studies come from the same research group; no independent group has repeated it.
-    sources: [pmid:36758522, pmid:28441964]
-  - to: symptom:cognitive-impairment
-    support: proposed
-    text: >-
-      A 2025 review proposes that changes in the gut microbiome may lead to distinct neurocognitive impairments in ME/CFS through the gut-brain axis; it was not studied directly in patients.
-    sources: [pmid:41516296]
-  - to: tryptophan-kynurenine-metabolism
-    support: proposed
-    text: >-
-      A 2025 review proposes that, because gut bacteria also metabolise tryptophan, dysbiosis can change the production of tryptophan- and phenylalanine-derived products made by gut bacteria, potentially affecting the gut, the brain and the microbiota-gut-brain axis; it was not studied directly in patients. The review does not say that this changes the body's own breakdown of tryptophan along the kynurenine pathway, which is what the linked card is about.
-    sources: [pmid:41516296]
-  - to: neuroinflammation
-    support: proposed
-    text: >-
-      A 2025 review reports that some researchers believe the passage of gut bacteria or their products into the body, which can cause inflammation throughout the body and alter the blood-brain barrier, may trigger neuroinflammation and underlie neurological problems in ME/CFS; the review reports no study that measured both in the same patients.
-    sources: [pmid:41516296]
-  - to: oxidative-nitrosative-stress
-    support: proposed
-    text: >-
-      Two reviews propose that bacterial products crossing the gut wall may drive the production of reactive oxygen molecules in ME/CFS, and one also names reactive nitrogen molecules and ties the more permeable gut wall to patients with irritable bowel syndrome; neither was a study in patients, and both note that it is not known which comes first.
-    sources: [pmid:41516296, pmid:31330791]
+links: []
 last_checked:
-  date: 2026-11-01
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit

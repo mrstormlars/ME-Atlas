@@ -59,62 +59,71 @@ slug: small-fibre-neuropathy
 name: Small nerve fibre damage (small fibre neuropathy)
 core_claim:
   text: >-
-    The hypothesis proposes that in people with ME/CFS the small nerve fibres of the skin and other
-    tissues, which carry pain and temperature signals and control sweating and blood vessels, are
-    damaged or work abnormally. Researchers look for this with skin biopsies, corneal confocal
-    microscopy of the nerves in the eye's surface, heat and cold evoked potentials, and sweat-function
+    The hypothesis proposes that in people with ME/CFS the small nerve fibres of the skin and
+    other tissues, which carry pain and temperature signals and control sweating, are damaged or
+    work abnormally. Researchers look for this with skin biopsies, corneal confocal microscopy
+    of the nerves in the eye's surface, heat and cold evoked potentials, and sweat-function
     tests.
-  sources: [pmid:37968647, pmid:39888240, pmid:41576003]
+  sources: ['pmid:37968647', 'pmid:39888240', 'pmid:41576003']
 level: 1
 level_reason:
   - text: >-
-      A study from Boston of 170 patients meeting the International Consensus Criteria or the 2015 IOM
-      criteria found small fibre neuropathy on skin biopsy in 52.6% of the ME/CFS patients with biopsy
-      results and 0.0% of the healthy controls with results; the paper has 54 missing values across its
-      groups and does not give the number per group. Mean calf nerve fibre density was 8.79 fibres/mm
-      in patients and 10.15 in controls; the paper reports one test across all four groups and no test
-      of ME/CFS against controls. For skin conductance, a measure of sweat-gland nerve function, the
-      Boston study reports a lower mean in patients (75.76 against 82.96 µS) but no test against
-      controls. The patients were referred to a dysautonomia centre, which the authors say may not be
-      representative, and the controls came from another university's research database. The card is
-      at level 1 because of this study.
-    sources: [pmid:41576003]
+      A study from Boston of 170 patients meeting the International Consensus Criteria or the
+      National Academy of Medicine criteria found small fibre neuropathy on skin biopsy in 52.6%
+      of the ME/CFS patients with biopsy results and 0.0% of the healthy controls with results;
+      the paper has 54 missing values across its groups and does not give the number per group.
+      Mean calf nerve fibre density was 8.79 fibres/mm in patients and 10.15 in controls; the
+      paper reports one test across all four groups and no test of ME/CFS against controls. For
+      skin conductance, a measure of sweat-gland nerve function, the Boston study reports a
+      lower mean in patients (75.76 against 82.96 µS) but no test against controls. The patients
+      were referred to a dysautonomia centre, which the authors say may not be representative,
+      and the controls were historical controls from the authors' autonomic research database at
+      the University of Massachusetts. These findings are unreplicated. The card is at level 1
+      because of this study.
+    sources: ['pmid:41576003']
   - text: >-
-      A study from Bilbao, Spain, of 59 patients meeting the Fukuda definition (which does not require
-      post-exertional malaise) and 36 healthy controls, mainly about autoantibodies, found no
-      significant difference in skin conductance of the palms or soles. This null result does not make
-      the card contested, because level 1 rests on the Boston study's means, which were not tested
-      against controls.
-    sources: [pmid:42082542]
+      A study from the Cruces University Hospital group in Barakaldo, Spain, of 59 patients
+      meeting the Fukuda definition (which does not require post-exertional malaise) and 36
+      healthy controls, mainly about autoantibodies, found no significant difference in skin
+      conductance of the palms or soles. This null result does not make the card contested: the
+      study uses the Fukuda definition, which ranks below the International Consensus Criteria
+      or National Academy of Medicine criteria of the Boston study, so it is not of comparable
+      quality under the rubric.
+    sources: ['pmid:42082542', 'pmid:41576003']
   - text: >-
-      The card is not at level 2 because no controlled comparison of ME/CFS patients with controls on
-      small fibre damage has both a verified case definition and a result that points to damage. Two
-      controlled studies from Bilbao included patients with a prior ME/CFS diagnosis or meeting the
-      Fukuda definition; because a prior diagnosis does not name a definition, these cannot count
-      towards the level. A Boston study of 160 patients, in which 31% of skin biopsies were consistent
-      with small fibre neuropathy, cannot count either because its case definition is not yet verified.
-    sources: [pmid:37968647, pmid:39888240, pmid:33577778]
+      The card is not at level 2 because the Boston study, the one controlled study with a
+      recognised case definition that points towards damage, reports its tests across four
+      groups with no test of ME/CFS against controls, and uses historical controls and a
+      referral sample. Two controlled studies from the Cruces University Hospital group included
+      patients with a prior ME/CFS diagnosis or meeting the Fukuda definition; because a prior
+      diagnosis does not name a definition, these cannot count towards the level. A study of 160
+      patients by a Boston-based group, in which 31% of skin biopsies were consistent with small
+      fibre neuropathy, cannot count either because its case definition is not yet verified.
+    sources: ['pmid:41576003', 'pmid:37968647', 'pmid:39888240', 'pmid:33577778']
   - text: >-
-      In the Bilbao studies, 30 patients and 30 matched healthy controls had more tortuous (winding)
-      corneal nerve fibres in patients, while corneal nerve fibre density, branch density and length did
-      not differ; the authors write that inconsistent corneal results across studies "might suggest that
-      SFN is not an inherent characteristic of these diseases". An earlier study of 50 patients and 50
-      controls found later brain responses to heat stimuli in patients; the later study used the same
-      heat test and found no significant difference in response time, but a lower heat response
-      amplitude in patients than in controls (p = 0.028), which the earlier study did not report for
-      ME/CFS against controls. Skin conductance did not differ between patients and controls in three
-      Bilbao studies. The patients in these studies may overlap.
-    sources: [pmid:39888240, pmid:37968647, pmid:42082542]
+      In the Cruces University Hospital studies, 30 patients and 30 matched healthy controls had
+      more tortuous (winding) corneal nerve fibres in patients, a finding not replicated by an
+      independent group, while corneal nerve fibre density, branch density and length did not
+      differ; the authors write that inconsistent corneal results across studies "might suggest
+      that SFN is not an inherent characteristic of these diseases". An earlier study of 50
+      patients and 50 controls found later brain responses to heat stimuli in patients; the
+      later study used the same heat test and found no significant difference in response time,
+      but a lower heat response amplitude in patients than in controls (p = 0.028), a finding
+      not replicated by an independent group. Skin conductance did not differ between patients
+      and controls in three studies from this group. These studies share authors; the records
+      shown do not state whether their patients overlap.
+    sources: ['pmid:39888240', 'pmid:37968647', 'pmid:42082542']
 contested: null
 badges:
   diagnostic_marker:
     value: false
     reason:
       text: >-
-        No marker of small fibre damage has been tested in a second, independent patient group with a
-        verified case definition. In one study whose case definition is not verified, corneal nerve
-        tortuosity separated 30 patients from 30 healthy controls with an area under the curve of 0.690.
-      sources: [pmid:39888240]
+        No marker of small fibre damage has been tested in a second, independent patient group
+        with a verified case definition. In one study whose case definition is not verified,
+        corneal nerve tortuosity had an area under the curve of 0.690 (p = 0.032), modest
+        accuracy, for telling 30 patients from 30 healthy controls.
+      sources: ['pmid:39888240']
   explains_pem:
     # Checked: every abstract on the card and the five open full texts. No study tracks symptoms after an exertion
     # challenge and links them to small fibre damage. 33577778 (unverified) found that denervation did not correlate
@@ -184,7 +193,7 @@ studies:
     preregistered: null
     role: context
     direction: mixed  # tortuosity higher; density, length, heat latency and skin conductance no difference
-    group: Gómez-Esteban JC and Del Pino R, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 37968647, 42286686, 42082542)
+    group: Gómez-Esteban JC and Del Pino R, Biobizkaia Health Research Institute, Cruces University Hospital, Barakaldo, Spain (same group as 37968647, 42286686, 42082542)
     finding: >-
       A study of n=30 patients with a prior ME/CFS diagnosis or meeting the Fukuda definition and 30
       matched healthy controls found more tortuous corneal nerve fibres in patients (p = 0.003), no
@@ -213,7 +222,7 @@ studies:
     preregistered: null
     role: context
     direction: mixed  # heat evoked latency longer; cold evoked potentials and skin conductance no difference
-    group: Gómez-Esteban JC and Tijero-Merino B, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 39888240, 42286686, 42082542)
+    group: Gómez-Esteban JC and Tijero-Merino B, Biocruces Bizkaia Health Research Institute, Cruces University Hospital, Barakaldo, Spain (same group as 39888240, 42286686, 42082542)
     finding: >-
       A study of n=50 patients with a prior ME/CFS diagnosis or meeting the Fukuda definition and 50
       healthy controls found longer latency of brain responses to heat stimuli in patients (p < 0.001),
@@ -235,7 +244,7 @@ studies:
     preregistered: null
     role: context  # main question is autoantibodies; skin conductance is a secondary measure
     direction: no_difference
-    group: Gómez-Esteban JC, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 37968647, 39888240, 42286686)
+    group: Gómez-Esteban JC, Biobizkaia Health Research Institute, Cruces University Hospital, Barakaldo, Spain (same group as 37968647, 39888240, 42286686)
     finding: >-
       A study of n=59 patients with ME/CFS and 36 healthy controls, mainly about autoantibodies, found
       no significant difference in skin conductance of the palms or soles.
@@ -254,7 +263,7 @@ studies:
     preregistered: null
     role: context
     direction: not_applicable
-    group: Gómez-Esteban JC and Del Pino R, Biocruces Bizkaia, Cruces University Hospital, Bilbao, Spain (same group as 37968647, 39888240, 42082542)
+    group: Gómez-Esteban JC and Del Pino R, Cruces University Hospital, Barakaldo, Spain (same group as 37968647, 39888240, 42082542)
     finding: >-
       A study of n=17 patients and 21 people with post-COVID condition, without a healthy control
       group, tested twice a median of 31 months apart, found that heat evoked potential scores improved
@@ -296,18 +305,14 @@ studies:
     role: context
     direction: not_applicable
     finding: >-
-      A review of exercise pathophysiology in ME/CFS and long COVID that also discusses small fibre neuropathy and blood pooling on standing in POTS. Cited on the map as the source of a proposed link, not as evidence for the level.
+      A review of exercise pathophysiology in ME/CFS and long COVID that also discusses small
+      fibre neuropathy and blood pooling on standing in POTS. Not evidence for the level.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: A mechanism reading also exists, in which small fibre damage is one form of dysautonomia upstream of vascular changes such as shunting of blood past the muscle capillaries (pmid:37054777, pmid:33577778); no card or open question covers peripheral oxygen extraction or shunting, so that link waits for such a card or question.
 # Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 layer: dysfunction
-links:
-  - to: symptom:orthostatic-intolerance
-    support: proposed
-    text: >-
-      A 2023 review states that small nerve fibre damage can reduce the tightening of veins, as seen with abnormal pooling of blood in the legs on standing in postural orthostatic tachycardia syndrome (POTS). The observations it cites are in POTS; no study on this card measured both in ME/CFS patients.
-    sources: [pmid:37054777]
+links: []
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit

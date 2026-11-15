@@ -1,0 +1,131 @@
+card: endothelial-dysfunction
+round: 1
+answered:
+- 2026-11-13-endothelial-dysfunction-second.yaml
+- 2026-11-13-endothelial-dysfunction.yaml
+draft_sha256: 87c6dfef3ce81aff809a2ce09af5250e717d86d019e91903101646cce98f21ba
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: level_reason paragraph 2 (sources pmid:33829023, pmid:32154656) says post-occlusive reactive
+      hyperaemia is "the measure closest to the Berlin index". Neither cached source says this. pmid:33829023
+      describes PORH as a skin blood-flow measure of small vessels ("endothelial function affecting both
+      large and small vessels"). pmid:32154656 measured the reactive hyperaemia index by finger tonometry
+      (EndoPAT2000). Neither paper compares the two methods. The phrase is the drafter's own reasoning,
+      and it makes the level-3 repeat read as closer than the sources show.
+    fix: 'Delete "the measure closest to the Berlin index", or say only what the records state, for example:
+      "The rise in skin blood flow after blood flow to the arm was briefly stopped (post-occlusive reactive
+      hyperaemia), a measure of small-vessel function, was lower in 39 patients than in 30 healthy people."
+      Keep the sentence that says the two groups used different methods.'
+  - operation: null
+    severity: must_fix
+    problem: 'links[0] (to orthostatic-intolerance-cerebral-blood-flow, source pmid:41516145) says "endothelial
+      dysfunction, driven by oxidative and nitrosative stress and by autoantibody-mediated receptor interference,
+      may explain orthostatic intolerance". The cached abstract says: "Endothelial dysfunction driven
+      by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may
+      explain orthostatic intolerance and impaired perfusion." In the source, autoantibody-mediated receptor
+      interference is a second explanation alongside endothelial dysfunction, not a cause of it. The link
+      text makes it a driver of endothelial dysfunction, which the source does not say. The study''s own
+      `finding` field quotes the source correctly ("along with").'
+    fix: 'Follow the source: "A 2025 review proposes that endothelial dysfunction driven by oxidative
+      and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic
+      intolerance and impaired perfusion in ME/CFS; this source does not report patient data linking the
+      two."'
+  - operation: null
+    severity: advisory
+    problem: pmid:36730360 case_definition_quote ("The study did not report any significant differences
+      in outcome measures between the rituximab and placebo groups, thus refuting the hypothesis that
+      B-cell depletion could be beneficial for ME/CFS patients selected on Canadian consensus criteria.")
+      is in the cached full text and supports CCC. It describes the parent RituxME trial's result rather
+      than this substudy's inclusion, and the substudy points to the main trial article for inclusion
+      criteria.
+    fix: Optionally use the full text's "no support for a beneficial role of rituximab in ME/CFS diagnosed
+      according to Canadian criteria", or keep the current quote; the label CCC stands.
+  - operation: null
+    severity: advisory
+    problem: level_reason paragraph 6 (pmid:29426834) says twice that the study used the Fukuda definition
+      with post-exertional malaise required ("using the Fukuda definition with post-exertional malaise
+      required" and "The authors applied the Fukuda definition with post-exertional malaise required").
+      Both statements match the cached full text; the repeat only lengthens the paragraph.
+    fix: Drop the first mention and keep the sentence that also reports the authors' statement that this
+      corresponds to the 2011 International Consensus Criteria.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'A later study from Bergen, Norway, with no authors shared with the Berlin study, tested patients
+    meeting the Canadian Consensus Criteria with two other methods. The rise in skin blood flow after
+    blood flow to the arm was briefly stopped (post-occlusive reactive hyperaemia) was lower in 39 patients
+    than in 30 healthy people. Widening of the arm artery (flow-mediated dilation) was lower in 35 patients
+    than in 66 healthy women (median 5.9% against 7.7%); this control group was all women, while 78% of
+    the patients were women. The card is at level 3 because this independent group found reduced endothelial
+    function in a separate cohort. The repeat is partial: the two groups used different methods, and the
+    paper says it had no designated control group of its own, but used healthy people from two other studies
+    by the same authors.'
+  sources:
+  - pmid:33829023
+  - pmid:32154656
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: Against these findings, a study from California of 24 patients and 24 sedentary controls found
+    no statistically significant difference in the reactive hyperaemia index at rest (p = 0.07), during
+    recovery or 18 hours after an exercise test. The authors applied the Fukuda definition with post-exertional
+    malaise required and say this corresponds to the International Consensus Criteria; the card records
+    Fukuda. Fukuda ranks below the Canadian Consensus Criteria on the published ladder, so this study
+    does not contest the level. A study from New Zealand using the International Consensus Criteria found
+    no difference in arterial stiffness between patients and controls at rest; arterial stiffness is a
+    different measure from the widening tested above.
+  sources:
+  - pmid:29426834
+  - pmid:33671082
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'No study on this card tracks symptoms after an exertion challenge and links them to endothelial
+    function or clotting in the same patients. Two studies measured vessel function after an exercise
+    test, without tracking symptoms: one found no difference in the reactive hyperaemia index 18 hours
+    later, and one found that arterial stiffness 48 hours later fell within the control group but not
+    within the patient group (7 each at 48 hours); its table gives a between-group p value of 0.21 for
+    the 48-hour measure.'
+  sources:
+  - pmid:29426834
+  - pmid:33671082
+- op: remove_link
+  to: orthostatic-intolerance-cerebral-blood-flow
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 3
+    severity: must_fix
+    problem: 'The remove_link answers pre-drafting finding 2 (the link text made autoantibody-mediated
+      receptor interference a driver of endothelial dysfunction; the source says ''along with''). With
+      no op to reword a link, removing it is a valid weakening. But after removal the study pmid:41516145
+      stays on the card, and its reader-facing `finding` still ends ''Cited on the map as the source of
+      a proposed link, not as evidence for the level.'' The card no longer has that link (`links: []`),
+      so that sentence is now false and relies on what was removed. The internal YAML comments (header
+      ''cited by the link to orthostatic-intolerance-cerebral-blood-flow'' and the comment above the study
+      entry ''a record cited by a link on the map'') are stale in the same way.'
+    fix: 'Add an update_study on pmid:41516145 that sets `finding` to the review sentence alone, without
+      the ''Cited on the map...'' sentence (for example: ''A review of the biological network underlying
+      ME/CFS; it proposes that endothelial dysfunction driven by oxidative and nitrosative stress, along
+      with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired
+      perfusion. Not evidence for the level.''). Or keep the link and get its text corrected to the source''s
+      ''along with'' wording if the pipeline allows that. The founder may also want the stale comments
+      updated.'
+  - operation: 2
+    severity: advisory
+    problem: 'This op answers audit 2026-11-13-endothelial-dysfunction-second Part 5. The new clause ''its
+      table gives a between-group p value of 0.21 for the 48-hour measure'' matches pmid:33671082 (Table
+      2: ME/CFS 48 h end-of-trial AIx75 17.0 against control 9.4, p = 0.21; the text calls 17.0 the ''end
+      of the trial'' value). Because it brings in a number the card did not have before, it goes beyond
+      removing the wrong clause. It is taken from a record in the context, and it replaces a statement
+      that record contradicts, so it is acceptable. ''The 48-hour measure'' is vague.'
+    fix: 'Optionally name it: ''for the augmentation index at 48 hours''. Or just delete the clause ''the
+      groups were not compared directly'', which also resolves the audit finding.'
+audits_run: []

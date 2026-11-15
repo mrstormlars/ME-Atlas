@@ -101,7 +101,9 @@ class Pub:
         review_path = self.dir / "review" / f"{SLUG}-rL.json"
         review_path.parent.mkdir(parents=True, exist_ok=True)
         findings = (
-            [] if review == "accept" else [{"operation": 0, "severity": "must_fix", "problem": "A fictional problem."}]
+            []
+            if review == "accept"
+            else [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A fictional problem."}]
         )
         review_path.write_text(json.dumps({"card": SLUG, "verdict": review, "findings": findings}), encoding="utf-8")
 

@@ -35,6 +35,7 @@ Each study on the card is checked. Errors unless marked.
 | **C7** DOI-only id | A `doi:` study id without `preprint: true` is an error: "cite by PMID". | Find the PMID and use `pmid:<digits>`. DOI-only ids cannot be checked yet, except preprints (below). |
 | **C8** Preprint flag | A `pmid:` study whose cached PubMed record has the publication type "Preprint" must have `preprint: true`; a study with `preprint: true` must have a record with that type. | Set or remove `preprint: true`. |
 | **C9** Group supported (**warning**) | A study with a non-null `group` and a usable record (the PubMed record, or the cached Europe PMC preprint record of a `preprint: true` study) must name at least one author of that record in `group`. See "Group matching (C9)" below. A record with no authors gives no issue. | Take the names in `group` from the author list of the record (the `- authors:` line of the context file), or leave `group` out. |
+| **C10** Numbers in free text (**warning** on `cards/` and `drafts/` as they stand, **error** on newly applied text) | Every numeral in a free-text item occurs in a source that item cites, or equals the `year`, `n_patients` or `n_controls` of one. See "Numbers in free text" below. | Use the number the cited record gives, cite the record that has it, or remove the claim. A sum or difference needs its derivation: `78 (= 40 + 38)`. |
 
 When there is no usable record (C1), the other checks for that study are skipped. A DOI-only study without `preprint: true` gets only C7.
 
@@ -58,6 +59,32 @@ Exactly this, nothing looser. Anything else that differs is a mismatch.
 - **Number (C6).** A whole number: `1234` also matches `1,234` and `1 234` (a space, no-break space or thin space). It must not be part of a longer number, so 48 is not found in `148`, `1,048`, `.48`, `0.48`, `3.48` or `48.5`.
 
 - **Group (C9).** Author names and `group` text are both put through Unicode NFKD with combining marks removed (so `Gómez` equals `Gomez`). A record author `<last> <initials>` (the initials are capital letters) is named in `group` when the text has the last name (case folded), then whitespace (a comma may precede it), then the first initial (case folded), then only further capital initials, with optional dots or spaces between them, ending at a word boundary. `Ponting C`, `Ponting CP`, `Ponting C.P.` and `Ponting C P` all name the record author `Ponting CP` (and `Ponting C`); `Ponting Cox` and `Smith Anna` do not name `Ponting C` or `Smith AB`. A collective (group) author, and a name with no initials, is named only by its full name as whole words, case folded (`Long Covid Cons` does not name `Long COVID Consortium`). Other names in `group` (cross-references such as "same group as ...") are allowed; only "no author of the record is named" is an issue.
+
+## Numbers in free text (C10)
+
+Founder ruling 2026-11-15 (`docs/pm/DECISIONS.md`, the valve entry, "Numbers"). **Plainly: the check verifies that a number occurs in a cited source, not that it is attached to the right thing.** `40` may be the number of controls in the source and the number of patients on the card; the check passes it. A person or the review agent still reads the sentence against the record.
+
+**What is checked.** Every free-text item of a card, the same list the valve and the translations use (`translations.english_items`, without the card `name`): `core_claim`, each paragraph of `level_reason`, the contested reason and the two badge reasons, `subgroups`, `early_signals`, link texts and each study's `finding`. A paragraph's sources are its own `sources`; a study's `finding` has none and cites its own study. A numeral passes when it is found (a) in the cached text of at least one of those sources: the PubMed title and abstract and, when cached, the full text (for a preprint: the Europe PMC record and full text), or (b) equals the `year`, `n_patients` or `n_controls` of a cited study (the only numeric study fields). Same offline cache as the other checks. A cited source with no cached record offers no numbers.
+
+**Severity.** `citations check` reports C10 as a **warning** on `cards/` and `drafts/` (it never changes the exit code there; the existing text is counted, not edited to pass, until the founder rules). It is an **error** where text is newly applied: `pipeline apply` for weekly pairs, correction rounds (`--round C<k>`) and `valve-apply`, because those call the check with `numbers_level=ERROR`. As for other errors, a C10 problem the text already had before the change (same kind of item, same words around the number) is `preexisting` and does not block. The issue names the kind of item (`level_reason`, not the paragraph's index) and quotes a few words around the number, so removing an earlier paragraph does not turn an old problem into a new one.
+
+**Normalisation** (each with one example):
+
+- Thousands separators: `9,392` equals `9392`, also `9 392` in a source.
+- Decimals: `0.05` equals `.05`. Trailing zeros are kept: `0.50` is not `0.5`.
+- A leading `<`, `>`, `≤`, `≥` or `=` is ignored: `p<0.05` checks `0.05`.
+- Percentages: `26%` checks `26`; the source may say `26%`, `26 %` or `26 percent`. The unit is not compared.
+- Ranges and pairs: `18-65`, `18–65`, `18 to 65`, `18 and 65` check `18` and `65` separately.
+- Minus signs and negative numbers: `-0.8` and `−0.8` check `0.8`. The sign is not compared.
+- A number inside a name or an identifier is skipped. The skip patterns: `pmid:`, `doi:`, `pmcid:` and `PPR` ids and any DOI; `PMC<digits>`; a year in a citation string (`Smith et al. (2019)`, `Smith (2019)`, `Fukuda 1994`, `2015 IOM criteria`, `2003 Canadian ...`); letters directly followed by digits (`COMPASS-31`, `IL-6`, `CD4`, `SF-36`, `COVID-19`, `IOM2015`, ICD codes such as `G93.3`); a digit before a capital (`5-HT`); a chemical prefix (`3-hydroxykynurenine`).
+- Rubric numbers: `level 3`, `rungs 2 and 3`, `step 1` refer to the rubric, not to a source, and are skipped. Only 0 to 5 counts (the rungs); a joined number outside that range (`level 3 and 47`, `step 2 to 47`) or followed by a counted noun (`level 3, 4 patients`) is still checked.
+- Ordinals (`3rd`, `21st`) are skipped.
+
+**Word numbers.** In the card, numbers written as words (`two`, `twelve`, `half`) are **not checked**: `one` and `two` are too common as plain words (`one study`) for a low-noise rule. The source side counts both forms: a source that writes `twelve`, `Thirty`, `twenty-eight` or `forty two` (one to ninety-nine, hyphen or space, any case) matches `12`, `30`, `28` or `42` on the card. `hundred` forms are not read.
+
+**Derived numbers.** A sum or difference of numbers from the record is not found in any record, so it fails unless it carries its derivation. The form is a marker right after the number, `78 (= 40 + 38) patients` or `12 (= 50 - 38)`: the arithmetic must hold, and each operand is an ordinary numeral that must itself be in a cited source or a structured field. Only `+` and `-` of plain numbers are evaluated; a ratio, a percentage computed from counts or any other expression is not allowed (write the numbers the record gives). A marker whose arithmetic is wrong, or which is not a sum or difference, is an issue. This form is a proposal for the founder to confirm.
+
+**Proper nouns (assessed, not built).** A check that city, country and institution names in free text occur in a cited record was tried over `cards/` and `drafts/` (assessment in the task notes): it was left out because the cached records hold no affiliations and the abstracts rarely name a country, so most hits are claims the check cannot verify rather than wrong ones, and names such as `Institute of Medicine` or `UK` (for `United Kingdom`) are false hits. The review agent's checklist (group and place names that are not in the records) covers it.
 
 ## Group matching (C9)
 

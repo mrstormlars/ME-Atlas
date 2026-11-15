@@ -49,7 +49,11 @@ def apply_revised(c: Corr, data: dict | None = None) -> int:
 def review_revised(c: Corr, verdict: str = "accept") -> int:
     path = c.dir / "review" / f"{SLUG}-rC1-revised.json"
     path.parent.mkdir(parents=True, exist_ok=True)
-    findings = [] if verdict == "accept" else [{"operation": 0, "severity": "must_fix", "problem": "A problem."}]
+    findings = (
+        []
+        if verdict == "accept"
+        else [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+    )
     path.write_text(json.dumps({"card": SLUG, "verdict": verdict, "findings": findings}), encoding="utf-8")
     return c.main("record-review", SLUG, "--round", "C1", "--revised", "--run-dir", str(c.dir))
 
@@ -88,7 +92,9 @@ def live_format_trail(c: Corr, verdict: str = "reject", date: str = PUB_DATE) ->
         "checks": {"passed": True, "errors": []},
         "review": {
             "verdict": verdict,
-            "findings": [{"operation": 0, "severity": "must_fix", "problem": "A problem.", "fix": None}],
+            "findings": [
+                {"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+            ],
         },
     }
     path = c.audits / f"{date}-{SLUG}-C1-correction.yaml"

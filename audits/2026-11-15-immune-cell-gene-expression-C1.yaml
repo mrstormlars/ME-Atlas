@@ -1,0 +1,109 @@
+card: immune-cell-gene-expression
+decision: accept
+parts:
+  - decision_part: "The level 2: controlled studies in cohorts with a recognised case definition (CCC, with IOM 2015 in one) found genes expressed differently in blood immune cells."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39435656
+        quote: "Participants with ME/CFS were included according to Canadian Consensus Criteria."
+      - source: pmid:39435656
+        quote: "A total of 14 genes was selected as differentially expressed between patients with ME/CFS compared with HC"
+      - source: pmid:39621903
+        quote: "all ME subjects fulfilled the IOM and Canadian Consensus Criteria for diagnosis"
+      - source: pmid:39621903
+        quote: "In ME TM, we observed increased expression of multiple key regulators of T cell exhaustion"
+      - source: pmid:30791746
+        quote: "Twenty-seven gene transcripts were increased 1.5- to sixfold and six decreased three- to sixfold in the patient group"
+    class: none
+  - decision_part: "Not level 3: the supporting studies point in different directions and no independent group reproduced a specific finding in a separate cohort; the one cross-study check of exhaustion in idiopathic ME/CFS found none, and the Australian panel estimated fewer exhausted CD8 cells."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:39435656
+        quote: "The abundance of exhausted CD8 cells was significantly lower in ME/CFS compared with HC"
+      - source: pmid:41822518
+        quote: "In contrast, no significant difference in T cell exhaustion status was observed between groups"
+      - source: pmid:16049284
+        quote: "This profile suggests T cell activation and perturbation of neuronal and mitochondrial function."
+      - source: pmid:39435656
+        quote: "This current pilot investigation is not without limitations."
+    class: none
+  - decision_part: "The contested mark on rung 2 from the Canadian-definition whole-blood RNA-seq study: CCC, controlled, 25 patients, at least half the size of each supporting CCC study and stricter than the CDC-defined first study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:28172519
+        quote: "Briefly, we enrolled 25 CFS patients who met the Canadian case definition [19]"
+      - source: pmid:28172519
+        quote: "No differentially expressed genes (DEGs) were found to be significant when CFS or ADCLS cases were compared to controls."
+      - source: pmid:28172519
+        quote: "Samples were collected at patient enrollment and not during acute symptom flares."
+      - source: pmid:39435656
+        quote: "RNA was extracted from peripheral blood mononuclear cells isolated from participants with ME/CFS (n = 14)"
+      - source: pmid:16049284
+        quote: "25 patients with CFS diagnosed according to the Centers for Disease Control criteria and 25 normal blood donors"
+    class: none
+  - decision_part: "The second contradicting study: the 44-gene blinded test set (Fukuda, 64 patients and 64 controls) ranks equal to the CDC-defined study it tests (55 patients by PCR) and is more than half its size."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:21479222
+        quote: "This comprised PBMC samples from 64 CFS patients and 64 healthy volunteers."
+      - source: pmid:21479222
+        quote: "The diagnosis of CFS was based on the Fukuda criteria and this diagnosis was made by CFS clinical experts."
+      - source: pmid:21479222
+        quote: "However, no significant difference is observed between the means for any of these genes in the test set"
+      - source: pmid:21479222
+        quote: "Overall, this resulted in 73 (58%) correct classifications (TP+TN), based on our gene expression scoring metric."
+      - source: pmid:18462164
+        quote: "Genes showing differential expression were further analyzed in 55 patients with CFS/ME and 75 healthy blood donors, using quantitative polymerase chain reaction."
+    class: none
+  - decision_part: "The twin study is correctly kept out of the contested mark: its affected twins mix CFS with idiopathic chronic fatigue, so its case definition is recorded as other."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:19503787
+        quote: "Discordance was defined as one twin meeting criteria for either idiopathic chronic fatigue (ICF, 12 pairs) or CFS (32 pairs) [1], [2]"
+      - source: pmid:19503787
+        quote: "There were no significant differences in gene expression for any transcript."
+    class: none
+  - decision_part: "The diagnostic marker badge stays no: the gene classifier failed on a new blinded set, and the ESRRA check used a dataset whose own paper states no case definition."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:21479222
+        quote: "We conclude many of the previously identified reporter genes are study-specific and thus cannot be used as a broad CFS diagnostic."
+      - source: pmid:39394558
+        quote: "In addition, data from the GSE214284 database confirmed higher ESRRA expression in the monocyte cell types of male ME/CFS patients."
+      - source: pmid:38232699
+        quote: "Analyzed single cell and bulk RNA seq data [GEO SuperSeries Accession]: [GSE214284]"
+    class: none
+  - decision_part: "The explains-PEM badge stays no: the study that related monocyte state to PEM severity states no case definition, and the adolescent study used a broad definition with no accompanying symptoms required."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:38232699
+        quote: "Similar correlations were observed with other metrics, including general health, Short Form (SF)-36 Physical Component Summary scores,51 and PEM severity"
+      - source: pmid:28494812
+        quote: "A broad case definition of CFS was applied, requiring 3 months of unexplained, disabling chronic/relapsing fatigue of new onset, whereas no accompanying symptoms were necessary."
+      - source: pmid:28494812
+        quote: "Also, an association with symptoms of post-exertional malaise was demonstrated."
+    class: none
+  - decision_part: "Layer dysfunction: altered gene expression in circulating immune cells is a measurable change in the body."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:30791746
+        quote: "we examined the transcriptomes of peripheral blood mononuclear cells by RNA-seq analysis in a small well-characterized patient group (10 patients)"
+    class: none
+  - decision_part: "The link to post-exertional malaise at step proposed: a peer-reviewed study states it; the two studies that measured both ends do not meet the case-definition requirement for step 2."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:39621903
+        quote: "these cells fail to upregulate effector programs, and instead become terminally exhausted, potentially contributing to inflammation and PEM"
+      - source: pmid:28494812
+        quote: "A broad case definition of CFS was applied"
+    class: none
+  - decision_part: "The two early signals are very small single-cell studies, correctly held as unreplicated signals rather than level support."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:39394558
+        quote: "in 4 ME/CFS patients and 4 heathy controls"
+      - source: pmid:41822518
+        quote: "Freshly isolated PBMCs from ten individuals, five LC patients with ME/CFS and five recovered individuals (R) following acute SARS-CoV-2 infection without any LC symptoms, were processed for scRNAseq."
+    class: none
+reasons_summary: "Level 2 contested at rung 2 is supported: CCC-defined controlled studies found altered immune-cell gene expression, comparable-quality studies found none, and neither badge nor the PEM link meets its test."
+would_change: "An independent group reproducing a specific expression finding in a separate CCC/ICC/IOM cohort would bear on level 3; a larger study settling the null results would bear on the contested mark. Unverifiable, not shown false: the card calls pmid:16049284 and pmid:18462164 UK studies, but neither abstract names a country and neither full text is cached; no level, badge or mark depends on it. A stated case definition for the GSE214284 cohort in its own paper (pmid:38232699) would reopen both badges and the link step."

@@ -145,30 +145,34 @@ level_reason:
       unreplicated.
     sources: [pmid:39621903]
   - text: >-
-      A New Zealand study of 10 patients meeting the Canadian Consensus Criteria and 10 controls found 27
-      transcripts higher and 6 lower in patients, with the top ones related to inflammation. Two UK studies using
-      CDC criteria (version not named), which do not require post-exertional malaise, found genes expressed
-      differently and confirmed them by PCR: 16 genes in a study of 25 patients and 25 controls, and 88 genes in
-      55 patients and 75 controls. The first read its pattern as T-cell activation.
-    sources: [pmid:30791746, pmid:16049284, pmid:18462164]
+      A New Zealand study of 10 patients meeting the Canadian Consensus Criteria and 10 controls
+      found 27 transcripts higher and 6 lower in patients, with the top ones related to
+      inflammation. Two UK studies using CDC criteria (version not named), which do not require
+      post-exertional malaise, found genes expressed differently: a microarray study of 25
+      patients and 25 controls, with 16 genes confirmed by PCR in fresh samples, and a study
+      that screened 25 patients and 50 blood donors by microarray and confirmed 88 genes by PCR
+      in 55 patients and 75 controls. The first read its pattern as T-cell activation.
+    sources: ['pmid:30791746', 'pmid:16049284', 'pmid:18462164']
   - text: >-
-      The card is at level 2. Each group found some genes expressed differently, but the genes and pathways
-      differ from study to study: T-cell activation, inflammation, lower interferon and immunoglobulin genes, and
-      T-cell exhaustion. No independent group has repeated a specific finding in a separate cohort, so each is
-      unreplicated. The exhaustion reading is not consistent across the card's own studies: the Australian study
-      estimated fewer exhausted CD8+ T cells in patients, and a re-analysis of the US single-cell data found no
-      T-cell exhaustion signature.
-    sources: [pmid:39435656, pmid:30791746, pmid:39621903, pmid:16049284, pmid:18462164, pmid:41822518]
+      The card is at level 2. Each group found some genes expressed differently, but the genes
+      and pathways differ from study to study: T-cell activation, inflammation, lower interferon
+      and immunoglobulin genes, and T-cell exhaustion. No independent group has repeated a
+      specific finding in a separate cohort, so each is unreplicated. The exhaustion reading is
+      not consistent across the card's own studies: the Australian study estimated fewer
+      exhausted CD8+ T cells in patients, and a long COVID study that re-analysed a public
+      single-cell dataset found no difference in T-cell exhaustion.
+    sources: ['pmid:39435656', 'pmid:30791746', 'pmid:39621903', 'pmid:16049284', 'pmid:18462164', 'pmid:41822518']
 contested:
   rungs: [2]
   reason:
     - text: >-
-        A study of whole blood from 25 patients and 25 matched controls found no genes expressed significantly
-        differently. Samples were taken at enrolment, not during symptom flares. The paper names the Canadian
-        case definition and cites the 2011 International Consensus Criteria for it; both are accepted at every
-        rung. It had a control group and at least half as many patients as each of the studies above that used
-        the Canadian Consensus Criteria and as the first UK study, so it is of comparable quality to them.
-      sources: [pmid:28172519]
+        A study of whole blood from 25 patients and 25 matched controls found no genes expressed
+        significantly differently. Samples were taken at enrolment, not during symptom flares.
+        The paper says its patients met the Canadian case definition, which is accepted at every
+        rung. It had a control group and at least half as many patients as each of the studies
+        above that used the Canadian Consensus Criteria and as the first UK study, so it is of
+        comparable quality to them.
+      sources: ['pmid:28172519']
     - text: >-
         The UK group tested 44 of its earlier genes on a new, blinded set of samples from 64 patients meeting
         the Fukuda criteria, which do not require post-exertional malaise, and 64 controls (the paper also gives
@@ -178,35 +182,44 @@ contested:
         to that study.
       sources: [pmid:21479222]
     - text: >-
-        A study of 44 pairs of identical twins, in which one twin was ill and the other well, also found no
-        difference in any transcript in blood leukocytes. The ill twins with chronic fatigue syndrome were
-        diagnosed by criteria the paper cites to the 1994 Fukuda definition and a 2003 paper on it, but 12 of the 44 had idiopathic
-        chronic fatigue instead and the analysis pooled both, so it does not count towards the contested mark.
-      sources: [pmid:19503787]
+        A study of 44 pairs of identical twins, in which one twin was ill and the other well,
+        also found no difference in any transcript in blood leukocytes. The ill twins had
+        chronic fatigue syndrome in 32 pairs or idiopathic chronic fatigue in 12 pairs, so its
+        case definition is recorded as other, and it does not count towards the contested mark.
+      sources: ['pmid:19503787']
 badges:
   diagnostic_marker:
     value: false
     reason:
       text: >-
-        Two checks in a second group of patients have been made. A gene list from two earlier studies by one
-        group was tested on a new, blinded set of samples by the same group and did not separate patients from
-        controls. A study of 4 patients checked one candidate gene (ESRRA) in public single-cell data from a
-        US cohort of 58 people and found it higher in monocytes of male patients, but the paper behind that
-        dataset does not state its case definition, so the check does not meet the badge's test.
-      sources: [pmid:21479222, pmid:39394558, pmid:38232699]
+        Two checks in a second group of patients have been made. A gene list from two earlier
+        studies by one group was tested on a new, blinded set of samples by the same group and
+        did not separate patients from controls. A single-cell study of 4 patients and 4
+        controls checked one candidate gene (ESRRA) in the public dataset GSE214284 and found it
+        higher in monocytes of male patients. The paper behind that dataset names no case
+        definition in its own text. Another study says its project and single-cell atlas came
+        from the same research centre and that its patients met the IOM and Canadian criteria,
+        but this card does not carry a definition from one paper to another, and the two papers
+        give the cohort's size differently (30 patients and 28 controls in one, 28 and 30 in the
+        other), so the check is not counted towards the badge's test.
+      sources: ['pmid:21479222', 'pmid:39394558', 'pmid:38232699', 'pmid:39621903']
   explains_pem:
     value: false
     reason:
       text: >-
-        Two studies related blood-cell gene expression to post-exertional malaise in the same patients: one found
-        that the share of altered monocytes rose with its severity, the other an association with its symptoms.
-        One did not state a case definition and the other used a broad one, so neither meets the badge's test.
-      sources: [pmid:38232699, pmid:28494812]
+        Two studies related blood-cell gene expression to post-exertional malaise in the same
+        patients: one found that the share of altered monocytes rose with its severity, the
+        other an association with its symptoms. One names no case definition in its own text
+        (another study describes the criteria for a cohort from the same research centre, but
+        this card does not carry a definition across papers) and the other used a broad one, so
+        neither meets the badge's test.
+      sources: ['pmid:38232699', 'pmid:28494812', 'pmid:39621903']
 subgroups:
   - text: >-
-      A 2008 UK study grouped 55 patients into 7 subtypes by their gene expression, with different scores on a
-      quality-of-life questionnaire and different severity. This grouping has not been repeated.
-    sources: [pmid:18462164]
+      A 2008 UK study grouped 55 patients into 7 subtypes by their gene expression, with
+      different scores on a health survey (SF-36), clinical features and severity. This grouping
+      has not been repeated.
+    sources: ['pmid:18462164']
 working_on_it: []
 early_signals:
   - text: >-
@@ -355,7 +368,7 @@ studies:
     cohort: me_cfs
     case_definition: other
     case_definition_source: fulltext
-    case_definition_quote: null
+    case_definition_quote: Discordance was defined as one twin meeting criteria for either idiopathic chronic fatigue (ICF, 12 pairs) or CFS (32 pairs) [1], [2]
     design: controlled
     n_patients: 44
     n_controls: 44
@@ -469,10 +482,10 @@ studies:
       An RNA-seq study of n=29 adolescents with CFS by a broad definition and 18 controls found 176 genes
       expressed differently in whole blood, with enrichment suggesting impaired B cell differentiation and
       enhanced innate antiviral responses.
-    group: Wyller VB, Oslo University Hospital
+    group: Wyller VB, Akershus University Hospital / University of Oslo
 last_checked:
-  date: 2026-11-08
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit
 layer: dysfunction
 links:
   - to: symptom:post-exertional-neuroimmune-exhaustion

@@ -1,0 +1,134 @@
+card: oxidative-nitrosative-stress
+round: 1
+answered:
+- 2026-11-13-oxidative-nitrosative-stress-second.yaml
+- 2026-11-13-oxidative-nitrosative-stress.yaml
+draft_sha256: 32823622223a59d74f502d30cb058f9d399bb442c12c4e4bde7963930c5f2b1b
+operations:
+- op: update_study
+  id: pmid:21455120
+  set:
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention
+      (CDC) criteria [29].
+- op: update_study
+  id: pmid:16085177
+  set:
+    group: null
+- op: update_study
+  id: pmid:19422646
+  set:
+    group: null
+- op: update_study
+  id: pmid:27224647
+  set:
+    finding: A study comparing patients with healthy controls at rest (numbers not given in the abstract)
+      found higher reactive oxygen metabolites (d-ROMs) and lower biological antioxidant potential (BAP)
+      in patients.
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study of 47 patients who fulfilled the Centers for Disease Control classification for CFS (version
+    not named) and 34 healthy volunteers enrolled (the number measured is not stated) found higher blood
+    levels of isoprostanes, a marker of oxidative damage to fats, in patients, both in those with and
+    in those without cardiovascular risk factors. A study from Antwerp of 56 patients diagnosed using
+    the CDC criteria (version not named) and 37 healthy controls found higher plasma peroxides in patients.
+    Both studies used a CDC definition without a stated version, which does not require post-exertional
+    malaise. The card is at level 2 because of these two controlled studies, which used different measures.
+  sources:
+  - pmid:16085177
+  - pmid:21455120
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'Other controlled studies found higher oxidative-stress markers, each on a different measure:
+    malondialdehyde and protein carbonyls in 24 women meeting the Fukuda definition against 19 controls
+    in Novi Sad, Serbia; reactive oxygen metabolites in a study of patients diagnosed by the Fukuda 1994
+    criteria, whose abstract does not give the numbers; and reactive oxygen species inside lymphocytes
+    in 15 patients against 16 controls at Stanford, where the difference was found in women but not in
+    men. The Stanford patients were diagnosed by a physician using the National Academy of Medicine, Fukuda
+    and Canadian Consensus criteria; which definition each patient met is not stated, and Fukuda is recorded
+    as the least strict one named. Because the measures differ, none of these is a repeat of another,
+    and each is unreplicated.'
+  sources:
+  - pmid:23185200
+  - pmid:27224647
+  - pmid:40627396
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'The card does not reach level 3: no independent group has found the same result on the same measure
+    in a separate cohort with a confirmed recognised case definition. The only other isoprostane study,
+    of 6 patients and 6 controls, also found higher levels at rest, but its case definition is not yet
+    verified. It shares three authors with the first isoprostane study, so it would not count as an independent
+    repeat even with a verified definition.'
+  sources:
+  - pmid:19422646
+  - pmid:16085177
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: Measures of antioxidant defences are mixed. In studies with a recognised definition, biological
+    antioxidant potential was lower in the Osaka study, while glutathione in lymphocytes was higher in
+    both sexes in the Stanford study (in men, in two of the three cell types tested). In studies whose
+    case definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients than in 22 controls;
+    whole-blood glutathione peroxidase activity did not differ between 40 patients and 24 controls; glutathione
+    in the brain was lower in 15 patients than in 13 healthy volunteers in one study and did not differ
+    in another of 26 people in all.
+  sources:
+  - pmid:27224647
+  - pmid:40627396
+  - pmid:20010505
+  - pmid:21552194
+  - pmid:22281935
+  - pmid:19906518
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 1
+    severity: must_fix
+    problem: 'Answers audit point (1), that the Dundee city cannot be checked, by setting group to null
+      for pmid:16085177. That leaves this level-carrier study without a group when every other study on
+      the card has one, and it also deletes the part the record does support: the PubMed author list names
+      Belch JJ as last author (Kennedy G first author). It removes more than the finding needs. In fact
+      the cached PubMed record data/cache/pubmed/16085177.xml gives the first author''s affiliation as
+      Ninewells Hospital and Medical School, Dundee.'
+    fix: Keep an author-only group taken from the existing text and the record's author list, with no
+      TODO, for example "Belch JJ (last author; first author Kennedy G)", instead of null.
+  - operation: 2
+    severity: must_fix
+    problem: Setting group to null for pmid:19422646 leaves the study without a group, unlike the rest
+      of the card. It also drops the sourced note that the study shares authors Kennedy G, Hill A and
+      Belch JJ with pmid:16085177, which is the reason level_reason[2] gives for not counting it as an
+      independent repeat. The author list in the record supports both the last author (Nimmo MA) and the
+      shared authors. The audit asked only about the city, and the cached record data/cache/pubmed/19422646.xml
+      does give University of Strathclyde, Glasgow.
+    fix: Set group to an author-only value from the existing text, for example "Nimmo MA (last author);
+      shares authors Kennedy G, Hill A, Belch JJ with 16085177", instead of null.
+  - operation: null
+    severity: advisory
+    problem: Audit point (1) named Dundee, Osaka and Glasgow together, but the correction treats them
+      differently. It removes Dundee and Glasgow from level_reason[0] and [2] and from two groups, yet
+      keeps "the Osaka study" in level_reason[4], "Osaka, Japan" in the groups of pmid:27224647 and pmid:27125909,
+      and "The Dundee study" in the explains_pem badge reason. The cached PubMed XML affiliations do support
+      all these place names, so nothing is wrong, but the card now names some cities and not others.
+    fix: Treat the place names the same way across the card. Because the cached PubMed affiliations support
+      them, keeping them is acceptable.
+  - operation: 0
+    severity: advisory
+    problem: The label is now CDC_unspecified, and the quote matches the cached full text PMC3539515.
+      But the YAML comment above the study still says reference 29 resolves to Fukuda 1994, and the header
+      comments still list 21455120 as "Fukuda via reference 29". These comments are not shown to readers,
+      but they now contradict the label.
+    fix: Update the comments when the card is next edited outside a correction.
+  - operation: null
+    severity: advisory
+    problem: Audit point (3), that both coenzyme Q10 plus NADH trials give a ClinicalTrials.gov registration
+      while preregistered is null, is not answered. It does not affect the level, and null (timing of
+      registration not known) is defensible.
+    fix: No change needed in this round.
+audits_run: []

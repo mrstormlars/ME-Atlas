@@ -1,0 +1,146 @@
+card: oxidative-nitrosative-stress
+round: 1
+answered:
+- 2026-11-13-oxidative-nitrosative-stress-second.yaml
+- 2026-11-13-oxidative-nitrosative-stress.yaml
+draft_sha256: 32823622223a59d74f502d30cb058f9d399bb442c12c4e4bde7963930c5f2b1b
+operations:
+- op: update_study
+  id: pmid:21455120
+  set:
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention
+      (CDC) criteria [29].
+- op: update_study
+  id: pmid:16085177
+  set:
+    group: Belch JJ (last author; first author Kennedy G)
+- op: update_study
+  id: pmid:19422646
+  set:
+    group: Nimmo MA (last author); shares authors Kennedy G, Hill A, Belch JJ with 16085177
+- op: update_study
+  id: pmid:27224647
+  set:
+    finding: A study comparing patients with healthy controls at rest (numbers not given in the abstract)
+      found higher reactive oxygen metabolites (d-ROMs) and lower biological antioxidant potential (BAP)
+      in patients.
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study of 47 patients who fulfilled the Centers for Disease Control classification for CFS (version
+    not named) and 34 healthy volunteers enrolled (the number measured is not stated) found higher blood
+    levels of isoprostanes, a marker of oxidative damage to fats, in patients, both in those with and
+    in those without cardiovascular risk factors. A study from Antwerp of 56 patients diagnosed using
+    the CDC criteria (version not named) and 37 healthy controls found higher plasma peroxides in patients.
+    Both studies used a CDC definition without a stated version, which does not require post-exertional
+    malaise. The card is at level 2 because of these two controlled studies, which used different measures.
+  sources:
+  - pmid:16085177
+  - pmid:21455120
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'Other controlled studies found higher oxidative-stress markers, each on a different measure:
+    malondialdehyde and protein carbonyls in 24 women meeting the Fukuda definition against 19 controls
+    in Novi Sad, Serbia; reactive oxygen metabolites in a study of patients diagnosed by the Fukuda 1994
+    criteria, whose abstract does not give the numbers; and reactive oxygen species inside lymphocytes
+    in 15 patients against 16 controls at Stanford, where the difference was found in women but not in
+    men. The Stanford patients were diagnosed by a physician using the National Academy of Medicine, Fukuda
+    and Canadian Consensus criteria; which definition each patient met is not stated, and Fukuda is recorded
+    as the least strict one named. Because the measures differ, none of these is a repeat of another,
+    and each is unreplicated.'
+  sources:
+  - pmid:23185200
+  - pmid:27224647
+  - pmid:40627396
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'The card does not reach level 3: no independent group has found the same result on the same measure
+    in a separate cohort with a confirmed recognised case definition. The only other isoprostane study,
+    of 6 patients and 6 controls, also found higher levels at rest, but its case definition is not yet
+    verified. It shares three authors with the first isoprostane study, so it would not count as an independent
+    repeat even with a verified definition.'
+  sources:
+  - pmid:19422646
+  - pmid:16085177
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: Measures of antioxidant defences are mixed. In studies with a recognised definition, biological
+    antioxidant potential was lower in the Osaka study, while glutathione in lymphocytes was higher in
+    both sexes in the Stanford study (in men, in two of the three cell types tested). In studies whose
+    case definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients than in 22 controls;
+    whole-blood glutathione peroxidase activity did not differ between 40 patients and 24 controls; glutathione
+    in the brain was lower in 15 patients than in 13 healthy volunteers in one study and did not differ
+    in another of 26 people in all.
+  sources:
+  - pmid:27224647
+  - pmid:40627396
+  - pmid:20010505
+  - pmid:21552194
+  - pmid:22281935
+  - pmid:19906518
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: Audit point (1) named Dundee, Osaka and Glasgow together. The revision removes Dundee and
+      Glasgow from level_reason[0] and [2] and from both groups, but keeps "the Osaka study" in level_reason[4],
+      "Osaka, Japan" in the groups of pmid:27224647 and pmid:27125909, and "The Dundee study" in the explains_pem
+      badge reason. The cached PubMed affiliations (data/cache/pubmed/27224647.xml and 16085177.xml) do
+      support these names, so nothing is wrong. But a reader now sees "the Dundee study" in the badge
+      reason while level_reason calls it "a study of 47 patients" and "the first isoprostane study".
+    fix: Name places the same way across the card when it is next edited. Keeping the names is acceptable
+      because the cached affiliations support them.
+  - operation: 0
+    severity: advisory
+    problem: The label and quote for pmid:21455120 are now CDC_unspecified and match the cached full text
+      PMC3539515. The YAML comment above the study still says reference 29 is Fukuda 1994, and the header
+      still lists 21455120 as "Fukuda via reference 29". Readers do not see these comments, but they contradict
+      the label.
+    fix: Update the comments when the card is next edited outside a correction.
+  - operation: null
+    severity: advisory
+    problem: 'Audit point (3) is still not answered: both coenzyme Q10 plus NADH trials give a ClinicalTrials.gov
+      registration, but preregistered is null. It does not affect the level, and null (timing of registration
+      unknown) is defensible.'
+    fix: No change needed in this round.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason (level 4 paragraph) says of pmid:10071523: ''A crossover trial of NADH alone
+      in 26 patients meeting the CDC criteria did not measure oxidative stress either.'' The cached record
+      (abstract only, no full text cached) does not say this: it says ''laboratory studies'' were obtained
+      at baseline, 4, 8 and 12 weeks without naming them, and reports only responder counts. That the
+      trial measured no oxidative-stress marker cannot be checked from the record. (For pmid:34444817
+      the same claim is supported by the cached full text, which reports no oxidative-stress outcome.)'
+    fix: 'Say only what the record supports, for example: ''A crossover trial of NADH alone in 26 patients
+      meeting the CDC criteria reports no oxidative-stress measure in its abstract.'''
+  - operation: null
+    severity: advisory
+    problem: core_claim says reactive species are 'damaging fats, proteins and other molecules', but neither
+      cited source (pmid:16085177, pmid:21455120) mentions proteins; 16085177 speaks of 'a FR attack on
+      lipids'. Protein damage (protein carbonyls) is in pmid:23185200, which is already on the card.
+    fix: Add pmid:23185200 to core_claim.sources, or drop 'proteins'.
+  - operation: null
+    severity: advisory
+    problem: 'Group fields name a place or institution from a sibling record rather than the study''s
+      own record: pmid:21552194 is listed under ''Maes Clinics'', but its record gives Piyavate Hospital,
+      Bangkok (Maes Clinics, Antwerp appears in the 20010505 and 21455120 records); pmid:27125909 lists
+      Watanabe Y with University of Kansai Welfare Sciences, but Watanabe Y''s affiliations in the record
+      are RIKEN, Kobe and Osaka City University (Kansai is the affiliation of Fukuda S and Kuratsune H).
+      Both names are in the cached records, so they are not invented, but they are attached to the wrong
+      author or study.'
+    fix: Use the study's own affiliation, for example 'Maes M / Bosmans E (same group as 21455120, 20010505)'
+      and 'Kuratsune H / Watanabe Y, University of Kansai Welfare Sciences and Osaka City University,
+      Osaka, Japan'.
+audits_run: []

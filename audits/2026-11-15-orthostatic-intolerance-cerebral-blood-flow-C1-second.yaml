@@ -1,0 +1,48 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+decision: reject
+parts:
+  - decision_part: "The card's level 2. The Dutch controlled study uses an accepted (Fukuda) definition with a control group and supports the claim, so level 2 is the rung the rubric supports. This part is correct and is not the reason for the reject."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32140630
+        quote: "All patients met the Fukuda criteria for CFS, and 70% met the criteria for ME."
+      - source: pmid:32140630
+        quote: "End-tilt CBF reduction was 7% in HC versus 26% in the overall ME/CFS group, 24% in patients with a normal HR/BP response, 28% in those with dOH, and 29% in POTS patients (all P < .0005)."
+  - decision_part: "Not level 3, and contested null. The only study with a null result on brain blood flow velocity has an unverified case definition and 26 patients, less than half of the 429 in the study it would contradict. The New York velocity studies also have unverified definitions. This part is correct."
+    rubric: "and at least half the sample size of the study it contradicts"
+    evidence:
+      - source: pmid:12593133
+        quote: "Transcranial Doppler monitoring of middle cerebral artery (MCA) CBFV was performed during 3-stage HUT prospectively in 26 patients with CFS and 23 healthy controls."
+      - source: pmid:32140630
+        quote: "429 ME/CFS patients were studied"
+  - decision_part: "Not level 4. The controlled interventions either did not change the outcome or come from studies whose case definition is none or unverified. This part is correct."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:11150109
+        quote: "No differences were observed in several other symptom scores or in the proportion with normal follow-up tilt test results at the end of the treatment period."
+  - decision_part: "Diagnostic marker badge set to false. The 13% cut-off comes from the Dutch clinic's own controls, and the records show no test of it in an independent patient group. This part is correct."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32140630
+        quote: "Using a lower limit of normal of 2SD of CBF reduction in HC (13% reduction), 82% of patients with normal HR/BP response, 98% with dOH and 100% with POTS showed an abnormal CBF reduction."
+  - decision_part: "Layer dysfunction and the associated link to symptom:orthostatic-intolerance. The Fukuda-defined study measured both ends in the same patients and reports a relation between them. This part is correct."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:32140630
+        quote: "There was a linear correlation of summed OI symptoms with the degree of CBF reduction at mid-tilt (P < .0005)."
+  - decision_part: "The explains_pem badge reason (a carrier) says the controls' scores 'did not change' after tilt. Setting the badge to false is correct. But the full text of the cited study reports that fatigue in controls fell significantly at 7 days, so the sentence is not accurate against its carrier source."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33585505
+        quote: "Values for all symptoms were unchanged for HC pre- and post-HUT."
+      - source: pmid:33585505
+        quote: "In HC only, the NRS for fatigue decreased significantly (p = 0.004)."
+  - decision_part: "The level_reason names research sites that cannot be matched to the cited records. These labels are used in the independent-group reasoning. They are 'A study from Osaka' (pmid:12006954), 'Johns Hopkins' for pmid:7674527 and for pmid:12593133, and 'a New York laboratory' for pmid:22180650 and pmid:25277740. None of these records states an institution, and the three without cached full text cannot be checked. The site names are unverifiable, so the level_reason is not fully correct against the cited records."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:7674527
+        quote: "Tertiary care hospital."
+      - source: pmid:12006954
+        quote: "We studied 28 patients (age, 10 to 22 years) and 20 healthy control subjects (age, 6 to 27 years)."
+reasons_summary: "Level 2, the badges, no contested mark, the layer and the link are supported. Rejected for unverifiable site names in level_reason (Osaka, Johns Hopkins, New York) and an inaccurate sentence about the controls in the explains_pem reason."
+would_change: "I would accept if level_reason removes or sources the institution names that the cited records do not state: Osaka for pmid:12006954, Johns Hopkins for pmid:7674527 and pmid:12593133, and New York laboratory for pmid:22180650 and pmid:25277740. Three of these (7674527, 12006954, 12593133) have no cached full text, so the names are unverifiable rather than shown to be wrong. The explains_pem reason should also state that control fatigue fell at 7 days in pmid:33585505 instead of saying the controls' scores did not change. No change to level 2, the badge values, the null contested mark, the layer or the link is needed. I was not handed any drafting, review or earlier audit material."

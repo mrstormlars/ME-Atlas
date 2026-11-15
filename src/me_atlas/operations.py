@@ -11,7 +11,8 @@ Operations:
 * ``propose``           set the level, the contested mark or a badge (tier 2: the founder decides)
 
 Three more operations exist only for the correction of a held-back draft (a correction round, see
-``docs/pipeline.md``); ``apply`` refuses them in any other round:
+``docs/pipeline.md``); ``apply`` refuses them in any other round, and so a ``replace_paragraph`` of ``core_claim``
+(``index`` 0, sources only among those it already cites; ``remove_paragraph`` refuses it):
 
 * ``update_study``      change fields of an existing study (not ``id``, not ``preprint``)
 * ``remove_paragraph``  remove paragraph ``index`` of a sourced-text field
@@ -74,6 +75,16 @@ ParagraphField = Literal[
     "badges.explains_pem.reason",
     "subgroups",
     "early_signals",
+]
+# Correction rounds and the valve may also reword ``core_claim`` (one sourced text, so only index 0).
+ReplaceField = Literal[
+    "level_reason",
+    "contested.reason",
+    "badges.diagnostic_marker.reason",
+    "badges.explains_pem.reason",
+    "subgroups",
+    "early_signals",
+    "core_claim",
 ]
 FOLD_WIDTH = 96
 
@@ -142,8 +153,14 @@ class AddParagraph(_TextOp):
 
 class ReplaceParagraph(_TextOp):
     op: Literal["replace_paragraph"]
-    field: ParagraphField
+    field: ReplaceField
     index: Annotated[int, Field(strict=True, ge=0)]
+
+    @model_validator(mode="after")
+    def _core_claim_index(self) -> ReplaceParagraph:
+        if self.field == "core_claim" and self.index != 0:
+            raise ValueError("core_claim is one sourced text: its only valid index is 0")
+        return self
 
 
 _UNSETTABLE_STUDY_FIELDS = ("id", "preprint")
@@ -171,7 +188,7 @@ class RemoveParagraph(_Op):
     """Correction rounds only: remove paragraph ``index`` of a sourced-text field."""
 
     op: Literal["remove_paragraph"]
-    field: ParagraphField
+    field: ReplaceField
     index: Annotated[int, Field(strict=True, ge=0)]
 
 
@@ -280,6 +297,8 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
         return 2 if op.id in preprints else 1
     if isinstance(op, RemoveParagraph):
         return 1
+    if isinstance(op, ReplaceParagraph) and op.field == "core_claim":
+        return 2  # it states what the hypothesis is
     return 2 if any(src in preprints for src in op.sources) else 1
 
 
@@ -526,6 +545,12 @@ def _apply_paragraph(lines: list[str], data: dict[str, Any], op: AddParagraph | 
     current = parent.get(key)
     paras = _as_list(current)
     new = {"text": op.text, "sources": list(op.sources)}
+    if isinstance(op, ReplaceParagraph) and op.field == "core_claim":
+        cited = set(paras[0]["sources"]) if paras else set()
+        if not set(op.sources) <= cited:
+            raise OperationError(
+                "a core_claim replacement may cite only sources core_claim already cites (no new source)"
+            )
     if isinstance(op, ReplaceParagraph):
         if op.index >= len(paras):
             raise OperationError(
@@ -669,6 +694,8 @@ def _apply_update_study(lines: list[str], data: dict[str, Any], op: UpdateStudy)
 
 
 def _apply_remove_paragraph(lines: list[str], data: dict[str, Any], op: RemoveParagraph) -> list[str]:
+    if op.field == "core_claim":
+        raise OperationError("core_claim cannot be removed (a card keeps its core claim); replace its text instead")
     parent, key = _get(data, op.field)
     current = parent.get(key)
     paras = _as_list(current)

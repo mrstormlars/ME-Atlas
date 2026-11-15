@@ -1,0 +1,330 @@
+card: gut-microbiome
+round: 1
+answered:
+- 2026-11-13-gut-microbiome-second.yaml
+- 2026-11-13-gut-microbiome.yaml
+draft_sha256: fabe9d0e345db7a7c89dfde0919eee24167a07cace7119cb6c707a7ef2b03e11
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'studies[pmid:42351611] has case_definition ''unverified'', case_definition_source null,
+      n_patients null and n_controls null, and level_reason[4] calls it ''A Bulgarian study whose case
+      definition is not yet verified''. The cached full text (data/cache/europepmc/PMC13296197.xml) states
+      both: ''This cross-sectional case-control study included 163 participants: 76 patients with ME/CFS
+      (17 males and 59 females), 50 patients with LC condition (13 males and 37 females), and 37 HC''
+      and ''Patients with ME/CFS were selected according to the 2015 Institute of Medicine/National Academy
+      of Medicine diagnostic criteria [42]''. The card understates an accepted-definition study of 76
+      patients that found no difference in alpha diversity (Shannon p = 0.72, Pielou''s evenness p = 0.72).'
+    fix: Set case_definition IOM2015, case_definition_source fulltext, case_definition_quote to the sentence
+      above, n_patients 76, n_controls 37. In level_reason[4] replace 'whose case definition is not yet
+      verified' with 'of 76 patients meeting the 2015 IOM criteria and 37 controls'. Keep its role as
+      context (it did not measure stool butyrate, so it does not bear on the rung).
+  - operation: null
+    severity: must_fix
+    problem: badge_reasons.explains_pem[1] says 'A Columbia University exercise cohort of 9 patients and
+      7 controls'. The cached record of pmid:37396339 says this second set of cohorts was collected 'under
+      institutional review board-approved protocols at the Marshfield Clinic and University of Wisconsin-Madison';
+      it is not a Columbia University cohort (Columbia analysed the samples).
+    fix: Write 'An exercise cohort of 9 patients and 7 controls from the Marshfield Clinic and the University
+      of Wisconsin-Madison, analysed in the same paper as the 131-patient study, ...' or drop the place
+      name.
+  - operation: null
+    severity: must_fix
+    problem: badge_reasons.explains_pem[1] and studies[pmid:37396339].finding report only that LBP and
+      sCD14 rose less in patients after exercise. The same paragraph of the cached full text (PMC10308215)
+      also reports 'individuals with ME/CFS, but not healthy controls, exhibited elevated circulating
+      levels of LPS (P = 0.008)' after exercise and 'a significantly increased IgM antibody response to
+      microbial and dietary antigens in ME/CFS patients after exercise (P = 0.004 for LPS; P = 0.004 for
+      gliadin)'. Leaving these out makes the exercise result read as a weaker gut-translocation response
+      in patients, when the paper reports that blood LPS rose only in patients. That changes how a reader
+      judges the PEM badge.
+    fix: 'Add one sentence to both items: ''LPS in blood rose after exercise in patients (P = 0.008) but
+      not in controls, and IgM antibodies to LPS rose in patients (P = 0.004).'' Keep ''The paper does
+      not relate these changes to symptoms.'''
+  - operation: null
+    severity: must_fix
+    problem: badge_reasons.diagnostic_marker[0] sets the badge to no because 'No study on this card from
+      another research group tests the marker.' The rubric's test is 'tested in a second, independent
+      patient group, with a stated case definition'. It says nothing about a different research group,
+      so this reason uses a criterion outside the rubric. The cached full text of pmid:36758522 says the
+      classifier was tested in 'an external validation metagenomic dataset from ME/CFS cases (n = 50)
+      and healthy controls (n = 50) recruited and sampled years earlier' (CFI-AUC = 0.734 for the GLM).
+      It also says 'differential abundance of the majority of species we report here were confirmed in
+      an independent external validation cohort'. pmid:28441964 states that cohort's case definition (1994
+      CDC Fukuda and/or 2003 Canadian). On the rubric's own words, this evidence could support yes.
+    fix: 'Either ground the ''no'' in the rubric and the records, for example: the two cohorts came from
+      the same sites and the same clinicians (Levine S, Bateman L, Klimas NG, Montoya JG and Peterson
+      DL are on both papers), and neither paper says whether any patient is in both, so the cohorts cannot
+      be shown to be independent. Or flag the badge for the auditor as possibly supported. Remove the
+      ''another research group'' criterion either way. The auditor decides the badge.'
+  - operation: null
+    severity: must_fix
+    problem: links[0] (to symptom:gastrointestinal-symptoms, step associated) cites only the two Columbia
+      studies. pmid:42351611, already on the card, measured gut bacteria and a gastrointestinal symptom
+      domain in the same patients. Its cached full text reports that 'affective, cognitive, and gastrointestinal
+      outcomes showed weaker or less stable signals' and that 'Several domains, particularly affective,
+      gastrointestinal, and HAMD-related measures, had near-zero or negative pooled out-of-fold R2 in
+      mixOmics, arguing against a stable microbiome contribution'. The link rubric requires that 'A study
+      that measured both ends and found no relation is recorded as a context study and the link text says
+      so.'
+    fix: 'Add a sentence to links[0]: ''A study of 76 patients meeting the 2015 IOM criteria, 50 with
+      long COVID and 37 controls, analysed together, found only weak or unstable links between gut bacteria
+      and gastrointestinal symptom scores.'' Add pmid:42351611 to the link''s sources.'
+  - operation: null
+    severity: must_fix
+    problem: links[1] (to symptom:cognitive-impairment) ends 'it was not studied directly in patients.'
+      pmid:42351611, already on the card, measured gut bacteria and a cognitive symptom domain in the
+      same patients. Its cached full text says 'affective, cognitive, and gastrointestinal outcomes showed
+      weaker or less stable signals'. The sentence as written is contradicted by a study on the card.
+    fix: 'Replace ''it was not studied directly in patients'' with a sentence that reports the Bulgarian
+      result: weak or unstable links between gut bacteria and cognitive symptom scores in 76 patients
+      (IOM 2015), 50 with long COVID and 37 controls analysed together. Cite pmid:42351611. Whether the
+      step stays proposed is the auditor''s decision.'
+  - operation: null
+    severity: advisory
+    problem: 'badge_reasons.explains_pem[0] and [1] read as two separate exercise studies. Both exercise
+      cohorts were recruited under Fukuda only and collected at the Marshfield Clinic and the University
+      of Wisconsin-Madison with a maximal exercise test: pmid:26683192 (10 patients, 10 controls) and
+      the 9 patients and 7 controls in pmid:37396339. Shukla SK, Cook DB and Vernon SD are authors on
+      both. Neither cached record says whether the participants overlap.'
+    fix: 'Add, as the card already does for the Levine patients: ''Both exercise cohorts come from the
+      Marshfield Clinic and the University of Wisconsin-Madison; the papers do not say whether any participant
+      is in both.'''
+  - operation: null
+    severity: advisory
+    problem: badge_reasons.diagnostic_marker[0] says the validation cohort was 'collected years earlier
+      at the same US sites'. pmid:36758522 says 'both the primary cohort and external validation cohort
+      were derived from individuals from the same five sites'. But the cached full text of pmid:28441964,
+      also cited here, says its 50 cases were 'recruited at four sites across the USA (New York, NY; Salt
+      Lake City, UT; Incline Village, NV; and Miami, FL)'.
+    fix: Write 'at four of the same five US sites', or keep the sentence attributed to the authors only
+      ('the authors write ...').
+  - operation: null
+    severity: advisory
+    problem: links[2] (to tryptophan-kynurenine-metabolism) says itself that the review 'does not say
+      that this changes the body's own breakdown of tryptophan along the kynurenine pathway, which is
+      what the linked card is about.' The review (pmid:41516296) puts the gut-bacteria sentence right
+      after a paragraph on the kynurenine pathway, but it does not state gut changes driving host kynurenine
+      metabolism. Whether the source states a link to this target is borderline.
+    fix: Leave the decision to the auditor. If the link stays, keep the disclaimer. Also change 'products
+      made by gut bacteria' to the review's words, 'TRP- and phenylalanine-derived metabolites', since
+      the review does not say gut bacteria make them all.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[5] covers Alistipes from the Norwegian and Chinese studies only. pmid:28441964,
+      cited elsewhere on the card, also reports Alistipes: ''Increased abundance of unclassified Alistipes
+      ... emerged as the top biomarkers of ME/CFS with IBS'', while Alistipes putredinis was decreased
+      in ME/CFS.'
+    fix: 'Add: ''the 50-patient Columbia study found more unclassified Alistipes, mainly in patients with
+      irritable bowel syndrome, and less Alistipes putredinis.'' Cite pmid:28441964.'
+  - operation: null
+    severity: advisory
+    problem: level_reason[6] says 'A Columbia University study of 131 patients'. level_reason[3] has just
+      named 'the Columbia University group that later ran the 106-patient study' (Center for Infection
+      and Immunity, Lipkin WI). pmid:37396339 comes from a different Columbia unit, the Division of Digestive
+      and Liver Diseases (Alaedini A), so a reader may take both for the same group.
+    fix: Write 'A study from Columbia University's Division of Digestive and Liver Diseases of 131 patients
+      ...'.
+  - operation: null
+    severity: advisory
+    problem: 'The case_definition_quote for pmid:19338686 (label CCC) says only ''meeting the formal diagnostic
+      criteria for CFS, according to published guidelines, [13]''. The quote for pmid:37516837 (label
+      IOM2015) says ''the Institute of Medicine (IOM) criteria were applied [17]'' without a year. Each
+      label is correct only through the reference list: ref 13 is Carruthers BM et al. 2003, the Canadian
+      case definition, and ref 17 is the 2015 IOM report.'
+    fix: 'Append the reference to each quote or to a note, for example ''[13] = Carruthers BM et al.,
+      J Chronic Fatigue Syndrome 2003'' and ''[17] = IOM, Beyond ME/CFS: Redefining an Illness, 2015''.'
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:23791918].group pairs the last author, De Meirleir K, with the first author's
+      affiliation (R.E.D Laboratories, Zellik). The cached record gives an affiliation for Frémont M only.
+      The parenthetical discloses this, but the label still implies an affiliation for De Meirleir that
+      the record does not state.
+    fix: Use 'Frémont M, R.E.D Laboratories, Zellik, Belgium (last author De Meirleir K)'.
+  - operation: null
+    severity: advisory
+    problem: pmid:36758521 (Jackson Laboratory) has Bateman L and Vernon SD of the Bateman Horne Center,
+      Salt Lake City, as authors. Utah is one of the five sites of the 106-patient study, which has the
+      same two authors. The study's group field mentions the shared authors, but level_reason[5] does
+      not tell readers that its patients may overlap with the 106-patient study.
+    fix: 'Optional: add ''its patients came partly through the Bateman Horne Center, one of the sites
+      of the 106-patient study; the papers do not say whether patients overlap.'' Only do this if the
+      cached record states where patients came from. If it does not, leave it out.'
+operations:
+- op: update_study
+  id: pmid:42351611
+  set:
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: Patients with ME/CFS were selected according to the 2015 Institute of Medicine/National
+      Academy of Medicine diagnostic criteria [42], requiring core ME/CFS symptoms for at least 6 months
+      with no alternative diagnosis.
+    n_patients: 76
+    n_controls: 37
+    finding: A study of 76 patients with ME/CFS meeting the 2015 IOM criteria, 50 patients with long COVID
+      and 37 healthy controls found no significant difference in diversity within samples, small differences
+      in overall make-up of gut bacteria with broad overlap, and more Sutterella and less Lachnospiraceae
+      in both patient groups. Its full text reports that affective, cognitive and gastrointestinal outcomes
+      showed weaker or less stable signals.
+- op: update_study
+  id: pmid:19338686
+  set:
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+- op: update_study
+  id: pmid:23791918
+  set:
+    group: Frémont M, R.E.D Laboratories, Zellik, Belgium (last author De Meirleir K)
+- op: update_study
+  id: pmid:37396339
+  set:
+    finding: A study of n=131 patients and 86 healthy controls found no significant rise in LPS-binding
+      protein or soluble CD14, but higher antibodies against LPS and flagellin and higher FABP2, a marker
+      of gut lining damage, in patients; in a separate group of 9 patients and 7 controls, LPS-binding
+      protein and soluble CD14 rose after exercise in controls (P = 0.007, P = 0.008), while in patients
+      LPS-binding protein did not rise significantly and soluble CD14 rose more modestly (P = 0.021).
+      LPS in blood rose after exercise in patients (P = 0.008) but not in controls, and IgM antibodies
+      to LPS rose in patients (P = 0.004).
+- op: update_study
+  id: pmid:41516296
+  set:
+    finding: A review of gut microbiome research in ME/CFS; its abstract says that microbiome changes
+      may lead to distinct neurocognitive impairments through the gut-brain axis, and that translocation
+      of microbial components triggers an immune response and systemic inflammation. Context only, not
+      evidence for the level.
+- op: update_study
+  id: pmid:31330791
+  set:
+    finding: A 2019 review of proposed disease mechanisms in ME/CFS; its abstract lists disturbances to
+      immunological and inflammatory pathways, autonomic and neurological dysfunction, abnormalities in
+      muscle and mitochondrial function, shifts in metabolism, and gut physiology or gut microbiota disturbances.
+      Context only, not evidence for the level.
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: Studies disagree on gut bacterial diversity. The Cornell study and the Chinese study found lower
+    diversity. A Polish study of 25 patients (Fukuda) and 16 controls found fewer bacterial types (lower
+    richness) but no significant difference in diversity or evenness. In the 106-patient study, diversity
+    was lower in the simple comparison, but after adjustment this was tied to irritable bowel syndrome
+    rather than ME/CFS. A Bulgarian study of 76 patients meeting the 2015 IOM criteria and 37 controls
+    found no difference in diversity within samples, but small differences in overall make-up.
+  sources:
+  - pmid:27338587
+  - pmid:41387992
+  - pmid:41006438
+  - pmid:36758522
+  - pmid:42351611
+- op: replace_paragraph
+  field: level_reason
+  index: 6
+  text: Blood markers of bacterial products crossing the gut wall give mixed results. The Cornell study
+    found higher LPS (a bacterial toxin), LPS-binding protein and soluble CD14 in patients, and a Spanish
+    study of 30 patients meeting the International Consensus Criteria and 26 controls found higher LPS,
+    soluble CD14 and zonulin-1. A separate Columbia University study (Alaedini A) of 131 patients meeting
+    both the Fukuda and Canadian criteria and 86 controls found neither LPS-binding protein nor soluble
+    CD14 significantly raised, but found more antibodies against LPS and flagellin and more FABP2, a marker
+    of damage to gut lining cells, which the Cornell study had found not significantly raised. The level
+    does not rest on these blood markers; the rungs rest on lower stool butyrate.
+  sources:
+  - pmid:27338587
+  - pmid:37744357
+  - pmid:37396339
+  - pmid:36758522
+  - pmid:41387992
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: The 106-patient study tested its bacterial classifier in a second cohort of 50 patients and 50
+    controls recruited and sampled years earlier. Both cohorts came from the same US sites, and several
+    of the same clinicians are authors on both papers (Levine S, Bateman L, Klimas NG, Montoya JG, Peterson
+    DL); neither paper says whether any patient is in both cohorts, so the cohorts cannot be shown to
+    be independent patient groups. The authors write that both cohorts came from the same five sites.
+  sources:
+  - pmid:36758522
+  - pmid:28441964
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 1
+  text: An exercise cohort of 9 patients and 7 controls, recruited under the Fukuda criteria only and
+    collected at the Marshfield Clinic and the University of Wisconsin-Madison, was analysed in the same
+    paper as the 131-patient study. LPS-binding protein and soluble CD14 rose after exercise in controls
+    (P = 0.007, P = 0.008); in patients LPS-binding protein did not rise significantly and soluble CD14
+    rose more modestly (P = 0.021). LPS in blood rose after exercise in patients (P = 0.008) but not in
+    controls, and IgM antibodies to LPS rose in patients (P = 0.004). The paper does not relate these
+    changes to symptoms. Both exercise cohorts come from the Marshfield Clinic and the University of Wisconsin-Madison;
+    the papers do not say whether any participant is in both.
+  sources:
+  - pmid:37396339
+  - pmid:26683192
+- op: remove_link
+  to: symptom:cognitive-impairment
+- op: remove_link
+  to: tryptophan-kynurenine-metabolism
+- op: remove_link
+  to: neuroinflammation
+- op: remove_link
+  to: oxidative-nitrosative-stress
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'Review finding 5 (pre-review) is not answered: links[0] (to symptom:gastrointestinal-symptoms,
+      step associated) still cites only pmid:36758522 and pmid:28441964 and says nothing about pmid:42351611.
+      That study is on the card as context and measured gut bacteria and a gastrointestinal symptom domain
+      in the same patients. Its cached full text (PMC13296197) says ''affective, cognitive, and gastrointestinal
+      outcomes showed weaker or less stable signals'' and ''Several domains, particularly affective, gastrointestinal,
+      and HAMD-related measures, had near-zero or negative pooled out-of-fold R2 in mixOmics, arguing
+      against a stable microbiome contribution''. The link rubric says a study that measured both ends
+      and found no relation ''is recorded as a context study and the link text says so''. The corrected
+      card now says this in studies[pmid:42351611].finding (op 0) but not in the link text, so the link
+      is inconsistent with the card. For the record, the other operations answer: op 0 and op 7 audit
+      second Part 6, audit first Part 4 and review finding 1; op 1 audit second Part 6; op 2 review finding
+      13; op 3 review finding 3; op 4 and op 5 audit second would_change (4); op 6 review finding 11;
+      op 8 review findings 4 and 8; op 9 review findings 2, 3 and 7; op 10 review finding 6; ops 11 to
+      13 audit first Part 3 and audit second Part 5. Those are checked against the cached records and
+      hold.'
+    fix: 'Either remove the link (remove_link symptom:gastrointestinal-symptoms), which is within the
+      correction limits, or, if the link text can be replaced, add one sentence citing pmid:42351611 (already
+      on the card): ''A study of 76 patients meeting the 2015 IOM criteria, 50 with long COVID and 37
+      controls, analysed together, found only weak or unstable links between gut bacteria and gastrointestinal
+      symptom scores.'' The auditor decides whether the step stays associated.'
+    class: decisive
+  - operation: 0
+    severity: advisory
+    problem: The new sentence in studies[pmid:42351611].finding, 'Its full text reports that affective,
+      cognitive and gastrointestinal outcomes showed weaker or less stable signals', does not say signals
+      of what; a reader cannot tell it means the association between gut bacteria and symptom scores.
+    fix: Write 'Its full text reports that affective, cognitive and gastrointestinal symptom scores showed
+      weaker or less stable associations with gut bacteria than fatigue scores did.'
+  - operation: 8
+    severity: advisory
+    problem: badges.diagnostic_marker.reason[0] says in the card's own voice 'Both cohorts came from the
+      same US sites', but pmid:28441964 (cited here) says its 50 cases were recruited at four sites, against
+      five in pmid:36758522. The reason also does not mention that pmid:36758522 itself calls the validation
+      set 'an independent external validation cohort'; the card's 'cannot be shown to be independent patient
+      groups' is the card's reading, not the authors'.
+    fix: Write 'Both cohorts came from four of the same five US sites' or attribute it ('the authors write
+      ...'), and consider adding that the authors call it an independent external validation cohort, so
+      the auditor sees both readings.
+  - operation: null
+    severity: advisory
+    problem: 'YAML comments are now stale: the header (lines 7 and 18) still lists 42351611 as unverified
+      with no open full text; the comment above pmid:19338686 still says ''Recorded CCC from the reference
+      number''; the ''Other reading'' comment still attributes to pmid:41516296 a statement (''cannot
+      be said whether gut changes precede, cause or follow'') that op 4 removed from its finding because
+      the abstract does not state it. They are not reader-facing but mislead the next drafter or auditor.'
+    fix: Update the comments when the card is next edited.
+  - operation: null
+    severity: advisory
+    problem: After ops 10 to 13, pmid:41516296 and pmid:31330791 are cited by no text on the card; they
+      were added only as sources for map links that are now removed.
+    fix: Consider removing them from studies in a later edit (not possible within a correction), or leave
+      them as context.
+audits_run: []

@@ -1,0 +1,75 @@
+card: endothelial-dysfunction
+decision: accept
+parts:
+  - decision_part: "Level 2 basis: the Berlin study is a controlled study in a CCC-defined cohort that found lower reactive hyperaemia index in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32154656
+        quote: "Clinical diagnosis of ME/CFS was based on Canadian Criteria."
+      - source: pmid:32154656
+        quote: "However, RHI was significantly reduced in patients compared with healthy controls (1.95 ± 0.47 vs. 2.21 ± 0.37, P < 0.05, Figure 1 A)."
+      - source: pmid:32154656
+        quote: "Peripheral ED was found in 18 of 35 patients (51%) with ME/CFS and in 4 healthy subjects (20%, P < 0.05)."
+  - decision_part: "The current level 3: the Bergen group, a different institution, found reduced endothelial function in a separate CCC-defined cohort; the card states that the methods differ and that the controls came from other studies."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:33829023
+        quote: "Department of Oncology and Medical Physics, Haukeland University Hospital, Bergen, Norway"
+      - source: pmid:33829023
+        quote: "Inclusion criteria were age 18 to 65, a confirmed ME/CFS diagnosis according to Canadian consensus criteria (4), disease duration of minimum 2 years, disease severity from mild-moderate to severe (excluding mild and very severe ME/CFS) and signed informed consent."
+      - source: pmid:33829023
+        quote: "Patients with ME/CFS had reduced endothelial function affecting both large and small vessels compared to healthy controls."
+      - source: pmid:33829023
+        quote: "Endothelial function at baseline was compared with two cohorts of healthy controls (N = 66 and N = 30) from previous studies."
+      - source: pmid:33829023
+        quote: "The study did not include a designated control group, but relied on endothelial function data from healthy individuals included as control groups for two other studies, one of which consisted of women only."
+      - source: pmid:36730360
+        quote: "ME/CFS patients had markedly reduced FMD compared to healthy controls at baseline (5.1% vs. 8.2%, p< 0.0001, adjusted for arterial diameter and sex), and significantly lower microvascular regulation measured by PORH than healthy controls (1354 PU vs. 2208 PU, p = 0.002)."
+  - decision_part: "Not level 4: no controlled intervention on endothelial function changed the illness outcome."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25455721
+        quote: "High-dose oral vitamin D3 did not improve markers of vascular health or fatigue in patients with chronic fatigue syndrome."
+      - source: pmid:36730360
+        quote: "There were no differences between the treatment and placebo groups in symptom changes or vascular measures."
+      - source: pmid:33829023
+        quote: "Changes in endothelial function did not follow clinical responses during follow-up after cyclophosphamide IV intervention."
+  - decision_part: "No contested mark: the one study with a null reactive hyperaemia result applied Fukuda criteria with PEM added, which ranks below CCC, so it is not of comparable quality; the other studies point the same way."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29426834
+        quote: "When designing the study we used the 1994 Centers for Disease Control (CDC)/Fukuda international diagnostic criteria for ME/CFS, but required participants to have post exertional malaise."
+      - source: pmid:29426834
+        quote: "Regarding assessment of endothelial function, the reactive hyperemia index (RHI) was similar in both groups at rest (2.21 ± 0.71 vs 2.44 ± 0.67, p = 0.07)."
+      - source: pmid:35317812
+        quote: "Five of the 14 post-COVID ME/CFS patients and five of the 16 PCS patients showed ED defined by a diminished RHI (< 1.67), but none of HCs exhibited this finding."
+      - source: pmid:42625188
+        quote: "AVR was lower in PCS patients with ME/CFS than in both NI controls (p < 0.001) and recovered individuals (p = 0.010)."
+  - decision_part: "Diagnostic marker badge no: no marker cut-off was tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32154656
+        quote: "ED was defined by reactive hyperaemia index ≤1.81."
+      - source: pmid:35317812
+        quote: "Based on previous studies and the manufacturer’s analytical instructions, ED was defined as RHI ≤ 1.67 [27–30]."
+      - source: pmid:42625188
+        quote: "The present findings are exploratory and hypothesis-generating and require validation in larger, independent and prospective cohorts."
+  - decision_part: "Explains PEM badge no: the two exercise studies measured vessel function after exertion but did not track symptoms afterwards and link them to vessel function."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients;"
+    evidence:
+      - source: pmid:29426834
+        quote: "There was no difference in RHI during recovery (2.40 ± 0.71 vs 2.12 ± 1.12, p = 0.14) or 18 hours post exercise (2.40 ± 0.70 vs 2.42 ± 0.68, p = 0.92)."
+      - source: pmid:33671082
+        quote: "During recovery, the 48 h control group experienced a significant 7.2% reduction in AIx75 from baseline measures (p < 0.05), while the matched ME/CFS experienced no change in AIx75."
+  - decision_part: "Layer dysfunction: the hypothesis is a measurable abnormality of the vessel lining."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:33829023
+        quote: "Dysfunction of the blood vessel endothelium could be an underlying biological mechanism, resulting in inability to fine-tune regulation of blood flow according to the metabolic demands of tissues."
+  - decision_part: "No links: the card proposes none, so there is no link to check."
+    rubric: "No link without a source, at every step."
+    evidence:
+      - source: pmid:36730360
+        quote: "Our study does not answer the question of why these patients have reduced endothelial function."
+reasons_summary: "Level 3 holds: a CCC-defined Berlin study and an independent Bergen group in a separate CCC cohort both found reduced endothelial function; no comparable contradiction, no controlled intervention, both badges correctly no."
+would_change: "A controlled study with CCC, ICC or IOM 2015 patients, at least half the size of the cohort it contradicts, finding no difference in endothelial function would contest level 3. If the Bergen comparison were found not to count as a separate controlled cohort, the level would fall to 2. A study validating a cut-off in an independent cohort, or tracking symptoms after exertion linked to vessel function, would change a badge. Not checked for lack of room: the card's statement that the two Barcelona studies (pmid:36902264, pmid:38600563) recruited in overlapping periods, which needs the full text of pmid:38600563, and the clotting-background details in the full text of pmid:36015078. Neither affects the level or a badge."

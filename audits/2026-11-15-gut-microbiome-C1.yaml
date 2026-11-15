@@ -1,0 +1,65 @@
+card: gut-microbiome
+decision: accept
+parts:
+  - decision_part: "The level 3: a controlled study in a CCC and Fukuda cohort found lower stool butyrate, and an independent group in China with an IOM 2015 cohort found lower stool butyrate after correction for multiple testing."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:36758522
+        quote: "The study included stool samples from 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS, and 91 healthy control individuals recruited from 5 sites in the United States (CA, NY, NV, UT, and FL)."
+      - source: pmid:36758522
+        quote: "In contrast, butyrate was lower in both ME/CFS subjects without sr-IBS and with sr-IBS compared with healthy controls without sr-IBS (Figure 3I)."
+      - source: pmid:41387992
+        quote: "Participants were recruited between April 2023 and April 2024 from the Endocrine Clinic and Chronic Disease Management Clinic of the Affiliated Hospital of Shandong University of Traditional Chinese Medicine."
+      - source: pmid:41387992
+        quote: "The concentrations of butyrate (q = 0.044), acetate (q = 0.032), isobutyrate (q = 0.039), and isovalerate (q = 0.008) were all significantly reduced in the CFS group, with isovalerate showing the strongest association."
+      - source: pmid:41387992
+        quote: "Other genera such as Alistipes, Faecalibacterium, and Subdoligranulum also exhibited reductions before multiple-testing correction, but these did not remain significant thereafter (all q > 0.05)."
+    class: none
+  - decision_part: "Not level 4: the two controlled trials on the card do not show that changing gut bacteria changes the illness, and both stool studies are cross-sectional."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:37516837
+        quote: "FMT was safe but did not relieve symptoms or improve the HRQOL of patients with CFS."
+      - source: pmid:19338686
+        quote: "X Interaction 1 .452 .513 1 .125 .729"
+      - source: pmid:41387992
+        quote: "the cross-sectional design precludes causal inference"
+    class: none
+  - decision_part: "No contested mark: the contradicting study on the card concerns blood markers of the gut wall, not the stool butyrate finding the rungs rest on, and no study on the card reports stool butyrate not lower."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:37396339
+        quote: "plasma levels of neither LBP nor sCD14 acute-phase responses were significantly elevated in individuals with ME/CFS in comparison with healthy controls"
+      - source: pmid:36758521
+        quote: "including reduced microbial butyrate biosynthesis and a reduction in plasma butyrate, bile acids, and benzoate"
+    class: none
+  - decision_part: "Diagnostic marker badge stays no: the classifier's validation cohort came from the same research group and the same US sites, so it cannot be shown to be an independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:36758522
+        quote: "While geographic diversity of sampling is distinctive to this study, both the primary cohort and external validation cohort were derived from individuals from the same five sites in the US."
+      - source: pmid:28441964
+        quote: "Subjects included 50 cases and 50 controls from the Chronic Fatigue Initiative (CFI) Cohort [49] recruited at four sites across the USA who met the 1994 CDC Fukuda [17] and/or 2003 Canadian consensus criteria for ME/CFS [18]."
+    class: none
+  - decision_part: "PEM badge stays no: the exercise studies did not relate the gut or blood changes to symptoms after exertion in the same patients."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:26683192
+        quote: "Additionally, the small sample size precluded us from directly examining the associations between symptoms and changes to the gut and plasma microbiome."
+      - source: pmid:37396339
+        quote: "Furthermore, it should be acknowledged that for the exercise challenge arm of the study, the relatively small sample size and the use of only the Fukuda criteria for recruitment, are noteworthy limitations."
+    class: none
+  - decision_part: "The early signal: the n=10 exercise study is small and is labelled as not yet repeated."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:26683192
+        quote: "However, given that this was a small pilot study with only 10 patients and 10 controls it was not possible to control for all potential confounders"
+    class: none
+  - decision_part: "Layer mechanism and no links: the card proposes an ongoing contribution of the altered gut community to the illness; no link is proposed."
+    rubric: "setting a card's layer and adding or changing a link are tier 2 decisions taken by the auditor"
+    evidence:
+      - source: pmid:36758522
+        quote: "Nonetheless, even if deficient butyrate-producing capacity is a consequence rather than a direct cause of symptoms, such a deficiency could both exacerbate ME/CFS-specific symptoms or potentiate the risk for the development of additional health-related issues."
+    class: none
+reasons_summary: "Level 3 stands: lower stool butyrate in a CCC/Fukuda US cohort was reproduced by an independent group in an IOM 2015 cohort in China; no trial changes the illness, no contradiction of the butyrate finding, both badges correctly no."
+would_change: "A controlled study of comparable quality finding stool butyrate not lower in patients would call for a contested mark; a classifier validated in a cohort shown to be independent with a stated case definition, or an exercise study relating gut changes to post-exertional symptoms at level 2 or above, would reopen the badges. Two carriers (pmid:36758521, pmid:23791918) have no cached full text; the card's statements about them match their abstracts and the level does not rest on them."

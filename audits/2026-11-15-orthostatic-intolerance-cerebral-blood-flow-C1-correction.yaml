@@ -1,0 +1,219 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+round: 1
+answered:
+- 2026-11-13-orthostatic-intolerance-cerebral-blood-flow-second.yaml
+- 2026-11-13-orthostatic-intolerance-cerebral-blood-flow.yaml
+draft_sha256: 35ead89d7ae1b0245b41663df23ef39c881e6cdee1b24abb7f19fbc166c2dd19
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'Study pmid:33050553 is labelled case_definition: none with case_definition_source: fulltext
+      and no quote. Two places on the card say the paper does not name its case definition: level_reason
+      paragraph 2 ("A later study from the same clinic, which does not name its case definition") and
+      the diagnostic_marker reason ("The later sitting study came from the same clinic and does not name
+      its case definition"). The cached full text (PMC7712289, Methods 2.1) contradicts this: "During
+      the first visit, it was determined whether patients satisfied the criteria for CFS and ME, taking
+      the exclusion criteria into account [ 4 , 5 ]." In its reference list, reference 4 is Carruthers
+      et al. 2011, "Myalgic encephalomyelitis: International Consensus Criteria", and reference 5 is Fukuda
+      et al. 1994. The card labels pmid:33585505 ICC from a sentence of the same kind ("met both the criteria
+      for CFS (1) and ME (3)"), so the two labels are also inconsistent with each other.'
+    fix: Set the label from the quoted Methods sentence, with case_definition_quote set to that sentence.
+      Because the sentence says "whether patients satisfied" rather than "met both", Fukuda is the safe
+      reading; ICC only if the drafter can show that every patient met both. Then reword level_reason
+      paragraph 2 and the diagnostic_marker reason so they no longer say the paper names no case definition.
+      Both can still say the study is from the same clinic and so is not an independent repeat. The level
+      does not change.
+  - operation: null
+    severity: must_fix
+    problem: The group field of pmid:25277740 ends "(same laboratory as 22180650; same numbers as 38682242)".
+      pmid:38682242 is not among the card's studies and is not one of the cached records named in the
+      context. The claim that another paper reports the same numbers cannot be checked from the sources
+      given, and it points readers to a study the card does not cite.
+    fix: Remove "; same numbers as 38682242" from the group field. The correction may not add a new study,
+      so do not add 38682242 to the card.
+  - operation: null
+    severity: advisory
+    problem: The early signal says hypocapnia (pmid:17263876) is "Not yet repeated by an independent group
+      with a verified case definition." pmid:32140630 (Fukuda, no author shared with 17263876) measured
+      end-tidal CO2 during tilt. Its Table 2 gives an end-tilt PetCO2 of 36 mmHg in controls against 32,
+      32 and 26 mmHg in the patient groups, and its text says patients with an end-tilt PetCO2 of 30 mmHg
+      or less had a greater fall in blood flow to the brain. It does not use 17263876's definition of
+      orthostatic hypocapnia, and the table does not make clear which group comparisons its P values refer
+      to, so the statement is not plainly wrong.
+    fix: Optionally say the claim means repetition of orthostatic hypocapnia as 17263876 defined it, or
+      note that 32140630 reports lower end-tilt end-tidal CO2 without testing that definition.
+  - operation: null
+    severity: advisory
+    problem: Level_reason paragraph 6 says the two New York studies "found lower blood flow velocity in
+      the brain on tilt". For pmid:22180650 the abstract says "Absolute mean CBFV was slightly less than
+      in control subjects in CFS subject at each angle", and the angles include 0 degrees (supine).
+    fix: Write "slightly lower blood flow velocity at each tilt angle" for 22180650, or describe each
+      study separately.
+  - operation: null
+    severity: advisory
+    problem: Level_reason paragraph 8 opens "Two small studies changed blood flow to the brain directly."
+      Compression stockings (pmid:35056360) and phenylephrine (pmid:25277740) act on venous pooling and
+      blood pressure, which then changed blood flow to the brain. "Directly" is stronger than either abstract
+      states.
+    fix: Write "Two small studies used an intervention that changed blood flow to the brain."
+  - operation: null
+    severity: advisory
+    problem: 'Level_reason paragraph 4 says of pmid:17263876: "The difference lay in low carbon dioxide
+      in the breath on standing". The abstract reports the rates separately: hypocapnia differed significantly,
+      while tachycardia, hypotension and hypertension did not. "The difference lay in" reads as the paper''s
+      own attribution, which it does not make in those words.'
+    fix: Write "Of the separate abnormalities, only low carbon dioxide in the breath on standing differed
+      significantly (20.6% against 2.9%)".
+  - operation: null
+    severity: advisory
+    problem: 'pmid:42746015 and pmid:22850676 are listed in studies but no core_claim, level_reason, badge,
+      subgroup, early signal or link text cites them. Their labels and findings match the cached records
+      (42746015: quote present in PMC13574936, POTS in 7/18 patients against 0/18 controls; 22850676:
+      9/36 against 9/43, not significant).'
+    fix: No change needed for accuracy. Optionally cite them where they bear on the text, for example
+      22850676 next to the other studies that found no difference.
+operations:
+- op: update_study
+  id: pmid:33585505
+  set:
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+- op: update_study
+  id: pmid:25277740
+  set:
+    group: Stewart JM, New York Medical College, Valhalla, USA (same laboratory as 22180650)
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: A later study from the same clinic found a similar fall while sitting in 100 severely ill patients
+    (24.5%, against 0.4% in 15 healthy controls). Its methods sentence on the case definition refers to
+    criteria for CFS and ME only by reference numbers and names no definition in the text, so the card
+    does not record a recognised definition for it. Being from the same group, it does not count as a
+    repeat by others.
+  sources:
+  - pmid:33050553
+  - pmid:32140630
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: An independent study from New Jersey, of 62 patients meeting the Fukuda definition and 35 controls,
+    found an abnormal standing test in 53% of patients and 20% of controls. Of the separate abnormalities,
+    only low carbon dioxide in the breath on standing (hypocapnia) differed significantly (20.6% against
+    2.9%); rates of orthostatic tachycardia and of a fall or rise in blood pressure did not differ significantly.
+    It did not measure blood flow to the brain, so the card does not count it as a repeat of the Dutch
+    finding.
+  sources:
+  - pmid:17263876
+  - pmid:32140630
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'The card does not reach level 3: no independent group with a verified case definition has repeated
+    the fall in blood flow to the brain. Two studies from a New York laboratory reported lower blood flow
+    velocity in the brain in patients (in one, slightly lower velocity at each tilt angle; in the other,
+    a fall of 22.5% in 15 patients against 8.7% in 11 controls on tilt), and a study from Osaka of 28
+    young patients and 20 controls found slower recovery of brain oxygen on standing. A Johns Hopkins
+    study of 26 patients and 23 controls found no difference in blood flow velocity at any of the measured
+    time points (supine, 1 and 5 minutes after tilt, 5 and 1 minutes before the end, and at termination).
+    The case definitions of all four are not yet verified, so none of them can support or contradict the
+    card.'
+  sources:
+  - pmid:22180650
+  - pmid:25277740
+  - pmid:12006954
+  - pmid:12593133
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: Two small studies used an intervention that changed blood flow to the brain. In a randomised crossover
+    study of 16 patients from the Dutch clinic, compression stockings reduced the fall in blood flow to
+    the brain during tilt (14% with stockings, 25% without); symptoms were not an outcome and the paper
+    does not name the case definition. In the New York study of 15 patients, phenylephrine, which raises
+    blood pressure, reduced the fall in blood flow velocity on tilt (8.1% against 22.5% untreated) and
+    the slowing on a working-memory task; its case definition is not yet verified. Neither can count towards
+    level 4.
+  sources:
+  - pmid:35056360
+  - pmid:25277740
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: The Dutch study set a lower limit of normal at a 13% fall in blood flow to the brain, from its
+    44 healthy controls, and found a larger fall in 82% to 100% of patients depending on their heart rate
+    and blood pressure response. The later sitting study came from the same clinic, so it is not an independent
+    patient group. No independent patient group has tested this cut-off.
+  sources:
+  - pmid:32140630
+  - pmid:33050553
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'No study at level 2 or above measures post-exertional malaise and links it to blood flow to the
+    brain in the same patients. A study from the Dutch clinic, of patients with ME/CFS (its case-definition
+    sentence cites numbered references and names no definition in the text), tracked pain, fatigue and
+    concentration scores after a tilt test in 278 patients and 30 healthy controls: scores rose in patients
+    and were still higher after 7 days, while controls'' did not change. The size of the fall in blood
+    flow to the brain was not related to the change in symptoms. A passive tilt is orthostatic stress
+    rather than physical or mental effort, so the card does not count it as a direct measure of post-exertional
+    malaise.'
+  sources:
+  - pmid:33585505
+- op: replace_paragraph
+  field: early_signals
+  index: 0
+  text: A study of n=62 patients and 35 controls found low carbon dioxide in the breath on standing (orthostatic
+    hypocapnia, as that study defined it) in 20.6% of patients and 2.9% of controls. Not yet repeated
+    by an independent group with a verified case definition.
+  sources:
+  - pmid:17263876
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 4
+    severity: advisory
+    problem: The new level_reason paragraph 6 opens "Two studies from a New York laboratory reported lower
+      blood flow velocity in the brain in patients". This holds for pmid:22180650 ("Absolute mean CBFV
+      was slightly less than in control subjects in CFS subject at each angle"). For pmid:25277740 the
+      abstract reports a larger fall on tilt ("HUT caused CBFv to decrease 8.7% in control subjects but
+      fell 22.5% in CFS"), not lower absolute velocity than in controls. The parenthesis then describes
+      each study correctly, so the meaning is not changed in substance. This operation answers pre-drafting
+      finding 4.
+    fix: 'For example: "Two studies from a New York laboratory reported differences in blood flow velocity
+      in the brain (in one, slightly lower velocity at each tilt angle; in the other, a larger fall on
+      tilt: 22.5% in 15 patients against 8.7% in 11 controls)".'
+  - operation: 0
+    severity: advisory
+    problem: 'Operation 0 sets pmid:33585505 to case_definition none (this answers audit Part 5 and the
+      audit''s note that the two Dutch papers should be classified the same way; operations 2, 6 and 7
+      answer pre-drafting finding 1 and audit Part 5, operation 1 pre-drafting finding 2, operation 3
+      finding 6, operation 5 finding 5, and the early_signals operation finding 3). The YAML comments
+      in the applied card were left as they were: the comment above the pmid:33585505 entry still says
+      "Both were required, so recorded as ICC", and the explains_pem comment still says "ICC (with Fukuda)".
+      These comments are not shown to readers, and a correction cannot edit comments, but they now contradict
+      the recorded value.'
+    fix: Update the two comments when the card is next edited by hand or by the pipeline, so they say
+      the study is recorded as none because its case-definition sentence gives only reference numbers.
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: 'pmid:33050553 and pmid:33585505 are labelled case_definition: none, and the card says their
+      case-definition sentence ''names no definition in the text''. That is literally true, but the cached
+      full texts resolve the numbered references: in PMC7712289 ''[ 4 , 5 ]'' are Carruthers 2011 (International
+      Consensus Criteria) and Fukuda 1994, and PMC7874746 says ''met both the criteria for CFS ( 1 ) and
+      ME ( 3 )'', where ref 1 is Fukuda 1994 and ref 3 is Carruthers 2011. The conservative label does
+      not change the level, the badges or the link here: 33050553 is from the same clinic as the level-2
+      study, and 33585505 found no relation. The wording is still narrower than what the records show.'
+    fix: Optionally add a short clause that the cited references are the Fukuda and International Consensus
+      Criteria papers, while keeping the label as the project's rule for definitions given only by reference
+      requires.
+audits_run:
+- 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C1.yaml
+- 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C1-second.yaml

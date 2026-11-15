@@ -1,0 +1,65 @@
+card: autoimmunity-autoantibodies-b-cells
+round: 1
+stage: correction-review
+attempt: C1
+classification:
+- finding: findings[0]
+  class: wording
+  target: subgroups[0]
+  problem: This operation answers review finding 6. Its new second sentence says 'The Swedish study included
+    all patients meeting its criteria at two clinics, without selecting on antibody level'. The cached
+    full text of pmid:34589868 does not say this. It says 'All patients at both Stora Skondal and Gottfries
+    clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM
+    criteria' and 'In total, 48 patients were included, 24 from each clinic respectively'. That means
+    every included patient met the criteria. It does not mean every patient who met the criteria was included.
+    The paper also says nothing about selecting or not selecting on antibody level. The sentence misreads
+    the record and adds a fact, which a correction may not do.
+- finding: findings[1]
+  class: wording
+  target: badge_reasons.diagnostic_marker[0]
+  problem: This operation answers review finding 5. The rewritten reason still ends 'The Cornell study
+    found no differences.' The cached record for pmid:40141440 is the abstract only (full text not cached;
+    HTTP 500), and its author list and abstract do not name Cornell. The second audit flagged this place
+    name as unverifiable. This same correction removes 'from Cornell' from level_reason[8] and the Cornell
+    affiliation from the study's group (operation 6) for that reason, but leaves the name in the badge
+    reason.
+operations:
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: The immunoadsorption studies included only patients whose illness began after an infection (after
+    COVID-19 in one) and who had raised β2 receptor antibodies. In the Swedish study, 79% and 91% of patients
+    in its two cohorts, and 25% of controls, had at least one raised receptor antibody.
+  sources:
+  - pmid:29543914
+  - pmid:39759581
+  - pmid:34589868
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: 'Receptor antibody levels have been compared with controls in separate cohorts, with mixed results,
+    and no study on this card has validated a cut-off in a second, independent patient group. In the Swedish
+    study, 25% of controls and 79% and 91% of patients had at least one receptor antibody above the controls''
+    90th percentile. The Spanish study applied the test maker''s cut-off, which was not derived from its
+    own study population, and it did not separate patients from controls: 27.5% of patients and 13.9%
+    of controls had β2 receptor antibodies above it, 18.6% of patients against 58.3% of controls had M4
+    receptor antibodies above it, and 55.9% of patients against 58.3% of controls had α1 receptor antibodies
+    above it. The third study found no differences.'
+  sources:
+  - pmid:34589868
+  - pmid:42082542
+  - pmid:40141440
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The unsupported clause about including all patients who met the criteria without selecting
+      on antibody level is removed; the 79%, 91% and 25% figures that remain are stated in the cached
+      full text PMC8474431.
+  - finding: findings[1]
+    resolves: true
+    new_claim: false
+    reason: '''Cornell'' is replaced by ''The third study''; the cached abstract of pmid:40141440 reports
+      no significant differences between patients and controls, and no new name or number is added.'

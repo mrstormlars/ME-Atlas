@@ -1,0 +1,324 @@
+card: mast-cell-activation
+round: 1
+answered:
+- 2026-11-13-mast-cell-activation-second.yaml
+- 2026-11-13-mast-cell-activation.yaml
+draft_sha256: 0b16f9e7f0a40a140a7158b44372c433578be950bec4ce41948671e7ea020cca
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[2], first sentence: "No other study has measured mast cells, or substances
+      released mainly by mast cells such as tryptase or histamine, in patients with a recognised case
+      definition against a control group." This is a claim about the whole literature, and its only cited
+      source, pmid:42327760, says nothing of the kind. The cached records also do not support the gloss
+      "released mainly by mast cells" for tryptase or histamine: none of them says "mainly". 27362406
+      lists histamine among several mediators, and 41300853 speaks only of "mast cell mediators or their
+      metabolites".'
+    fix: 'Limit the claim to the card: "No other study on this card measured mast cells or mast cell mediators
+      in patients with a recognised case definition against a control group." Drop "released mainly by
+      mast cells such as tryptase or histamine", or give a source on the card that states it.'
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[4], second sentence: "The only controlled treatment trial, of the antihistamine
+      terfenadine ... blocks one effect of histamine rather than changing mast cells, so it cannot count
+      towards level 4." The 8568124 record does not say it is the only controlled trial, and it does not
+      describe how terfenadine works: it says only "the antihistamine terfenadine (60 mg twice daily)".
+      Both are unsourced facts. The trial found no benefit ("No therapeutic benefit from terfenadine could
+      be detected"), so it gives no level 4 support whatever the drug''s mechanism.'
+    fix: Write "The only controlled treatment trial on this card, of the antihistamine terfenadine in
+      28 patients (case definition not yet verified), found no benefit, so it does not count towards level
+      4." Remove the mechanism clause.
+  - operation: null
+    severity: must_fix
+    problem: 'Contested mark, and level_reason[1]. pmid:29223146 meets the rubric''s test for comparable
+      quality against pmid:27362406: the same case definition (ICC, quoted in both abstracts), a control
+      group (12 healthy controls), and 11 patients, at least half of 18. Its abstract reports "no significant
+      differences in maturity MCPs" (maturity markers CD34 and FcεRI) between groups, and the card itself
+      says these are the markers that defined the population that 27362406 found increased. The card then
+      decides that this is "a different measure ... so it is not counted as contradicting it", while admitting
+      that "the abstracts do not give the exact denominator". No cached record supports that decision:
+      it is an assumption that favours the level, made where the records cannot settle the question. Under
+      the rubric, whether this is a contradiction of comparable quality, and so a contested mark, is for
+      the auditor to decide, not for the card to assert.'
+    fix: 'Remove the sentence "The card treats its maturity markers ... as a different measure ... so
+      it is not counted as contradicting it." State only what the records give: 29223146, from the same
+      group, found no significant difference in the maturity markers CD34 and FcεRI among separated mast
+      cell precursors, and the abstracts do not show whether this measures the same thing as the first
+      study''s increased population. Leave the contested question to the auditor, citing both studies.'
+  - operation: null
+    severity: must_fix
+    problem: 'studies[pmid:29223146].finding: "the one reported difference (lower HLA-DR+/CD154- expression)
+      was between patients and people with systemic mastocytosis." The abstract reports a second result,
+      "an observed increase in HLA-DR-/CD154+ expression post Poly I:C stimulation in CFS/ME participants",
+      so "the one reported difference" overstates it. The abstract also says only "a significant decrease
+      in HLA-DR+/CD154- expression between CFS/ME and SM groups" and does not state which group is lower.
+      "lower" with no group named reads as lower in patients.'
+    fix: Write "the one reported between-group difference was in HLA-DR+/CD154- expression, between patients
+      and people with systemic mastocytosis". Either drop "lower" or say exactly what the abstract says
+      ("a significant decrease ... between CFS/ME and SM groups").
+  - operation: null
+    severity: must_fix
+    problem: 'studies[pmid:42327760].group: "Theoharides TC, Tufts University School of Medicine, USA;
+      patients from Klimas NG, University of Miami". In the cached PubMed record and in the full text
+      (PMC13278969), every author''s first affiliation is the Institute for Neuro-Immune Medicine, Nova
+      Southeastern University, Ft. Lauderdale (aff1), and correspondence goes to nova.edu. Tufts is only
+      Theoharides''s second affiliation (aff4). Klimas''s affiliations are Nova Southeastern and the Miami
+      VA (aff1, aff2), not the University of Miami. The University of Miami appears only as the place
+      where patients were recruited ("recruited (2007–2012) at the Department of Medicine, University
+      of Miami Miller School of Medicine"). The field names the wrong lead institution and pairs Klimas
+      with an institution the record does not give for her. The group field is what independence is judged
+      on.'
+    fix: Write "Theoharides TC, Institute for Neuro-Immune Medicine, Nova Southeastern University, USA;
+      patients recruited at the University of Miami Miller School of Medicine".
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:27362406].group names the "National Centre for Neuroimmunology and Emerging
+      Diseases". The 27362406 record gives only "School of Medical Science, Griffith University, Gold
+      Coast, QLD, Australia" for all authors. The centre's name appears only in the 29223146 record (author
+      Smith P). It is the same group, but the name comes from another paper's record.
+    fix: 'Use the affiliation in 27362406''s own record: "Marshall-Gradisnik S, School of Medical Science,
+      Griffith University, Australia (same group as 29223146)".'
+  - operation: null
+    severity: advisory
+    problem: 'badges.diagnostic_marker.reason: "No mast cell marker has been tested in a second, independent
+      patient group. The only later study of blood mast cells came from the same group ..." Like level_reason[2],
+      this reads as a claim about the whole literature. The badge value (false) is correct on the card''s
+      evidence.'
+    fix: 'Add "on this card": "No mast cell marker on this card has been tested in a second, independent
+      patient group. The only later study of blood mast cells on this card came from the same group ...".'
+  - operation: null
+    severity: advisory
+    problem: level_reason[3] and studies[pmid:11570618].finding describe IgE as "the antibody that arms
+      mast cells in allergy". The 11570618 abstract does not say this. It mentions only "TH2-lymphocyte
+      and IgE-mast cell mechanisms". The gloss adds explanatory content that is not in the record.
+    fix: 'Write "IgE, an antibody involved in allergy", or say only what the record states: the authors
+      concluded that "IgE-mast cell mechanisms are unlikely causes of CFS".'
+  - operation: null
+    severity: advisory
+    problem: level_reason[0] calls the population "a type of immature mast cell". The 27362406 abstract
+      calls it "naïve MCs" (conclusions) and gives the phenotype CD117+CD34+FCεRI-chymase-. The meaning
+      is close but the word is not the record's.
+    fix: Write "naïve (undifferentiated) mast cells", as the abstract does, or keep only the phenotype.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:33996867].case_definition_quote ("After 6 months of illness, he satisfied the
+      Institute of Medicine criteria for ME/CFS.") is about patient 1 only. For all three patients, the
+      full text says "all three participants met criteria for ME/CFS 6 months after the onset of symptoms",
+      and its Table 2 lists the IOM 2015 items for each patient. The label is supported, but the quote
+      covers one of the three patients.
+    fix: Add the series-level sentence ("As shown in Table 2, all three participants met criteria for
+      ME/CFS 6 months after the onset of symptoms.") next to the IOM sentence, or note that the IOM criteria
+      are named for patient 1 and laid out for all three in Table 2.
+  - operation: null
+    severity: advisory
+    problem: 'links[0] (to symptom:orthostatic-intolerance, support: associated). The numbers check against
+      the PMC12651186 full text: 70.3% (n=45) against 49.7% (n=84), OI n=233, p=0.005, POTS p=0.054, mediators
+      tested in 12. The criteria overlap is also accurate: the cardiovascular organ system for MCA was
+      "hypotension, tachycardia, syncope, or presyncope". But mast cell activation was a classification
+      from records, partly defined by orthostatic-type symptoms, not a measurement. The rubric''s "measured
+      both ends in the same patients" is met only loosely. The link text says this openly, and the auditor
+      should weigh it when deciding between associated and proposed. Note also that the paper''s abstract
+      says POTS was "significantly more common" in both cohorts, while its results give p=0.054 for POTS
+      in this cohort. The card rightly follows the results.'
+    fix: No text change needed. The auditor should consider whether the overlap in criteria keeps this
+      link at 'associated'.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'A study of 12 patients with moderately severe and 6 with severe ME/CFS meeting the International
+    Consensus Criteria, and 13 healthy controls, found a significant increase in CD117+CD34+FcεRI-chymase-
+    mast cell populations (called naïve mast cells by the authors), identified from peripheral blood mononuclear
+    cells, in moderately severe and severe patients compared with healthy controls. Its authors call it
+    a preliminary study. The card is at level 1 because the rubric holds back a finding that rests on
+    a very small sample: this is one small, preliminary study, so it counts as a small study pointing
+    towards the hypothesis.'
+  sources:
+  - pmid:27362406
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: The same group later studied mast cell precursors in 11 patients meeting the International Consensus
+    Criteria, 9 people with systemic mastocytosis and 12 healthy controls, after magnetically separating
+    CD117+ cells from the blood. It found no significant differences between groups in the maturity markers
+    CD34 and FcεRI, the markers that defined the population the first study found increased. Because the
+    group is the same, this study cannot be a repeat. The abstracts do not show whether this measures
+    the same thing as the first study's increased population, so whether it contradicts the first finding
+    is left open.
+  sources:
+  - pmid:29223146
+  - pmid:27362406
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: Apart from these two studies, no other study on this card measured mast cells in patients with
+    a recognised case definition against a control group. A study of 18 patients and 18 controls found
+    higher blood MMP-9, an enzyme that the authors say can be released from mast cells and from other
+    cells such as microglia; this does not show that the patients' mast cells were the source.
+  sources:
+  - pmid:42327760
+  - pmid:27362406
+  - pmid:29223146
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: Two older studies, whose case definitions are not yet verified, cannot count. A study of lip salivary
+    gland tissue from 11 patients and controls found that the presence of mast cells was the only one
+    of seven features that differed significantly between the groups. A study of 95 patients and 109 controls
+    found no difference in serum IgE, an antibody involved in allergy.
+  sources:
+  - pmid:10884641
+  - pmid:11570618
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: An Austrian study of patients meeting the 2015 Institute of Medicine criteria reports how often
+    patients' records met symptom and treatment-response criteria for mast cell activation, not a measurement
+    against controls (see below). The only controlled treatment trial on this card, of the antihistamine
+    terfenadine in 28 patients (case definition not yet verified), found no benefit, so it does not count
+    towards level 4.
+  sources:
+  - pmid:41300853
+  - pmid:8568124
+- op: propose
+  target: level
+  value: 1
+  reason:
+  - text: 'A study of 12 patients with moderately severe and 6 with severe ME/CFS meeting the International
+      Consensus Criteria, and 13 healthy controls, found a significant increase in CD117+CD34+FcεRI-chymase-
+      mast cell populations (called naïve mast cells by the authors), identified from peripheral blood
+      mononuclear cells, in moderately severe and severe patients compared with healthy controls. Its
+      authors call it a preliminary study. The card is at level 1 because the rubric holds back a finding
+      that rests on a very small sample: this is one small, preliminary study, so it counts as a small
+      study pointing towards the hypothesis.'
+    sources:
+    - pmid:27362406
+  - text: The same group later studied mast cell precursors in 11 patients meeting the International Consensus
+      Criteria, 9 people with systemic mastocytosis and 12 healthy controls, after magnetically separating
+      CD117+ cells from the blood. It found no significant differences between groups in the maturity
+      markers CD34 and FcεRI, the markers that defined the population the first study found increased.
+      Because the group is the same, this study cannot be a repeat. The abstracts do not show whether
+      this measures the same thing as the first study's increased population, so whether it contradicts
+      the first finding is left open.
+    sources:
+    - pmid:29223146
+    - pmid:27362406
+  - text: Apart from these two studies, no other study on this card measured mast cells in patients with
+      a recognised case definition against a control group. A study of 18 patients and 18 controls found
+      higher blood MMP-9, an enzyme that the authors say can be released from mast cells and from other
+      cells such as microglia; this does not show that the patients' mast cells were the source.
+    sources:
+    - pmid:42327760
+    - pmid:27362406
+    - pmid:29223146
+  - text: Two older studies, whose case definitions are not yet verified, cannot count. A study of lip
+      salivary gland tissue from 11 patients and controls found that the presence of mast cells was the
+      only one of seven features that differed significantly between the groups. A study of 95 patients
+      and 109 controls found no difference in serum IgE, an antibody involved in allergy.
+    sources:
+    - pmid:10884641
+    - pmid:11570618
+  - text: An Austrian study of patients meeting the 2015 Institute of Medicine criteria reports how often
+      patients' records met symptom and treatment-response criteria for mast cell activation, not a measurement
+      against controls (see below). The only controlled treatment trial on this card, of the antihistamine
+      terfenadine in 28 patients (case definition not yet verified), found no benefit, so it does not
+      count towards level 4.
+    sources:
+    - pmid:41300853
+    - pmid:8568124
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No mast cell marker on this card has been tested in a second, independent patient group. The only
+    later study of blood mast cells on this card came from the same group and did not test the first study's
+    finding as a marker.
+  sources:
+  - pmid:27362406
+  - pmid:29223146
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: 'Severity: in the first study of blood mast cells, two surface markers (CD40 ligand and MHC-II)
+    on differentiated mast cells were higher in the 6 severe patients than in the 12 moderate patients
+    and the 13 controls. This rests on 6 patients and has not been repeated.'
+  sources:
+  - pmid:27362406
+- op: replace_paragraph
+  field: early_signals
+  index: 0
+  text: A study of n=3 adolescents and young adults with confirmed or probable COVID-19 who all met ME/CFS
+    criteria after 6 months of illness found strong histories of allergies in all three and elevations
+    in plasma histamine in two, with no control group. Not yet repeated.
+  sources:
+  - pmid:33996867
+- op: update_study
+  id: pmid:33996867
+  set:
+    finding: A case series of n=3 adolescents and young adults with confirmed or probable COVID-19 who
+      all met ME/CFS criteria after 6 months of illness found strong histories of allergies in all three
+      and elevations in plasma histamine in two; there was no control group.
+- op: update_study
+  id: pmid:27362406
+  set:
+    group: Nguyen T, Marshall-Gradisnik S (same group as pmid:29223146)
+- op: update_study
+  id: pmid:29223146
+  set:
+    finding: A study of n=11 patients, 9 people with systemic mastocytosis and 12 healthy controls found
+      no significant differences between groups in the maturity markers (CD34, FcεRI), CD154 or CD2/CD25
+      of magnetically separated mast cell precursors, before or after stimulation with Poly I:C; the reported
+      between-group difference was a significant decrease in HLA-DR+/CD154- expression between patients
+      and people with systemic mastocytosis (the abstract does not say which group was lower), and an
+      increase in HLA-DR-/CD154+ expression after stimulation was observed in patients.
+- op: update_study
+  id: pmid:10884641
+  set:
+    group: Woo SB, Schacterle RS, Komaroff AL, Gallagher GT
+- op: update_study
+  id: pmid:11570618
+  set:
+    group: Repka-Ramirez MS, Baraniuk JN
+    finding: A study of n=95 patients and 109 controls found no significant difference in serum IgE, an
+      antibody involved in allergy, between the groups (133 against 128 IU/mL), overall or within four
+      groups defined by allergy skin tests and rhinitis.
+- op: update_study
+  id: pmid:8568124
+  set:
+    finding: A placebo-controlled trial in which 28 patients completed two months of the antihistamine
+      terfenadine or placebo found no benefit on symptoms, physical or social functioning, health perceptions
+      or mental health; 73% had a history of atopy and 53% a positive immediate skin test.
+- op: update_study
+  id: pmid:42327760
+  set:
+    group: Theoharides TC, Institute for Neuro-Immune Medicine, Nova Southeastern University, USA; patients
+      recruited at the University of Miami Miller School of Medicine
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 14
+    severity: must_fix
+    problem: 'The update_study on pmid:8568124 now changes `finding` from "28 of 30 enrolled patients
+      completed" to "28 patients completed". No audit part and no review finding (pre-drafting findings
+      1 to 11, or the first attempt''s findings) concerns this study''s finding text. The old wording
+      was supported by the cached record: "Thirty patients with CFS were enrolled" and "Twenty-eight patients
+      completed the trial." The first attempt''s review already rejected op 14 because it changed this
+      study while answering no finding (then its `group`). The revised op still answers no finding and
+      still changes the card, and it drops a number (30 enrolled) that the record states.'
+    fix: Drop operation 14 entirely, so the 8568124 finding stays as it was ("28 of 30 enrolled patients").
+    class: decisive
+  - operation: null
+    severity: advisory
+    problem: 'YAML comments still misdescribe the corrected card: header line 1 ("FOUNDER RULING ... level
+      2"), the "PROPOSED LEVEL" block ("2: reached"), `role: supports  # rung 2` on 27362406, the 29223146
+      comment ("Not `contradicts`: maturity markers within magnetically enriched precursors"), and the
+      33996867 direction comment ("histamine judged against a reference range"). Not reader-facing. Separately,
+      the contested mark stays null while level_reason[1] now leaves the 29223146 question open; that
+      is for the auditor. No drafter explanation was handed to this review.'
+    fix: Update the comments when the card is next edited outside a correction; the auditor decides the
+      contested mark.
+audits_run: []
