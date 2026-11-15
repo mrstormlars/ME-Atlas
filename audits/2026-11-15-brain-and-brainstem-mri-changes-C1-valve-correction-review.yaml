@@ -1,0 +1,112 @@
+card: brain-and-brainstem-mri-changes
+round: 1
+stage: correction-review
+attempt: C1
+classification:
+- finding: findings[0]
+  class: wording
+  target: level_reason[5]
+  problem: 'This answers review finding 2, but the new text is false against the record. The new level_reason[5]
+    says of pmid:35355311 ''16 of the 18 patients meeting the International Consensus Criteria were analysed
+    (the paper does not say why two were left out)''. The cached full text of 35355311 (PMC9321967, in
+    the context) does give the reason: ''All hippocampal subfields were visually checked for distortion-free
+    segmentation. Two ME/CFSICC patients and one ME/CFSFukuda patients were excluded from analysis due
+    to inadequate segmentation.'' Review finding 2 was mistaken, and the earlier wording (''two scans
+    could not be analysed'') was supported by the record. The number 16 of 18 is right; only the stated
+    reason is wrong.'
+- finding: findings[1]
+  class: wording
+  target: studies[pmid:35355311].finding
+  problem: This has the same error as level_reason[5]. The new finding says 'n=16 of the 18 patients meeting
+    the International Consensus Criteria (the paper does not say why two were left out)'. The cached full
+    text of 35355311 says 'Two ME/CFSICC patients and one ME/CFSFukuda patients were excluded from analysis
+    due to inadequate segmentation.' The card's own comment above n_patients quotes this sentence.
+- finding: findings[2]
+  class: wording
+  target: contested_reason[0]
+  problem: 'contested.reason[0] ends ''so whether it contradicts the first is for the auditor to decide''.
+    This sentence is reader-facing, and it is an internal process note, not a sourced statement. It also
+    leaves the card disagreeing with itself. This correction sets pmid:40624094 to role ''contradicts''
+    (operation 0), and level_reason[2] now says ''This is why the card is marked as contested at level
+    2'', yet the paragraph that gives the reason for the mark says the contradiction is undecided. The
+    sourced limits in the same sentence are supported: the opposite direction was found in the post-infectious
+    subgroup, and 40624094 used TBSS (''The DTI data were analysed using the established tool, tract-based
+    spatial statistics (TBSS)'') while 34355438 used voxel-based analysis.'
+- finding: findings[3]
+  class: wording
+  target: contested_reason[1]
+  problem: 'contested.reason[1] adds ''Neither the level 2 finding nor the opposing finding has been repeated.''
+    The ''opposing finding'' is pmid:40624094, which this paragraph does not cite: its sources are pmid:42539798
+    and pmid:34355438. Neither of those records says anything about whether 40624094 was repeated. That
+    makes this a new, unsourced claim, and a correction must not add one.'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'Two studies from the Griffith group found larger volumes in the same parts of the left hippocampus
+    (subiculum head and presubiculum head): 16 of the 18 patients meeting the International Consensus
+    Criteria were analysed (two were excluded because their hippocampal segmentation was inadequate),
+    against 25 controls, in the same cohort as the level 2 study; and 29 patients meeting the Canadian
+    or International criteria against 15 controls at 7 Tesla, which that paper describes as a different
+    cohort from the earlier hippocampal study. Because both come from the same group, this is not an independent
+    repeat.'
+  sources:
+  - pmid:35355311
+  - pmid:34355438
+  - pmid:39804864
+- op: update_study
+  id: pmid:35355311
+  set:
+    finding: A study of n=16 of the 18 patients meeting the International Consensus Criteria (two were
+      excluded because their hippocampal segmentation was inadequate) and 25 healthy controls found larger
+      volumes of the left subiculum head, presubiculum head and fimbria of the hippocampus in patients;
+      the patients in the Fukuda group did not differ from controls.
+- op: replace_paragraph
+  field: contested.reason
+  index: 0
+  text: The level 2 finding comes from one study of 18 patients meeting the International Consensus Criteria
+    and 26 healthy controls, which found lower axial and mean diffusivity in a cluster in the midbrain
+    and pons. A study of 43 patients with an infection-triggered onset, diagnosed as consistent with the
+    Canadian Consensus Criteria, and 43 matched healthy controls found higher axial diffusivity in patients
+    in several tracts that pass through the brainstem, including the cerebellar peduncles, the corticospinal
+    tract and the left medial lemniscus, and no difference in mean diffusivity. In 33 patients with a
+    gradual onset, axial diffusivity was lower only in the corpus callosum. Both studies have a recognised
+    case definition and a control group, and the second has more than half as many patients as the first,
+    so it is of comparable quality under the rubric. The opposite direction was found only in the infection-triggered
+    subgroup, and the two studies used different analyses (tract-based against voxel-based).
+  sources:
+  - pmid:34355438
+  - pmid:40624094
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: A later study from the same group as the level 2 study, in 37 patients meeting the Canadian or
+    International criteria and 27 healthy controls, found differences outside the brainstem and did not
+    report a brainstem result either way, so it is recorded as context and not as a contradiction.
+  sources:
+  - pmid:42539798
+  - pmid:34355438
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The parenthesis now gives the reason the PMC9321967 full text states ('Two ME/CFSICC patients
+      ... were excluded from analysis due to inadequate segmentation'); the rest of the sentence is unchanged
+      apart from the source tag.
+  - finding: findings[1]
+    resolves: true
+    new_claim: false
+    reason: The same corrected parenthesis, matching the exclusion sentence in the cached full text of
+      pmid:35355311; nothing else changed.
+  - finding: findings[2]
+    resolves: true
+    new_claim: false
+    reason: The auditor note is gone; 'only in the infection-triggered subgroup' matches the 40624094
+      abstract (gradual onset showed decreased AD), and tract-based (TBSS, 40624094) against voxel-based
+      (SPM12 voxel-based statistics, 34355438) matches both cached full texts.
+  - finding: findings[3]
+    resolves: true
+    new_claim: false
+    reason: The unsourced sentence about repetition was removed; the remaining text is unchanged.

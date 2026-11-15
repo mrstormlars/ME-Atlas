@@ -1,0 +1,369 @@
+card: brain-and-brainstem-mri-changes
+round: 1
+answered:
+- 2026-11-13-brain-and-brainstem-mri-changes-second.yaml
+- 2026-11-13-brain-and-brainstem-mri-changes.yaml
+draft_sha256: 1329d6eed455b5921ad379bdd229db6462485ae01f222bfbc2cd4144072a0d23
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'Contested mark: level_reason[2] itself says pmid:40624094 found higher axial diffusivity
+      in brainstem tracts (cerebellar peduncles, corticospinal tract, left medial lemniscus), ''the opposite
+      direction to the level 2 study'', and no difference in mean diffusivity, where the level 2 study
+      (pmid:34355438) found lower axial and mean diffusivity in the midbrain and pons. The cached full
+      text of 40624094 also says no significant changes in FA, MD or RD were seen, ''in contrast to previous
+      studies that reported changes in these diffusion metrics in ME/CFS'' (refs 2-4; ref 4 is Thapaliya
+      et al., i.e. 34355438). On the rubric, 40624094 looks to be of comparable quality: a CCC-consistent
+      diagnosis (accepted, ranked with ICC), a matched control group (43 controls), and 43 post-infectious
+      patients, more than half of the 18 ICC patients in 34355438. Yet the card has contested: null, records
+      40624094 as role ''context'', and gives no reason why it does not meet the rubric''s definition
+      of a contradicting study.'
+    fix: Either record 40624094 as role 'contradicts' and propose a contested mark for the auditor, with
+      a contested.reason in plain sentences that cites both studies, or state in level_reason which rubric
+      criterion 40624094 fails (for example, if the different analysis, TBSS against voxel-based, or the
+      post-infectious subgroup is taken to mean it does not test the same finding, say so and cite the
+      record). The auditor decides.
+  - operation: null
+    severity: must_fix
+    problem: level_reason[5] and studies[pmid:35355311].finding say '16 of 18 patients meeting the International
+      Consensus Criteria (two scans could not be analysed)'. The cached record of 35355311 reports N =
+      16 for the ICC correlations (and F(1,36) in the group comparison) but gives no reason why two of
+      the 18 were not included. 'Two scans could not be analysed' is not in the record.
+    fix: Write '16 of the 18 patients meeting the International Consensus Criteria were analysed; the
+      paper does not say why two were left out', in both places.
+  - operation: null
+    severity: must_fix
+    problem: links[1] ('A study of n=16 of 18 patients meeting the International criteria (two were left
+      out of this analysis) and 26 healthy controls') and links[2] ('In 16 of 18 patients meeting the
+      International criteria (two were left out of this analysis)') attribute the 16-of-18 figure to pmid:34355438.
+      The cached full text of 34355438 reports the group comparison and the interaction-with-group regressions
+      for 18 ME/CFS-ICC patients and 26 controls ('We performed voxel-based analysis on FA, AD, MD, RD,
+      lambda2 and lambda3 images estimated for 18 ME/CFSICC and 26 HCs'). It never gives 16. The 16 comes
+      from the hippocampal paper, 35355311.
+    fix: For 34355438, write '18 patients meeting the International criteria and 26 healthy controls'
+      in links[1] and links[2]. Keep '16 of 18' only where 35355311 is the source.
+  - operation: null
+    severity: must_fix
+    problem: 'links[1] says of 34355438 and 39804864: ''whether their patients overlap is not stated''.
+      The cached full text of 39804864 says twice that the earlier hippocampal study [ref 20, 35355311]
+      was in ''a different cohort of ME/CFS patients''. 35355311 itself says its cohort is the same as
+      that of the DTI study 34355438 (''Our recent findings with DTI parameters on the same cohort'').
+      So the records do state that the patients do not overlap.'
+    fix: Replace the sentence with one saying that the 7 Tesla study describes its patients as a different
+      cohort from the group's earlier hippocampal study, which used the same patients as the diffusion
+      study; the two studies are still from the same research group.
+  - operation: null
+    severity: must_fix
+    problem: studies[pmid:40624094].group ends '(same cohort as 41834684)'. pmid:41834684 is not on the
+      card and has no cached record in the context, so neither the identifier nor the claim that it uses
+      the same cohort can be verified from the records.
+    fix: Remove '(same cohort as 41834684)', or fetch and cache that record and add it through the normal
+      path before naming it.
+  - operation: null
+    severity: advisory
+    problem: 'pmid:36937672 case definition: the abstract says ''10 ME/CFS (CCC or ICC criteria)'', the
+      eligibility sentence says ''fulfilled the CCC and/or ICC definitions'', and only the final-sample
+      sentence (the case_definition_quote) says ''fulfilling the CCC and ICC criteria''. early_signals[0]
+      (''meeting the Canadian and International criteria''), links[0] and links[3] (''meeting both the
+      Canadian and International criteria'') state the strongest reading. The CCC label is correct either
+      way.'
+    fix: Write 'meeting the Canadian and/or International criteria', or say that the paper gives both
+      readings.
+  - operation: null
+    severity: advisory
+    problem: links[3] says the pain score of 36937672 is 'the SF-36 bodily pain score, on which a higher
+      score means less pain'. 36937672 says only that 'pain' was extracted from SF36v2 with domain scores
+      between 0 and 100. That a higher score means less pain is inferred from its table (patients 38,
+      controls 87); the paper does not state it. The authors read the correlation as 'larger brainstem
+      volumes are associated with higher pain severity'. 39804864 does state its scale (0 very severe,
+      100 no symptoms).
+    fix: Tie the statement to what the record shows, for example 'on this score patients averaged 38 and
+      controls 87', so a reader can see the basis for the direction.
+  - operation: null
+    severity: advisory
+    problem: links[0] says flatly that the 36937672 correlations 'were not corrected for multiple comparisons'.
+      The paper says Bonferroni correction was applied to the group comparisons and then describes the
+      Spearman correlations without saying they were corrected. links[3] phrases this more exactly.
+    fix: 'Use the links[3] wording: ''the correction for multiple comparisons described in the paper applied
+      to the group comparisons, not to the correlations''.'
+  - operation: null
+    severity: advisory
+    problem: 'subgroups[0]: ''two other studies from the same group found brainstem differences in cohorts
+      defined by the Fukuda definition alone''. 31671321 and 30497131 say only that patients met Fukuda
+      criteria. Neither says whether some also met ICC; 30497131''s 43 patients equal the 25 Fukuda-only
+      plus 18 ICC patients of 34355438, but no record links them. The ''Yet'' contrast may therefore mislead
+      a reader into thinking these were Fukuda-only patients.'
+    fix: Write 'in cohorts selected by the Fukuda definition (the papers do not say whether any patients
+      also met stricter criteria)'.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:34355438].group says 'same group and likely same cohort as 30497131, 31671321,
+      35355311'. Only 35355311 states that it uses the same cohort. 'Likely same cohort' for 30497131
+      and 31671321 is not in any cached record, and level_reason[3] says the papers do not say whether
+      they share patients.
+    fix: Write 'same cohort as 35355311; same group as 30497131, 31671321'.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[2]: ''with no authors shared with the level 2 study'' is correct against 34355438.
+      But the 40624094 author list includes Shan ZY (co-author of 31671321 and 30497131 at Griffith) and
+      Del Fante P and Kwiatek R (co-authors of 21560176 in Adelaide), so the group is not wholly separate
+      from the other studies on the card.'
+    fix: Add that 40624094 shares authors with other studies on the card (31671321, 30497131, 21560176),
+      so a reader can judge its independence.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:42819213] (amygdala volumetry, Tokyo) is in the studies list but is cited by
+      no level_reason, badge reason, subgroup, early signal or link, so a reader never sees where it bears
+      on the card.
+    fix: Either cite it in a sentence (for example among the studies that found no difference surviving
+      correction) or say why it is listed.
+operations:
+- op: update_study
+  id: pmid:40624094
+  set:
+    role: contradicts
+    group: Shan ZY, Thompson Institute, University of the Sunshine Coast, Australia
+- op: propose
+  target: contested
+  value:
+  - 2
+  reason:
+  - text: The level 2 finding comes from one study of 18 patients meeting the International Consensus
+      Criteria and 26 healthy controls, which found lower axial and mean diffusivity in a cluster in the
+      midbrain and pons. A study of 43 patients with an infection-triggered onset, diagnosed as consistent
+      with the Canadian Consensus Criteria, and 43 matched healthy controls found higher axial diffusivity
+      in patients in several tracts that pass through the brainstem, including the cerebellar peduncles,
+      the corticospinal tract and the left medial lemniscus, and no difference in mean diffusivity. In
+      33 patients with a gradual onset, axial diffusivity was lower only in the corpus callosum. Both
+      studies have a recognised case definition and a control group, and the second has more than half
+      as many patients as the first, so it is of comparable quality under the rubric. The opposite direction
+      was found in the infection-triggered subgroup and the two studies use different analyses, so whether
+      it contradicts the first is for the auditor to decide.
+    sources:
+    - pmid:34355438
+    - pmid:40624094
+  - text: A later study from the same group as the level 2 study, in 37 patients meeting the Canadian
+      or International criteria and 27 healthy controls, found differences outside the brainstem and did
+      not report a brainstem result either way, so it is recorded as context and not as a contradiction.
+      Neither the level 2 finding nor the opposing finding has been repeated.
+    sources:
+    - pmid:42539798
+    - pmid:34355438
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'A study with no authors shared with the level 2 study (it does share authors with three other
+    studies on the card: 31671321, 30497131 and 21560176) compared 43 patients with an infection-triggered
+    onset, diagnosed as consistent with the Canadian Consensus Criteria, with 43 matched healthy controls.
+    It found higher axial diffusivity in patients in several tracts that pass through the brainstem, including
+    the cerebellar peduncles, the corticospinal tract and the left medial lemniscus, the opposite direction
+    to the level 2 study, and no difference in mean diffusivity. In 33 patients with a gradual onset,
+    axial diffusivity was lower only in the corpus callosum. This is why the card is marked as contested
+    at level 2.'
+  sources:
+  - pmid:40624094
+  - pmid:34355438
+  - pmid:31671321
+  - pmid:30497131
+  - pmid:21560176
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'Two studies from the Griffith group found larger volumes in the same parts of the left hippocampus
+    (subiculum head and presubiculum head): 16 of the 18 patients meeting the International Consensus
+    Criteria were analysed (the paper does not say why two were left out), against 25 controls, in the
+    same cohort as the level 2 study; and 29 patients meeting the Canadian or International criteria against
+    15 controls at 7 Tesla, which that paper describes as a different cohort from the earlier hippocampal
+    study. Because both come from the same group, this is not an independent repeat.'
+  sources:
+  - pmid:35355311
+  - pmid:34355438
+  - pmid:39804864
+- op: replace_paragraph
+  field: level_reason
+  index: 6
+  text: Several studies cannot count towards the level because their case definition is not yet verified.
+    One of 15 patients and 14 controls found lower total white matter volume, as did the Newcastle study;
+    one of 28 patients and 28 controls in two cohorts found lower total grey matter volume; and one of
+    25 adolescents with ME/CFS and 23 controls found no difference in white matter structure.
+  sources:
+  - pmid:25353054
+  - pmid:29021956
+  - pmid:15955487
+  - pmid:37331007
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: In two analyses of the same Griffith cohort, patients meeting the International Consensus Criteria
+    differed from controls on diffusion MRI and hippocampal volume, while the patients in the Fukuda group
+    (a definition that does not require post-exertional malaise) did not. Two other studies from the same
+    group found brainstem differences in cohorts selected by the Fukuda definition (the papers do not
+    say whether any patients also met stricter criteria). Not repeated by another group.
+  sources:
+  - pmid:34355438
+  - pmid:35355311
+  - pmid:31671321
+  - pmid:30497131
+- op: replace_paragraph
+  field: early_signals
+  index: 0
+  text: A study of n=10 patients meeting the Canadian and/or International criteria (the paper gives both
+    readings) and 10 healthy controls at 7 Tesla found a larger pons and whole brainstem in patients.
+    Not yet repeated.
+  sources:
+  - pmid:36937672
+- op: update_study
+  id: pmid:35355311
+  set:
+    finding: A study of n=16 of the 18 patients meeting the International Consensus Criteria (the paper
+      does not say why two were left out) and 25 healthy controls found larger volumes of the left subiculum
+      head, presubiculum head and fimbria of the hippocampus in patients; the patients in the Fukuda group
+      did not differ from controls.
+- op: update_study
+  id: pmid:34355438
+  set:
+    group: Barnden L, Griffith University, Gold Coast, Australia (same cohort as 35355311; same group
+      as 30497131, 31671321)
+- op: update_study
+  id: pmid:25353054
+  set:
+    group: Zeineh MM
+- op: update_study
+  id: pmid:15955487
+  set:
+    group: Toni I
+- op: update_study
+  id: pmid:37331007
+  set:
+    group: Knight SJ
+- op: remove_link
+  to: symptom:cognitive-impairment
+- op: remove_link
+  to: symptom:sleep-disturbance
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 3
+    severity: must_fix
+    problem: 'This answers review finding 2, but the new text is false against the record. The new level_reason[5]
+      says of pmid:35355311 ''16 of the 18 patients meeting the International Consensus Criteria were
+      analysed (the paper does not say why two were left out)''. The cached full text of 35355311 (PMC9321967,
+      in the context) does give the reason: ''All hippocampal subfields were visually checked for distortion-free
+      segmentation. Two ME/CFSICC patients and one ME/CFSFukuda patients were excluded from analysis due
+      to inadequate segmentation.'' Review finding 2 was mistaken, and the earlier wording (''two scans
+      could not be analysed'') was supported by the record. The number 16 of 18 is right; only the stated
+      reason is wrong.'
+    fix: Replace the parenthesis with what the record says, for example '16 of the 18 patients meeting
+      the International Consensus Criteria were analysed (two were excluded because their hippocampal
+      segmentation was inadequate)', or put back the earlier wording.
+    class: wording
+    target: level_reason[5]
+  - operation: 7
+    severity: must_fix
+    problem: This has the same error as level_reason[5]. The new finding says 'n=16 of the 18 patients
+      meeting the International Consensus Criteria (the paper does not say why two were left out)'. The
+      cached full text of 35355311 says 'Two ME/CFSICC patients and one ME/CFSFukuda patients were excluded
+      from analysis due to inadequate segmentation.' The card's own comment above n_patients quotes this
+      sentence.
+    fix: Write '(two were excluded because their hippocampal segmentation was inadequate)', or put back
+      the earlier '(two scans could not be analysed)'.
+    class: wording
+    target: studies[pmid:35355311].finding
+  - operation: 1
+    severity: must_fix
+    problem: 'contested.reason[0] ends ''so whether it contradicts the first is for the auditor to decide''.
+      This sentence is reader-facing, and it is an internal process note, not a sourced statement. It
+      also leaves the card disagreeing with itself. This correction sets pmid:40624094 to role ''contradicts''
+      (operation 0), and level_reason[2] now says ''This is why the card is marked as contested at level
+      2'', yet the paragraph that gives the reason for the mark says the contradiction is undecided. The
+      sourced limits in the same sentence are supported: the opposite direction was found in the post-infectious
+      subgroup, and 40624094 used TBSS (''The DTI data were analysed using the established tool, tract-based
+      spatial statistics (TBSS)'') while 34355438 used voxel-based analysis.'
+    fix: 'Drop ''so whether it contradicts the first is for the auditor to decide'' and keep the limits
+      as plain facts. For example: ''The opposite direction was found only in the infection-triggered
+      subgroup, and the two studies used different analyses (tract-based against voxel-based).'''
+    class: wording
+    target: contested_reason[0]
+  - operation: 1
+    severity: must_fix
+    problem: 'contested.reason[1] adds ''Neither the level 2 finding nor the opposing finding has been
+      repeated.'' The ''opposing finding'' is pmid:40624094, which this paragraph does not cite: its sources
+      are pmid:42539798 and pmid:34355438. Neither of those records says anything about whether 40624094
+      was repeated. That makes this a new, unsourced claim, and a correction must not add one.'
+    fix: Write 'The level 2 finding has not been repeated by another group.' (level_reason[0] already
+      says this), or remove the sentence.
+    class: wording
+    target: contested_reason[1]
+  - operation: 2
+    severity: advisory
+    problem: The rewritten level_reason[2] drops 'from the University of the Sunshine Coast'. The cached
+      full text of 40624094 gives that affiliation ('Thompson Institute, University of the Sunshine Coast,
+      Birtinya'), and no finding asked for its removal. It does weaken the text and adds nothing, so it
+      is acceptable, but it is more change than the findings needed.
+    fix: This can stay as it is, or the institution can be restored.
+  - operation: null
+    severity: advisory
+    problem: 'Several comments in the YAML are now out of date (not reader-facing). The header still says
+      ''FOUNDER RULING (2026-11-02): level 2, not contested ... Both stay context.'' and ''contested null
+      for now''. The comment above contested still says ''Null for now, pending FOUNDER QUESTIONS 1 (42539798)
+      and 2 (40624094)''. The causal-map comment still names links to symptom:cognitive-impairment and
+      symptom:sleep-disturbance, which operations 12 and 13 remove. Per DECISIONS 2026-11-14, the founder
+      ruling recorded in the header is history, not a constraint.'
+    fix: Update or mark these comments as history the next time the draft is touched.
+  - operation: null
+    severity: advisory
+    problem: early_signals[0] now says pmid:36937672's patients met 'the Canadian and/or International
+      criteria (the paper gives both readings)'. The remaining links[0] (respiratory symptoms) and the
+      pain link still say 'meeting both the Canadian and International criteria'. This is review finding
+      6, so far addressed only in early_signals[0].
+    fix: No operation can change link text in a correction, so leave this for the next drafting pass.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[2] says pmid:40624094 ''does share authors with three other studies on the
+      card: 31671321, 30497131 and 21560176''. The cached PubMed records show a fourth: Takashi Yamamura
+      is an author of both pmid:40624094 and pmid:42819213, which is on the card. So the count and the
+      list are wrong. This sentence is part of the reason the card is contested and concerns whether the
+      contradicting study is independent.'
+    fix: 'Make the list complete (four studies: 31671321, 30497131, 21560176 and 42819213), or remove
+      the parenthetical and keep only what the records support: no authors are shared with pmid:34355438.'
+    class: decisive
+  - operation: null
+    severity: must_fix
+    problem: 'links[0] and links[1] both describe pmid:36937672 as ''n=10 patients meeting both the Canadian
+      and International criteria''. The cached record gives three readings: the abstract says ''CCC or
+      ICC criteria'', the methods say patients were eligible if they ''fulfilled the CCC and/or ICC definitions'',
+      and only the final inclusion sentence says ''fulfilling the CCC and ICC criteria''. The card''s
+      own early_signals[0] says ''the Canadian and/or International criteria (the paper gives both readings)''.
+      The link text states the case definition more strongly than the record supports and contradicts
+      the rest of the card.'
+    fix: In both links, write 'patients meeting the Canadian and/or International criteria (the paper
+      gives both readings)', as early_signals[0] does.
+    class: decisive
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] and contested.reason[0] describe the pmid:40624094 tracts as 'several tracts
+      that pass through the brainstem'. The cached full text names the tracts (left inferior, middle and
+      left superior cerebellar peduncles, corticospinal tract, left medial lemniscus) but never uses the
+      word brainstem. The anatomical gloss is the card's own wording, not the source's.
+    fix: Consider naming the tracts as the paper does and dropping 'pass through the brainstem', or make
+      clear that this is a description of where those tracts run, not a finding the paper reports.
+  - operation: null
+    severity: advisory
+    problem: level_reason[6] says pmid:25353054 'found lower total white matter volume'. The cached abstract
+      says 'Bilateral white matter volumes were reduced' and that the segmentation covered supratentorial
+      grey and white matter. The study entry's own wording ('lower white matter volume in both hemispheres')
+      is closer to the record.
+    fix: Use 'lower white matter volume in both hemispheres', matching the study entry.
+audits_run: []
+valve:
+  correction-review:
+    file: 2026-11-15-brain-and-brainstem-mri-changes-C1-valve-correction-review.yaml
+    passed: true

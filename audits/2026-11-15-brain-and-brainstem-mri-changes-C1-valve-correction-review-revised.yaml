@@ -1,0 +1,31 @@
+card: brain-and-brainstem-mri-changes
+round: 1
+stage: correction-review
+attempt: C1-revised
+classification:
+- finding: findings[0]
+  class: wording
+  target: contested_reason[1]
+  problem: 'The revised attempt puts back the sentence that the first review (review/brain-and-brainstem-mri-changes-rC1.json,
+    finding 4) rejected and that the valve fix removed: contested.reason[1] again ends ''Neither the level
+    2 finding nor the opposing finding has been repeated.'' The ''opposing finding'' is pmid:40624094.
+    This paragraph cites only pmid:42539798 and pmid:34355438, and neither record says anything about
+    whether 40624094 was repeated. A correction may not add an unsourced claim.'
+operations:
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: A later study from the same group as the level 2 study, in 37 patients meeting the Canadian or
+    International criteria and 27 healthy controls, found differences outside the brainstem and did not
+    report a brainstem result either way, so it is recorded as context and not as a contradiction.
+  sources:
+  - pmid:42539798
+  - pmid:34355438
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The unsourced sentence 'Neither the level 2 finding nor the opposing finding has been repeated.'
+      is removed; the remaining sentence is unchanged from before, so nothing is added.
