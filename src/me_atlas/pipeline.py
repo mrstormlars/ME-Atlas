@@ -1231,11 +1231,11 @@ def _check_applied(
     }
     _count, validator_issues = cards.validate_paths([card_path], extra_known_slugs=link_targets)
     result["validator"] = [str(i) for i in validator_issues]
-    _count, cite_issues = citations.check_paths([card_path], cfg.cache_dir)
+    _count, cite_issues = citations.check_paths([card_path], cfg.cache_dir, citations.ERROR)
     with tempfile.TemporaryDirectory() as tmp:
         baseline_path = Path(tmp) / f"{slug}.yaml"
         baseline_path.write_text(base_text, encoding="utf-8", newline="\n")
-        _count, base_issues = citations.check_paths([baseline_path], cfg.cache_dir)
+        _count, base_issues = citations.check_paths([baseline_path], cfg.cache_dir, citations.ERROR)
     known = {(i.study, i.code, i.message) for i in base_issues}
     rows = _citation_rows(cite_issues)
     for row in rows:
