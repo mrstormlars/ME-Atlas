@@ -1,0 +1,86 @@
+card: small-fibre-neuropathy
+round: 1
+answered:
+- 2026-11-13-small-fibre-neuropathy-second.yaml
+- 2026-11-13-small-fibre-neuropathy.yaml
+draft_sha256: 3cb63898cc0d39c94b4b45b318660109b78395ea261e9a2d9db42f1277391e89
+operations:
+- op: remove_link
+  to: symptom:orthostatic-intolerance
+- op: update_study
+  id: pmid:37054777
+  set:
+    finding: A review of exercise pathophysiology in ME/CFS and long COVID (post-acute sequelae of SARS-CoV-2),
+      which describes overlapping blood flow and gas exchange changes on exercise testing in the two conditions.
+      Kept as context, not as evidence for the level.
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 1
+    severity: advisory
+    problem: 'The update_study on pmid:37054777 resolves the first review''s must_fix finding: the new
+      finding ("describes overlapping blood flow and gas exchange changes on exercise testing in the two
+      conditions. Kept as context, not as evidence for the level.") matches the cached abstract ("perturbations
+      related to systemic blood flow and ventilatory control"; "Hemodynamic and gas exchange derangements
+      in PASC have substantial overlap with those observed with ME/CFS"), and the false sentence about
+      a map link is gone. It answers the first review''s finding on operation 0, which follows from Part
+      7 of the second audit and Part 1 of the first. But case_definition_source is still ''fulltext'',
+      while the context gives this record as abstract only. The first try set it to null, which the checks
+      refused for case_definition ''none''; the value ''abstract'' is allowed and fits the record. The
+      field is metadata for a review with no case definition and was not raised by either audit, so this
+      does not change how a reader would read the card.'
+    fix: In a later correction, set case_definition_source to 'abstract' for pmid:37054777.
+  - operation: null
+    severity: advisory
+    problem: 'Two YAML comments still describe the removed link: the comment above pmid:37054777 ("a review
+      cited by a link on the map, kept as context") and the ''Other reading'' comment above layer, which
+      cites pmid:37054777 for small fibre damage as a form of dysautonomia upstream of shunting. Its cached
+      abstract does not say this. Neither comment is reader-facing.'
+    fix: Update the first comment to say the link was removed in correction round C1, and drop pmid:37054777
+      from the 'Other reading' comment.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[1] gives a reason outside the rubric for why the card is not contested: "This
+      null result does not make the card contested, because level 1 rests on the Boston study''s means,
+      which were not tested against controls." The rubric (Contested evidence) decides this by comparable
+      quality: same or stricter case definition, a control group, and at least half the sample size. The
+      rubric has no rule that an untested finding cannot be contradicted. The sentence also misstates
+      what the level rests on: level_reason[0] says level 1 rests on the Boston study as a whole, including
+      the 52.6% against 0.0% biopsy result, not only its means. The conclusion (not contested) does hold
+      under the rubric, because pmid:42082542 uses Fukuda, which ranks below ICC/IOM 2015 (the case definition
+      of pmid:41576003), and its 59 patients are fewer than half of 170.'
+    fix: 'Replace the reason with the rubric''s: the Bilbao study is not of comparable quality, because
+      its Fukuda definition ranks below the ICC/IOM 2015 definition of the Boston study (and 59 patients
+      is fewer than half of 170). So under the rubric it does not make the level contested.'
+  - operation: null
+    severity: must_fix
+    problem: core_claim says the small fibres "control sweating and blood vessels". None of the three
+      cited sources (pmid:37968647, pmid:39888240, pmid:41576003), as cached, says that small fibres control
+      blood vessels. They describe sensory fibres for pain and temperature, and autonomic or sudomotor
+      fibres (sweating, dry mouth, orthostatic dizziness, palpitations). Vasomotor appears only as a COMPASS-31
+      symptom domain. The phrase is an unsourced fact.
+    fix: Drop "and blood vessels" (for example "carry pain and temperature signals and control sweating"),
+      or cite a source on the card whose cached record states it.
+  - operation: null
+    severity: advisory
+    problem: The group fields and level_reason place the Bilbao group's hospital in Bilbao ("Cruces University
+      Hospital, Bilbao, Spain"; "A study from Bilbao, Spain"). The cached records give "Cruces University
+      Hospital-OSAKIDETZA, Barakaldo" and "Biocruces Bizkaia"/"Biobizkaia Health Research Institute, Barakaldo".
+      Bilbao appears only for the University of Deusto and IKERBASQUE affiliations. A reader who checks
+      will find Barakaldo.
+    fix: Write "Cruces University Hospital, Barakaldo (Bizkaia), Spain" in the group fields, and "Barakaldo
+      (Bizkaia)" or "the Basque Country" in the level_reason text.
+  - operation: null
+    severity: advisory
+    problem: pmid:41576003 is labelled ICC, but the quoted sentence says the diagnosis was based on ICC
+      "or newer National Academy of Medicine diagnostic criteria". So some patients may have met IOM 2015
+      only. level_reason[0] states this correctly ("International Consensus Criteria or the 2015 IOM criteria").
+      Both definitions are accepted at every rung, so the level is unaffected.
+    fix: Where the label is shown, note that it covers ICC or IOM 2015.
+audits_run: []
