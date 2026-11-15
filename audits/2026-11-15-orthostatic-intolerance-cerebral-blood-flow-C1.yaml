@@ -1,0 +1,84 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+decision: accept
+parts:
+  - decision_part: "The card's level 2: a controlled study in a Fukuda-defined cohort that measured blood flow to the brain on tilt."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32140630
+        quote: "All patients met the Fukuda criteria for CFS, and 70% met the criteria for ME."
+      - source: pmid:32140630
+        quote: "429 ME/CFS patients were studied: 247 had a normal heart rate (HR) and blood pressure (BP) response to HUT, 62 had delayed orthostatic hypotension (dOH), and 120 had postural orthostatic tachycardia syndrome (POTS). We also studied 44 healthy controls (HC)."
+      - source: pmid:32140630
+        quote: "End-tilt CBF reduction was 7% in HC versus 26% in the overall ME/CFS group, 24% in patients with a normal HR/BP response, 28% in those with dOH, and 29% in POTS patients (all P < .0005)."
+  - decision_part: "Level 3 is not reached: no independent group with a stated, accepted case definition has repeated the fall in blood flow to the brain. The later sitting study is from the same clinic, the New Jersey and Wichita studies did not measure blood flow to the brain, and the studies that measured blood flow velocity have no case definition in the records given. The hypocapnia early signal is from one study and is unreplicated."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:32140630
+        quote: "From October 2012 to January 2018, 714 consecutive patients visited the outpatient clinic of the Stichting CardioZorg, Hoofddorp, the Netherlands, because of a suspicion of ME/CFS."
+      - source: pmid:33050553
+        quote: "From June 2011 to January 2018, 801 patients with the suspicion of ME/CFS visited the outpatient clinic of the Stichting CardioZorg."
+      - source: pmid:33050553
+        quote: "During the first visit, it was determined whether patients satisfied the criteria for CFS and ME, taking the exclusion criteria into account [4,5]."
+      - source: pmid:32140630
+        quote: "Finally, the use of extracranial Doppler flow to measure cerebral blood flow has to be replicated by others and in different patient groups."
+      - source: pmid:17263876
+        quote: "In contrast, rates of orthostatic hypocapnia were significantly higher in CFS than in controls (20.6% vs 2.9%, p < .02)."
+      - source: pmid:17263876
+        quote: "The subjects were 75 patients (60 women and 15 men) fulfilling the 1994 case definition for CFS."
+      - source: pmid:25277740
+        quote: "HUT caused CBFv to decrease 8.7% in control subjects but fell 22.5% in CFS."
+  - decision_part: "Studies whose records state no case definition (the blood flow velocity and brain oxygen studies, the sitting, stockings and rating-scale studies from the Dutch clinic) are kept as context and do not support or contradict the level."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:12593133
+        quote: "Transcranial Doppler monitoring of middle cerebral artery (MCA) CBFV was performed during 3-stage HUT prospectively in 26 patients with CFS and 23 healthy controls."
+      - source: pmid:35056360
+        quote: "All patients underwent an extensive history and physical examination to confirm that they satisfied the criteria for the diagnosis of CFS or ME and to exclude other conditions that could account for the diagnosis."
+      - source: pmid:33585505
+        quote: "ME/CFS was considered present if participants met both the criteria for CFS (1) and ME (3), taking the exclusion criteria into account."
+  - decision_part: "No contested mark (contested: null). The Wichita study contradicts the blood-pressure and heart-rate finding of the 23-patient Johns Hopkins study, which the level does not rest on, and did not measure blood flow to the brain. The Johns Hopkins blood flow velocity study that found no difference has no case definition in its record and 26 patients, fewer than half of the 429 in the study the level rests on."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:16378795
+        quote: "The head-up tilt test elicited orthostatic instability in 30% of eligible chronic fatigue syndrome subjects (all with postural orthostatic tachycardia) and 48% of controls (50% with neurally mediated hypotension)"
+      - source: pmid:16378795
+        quote: "Fifty-eight subjects who fulfilled criteria of the 1994 chronic fatigue syndrome research case definition and 55 healthy controls participated in a 2-day inpatient evaluation."
+      - source: pmid:7674527
+        quote: "An abnormal response to upright tilt was observed in 22 of 23 patients with chronic fatigue syndrome vs four of 14 controls (P < .001)."
+      - source: pmid:7674527
+        quote: "each of whom fulfilled the strict diagnostic criteria of the Centers for Disease Control and Prevention"
+      - source: pmid:12593133
+        quote: "The CBFV did not differ between groups in the supine posture, at 1 or 5 minutes after upright tilt, at 5 or 1 minute before the end of the test, or at termination of the test."
+  - decision_part: "Level 4 is not reached: the controlled trials changed blood pressure and found no difference in symptoms, and the studies that changed blood flow to the brain either had no symptom outcome or have no case definition in the record."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:11150109
+        quote: "Using an intention-to-treat analysis, 7 subjects (14%) treated with fludrocortisone experienced at least a 15-point improvement in their wellness scores compared with 5 (10%) among placebo recipients (P =.76)."
+      - source: pmid:19912315
+        quote: "There was no significant difference in fatigue between groups at 4 weeks (mean difference 1.4, 95% CI: -13.5 to 16.2), but there was a trend towards improvement in fatigue at 6 months."
+      - source: pmid:35056360
+        quote: "We performed a randomized crossover trial in 16 ME/CFS patients."
+  - decision_part: "Diagnostic marker badge: no. The 13% cut-off was set and applied in one clinic's patients; no second, independent patient group has tested it."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:32140630
+        quote: "Using a lower limit of normal of 2SD of CBF reduction in HC (13% reduction), 82% of patients with normal HR/BP response, 98% with dOH and 100% with POTS showed an abnormal CBF reduction."
+  - decision_part: "Explains PEM badge: no. The only study that tracked symptoms after an orthostatic challenge states no named case definition and found no relation between the fall in blood flow to the brain and the symptom scores."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33585505
+        quote: "No significant relations were found between the reduction in percentage of CBF and NRS for pain, fatigue, or concentration at all time points assessed (data not shown)."
+  - decision_part: "Layer: dysfunction. A fall in blood flow to the brain on tilt is a measured change in the body."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:32140630
+        quote: "During HUT, extracranial Doppler measurements demonstrate that CBF is reduced in ME/CFS patients with POTS, dOH, and even in those without HR/BP abnormalities."
+  - decision_part: "Link to symptom:orthostatic-intolerance at step associated: one Fukuda-defined cohort measured both orthostatic symptoms and blood flow to the brain in the same patients and reports a relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:32140630
+        quote: "There was a linear correlation of summed OI symptoms with the degree of CBF reduction at mid-tilt (P < .0005)."
+      - source: pmid:32140630
+        quote: "The second method was included from August 2013 on."
+reasons_summary: "Level 2 holds on one controlled Fukuda study of 429 patients showing a larger fall in blood flow to the brain on tilt; it has not been repeated by an independent group with a stated definition, no study contests it, both badges are no, and the layer and the associated link are supported."
+would_change: "A controlled study from an independent group with a stated accepted case definition that repeats the fall in blood flow to the brain (level 3), or one of comparable quality and at least half the sample that finds no fall (contested). The full texts of pmid:22180650, pmid:25277740, pmid:12006954 and pmid:12593133 were not cached; if they state an accepted case definition, the card's reading of them as unable to support or contradict would need re-checking. The level does not rest on any statement in an uncached full text: the statements about pmid:7674527, pmid:16378795, pmid:11150109 and pmid:19912315 all match their abstracts. No drafting, review or earlier audit reasoning was handed to me."
