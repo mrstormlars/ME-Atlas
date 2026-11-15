@@ -366,13 +366,20 @@ def test_a_banned_word_is_not_checked_in_a_finding_like_the_english_rule(card):
     assert status(tr.check_card(card, side, "nb"), "studies[pmid:00000003].finding") == "fresh"
 
 
-def test_a_locator_the_english_card_lacks_is_an_error(tmp_path):
+def test_a_locator_on_an_unknown_field_is_an_error(card):
+    side = sidecar_for(card)
+    side.items["unknown_field[0]"] = side.items["name"]
+    result = tr.check_card(card, side, "nb")
+    assert result.errors == [f"{SLUG}: item 'unknown_field[0]' does not exist on the English card"]
+    assert result.obsolete == []
+
+
+def test_a_removed_contested_mark_makes_its_reason_obsolete_not_an_error(tmp_path):
     data = card_data()
     data["contested"] = None
-    with_contested = load_card_from(card_data(), tmp_path)
-    side = sidecar_for(with_contested)
+    side = sidecar_for(load_card_from(card_data(), tmp_path))
     result = tr.check_card(load_card_from(data, tmp_path), side, "nb")
-    assert result.errors == [f"{SLUG}: item 'contested_reason[0]' does not exist on the English card"]
+    assert result.errors == [] and result.obsolete == ["contested_reason[0]"]
 
 
 def test_a_study_the_card_does_not_cite_is_an_error(card):
@@ -381,10 +388,11 @@ def test_a_study_the_card_does_not_cite_is_an_error(card):
     assert any("studies[pmid:99999999].finding" in e for e in tr.check_card(card, side, "nb").errors)
 
 
-def test_more_paragraphs_than_the_english_has_is_an_error(card):
+def test_more_paragraphs_than_the_english_has_is_obsolete_not_an_error(card):
     side = sidecar_for(card)
     side.items["level_reason[1]"] = side.items["level_reason[0]"]
-    assert any("level_reason[1]" in e for e in tr.check_card(card, side, "nb").errors)
+    result = tr.check_card(card, side, "nb")
+    assert result.errors == [] and result.obsolete == ["level_reason[1]"]
 
 
 # --- the sidecar file -----
@@ -644,12 +652,12 @@ def test_check_fails_on_a_changed_number_and_names_the_item(project, capsys):
 def test_check_reports_changed_sources_as_stale_and_still_fails_on_an_extra_item(project, capsys):
     side = sidecar_for(project.card)
     side.items["core_claim"] = side.items["core_claim"].model_copy(update={"sources": ["pmid:00000002"]})
-    side.items["subgroups[3]"] = side.items["subgroups[0]"]
+    side.items["unknown_field[0]"] = side.items["subgroups[0]"]
     project.put(side)
     assert project.run("check") == 1
     captured = capsys.readouterr()
     assert f"stale: nb: {SLUG}: core_claim (the English sources changed after it was translated)" in captured.out
-    assert "subgroups[3]" in captured.err
+    assert "unknown_field[0]" in captured.err
 
 
 def test_check_does_not_fail_on_changed_sources_alone(project, capsys):
@@ -717,8 +725,8 @@ def test_check_with_overlay_compares_against_the_overlay_card_not_the_draft(proj
     )
     overlay = put_overlay(tmp_path, data)
     project.put(sidecar_for(cardlib.load_card(overlay / f"{SLUG}.yaml")))  # translates the added item too
-    assert project.run("check") == 1  # today's behaviour: the draft has no such item
-    assert "subgroups[" in capsys.readouterr().err
+    assert project.run("check") == 0  # the draft has no such item: obsolete, a warning only
+    assert "obsolete: nb: fictional-hypothesis: subgroups[" in capsys.readouterr().out
     assert project.run("check", "--overlay", str(overlay)) == 0
     assert "OK: 1 translation file(s) checked" in capsys.readouterr().out
 
@@ -974,3 +982,49 @@ def test_a_translator_cannot_supply_sources_and_check_item_still_rejects_other_s
     assert project.run("apply", SLUG, str(out)) == 0
     data = yaml.safe_load(project.sidecar_path.read_text(encoding="utf-8"))
     assert data["items"]["core_claim"]["sources"] == en.sources  # always the English item's
+
+
+def test_check_warns_about_an_orphan_list_item_and_exits_zero(project, capsys):
+    side = sidecar_for(project.card)  # the fixture card has no links
+    side.items["links[0]"] = side.items["subgroups[0]"]
+    side.items["subgroups[5]"] = side.items["subgroups[0]"]
+    project.put(side)
+    assert project.run("check") == 0
+    out = capsys.readouterr().out
+    assert f"obsolete: nb: {SLUG}: links[0] (the English item was removed)" in out
+    assert f"obsolete: nb: {SLUG}: subgroups[5] (the English item was removed)" in out and "OK:" in out
+
+
+def test_check_with_overlay_warns_about_an_orphan_and_exits_zero(project, tmp_path, capsys):
+    side = sidecar_for(project.card)
+    side.items["links[0]"] = side.items["subgroups[0]"]
+    project.put(side)
+    overlay = tmp_path / "overlay"
+    overlay.mkdir()
+    (overlay / f"{SLUG}.yaml").write_text(project.card_path.read_text(encoding="utf-8"), encoding="utf-8")
+    assert project.run("check", "--overlay", str(overlay)) == 0
+    assert f"obsolete: nb: {SLUG}: links[0]" in capsys.readouterr().out
+
+
+def test_check_still_fails_on_an_unknown_field_and_a_malformed_key(project, capsys):
+    side = sidecar_for(project.card)
+    side.items["unknown_field[0]"] = side.items["subgroups[0]"]
+    side.items["links[x]"] = side.items["subgroups[0]"]
+    project.put(side)
+    assert project.run("check") == 1
+    err = capsys.readouterr().err
+    assert "unknown_field[0]" in err and "links[x]" in err
+
+
+def test_apply_drops_an_obsolete_item_and_keeps_an_unknown_one_out_of_the_merge(project, tmp_path):
+    side = sidecar_for(project.card)
+    side.items["links[0]"] = side.items["subgroups[0]"]
+    project.put(side)
+    out = tmp_path / "translated.json"
+    out.write_text(
+        json.dumps({"slug": SLUG, "lang": "nb", "items": [{"item": "core_claim", "text": "Fiktiv hovedpåstand."}]}),
+        encoding="utf-8",
+    )
+    assert project.run("apply", SLUG, str(out)) == 0
+    data = yaml.safe_load(project.sidecar_path.read_text(encoding="utf-8"))
+    assert "links[0]" not in data["items"] and "subgroups[0]" in data["items"]

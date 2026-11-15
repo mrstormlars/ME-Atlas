@@ -19,6 +19,9 @@ into a sidecar: the page takes them from the English card. An item is
 - **invalid**: the hash and the sources match but a check fails (numbers, PMIDs, banned words); English with a note,
   and ``check`` exits non-zero.
 
+An item whose list index is past the end of that list on the English card (a removed link or paragraph) is
+**obsolete**: ``check`` warns, nothing shows it, and ``apply`` drops it from the file.
+
 Command line::
 
     uv run python -m me_atlas.translations check [--lang nb]
@@ -51,6 +54,13 @@ DEFAULT_DIR = Path("translations")
 Sha256 = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
 # Like V10 for English: these two texts may not carry a banned word, in either language.
 BANNED_CHECKED = ("core_claim", "early_signals[")
+
+
+# Locators of list items; one past the end of its list on the English card means the English item was removed.
+LIST_ITEM_RE = re.compile(
+    r"^(?:level_reason|contested_reason|badge_reasons\.(?:diagnostic_marker|explains_pem)|subgroups|early_signals|links)"
+    r"\[\d+\]$"
+)
 
 
 class TranslationError(Exception):
@@ -238,6 +248,7 @@ class CardCheck:
     has_file: bool
     items: dict[str, ItemResult] = field(default_factory=dict)
     errors: list[str] = field(default_factory=list)  # items the English card does not have
+    obsolete: list[str] = field(default_factory=list)  # list items whose English item was removed (a warning)
     sidecar: TFile | None = None
 
     def of(self, status: str) -> list[ItemResult]:
@@ -255,7 +266,11 @@ def check_card(card: Card, sidecar: TFile | None, lang: str) -> CardCheck:
     result = CardCheck(card.slug, sidecar is not None, sidecar=sidecar)
     have = sidecar.items if sidecar is not None else {}
     for locator in have:
-        if locator not in english:
+        if locator in english:
+            continue
+        if LIST_ITEM_RE.match(locator):
+            result.obsolete.append(locator)
+        else:
             result.errors.append(f"{card.slug}: item '{locator}' does not exist on the English card")
     for locator, en in english.items():
         item = have.get(locator)
@@ -442,7 +457,11 @@ def merge(
         raise TranslationError(f"the review is for '{review.slug}' ({review.lang}), not '{card.slug}' ({lang})")
     blocked_all = review is not None and any(f.severity == "must_fix" and f.item is None for f in review.findings)
     blocked = {f.item for f in review.findings if f.severity == "must_fix" and f.item} if review is not None else set()
-    items = dict(existing.items) if existing else {}
+    items = {
+        loc: item
+        for loc, item in (existing.items if existing else {}).items()
+        if loc in english or not LIST_ITEM_RE.match(loc)
+    }
     written: list[str] = []
     seen: set[str] = set()
     for t in translated.items:
@@ -528,6 +547,8 @@ def run_check(
                 for p in r.problems:
                     print(f"error: {lang}: {slug}: {r.locator}: {p}", file=sys.stderr)
                     errors += 1
+            for locator in result.obsolete:
+                print(f"obsolete: {lang}: {slug}: {locator} (the English item was removed)")
             for r in result.of("stale"):
                 print(f"stale: {lang}: {slug}: {r.locator} ({r.problems[0] if r.problems else STALE_TEXT})")
             missing = result.of("missing")

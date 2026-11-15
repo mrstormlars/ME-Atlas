@@ -974,11 +974,11 @@ def test_a_sidecar_item_the_english_card_lacks_is_printed_as_a_warning_by_the_co
     write_card(proj_tmp.cards, card)
     path = write_sidecar(proj_tmp, card)
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    data["items"]["subgroups[7]"] = data["items"]["subgroups[0]"]
+    data["items"]["unknown_field[0]"] = data["items"]["subgroups[0]"]
     write_yaml(path, data)
     assert proj_tmp.run() == 0
     err = capsys.readouterr().err
-    assert f"warning: [nb] {SLUG}: item 'subgroups[7]' does not exist on the English card" in err
+    assert f"warning: [nb] {SLUG}: item 'unknown_field[0]' does not exist on the English card" in err
 
 
 def test_a_translation_file_for_a_card_that_is_not_in_the_build_is_a_warning(proj_tmp):
@@ -1187,3 +1187,15 @@ def test_the_english_drawing_is_not_changed_by_norwegian_files(proj_tmp, tmp_pat
     assert proj_tmp.build(content_dir=content).errors == []
     text = (proj_tmp.out / "map.html").read_text(encoding="utf-8")
     assert "Nivå" not in text and "Fiktiv utmattelse" not in text and "Level 2" in text
+
+
+def test_an_obsolete_item_is_never_shown_and_is_listed_as_a_warning(proj_tmp):
+    card_with_sidecar(proj_tmp)  # the card has no links
+    path = proj_tmp.root / "translations" / "nb" / f"{SLUG}.yaml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    data["items"]["links[0]"] = {"text": "OBSOLETE-NB-LINK-TEXT", "sources": ["pmid:00000001"], "source_hash": "a" * 64}
+    write_yaml(path, data)
+    result = proj_tmp.build()
+    assert result.errors == []
+    assert f"[nb] {SLUG}: links[0] is obsolete (the English item was removed)" in result.translation_warnings
+    assert "OBSOLETE-NB-LINK-TEXT" not in page(proj_tmp.out, f"nb/hypotheses/{SLUG}.html").text()
