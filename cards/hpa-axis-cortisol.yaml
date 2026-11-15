@@ -76,86 +76,105 @@ core_claim:
 level: 2
 level_reason:
   - text: >-
-      A study from the Dinan group of 14 patients diagnosed by CDC criteria (version not stated, so
-      the definition does not require post-exertional malaise) and 14 healthy volunteers gave
-      corticotropin-releasing hormone (CRH), the brain signal that starts the HPA axis. The release
-      of ACTH, the pituitary hormone that stimulates the adrenal glands, and of cortisol was lower
-      in patients; basal ACTH and cortisol did not differ. The card is at level 2 because of this
-      study. A second study by the same group, of 20 patients and 20 healthy volunteers, found a
-      smaller rise in cortisol after a low dose (1 microgram) of ACTH; 9 of 20 patients and 2 of 20
-      volunteers failed the test at a cut-off the authors call arbitrary. No other group has
-      repeated either test with the same result.
-    sources: [pmid:9669518, pmid:9713562]
+      A study from the Dinan group of 14 patients diagnosed by CDC criteria (version not stated,
+      so the definition does not require post-exertional malaise) and 14 healthy volunteers gave
+      100 micrograms of ovine corticotropin-releasing hormone (CRH), the brain signal that
+      starts the HPA axis. The release of ACTH, the pituitary hormone that stimulates the
+      adrenal glands, and of cortisol was lower in patients; basal ACTH and cortisol did not
+      differ. A study of 30 women and 25 healthy controls (Fukuda, Canadian and Institute of
+      Medicine criteria) also reported lower ACTH/cortisol levels; it is a controlled study with
+      a recognised case definition and also supports level 2, consistent with either part of the
+      core claim, although its abstract does not say whether the values were resting or
+      stimulated. A second study by the Dinan group, of 20 patients and 20 healthy volunteers,
+      found a smaller rise in cortisol after a low dose (1 microgram) of ACTH; 9 of 20 patients
+      and 2 of 20 volunteers failed the test at a cut-off the authors call arbitrary. An earlier
+      study whose case definition is not verified found a smaller ACTH response to CRH, so it
+      cannot count. No other group has repeated either Dinan test with the same result and a
+      verified case definition.
+    sources: ['pmid:9669518', 'pmid:34254637', 'pmid:9713562', 'pmid:1659582']
   - text: >-
-      A study from King's College London, with no authors shared with the Dinan studies, tested 37
-      patients meeting CDC criteria (version not stated) and 28 healthy controls. Urinary free
-      cortisol over 24 hours was lower in patients (number measured not stated in the abstract).
-      The study used the same CRH test as the Dinan group. Baseline cortisol before the CRH test was
-      higher in patients. ACTH responses to CRH and to two
-      other challenge tests were normal, similar in the two groups, and the authors write that their
-      results "do not support previous findings" of reduced central responses of the HPA axis. The
-      cortisol responses to CRH and to d-fenfluramine showed a trend to be lower in patients that
-      was significant only after adjusting for ACTH responses.
-    sources: [pmid:11502777]
+      A study with no authors shared with the Dinan studies tested 37 patients meeting CDC
+      criteria (version not stated) and 28 healthy controls. Urinary free cortisol over 24 hours
+      was lower in patients (number measured not stated in the abstract). It gave human CRH,
+      whereas the Dinan study gave 100 micrograms of ovine CRH (the dose is not stated in the
+      abstract of the 37-patient study), so the two studies used different CRH preparations.
+      Baseline cortisol before the human CRH test was higher in patients. ACTH responses to CRH
+      and to two other challenge tests were normal, similar in the two groups, and the authors
+      write that their results "do not support previous findings" of reduced central responses
+      of the HPA axis. The cortisol responses to CRH and to d-fenfluramine showed a trend to be
+      lower in patients that was significant only after adjusting for ACTH responses.
+    sources: ['pmid:11502777', 'pmid:9669518']
   - text: >-
       The card is not at level 3 because no independent study has repeated the same result. The
-      London study gave the same CRH test and found normal ACTH responses, with a lower cortisol
-      response only after adjustment. A study from Naples and Stanford of 30 women diagnosed
-      according to the Fukuda, Canadian and Institute of Medicine criteria and 25 healthy controls
-      found lower ACTH and cortisol levels in patients, but this is a different blood measure, and
-      the abstract does not say whether the values were resting or stimulated. A study from Uppsala
-      with patients meeting the Canadian criteria found no difference in morning plasma cortisol.
-    sources: [pmid:9669518, pmid:11502777, pmid:34254637, pmid:40713801]
+      37-patient study gave human CRH, not ovine CRH, and found normal ACTH responses, with a
+      lower cortisol response only after adjustment, so it did not reproduce the blunted ACTH
+      response. The study of 30 women and 25 healthy controls reported lower ACTH/cortisol
+      levels, but its abstract does not say whether the values were resting or stimulated, so it
+      cannot be told from the abstract whether it repeats the Dinan CRH result. A study of
+      patients meeting the Canadian, International and 2015 IOM criteria found no difference in
+      plasma cortisol. Whether the plasma cortisol study of 24 patients and 24 controls
+      contradicts the study of 30 women (Fukuda, Canadian and Institute of Medicine criteria)
+      cannot be told from the abstracts, because the abstract of the 30-woman study does not say
+      whether its values were resting or stimulated.
+    sources: ['pmid:9669518', 'pmid:11502777', 'pmid:34254637', 'pmid:40713801']
   - text: >-
-      Other studies with a recognised case definition did not find the same. A London study of 20
-      patients meeting CDC criteria and 20 matched controls used the same low-dose ACTH test as the
-      Dinan group and found no differences in baseline cortisol or cortisol responses. A study from
-      Uppsala of 24 patients meeting the Canadian, International and 2015 IOM criteria and 24 matched
-      controls found no significant difference in morning plasma cortisol, measured with mass
-      spectrometry; cortisol did not differ before correction for multiple testing either, nor in
-      women or men analysed separately. A study from Austria and Chile (Canadian and/or Fukuda
-      criteria) of women (20 with mild or moderate and 24 with severe illness, 12 controls) and men
-      (8 and 6, 17 controls) found lower cortisol only in men with mild or moderate illness; after
-      correction for multiple testing, cortisol was not among the hormones that differed between
-      groups.
-    sources: [pmid:10594524, pmid:40713801, pmid:38724880]
+      Other studies with a recognised case definition did not find the same. A study of 20
+      patients meeting CDC criteria and 20 matched controls gave the same 1 microgram ACTH dose
+      as the Dinan group (the sampling differed) and found no differences in baseline cortisol
+      or cortisol responses. A study of 24 patients meeting the Canadian, International and 2015
+      IOM criteria and 24 matched controls found no significant difference in plasma cortisol,
+      measured with mass spectrometry; cortisol did not differ before correction for multiple
+      testing either, nor in women or men analysed separately. A study of women (20 with mild or
+      moderate and 24 with severe illness, 12 controls) and men (8 and 6, 17 controls), meeting
+      the Canadian and/or Fukuda criteria, reported two results. In the three-group test,
+      cortisol was not among the hormones that differed after correction for multiple testing.
+      In the pairwise comparison adjusted by the Benjamini-Hochberg (BH) procedure, men with
+      mild or moderate illness (n=8) had lower cortisol than male controls (n=17; p = 0.0260),
+      and no difference in cortisol was reported in women.
+    sources: ['pmid:10594524', 'pmid:40713801', 'pmid:38724880']
   - text: >-
-      Several studies cannot count towards the level because their case definition is
-      not yet verified. They point in both directions: lower evening plasma cortisol and lower
-      urinary cortisol in 30 patients compared with 72 volunteers; lower urinary cortisol in 121
-      clinic patients compared with 64 people without the illness; a flatter rise in morning saliva
-      cortisol in women, but not men, in a population-based study of 75 people with the illness and
-      110 well controls; and no difference in saliva or urinary cortisol in 22 patients in a study
-      from Oxford.
-    sources: [pmid:1659582, pmid:11282703, pmid:18160468, pmid:9494707]
+      Several studies cannot count towards the level because their case definition is not yet
+      verified. They point in both directions: lower evening plasma cortisol and lower urinary
+      cortisol in 30 patients compared with 72 volunteers; lower urinary cortisol in 121 clinic
+      patients compared with 64 people without the illness; a flatter rise in morning saliva
+      cortisol in women, but not men, in a population-based study of 75 people with the illness
+      and 110 well controls; and no difference in saliva or urinary cortisol in 22 patients.
+    sources: ['pmid:1659582', 'pmid:11282703', 'pmid:18160468', 'pmid:9494707']
   - text: >-
-      In a placebo-controlled trial from the US National Institutes of Health, 56 women and 14 men
-      meeting the 1988 CDC definition (which does not require post-exertional malaise) took hydrocortisone,
-      a cortisol tablet, or placebo for about 12 weeks. The trial's main measure, the share of
-      patients who improved on a wellness scale, did not differ (20 of 30 on hydrocortisone, 19 of 35
-      on placebo, P = .31). More patients on hydrocortisone improved by 5 points or more (53% against
-      29%, P = .04), a secondary measure; other self-rating scales showed no difference, and the
-      body's own cortisol response was suppressed in 12 patients on hydrocortisone and none on
-      placebo. On the trial's main measure, level 4 is not reached.
-    sources: [pmid:9757853]
+      In a placebo-controlled trial of 56 women and 14 men meeting the 1988 CDC definition
+      (which does not require post-exertional malaise), patients took hydrocortisone, a cortisol
+      tablet, or placebo for about 12 weeks. The number of patients improving on a wellness
+      scale did not differ (20 of 30 on hydrocortisone, 19 of 35 on placebo, P = .31).
+      Hydrocortisone recipients had a greater improvement in mean wellness score (6.3 vs 1.7
+      points; P=.06), more of them recorded an improvement of 5 or more points (53% against 29%,
+      P = .04), and they had a higher average improvement on more days (P<.001). Statistical
+      evidence of improvement was not seen with other self-rating scales, and suppression of
+      adrenal glucocorticoid responsiveness was documented in 12 patients on hydrocortisone and
+      none on placebo. Level 4 is not reached: the results within this one trial are mixed, it
+      has not been repeated with the same treatment (a later crossover trial tested a lower dose
+      with fludrocortisone), and the case definition of the crossover trial that favoured
+      hydrocortisone is not verified.
+    sources: ['pmid:9757853', 'pmid:12829200', 'pmid:9989716']
   - text: >-
-      A larger placebo-controlled crossover trial from Leuven, Belgium, of 100 patients meeting the
-      1994 CDC (Fukuda) definition, of whom 80 completed three months of 5 mg hydrocortisone with 50
-      micrograms of fludrocortisone and three months of placebo, found no difference in fatigue,
-      well-being or any other measure. It used a lower hydrocortisone dose and added
-      fludrocortisone, so it did not test the same treatment as the NIH trial.
-    sources: [pmid:12829200, pmid:9757853]
+      A larger placebo-controlled crossover trial of 100 patients meeting the 1994 CDC (Fukuda)
+      definition, of whom 80 completed three months of 5 mg hydrocortisone with 50 micrograms of
+      fludrocortisone and three months of placebo, found no difference in fatigue, well-being or
+      the other measures reported in the abstract. It used a lower hydrocortisone dose and added
+      fludrocortisone, so it did not test the same treatment as the 1998 trial.
+    sources: ['pmid:12829200', 'pmid:9757853']
   - text: >-
-      A crossover trial from London of 32 patients found that fatigue fell more on low-dose
-      hydrocortisone than on placebo (p = 0.009), but its case definition is not yet verified, so it
-      cannot count towards level 4. The London HPA study, from the same group, treated 32 of its
-      patients with hydrocortisone in the same kind of crossover; whether these are the same
-      patients is not stated. In the patients who improved, the cortisol response to CRH rose,
-      reversing the blunted response seen before. This is a change within the patients who
-      improved, not a comparison with controls, and it has not been repeated.
-      A trial of fludrocortisone alone in 100 patients meeting CDC criteria found no difference from
-      placebo; it was tested as a treatment for low blood pressure on standing, not for low cortisol.
-    sources: [pmid:9989716, pmid:11502777, pmid:11150109]
+      A crossover trial of 32 patients found that fatigue fell more on low-dose hydrocortisone
+      than on placebo (p = 0.009), but its case definition is not yet verified, so it cannot
+      count towards level 4. The HPA study of 37 patients treated 32 of its patients with
+      hydrocortisone in the same kind of crossover; whether these are the same patients is not
+      stated. Looking at all subjects, the ACTH and cortisol responses to human CRH and the
+      insulin stress test did not differ between active and placebo treatment. In the patients
+      who improved, the cortisol response to CRH rose, reversing the blunted response seen
+      before. This is a change within the patients who improved, not a comparison with controls,
+      and it has not been repeated. A trial of fludrocortisone alone in 100 patients meeting CDC
+      criteria found no difference from placebo; it was tested as a treatment for low blood
+      pressure on standing, not for low cortisol.
+    sources: ['pmid:9989716', 'pmid:11502777', 'pmid:11150109']
 # Founder ruling 2026-11-02: contested at rung 2 (11502777 against 9669518).
 contested:
   rungs: [2]
@@ -166,24 +185,33 @@ contested:
         corticotropin-releasing hormone (CRH) in patients.
       sources: [pmid:9669518]
     - text: >-
-        A later study from King's College London, with no authors shared with the first, gave the
-        same CRH test to 37 patients meeting CDC criteria (version not stated) and 28 healthy
-        controls. ACTH responses were similar in the two groups, and the cortisol response showed a
-        trend to be lower in patients that was significant only after adjusting for ACTH responses.
-        The authors write that their results "do not support previous findings" of reduced central
-        responses of the HPA axis.
-      sources: [pmid:11502777]
+        A later study, with no authors shared with the first, gave human CRH (the first study
+        gave 100 micrograms of ovine CRH; the dose is not stated in the abstract of the later
+        study) to 37 patients meeting CDC criteria (version not stated) and 28 healthy controls.
+        ACTH responses were similar in the two groups, and the cortisol response showed a trend
+        to be lower in patients that was significant only after adjusting for ACTH responses.
+        The authors write that their results "do not support previous findings" of reduced
+        central responses of the HPA axis.
+      sources: ['pmid:11502777', 'pmid:9669518']
     - text: >-
-        The London study has a case definition of equal rank, a control group and at least half as
-        many patients (37 against 14), so it is of comparable quality and contradicts the study on
-        which level 2 rests. Rung 2 is therefore contested.
-      sources: [pmid:11502777, pmid:9669518]
+        The two studies used different CRH preparations, which the comparable-quality rule does
+        not address. The rule asks for the same or a stricter case definition (CDC criteria in
+        both), a control group and at least half as many patients (37 against 14), and the later
+        study meets all three, so it is of comparable quality and contradicts the study on which
+        level 2 rests. Rung 2 is therefore contested. The study of 30 women and 25 healthy
+        controls (Fukuda, Canadian and Institute of Medicine criteria) also reported lower
+        ACTH/cortisol and also supports the rung; its abstract does not say whether the values
+        were resting or stimulated. Whether the plasma cortisol study of 24 patients meeting the
+        Canadian, International and 2015 IOM criteria and 24 controls, which found no
+        difference, contradicts it cannot be told from the abstracts, because that depends on
+        the measure.
+      sources: ['pmid:11502777', 'pmid:9669518', 'pmid:34254637', 'pmid:40713801']
     - text: >-
-        The Dinan group's low-dose ACTH study is not needed for level 2, which rests on its CRH study.
-        With the same 1 microgram ACTH test, that study found a smaller cortisol rise in 20 patients
-        than in 20 volunteers, and a London study found no difference between 20 patients and 20
-        controls; both used CDC criteria and a control group.
-      sources: [pmid:9713562, pmid:10594524]
+        The Dinan group's low-dose ACTH study is not needed for level 2, which rests on its CRH
+        study. With the same 1 microgram ACTH test, that study found a smaller cortisol rise in
+        20 patients than in 20 volunteers, and another study found no difference between 20
+        patients and 20 controls; both used CDC criteria and a control group.
+      sources: ['pmid:9713562', 'pmid:10594524']
 badges:
   diagnostic_marker:
     value: false
@@ -209,10 +237,13 @@ badges:
 subgroups:
   - text: >-
       Two studies suggest sex differences, using different measures; the men's result rests on 8
-      patients. Not repeated. A population-based study, whose case definition is not yet verified,
-      found a flatter morning saliva cortisol rise in women but not men; a study from Austria and
-      Chile found lower plasma cortisol only in men with mild or moderate illness.
-    sources: [pmid:18160468, pmid:38724880]
+      patients. Not repeated. A population-based study, whose case definition is not yet
+      verified, found an attenuated morning saliva cortisol profile in women but not men. A
+      study meeting the Canadian and/or Fukuda criteria found lower plasma cortisol in men with
+      mild or moderate illness (n=8) in the BH-adjusted pairwise comparison. A study meeting the
+      Canadian, International and 2015 IOM criteria found no significant difference in plasma
+      cortisol in women (16 patients) or men (8 patients) analysed separately.
+    sources: ['pmid:18160468', 'pmid:38724880', 'pmid:40713801']
   - text: >-
       In the Naples and Stanford study, the 13 patients with high levels of antibodies against the
       pituitary or hypothalamus had lower ACTH and cortisol levels and more severe illness than
@@ -333,10 +364,13 @@ studies:
     direction: not_applicable  # treatment vs placebo
     group: Straus SE, National Institute of Allergy and Infectious Diseases, NIH, Bethesda, USA (Demitrack M, Dale J also on 1659582)
     finding: >-
-      A placebo-controlled trial of 56 women and 14 men found no difference in the share improving on a
-      wellness scale (20 of 30 on hydrocortisone, 19 of 35 on placebo, P = .31); 53% against 29%
-      improved by 5 points or more (P = .04, a secondary measure), and adrenal suppression occurred in 12 patients on
-      hydrocortisone and none on placebo.
+      A placebo-controlled trial of 56 women and 14 men found no difference in the share
+      improving on a wellness scale (20 of 30 on hydrocortisone, 19 of 35 on placebo, P = .31);
+      mean wellness improvement was 6.3 vs 1.7 points (P=.06), 53% against 29% improved by 5
+      points or more (P = .04), and average improvement was higher on more days on
+      hydrocortisone (P<.001); other self-rating scales showed no statistical evidence of
+      improvement, and adrenal suppression occurred in 12 patients on hydrocortisone and none on
+      placebo.
   # --- contradicts ---
   - id: pmid:12829200
     title: "Combination therapy with hydrocortisone and fludrocortisone does not improve symptoms in chronic fatigue syndrome: a randomized, placebo-controlled, double-blind, crossover study."
@@ -357,9 +391,9 @@ studies:
     direction: not_applicable  # treatment vs placebo
     group: Bobbaers H, University Hospital Gasthuisberg, Leuven, Belgium
     finding: >-
-      A placebo-controlled crossover trial of n=80 patients who completed both arms (100 enrolled)
-      found no difference between low-dose hydrocortisone with fludrocortisone and placebo in
-      fatigue, well-being or any other measure.
+      A placebo-controlled crossover trial of n=80 patients who completed both arms (100
+      enrolled) found no difference between low-dose hydrocortisone with fludrocortisone and
+      placebo in fatigue or well-being.
   - id: pmid:10594524
     title: The 1microg short Synacthen test in chronic fatigue syndrome.
     year: 1999
@@ -400,8 +434,8 @@ studies:
     group: Bergquist J, ME/CFS Collaborative Research Centre, Uppsala University, Sweden
     finding: >-
       A study of n=24 patients and 24 age- and gender-matched controls found no difference in
-      morning plasma cortisol even before correction for multiple testing (means 138.064 in controls
-      and 135.157 in patients, p 0.718), and none in women or men analysed separately.
+      plasma cortisol even before correction for multiple testing (means 138.064 in controls and
+      135.157 in patients, p 0.718), and none in women or men analysed separately.
   # --- context ---
   - id: pmid:38724880
     title: Sex and disease severity-based analysis of steroid hormones in ME/CFS.
@@ -423,10 +457,12 @@ studies:
     direction: mixed
     group: Westermeier F, Universidad Bernardo O'Higgins, Santiago, Chile (co-authors in Austria and Chile)
     finding: >-
-      A study of women (20 with mild or moderate and 24 with severe illness, 12 healthy controls) and
-      men (8 and 6, 17 healthy controls) found lower plasma cortisol in men with mild or moderate
-      illness but not in women; after correction for multiple testing, cortisol was not among the
-      hormones that differed between groups.
+      A study of women (20 with mild or moderate and 24 with severe illness, 12 healthy
+      controls) and men (8 and 6, 17 healthy controls) found that, in the three-group test,
+      cortisol was not among the hormones that differed after correction for multiple testing;
+      in the BH-adjusted pairwise comparison, men with mild or moderate illness (n=8) had lower
+      plasma cortisol than male controls (n=17; p = 0.0260), and no difference in cortisol was
+      reported in women.
   - id: pmid:9989716
     title: "Low-dose hydrocortisone in chronic fatigue syndrome: a randomised crossover trial."
     year: 1999
@@ -581,8 +617,7 @@ studies:
     preregistered: null
     role: context
     direction: not_applicable
-    finding: >-
-      A review of gut microbiome research in ME/CFS that also summarises other proposed mechanisms, including abnormal HPA-axis hormone levels. Cited on the map as the source of proposed links, not as evidence for the level.
+    finding: A review of gut microbiome research in ME/CFS.
   # Added 2026-11-06 (founder ruling, causal map second pass): a review cited by a link on the map, kept as context.
   - id: pmid:31330791
     title: "Pathological Mechanisms Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
@@ -598,29 +633,13 @@ studies:
     preregistered: null
     role: context
     direction: not_applicable
-    finding: >-
-      A 2019 review of proposed disease mechanisms in ME/CFS; it states that the causal links between the affected systems are unknown and cannot be discerned from clinical correlation alone. Cited on the map as the source of proposed links, not as evidence for the level.
+    finding: A 2019 review of proposed disease mechanisms in ME/CFS.
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 # Other reading: pmid:31330791 P23 (a perturbed regulatory loop) and P24 (a shift to an alternative resting steady state) give a reason to read the card as mechanism ('why it does not resolve'); expressed as the link to question:what-keeps-it-going.
 layer: dysfunction
-links:
-  - to: symptom:sleep-disturbance
-    support: proposed
-    text: >-
-      A 2025 review states that abnormal HPA-axis hormone levels in ME/CFS have been associated with worse sleep difficulties, citing one earlier paper; the review did not test this itself.
-    sources: [pmid:41516296]
-  - to: symptom:cognitive-impairment
-    support: proposed
-    text: >-
-      The same 2025 review states that abnormal HPA-axis hormone levels in ME/CFS have been associated with worse concentration difficulties, citing one earlier paper; the review did not test this itself.
-    sources: [pmid:41516296]
-  - to: question:what-keeps-it-going
-    support: proposed
-    text: >-
-      A 2019 review suggests that HPA-axis dysregulation, including the low cortisol suggested by earlier studies, could add a disturbed regulatory loop that may help keep the body in an altered steady state; it states that the causal links between systems are unknown.
-    sources: [pmid:31330791]
+links: []
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit

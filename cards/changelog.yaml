@@ -308,3 +308,24 @@
   - pmid:33585505
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: hpa-axis-cortisol
+  change: First publication at level 2 after correction round 2 and a wording fix
+  reason: 'Level 2, the contested mark on rung 2, both badges at no and the dysfunction layer are supported.
+    Four sentences cannot be matched to the records: ''from Oxford'', ''a London study'' and the findings
+    of the two uncited reviews.'
+  sources:
+  - pmid:9669518
+  - pmid:34254637
+  - pmid:11502777
+  - pmid:40713801
+  - pmid:9713562
+  - pmid:10594524
+  - pmid:11150897
+  - pmid:9757853
+  - pmid:12829200
+  - pmid:9494707
+  - pmid:41516296
+  - pmid:31330791
+  tier: 2
+  decided_by: ai_audit

@@ -1,0 +1,89 @@
+card: hpa-axis-cortisol
+decision: reject
+parts:
+  - decision_part: "Level 2: a controlled study with a recognised case definition (CDC, version not stated, treated like Fukuda) found lower ACTH and cortisol release after CRH."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:9669518
+        quote: "A sample of 14 patients with CDC-diagnosed CFS were compared with 14 healthy volunteers."
+      - source: pmid:9669518
+        quote: "The release of ACTH was significantly attenuated in the CFS group (P < 0.005), as was the release of cortisol (P < 0.05)."
+      - source: pmid:34254637
+        quote: "Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls."
+    class: none
+  - decision_part: "Not level 3: the independent CRH study did not reproduce the blunted ACTH response, and the abstract of the 30-woman study does not say whether its lower ACTH/cortisol values were resting or stimulated."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:11502777
+        quote: "ACTH responses to human CRH, the insulin stress test, and D- fenfluramine were similar for patient and control groups."
+      - source: pmid:34254637
+        quote: "significantly lower levels of adrenocorticotropin (ACTH)/cortisol"
+      - source: pmid:40713801
+        quote: "No significant differences in absolute steroid levels were observed between the ME/CFS and control groups, either in the combined cohort or within gender-stratified groups."
+    class: none
+  - decision_part: "Contested rung 2: the 37-patient CRH study has a CDC case definition like the study level 2 rests on, a control group and more than half its sample, and does not support reduced central HPA responses."
+    rubric: "Comparable quality means all three: the same or a stricter case definition"
+    evidence:
+      - source: pmid:11502777
+        quote: "We measured ACTH and cortisol responses to human CRH, the insulin stress test, and D-fenfluramine in 37 medication-free patients with CDC-defined chronic fatigue syndrome but no comorbid psychiatric disorders and 28 healthy controls."
+      - source: pmid:11502777
+        quote: "do not support previous findings of reduced central responses in hypothalamic-pituitary-adrenal axis function"
+    class: none
+  - decision_part: "Diagnostic marker badge no: the low-dose ACTH cut-off was arbitrary and an independent cohort given the same test found no difference."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:9713562
+        quote: "Using an incremental cortisol of > 250 nmol/l as an arbitrary cutoff point, two (10%) of the healthy subjects and nine (45%) of the CFS subjects failed the test on this basis (chi 2 = 4.3, df = 38, P < 0.05)."
+      - source: pmid:10594524
+        quote: "There were no significant differences in baseline cortisol or cortisol responses between patients and controls."
+    class: none
+  - decision_part: "PEM badge no: the only exercise study measured hormones, not symptoms after exertion, and its case definition is not stated in the record."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:11150897
+        quote: "The next day, there were no differences in hormone levels between the groups"
+    class: none
+  - decision_part: "Not level 4: the one hydrocortisone trial with a recognised case definition did not differ on its main measure, and the combination trial found no effect."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:9757853
+        quote: "The number of patients showing improvement on the Wellness scale was 19 (54.3%) of 35 placebo recipients vs 20 (66.7%) of 30 hydrocortisone recipients (P =.31)."
+      - source: pmid:12829200
+        quote: "Low-dose combination therapy of hydrocortisone and fludrocortisone was not effective in patients with chronic fatigue syndrome."
+    class: none
+  - decision_part: "Layer dysfunction: the card is about a measured hormone level in patients."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:11502777
+        quote: "Urinary free cortisol levels were lower in the chronic fatigue syndrome group compared with the healthy group."
+    class: none
+  - decision_part: "level_reason[4] calls pmid:9494707 'a study from Oxford'. No record in the context file says where it was done, and the word reads like the Oxford case definition, which the card has not verified."
+    rubric: "Evidence resting only on Oxford-defined cohorts cannot raise a hypothesis above level 1."
+    evidence:
+      - source: pmid:9494707
+        quote: "Basal activity of the HPA was assessed using salivary and urinary cortisol collection over a 24-hour period in 22 (12 male; 10 female) patients meeting criteria for CFS and appropriate controls."
+    class: wording
+    target: level_reason[4]
+  - decision_part: "contested_reason[3] calls pmid:10594524 'a London study'. Its record does not say where it was done, so the place cannot be matched to a sentence."
+    rubric: "with the contradicting study linked on the card and the reason written in plain sentences"
+    evidence:
+      - source: pmid:10594524
+        quote: "We tested 20 subjects suffering from CFS according to the criteria of the Center for Diseases Control without psychiatric comorbidity and 20 matched healthy controls."
+    class: wording
+    target: contested_reason[3]
+  - decision_part: "The finding for pmid:41516296 says the review covers 'abnormal HPA-axis hormone levels' and is 'cited on the map as the source of proposed links'. The abstract only mentions endocrine alterations, and the card has no links."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:41516296
+        quote: "Although numerous post-infectious, immunological, neurological, metabolic, and endocrine alterations have been documented, neither a definitive diagnostic marker nor approved treatments are available."
+    class: wording
+    target: studies[pmid:41516296].finding
+  - decision_part: "The finding for pmid:31330791 says the review states that causal links 'cannot be discerned from clinical correlation alone' and that it is cited on the map for links. The abstract does not say this, and the card has no links."
+    rubric: "No link without a source, at every step."
+    evidence:
+      - source: pmid:31330791
+        quote: "The underlying molecular basis of myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) is not well understood."
+    class: wording
+    target: studies[pmid:31330791].finding
+reasons_summary: "Level 2, the contested mark on rung 2, both badges at no and the dysfunction layer are supported. Four sentences cannot be matched to the records: 'from Oxford', 'a London study' and the findings of the two uncited reviews."
+would_change: "Rewording or removing the four sentences (level_reason[4], contested_reason[3] and the findings of pmid:41516296 and pmid:31330791) so that each matches its record would let the card be accepted at level 2 with rung 2 contested. Statements resting on full texts that are not cached (pmid:9669518, pmid:11502777, pmid:9494707, pmid:10594524) cannot be checked beyond their abstracts. If a study showing whether the 30-woman study's ACTH/cortisol values were resting or stimulated became available, it could bear on level 3 and on the contested mark. No drafting or review reasoning and no earlier audit were given to me."
