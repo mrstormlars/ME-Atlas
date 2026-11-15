@@ -48,6 +48,8 @@ parts:
     evidence:
       - source: pmid:<digits>
         quote: "A sentence copied word for word from that study's record in the context file."
+    class: decisive             # whole-card audit of a correction round only: decisive | wording | none (see below)
+    target: level_reason[0]     # only with class wording: the free-text item the part is about
 reasons_summary: "One line, plain English, for the weekly report."
 would_change: "What new evidence or correction would change this decision."
 ```
@@ -59,6 +61,17 @@ Rules code enforces:
 - `accepted_level` is required for `accept_lower` and forbidden otherwise.
 - `reasons_summary` is one line. `would_change` is not empty.
 - Quote in YAML with care: use double quotes, and escape any double quote or backslash inside a quote.
+
+## Classifying your parts (whole-card audit of a correction round)
+
+When the context file is the audit of a corrected draft, each part of a `reject` says whether resolving it is `decisive` or `wording`, so that code can tell a reject that only a sentence causes from one that moves a conclusion. You classify; nobody else does. The rule, verbatim:
+
+`wording` only if resolving it touches none of level, badges, contested mark, layer, links, case definition, a study's role, or any number.
+
+- A part that objects (it names something that is not supported) has `class: decisive` or `class: wording`. When in doubt it is `decisive`. For an objecting part, `decision_part` names the sentence and what is wrong with it, since it is what a later check reads.
+- `wording` also needs `target`, the free-text item to reword or remove, in the translation-key style: `core_claim`, `level_reason[n]`, `contested_reason[n]`, `badge_reasons.explains_pem[n]` (or `diagnostic_marker`), `subgroups[n]`, `early_signals[n]`, `links[n]`, `studies[pmid:N].finding` (indexes from 0, as the text is written in the context file). Code refuses `wording` with any other target.
+- A part that supports the card has `class: none` (or no `class`). In an `accept` every part is such a part; an `accept` with an objecting part is refused. A `reject` needs at least one objecting part, and every part of it has a `class`.
+- A `reject` whose objecting parts are all `wording` does not end the audits: a second auditor still audits the card, and when the two records agree that only wording is at issue the orchestrator fixes the sentences and a check follows. Any `decisive` part, in either record, takes the normal path.
 
 ## Format retry
 

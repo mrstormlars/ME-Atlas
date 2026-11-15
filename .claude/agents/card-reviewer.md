@@ -72,6 +72,16 @@ Check each operation against the cached records in the context and against the f
 - Say, per operation, which finding it answers; an operation that answers none of them and changes the card anyway is a `must_fix` (change as little as the findings require).
 - A `reject` of the first attempt gives the drafter one revised attempt (`ops/<slug>-rC<k>-revised.json`). You review that revised attempt as you review any second attempt of the weekly path: you are given the context file, the revised operations file, its applied result (`applied/<slug>-rC<k>-revised/<slug>.yaml`) and checks (`checks/<slug>-rC<k>-revised.json`), and the review of the first attempt (`review/<slug>-rC<k>.json`) so you can see whether its findings are resolved; judge the revised attempt on its own merits too, and write `review/<slug>-rC<k>-revised.json`. If that attempt is rejected too, for the other review kind than the first (the whole-card review rather than the correction review, or the reverse), the drafter gets a third attempt (`ops/<slug>-rC<k>-revised2.json`, review file `review/<slug>-rC<k>-revised2.json`), reviewed the same way against the earlier reviews; a reject of a kind whose revision is already used ends the round.
 
+### Classifying a finding (correction review and whole-card review of a correction round)
+
+In a correction round every `must_fix` finding you write carries `class` and, for `wording`, `target` (code refuses a `must_fix` without `class`; the review before drafting, `-pre`, does not need it). You classify; the orchestrator never does. The rule, verbatim:
+
+`wording` only if resolving it touches none of level, badges, contested mark, layer, links, case definition, a study's role, or any number.
+
+Everything else is `decisive`; when in doubt it is `decisive`. A finding about a sentence that a reader would read differently if the sentence were removed, because the level, a badge, the contested mark, a link, a case definition, a study's role or a number rests on it, is `decisive`. A place name, an institution, an adjective or a sentence the cited abstract does not state, where removing or rewording the sentence changes none of those, is `wording`.
+
+`target` names the free-text item the finding is about, in the translation-key style: `core_claim`, `level_reason[n]`, `contested_reason[n]`, `badge_reasons.explains_pem[n]` (or `diagnostic_marker`), `subgroups[n]`, `early_signals[n]`, `links[n]`, `studies[pmid:N].finding` (indexes from 0, in the numbering of the text you were shown). Code refuses `wording` with any other target. A reject whose every `must_fix` is `wording` is fixed directly by the orchestrator and checked once more (fix-check mode below) instead of costing a revised attempt; one `decisive` `must_fix` makes it the normal reject. Example finding: `{"operation": null, "severity": "must_fix", "class": "wording", "target": "level_reason[0]", "problem": "...", "fix": "Remove the place name."}`.
+
 ### Whole-card review (correction round)
 
 When you are given a `card-review-context` file (`card-review-context/<slug>-C<k>[-revised|-revised2].md`), you review the whole corrected card of a held-back draft, after its correction review accepted. This is not a review of the operations: it is a check of every claim on the card as it now stands against its sources. Nothing in this section needs the web: you read cached records only, the files named in the context under `data/cache/`, and you fetch nothing (no WebFetch, no E-utilities call). A full text is not in the context; open the cached file it names when you need it. A study with no cached record cannot be checked: say so, and treat a claim that rests only on it as unsupported.
@@ -89,6 +99,19 @@ Write only `review/<slug>-card-C<k>[-revised|-revised2].json` at the path the co
 ### Whole-card review before drafting (`-pre`)
 
 When the context file is `card-review-context/<slug>-C<k>-pre.md`, the card in it is the held-back draft as it stands, before any correction. Use the same checklist as above on that draft, and write only `review/<slug>-card-C<k>-pre.json` at the path the context gives, with `"paper": null` and `operation` `null` in every finding (there are no operations yet). Your verdict does not gate anything: the findings go to the drafter, who answers them in the correction, so make each `problem` and `fix` specific (which claim, which source, what the source says). Reply with the verdict and the number of findings, nothing else.
+
+### Fix check (safety valve, `valve-check-context`)
+
+When the file you are given is `valve-check-context/<slug>-<key>.md`, the orchestrator has fixed wording-only findings (a reworded or removed sentence) and you check the fixes once. Read only that file and the cached records it names by path (open them under `data/cache/`); fetch nothing. For each finding the file gives its problem, the suggested fix, the target text before and after the fix and the cited records. Answer per finding:
+
+- `resolves`: true when the problem named is gone from the text after the fix (the sentence is removed, or the reworded sentence no longer says what the finding objected to), false when it still stands.
+- `new_claim`: true when the text after the fix says anything the cited records do not state (a new name, number, direction, strength of wording or source), false when it only removes or weakens. A removed paragraph adds no claim. When no operation touches the target, `resolves` is false.
+
+Write only `valve/<slug>-<key>-check.json` at the path the file gives: `{"card": "<slug>", "fixes": [{"finding": "<id as in the file>", "resolves": true, "new_claim": false, "reason": "One line."}]}`, one entry per finding. Any `resolves: false` or `new_claim: true` holds the card back; do not soften an answer. Reply with the number of fixes and how many failed, nothing else.
+
+### Classify an existing audit (one card, once)
+
+When you are given the two audit records of one card's correction round (`audits/<date>-<slug>-C<k>.yaml` and `-C<k>-second.yaml`, written before the classification existed) and told to classify them, you do for each part of each record what the auditor would have done: say `decisive`, `wording` or `none` (a part that supports the card, in an `accept` record every part) by the rule under "Classifying a finding", and for `wording` the `target`. Read the records and the card text they concern (the corrected card, `DIR/applied/...`) and the cached records the evidence cites; decide from what the part says is wrong, not from what would be convenient. Write only `DIR/valve/<slug>-classification.json`: `{"card": "<slug>", "round": "C<k>", "first": [{"class": "wording", "target": "early_signals[0]"}], "second": [{"class": "none"}]}`, one entry per part of each record, in the order of the parts. If a part's problem cannot be tied to one free-text item, it is `decisive`. Reply with how many parts are `wording` and how many `decisive`, nothing else.
 
 ## Map mode (causal map: layer and links)
 
