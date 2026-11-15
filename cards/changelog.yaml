@@ -235,3 +235,17 @@
   - pmid:34254637
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: small-fibre-neuropathy
+  change: First publication at level 1 after correction round 2
+  reason: 'Level 1 is supported: the one study with a recognised definition (ICC/NAM, n=170) reports no
+    ME/CFS-versus-control test and uses historical controls. Other controlled cohorts are prior-diagnosis
+    or Fukuda. No contested mark, both badges no, layer dysfunction.'
+  sources:
+  - pmid:41576003
+  - pmid:37968647
+  - pmid:39888240
+  - pmid:33577778
+  - pmid:42082542
+  tier: 2
+  decided_by: ai_audit

@@ -1,0 +1,64 @@
+card: small-fibre-neuropathy
+decision: accept
+parts:
+  - decision_part: "The level 1. The one study with a recognised case definition (ICC or National Academy of Medicine) found small fibre neuropathy on biopsy in 52.6% of ME/CFS patients and lower mean calf nerve fibre density than in historical controls, but it tests across four groups and reports no ME/CFS-against-control comparison, in a referral sample. That points towards the hypothesis without a controlled comparison of patients against controls, which is level 1."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:41576003
+        quote: "The diagnosis of ME/CFS was based on myalgic encephalomyelitis international consensus criteria (ME-ICC) [26] or newer National Academy of Medicine diagnostic criteria [27]."
+      - source: pmid:41576003
+        quote: "SFN, any from biopsy,% 0.0 67.2 52.6 63.3 <0.001 0.0437 0.0787 0.499 54"
+      - source: pmid:41576003
+        quote: "Epidermal nerve fiber density at calf, fibers/mm 10.15 (2.25) 7.94 (3.46) 8.79 (3.55) 8.20 (4.00) <0.001 0.051 0.043 0.049 0.622 0"
+      - source: pmid:41576003
+        quote: "If an overall comparison was statistically significant, pairwise post hoc comparisons were performed using Dunn test [50] with the Benjamini-Hochberg adjustment for multiple comparisons [51]."
+      - source: pmid:41576003
+        quote: "These measurements were compared to historical healthy controls"
+      - source: pmid:41576003
+        quote: "We are a referral center for dysautonomia, so we may not see a representative group of patients."
+  - decision_part: "Not level 2. The Boston study reports no test of ME/CFS against its historical controls from another institution's database. The two controlled Cruces studies admitted patients with a prior diagnosis or Fukuda, so their case definition cannot be read from the record. The 160-patient Boston study names no case definition in its abstract."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:41576003
+        quote: "The Long COVID and ME/CFS subjects were compared to a healthy control group from our autonomic research database at the University of Massachusetts [28]."
+      - source: pmid:37968647
+        quote: "Patients diagnosed of ME/CFS should be previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time."
+      - source: pmid:39888240
+        quote: "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation."
+      - source: pmid:33577778
+        quote: "results from 160 patients meeting ME/CFS criteria who had skin biopsy test results were compared with 36 control subjects."
+  - decision_part: "No contested mark. The null skin-conductance results come from Fukuda or prior-diagnosis cohorts, which rank below the ICC or National Academy of Medicine cohort of the supporting study, so none is of comparable quality."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42082542
+        quote: "For the ME/CFS group, patients had to meet the diagnostic criteria proposed by Fukuda28, which require severe fatigue disproportionate to activity lasting at least six months accompanied by at least four of the following symptoms: memory impairment, post-exertional malaise, unrefreshing sleep, arthralgia, headaches, sore throat, and/or lymph node tenderness."
+      - source: pmid:37968647
+        quote: "No significant differences were found between groups in ESC on the Sudoscan."
+      - source: pmid:39888240
+        quote: "might suggest that SFN is not an inherent characteristic of these diseases"
+  - decision_part: "The Cruces findings described in level_reason (heat evoked potentials, corneal tortuosity, unchanged corneal density) match the records and are correctly kept out of the level."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:37968647
+        quote: "Response latency was larger in ME/CFS patients (686 ± 16), followed by post-COVID patients (676 ± 15), and finally by HC (552 ± 13)"
+      - source: pmid:39888240
+        quote: "ME/CFS patients exhibited lower N amplitude in CHEPs compared to HC"
+      - source: pmid:39888240
+        quote: "Statistically significant differences were found between groups (F = 6.80, p = 0.002), specifically between HC and ME/CFS patients (p = 0.003) and between HC and PCC (p = 0.012), with worse tortuosity observed in patients than in HC"
+  - decision_part: "The diagnostic marker badge is no. Corneal tortuosity was tested in one cohort of 30 patients whose case definition is not verified, with no second independent cohort."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:39888240
+        quote: "In ME/CFS patients, the variable that best discriminated between them and HC was also fiber tortuosity (AUC = 0.690; p = 0.032)."
+  - decision_part: "The PEM badge is no. No study on the card measures PEM directly, and in the one study relating nerve loss to exercise testing there was no correlation."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33577778
+        quote: "Denervation severity did not correlate with exertional measures."
+  - decision_part: "The layer is dysfunction, and there are no links. Small fibre damage is a measured abnormality in the body, and the card proposes no link."
+    rubric: "Measurable dysfunction | `dysfunction` | What goes wrong in the body?"
+    evidence:
+      - source: pmid:41576003
+        quote: "Skin biopsies, which provide direct evidence of peripheral nerve damage, confirmed the presence of SFN in both Long COVID and ME/CFS patients."
+reasons_summary: "Level 1 is supported: the one study with a recognised definition (ICC/NAM, n=170) reports no ME/CFS-versus-control test and uses historical controls. Other controlled cohorts are prior-diagnosis or Fukuda. No contested mark, both badges no, layer dysfunction."
+would_change: "A study with a recognised case definition that compares ME/CFS directly against concurrent controls would bear on level 2; so would the full text of pmid:33577778 if it names a recognised case definition (not cached, so its case definition could not be checked here). An independent replication of the corneal tortuosity finding with a stated definition would bear on the marker badge. Not checkable here: the study entry for pmid:42286686 is a non-carrier given as abstract only. Its Fukuda quote, 'shorter latencies' and 'regression to the mean' are not in the abstract, which says only 'increases in CHEPs'. That entry bears on no level, badge, mark, layer or link."

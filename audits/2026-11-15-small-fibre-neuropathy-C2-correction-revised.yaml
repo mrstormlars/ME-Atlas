@@ -1,0 +1,283 @@
+card: small-fibre-neuropathy
+round: 2
+answered:
+- 2026-11-13-small-fibre-neuropathy-second.yaml
+- 2026-11-13-small-fibre-neuropathy.yaml
+draft_sha256: 3cb63898cc0d39c94b4b45b318660109b78395ea261e9a2d9db42f1277391e89
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'Place name ''Bilbao'' is wrong for the Cruces group. It appears in level_reason[1] (''A
+      study from Bilbao, Spain''), level_reason[2] (''Two controlled studies from Bilbao''), level_reason[3]
+      (''In the Bilbao studies'', ''three Bilbao studies'') and in the group field of pmid:39888240, pmid:37968647,
+      pmid:42082542 and pmid:42286686 (''Cruces University Hospital, Bilbao, Spain''). Every cached record
+      places Cruces University Hospital and the Biobizkaia/Biocruces Bizkaia institute in Barakaldo (e.g.
+      37968647: ''Plaza de Cruces 12, 48903 Barakaldo (Bizkaia)''; 39888240 full text: ''Hospital de Cruces,
+      Plaza de Cruces s/n, Barakaldo''). Bilbao appears only as the location of co-author affiliations
+      IKERBASQUE and University of Deusto.'
+    fix: Replace 'Bilbao' with 'Barakaldo' (or 'Barakaldo, Basque Country, Spain') in all four group fields
+      and in level_reason[1], [2] and [3]; or drop the place name and say 'the Cruces University Hospital
+      group'.
+  - operation: null
+    severity: must_fix
+    problem: Institution name 'Biocruces Bizkaia' in the group fields of pmid:39888240, pmid:42082542
+      and pmid:42286686 is not in their records. 39888240 and 42082542 give 'Biobizkaia Health Research
+      Institute, Barakaldo'; 42286686 gives 'Biobizkaia Bizkaia Health Research Institute, Barakaldo'.
+      Only 37968647 names 'Biocruces Bizkaia Health Research Institute'.
+    fix: 'Use the name each record gives: ''Biobizkaia Health Research Institute'' for 39888240 and 42082542,
+      ''Biobizkaia Bizkaia Health Research Institute'' for 42286686; keep ''Biocruces Bizkaia'' only for
+      37968647, or use ''Cruces University Hospital'' alone for all four.'
+  - operation: null
+    severity: must_fix
+    problem: core_claim says small nerve fibres 'control sweating and blood vessels'. None of the cited
+      sources (pmid:37968647, pmid:39888240, pmid:41576003) states that small fibres control blood vessels;
+      37968647 states only that ANS nerve signals control sweat production and that C and A-delta fibres
+      carry pain and temperature information. The statement about vessels is in pmid:37054777 ('Small
+      fibers regulate microvascular tone through sympathetic and parasympathetic cholinergic synapses
+      on perivascular myocytes'), which core_claim does not cite.
+    fix: Remove 'and blood vessels', or add pmid:37054777 to core_claim.sources (it is already on the
+      card) and keep the wording to 'small blood vessels' as the review states.
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[1] gives a reason for no contested mark that is not in the rubric: ''because
+      level 1 rests on the Boston study''s means, which were not tested against controls''. The rubric
+      decides contest by comparable quality: same or stricter case definition, a control group, and at
+      least half the sample size. pmid:42082542 is Fukuda (ranks below ICC and IOM 2015 of pmid:41576003)
+      and has 59 ME/CFS patients, under half of 170.'
+    fix: 'Replace the reason with the rubric''s: the study uses the Fukuda definition, which ranks below
+      the ICC/IOM 2015 definition of the Boston study, so it is not of comparable quality and does not
+      make the level contested.'
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[2] says ''no controlled comparison of ME/CFS patients with controls on small
+      fibre damage has both a verified case definition and a result that points to damage''. This contradicts
+      level_reason[0] and the record of pmid:41576003: a controlled study (170 ME/CFS, 73 healthy controls)
+      with a verified ICC/National Academy of Medicine definition found SFN on biopsy in 52.6% of ME/CFS
+      and 0.0% of controls (overall chi-squared p < 0.001 across four groups) and lower calf ENFD (8.79
+      vs 10.15 fibres/mm, overall Kruskal-Wallis p < 0.001). Requiring a pairwise ME/CFS-versus-control
+      test is a criterion the rubric does not state; level 2 reads ''A controlled study in patients with
+      a recognised case definition supports it''. Level 1 reads ''One or more small or uncontrolled studies'',
+      which does not describe this study. pmid:41576003 is also missing from level_reason[2].sources although
+      the sentence is about it. On the rubric as written, this evidence may support level 2, with its
+      limits (historical controls from a separate database, a dysautonomia referral sample, no pairwise
+      test against controls, 54 missing biopsy values); the auditor decides.'
+    fix: Rewrite level_reason[2] so it describes what 41576003 did and did not test without a criterion
+      outside the rubric, cite 41576003, and put the level question to the auditor (level 2 on 41576003
+      with its limits stated, or a rubric-based reason it does not count). Adjust 'The card is at level
+      1 because of this study' in level_reason[0] to match.
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[3] says the lower heat response amplitude in 39888240 was something ''which
+      the earlier study did not report for ME/CFS against controls''. The record of pmid:37968647 does
+      report heat N amplitude: Table 3 gives HC -11.2, ME/CFS -9.3, post-COVID -7.9 microvolts, H = 7.3*,
+      with one Bonferroni p = 0.026 that the cached table does not assign to a comparison. The negative
+      claim cannot be checked against the record.'
+    fix: Remove the clause, or write that the earlier study also found a difference in heat response amplitude
+      across its three groups (H = 7.3) without a comparison of ME/CFS against controls that can be read
+      from its table.
+  - operation: null
+    severity: must_fix
+    problem: level_reason[3] ends 'The patients in these studies may overlap.' No cached record states
+      this; it is the drafter's inference and the sentence has no source.
+    fix: 'Remove the sentence, or replace it with what the records say: e.g. 39888240 recruited ''through
+      the Neurology Department at the Cruces University Hospital'', and the four Cruces studies share
+      authors (Gómez-Esteban, Del Pino, Tijero-Merino), without claiming overlap.'
+  - operation: null
+    severity: must_fix
+    problem: badges.diagnostic_marker reason says corneal nerve tortuosity 'separated 30 patients from
+      30 healthy controls with an area under the curve of 0.690'. 'Separated' overstates an AUC of 0.690
+      (p = 0.032 in the full text of pmid:39888240), which is modest discrimination.
+    fix: Write 'distinguished ... with modest accuracy (area under the curve 0.690, p = 0.032)' or 'had
+      an area under the curve of 0.690 for telling 30 patients from 30 healthy controls'.
+  - operation: null
+    severity: must_fix
+    problem: 'links[0] text says ''no study on this card measured both in ME/CFS patients''. That is false:
+      pmid:41576003 measured skin-biopsy SFN and tilt-table orthostatic responses in the same ME/CFS patients
+      (POTS 19.4%, orthostatic lightheadedness 65.9%, SFN from biopsy 52.6%), and pmid:37968647 and pmid:39888240
+      measured Sudoscan/heat evoked potentials and the tilt test in the same patients. None reports a
+      relation between small fibre measures and orthostatic intolerance.'
+    fix: Write 'no study on this card reports a relation between the two in ME/CFS patients'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[0] says the controls 'came from another university's research database'. pmid:41576003
+      says 'a healthy control group from our autonomic research database at the University of Massachusetts'
+      and, in its limitations, 'We also used historical controls'.
+    fix: Write 'historical controls from the authors' autonomic research database at the University of
+      Massachusetts'.
+  - operation: null
+    severity: advisory
+    problem: 'pmid:41576003: level_reason[0] says ''2015 IOM criteria''; the record says ''newer National
+      Academy of Medicine diagnostic criteria [27]'' (ref 27 is Bateman et al. 2021). The case_definition
+      label is ''ICC'' while the quote names ICC or NAM.'
+    fix: Write 'International Consensus Criteria or National Academy of Medicine (IOM 2015) criteria'
+      and consider a label that reflects both.
+  - operation: null
+    severity: advisory
+    problem: pmid:42082542 case_definition_quote reads 'Fukuda28'; the record has 'Fukuda 28' (superscript
+      reference number).
+    fix: Quote as 'Fukuda 28' or drop the reference number with an ellipsis.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] calls pmid:33577778 'A Boston study'. The abstract does not state the study
+      site; the first author is at Yale, the senior author and two others at Boston hospitals.
+    fix: Write 'a study by a Boston-based group' or drop the place.
+  - operation: null
+    severity: advisory
+    problem: Single-study findings in level_reason[3] (corneal tortuosity, lower heat response amplitude,
+      both only in pmid:39888240) and the SFN rate in pmid:41576003 are not labelled as not yet replicated.
+    fix: Add 'not yet replicated' to the single-study findings.
+  - operation: null
+    severity: advisory
+    problem: pmid:37968647 study finding omits the heat N amplitude difference across groups (H = 7.3)
+      that its Table 3 reports, which bears on the comparison drawn in level_reason[3].
+    fix: Mention it, or keep the card silent on amplitude in the earlier study.
+operations:
+- op: replace_paragraph
+  field: core_claim
+  index: 0
+  text: The hypothesis proposes that in people with ME/CFS the small nerve fibres of the skin and other
+    tissues, which carry pain and temperature signals and control sweating, are damaged or work abnormally.
+    Researchers look for this with skin biopsies, corneal confocal microscopy of the nerves in the eye's
+    surface, heat and cold evoked potentials, and sweat-function tests.
+  sources:
+  - pmid:37968647
+  - pmid:39888240
+  - pmid:41576003
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study from Boston of 170 patients meeting the International Consensus Criteria or the National
+    Academy of Medicine criteria found small fibre neuropathy on skin biopsy in 52.6% of the ME/CFS patients
+    with biopsy results and 0.0% of the healthy controls with results; the paper has 54 missing values
+    across its groups and does not give the number per group. Mean calf nerve fibre density was 8.79 fibres/mm
+    in patients and 10.15 in controls; the paper reports one test across all four groups and no test of
+    ME/CFS against controls. For skin conductance, a measure of sweat-gland nerve function, the Boston
+    study reports a lower mean in patients (75.76 against 82.96 µS) but no test against controls. The
+    patients were referred to a dysautonomia centre, which the authors say may not be representative,
+    and the controls were historical controls from the authors' autonomic research database at the University
+    of Massachusetts. These findings are unreplicated. The card is at level 1 because of this study.
+  sources:
+  - pmid:41576003
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: 'A study from the Cruces University Hospital group in Barakaldo, Spain, of 59 patients meeting
+    the Fukuda definition (which does not require post-exertional malaise) and 36 healthy controls, mainly
+    about autoantibodies, found no significant difference in skin conductance of the palms or soles. This
+    null result does not make the card contested: the study uses the Fukuda definition, which ranks below
+    the International Consensus Criteria or National Academy of Medicine criteria of the Boston study,
+    so it is not of comparable quality under the rubric.'
+  sources:
+  - pmid:42082542
+  - pmid:41576003
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: The card is not at level 2 because the Boston study, the one controlled study with a recognised
+    case definition that points towards damage, reports its tests across four groups with no test of ME/CFS
+    against controls, and uses historical controls and a referral sample. Two controlled studies from
+    the Cruces University Hospital group included patients with a prior ME/CFS diagnosis or meeting the
+    Fukuda definition; because a prior diagnosis does not name a definition, these cannot count towards
+    the level. A study of 160 patients by a Boston-based group, in which 31% of skin biopsies were consistent
+    with small fibre neuropathy, cannot count either because its case definition is not yet verified.
+  sources:
+  - pmid:41576003
+  - pmid:37968647
+  - pmid:39888240
+  - pmid:33577778
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: In the Cruces University Hospital studies, 30 patients and 30 matched healthy controls had more
+    tortuous (winding) corneal nerve fibres in patients, a finding not replicated by an independent group,
+    while corneal nerve fibre density, branch density and length did not differ; the authors write that
+    inconsistent corneal results across studies "might suggest that SFN is not an inherent characteristic
+    of these diseases". An earlier study of 50 patients and 50 controls found later brain responses to
+    heat stimuli in patients; the later study used the same heat test and found no significant difference
+    in response time, but a lower heat response amplitude in patients than in controls (p = 0.028), a
+    finding not replicated by an independent group. Skin conductance did not differ between patients and
+    controls in three studies from this group. These studies share authors; the records shown do not state
+    whether their patients overlap.
+  sources:
+  - pmid:39888240
+  - pmid:37968647
+  - pmid:42082542
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No marker of small fibre damage has been tested in a second, independent patient group with a
+    verified case definition. In one study whose case definition is not verified, corneal nerve tortuosity
+    had an area under the curve of 0.690 (p = 0.032), modest accuracy, for telling 30 patients from 30
+    healthy controls.
+  sources:
+  - pmid:39888240
+- op: update_study
+  id: pmid:39888240
+  set:
+    group: Gómez-Esteban JC and Del Pino R, Biobizkaia Health Research Institute, Cruces University Hospital,
+      Barakaldo, Spain (same group as 37968647, 42286686, 42082542)
+- op: update_study
+  id: pmid:37968647
+  set:
+    group: Gómez-Esteban JC and Tijero-Merino B, Biocruces Bizkaia Health Research Institute, Cruces University
+      Hospital, Barakaldo, Spain (same group as 39888240, 42286686, 42082542)
+- op: update_study
+  id: pmid:42082542
+  set:
+    group: Gómez-Esteban JC, Biobizkaia Health Research Institute, Cruces University Hospital, Barakaldo,
+      Spain (same group as 37968647, 39888240, 42286686)
+- op: update_study
+  id: pmid:42286686
+  set:
+    group: Gómez-Esteban JC and Del Pino R, Cruces University Hospital, Barakaldo, Spain (same group as
+      37968647, 39888240, 42082542)
+- op: remove_link
+  to: symptom:orthostatic-intolerance
+- op: update_study
+  id: pmid:37054777
+  set:
+    finding: A review of exercise pathophysiology in ME/CFS and long COVID that also discusses small fibre
+      neuropathy and blood pooling on standing in POTS. Not evidence for the level.
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 2
+    severity: advisory
+    problem: level_reason[1] says Fukuda 'ranks below the International Consensus Criteria or National
+      Academy of Medicine criteria of the Boston study'. The rubric's ranking names CCC, ICC and IOM 2015;
+      pmid:41576003 cites 'newer National Academy of Medicine diagnostic criteria [27]'. The conclusion
+      holds because ICC is named and ranks above Fukuda, and pmid:42082542 (59 patients) is also under
+      half the Boston study's 170, but the sentence leans on a name the rubric does not use.
+    fix: Optionally write 'ranks below the International Consensus Criteria of the Boston study' or add
+      that the study has fewer than half the Boston study's patients.
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: badge_reasons.diagnostic_marker[0] calls an area under the curve of 0.690 (p = 0.032) 'modest
+      accuracy'. The number and p value match the cached full text of pmid:39888240 ('In ME/CFS patients,
+      the variable that best discriminated between them and HC was also fiber tortuosity (AUC = 0.690;
+      p = 0.032)'), but the paper does not use the word 'modest'. The gloss weakens rather than strengthens
+      and does not change the badge.
+    fix: Optionally drop 'modest accuracy,' so the sentence gives only the number the paper reports.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[0] and level_reason[2] keep the card at level 1 even though pmid:41576003 is
+      a controlled study (73 historical controls) in 170 patients meeting ICC or National Academy of Medicine
+      criteria. The stated reason is supported by the cached full text: the tables give an overall Kruskal-Wallis
+      or chi-squared test across four groups plus pairwise tests only for ME/CFS-Long COVID, ME/CFS-hEDS
+      and Long COVID-hEDS, with no ME/CFS-control comparison; the controls are historical and the sample
+      comes from a referral centre. Level 1 is a conservative reading that the rubric allows. A reader
+      could argue for level 2 from the overall test (SFN on biopsy 52.6% against 0.0%, overall p < 0.001).
+      The auditor decides the level.'
+    fix: No change needed. The auditor should note that the level rests on reading 'supports' as needing
+      a direct ME/CFS-control test.
+audits_run:
+- 2026-11-15-small-fibre-neuropathy-C2.yaml
+- 2026-11-15-small-fibre-neuropathy-C2-second.yaml
