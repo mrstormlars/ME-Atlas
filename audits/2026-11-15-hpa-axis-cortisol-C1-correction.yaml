@@ -1,0 +1,345 @@
+card: hpa-axis-cortisol
+round: 1
+answered:
+- 2026-11-13-hpa-axis-cortisol-second.yaml
+- 2026-11-13-hpa-axis-cortisol.yaml
+draft_sha256: bdeb907a84616066c18586b78ef14814c180c60031968eeda439640c67e8d3e4
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'The card says three times that the London study (pmid:11502777) used the same CRH test as
+      the Dinan group: level_reason[1] ''The study used the same CRH test as the Dinan group'', level_reason[2]
+      ''The London study gave the same CRH test'', and contested.reason[1] ''gave the same CRH test''.
+      The records say otherwise. pmid:9669518 gave ''100 microg ovine CRH''. pmid:11502777 measured ''ACTH
+      and cortisol responses to human CRH'' and does not state the dose. Ovine and human CRH are different
+      preparations.'
+    fix: In all three places say that the London study also gave a CRH stimulation test, but with human
+      CRH where the Dinan study used 100 micrograms of ovine CRH. The contested mark can still rest on
+      the rubric's three criteria (same rank of case definition, a control group, 37 against 14 patients),
+      which do not need the test to be identical.
+  - operation: null
+    severity: must_fix
+    problem: The name 'King's College London' (level_reason[1] 'A study from King's College London', contested.reason[1]
+      'A later study from King's College London') does not appear in the cached record of pmid:11502777.
+      The record's affiliation is 'Department of Psychological Medicine, Institute of Psychiatry and Guy's,
+      King's and St Thomas' School of Medicine, London'. Only the e-mail domain hints at kcl.
+    fix: Write 'A study from the Institute of Psychiatry and Guy's, King's and St Thomas' School of Medicine,
+      London', or just 'A London study', as the study's group field already does.
+  - operation: null
+    severity: must_fix
+    problem: level_reason[0] ends 'No other group has repeated either test with the same result.' This
+      is a claim about other groups' studies, but the paragraph cites only the two Dinan papers (pmid:9669518,
+      pmid:9713562), which cannot support it.
+    fix: 'Cite the other groups'' studies that ran the tests: pmid:11502777 (a CRH test, with ACTH responses
+      similar between groups) and pmid:10594524 (the 1 microgram ACTH test, with no differences). Or move
+      the sentence to the paragraphs that already cite them.'
+  - operation: null
+    severity: must_fix
+    problem: level_reason[4] ('a flatter rise in morning saliva cortisol in women, but not men') and subgroups[0]
+      ('found a flatter morning saliva cortisol rise in women but not men') describe pmid:18160468 as
+      showing a 'flatter rise'. The record says 'attenuated morning cortisol profile' and 'Women with
+      CFS exhibited significantly attenuated morning cortisol profiles compared with well women', and
+      the title says 'Attenuated morning salivary cortisol concentrations'. It does not say that the rise
+      was flatter.
+    fix: 'Use the record''s wording, as the study''s finding field already does: ''an attenuated morning
+      saliva cortisol profile in women, but not men''.'
+  - operation: null
+    severity: must_fix
+    problem: subgroups[0] says that 'Two studies suggest sex differences' (pmid:18160468, pmid:38724880).
+      It leaves out a study the card cites elsewhere that looked at the same question with an accepted
+      case definition. The full text of pmid:40713801 (CCC, ICC and IOM criteria) found no difference
+      in absolute steroid levels 'either in the combined cohort or within gender-stratified groups', with
+      cortisol means of 139.623 in control women and 153.090 in women with ME/CFS (p 0.440). Without it,
+      the reader sees only the studies that found a difference.
+    fix: 'Add a sentence citing pmid:40713801: a study of 24 patients and 24 controls found no difference
+      in plasma cortisol when women and men were analysed separately. Its authors note that this may reflect
+      limited statistical power.'
+  - operation: null
+    severity: advisory
+    problem: 'The core claim includes ''cortisol output is low'', but the level reasoning discusses replication
+      only for the stimulated CRH response. Two independent groups with accepted case definitions found
+      lower basal cortisol output. pmid:11502777 (CDC) found ''Urinary free cortisol levels were lower
+      in the chronic fatigue syndrome group''. pmid:34254637 (Fukuda, Canadian and IOM) found ''significantly
+      lower levels of adrenocorticotropin (ACTH)/cortisol''. The paragraph explaining why the card is
+      not at level 3 sets the second aside as ''a different blood measure'', but it does not say why these
+      two together do not replicate the low-output part of the claim. The reasons are in the records:
+      urine against blood, the Dinan study itself found no difference in basal cortisol, and pmid:40713801
+      (CCC, ICC and IOM; 24 patients, at least half of 30) found no difference in morning plasma cortisol.
+      Levels are for the auditor to decide.'
+    fix: Add one sentence saying that the low-output finding comes from different measures in different
+      groups, and that it is contradicted by pmid:40713801 and by the basal results of pmid:9669518 and
+      pmid:10594524.
+  - operation: null
+    severity: advisory
+    problem: pmid:40713801 is called 'A study from Uppsala' (level_reason[2] and [3]). The full text says
+      that participants 'were diagnosed at the Gottfries clinic in Göteborg', that controls came from
+      the Uppsala blood bank, and that several authors are at the University of Melbourne.
+    fix: Write 'a study from Uppsala and Melbourne of patients diagnosed at a clinic in Göteborg', or
+      similar.
+  - operation: null
+    severity: advisory
+    problem: level_reason[5] glosses hydrocortisone as 'a cortisol tablet'. pmid:9757853 says 'Oral hydrocortisone'.
+    fix: Write 'hydrocortisone (a form of cortisol taken by mouth)', or simply 'oral hydrocortisone'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[6] says that the Leuven trial (pmid:12829200) found no difference 'in fatigue,
+      well-being or any other measure'. The abstract lists the measures it reports (the Abbreviated Fatigue
+      Questionnaire, the SF-36 mental and physical scores, and the Hospital Anxiety and Depression Scale).
+      'Any other measure' is broader than the record.
+    fix: Write 'or the other measures reported'.
+  - operation: null
+    severity: advisory
+    problem: The finding for pmid:40713801 gives the means '138.064 in controls and 135.157 in patients'
+      without units. In men, the full text reports a moderate effect size for cortisol (d = -0.57) and
+      says that the lack of differences 'may reflect limited statistical power'. level_reason[3] uses
+      this study for 'nor in women or men analysed separately' and does not mention that limit.
+    fix: Add the units given in the full text, or drop the raw means. Say that the authors attribute the
+      null result possibly to limited power, especially in the sex-stratified analysis.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study from the Dinan group of 14 patients diagnosed by CDC criteria (version not stated, so
+    the definition does not require post-exertional malaise) and 14 healthy volunteers gave 100 micrograms
+    of ovine corticotropin-releasing hormone (CRH), the brain signal that starts the HPA axis. The release
+    of ACTH, the pituitary hormone that stimulates the adrenal glands, and of cortisol was lower in patients;
+    basal ACTH and cortisol did not differ. The card is at level 2 because of this study. A second study
+    by the same group, of 20 patients and 20 healthy volunteers, found a smaller rise in cortisol after
+    a low dose (1 microgram) of ACTH; 9 of 20 patients and 2 of 20 volunteers failed the test at a cut-off
+    the authors call arbitrary.
+  sources:
+  - pmid:9669518
+  - pmid:9713562
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: A London study, with no authors shared with the Dinan studies, tested 37 patients meeting CDC
+    criteria (version not stated) and 28 healthy controls. Urinary free cortisol over 24 hours was lower
+    in patients (number measured not stated in the abstract). The study also gave a CRH test, but with
+    human CRH where the Dinan study gave 100 micrograms of ovine CRH. Baseline cortisol before the CRH
+    test was higher in patients. ACTH responses to CRH and to two other challenge tests were similar in
+    the two groups, and the authors write that their results "do not support previous findings" of reduced
+    central responses of the HPA axis. The cortisol responses to CRH and to d-fenfluramine showed a trend
+    to be lower in patients that was significant only after adjusting for ACTH responses.
+  sources:
+  - pmid:11502777
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'The card is not at level 3 because no independent study has repeated the same result. The London
+    study gave a CRH test too, with human CRH instead of the ovine CRH of the Dinan study, and found similar
+    ACTH responses, with a lower cortisol response only after adjustment. A study of 20 patients meeting
+    CDC criteria and 20 matched controls that used the 1 microgram ACTH test found no differences in baseline
+    cortisol or cortisol responses. The low-output part of the claim comes from different measures in
+    different groups: lower 24-hour urinary cortisol in the London study, and lower ACTH and cortisol
+    levels in a study of 30 women diagnosed according to the Fukuda, Canadian and Institute of Medicine
+    criteria at Stanford (a blood measure; the abstract does not say whether the values were resting or
+    stimulated). Against this, the Dinan CRH study found no difference in basal cortisol, and a study
+    of patients diagnosed at a clinic in Göteborg, meeting the Canadian, International and Institute of
+    Medicine criteria, found no difference in morning plasma cortisol.'
+  sources:
+  - pmid:9669518
+  - pmid:11502777
+  - pmid:10594524
+  - pmid:34254637
+  - pmid:40713801
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: Other studies with a recognised case definition did not find the same. A study of 20 patients
+    meeting CDC criteria and 20 matched controls used the same low-dose ACTH test as the Dinan group's
+    second study and found no differences in baseline cortisol or cortisol responses. A study of 24 patients
+    meeting the Canadian, International and 2015 IOM criteria, diagnosed at a clinic in Göteborg, and
+    24 matched controls found no significant difference in morning plasma cortisol, measured with mass
+    spectrometry; cortisol did not differ before correction for multiple testing either, nor in women
+    or men analysed separately. The authors say the lack of differences may reflect limited statistical
+    power, especially in the analysis by sex. A study from Austria and Chile (Canadian and/or Fukuda criteria)
+    of women (20 with mild or moderate and 24 with severe illness, 12 controls) and men (8 and 6, 17 controls)
+    found that, after correction for multiple testing, cortisol was not among the hormones that differed
+    among the three groups; in the pairwise comparison adjusted with the Benjamini-Hochberg procedure,
+    cortisol was lower in men with mild or moderate illness than in male controls (p = 0.0260), and not
+    in women.
+  sources:
+  - pmid:9713562
+  - pmid:10594524
+  - pmid:40713801
+  - pmid:38724880
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: 'Several studies cannot count towards the level because their case definition is not yet verified.
+    They point in both directions: lower evening plasma cortisol and lower urinary cortisol in 30 patients
+    compared with 72 volunteers; lower urinary cortisol in 121 clinic patients compared with 64 people
+    without the illness; an attenuated morning saliva cortisol profile in women, but not men, in a population-based
+    study of 75 people with the illness and 110 well controls; and no difference in saliva or urinary
+    cortisol in 22 patients in another study.'
+  sources:
+  - pmid:1659582
+  - pmid:11282703
+  - pmid:18160468
+  - pmid:9494707
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: In a placebo-controlled trial, 56 women and 14 men meeting the 1988 CDC definition (which does
+    not require post-exertional malaise) took oral hydrocortisone or placebo for about 12 weeks. The trial's
+    main measure, the share of patients who improved on a wellness scale, did not differ (20 of 30 on
+    hydrocortisone, 19 of 35 on placebo, P = .31). More patients on hydrocortisone improved by 5 points
+    or more (53% against 29%, P = .04), a secondary measure; other self-rating scales showed no difference,
+    and the body's own cortisol response was suppressed in 12 patients on hydrocortisone and none on placebo.
+    On the trial's main measure, level 4 is not reached.
+  sources:
+  - pmid:9757853
+- op: replace_paragraph
+  field: level_reason
+  index: 6
+  text: A larger placebo-controlled crossover trial of 100 patients meeting the 1994 CDC (Fukuda) definition,
+    of whom 80 completed three months of 5 mg hydrocortisone with 50 micrograms of fludrocortisone and
+    three months of placebo, found no difference in fatigue, well-being or the other measures reported.
+    It used a lower hydrocortisone dose and added fludrocortisone, so it did not test the same treatment
+    as the first trial.
+  sources:
+  - pmid:12829200
+  - pmid:9757853
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: A crossover trial of 32 patients found that fatigue fell more on low-dose hydrocortisone than
+    on placebo (p = 0.009), but its case definition is not yet verified, so it cannot count towards level
+    4. The HPA study of 37 patients, from the same group, treated 32 of its patients with hydrocortisone
+    in the same kind of crossover; whether these are the same patients is not stated. In the patients
+    who improved, the cortisol response to CRH rose, reversing the blunted response seen before. This
+    is a change within the patients who improved, not a comparison with controls, and it has not been
+    repeated. A trial of fludrocortisone alone in 100 patients meeting CDC criteria found no difference
+    from placebo; it was tested as a treatment for low blood pressure on standing, not for low cortisol.
+  sources:
+  - pmid:9989716
+  - pmid:11502777
+  - pmid:11150109
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: A later London study, with no authors shared with the first, gave a CRH test too, with human CRH
+    where the first study gave 100 micrograms of ovine CRH, to 37 patients meeting CDC criteria (version
+    not stated) and 28 healthy controls. ACTH responses were similar in the two groups, and the cortisol
+    response showed a trend to be lower in patients that was significant only after adjusting for ACTH
+    responses. The authors write that their results "do not support previous findings" of reduced central
+    responses of the HPA axis.
+  sources:
+  - pmid:11502777
+- op: replace_paragraph
+  field: contested.reason
+  index: 2
+  text: The second study has a case definition of equal rank, a control group and at least half as many
+    patients (37 against 14), which is what the rubric counts as comparable quality; the two CRH tests
+    used different preparations (human and ovine CRH), which the rubric does not weigh. It contradicts
+    the study on which level 2 rests, so rung 2 is contested.
+  sources:
+  - pmid:11502777
+  - pmid:9669518
+- op: replace_paragraph
+  field: contested.reason
+  index: 3
+  text: The Dinan group's low-dose ACTH study is not needed for level 2, which rests on its CRH study.
+    With the same 1 microgram ACTH test, that study found a smaller cortisol rise in 20 patients than
+    in 20 volunteers, and another study found no difference between 20 patients and 20 controls; both
+    used CDC criteria and a control group.
+  sources:
+  - pmid:9713562
+  - pmid:10594524
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: Two studies suggest sex differences, using different measures; the men's result rests on 8 patients.
+    Not repeated. A population-based study, whose case definition is not yet verified, found an attenuated
+    morning saliva cortisol profile in women but not men; a study from Austria and Chile found lower plasma
+    cortisol only in men with mild or moderate illness. A study of 24 patients and 24 controls (Canadian,
+    International and IOM criteria) found no difference in plasma cortisol when women and men were analysed
+    separately; its authors note that this may reflect limited statistical power.
+  sources:
+  - pmid:18160468
+  - pmid:38724880
+  - pmid:40713801
+- op: update_study
+  id: pmid:40713801
+  set:
+    finding: A study of n=24 patients and 24 age- and gender-matched controls found no difference in morning
+      plasma cortisol even before correction for multiple testing (p 0.718), and none in women or men
+      analysed separately; the authors say the lack of differences may reflect limited statistical power,
+      especially in the sex-stratified analysis.
+- op: update_study
+  id: pmid:38724880
+  set:
+    finding: A study of women (20 with mild or moderate and 24 with severe illness, 12 healthy controls)
+      and men (8 and 6, 17 healthy controls) found that, after correction for multiple testing, cortisol
+      was not among the hormones that differed among the three groups; in the pairwise comparison adjusted
+      with the Benjamini-Hochberg procedure, plasma cortisol was lower in men with mild or moderate illness
+      than in male controls (p = 0.0260) but not in women.
+- op: remove_link
+  to: symptom:sleep-disturbance
+- op: remove_link
+  to: symptom:cognitive-impairment
+- op: remove_link
+  to: question:what-keeps-it-going
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 1
+    severity: must_fix
+    problem: 'The correction still places pmid:11502777 in London: level_reason[1] ''A London study, with
+      no authors shared with the Dinan studies'', level_reason[2] ''The London study gave a CRH test too''
+      and ''lower 24-hour urinary cortisol in the London study'' (operation 2), and contested.reason[1]
+      ''A later London study'' (operation 8). The record of pmid:11502777 in section 4 of the context
+      gives title, authors, journal and abstract but no affiliation, and its abstract names no place.
+      The second audit''s would_change lists ''King''s College London'' and ''London'' for pmid:11502777
+      as unverifiable from what it was given. Dropping ''King''s College'' answers the review finding
+      but not the audit finding.'
+    fix: In all four places, name the study by what the record shows, for example 'A study by Cleare and
+      colleagues' / 'the Cleare study', or 'a study by a different group', and leave the place out.
+  - operation: 3
+    severity: must_fix
+    problem: 'level_reason[3] says ''The authors say the lack of differences may reflect limited statistical
+      power, especially in the analysis by sex.'' The updated finding of pmid:40713801 (operation 12)
+      says the same: ''especially in the sex-stratified analysis''. The cached full text says: ''No significant
+      differences in absolute steroid levels were observed between the ME/CFS and control groups, either
+      in the combined cohort or within gender-stratified groups. However, this may reflect limited statistical
+      power rather than the absence of true biological differences.'' The authors do not say ''especially''
+      for the analysis by sex. This puts words in the authors'' mouths.'
+    fix: Drop 'especially in the analysis by sex' and 'especially in the sex-stratified analysis', or
+      write 'in the combined cohort and in the analyses by gender', following the full text.
+  - operation: 12
+    severity: must_fix
+    problem: This has the same unsourced 'especially in the sex-stratified analysis' as operation 3, here
+      in the study's finding field.
+    fix: End the finding at '...may reflect limited statistical power.'
+  - operation: null
+    severity: must_fix
+    problem: Operations 14 to 16 remove all three links (links is now []), but the findings of the two
+      review studies still rely on them. pmid:41516296 says 'Cited on the map as the source of proposed
+      links, not as evidence for the level.', and pmid:31330791 says the same. No link on the card now
+      cites either study, so those reader-facing sentences are false.
+    fix: Add update_study operations for pmid:41516296 and pmid:31330791 that drop 'Cited on the map as
+      the source of proposed links', for example ending with 'Not used as evidence for the level.' Also
+      update the stale YAML comments (the 'Added 2026-11-06 ... cited by a link on the map' lines and
+      the 'Other reading ... expressed as the link to question:what-keeps-it-going' line).
+  - operation: 2
+    severity: advisory
+    problem: level_reason[2] now includes 'A study of 20 patients meeting CDC criteria and 20 matched
+      controls that used the 1 microgram ACTH test found no differences in baseline cortisol or cortisol
+      responses', and level_reason[3] repeats almost the same sentence for pmid:10594524. The repetition
+      does not change the meaning but makes the card longer.
+    fix: Keep the sentence in one paragraph only, or in level_reason[2] refer back briefly to the study
+      described in level_reason[3].
+  - operation: 8
+    severity: advisory
+    problem: 'contested.reason[1] reads awkwardly: ''gave a CRH test too, with human CRH where the first
+      study gave 100 micrograms of ovine CRH, to 37 patients...''. The dose clause splits the verb from
+      its object.'
+    fix: 'For example: ''gave a CRH test to 37 patients ... and 28 healthy controls, using human CRH where
+      the first study used 100 micrograms of ovine CRH.'''
+audits_run: []
