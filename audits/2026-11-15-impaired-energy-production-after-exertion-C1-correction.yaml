@@ -1,0 +1,348 @@
+card: impaired-energy-production-after-exertion
+round: 1
+answered:
+- 2026-11-13-impaired-energy-production-after-exertion-second.yaml
+- 2026-11-13-impaired-energy-production-after-exertion.yaml
+draft_sha256: 3981010cfb5f60ab1ec4f69c24e1ac636fda9ad236126fa905de8d345f19f1b4
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[0] ends ''The card is at level 2 because of this study.'' The card is at level
+      3 (level: 3; level_reason[4] says ''The card is at level 3 ...''). A reader sees two different levels
+      stated as the card''s level.'
+    fix: Replace the last sentence of level_reason[0] with 'Rung 2 rests on this study.' (the wording
+      contested.reason[3] already uses).
+  - operation: null
+    severity: must_fix
+    problem: Sample sizes for pmid:42212259 (New York) disagree within the card. studies[pmid:42212259]
+      has n_patients 53 and n_controls 19, but its finding, level_reason[5] and contested.reason[0] say
+      58 patients and 25 controls. The cached full text (PMC13213420) enrolled 58 patients and 25 controls
+      (Table 1), but the no-change result in Table 2 is for 'those ME/CFS patients and controls who achieved
+      maximal effort on both tests'. Five patients and six controls did not meet the criteria, so that
+      table covers 53 and 19. A second analysis with RER >= 1.05 'allowed us to capture every ME/CFS patient
+      except one with no change in the results'. contested.reason[0] compares '58 against 15'. The rubric's
+      sample size is 'the number of patients in the measurement that bears on the finding', which is 53
+      for the main analysis.
+    fix: Make the text match the record and the n fields. Say 58 patients and 25 controls enrolled, with
+      53 patients and 19 controls in the main both-days-maximal analysis (or 57 patients under the RER
+      >= 1.05 criterion). In contested.reason[0], write '53 against 15'. The comparable-quality conclusion
+      is unchanged (53 is more than half of 15).
+  - operation: null
+    severity: must_fix
+    problem: 'contested.reason[1] says the ICC label for the two Dutch clinic studies ''is read from a
+      reference number and not confirmed''. That is wrong for pmid:34198913 (women). Its cached full text
+      (PMC8229058) says ''Female ME/CFS patients graded as having severe ME/CFS according to International
+      Consensus Criteria (ICC) were excluded from this analysis''. Its reference [1], cited in ''according
+      to the ME criteria [1] and CFS criteria of Fukuda [3]'', is Carruthers 2011, ''Myalgic encephalomyelitis:
+      International Consensus Criteria''. For pmid:34198946 (men), the only defining sentence (PMC8230194)
+      is ''...satisfied the criteria for ME/CFS ... (ICF) [1,3]''. There [1] is the ICC and [3] is Fukuda
+      1994, and the text does not say which of the two the patients met. So the reason understates the
+      women''s study and does not say what is actually uncertain for the men''s study.'
+    fix: 'For 34198913, use the sentence naming International Consensus Criteria (ICC) as case_definition_quote,
+      or keep the current quote and note that reference [1] is the ICC. Rewrite contested.reason[1]: the
+      women''s study names the ICC (with Fukuda); the men''s study cites the ICC and Fukuda references
+      together without saying which criteria the patients met. Keep the point that both studies compare
+      with idiopathic chronic fatigue rather than healthy controls. Check whether the ICC label for 34198946
+      is supported by its quote alone.'
+  - operation: null
+    severity: must_fix
+    problem: The group fields of pmid:36984572 and pmid:35358096 say 'same group and cohort as 38965566',
+      and badge_reasons.explains_pem[2] says 'In an overlapping cohort from the 84-patient study's research
+      group'. No cached record states that these cohorts are the same as, or overlap with, the 84-patient
+      cohort. 36984572 (PMC10059925) says only 'The present study was part of a larger study to investigate
+      molecular mechanisms of ME/CFS. Detailed exercise test results of the 2-day CPET protocol will be
+      reported separately' (92 ME/CFS, 81 CTL tested). 38965566 reports 90 ME/CFS and 81 CTL accepted.
+      35358096 reports 60 and 45 at 3 sites. 38965566 cites both papers only as background references
+      (refs 16 and 37). The authors and the three test sites (Ithaca, New York City, Los Angeles) are
+      shared, but the records do not state that the cohort is shared.
+    fix: Change both group fields to 'same group as 38965566' and drop 'and cohort'. In explains_pem[2],
+      replace 'In an overlapping cohort from the 84-patient study's research group' with wording the records
+      support, for example 'In a study by the 84-patient study's research group, at the same three test
+      sites'. Or remove the overlap claim.
+  - operation: null
+    severity: must_fix
+    problem: studies[pmid:37054777] has no group field, while every other study on the card has one.
+    fix: Add a group from the cached record (pubmed 37054777), for example 'Systrom DM, Brigham and Women's
+      Hospital, Harvard Medical School, Boston, USA (first author Joseph P, Yale University, New Haven)'.
+  - operation: null
+    severity: advisory
+    problem: This is a question for the auditor; the card is consistent with its own labels. contested.reason[3]
+      keeps rung 2 uncontested because pmid:42212259 is labelled Fukuda. Its quote, 'They all met both
+      the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table
+      1)', names only one definition after 'both', so it reads as truncated. The companion paper pmid:41293716
+      (same authors; same mean age 38.6 ± 9.6 years, peak VO2 22.3 mL/kg/min and 25 controls) says its
+      patients 'met the 2015 IOM case definition'. If the New York cohort is treated as IOM 2015, it would
+      rank with the CCC 84-patient study, with controls and 53 >= 42 patients. Rung 2 would then meet
+      the rubric's comparable-quality test for a contested mark. The card says 'appears to describe the
+      same cohort' without saying why.
+    fix: In contested.reason[3], state the basis for 'appears to describe the same cohort' (same authors,
+      identical mean age, peak oxygen use and number of controls), and note that the New York sentence
+      names only one definition after 'both'. Whether rung 2 is contested is the auditor's decision.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:30871578] (Adelaide) is labelled Fukuda, but its quote says patients were diagnosed
+      'based on one of three widely accepted diagnostic criteria' (Fukuda, CCC or ICC). The quote does
+      not show that all patients met Fukuda. The label is the lowest-ranked of the three, which is conservative,
+      but the card text never says the cohort was mixed.
+    fix: In level_reason[7] or the study's finding, mention that patients were diagnosed by Fukuda, CCC
+      or ICC.
+  - operation: null
+    severity: advisory
+    problem: pmid:23813081 and pmid:28782878 have case_definition 'unverified'. The rubric does not accept
+      a cohort whose definition is not yet checked. They are context studies and the text says 'case definition
+      not yet verified', but level_reason[7] and badge_reasons.diagnostic_marker still describe their
+      results. The 23813081 abstract also says participants 'who were unable to meet the criteria for
+      maximal effort during both tests ... were excluded from the analysis'. That limit bears on the effort
+      argument in level_reason[5] and [6] but is not mentioned.
+    fix: Keep both clearly outside the level. Consider noting the 23813081 maximal-effort exclusion where
+      its result is cited.
+  - operation: null
+    severity: advisory
+    problem: The PubMed abstract of pmid:34198913 gives the group sizes the other way round ('Fifty-one
+      female patients with ICF ... compared to ... 50 female ME/CFS patients'), and gives fibromyalgia
+      as 'seven ME/CFS patients vs zero ICF patients'. The full text (PMC8229058) gives 51 ME/CFS and
+      50 ICF, and fibromyalgia 25/51 (49%) against 7/50 (14%). The card follows the full text, which is
+      correct, but a reader checking the abstract will see a conflict.
+    fix: Optionally note that the numbers are from the full text, where the abstract differs.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] calls the Dutch studies 'retrospective analyses of a clinical database'.
+      The records say 'this was not a prospective trial', that data were taken 'from the clinical database',
+      and (for men) 'From a database of patients'. This is close but not their word. contested.reason[2]
+      says 'The Oslo study, which meets the Canadian Consensus Criteria'. It is the patients who met the
+      criteria, not the study.
+    fix: Use 'not prospective; drawn from a clinical database', and 'whose patients met the Canadian Consensus
+      Criteria'.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'A controlled study of 84 patients meeting the Canadian Consensus Criteria and 71 sedentary controls
+    repeated a maximal exercise test after 24 hours. Unlike controls, patients did not reproduce their
+    first-day results: oxygen use and work fell at peak effort and at the ventilatory threshold on the
+    second day. Rung 2 rests on this study.'
+  sources:
+  - pmid:38965566
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: 'Two studies from one Dutch clinic compared patients with people who have chronic fatigue but
+    do not meet ME/CFS criteria (51 and 50 women; 26 and 25 men): oxygen use and workload fell on the
+    second day in ME/CFS, while the comparison group''s performance improved. They were not prospective:
+    the data were drawn from a clinical database. The women''s study states that diagnosis followed the
+    ME criteria and the Fukuda criteria, and its analysis excluded severe ME/CFS; fibromyalgia was more
+    common in its ME/CFS group (49% against 14%). Its group sizes and fibromyalgia counts are those of
+    the full text, which differ from the abstract. The men''s study cites two criteria references together
+    without saying which the patients met, so its case definition is not verified and it is kept as context.
+    One author, Visser FC, is also on the Amsterdam study.'
+  sources:
+  - pmid:34198913
+  - pmid:34198946
+  - pmid:20937116
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: The card is at level 3 because independent groups found parts of the same result in separate cohorts.
+    Each has a limit, and rungs 2 and 3 are contested (see the contested note).
+  sources:
+  - pmid:38965566
+  - pmid:20937116
+  - pmid:34198913
+  - pmid:34198946
+  - pmid:31161646
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'Against these findings, a study from New York that enrolled 58 patients and 25 sedentary controls
+    found no change in peak oxygen use or oxygen use at the ventilatory threshold on the second day in
+    either group, among those who reached maximal effort on both days: 53 (= 58 - 5) patients and 19 (=
+    25 - 6) controls, since the paper reports that 5 patients and 6 controls did not meet maximal-effort
+    criteria. Its sentence on the case definition says the patients met both the 1994 (Fukuda) definition,
+    modified to require post-exertional malaise, and names no second definition; a companion paper by
+    the same authors names the 2015 IOM definition, so the records do not settle which applies. The card
+    records Fukuda. Its authors suggest that falls reported elsewhere may reflect lower effort on the
+    second day.'
+  sources:
+  - pmid:42212259
+  - pmid:41293716
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: A study of 16 patients and 10 controls from Adelaide found that work rate at the ventilatory threshold
+    fell more in patients on the second day, but found no difference between groups in how oxygen use
+    changed; its patients had been diagnosed by one of the Fukuda, Canadian Consensus or International
+    Consensus criteria, so the cohort was mixed. Two other two-day studies whose case definition is not
+    yet verified, and which are therefore kept outside the level, found lower oxygen use and workload
+    in 51 women on the second test only (the abstract states that participants who did not meet maximal-effort
+    criteria on both tests were excluded), and lower workload but higher oxygen use on the second day
+    in 10 patients.
+  sources:
+  - pmid:30871578
+  - pmid:23813081
+  - pmid:28782878
+- op: propose
+  target: contested
+  value:
+  - 2
+  - 3
+  reason:
+  - text: Rung 3 rests on independent studies that found the same result as the 84-patient study, whose
+      patients met the Canadian Consensus Criteria. The clearest, a Fukuda study of 15 women patients
+      and 15 controls from Amsterdam, is contradicted by the New York study, recorded as Fukuda, which
+      enrolled 58 patients and 25 sedentary controls and found no change on the second day; 53 (= 58 -
+      5) patients were in its main analysis of those with maximal tests on both days. With the same recorded
+      case definition, a control group and more patients (53 against 15), the New York study is of comparable
+      quality.
+    sources:
+    - pmid:20937116
+    - pmid:42212259
+    - pmid:38965566
+  - text: The two Dutch clinic studies point the same way, but they compare patients with people who have
+      chronic fatigue without ME/CFS rather than with healthy controls. The women's study states that
+      diagnosis followed the ME criteria and the Fukuda criteria, and is recorded as Fukuda; the men's
+      study cites two criteria references together without saying which the patients met, so its case
+      definition is not verified.
+    sources:
+    - pmid:34198913
+    - pmid:34198946
+  - text: 'The Oslo study, whose patients met the Canadian Consensus Criteria, found the same result only
+      in part: power output at the threshold fell more in patients than in controls, but the changes in
+      oxygen use did not differ between groups.'
+    sources:
+    - pmid:31161646
+  - text: Rung 2 rests on the 84-patient study. The New York study's sentence says its patients met both
+      the 1994 case definition, modified to require post-exertional malaise, and names no second definition.
+      A companion paper by the same authors describes 57 patients and 25 controls with the same mean age
+      (38.6 ± 9.6 years) as the New York study and names the 2015 IOM definition, so it may describe the
+      same cohort. The records do not settle which definition applies. If it is IOM 2015, the New York
+      study has a control group and a case definition ranked with the Canadian Consensus Criteria, and
+      53 (= 58 - 5) patients in its main analysis, so it would be of comparable quality to the 84-patient
+      study; rung 2 is therefore marked contested as well. The card records Fukuda, from the New York
+      study's own sentence.
+    sources:
+    - pmid:38965566
+    - pmid:42212259
+    - pmid:41293716
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: No study on this card tests a two-day exercise marker in a second, independent patient group.
+    A study of 51 women (case definition not yet verified) reported a classification analysis that differentiated
+    patients and controls with 95.1% accuracy, and a study of 16 patients reported, from an ROC analysis,
+    that a decrease in work rate at the ventilatory threshold of 6.3% to 9.8% best distinguished patients
+    from controls; neither was tested in a second group on this card. A study of 58 patients concluded
+    that its data do not support using the two-day protocol to define post-exertional malaise or disability.
+  sources:
+  - pmid:23813081
+  - pmid:30871578
+  - pmid:42212259
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 2
+  text: In a study by the same research group as the two-day exercise study, 78 patients took on average
+    about 12.7 days to recover from the two-day test, against 2.1 days for 64 sedentary controls; the
+    paper reports the exercise test results separately and does not relate recovery to oxygen use or work.
+  sources:
+  - pmid:36984572
+- op: update_study
+  id: pmid:34198913
+  set:
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: All patients underwent a detailed clinical history to establish the diagnosis
+      of ME/CFS according to the ME criteria [1] and CFS criteria of Fukuda [3].
+- op: update_study
+  id: pmid:34198946
+  set:
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    role: context
+- op: update_study
+  id: pmid:42212259
+  set:
+    finding: A study that enrolled 58 patients and 25 sedentary controls found no significant change in
+      peak oxygen use, oxygen use at the ventilatory threshold or ventilatory efficiency from the first
+      to the second day in either group, among those with maximal tests on both days (53 (= 58 - 5) patients
+      and 19 (= 25 - 6) controls); it also found a lower peak heart rate and higher perceived exertion
+      in patients. The paper reports that 5 patients and 6 controls did not meet maximal-effort criteria.
+- op: update_study
+  id: pmid:36984572
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same group as 38965566)
+- op: update_study
+  id: pmid:35358096
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same group as 38965566)
+- op: update_study
+  id: pmid:37054777
+  set:
+    group: Joseph P (first author); Systrom DM (last author)
+    finding: A review of exercise pathophysiology in ME/CFS and long COVID (postacute sequelae of SARS-CoV-2);
+      it states that hemodynamic and gas exchange derangements in long COVID have substantial overlap
+      with those observed in ME/CFS. Cited on the map as context, not as evidence for the level.
+- op: remove_link
+  to: question:closest-to-symptoms
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 2
+    severity: must_fix
+    problem: level_reason[4] ('The card is at level 3 because independent groups found parts of the same
+      result in separate cohorts') still cites pmid:34198946 as one of the groups carrying level 3. Operation
+      9 sets that study to case_definition 'unverified' and role 'context', and operation 1 says it 'is
+      kept as context'. The rubric does not accept a cohort whose case definition is not checked, so a
+      context study with an unverified definition cannot be a source for the level.
+    fix: Remove pmid:34198946 from the sources of level_reason[4], so the level-3 paragraph cites only
+      38965566, 20937116, 34198913 and 31161646.
+    class: decisive
+  - operation: 4
+    severity: must_fix
+    problem: level_reason[7] says of the Adelaide study (pmid:30871578) that its patients 'had been diagnosed
+      by one of the Fukuda, Canadian Consensus or International Consensus criteria, so the cohort was
+      mixed'. The full text says only that patients 'had to have been previously diagnosed with ME/CFS
+      based on one of three widely accepted diagnostic criteria' and never says how many met each; it
+      does not state that the cohort was mixed (all could have met one definition). 'So the cohort was
+      mixed' adds a fact the record does not give.
+    fix: Replace 'so the cohort was mixed' with 'and the paper does not say how many met each'.
+    class: wording
+    target: level_reason[7]
+  - operation: 13
+    severity: must_fix
+    problem: The new finding of pmid:37054777 ends 'Cited on the map as context, not as evidence for the
+      level.' Operation 14 removes the link to question:closest-to-symptoms, which was the only place
+      the card cited this review; in the applied card no link, paragraph or reason cites pmid:37054777.
+      The sentence now states something untrue about the card.
+    fix: Remove 'Cited on the map as context, not as evidence for the level.' or replace it with 'Kept
+      as context; not evidence for the level.'
+    class: wording
+    target: studies[pmid:37054777].finding
+  - operation: 5
+    severity: advisory
+    problem: 'Contested rungs [2, 3]: rung 2 is marked contested on a conditional (''If it is IOM 2015
+      ... rung 2 is therefore marked contested as well'') while the card still records pmid:42212259 as
+      Fukuda, which under the rubric ranks below CCC and is not of comparable quality to the 84-patient
+      study. Marking it contested is the cautious reading of an unresolved case definition and is stated
+      as such; whether the rubric supports it is the auditor''s decision.'
+    fix: Consider saying explicitly that the mark is set because the records cannot rule out IOM 2015,
+      not because the recorded label meets the comparable-quality test.
+  - operation: 7
+    severity: advisory
+    problem: badge_reasons.explains_pem[2] now begins 'In a study by the same research group as the two-day
+      exercise study'. The card has many two-day exercise studies; the reader cannot tell that the 84-patient
+      study (pmid:38965566) is meant.
+    fix: Write 'by the same research group as the 84-patient study'.
+  - operation: null
+    severity: advisory
+    problem: 'Internal YAML comments now contradict the corrected card: the comment block above contested
+      (''Contested at rung 3 ... Rung 2 not contested''; ''34198913/34198946 (ICC as recorded, unconfirmed)''),
+      the 34198913 and 34198946 comments (''Recorded as ICC''), and the 36984572, 35358096 and 38965566
+      comments (''same CRC cohort'', ''overlapping participants''). They are not reader-facing but will
+      mislead the next editor or auditor.'
+    fix: Update or remove the stale comments when the card is next edited.
+audits_run: []
