@@ -1552,6 +1552,11 @@ def apply_ops_file(
             for i, op in enumerate(ops.operations)
             if op.op in CORRECTION_ONLY_OPS
         ]
+        ops_errors += [
+            f"operations[{i}] is replace_paragraph of core_claim: only a correction round (--round C<k>) may use it"
+            for i, op in enumerate(ops.operations)
+            if isinstance(op, ReplaceParagraph) and op.field == "core_claim"
+        ]
     except (PipelineError, OperationError) as exc:
         ops_errors.append(str(exc))
         if redraft and isinstance(raw, dict) and raw.get("paper") is None:
@@ -3583,6 +3588,7 @@ def card_review_plan(
 # ---------------------------------------------------------------------------
 
 _TARGET_PREFIX = {
+    "core_claim": "core_claim",
     "level_reason": "level_reason",
     "contested.reason": "contested_reason",
     "badges.diagnostic_marker.reason": "badge_reasons.diagnostic_marker",
@@ -3689,6 +3695,8 @@ def _attempt_text_path(cfg: Config, slug: str, tag: str, upto: str) -> Path:
 
 
 def _field_paras(card: cards.Card, field_name: str) -> list[cards.SourcedText]:
+    if field_name == "core_claim":
+        return [card.core_claim]
     if field_name in ("subgroups", "early_signals"):
         return list(getattr(card, field_name))
     reason = (
@@ -3721,8 +3729,10 @@ def _valve_op_targets(card: cards.Card, ops: OpsFile) -> tuple[list[str | None],
                 found.append(f"operations[{i}]: {op.field} has no paragraph {op.index}")
             else:
                 original = left[op.index]
-                target = f"{_TARGET_PREFIX[op.field]}[{original}]"
-                if isinstance(op, RemoveParagraph):
+                target = _TARGET_PREFIX[op.field] + ("" if op.field == "core_claim" else f"[{original}]")
+                if op.field == "core_claim" and isinstance(op, RemoveParagraph):
+                    found.append(f"operations[{i}]: core_claim cannot be removed")
+                elif isinstance(op, RemoveParagraph):
                     del left[op.index]
                 elif not set(op.sources) <= set(paras[original].sources):
                     found.append(f"operations[{i}] cites a source its paragraph does not cite: a fix adds no source")
@@ -3743,6 +3753,7 @@ def _without_free_text(data: dict[str, Any]) -> dict[str, Any]:
     """The card data with every free-text item blanked: what a valve fix must leave exactly as it is."""
     d = copy.deepcopy(data)
     d["level_reason"] = d["subgroups"] = d["early_signals"] = None
+    d["core_claim"] = {"text": None, "sources": d["core_claim"]["sources"]}  # the text is free, its sources are not
     if isinstance(d.get("contested"), dict):
         d["contested"]["reason"] = None
     for badge in d["badges"].values():

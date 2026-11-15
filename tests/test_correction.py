@@ -189,6 +189,16 @@ def corr(pub: Pub, tmp_path: Path) -> Corr:
         ({"op": "remove_paragraph", "field": "early_signals", "index": 0}, "remove_paragraph"),
         ({"op": "update_study", "id": "pmid:90000100", "set": {"year": 2019}}, "update_study"),
         ({"op": "remove_link", "to": "somewhere"}, "remove_link"),
+        (
+            {
+                "op": "replace_paragraph",
+                "field": "core_claim",
+                "index": 0,
+                "text": "A reworded fictional claim.",
+                "sources": ["pmid:90000100"],
+            },
+            "replace_paragraph of core_claim",
+        ),
     ],
 )
 def test_a_normal_round_rejects_a_correction_only_operation_and_names_it(env: Env, operation, name, capsys):
@@ -226,6 +236,11 @@ def test_a_correction_names_no_paper():
 def test_a_correction_needs_at_least_one_operation():
     empty = parse_ops({"card": SLUG, "paper": None, "operations": []})
     assert any("at least one operation" in p for p in pipeline.correction_ops_problems(empty, 2))
+
+
+def test_a_correction_may_reword_core_claim():
+    claim = {"op": "replace_paragraph", "field": "core_claim", "index": 0, "text": "T.", "sources": [CITED]}
+    assert problems(claim) == []
 
 
 def test_a_correction_may_not_add_a_study_or_a_paragraph():

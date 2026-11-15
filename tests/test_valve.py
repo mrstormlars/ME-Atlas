@@ -320,6 +320,23 @@ def test_the_guard_refuses_an_operation_that_is_not_free_text(operation, fragmen
     assert text is None and any(fragment in p for p in problems), problems
 
 
+def test_the_guard_applies_a_core_claim_rewording_but_not_a_change_of_its_sources_or_its_removal():
+    claim = {"op": "replace_paragraph", "field": "core_claim", "index": 0, "text": "Reworded.", "sources": [STUDY]}
+    text, problems = guard(claim, targets={"core_claim"})
+    assert problems == [] and text is not None and yaml.safe_load(text)["core_claim"]["text"] == "Reworded."
+    _, problems = guard(claim, targets={EARLY})
+    assert any("changes core_claim, which no wording finding" in p for p in problems)
+    # dropping a cited source is a subset, but sources are structured: refused by the free-text comparison
+    base = DRAFT.replace("sources: [pmid:90000100]", "sources: [pmid:90000100, pmid:90000104]", 1)
+    assert base != DRAFT
+    fewer = parse_ops(ops_data(claim))
+    text, problems = apply_valve(base, fewer, {"core_claim"})
+    assert text is None and any("more than free text" in p for p in problems), problems
+    gone = {"op": "remove_paragraph", "field": "core_claim", "index": 0}
+    text, problems = guard(gone, targets={"core_claim"})
+    assert text is None and any("core_claim cannot be removed" in p for p in problems)
+
+
 def test_the_guard_refuses_a_paragraph_no_wording_finding_names():
     text, problems = guard(REWORD_CONTESTED)  # the finding names early_signals[0] only
     assert text is None and "changes contested_reason[0], which no wording finding of this stage names" in problems[0]

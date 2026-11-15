@@ -58,6 +58,7 @@ Limits, enforced by code (a file that breaks one is rejected before review):
 - `paper` is `null` and there is at least one operation. A file that changes nothing fails.
 - Allowed operations: `replace_paragraph`, `remove_paragraph` (`field`, `index`), `update_study` (`id` and `set`, a map of study fields; not `id`, not `preprint`; a recognised `case_definition` needs `case_definition_source` and a verbatim `case_definition_quote`, `unverified` needs both null), `remove_link` (`to`) and `propose`. Nothing else: no `add_study`, no `add_paragraph`.
 - A `propose` on `level` may only lower the level (the value must be lower than the draft's); a `propose` on a badge may only set it to `false`; a `propose` on `contested` may add, change or remove the mark.
+- `replace_paragraph` also takes `field: core_claim` (`index` 0): reword it, citing only sources it already cites; `remove_paragraph` cannot remove it.
 - `remove_paragraph` cannot leave `level_reason` empty, nor `contested.reason` while the card is contested, nor a true badge without a reason.
 
 How to resolve a finding:
