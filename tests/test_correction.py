@@ -101,7 +101,7 @@ class Corr:
         )
         audit_targets = [
             {"record": name, "part": i, "targets": targets or BROAD_TARGETS}
-            for name, i, _part, _decision in pipeline.objecting_audit_parts(cfg, SLUG)
+            for name, i, _part, _decision in pipeline.objecting_audit_parts(cfg, SLUG, k)
         ]
         path.write_text(
             json.dumps(

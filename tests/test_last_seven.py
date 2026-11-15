@@ -483,3 +483,18 @@ def test_every_trail_written_by_the_code_carries_the_revision_rule(corr: Corr):
     corr.round_to_audits()
     assert corr.publish() == 0
     assert corr.trail()["revision_rule"] == pipeline.REVISION_RULE
+
+
+def test_a_pre_review_that_record_review_would_refuse_does_not_count(corr: Corr, capsys):
+    assert corr.pre_review() == 0
+    pre = corr.dir / "review" / f"{SLUG}-card-C1-pre.json"
+    data = json.loads(pre.read_text(encoding="utf-8"))
+    write(pre, data | {"audit_targets": data["audit_targets"][1:]})  # an entry missing; recorded by hand
+    out = corr.dir / "correction-context"
+    assert corr.main("correction-plan", SLUG, "--out", str(corr.dir)) == 1
+    assert "no valid whole-card review of the unchanged draft" in capsys.readouterr().err
+    assert not out.exists()
+    write(pre, data)
+    assert corr.main("correction-plan", SLUG, "--out", str(corr.dir)) == 0
+    text = (out / f"{SLUG}-C1.md").read_text(encoding="utf-8")
+    assert "Targets the findings name (draft numbering" in text  # B4: the allowed targets are written

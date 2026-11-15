@@ -1364,13 +1364,17 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     return found
 
 
-def objecting_audit_parts(cfg: Config, slug: str) -> list[tuple[str, int, AuditPart, str]]:
+def objecting_audit_parts(cfg: Config, slug: str, before: int | None = None) -> list[tuple[str, int, AuditPart, str]]:
     """The objecting parts of the valid whole-card audit records the correction answers: (record file name, part
     index, part, the decision of the record). Objecting = the record does not accept and the part is not classed
-    ``none`` (a part that supports the card). An invalid or unreadable record has no parts."""
+    ``none`` (a part that supports the card). An invalid or unreadable record has no parts. With ``before`` k, the
+    records of round ``C<k>`` and later (written after the step 0 review) are left out."""
     found: list[tuple[str, int, AuditPart, str]] = []
     for path in whole_card_audit_files(cfg, slug):
         if path.name.endswith("-invalid.yaml"):
+            continue
+        later = re.search(r"-C([1-9]\d*)(?:-second)?\.yaml$", path.name)
+        if before is not None and later and int(later.group(1)) >= before:
             continue
         try:
             audit = AuditRecord.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")))
@@ -1523,7 +1527,11 @@ def _load_card_review(cfg: Config, slug: str, tag: str) -> ReviewFile | None:
         review = ReviewFile.model_validate(_read_json(path))
     except (PipelineError, ValidationError):
         return None
-    return review if review.card == slug and review.paper is None else None
+    if review.card != slug or review.paper is not None:
+        return None
+    if tag.endswith("-pre") and _correction_review_target_problems(cfg, slug, review, True, correction_number(tag)):
+        return None  # the step 0 review counts only when `record-review` would accept it (targets, audit_targets)
+    return review
 
 
 Reject = tuple[str, int]  # (kind of reject, number of decisive must_fix findings)
@@ -1881,7 +1889,7 @@ def apply_ops_file(
 # ---------------------------------------------------------------------------
 
 
-def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool) -> list[str]:
+def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool, k: int) -> list[str]:
     """B1, B2: every ``must_fix`` of a correction-path review carries ``targets`` (and a ``target`` is one of them);
     the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other."""
     problems = [
@@ -1898,7 +1906,7 @@ def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFil
         if review.audit_targets is not None:
             problems.append("`audit_targets` belongs to the --pre review only")
         return problems
-    expected = {(name, i) for name, i, _part, _decision in objecting_audit_parts(cfg, slug)}
+    expected = {(name, i) for name, i, _part, _decision in objecting_audit_parts(cfg, slug, k)}
     seen: set[tuple[str, int]] = set()
     for j, entry in enumerate(review.audit_targets or []):
         key = (entry.record, entry.part)
@@ -1956,7 +1964,7 @@ def record_review(
             if finding.severity == "must_fix" and finding.klass is None
         ]
     if pre or re.fullmatch(rf"C[1-9]\d*{ATTEMPT_RE}", str(n)):
-        problems += _correction_review_target_problems(cfg, slug, review, pre)
+        problems += _correction_review_target_problems(cfg, slug, review, pre, correction_number(str(n)))
     if problems:
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
     event = {"event": "record-review", "card": slug, "paper": review.paper, "round": n, "verdict": review.verdict}
@@ -3770,7 +3778,7 @@ def _cached_study_files(cfg: Config, study_id: str, reader: citations.CacheReade
     return [*lines, f"- full text: {text}"]
 
 
-def _pre_audit_target_lines(cfg: Config, slug: str) -> list[str]:
+def _pre_audit_target_lines(cfg: Config, slug: str, tag: str) -> list[str]:
     """The objecting parts of the audit records the correction answers, for the ``--pre`` review context: it fills
     ``audit_targets`` with the targets of each part, and gives every ``must_fix`` finding ``targets``."""
     lines = [
@@ -3785,7 +3793,7 @@ def _pre_audit_target_lines(cfg: Config, slug: str) -> list[str]:
         '"targets": [...]}]`: one entry for each objecting audit part below, no other.',
         "",
     ]
-    parts = objecting_audit_parts(cfg, slug)
+    parts = objecting_audit_parts(cfg, slug, correction_number(tag))
     if not parts:
         lines += ["No audit record has an objecting part: `audit_targets` is an empty list.", ""]
     for name, i, part, decision in parts:
@@ -3837,7 +3845,7 @@ def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
         citations.author_facts_section(card, reader).replace("## Author facts", "## 5. Author facts", 1),
     ]
     if pre:
-        parts += _pre_audit_target_lines(cfg, slug)
+        parts += _pre_audit_target_lines(cfg, slug, tag)
     return "\n".join(parts)
 
 
