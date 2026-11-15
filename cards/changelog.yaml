@@ -265,3 +265,25 @@
   - pmid:42327760
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: brain-and-brainstem-mri-changes
+  change: First publication at level 2 after correction round 2 and a wording fix; the draft had contested
+    mark null
+  reason: Level 2 rests on one controlled ICC diffusion study, not replicated by an independent group;
+    rung 2 contested by a comparable CCC study finding opposite axial diffusivity; badges no; layer and
+    associated links supported.
+  sources:
+  - pmid:34355438
+  - pmid:29021956
+  - pmid:21560176
+  - pmid:30497131
+  - pmid:42539798
+  - pmid:40624094
+  - pmid:34975370
+  - pmid:28216087
+  - pmid:25353054
+  - pmid:36937672
+  - pmid:35355311
+  - pmid:39804864
+  tier: 2
+  decided_by: ai_audit

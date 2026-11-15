@@ -128,16 +128,16 @@ level_reason:
       gradual onset, axial diffusivity was lower only in the corpus callosum.
     sources: [pmid:40624094, pmid:34355438]
   - text: >-
-      Other controlled studies from the same group as the level 2 study, using different measures,
-      also report brainstem differences: weaker connections between brainstem regions during a task
-      (45 patients meeting the Fukuda definition, which does not require post-exertional malaise, and
-      27 controls), a lower T1-weighted MRI signal in a brainstem region (43 patients meeting the
-      Fukuda definition and 27 controls), weaker connections between the pons and the cerebellum
-      during a task (31 patients meeting the Canadian or International criteria and 15 controls), and
-      a larger pons and whole brainstem at 7 Tesla (10 patients and 10 controls). The papers do not
-      say whether they share patients, and none of these results has been repeated by an
-      independent group.
-    sources: [pmid:31671321, pmid:30497131, pmid:38347875, pmid:36937672]
+      Other controlled studies from the same group as the level 2 study, using different
+      measures, also report brainstem differences: weaker connections between brainstem regions
+      during a task (45 patients meeting the Fukuda definition, which does not require
+      post-exertional malaise, and 27 controls), a lower T1-weighted MRI signal in a brainstem
+      region (43 patients meeting the Fukuda definition and 27 controls), weaker connections
+      between the pons and the cerebellum during a task (31 patients meeting the Canadian or
+      International criteria and 15 controls), and a larger pons and whole brainstem at 7 Tesla
+      (10 patients and 10 controls). None of these results has been repeated by an independent
+      group.
+    sources: ['pmid:31671321', 'pmid:30497131', 'pmid:38347875', 'pmid:36937672']
   - text: >-
       The card is not at level 3 because no independent group has found the same result in a separate
       cohort. A study from Newcastle, UK, with no shared authors, of 42 patients meeting the Fukuda
@@ -164,7 +164,22 @@ level_reason:
       ME/CFS and 23 controls found no difference in white matter structure.
     sources: [pmid:25353054, pmid:29021956, pmid:15955487, pmid:37331007]
 # Null for now, pending FOUNDER QUESTIONS 1 (42539798) and 2 (40624094) in the header.
-contested: null
+contested:
+  rungs: [2]
+  reason:
+    - text: >-
+        The level 2 finding rests on one study of 18 patients meeting the International
+        Consensus Criteria and 26 healthy controls, which found lower axial and mean diffusivity
+        in a midbrain and pons cluster. A later controlled study from a different group
+        (University of the Sunshine Coast), of 43 patients with an infection-triggered onset,
+        diagnosed as consistent with the Canadian Consensus Criteria, and 43 matched healthy
+        controls, found higher axial diffusivity in patients in several tracts that pass through
+        the brainstem, including the cerebellar peduncles, the corticospinal tract and the left
+        medial lemniscus, and no significant difference in mean diffusivity. The two studies
+        used different methods (a voxel-based analysis and a tract-based analysis), and the
+        tracts overlap only partly, so the conflict is partial. The rung is therefore marked
+        contested.
+      sources: ['pmid:40624094', 'pmid:34355438']
 badges:
   diagnostic_marker:
     value: false
@@ -426,7 +441,7 @@ studies:
     n_controls: 43
     measures_pem: false
     preregistered: null  # registered (ACTRN12622001095752) with a protocol paper; whether this analysis was prespecified is not stated
-    role: context  # FOUNDER QUESTION 2: does it contradict rung 2 (34355438)?
+    role: contradicts
     direction: mixed  # axial diffusivity higher in post-infectious patients; lower in the corpus callosum in gradual-onset patients
     group: Shan ZY, Thompson Institute, University of the Sunshine Coast, Australia (same cohort as 41834684)
     finding: >-
@@ -573,19 +588,6 @@ links:
       breathing difficulty in the patients. The score was low on average in the patients, and the correlations
       were not corrected for multiple comparisons. The group is small and the finding is unreplicated.
     sources: [pmid:36937672]
-  - to: symptom:cognitive-impairment
-    support: associated
-    text: >-
-      A study of n=16 of 18 patients meeting the International criteria (two were left out of this analysis) and
-      26 healthy controls found that the relation between diffusion MRI measures and a self-reported information
-      processing score (a 1 to 10 rating of difficulty processing information) differed from that in controls. A
-      study at 7 Tesla of n=29 patients meeting the Canadian criteria (17 of them also the International criteria)
-      found that the volume of one hippocampal subfield (left CA4 body) was larger in patients who rated their
-      impaired concentration (a five-point severity rating) as more severe (r = 0.41). Both measures are self-
-      ratings, not cognitive tests. The two studies are from the same research group, and whether their patients
-      overlap is not stated; the correction for multiple comparisons in the second study applied to the group
-      comparisons, not to the correlations. Small and unreplicated.
-    sources: [pmid:34355438, pmid:39804864]
   - to: symptom:sleep-disturbance
     support: associated
     text: >-
@@ -622,5 +624,5 @@ links:
       symptoms including pain (data not shown); it did not measure brain volumes. Small and unreplicated.
     sources: [pmid:36937672, pmid:39804864, pmid:35355311, pmid:34975370]
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit
