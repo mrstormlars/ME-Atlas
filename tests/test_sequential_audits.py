@@ -180,6 +180,7 @@ def test_the_invalid_copy_counts_as_an_audit_record_for_the_guard_and_correction
     assert "correction-plan" in capsys.readouterr().err
     assert pub.publish() == 1  # the same draft is not audited again
     assert path.with_name(path.stem + ".invalid-2.yaml").is_file()
+    assert Corr(pub, pub.dir).pre_review(folder=pub.dir / "c") == 0
     plan = pub.main("correction-plan", SLUG, "--out", str(pub.dir / "c"))
     assert plan == 0
     text = (pub.dir / "c" / "correction-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
@@ -289,6 +290,7 @@ def test_the_round_count_reads_trails_with_and_without_the_new_keys(env: Env, tm
 def test_correction_plan_presents_a_single_reject_card_like_any_other(pub: Pub):
     pub.audits_of_card(whole("reject"), None)
     assert pub.publish() == 0
+    assert Corr(pub, pub.dir).pre_review(folder=pub.dir / "c") == 0
     assert pub.main("correction-plan", SLUG, "--out", str(pub.dir / "c")) == 0
     text = (pub.dir / "c" / "correction-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
     assert f"### {CLEAN_FIRST}" in text and "- decision: reject" in text and CLEAN_SECOND not in text
@@ -298,11 +300,13 @@ def test_correction_plan_labels_an_invalid_record_and_shows_its_errors_when_the_
     pub.audits.mkdir()
     name = f"{PUB_DATE}-{SLUG}-invalid.yaml"
     (pub.audits / name).write_text(yaml.safe_dump({"card": SLUG, "validation_errors": ["quote not found"]}), "utf-8")
+    assert Corr(pub, pub.dir).pre_review(folder=pub.dir / "c") == 0
     assert pub.main("correction-plan", SLUG, "--out", str(pub.dir / "c")) == 0
     text = (pub.dir / "c" / "correction-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
     assert f"### {name}" in text and "failed validation twice" in text and "quote not found" in text
     other = pub.dir / "d"
     (pub.audits / name).write_text(yaml.safe_dump({"card": SLUG}), encoding="utf-8")
+    assert Corr(pub, pub.dir).pre_review(folder=other) == 0
     assert pub.main("correction-plan", SLUG, "--out", str(other)) == 0
     text = (other / "correction-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
     assert f"### {name}" in text and "failed validation twice" in text and "Validation errors" not in text
@@ -390,7 +394,7 @@ def test_card_review_plan_refuses_without_checks_review_or_a_rejected_first_atte
     assert card_review_plan(corr) == 1 and "no valid review" in capsys.readouterr().err
     assert corr.review("reject") == 0
     assert card_review_plan(corr) == 1 and "reviewer rejected" in capsys.readouterr().err
-    assert not (corr.dir / "card-review-context").exists()
+    assert not (corr.dir / "card-review-context" / f"{SLUG}-C1.md").exists()
 
 
 def test_card_review_plan_refuses_a_revised_attempt_when_the_first_was_not_rejected(corr: Corr, capsys):
@@ -400,7 +404,7 @@ def test_card_review_plan_refuses_a_revised_attempt_when_the_first_was_not_rejec
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps({"passed": True}), encoding="utf-8")
     assert card_review_plan(corr, "--revised") == 1
-    assert not (corr.dir / "card-review-context").exists()
+    assert not (corr.dir / "card-review-context" / f"{SLUG}-C1-revised.md").exists()
 
 
 def test_record_review_validates_the_card_review_file(corr: Corr, capsys):

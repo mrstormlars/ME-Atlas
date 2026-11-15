@@ -51,8 +51,29 @@ class Corr:
     def main(self, *argv: str) -> int:
         return pipeline.main([*argv, *self.env.dir_args], fulltext=_loader(), out=self.env.out.append)
 
-    def plan(self) -> int:
-        return self.main("correction-plan", SLUG, "--out", str(self.dir))
+    def pre_review(
+        self, verdict: str = "accept", k: int = 1, folder: Path | None = None, findings: list | None = None
+    ) -> int:
+        """The whole-card review of the unchanged draft: card-review-plan --pre, the reviewer's file, record-review."""
+        folder = folder or self.dir
+        if code := self.main("card-review-plan", SLUG, "--pre", "--round", f"C{k}", "--out", str(folder)):
+            return code
+        path = folder / "review" / f"{SLUG}-card-C{k}-pre.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if findings is None:
+            findings = [] if verdict == "accept" else [{"operation": None, "severity": "must_fix", "problem": "P."}]
+        path.write_text(
+            json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
+        )
+        args = ["record-review", SLUG, "--card-review", "--pre", "--round", f"C{k}", "--run-dir", str(folder)]
+        return self.main(*args)
+
+    def plan(self, folder: Path | None = None) -> int:
+        """The pre-drafting review (an accept, unless one is recorded already) and then correction-plan."""
+        folder = folder or self.dir
+        if not (folder / "review" / f"{SLUG}-card-C1-pre.json").exists() and self.pre_review(folder=folder) != 0:
+            return 1  # the pre-drafting review was refused
+        return self.main("correction-plan", SLUG, "--out", str(folder))
 
     def write_ops(self, data: dict | None = None, attempt: str = "") -> Path:
         path = self.dir / "ops" / f"{SLUG}-rC1{attempt}.json"
@@ -476,8 +497,9 @@ def test_publish_after_a_correction_publishes_the_corrected_text_and_writes_the_
         f"{PUB_DATE}-{SLUG}.yaml",
     ]
     trail = corr.trail()
-    keys = ["card", "round", "answered", "draft_sha256", "operations", "checks", "review", "card_review", "audits_run"]
-    assert list(trail) == keys
+    keys = ["card", "round", "answered", "draft_sha256", "pre_card_review", "operations", "checks", "review"]
+    assert list(trail) == [*keys, "card_review", "audits_run"]
+    assert trail["pre_card_review"] == {"verdict": "accept", "findings": []}
     assert trail["card_review"] == {"verdict": "accept", "findings": []}
     assert trail["audits_run"] == [f"{PUB_DATE}-{SLUG}-C1.yaml", f"{PUB_DATE}-{SLUG}-C1-second.yaml"]
     assert trail["card"] == SLUG and trail["round"] == 1
