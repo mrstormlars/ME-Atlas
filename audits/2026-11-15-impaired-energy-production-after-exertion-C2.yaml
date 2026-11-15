@@ -1,0 +1,71 @@
+card: impaired-energy-production-after-exertion
+decision: reject
+parts:
+  - decision_part: "contested.rungs and contested_reason[3]: the card marks only rung 3 contested and states that rung 2 (the 84-patient CCC study) is not contested, while it admits that the records do not settle whether the New York cohort met Fukuda or the 2015 IOM definition. The New York paper's own sentence says the patients met 'both' definitions but names only one, and a companion paper on what appears to be the same cohort names IOM 2015. If IOM applies, the New York study (controlled, 53 maximal-effort patients against 84, more than half) is of comparable quality to the rung 2 study and contradicts it, so rung 2 would also be contested. The records do not let the uncontested status of rung 2 be established, so the contested mark as set is not supported."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42212259
+        quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+      - source: pmid:42212259
+        quote: "Forty-seven women and 11 men with ME/CFS were included in the study."
+      - source: pmid:41293716
+        quote: "The patients with ME/CFS were between the ages of 25 and 60 years and met the 2015 IOM case definition (22)."
+      - source: pmid:41293716
+        quote: "The study included 57 patients with ME/CFS (F:M = 46:11) with an average age of 38.6 ± 9.6 years and a mean BMI of 24.1 ± 3.4 and 25 sedentary controls (F:M = 20:5)"
+      - source: pmid:41293716
+        quote: "There was no significant difference in the Godin Leisure-Time Exercise Questionnaire between the two groups (ME/CFS: 27.7 ± 35.5; Controls: 13.5 ± 14.4; p = 0.22)"
+      - source: pmid:42212259
+        quote: "The weekly leisure time activity score was 27.7 ± 35.5 in the ME/CFS group"
+      - source: pmid:42212259
+        quote: "Five ME/CFS and six sedentary controls did not meet the American College of Sports Medicine (ACSM) criteria."
+      - source: pmid:42212259
+        quote: "For ME/CFS and CON subjects, there were no significant changes in Peak VO2 between Day 1 and Day 2 studies"
+      - source: pmid:42212259
+        quote: "This lack of effort on Day 2 testing could explain the apparent decrement in VO2max noted."
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+    class: decisive
+  - decision_part: "Level 3 itself: an independent group (Amsterdam, Fukuda) found the same second-day fall against controls as the 84-patient CCC study, so rung 3 is reached; this part does not object."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:38965566
+        quote: "Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2 with significant declines at peak exertion in work, exercise time"
+      - source: pmid:20937116
+        quote: "At the anaerobic threshold the group of patients performed worse and the controls improved."
+      - source: pmid:20937116
+        quote: "All patients fulfilled the criteria of Fukuda et al [1] for CFS/ME and reported the start of symptoms after an infectious disease."
+    class: none
+  - decision_part: "Rung 3 contested through the Amsterdam study: the New York study has the same Fukuda-based definition at least, a control group and more patients, and found no second-day change; this part does not object."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:20937116
+        quote: "Female patients (n = 15) and controls (n = 15) performed a cardiopulmonary exercise test (CPET) by cycling at a continuously increased work rate till maximal exertion."
+      - source: pmid:42212259
+        quote: "Similarly, VO2VT and VE/VCO2 slopes were not significantly different between the ME/CFS patients and CON, and on Day 2, they did not show any differences within or between groups."
+    class: none
+  - decision_part: "Badge explains_pem set to no: no study on the card relates the second-day fall to symptoms after exertion in the same patients; this part does not object."
+    rubric: "a measured change that is itself the hypothesised abnormality (for example a fall in oxygen use on the second test) does not on its own explain PEM."
+    evidence:
+      - source: pmid:31161646
+        quote: "Although VO2peak decreased significantly in patients, the absolute change was too small, in our opinion, to indicate any major change in exercise tolerance or explain PEM."
+      - source: pmid:36984572
+        quote: "Detailed exercise test results of the 2-day CPET protocol will be reported separately."
+    class: none
+  - decision_part: "Badge diagnostic_marker set to no: classification was tested only within each study's own cohort; this part does not object."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:23813081
+        quote: "Follow-up classification analysis differentiated between groups with an overall accuracy of 95.1%."
+      - source: pmid:42212259
+        quote: "The data do not support using the 2-day CPET protocol to define PEM or disability."
+    class: none
+  - decision_part: "Link to neuroinflammation at step proposed, sourced to a peer-reviewed systematic review; this part does not object."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:42051540
+        quote: "First, mitochondrial dysfunction and metabolic abnormalities may act as potential initiating factors in PEM, manifesting as impaired ATP synthesis, overproduction of reactive oxygen species (ROS), and the accumulation of metabolic byproducts."
+      - source: pmid:42051540
+        quote: "Subsequently, peripheral inflammation may be transmitted to the central nervous system through disruption of the blood-brain barrier and vagal nerve pathways, activating glial cells and initiating neuroinflammation."
+    class: none
+reasons_summary: "Level 3 with rung 3 contested is supported, but the card calls rung 2 uncontested although the records leave open whether the contradicting New York cohort met the IOM 2015 definition, which would make it comparable to the rung 2 study."
+would_change: "A record that settles which case definition the New York cohort (pmid:42212259) met, for example a correction or statement from its authors, would settle whether rung 2 is contested; if it is Fukuda-modified only, the contested mark as drafted would stand. Not a ground for this decision: the cached full text of pmid:38965566 is one line too long for the reading tool in this run, so the statements in level_reason[6] about how that study handled effort on the second test (keeping patients who were maximal only on the first test, the authors' reading of such cases, a similar heart-rate-reserve fall in controls) were not checked here beyond what pmid:42212259 quotes from it. No drafting reasoning, review findings or earlier audit verdict was handed to this auditor."
