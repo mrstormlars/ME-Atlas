@@ -17,13 +17,30 @@ from pathlib import Path
 import pytest
 import yaml
 from test_audit import CITED
-from test_pipeline import SLUG, Env
+from test_pipeline import SLUG, SPEC, Env
 from test_publish_card import PUB_DATE, Pub, whole
 
 from me_atlas import cards, pipeline
 from me_atlas.operations import parse_ops
 
 LATER = "2026-11-20"
+# what the existing correction tests change, so that the guard of B3 lets their operations through; the tests of the
+# guard itself name tighter targets
+BROAD_TARGETS = [
+    "core_claim",
+    "level",
+    "contested",
+    "contested_reason[0]",
+    "contested_reason[1]",
+    "level_reason[0]",
+    "level_reason[1]",
+    "subgroups[0]",
+    "early_signals[0]",
+    "badges.diagnostic_marker",
+    "badges.explains_pem",
+    "links[0]",
+    "studies[pmid:90000100]",
+]
 CONTESTED_LAST = {"op": "remove_paragraph", "field": "contested.reason", "index": 1}
 
 
@@ -52,7 +69,12 @@ class Corr:
         return pipeline.main([*argv, *self.env.dir_args], fulltext=_loader(), out=self.env.out.append)
 
     def pre_review(
-        self, verdict: str = "accept", k: int = 1, folder: Path | None = None, findings: list | None = None
+        self,
+        verdict: str = "accept",
+        k: int = 1,
+        folder: Path | None = None,
+        findings: list | None = None,
+        targets: list[str] | None = None,
     ) -> int:
         """The whole-card review of the unchanged draft: card-review-plan --pre, the reviewer's file, record-review."""
         folder = folder or self.dir
@@ -64,10 +86,34 @@ class Corr:
             findings = (
                 []
                 if verdict == "accept"
-                else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "P."}]
+                else [
+                    {
+                        "operation": None,
+                        "severity": "must_fix",
+                        "class": "decisive",
+                        "targets": ["core_claim"],
+                        "problem": "P.",
+                    }
+                ]
             )
+        cfg = pipeline.Config(
+            folder, self.env.cards, self.env.drafts, self.env.cache, SPEC, self.env.pipeline, None, self.audits
+        )
+        audit_targets = [
+            {"record": name, "part": i, "targets": targets or BROAD_TARGETS}
+            for name, i, _part, _decision in pipeline.objecting_audit_parts(cfg, SLUG)
+        ]
         path.write_text(
-            json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
+            json.dumps(
+                {
+                    "card": SLUG,
+                    "paper": None,
+                    "verdict": verdict,
+                    "findings": findings,
+                    "audit_targets": audit_targets,
+                }
+            ),
+            encoding="utf-8",
         )
         args = ["record-review", SLUG, "--card-review", "--pre", "--round", f"C{k}", "--run-dir", str(folder)]
         return self.main(*args)
@@ -86,6 +132,8 @@ class Corr:
         return path
 
     def apply(self, data: dict | None = None) -> int:
+        if not (self.dir / "review" / f"{SLUG}-card-C1-pre.json").exists():
+            self.pre_review()  # the targets the guard of apply checks against (refused when the round is not allowed)
         path = self.write_ops(data)
         return self.main("apply", SLUG, str(path), "--round", "C1", "--run-dir", str(self.dir))
 
@@ -95,7 +143,15 @@ class Corr:
         findings = (
             []
             if verdict == "accept"
-            else [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+            else [
+                {
+                    "operation": 0,
+                    "severity": "must_fix",
+                    "class": "decisive",
+                    "targets": ["core_claim"],
+                    "problem": "A problem.",
+                }
+            ]
         )
         path.write_text(json.dumps({"card": SLUG, "verdict": verdict, "findings": findings}), encoding="utf-8")
         return self.main("record-review", SLUG, "--round", "C1", "--run-dir", str(self.dir))
@@ -108,7 +164,15 @@ class Corr:
         findings = (
             []
             if verdict == "accept"
-            else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+            else [
+                {
+                    "operation": None,
+                    "severity": "must_fix",
+                    "class": "decisive",
+                    "targets": ["core_claim"],
+                    "problem": "A problem.",
+                }
+            ]
         )
         path.write_text(
             json.dumps({"card": SLUG, "paper": None, "verdict": verdict, "findings": findings}), encoding="utf-8"
@@ -586,7 +650,14 @@ def test_a_review_reject_holds_the_card_back_and_the_trail_records_the_finding(c
     assert corr.trail()["review"] == {
         "verdict": "reject",
         "findings": [
-            {"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+            {
+                "operation": 0,
+                "severity": "must_fix",
+                "class": "decisive",
+                "targets": ["core_claim"],
+                "problem": "A problem.",
+                "fix": None,
+            }
         ],
     }
 

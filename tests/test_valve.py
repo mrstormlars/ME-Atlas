@@ -77,6 +77,7 @@ def finding(klass: str | None = "wording", target: str | None = "contested_reaso
     }
     if klass is not None:
         data["class"] = klass
+    data["targets"] = [target or "core_claim"]
     if target is not None:
         data["target"] = target
     return data | over
@@ -143,7 +144,10 @@ def test_a_must_fix_of_the_whole_card_review_needs_a_class_but_the_review_before
     pre.write_text(
         json.dumps(
             json.loads(pre.read_text(encoding="utf-8"))
-            | {"findings": [{"operation": None, "severity": "must_fix", "problem": "P."}], "verdict": "reject"}
+            | {
+                "findings": [{"operation": None, "severity": "must_fix", "targets": ["core_claim"], "problem": "P."}],
+                "verdict": "reject",
+            }
         ),
         encoding="utf-8",
     )

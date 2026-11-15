@@ -10,8 +10,8 @@ Command line::
     uv run python -m me_atlas.pipeline apply <slug> <ops file> [--round 1|2|L|C<k>]
     uv run python -m me_atlas.pipeline record-review <slug> <pmid> [--round 1|2|L|C<k>]
     uv run python -m me_atlas.pipeline correction-plan <slug> --out DIR
-    uv run python -m me_atlas.pipeline card-review-plan <slug> --round C<k> [--pre | --revised | --revised2] --out DIR
-    uv run python -m me_atlas.pipeline record-review <slug> --card-review --round C<k> [--pre | --revised | --revised2]
+    uv run python -m me_atlas.pipeline card-review-plan <slug> --round C<k> [--pre | --revised[2-4]] --out DIR
+    uv run python -m me_atlas.pipeline record-review <slug> --card-review --round C<k> [--pre | --revised[2-4]]
         --run-dir DIR
     uv run python -m me_atlas.pipeline audit-plan <slug> <pmid> | --card <slug> [--out DIR]
     uv run python -m me_atlas.pipeline record-audit <slug> <pmid> [--second] | --card <slug> --file PATH
@@ -80,10 +80,20 @@ MAX_ROUNDS = 2
 REDRAFT = "L"
 # The correction of a held-back draft (rounds C1, C2, ...): at most this many rounds per card (contract A3).
 MAX_CORRECTION_ROUNDS = 1
-# A logged exception for two cards (DECISIONS 2026-11-15): both stranded on the sequence of the 2026-11-14 path, not on
-# their content, so each gets round C2 under the new path. Not a general reopen mechanism: every other slug keeps
-# MAX_CORRECTION_ROUNDS.
-REOPENED_ROUNDS = {"oxidative-nitrosative-stress": 2, "small-fibre-neuropathy": 2}
+# Logged exceptions (DECISIONS 2026-11-15: two cards stranded on the sequence of the 2026-11-14 path, each gets round
+# C2; DECISIONS 2026-11-15/16: the seven last held-back drafts get one more round, `oxidative-nitrosative-stress` its
+# third). Not a general reopen mechanism: every other slug keeps MAX_CORRECTION_ROUNDS.
+REOPENED_ROUNDS = {
+    "oxidative-nitrosative-stress": 3,
+    "small-fibre-neuropathy": 2,
+    # DECISIONS 2026-11-15/16 ("one new round for each of the seven"): one more round each, under the new path.
+    "mast-cell-activation": 2,
+    "impaired-energy-production-after-exertion": 2,
+    "brain-and-brainstem-mri-changes": 2,
+    "orthostatic-intolerance-cerebral-blood-flow": 2,
+    "hpa-axis-cortisol": 2,
+    "herpesvirus-reactivation": 2,
+}
 # The safety valve for wording-only findings (DECISIONS 2026-11-15, "A safety valve for wording-only findings"): the
 # stages of a correction attempt that can open it, in order. A key names the valve of one stage of one attempt
 # (``correction-review``, ``card-review-revised``, ``audit``): the audits belong to the last attempt, so ``audit`` has
@@ -93,9 +103,13 @@ VALVE_STAGES = ("correction-review", "card-review", "audit")
 # records of round C1 predate the classification, so a card-reviewer classifies them once; if every finding is wording,
 # the audit-stage valve may run on that closed round. The value is the round. No other slug can use this.
 CLASSIFICATION_EXCEPTION = {"orthostatic-intolerance-cerebral-blood-flow": 1}
-# The attempts of a correction round, in order: the first, one revised attempt after a reject of one kind (correction
-# review or whole-card review), one more after a reject of the other kind. Tags of files: C1, C1-revised, C1-revised2.
-ATTEMPT_SUFFIXES = ("", "-revised", "-revised2")
+# The attempts of a correction round, in order: the first, then up to MAX_REVISIONS revised attempts, each after a
+# reject at the correction review or the whole-card review (DECISIONS 2026-11-15/16: while the decisive findings fall).
+# Tags of files: C1, C1-revised, C1-revised2, ... C1-revised<MAX_REVISIONS>.
+MAX_REVISIONS = 4
+ATTEMPT_SUFFIXES = tuple("" if i == 0 else "-revised" if i == 1 else f"-revised{i}" for i in range(MAX_REVISIONS + 1))
+# The regex group for the suffix of an attempt tag or file name (the first attempt has none).
+ATTEMPT_RE = "(?:" + "|".join(re.escape(x) for x in ATTEMPT_SUFFIXES[1:]) + ")?"
 Round_ = int | str
 # A rubric excerpt in an audit record must be at least this long after normalisation (contract decision D5).
 MIN_RUBRIC_CHARS = 20
@@ -121,6 +135,19 @@ FREE_TEXT_TARGET = re.compile(
 )
 
 
+# What a finding of the correction path names, beyond the free-text items: the structured parts of a card (DECISIONS
+# 2026-11-15/16: a correction touches only what a finding names). ``studies[<id>]`` alone, or with a field.
+STRUCTURED_TARGET = re.compile(
+    r"^(?:level|contested|badges\.(?:diagnostic_marker|explains_pem)|layer|links\[\d+\]"
+    r"|studies\[(?:pmid:\d+|doi:\S+)\](?:\.[a-z_]+)?)$"
+)
+
+
+def valid_target(target: str) -> bool:
+    """Whether ``target`` is one a finding of the correction path may name (free text, or a structured part)."""
+    return FREE_TEXT_TARGET.match(target) is not None or STRUCTURED_TARGET.match(target) is not None
+
+
 def is_correction_round(n: object) -> bool:
     """Whether a round value is a correction round: ``C1``, ``C2``, ..."""
     return isinstance(n, str) and re.fullmatch(r"C[1-9]\d*", n) is not None
@@ -131,20 +158,36 @@ def max_correction_rounds(slug: str) -> int:
     return REOPENED_ROUNDS.get(slug, MAX_CORRECTION_ROUNDS)
 
 
-def attempt_tag(n: str, revised: bool = False, revised2: bool = False) -> str:
-    """The tag of the attempt of round ``n`` (``C1``): ``C1``, ``C1-revised`` or ``C1-revised2``."""
-    if revised and revised2:
-        raise PipelineError("--revised and --revised2 are two different attempts: give one")
-    return f"{n}-revised2" if revised2 else f"{n}-revised" if revised else n
+def attempt_tag(n: str, revision: int = 0) -> str:
+    """The tag of attempt ``revision`` (0 = the first) of round ``n`` (``C1``): ``C1``, ``C1-revised``,
+    ``C1-revised2``, ... ``C1-revised<MAX_REVISIONS>``."""
+    if not 0 <= revision <= MAX_REVISIONS:
+        raise PipelineError(f"a round has at most {MAX_REVISIONS} revised attempts, not {revision}")
+    return n + ATTEMPT_SUFFIXES[revision]
 
 
 def _attempt_flag(tag: str) -> str:
     """The command-line flag that names attempt ``tag`` (with a leading space), empty for the first attempt."""
-    return " --revised2" if tag.endswith("-revised2") else " --revised" if tag.endswith("-revised") else ""
+    found = re.search(r"-(revised\d?)$", tag)
+    return f" --{found.group(1)}" if found else ""
+
+
+def _add_revision_flags(parser: argparse.ArgumentParser, what: str) -> None:
+    """``--revised``, ``--revised2``, ... ``--revised<MAX_REVISIONS>`` (at most one), read as ``args.revision``."""
+    group = parser.add_mutually_exclusive_group()
+    for i in range(1, MAX_REVISIONS + 1):
+        group.add_argument(
+            ATTEMPT_SUFFIXES[i].replace("-", "--", 1),
+            dest="revision",
+            action="store_const",
+            const=i,
+            default=0,
+            help=f"{what}: revised attempt {i} of the round",
+        )
 
 
 def correction_number(n: str) -> int:
-    """The k of ``C<k>`` (also of ``C<k>-revised``, ``C<k>-revised2``, ``C<k>-pre`` and ``...-attempt1``)."""
+    """The k of ``C<k>`` (also of ``C<k>-revised<i>``, ``C<k>-pre`` and ``...-attempt1``)."""
     match = re.match(r"C([1-9]\d*)", n)
     assert match is not None, n
     return int(match.group(1))
@@ -229,6 +272,16 @@ class Finding(_Classified):
     severity: Literal["must_fix", "advisory"]
     problem: NonEmptyStr
     fix: NonEmptyStr | None = None
+    # The parts of the card the finding is about (the correction path: a must_fix needs them, `record-review`).
+    targets: list[NonEmptyStr] | None = None
+
+    @model_validator(mode="after")
+    def _valid_targets(self) -> Finding:
+        if bad := [t for t in self.targets or [] if not valid_target(t)]:
+            raise ValueError(
+                f"targets {bad!r} are not valid targets (docs/pipeline.md, 'Correcting a held-back draft')"
+            )
+        return self
 
     @model_validator(mode="after")
     def _no_none_class(self) -> Finding:
@@ -238,13 +291,27 @@ class Finding(_Classified):
 
 
 def _finding_dicts(findings: Sequence[Finding]) -> list[dict[str, Any]]:
-    """Findings as written to a trail: the class and the target only when the finding has them."""
+    """Findings as written to a trail: the class, target and targets only when the finding has them."""
     out = []
     for f in findings:
         d = f.model_dump(mode="json", by_alias=True)
-        extra = {k: v for k in ("class", "target") if (v := d.pop(k)) is not None}
+        extra = {k: v for k in ("class", "target", "targets") if (v := d.pop(k)) is not None}
         out.append(d | extra)
     return out
+
+
+class AuditTargets(_M):
+    """The targets of one objecting audit part, in the numbering of the draft (the ``--pre`` review fills them)."""
+
+    record: NonEmptyStr
+    part: Annotated[int, Field(strict=True, ge=0)]
+    targets: Annotated[list[NonEmptyStr], Field(min_length=1)]
+
+    @model_validator(mode="after")
+    def _valid_targets(self) -> AuditTargets:
+        if bad := [t for t in self.targets if not valid_target(t)]:
+            raise ValueError(f"targets {bad!r} are not valid targets")
+        return self
 
 
 class ReviewFile(_M):
@@ -252,6 +319,7 @@ class ReviewFile(_M):
     paper: StudyId | None = None  # None only in the review of a whole-card redraft (round L)
     verdict: Literal["accept", "reject"]
     findings: list[Finding]
+    audit_targets: list[AuditTargets] | None = None  # only the `--pre` review of a correction round
     # The reviewer's one-line reason to list the paper under "Not on the card" in the card header (optional).
     not_on_card: NonEmptyStr | None = None
 
@@ -1296,6 +1364,128 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     return found
 
 
+def objecting_audit_parts(cfg: Config, slug: str) -> list[tuple[str, int, AuditPart, str]]:
+    """The objecting parts of the valid whole-card audit records the correction answers: (record file name, part
+    index, part, the decision of the record). Objecting = the record does not accept and the part is not classed
+    ``none`` (a part that supports the card). An invalid or unreadable record has no parts."""
+    found: list[tuple[str, int, AuditPart, str]] = []
+    for path in whole_card_audit_files(cfg, slug):
+        if path.name.endswith("-invalid.yaml"):
+            continue
+        try:
+            audit = AuditRecord.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")))
+        except (OSError, yaml.YAMLError, ValidationError):
+            continue
+        if audit.decision == "accept":
+            continue
+        found += [(path.name, i, part, audit.decision) for i, part in enumerate(audit.parts) if part.klass != "none"]
+    return found
+
+
+def _correction_op_targets(card: cards.Card, ops: OpsFile) -> tuple[list[str | None], dict[str, list[int]]]:
+    """The target of each operation of a correction, in the numbering of the draft ``card`` (an earlier
+    ``remove_paragraph`` does not shift a later index, as in `_valve_op_targets`), and for each paragraph field (the
+    translation-key prefix) and for ``links`` the draft indices still there after the operations. A correction never
+    adds a paragraph or a link, so that list maps the numbering of its applied text back to the draft's. An
+    operation that does not resolve (an index out of range, an unknown link) has the target None: applying it fails
+    by itself."""
+    present: dict[str, list[int]] = {}
+    links_left = list(range(len(card.links)))
+    targets: list[str | None] = []
+    for op in ops.operations:
+        target: str | None = None
+        if isinstance(op, (ReplaceParagraph, RemoveParagraph)):
+            prefix = _TARGET_PREFIX[op.field]
+            left = present.setdefault(prefix, list(range(len(_field_paras(card, op.field)))))
+            if op.index < len(left):
+                original = left[op.index]
+                target = prefix if op.field == "core_claim" else f"{prefix}[{original}]"
+                if isinstance(op, RemoveParagraph) and op.field != "core_claim":
+                    del left[op.index]
+        elif isinstance(op, UpdateStudy):
+            target = f"studies[{op.id}]"
+        elif isinstance(op, RemoveLink):
+            index = next((i for i, link in enumerate(card.links) if link.to == op.to), None)
+            if index is not None:
+                target = f"links[{index}]"
+                if index in links_left:
+                    links_left.remove(index)
+        elif isinstance(op, Propose):
+            target = op.target if op.target in ("level", "contested") else f"badges.{op.target}"
+        targets.append(target)
+    return targets, present | {"links": links_left}
+
+
+_INDEXED_TARGET = re.compile(
+    r"^(core_claim|level_reason|contested_reason|subgroups|early_signals|badge_reasons\.\w+|links)\[(\d+)\](.*)$"
+)
+
+
+def _map_to_draft(target: str, survivors: dict[str, list[int]]) -> str | None:
+    """A target in the numbering of an attempt's applied text, in the draft's numbering; None when it names a
+    paragraph or link that is not in the draft's list (nothing is allowed then)."""
+    match = _INDEXED_TARGET.match(target)
+    if match is None or match.group(1) not in survivors:
+        return target
+    left, index = survivors[match.group(1)], int(match.group(2))
+    return f"{match.group(1)}[{left[index]}]{match.group(3)}" if index < len(left) else None
+
+
+def _finding_targets(review: ReviewFile | None) -> list[str]:
+    """The targets of the ``must_fix`` findings of a review."""
+    return [t for f in (review.findings if review else []) if f.severity == "must_fix" for t in f.targets or []]
+
+
+def pre_targets(review: ReviewFile | None) -> set[str]:
+    """What the audits and the step-0 review name, in the draft's numbering: the ``audit_targets`` of the ``--pre``
+    review and the targets of its ``must_fix`` findings."""
+    found = set(_finding_targets(review))
+    for entry in (review.audit_targets if review else None) or []:
+        found |= set(entry.targets)
+    return found
+
+
+def allowed_targets(cfg: Config, slug: str, tag: str, draft_card: cards.Card) -> set[str]:
+    """The targets a correction attempt ``tag`` may change, in the draft's numbering: those of the step-0 review and,
+    for a revised attempt, the targets of every ``must_fix`` finding of the reviews of the earlier attempts of the
+    round, mapped from that attempt's applied numbering back to the draft's."""
+    base = _round_base(tag)
+    allowed = pre_targets(_load_card_review(cfg, slug, f"{base}-pre"))
+    index = ATTEMPT_SUFFIXES.index(tag[len(base) :])
+    for earlier in (base + suffix for suffix in ATTEMPT_SUFFIXES[:index]):
+        r = _load_round(cfg, slug, "", earlier)
+        survivors = _correction_op_targets(draft_card, r.ops)[1] if r is not None and r.ops is not None else {}
+        for review in (r.review if r is not None else None, _load_card_review(cfg, slug, earlier)):
+            allowed |= {m for t in _finding_targets(review) if (m := _map_to_draft(t, survivors)) is not None}
+    return allowed
+
+
+def _target_permitted(op: Any, target: str, allowed: set[str]) -> bool:
+    """Whether a target a finding names permits operation ``op`` on ``target``: the target itself; for
+    ``update_study`` a target of one of its fields; for ``remove_link`` the link's reason; for a badge ``propose``
+    a paragraph of that badge's reason."""
+    if target in allowed:
+        return True
+    if isinstance(op, UpdateStudy):
+        return any(a.startswith(target + ".") for a in allowed)
+    if isinstance(op, RemoveLink):
+        return f"{target}.reason" in allowed
+    if isinstance(op, Propose) and target.startswith("badges."):
+        return any(a.startswith(f"badge_reasons.{op.target}[") for a in allowed)
+    return False
+
+
+def correction_target_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_card: cards.Card) -> list[str]:
+    """B3: the operations of attempt ``tag`` that change something no finding names (empty when none)."""
+    allowed = allowed_targets(cfg, slug, tag, draft_card)
+    targets, _survivors = _correction_op_targets(draft_card, ops)
+    return [
+        f"operations[{i}] changes {t}, which no finding names"
+        for i, (op, t) in enumerate(zip(ops.operations, targets, strict=True))
+        if t is not None and not _target_permitted(op, t, allowed)
+    ]
+
+
 def _draft_problem(cfg: Config, slug: str, base: str) -> str | None:
     """R8: the revised attempt applies to the draft the first attempt was applied to. Checked from what exists: the
     first attempt's operations applied to the draft must give its applied text, and a trail of the round in
@@ -1336,37 +1526,67 @@ def _load_card_review(cfg: Config, slug: str, tag: str) -> ReviewFile | None:
     return review if review.card == slug and review.paper is None else None
 
 
-def _reject_kind(cfg: Config, slug: str, tag: str) -> str | None:
-    """Why attempt ``tag`` was rejected: ``"correction review"``, ``"whole-card review"`` (the correction review
-    accepted, the whole-card review rejected), or None when it was not rejected (or has no valid review yet)."""
+Reject = tuple[str, int]  # (kind of reject, number of decisive must_fix findings)
+
+
+def _decisive_count(findings: Any) -> int:
+    """How many ``must_fix`` findings (``Finding`` objects or trail dicts) are ``decisive`` or have no class."""
+    count = 0
+    for f in findings or []:
+        severity, klass = (f.get("severity"), f.get("class")) if isinstance(f, dict) else (f.severity, f.klass)
+        count += severity == "must_fix" and klass in ("decisive", None)
+    return count
+
+
+def _reject(cfg: Config, slug: str, tag: str) -> Reject | None:
+    """How attempt ``tag`` was rejected: (``"correction review"``, decisive findings of that review), or
+    (``"whole-card review"``, ...) when the correction review accepted and the whole-card review rejected; None when
+    it was not rejected (or has no valid review yet, or the reject is wording only and goes through the valve)."""
     r = _load_round(cfg, slug, "", tag)
     if r is None or r.review is None:
         return None
     if r.review.verdict == "reject":
         if _review_valve_findings(r.review) is None:
-            return "correction review"
+            return "correction review", _decisive_count(r.review.findings)
         if not _valve_passed(cfg, slug, _valve_key("correction-review", tag)):
             return None  # a wording-only reject goes through the valve, not a revised attempt
     card_review = _load_card_review(cfg, slug, tag)
     if card_review is None or card_review.verdict != "reject":
         return None
-    return None if _review_valve_findings(card_review) is not None else "whole-card review"
+    if _review_valve_findings(card_review) is not None:
+        return None
+    return "whole-card review", _decisive_count(card_review.findings)
 
 
-def _revision_pending(kinds: list[str | None]) -> bool:
-    """The reject kinds of the attempts of a round so far (the last attempt last): the next attempt is open when the
-    last one was rejected and the revision of that kind was not used by an earlier attempt (one revision per kind)."""
-    return bool(kinds) and kinds[-1] is not None and kinds[-1] not in kinds[:-1] and len(kinds) < len(ATTEMPT_SUFFIXES)
+def _revision_state(rejects: Sequence[Reject | None]) -> tuple[bool, str | None]:
+    """The rejects of the attempts of a round so far (the last attempt last): (whether the next attempt is open, why
+    the round ends). Open when fewer than ``MAX_REVISIONS`` revisions exist and the last attempt was rejected, and
+    either no earlier attempt was rejected by the same review, or the decisive findings of this reject are fewer than
+    those of the most recent earlier reject of that review (DECISIONS 2026-11-15/16). The reason is None when the last
+    attempt was not rejected at all."""
+    if not rejects or rejects[-1] is None:
+        return False, None
+    kind, count = rejects[-1]
+    if len(rejects) - 1 >= MAX_REVISIONS:
+        return False, f"all {MAX_REVISIONS} revisions are used"
+    earlier = [r[1] for r in rejects[:-1] if r is not None and r[0] == kind]
+    if not earlier or count < earlier[-1]:
+        return True, None
+    return False, f"the decisive findings did not fall ({earlier[-1]}, then {count})"
+
+
+def _revision_pending(rejects: Sequence[Reject | None]) -> bool:
+    return _revision_state(rejects)[0]
 
 
 def _revision_problem(cfg: Config, slug: str, base: str, tag: str) -> str | None:
-    """Why attempt ``tag`` (``C1-revised`` or ``C1-revised2``) may not be made, or None: the attempts before it must
-    each have been rejected, each for a kind whose revision was not used yet."""
+    """Why attempt ``tag`` (``C1-revised``, ``C1-revised2``, ...) may not be made, or None: the attempts before it
+    must each have been rejected, and the decisive findings must have fallen at each reject of a kind seen before."""
     index = ATTEMPT_SUFFIXES.index(tag[len(base) :])
     earlier = [base + suffix for suffix in ATTEMPT_SUFFIXES[:index]]
-    kinds = [_reject_kind(cfg, slug, t) for t in earlier]
+    rejects = [_reject(cfg, slug, t) for t in earlier]
     for j, t in enumerate(earlier):
-        if kinds[j] is None:
+        if rejects[j] is None:
             review = _load_round(cfg, slug, "", t)
             if review is not None and review.review is not None and _review_valve_findings(review.review) is not None:
                 return f"the reject of {t} is wording only: it goes through the valve (`valve-apply`), not a revision"
@@ -1375,25 +1595,26 @@ def _revision_problem(cfg: Config, slug: str, base: str, tag: str) -> str | None
                 f"the attempt {tag} needs the {first} of round {base}, and it must say reject "
                 "(the correction review, or the whole-card review of that attempt)"
             )
-        if not _revision_pending(kinds[: j + 1]):
+        pending, why = _revision_state(rejects[: j + 1])
+        if not pending:
             return (
-                f"the revision after a {kinds[j]} reject of round {base} is already used: "
+                f"round {base} ends after the {rejects[j][0]} reject of {t} ({why}): "
                 f"the round ends with no audit, there is no attempt {tag}"
             )
     return None
 
 
 def _pending_flag(cfg: Config, slug: str, base: str) -> str | None:
-    """The flag of the revised attempt that round ``base`` is waiting for (``--revised``, ``--revised2``), or None
-    when the last attempt was not rejected, or was rejected for a kind whose revision is used."""
+    """The flag of the revised attempt that round ``base`` is waiting for (``--revised``, ``--revised2``, ...), or
+    None when the last attempt was not rejected, or the revision is not open (`_revision_state`)."""
     chain = _attempt_chain(cfg, slug, base)
-    if not _revision_pending([_reject_kind(cfg, slug, t) for t in chain]):
+    if not _revision_pending([_reject(cfg, slug, t) for t in chain]):
         return None
     return _attempt_flag(base + ATTEMPT_SUFFIXES[len(chain)]).strip()
 
 
 def _attempt_chain(cfg: Config, slug: str, base: str) -> list[str]:
-    """The attempts of round ``base`` that have an ops file, in order (``C1``, ``C1-revised``, ``C1-revised2``)."""
+    """The attempts of round ``base`` that have an ops file, in order (``C1``, ``C1-revised``, ...)."""
     chain: list[str] = []
     for suffix in ATTEMPT_SUFFIXES:
         if not cfg.ops_path(slug, None, base + suffix).is_file():
@@ -1402,20 +1623,17 @@ def _attempt_chain(cfg: Config, slug: str, base: str) -> list[str]:
     return chain
 
 
-def apply_correction_ops(
-    cfg: Config, slug: str, ops_path: Path, n: str, *, revised: bool = False, revised2: bool = False
-) -> dict[str, Any]:
-    """`apply --round C<k> [--revised|--revised2]`: apply a correction's operations, check them (A2, A4).
+def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revision: int = 0) -> dict[str, Any]:
+    """`apply --round C<k> [--revised[2-4]]`: apply a correction's operations, check them (A2, A4).
 
     Writes ``checks/<slug>-rC<k>.json`` and ``applied/<slug>-rC<k>/`` as for other rounds. At most two attempts after
     failed checks: a second is allowed only after a failed first one, whose ops and checks files are kept as
-    ``...-attempt1``. After a review reject the drafter gets one revised attempt (``--revised``, files
-    ``...-rC<k>-revised...``), which has its own check retry unless the first attempt's was used; after a reject of
-    the other review kind, one more (``--revised2``, files ``...-rC<k>-revised2...``). Each kind of reject (the
-    correction review, the whole-card review) opens a revision once. The draft in ``drafts/`` is never touched.
+    ``...-attempt1``. After a review reject the drafter gets a revised attempt (``--revised``, ``--revised2``, ...,
+    files ``...-rC<k>-revised<i>...``) while fewer than ``MAX_REVISIONS`` exist and the decisive findings fell since
+    the last reject of the same review (`_revision_state`). The draft in ``drafts/`` is never touched.
     """
     base = n
-    n = attempt_tag(base, revised, revised2)
+    n = attempt_tag(base, revision)
     k = correction_number(n)
     draft = cfg.drafts_dir / f"{slug}.yaml"
     if (cfg.cards_dir / f"{slug}.yaml").exists():
@@ -1461,7 +1679,9 @@ def apply_correction_ops(
         ops = parse_ops(_read_json(ops_path))
         if ops.card != slug:
             ops_errors.append(f"the ops file is for card '{ops.card}', not '{slug}'")
-        ops_errors += correction_ops_problems(ops, _load_card(draft).level)
+        draft_card = _load_card(draft)
+        ops_errors += correction_ops_problems(ops, draft_card.level)
+        ops_errors += correction_target_problems(cfg, slug, n, ops, draft_card)
     except (PipelineError, OperationError) as exc:
         ops_errors.append(str(exc))
     result: dict[str, Any] = {
@@ -1507,8 +1727,7 @@ def apply_ops_file(
     n: Round_,
     *,
     audit_file: Path | None = None,
-    revised: bool = False,
-    revised2: bool = False,
+    revision: int = 0,
 ) -> dict[str, Any]:
     """Validate and apply one ops file to a copy of the card; run the validator and the citations check.
 
@@ -1519,10 +1738,10 @@ def apply_ops_file(
     pair, enforces E4 (`redraft_ops_problems`) against the first audit's ``accepted_level`` and diffs the result
     against the card. A whole-card redraft names no paper (``audit_file`` is then the first audit's record).
     """
-    if (revised or revised2) and not is_correction_round(n):
-        raise PipelineError("--revised is only for a correction round (--round C<k>); so is --revised2")
+    if revision and not is_correction_round(n):
+        raise PipelineError("--revised, --revised2, ... are only for a correction round (--round C<k>)")
     if is_correction_round(n):
-        return apply_correction_ops(cfg, slug, ops_path, str(n), revised=revised, revised2=revised2)
+        return apply_correction_ops(cfg, slug, ops_path, str(n), revision=revision)
     redraft = n == REDRAFT
     pmid = _pmid_from_name(ops_path)
     ops: OpsFile | None = None
@@ -1654,6 +1873,38 @@ def apply_ops_file(
 # ---------------------------------------------------------------------------
 
 
+def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool) -> list[str]:
+    """B1, B2: every ``must_fix`` of a correction-path review carries ``targets`` (and a ``target`` is one of them);
+    the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other."""
+    problems = [
+        f"findings[{i}] is a must_fix without `targets`: name the parts of the card it is about (a non-empty list)"
+        for i, f in enumerate(review.findings)
+        if f.severity == "must_fix" and not f.targets
+    ]
+    problems += [
+        f"findings[{i}].target {f.target!r} is not one of its `targets`"
+        for i, f in enumerate(review.findings)
+        if f.target is not None and f.targets and f.target not in f.targets
+    ]
+    if not pre:
+        if review.audit_targets is not None:
+            problems.append("`audit_targets` belongs to the --pre review only")
+        return problems
+    expected = {(name, i) for name, i, _part, _decision in objecting_audit_parts(cfg, slug)}
+    seen: set[tuple[str, int]] = set()
+    for j, entry in enumerate(review.audit_targets or []):
+        key = (entry.record, entry.part)
+        if key not in expected:
+            problems.append(f"audit_targets[{j}] ({entry.record} part {entry.part}) is not an objecting audit part")
+        elif key in seen:
+            problems.append(f"audit_targets[{j}] repeats {entry.record} part {entry.part}")
+        seen.add(key)
+    problems += [
+        f"audit_targets has no entry for {name} part {i}: give its targets" for name, i in sorted(expected - seen)
+    ]
+    return problems
+
+
 def record_review(
     cfg: Config, slug: str, pmid: str | None, n: Round_, *, card_review: bool = False, pre: bool = False
 ) -> ReviewFile:
@@ -1690,12 +1941,14 @@ def record_review(
                 problems.append(
                     f"findings[{i}].operation {finding.operation} is out of range ({count} operation(s), from 0)"
                 )
-    if not pre and re.fullmatch(r"C[1-9]\d*(-revised2?)?", str(n)):  # a correction review: the valve needs the class
+    if not pre and re.fullmatch(rf"C[1-9]\d*{ATTEMPT_RE}", str(n)):  # a correction review: the valve needs the class
         problems += [
             f"findings[{i}] is a must_fix without `class`: say `decisive` or `wording` (and a `target` for wording)"
             for i, finding in enumerate(review.findings)
             if finding.severity == "must_fix" and finding.klass is None
         ]
+    if pre or re.fullmatch(rf"C[1-9]\d*{ATTEMPT_RE}", str(n)):
+        problems += _correction_review_target_problems(cfg, slug, review, pre)
     if problems:
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
     event = {"event": "record-review", "card": slug, "paper": review.paper, "round": n, "verdict": review.verdict}
@@ -3149,11 +3402,11 @@ def correction_trails(cfg: Config, slug: str) -> list[Path]:
 
 def _attempt_trails(cfg: Config, slug: str) -> dict[tuple[int, int], Path]:
     """The trail records of ``slug`` by (round k, attempt index): ``...-C<k>-correction.yaml`` is attempt 0,
-    ``...-correction-revised.yaml`` 1 and ``...-correction-revised2.yaml`` 2."""
-    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-C[1-9]\d*-correction(-revised2?)?\.yaml$")
+    ``...-correction-revised.yaml`` 1, ``...-correction-revised2.yaml`` 2, and so on."""
+    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-C[1-9]\d*-correction({ATTEMPT_RE})\.yaml$")
     found: dict[tuple[int, int], Path] = {}
     for path in _records_of_card(cfg, slug, pattern, whole_card=False):
-        suffix = re.search(r"-correction(-revised2?)?\.yaml$", path.name)
+        suffix = re.search(rf"-correction({ATTEMPT_RE})\.yaml$", path.name)
         assert suffix is not None
         found[(_trail_round(path), ATTEMPT_SUFFIXES.index(suffix.group(1) or ""))] = path
     return found
@@ -3165,8 +3418,8 @@ def _trail_round(path: Path) -> int:
     return int(match.group(1))
 
 
-def _trail_reject_kind(data: Any) -> str | None:
-    """`_reject_kind` read from a trail record: its review verdict and whole-card review verdict."""
+def _trail_reject(data: Any) -> Reject | None:
+    """`_reject` read from a trail record: its review verdict and whole-card review verdict."""
     review = data.get("review") if isinstance(data, dict) else None
     verdict = review.get("verdict") if isinstance(review, dict) else None
     card_review = data.get("card_review") if isinstance(data, dict) else None
@@ -3177,12 +3430,14 @@ def _trail_reject_kind(data: Any) -> str | None:
     }
     if verdict == "reject":
         if not _wording_only(review.get("findings")):
-            return "correction review"
+            return "correction review", _decisive_count(review.get("findings"))
         if not any(k.startswith("correction-review") for k in passed):
             return None  # a wording-only reject goes through the valve, not a revised attempt
         verdict = "accept"
     if verdict == "accept" and card_verdict == "reject":
-        return None if _wording_only(card_review.get("findings")) else "whole-card review"
+        if _wording_only(card_review.get("findings")):
+            return None
+        return "whole-card review", _decisive_count(card_review.get("findings"))
     return None
 
 
@@ -3190,12 +3445,12 @@ def correction_round_state(cfg: Config, slug: str) -> tuple[int, int | None]:
     """R7: (the number of correction rounds used, the number of an open round or None) from the trails in ``audits/``.
 
     A round is open while its last trail ends in a reject (correction review, or whole-card review after an accepted
-    correction review) whose revision is unused: each of the two kinds opens one revised attempt per round (P4), so a
-    reject of a kind an earlier attempt of the round was already rejected for closes the round. Otherwise the round is
-    used: accepted, failed checks (no review verdict: no revised attempt is possible), closed with one audit record
-    only (a first reject, S1) or none (S4). A round whose trails carry no ``pre_card_review`` was run under the
-    2026-11-14 rules, where any revised trail closes the round (and a trail without ``card_review`` or ``audits_run``
-    reads as before). A trail that does not let code decide counts as used.
+    correction review) that opens a revision (`_revision_state`): a further revised attempt is open while fewer than
+    ``MAX_REVISIONS`` exist and the decisive findings fell since the last reject of the same kind. Otherwise the
+    round is used: accepted, failed checks (no review verdict: no revised attempt is possible), closed with one
+    audit record only (a first reject, S1) or none (S4). A round whose trails carry no ``pre_card_review`` was run
+    under the 2026-11-14 rules, where any revised trail closes the round (and a trail without ``card_review`` or
+    ``audits_run`` reads as before). A trail that does not let code decide counts as used.
     """
     trails = _attempt_trails(cfg, slug)
     used, open_round = 0, None
@@ -3203,9 +3458,9 @@ def correction_round_state(cfg: Config, slug: str) -> tuple[int, int | None]:
         attempts = sorted(i for kk, i in trails if kk == k)
         data = [yaml.safe_load(trails[(k, i)].read_text(encoding="utf-8")) for i in attempts]
         legacy = not (isinstance(data[0], dict) and "pre_card_review" in data[0])
-        kinds = [_trail_reject_kind(d) for d in data]
+        rejects = [_trail_reject(d) for d in data]
         # an older round had one revised attempt, whatever the kind
-        pending = (kinds[-1] is not None and attempts == [0]) if legacy else _revision_pending(kinds)
+        pending = (rejects[-1] is not None and attempts == [0]) if legacy else _revision_pending(rejects)
         if pending:
             open_round = k
         else:
@@ -3246,6 +3501,8 @@ def _pre_review_lines(review: ReviewFile) -> list[str]:
         lines.append("- findings: none")
     for i, finding in enumerate(review.findings, 1):
         lines.append(f"- finding {i} ({finding.severity}): {finding.problem}")
+        if finding.targets:
+            lines.append(f"  - targets: {', '.join(finding.targets)}")
         if finding.fix:
             lines.append(f"  - fix: {finding.fix}")
     return lines
@@ -3315,6 +3572,15 @@ def build_correction_context(
         "",
         CORRECTION_LIMITS,
         "",
+        "Targets the findings name (draft numbering; the code refuses an operation on anything else):",
+        "",
+        *([f"- `{t}`" for t in sorted(pre_targets(pre_review))] or ["- (none recorded)"]),
+        "",
+        "A `replace_paragraph` or `remove_paragraph` changes `<field>[i]` (`core_claim` has no index); `update_study` "
+        "changes `studies[<id>]` (allowed by `studies[<id>]` or `studies[<id>].<field>`); `remove_link` changes "
+        "`links[i]`; a `propose` changes `level`, `contested` or `badges.<badge>` (also allowed by "
+        "`badge_reasons.<badge>[n]`). An operation on anything else is refused.",
+        "",
         "## 4. Cited records",
         "",
         *(records or ["The card cites no study.", ""]),
@@ -3333,6 +3599,9 @@ def build_correction_context(
         "",
         *(_pre_review_lines(pre_review) if pre_review is not None else ["(no review recorded)"]),
         "",
+        citations.author_facts_section(card, citations.CacheReader(cfg.cache_dir)).replace(
+            "## Author facts", "## 8. Author facts", 1
+        ),
     ]
     return "\n".join(parts)
 
@@ -3354,8 +3623,8 @@ def correction_plan(cfg: Config, slug: str, loader: FullTextLoader) -> Path:
     used, open_round = correction_round_state(cfg, slug)
     if open_round is not None:
         raise PipelineError(
-            f"round C{open_round} is open: the revised attempt is pending (apply it with `--revised` or "
-            "`--revised2`); a new round is not started"
+            f"round C{open_round} is open: the revised attempt is pending (apply it with the "
+            "`--revised...` flag it is waiting for); a new round is not started"
         )
     k = 1 + used
     if k > max_correction_rounds(slug):
@@ -3489,6 +3758,31 @@ def _cached_study_files(cfg: Config, study_id: str, reader: citations.CacheReade
     return [*lines, f"- full text: {text}"]
 
 
+def _pre_audit_target_lines(cfg: Config, slug: str) -> list[str]:
+    """The objecting parts of the audit records the correction answers, for the ``--pre`` review context: it fills
+    ``audit_targets`` with the targets of each part, and gives every ``must_fix`` finding ``targets``."""
+    lines = [
+        "## 6. Targets (the `--pre` review)",
+        "",
+        "Every `must_fix` finding carries `targets`: a non-empty list naming the parts of the card it is about "
+        "(`core_claim`, `level_reason[n]`, `contested_reason[n]`, `subgroups[n]`, `early_signals[n]`, "
+        "`badge_reasons.diagnostic_marker[n]`, `badge_reasons.explains_pem[n]`, `links[n]`, `links[n].reason`, "
+        "`studies[<id>].finding`, or a structured part: `level`, `contested`, `badges.diagnostic_marker`, "
+        "`badges.explains_pem`, `layer`, `links[n]`, `studies[<id>]`, `studies[<id>].<field>`), numbered as in the "
+        'draft of section 1. The review file also holds `"audit_targets": [{"record": "<file>", "part": <i>, '
+        '"targets": [...]}]`: one entry for each objecting audit part below, no other.',
+        "",
+    ]
+    parts = objecting_audit_parts(cfg, slug)
+    if not parts:
+        lines += ["No audit record has an objecting part: `audit_targets` is an empty list.", ""]
+    for name, i, part, decision in parts:
+        lines += [f"### {name}, part {i} (record decision: {decision})", "", f"- decision_part: {part.decision_part}"]
+        lines += [f"- evidence: {e.source}: {e.quote}" for e in part.evidence]
+        lines.append("")
+    return lines
+
+
 def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
     """W1: what the card-reviewer reads for the whole-card review of correction attempt ``tag`` (``C1``,
     ``C1-revised`` or ``C1-revised2``): the corrected card (the applied text, comments stripped), for each cited study
@@ -3528,14 +3822,15 @@ def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
         "",
         CARD_REVIEW_CHECKLIST,
         "",
+        citations.author_facts_section(card, reader).replace("## Author facts", "## 5. Author facts", 1),
     ]
+    if pre:
+        parts += _pre_audit_target_lines(cfg, slug)
     return "\n".join(parts)
 
 
-def card_review_plan(
-    cfg: Config, slug: str, n: str, *, revised: bool = False, revised2: bool = False, pre: bool = False
-) -> Path:
-    """`card-review-plan <slug> --round C<k> [--revised | --revised2 | --pre]`: write the whole-card review context of
+def card_review_plan(cfg: Config, slug: str, n: str, *, revision: int = 0, pre: bool = False) -> Path:
+    """`card-review-plan <slug> --round C<k> [--revised[2-4] | --pre]`: write the whole-card review context of
     a correction attempt (W1). Refused unless that attempt's checks passed and its correction review says accept; for
     a revised attempt also unless the attempts before it were rejected, each for a kind whose revision was unused.
 
@@ -3543,7 +3838,7 @@ def card_review_plan(
     refused unless the card is a held-back draft (no card, a draft, a whole-card audit record) and ``k`` is the next
     round the card may have."""
     if pre:
-        if revised or revised2:
+        if revision:
             raise PipelineError("--pre is the review before drafting: it takes no revised attempt")
         if (cfg.cards_dir / f"{slug}.yaml").exists():
             raise PipelineError(f"{cfg.cards_dir / f'{slug}.yaml'} exists: only a held-back draft is reviewed")
@@ -3562,7 +3857,7 @@ def card_review_plan(
         path = cfg.card_review_context_path(slug, f"{n}-pre")
         _write_text(path, build_card_review_context(cfg, slug, f"{n}-pre"))
         return path
-    tag = attempt_tag(n, revised, revised2)
+    tag = attempt_tag(n, revision)
     checks_file = cfg.checks_path(slug, None, tag)
     if not checks_file.is_file():
         raise PipelineError(f"no checks for correction round {tag} ({checks_file}); run `apply --round {n}` first")
@@ -3897,7 +4192,7 @@ def _valve_findings(cfg: Config, slug: str, tag: str, stage: str) -> list[ValveF
     return found
 
 
-def _valve_stage_key(cfg: Config, slug: str, stage: str, n: str, revised: bool, revised2: bool) -> tuple[str, str]:
+def _valve_stage_key(cfg: Config, slug: str, stage: str, n: str, revision: int) -> tuple[str, str]:
     """(the attempt tag, the valve key) of a valve command; the round must be one the card may have, or (V8) the closed
     round of the exception."""
     if stage not in VALVE_STAGES:
@@ -3910,9 +4205,9 @@ def _valve_stage_key(cfg: Config, slug: str, stage: str, n: str, revised: bool, 
         stage == "audit" and k == used and _exception_classes(cfg, slug, k) is not None
     ):
         raise PipelineError(f"correction round {n} is not open for a valve: the next round is C{used + 1}")
-    if stage == "audit" and (revised or revised2):
+    if stage == "audit" and revision:
         raise PipelineError("the audits belong to the last attempt of the round: no --revised for --stage audit")
-    tag = last_attempt_tag(cfg, slug, n) if stage == "audit" else attempt_tag(n, revised, revised2)
+    tag = last_attempt_tag(cfg, slug, n) if stage == "audit" else attempt_tag(n, revision)
     return tag, _valve_key(stage, tag)
 
 
@@ -3927,13 +4222,13 @@ def _read_valve_ops(cfg: Config, slug: str, key: str) -> OpsFile:
     return ops
 
 
-def valve_apply(cfg: Config, slug: str, stage: str, n: str, *, revised: bool = False, revised2: bool = False) -> Path:
+def valve_apply(cfg: Config, slug: str, stage: str, n: str, *, revision: int = 0) -> Path:
     """`valve-apply`: apply ``valve/<slug>-<key>.json`` (the orchestrator's wording fix) to the text of the stage with
     the ordinary operation code, run the card validator and the citations check, and write the result as
     ``valve/<slug>-<key>/<slug>.yaml``. Refused (nothing written) when the valve is not open at the stage, when one
     was applied already (one per stage and attempt), when an operation is not free text or names a target no wording
     finding of the stage names, or when the validator or a new citation error fails."""
-    tag, key = _valve_stage_key(cfg, slug, stage, n, revised, revised2)
+    tag, key = _valve_stage_key(cfg, slug, stage, n, revision)
     findings = _valve_findings(cfg, slug, tag, stage)
     text_path = cfg.valve_text_path(slug, key)
     if text_path.exists():
@@ -3958,13 +4253,11 @@ def valve_apply(cfg: Config, slug: str, stage: str, n: str, *, revised: bool = F
     return text_path
 
 
-def valve_check_plan(
-    cfg: Config, slug: str, stage: str, n: str, *, revised: bool = False, revised2: bool = False
-) -> Path:
+def valve_check_plan(cfg: Config, slug: str, stage: str, n: str, *, revision: int = 0) -> Path:
     """`valve-check-plan`: write ``valve-check-context/<slug>-<key>.md`` for the card-reviewer's fix check (V5): each
     finding (problem, fix, target), the text of its target before and after the fix, and the cached records of the
     sources that paragraph cites (named by path, not embedded). Nothing else."""
-    tag, key = _valve_stage_key(cfg, slug, stage, n, revised, revised2)
+    tag, key = _valve_stage_key(cfg, slug, stage, n, revision)
     findings = _valve_findings(cfg, slug, tag, stage)
     if not cfg.valve_text_path(slug, key).is_file():
         raise PipelineError(f"no applied wording fix for {key}: run `valve-apply {slug} --stage {stage} ...` first")
@@ -4016,17 +4309,16 @@ def valve_check_plan(
         for study_id in dict.fromkeys(sources):
             parts += [f"  - {study_id}", *(f"    {line}" for line in _cached_study_files(cfg, study_id, reader))]
         parts.append("")
+    parts.append(citations.author_facts_section(base, reader))
     path = cfg.valve_context_path(slug, key)
     _write_text(path, "\n".join(parts))
     return path
 
 
-def record_valve_check(
-    cfg: Config, slug: str, stage: str, n: str, *, revised: bool = False, revised2: bool = False
-) -> ValveCheck:
+def record_valve_check(cfg: Config, slug: str, stage: str, n: str, *, revision: int = 0) -> ValveCheck:
     """`record-valve-check`: validate ``valve/<slug>-<key>-check.json``: one answer for each finding of the stage, no
     other. Passed means every fix resolves its finding and adds no claim (``ValveCheck.passed``)."""
-    tag, key = _valve_stage_key(cfg, slug, stage, n, revised, revised2)
+    tag, key = _valve_stage_key(cfg, slug, stage, n, revision)
     findings = _valve_findings(cfg, slug, tag, stage)
     if not cfg.valve_text_path(slug, key).is_file():
         raise PipelineError(f"no applied wording fix for {key}: run `valve-apply {slug} --stage {stage} ...` first")
@@ -4951,12 +5243,11 @@ def correction_outcome(cfg: Config, slug: str, date: str, tag: str, *, exception
             why = _valve_failure(cfg, slug, _valve_key(stage, attempt))
             return held(f"{cause}: the wording fix did not pass its check: {why}")
         chain = _attempt_chain(cfg, slug, tag)
-        if _revision_pending([_reject_kind(cfg, slug, t) for t in chain]):
+        pending, why = _revision_state([_reject(cfg, slug, t) for t in chain])
+        if pending:
             pub.open_round = True
             return held(f"{cause}; the revised attempt is pending (round {tag} is not used yet)")
-        return held(
-            f"{cause}; " + ("the revised attempt is used" if len(chain) < 3 else "both revised attempts are used")
-        )
+        return held(f"{cause}; {why or 'no revision is open'}")
 
     r = _load_round(cfg, slug, "", attempt)
     if r is None:
@@ -4966,7 +5257,9 @@ def correction_outcome(cfg: Config, slug: str, date: str, tag: str, *, exception
         pub.would_text = applied_path.read_text(encoding="utf-8")
     if r.ops is None:
         return held(f"correction failed checks: {r.ops_problem}")
-    if ops_problems := correction_ops_problems(r.ops, draft_card.level):
+    if ops_problems := correction_ops_problems(r.ops, draft_card.level) + correction_target_problems(
+        cfg, slug, attempt, r.ops, draft_card
+    ):
         return held("correction failed checks: " + "; ".join(ops_problems))
     if r.checks is None or not r.checks.get("passed"):
         why = _check_failure_summary(r.checks) if r.checks is not None else "it was never applied (no check result)"
@@ -5581,16 +5874,7 @@ def _build_parser() -> argparse.ArgumentParser:
         "--round", type=_round_arg, default=1, help="1, 2, L (the redraft after accept_lower) or C<k> (a correction)"
     )
     app.add_argument("--audit", type=Path, help="with --round L for a whole card: the first audit's record")
-    app.add_argument(
-        "--revised",
-        action="store_true",
-        help="with --round C<k>: the revised attempt after a reject of the first attempt",
-    )
-    app.add_argument(
-        "--revised2",
-        action="store_true",
-        help="with --round C<k>: the second revised attempt, after a reject of the other review kind",
-    )
+    _add_revision_flags(app, "with --round C<k>")
 
     rev = sub.add_parser("record-review", parents=[common], help="validate a review file")
     rev.add_argument("slug")
@@ -5603,10 +5887,7 @@ def _build_parser() -> argparse.ArgumentParser:
     rev.add_argument(
         "--round", type=_round_arg, default=1, help="1, 2, L (the redraft after accept_lower) or C<k> (a correction)"
     )
-    rev.add_argument("--revised", action="store_true", help="with --round C<k>: the review of the revised attempt")
-    rev.add_argument(
-        "--revised2", action="store_true", help="with --round C<k>: the review of the second revised attempt"
-    )
+    _add_revision_flags(rev, "with --round C<k>: the review of")
     rev.add_argument(
         "--pre",
         action="store_true",
@@ -5615,7 +5896,7 @@ def _build_parser() -> argparse.ArgumentParser:
     rev.add_argument(
         "--card-review",
         action="store_true",
-        help="with --round C<k>: the whole-card review (review/<slug>-card-C<k>[-pre|-revised|-revised2].json)",
+        help="with --round C<k>: the whole-card review (review/<slug>-card-C<k>[-pre|-revised[2-4]].json)",
     )
 
     aplan = sub.add_parser(
@@ -5675,15 +5956,14 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     crplan.add_argument("slug")
     crplan.add_argument("--round", type=_audit_round_arg, required=True, help="C<k>: the correction round")
-    crplan.add_argument("--revised", action="store_true", help="the revised attempt of the round")
-    crplan.add_argument("--revised2", action="store_true", help="the second revised attempt of the round")
+    _add_revision_flags(crplan, "the review of")
     crplan.add_argument(
         "--pre", action="store_true", help="the unchanged held-back draft, before drafting the correction"
     )
     crplan.add_argument(
         "--out",
         type=Path,
-        help="write <OUT>/card-review-context/<slug>-C<k>[-pre|-revised|-revised2].md (default: --run-dir)",
+        help="write <OUT>/card-review-context/<slug>-C<k>[-pre|-revised[2-4]].md (default: --run-dir)",
     )
 
     for name, text in (
@@ -5698,8 +5978,7 @@ def _build_parser() -> argparse.ArgumentParser:
         valve.add_argument("slug")
         valve.add_argument("--stage", required=True, choices=VALVE_STAGES, help="the stage that opened the valve")
         valve.add_argument("--round", type=_audit_round_arg, required=True, help="C<k>: the correction round")
-        valve.add_argument("--revised", action="store_true", help="the revised attempt (not for --stage audit)")
-        valve.add_argument("--revised2", action="store_true", help="the second revised attempt (not for audit)")
+        _add_revision_flags(valve, "not for --stage audit")
 
     rac = sub.add_parser(
         "record-audit-classification",
@@ -5916,9 +6195,7 @@ def _dispatch(
         out(str(path))
         return 0
     if args.command == "apply":
-        result = apply_ops_file(
-            cfg, args.slug, args.ops, args.round, audit_file=args.audit, revised=args.revised, revised2=args.revised2
-        )
+        result = apply_ops_file(cfg, args.slug, args.ops, args.round, audit_file=args.audit, revision=args.revision)
         for line in result["ops_errors"]:
             out(f"operations error: {line}")
         for line in result["validator"]:
@@ -5941,9 +6218,9 @@ def _dispatch(
         if args.card_review:
             if args.pmid is not None or not is_correction_round(args.round):
                 raise PipelineError("--card-review is for a whole card in a correction round: --round C<k>, no paper")
-            if args.pre and (args.revised or args.revised2):
+            if args.pre and args.revision:
                 raise PipelineError("--pre is the review before drafting: it takes no revised attempt")
-            tag = f"{args.round}-pre" if args.pre else attempt_tag(args.round, args.revised, args.revised2)
+            tag = f"{args.round}-pre" if args.pre else attempt_tag(args.round, args.revision)
             review = record_review(cfg, args.slug, None, tag, card_review=True, pre=args.pre)
             out(f"whole-card review recorded: {review.verdict}, {len(review.findings)} finding(s)")
             return 0
@@ -5958,9 +6235,9 @@ def _dispatch(
             key, _paper = resolve_paper(cfg, args.pmid)
         if args.pre:
             raise PipelineError("--pre goes with --card-review")
-        if (args.revised or args.revised2) and not is_correction_round(args.round):
-            raise PipelineError("--revised is only for a correction round (--round C<k>); so is --revised2")
-        review = record_review(cfg, args.slug, key, attempt_tag(str(args.round), args.revised, args.revised2))
+        if args.revision and not is_correction_round(args.round):
+            raise PipelineError("--revised, --revised2, ... are only for a correction round (--round C<k>)")
+        review = record_review(cfg, args.slug, key, attempt_tag(str(args.round), args.revision))
         out(f"review recorded: {review.verdict}, {len(review.findings)} finding(s)")
         return 0
     if args.command == "audit-plan":
@@ -6032,15 +6309,11 @@ def _dispatch(
     if args.command == "card-review-plan":
         if not is_correction_round(args.round):
             raise PipelineError("card-review-plan --round takes a correction round (C1, C2, ...)")
-        out(
-            str(
-                card_review_plan(cfg, args.slug, args.round, revised=args.revised, revised2=args.revised2, pre=args.pre)
-            )
-        )
+        out(str(card_review_plan(cfg, args.slug, args.round, revision=args.revision, pre=args.pre)))
         return 0
     if args.command in ("valve-apply", "valve-check-plan", "record-valve-check"):
         valve_args = (cfg, args.slug, args.stage, args.round)
-        valve_kw = {"revised": args.revised, "revised2": args.revised2}
+        valve_kw = {"revision": args.revision}
         if args.command == "valve-apply":
             out(f"wording fix applied: {valve_apply(*valve_args, **valve_kw)}")
         elif args.command == "valve-check-plan":
