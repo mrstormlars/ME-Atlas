@@ -54,89 +54,93 @@ core_claim:
     such as the adrenergic and muscarinic receptors that respond to the nervous system's signalling
     chemicals, and these antibodies contribute to the symptoms.
   sources: [pmid:26399744, pmid:22039471, pmid:34589868]
-level: 3
+level: 2
 level_reason:
   - text: >-
       A study from Sweden measured antibodies against adrenergic and muscarinic receptors in the
       blood of two cohorts of 24 patients, all meeting the Canadian Consensus Criteria, the
       International Consensus Criteria and the 2015 IOM criteria, and of 24 matched healthy
-      controls. Antibodies against the M3 and M4 muscarinic receptors were higher than controls' in
-      both cohorts; antibodies against the β1 and β2 adrenergic receptors were higher in the
-      Gothenburg cohort only, whose samples the paper reports were collected earlier and analysed
-      separately. Levels did not correlate with disease severity. The card is at level 2 because of
-      this study.
-    sources: [pmid:34589868]
+      controls. Antibodies against the M3 and M4 muscarinic receptors were higher than controls'
+      in both cohorts; antibodies against the β1 and β2 adrenergic receptors were higher in the
+      Göteborg (Gottfries Clinic) cohort only, whose samples the paper reports were collected
+      earlier and analysed separately. Levels did not correlate with disease severity. This
+      controlled study in a defined group is the basis for level 2.
+    sources: ['pmid:34589868']
   - text: >-
-      An earlier study from Berlin of 268 patients and 108 healthy controls, whose case definition is
-      not yet verified, found higher antibodies against the β2, M3 and M4 receptors in patients. It
-      shares two authors with the Swedish study. A study from Japan of 60 patients and 30 healthy
-      controls, also with the case definition not yet verified, found higher antibodies against the
-      M1 muscarinic receptor, using a different test.
-    sources: [pmid:26399744, pmid:12851722]
+      An earlier study from Berlin of 268 patients and 108 healthy controls, whose case
+      definition is not yet verified, found higher antibodies against the β2, M3 and M4
+      receptors in patients. It shares two authors with the Swedish study. A study of 60
+      patients and 30 healthy controls, also with the case definition not yet verified, found
+      higher antibodies against the M1 muscarinic receptor, using a different test.
+    sources: ['pmid:26399744', 'pmid:12851722']
   - text: >-
-      A study from Spain, with no authors shared with the Swedish study, measured the same kinds of
-      antibodies with a test from the same supplier in 59 patients meeting the Fukuda definition,
-      which does not require post-exertional malaise, and 36 healthy controls. Antibodies against
-      the β2 adrenergic receptor were higher in patients than in controls. Average antibody levels
-      against the M1 to M4 muscarinic receptors and the α1 and β1 adrenergic receptors did not
-      differ; the share of people above the test maker's cut-off differed for M3 and M4, and for M4
-      more controls than patients were above it. The paper's table reports identical values in
-      patients and controls for M3 and M4. The groups were not matched for sex (analyses were
-      adjusted for age and sex), the authors describe the study as exploratory, and they made no
-      correction for multiple comparisons. The card is at level 3 because this independent group
-      found higher β2 receptor antibodies in a separate cohort. The repeat is partial: both studies
-      used a test from the same supplier, the Swedish study found higher β2 antibodies in only one of
-      its two cohorts, and the higher M3 and M4 antibodies were not repeated.
-    sources: [pmid:42082542, pmid:34589868]
+      A study from Spain, with no authors shared with the Swedish study, measured the same kinds
+      of antibodies with a test from the same supplier in 59 patients meeting the Fukuda
+      definition, which does not require post-exertional malaise, and 36 healthy controls.
+      Antibodies against the β2 adrenergic receptor were higher in patients than in controls.
+      Average antibody levels against the M1 to M4 muscarinic receptors and the α1 and β1
+      adrenergic receptors did not differ; the share of people above the test maker's cut-off
+      differed for M3 and M4, and for M4 more controls than patients were above it. The paper's
+      table gives the same values for the M3 and M4 rows, in patients and in controls. The
+      sample was not matched for age and sex (analyses were adjusted for age and sex), the
+      authors describe the study as exploratory, and they made no correction for multiple
+      comparisons. The card is held at level 2 and not level 3: this independent group
+      reproduced only the β2 result, which the Swedish study found in one of its two cohorts,
+      and did not reproduce the higher M3 and M4 antibodies. Both studies used a test from the
+      same supplier. The finding is unreplicated beyond this single partial repeat.
+    sources: ['pmid:42082542', 'pmid:34589868']
   - text: >-
       In a randomised, double-blind trial from Bergen, Norway, 30 patients meeting the Fukuda
-      definition received rituximab, a drug that removes B cells, or saline placebo, 15 in each group.
-      At the trial's predefined primary end point, fatigue three months after treatment, there was no
-      difference between groups. Lasting improvement in self-reported fatigue was seen in 10 of 15
-      patients given rituximab and 2 of 15 given placebo (p = 0.003), and fatigue scores differed
-      between groups 6 to 10 months after treatment.
-    sources: [pmid:22039471]
+      definition received rituximab, a drug that removes B cells, or saline placebo, 15 in each
+      group. At the trial's predefined primary end point, fatigue three months after treatment,
+      there was no difference between groups. Lasting improvement in self-reported fatigue was
+      seen in 10 of 15 patients given rituximab and 2 of 15 given placebo (p = 0.003), and
+      fatigue scores differed between groups 6 to 10 months after treatment.
+    sources: ['pmid:22039471']
   - text: >-
-      A larger randomised, double-blind trial by the same Bergen group, of 151 patients meeting the
-      Canadian Consensus Criteria (77 given rituximab, 74 placebo; infusions over 12 months, follow-up
-      24 months), found no
-      difference between groups in response rate (26.0% with rituximab, 35.1% with placebo), in
-      fatigue over 24 months or in any secondary end point. With a stricter case definition, a
-      placebo group and more patients (151 against 30), this trial settles the question against the
-      30-patient trial, so the card does not reach level 4: in the larger controlled trial, removing
-      B cells did not change the outcome.
-    sources: [pmid:30934066, pmid:22039471]
+      A larger randomised, double-blind trial by the same Bergen group, of 151 patients meeting
+      the Canadian Consensus Criteria (77 given rituximab, 74 placebo; infusions over 12 months,
+      follow-up 24 months), found no difference between groups in response rate (26.0% with
+      rituximab, 35.1% with placebo), in fatigue over 24 months or in any secondary end point.
+      It did not confirm the benefit seen in the 30-patient trial. The two trials differ in case
+      definition (Canadian Consensus Criteria against Fukuda), in size (151 against 30) and in
+      regimen (two infusions two weeks apart in the smaller trial, several infusions over 12
+      months in the larger one). In the larger controlled trial, B-cell depletion was not
+      associated with clinical improvement, so the card does not reach level 4.
+    sources: ['pmid:30934066', 'pmid:22039471']
   - text: >-
-      Rituximab removes B cells rather than the antibodies themselves. The authors of the 30-patient
-      trial suggest that improvement starting months after B cells were removed may fit a gradual
-      clearing of autoantibodies.
-    sources: [pmid:22039471, pmid:30934066]
+      Rituximab removes B cells rather than the antibodies themselves. The authors of the
+      30-patient trial suggest that improvement starting months after B cells were removed may
+      fit a gradual clearing of autoantibodies.
+    sources: ['pmid:22039471', 'pmid:30934066']
   - text: >-
-      In 25 patients from an open-label Bergen rituximab maintenance trial without a placebo group,
-      analysed in the Berlin study, raised β2 and M4 receptor antibodies fell, among patients who
-      achieved prolonged B-cell depletion, in those who responded but not in those who did not.
-    sources: [pmid:26399744]
+      In 25 patients treated within the KTS-2 rituximab trial, receiving rituximab maintenance
+      treatment, analysed in the Berlin study, raised β2 and M4 receptor antibodies fell, among
+      patients who achieved prolonged B-cell depletion, in those who responded but not in those
+      who did not.
+    sources: ['pmid:26399744']
   - text: >-
-      Treatments that lower antibody levels have otherwise been studied without a placebo group, so
-      they cannot count towards level 4. In 10 patients with raised β2 receptor antibodies,
-      immunoadsorption (filtering antibodies out of the blood) lowered these antibodies in 9, and 7
-      reported improvement during treatment. In 20 patients whose ME/CFS followed COVID-19, the same
-      Berlin group reported a mean rise of 17.75 points in a physical function score after
-      immunoadsorption. In 10 women given daratumumab, a drug that targets antibody-producing plasma
-      cells, 6 improved markedly and 4 had no significant change.
-    sources: [pmid:29543914, pmid:39759581, pmid:40703261]
+      Treatments that lower antibody levels have otherwise been studied without a placebo group,
+      so they cannot count towards level 4. In 10 patients with raised β2 receptor antibodies,
+      immunoadsorption (filtering antibodies out of the blood) lowered these antibodies in 9,
+      and 7 reported improvement during treatment. In 20 patients whose ME/CFS followed
+      COVID-19, the same Berlin group reported a mean rise of 17.75 points in a physical
+      function score after immunoadsorption. In 10 women given daratumumab, a drug that targets
+      antibody-producing plasma cells, 6 improved markedly and 4 had no significant change.
+    sources: ['pmid:29543914', 'pmid:39759581', 'pmid:40703261']
   - text: >-
-      Against the antibody findings, a study from Cornell of 172 participants, whose case definition
-      is not yet verified, measured antibodies against more than 6,000 human proteins and found no
+      Against the antibody findings, a study of 172 participants, whose case definition is not
+      yet verified, measured antibodies against a large panel of human proteins and found no
       significant differences between patients and controls, including against β-adrenergic
       receptors.
-    sources: [pmid:40141440]
+    sources: ['pmid:40141440']
   - text: >-
-      Studies of B cells themselves are mixed. One study of 33 patients and 24 healthy controls found
-      more naive and transitional B cells and fewer plasmablasts in patients; a second, sharing an
-      author, found no difference in the classical B-cell groups in 38 patients and 32 controls, but
-      differences in a B-cell surface marker (CD24) and in one memory B-cell group.
-    sources: [pmid:23480187, pmid:26646713]
+      Studies of B cells themselves are mixed. One study of 33 patients and 24 healthy controls
+      found more naive and transitional B cells and fewer plasmablasts in patients; a second,
+      sharing an author, found no difference in the classical B-cell groups in 38 patients and
+      32 controls, but differences in a B-cell surface marker (CD24) and in one memory B-cell
+      group.
+    sources: ['pmid:23480187', 'pmid:26646713']
 # Contested: null (founder ruling 2026-11-01). Rung 4 settled by 30934066, so not reached. Rungs 2 and 3: no
 # contradicting study of comparable quality (42082542's null M3/M4 result is Fukuda, below 34589868's CCC; the
 # Stockholm cohort's null beta2 result is part of the rung-2 study, 24 patients < 29.5; 40141440 unverified, V9).
@@ -146,14 +150,16 @@ badges:
     value: false
     reason:
       text: >-
-        Receptor antibody levels have been compared with controls in separate cohorts, with mixed
-        results, but no study on this card tests a cut-off from one cohort in a second, independent
-        patient group. In the Swedish study, 25% of controls and 79% and 91% of patients had at least
-        one receptor antibody above the controls' 90th percentile. In the Spanish study, 27.5% of
-        patients and 13.9% of controls had β2 receptor antibodies above the test maker's cut-off, and
-        18.6% of patients against 58.3% of controls had M4 receptor antibodies above it. The
-        Cornell study found no differences.
-      sources: [pmid:34589868, pmid:42082542, pmid:40141440]
+        Receptor antibody levels have been compared with controls in separate cohorts, with
+        mixed results, and no study on this card has validated a cut-off in a second,
+        independent patient group. In the Swedish study, 25% of controls and 79% and 91% of
+        patients had at least one receptor antibody above the controls' 90th percentile. The
+        Spanish study applied the test maker's cut-off, which was not derived from its own study
+        population, and it did not separate patients from controls: 27.5% of patients and 13.9%
+        of controls had β2 receptor antibodies above it, 18.6% of patients against 58.3% of
+        controls had M4 receptor antibodies above it, and 55.9% of patients against 58.3% of
+        controls had α1 receptor antibodies above it. The third study found no differences.
+      sources: ['pmid:34589868', 'pmid:42082542', 'pmid:40141440']
   explains_pem:
     # Checked: every abstract on the card, and the full texts of 22039471, 34589868, 42082542, 34589837, 29543914,
     # 39759581 and 40703261 as far as read for methods and results. No study uses an exertion challenge. 22039471's
@@ -169,10 +175,11 @@ badges:
       sources: [pmid:34589868, pmid:39759581]
 subgroups:
   - text: >-
-      The antibody and immunoadsorption studies focus on patients whose illness began after an
-      infection and who have raised β2 receptor antibodies. In the Swedish study, 79% and 91% of
-      patients in its two cohorts, and 25% of controls, had at least one raised receptor antibody.
-    sources: [pmid:29543914, pmid:39759581, pmid:34589868]
+      The immunoadsorption studies included only patients whose illness began after an infection
+      (after COVID-19 in one) and who had raised β2 receptor antibodies. In the Swedish study,
+      79% and 91% of patients in its two cohorts, and 25% of controls, had at least one raised
+      receptor antibody.
+    sources: ['pmid:29543914', 'pmid:39759581', 'pmid:34589868']
 # From pmid:38454468 (trial protocol, Trials 2024): "Registration Number: NCT05710770 . Registered on 02 February
 # 2023." Authors at Charité-Universitätsmedizin Berlin (last author Prüss H, Department of Neurology and Experimental
 # Neurology). 66 patients to be randomised 2:1 to immunoadsorption or sham apheresis. Results not in the cache.
@@ -186,10 +193,11 @@ early_signals:
       patients with high β2 receptor antibodies did not. Not yet repeated.
     sources: [pmid:34589837]
   - text: >-
-      A study of n=10 women, without a control group, found that after the plasma-cell-targeting drug
-      daratumumab 6 had marked improvement in physical function, alongside a fall in IgG levels, and
-      4 had no significant change. Not yet repeated.
-    sources: [pmid:40703261]
+      A study of n=10 women, without a control group, found that after the plasma-cell-targeting
+      drug daratumumab 6 had marked improvement in physical function and 4 had no significant
+      change; IgG fell by 54% in those who improved and by 40% in those who did not. Not yet
+      repeated.
+    sources: ['pmid:40703261']
 studies:
   # --- supports ---
   - id: pmid:34589868
@@ -355,11 +363,12 @@ studies:
     direction: higher
     group: Scheibenbogen C, Charité, Berlin, Germany (Fluge Ø and Mella O of the Bergen rituximab trials are co-authors; Heidecke H also on 34589868)
     finding: >-
-      A study of n=268 patients and 108 healthy controls found higher antibodies against the β2, M3
-      and M4 receptors in patients and no difference for α adrenergic, dopamine, serotonin,
-      angiotensin and endothelin receptors; in 25 patients from an open-label rituximab maintenance
-      trial without a placebo group, raised β2 and M4 receptor antibodies fell, among those achieving
-      prolonged B-cell depletion, in responders but not in non-responders.
+      A study of n=268 patients and 108 healthy controls found higher antibodies against the β2,
+      M3 and M4 receptors in patients and no difference for α adrenergic, dopamine, serotonin,
+      angiotensin and endothelin receptors; in 25 patients treated within the KTS-2 rituximab
+      trial, receiving rituximab maintenance treatment, raised β2 and M4 receptor antibodies
+      fell, among those achieving prolonged B-cell depletion, in responders but not in
+      non-responders.
   - id: pmid:12851722
     title: Autoantibodies against muscarinic cholinergic receptor in chronic fatigue syndrome.
     year: 2003
@@ -374,7 +383,7 @@ studies:
     preregistered: null
     role: context
     direction: higher
-    group: Amino N, Osaka University, Japan (affiliation from first author)
+    group: Amino N
     finding: >-
       A study of n=60 patients, 33 people with autoimmune disease and 30 healthy controls found a
       higher mean antibody index against the M1 muscarinic receptor in patients than in healthy
@@ -397,7 +406,7 @@ studies:
     preregistered: null
     role: context  # would be `contradicts` once the case definition is verified (see header, decision 3)
     direction: no_difference
-    group: Hanson MR, Cornell University, Ithaca, USA
+    group: Hanson MR
     finding: >-
       A study of 172 participants measuring antibodies against 6,183 extracellular human proteins and
       a 1,134-antibody panel found no significant differences between patients and controls,
@@ -558,5 +567,5 @@ links:
       in time is shown; it has not been repeated.
     sources: [pmid:42082542]
 last_checked:
-  date: 2026-11-01
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit

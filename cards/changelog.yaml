@@ -216,3 +216,22 @@
   - pmid:26683192
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: autoimmunity-autoantibodies-b-cells
+  change: First publication at level 2 after correction round 1 and a wording fix; the draft had level
+    3
+  reason: Level 2 rests on a controlled CCC/ICC/IOM study; the independent Fukuda repeat reproduced only
+    the β2 result, controlled B-cell depletion did not help, no comparable contradiction, both badges
+    no, layer and links match their sources.
+  sources:
+  - pmid:34589868
+  - pmid:42082542
+  - pmid:40141440
+  - pmid:30934066
+  - pmid:22039471
+  - pmid:39759581
+  - pmid:40703261
+  - pmid:32247028
+  - pmid:34254637
+  tier: 2
+  decided_by: ai_audit
