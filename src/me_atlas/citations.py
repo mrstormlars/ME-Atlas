@@ -863,6 +863,7 @@ _QUALIFIED = re.compile(
     re.IGNORECASE,
 )
 _DESCRIPTIVE_COUNTERPART = re.compile(r"\s+with\s+(?:the|a|an|that|this|its|their|those|these)\b", re.IGNORECASE)
+_WITH_COUNTERPART = re.compile(chr(92) + "s+with" + chr(92) + "b", re.IGNORECASE)
 _GROUP_POSITION = re.compile(r"\b(?P<pos>first|last)\s+author\b(?![’'])", re.IGNORECASE)
 _ALSO_ON = re.compile(r"(?P<names>[^;()]*?)\s+also\s+on\s+(?P<pmids>\d+(?:\s*(?:,|and|&)\s*\d+)*)", re.IGNORECASE)
 _PMID_RE = re.compile(r"\d+")
@@ -930,8 +931,10 @@ def _check_free_text_authors(file: str, card, cache: CacheReader, level: str) ->
                 )
         if not all(e >= 1 for _a, _b, e, _n in pairs):
             continue
-        for pattern in _NO_SHARED_PATTERNS:
+        for number, pattern in enumerate(_NO_SHARED_PATTERNS):
             for m in pattern.finditer(text):
+                if number < len(_NO_SHARED_PATTERNS) - 1 and _WITH_COUNTERPART.match(text, m.end()):
+                    continue  # "no authors are shared with the earlier study": the study named may not be cited here
                 if _QUALIFIED.search(text[max(0, m.start() - 30) : m.start()]):
                     continue
                 issues.append(

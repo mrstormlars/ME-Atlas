@@ -127,6 +127,14 @@ def test_c11b_no_shared_authors_for_studies_that_share_some_is_reported(tmp_path
     failing = c11(tmp_path, cache, reason="The two studies have no shared authors.")
     assert len(failing) == 1 and "shares at least one author" in failing[0].message
     assert len(c11(tmp_path, cache, reason="They are independent research groups.")) == 1
+    # a statement about a study the item does not cite is not checked
+    for text in (
+        "No authors are shared with the earlier Swedish study.",
+        "They share no authors with the third report.",
+        "There are no authors in common with controls.",
+    ):
+        assert c11(tmp_path, cache, reason=text) == [], text
+        assert len(c11(tmp_path, cache, reason=text.split(" with ")[0] + ".")) == 1, text
     # no pair of the cited studies that shares an author: the statement may be true
     assert c11(tmp_path, cache, reason="The two studies have no shared authors.", pmids=(P1, P3)) == []
     # a negation, a singular rubric phrase and a statement about a group of patients are not claims
