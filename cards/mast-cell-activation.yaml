@@ -93,46 +93,50 @@ core_claim:
     inflammatory substances, are abnormal in number or behaviour or are overactive in people with
     ME/CFS, and that this contributes to their symptoms.
   sources: [pmid:27362406, pmid:41300853]
-level: 2
+level: 1
 level_reason:
   - text: >-
       A study from Griffith University, Australia, of 12 patients with moderately severe and 6
-      with severe ME/CFS meeting the International Consensus Criteria, and 13 healthy controls, found
-      more of a type of immature mast cell (CD117+CD34+FcεRI-chymase-) among blood immune cells in
-      moderately severe and severe patients compared with healthy controls. The card is at level 2 because of this study. It is small and has not
-      been repeated by an independent group.
-    sources: [pmid:27362406]
+      with severe ME/CFS meeting the International Consensus Criteria, and 13 healthy controls,
+      found more of a type of immature mast cell (CD117+CD34+FcεRI-chymase-) among blood immune
+      cells in moderately severe and severe patients compared with healthy controls. Its authors
+      call it a preliminary study and write that further investigation is required. It meets the
+      wording of level 2 in form (a controlled study with a recognised case definition), but it
+      is a single study with a very small sample, one of the grounds on which the rubric holds a
+      level back, and it has not been repeated by an independent group. The card is therefore at
+      level 1: small studies point towards the hypothesis.
+    sources: ['pmid:27362406']
   - text: >-
       The same group later studied mast cell precursors in 11 patients meeting the International
-      Consensus Criteria, 9 people with systemic mastocytosis and 12 healthy controls, using a different
-      method that first separates these cells from the blood. It found no significant differences
-      between groups in the maturity markers CD34 and FcεRI, the markers that defined the population
-      the first study found increased. Because the group is the same, this study cannot be a repeat.
-      The card treats its maturity markers, measured within the separated precursor cells, as a
-      different measure from the share of blood immune cells reported in the first study (the
-      abstracts do not give the exact denominator), so it is not counted as contradicting it.
-    sources: [pmid:29223146, pmid:27362406]
+      Consensus Criteria, 9 people with systemic mastocytosis and 12 healthy controls, using a
+      different method that first separates these cells from the blood. It found no significant
+      differences between groups in the maturity markers CD34 and FcεRI, the markers that
+      defined the population the first study found increased. Because the group is the same,
+      this study cannot be a repeat. The records do not say whether this measures the same thing
+      as the share of blood immune cells reported in the first study, so the card does not
+      decide whether it contradicts that finding.
+    sources: ['pmid:29223146', 'pmid:27362406']
   - text: >-
-      No other study has measured mast cells, or substances released mainly by mast cells such as
-      tryptase or histamine, in patients with a recognised case definition against a control group.
-      Higher blood MMP-9, an enzyme that mast cells and other cells can release, in 18 patients than
-      in 18 controls does not show that the patients' mast cells were the source.
-    sources: [pmid:42327760]
+      No other study on this card has measured mast cells, or substances released mainly by mast
+      cells such as tryptase or histamine, in patients with a recognised case definition against
+      a control group. Higher blood MMP-9, an enzyme that mast cells and other cells can
+      release, in 18 patients than in 18 controls does not show that the patients' mast cells
+      were the source.
+    sources: ['pmid:42327760']
   - text: >-
-      Two older studies, whose case definitions are not yet verified, cannot count. A study from Harvard
-      of lip salivary gland tissue from 11 patients and controls found that the presence of mast cells
-      was the only one of seven features that differed significantly between the groups. A study from
-      Washington, DC, of 95 patients and 109 controls found no difference in IgE, the antibody that arms
-      mast cells in allergy.
-    sources: [pmid:10884641, pmid:11570618]
+      Two older studies, whose case definitions are not yet verified, cannot count. A study from
+      Harvard of lip salivary gland tissue from 11 patients and controls found that the presence
+      of mast cells was the only one of seven features that differed significantly between the
+      groups. A study from Washington, DC, of 95 patients and 109 controls found no difference
+      in IgE, the antibody that arms mast cells in allergy.
+    sources: ['pmid:10884641', 'pmid:11570618']
   - text: >-
-      An Austrian study of patients meeting the 2015 Institute of Medicine criteria reports how often
-      patients' records met symptom and treatment-response criteria for mast cell activation, not a
-      measurement against controls (see below). The only
-      controlled treatment trial, of the antihistamine terfenadine in 28 patients, has a case
-      definition that is not yet verified, found no benefit, and blocks one effect of histamine rather
-      than changing mast cells, so it cannot count towards level 4.
-    sources: [pmid:41300853, pmid:8568124]
+      An Austrian study of patients meeting the 2015 Institute of Medicine criteria reports how
+      often patients' records met symptom and treatment-response criteria for mast cell
+      activation, not a measurement against controls (see below). The only controlled treatment
+      trial on this card, of the antihistamine terfenadine in 28 patients, has a case definition
+      that is not yet verified and found no benefit, so it cannot count towards level 4.
+    sources: ['pmid:41300853', 'pmid:8568124']
 contested: null
 badges:
   diagnostic_marker:
@@ -321,7 +325,7 @@ studies:
     # cell link was tested only in cord-blood-derived mast cells in vitro.
     role: context
     direction: higher
-    group: Theoharides TC, Tufts University School of Medicine, USA; patients from Klimas NG, University of Miami
+    group: Theoharides TC, Institute for Neuro-Immune Medicine, Nova Southeastern University, USA; patients recruited at the University of Miami Miller School of Medicine
     finding: >-
       A study of n=18 female patients and 18 healthy controls found higher serum MMP-9 in patients
       (126 against 17 ng/ml), and in a separate set of 40 patients and 38 controls higher serum IL-11;
@@ -361,5 +365,5 @@ links:
       A retrospective study of n=285 patients meeting the 2015 Institute of Medicine criteria, from one Vienna clinic, found orthostatic intolerance confirmed by a tilt or standing test more often in patients judged to have mast cell activation than in the others (70.3% against 49.7%, of 233 patients with usable data). Mast cell activation was judged from patient records of symptoms and response to medicines, not from measured mediators, and there was no control group. The symptoms used to judge mast cell activation included low blood pressure, fast heart rate and fainting, which overlap with orthostatic intolerance, so the two ends were not measured independently. Not yet repeated by an independent group; the same paper's online survey of self-reported diagnoses, whose case definition was not checked, is not counted.
     sources: [pmid:41300853]
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit

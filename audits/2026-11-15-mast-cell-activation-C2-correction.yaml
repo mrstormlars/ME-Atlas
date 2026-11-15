@@ -1,0 +1,231 @@
+card: mast-cell-activation
+round: 2
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-mast-cell-activation-second.yaml
+- 2026-11-13-mast-cell-activation.yaml
+draft_sha256: 0b16f9e7f0a40a140a7158b44372c433578be950bec4ce41948671e7ea020cca
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[1] rules that pmid:29223146 ''is not counted as contradicting'' pmid:27362406
+      because the card ''treats'' its maturity markers as a different measure. The records do not state
+      this; the sentence itself admits ''the abstracts do not give the exact denominator''. On the rubric''s
+      terms pmid:29223146 is of comparable quality (ICC, as pmid:27362406; a control group of 12; 11 patients,
+      which is at least half of the 18 in pmid:27362406), and its record says ''There were no significant
+      differences in maturity MCPs, CD154, and CD2/CD25 expression between groups'', where the maturity
+      markers are ''CD34 and FcεRI'', the markers that define the CD117+CD34+FCεRI-chymase- population
+      that pmid:27362406 reports as increased. The cached records do not show whether this is the same
+      measure or a different one. So the card cannot settle the question itself and then set contested:
+      null on that ground.'
+    fix: 'Remove the card''s own ruling (''The card treats ... so it is not counted as contradicting it'').
+      State only what the two records say: the 2018 study, from the same group, in 11 ICC patients and
+      12 controls, found no significant difference between groups in the maturity markers CD34 and FcεRI
+      of magnetically separated precursors, and the records do not say whether this measures the same
+      thing as the share of PBMCs in the 2017 study. Leave the contested mark for the auditor to decide
+      on that stated uncertainty.'
+    targets:
+    - contested
+    - level_reason[1]
+  - operation: null
+    severity: must_fix
+    problem: 'Level 2 rests on one study, pmid:27362406: 12 moderately severe and 6 severe ICC patients
+      against 13 controls, which its own record calls ''This preliminary study'' and ends ''further investigation
+      to determine their role is required''. The rung''s wording (a controlled study, recognised case
+      definition) is met in form, but the rubric''s ''Down or held back'' list includes ''a very small
+      sample'', and level_reason[0] does not address it; it says only ''It is small and has not been repeated''.
+      The earlier audit of this card accepted only a lower level on this ground. The evidence supports
+      level 2 in form, with level 1 as the held-back reading; the card states level 2 without saying why
+      the hold-back does not apply.'
+    fix: Either set the level the auditor accepted (1), with a level_reason that says the only controlled
+      study meets the rung in form but is a single preliminary study of 18 patients and 13 controls, so
+      the rubric's hold-back for a very small sample applies; or give the rubric reason why the hold-back
+      does not apply. Do not add any new fact.
+    targets:
+    - level
+    - level_reason[0]
+  - operation: null
+    severity: must_fix
+    problem: 'Two sentences make claims about the whole literature that no cited record states. level_reason[2]:
+      ''No other study has measured mast cells, or substances released mainly by mast cells such as tryptase
+      or histamine, in patients with a recognised case definition against a control group'', cited only
+      to pmid:42327760, which says nothing of the kind. level_reason[4]: ''The only controlled treatment
+      trial, of the antihistamine terfenadine'' is cited to pmid:8568124, which does not say it is the
+      only one.'
+    fix: 'Limit both to the card: ''No other study on this card ...'' and ''The only controlled treatment
+      trial on this card ...''.'
+    targets:
+    - level_reason[2]
+    - level_reason[4]
+  - operation: null
+    severity: must_fix
+    problem: level_reason[4] says terfenadine 'blocks one effect of histamine rather than changing mast
+      cells'. The cached record of pmid:8568124 says only 'the antihistamine terfenadine (60 mg twice
+      daily)'; nothing about its mechanism or about mast cells. This is an unsourced pharmacological claim
+      used as a reason why the trial cannot count towards level 4.
+    fix: Remove 'and blocks one effect of histamine rather than changing mast cells'. The remaining reasons
+      (case definition not verified, no benefit found) are in the record and are enough.
+    targets:
+    - level_reason[4]
+  - operation: null
+    severity: advisory
+    problem: 'links[0] at step associated: both ends were recorded in the same IOM 2015 patients (pmid:41300853)
+      and a relation is reported (OI 70.3% against 49.7%, p = 0.005, of 233), so the step''s wording is
+      met in form. The text correctly states that mast cell activation was judged partly from cardiovascular
+      symptoms (hypotension, tachycardia, syncope or presyncope) that overlap with orthostatic intolerance,
+      and that there was no control group. The auditor may weigh whether ends that were ''not measured
+      independently'' carry step 2; the text itself is accurate against the full text.'
+    fix: null
+  - operation: null
+    severity: advisory
+    problem: 'Several group fields pair the last author with the first author''s affiliation: pmid:10884641
+      ''Gallagher GT, Harvard School of Dental Medicine'' (the affiliation in the record belongs to Woo
+      SB; Gallagher GT has none), pmid:11570618 ''Baraniuk JN, Georgetown University'' (affiliation of
+      Repka-Ramirez MS), pmid:8568124 ''Peterson PK, Hennepin County Medical Center'' (affiliation of
+      Steinberg P). pmid:42327760 gives ''Tufts University School of Medicine'' for Theoharides TC; the
+      record lists Tufts as one of his affiliations, but his first is Nova Southeastern University. The
+      places are in the records, so no reader-facing claim is wrong.'
+    fix: Name the institution of the author it is given with, or name the first author with that affiliation.
+  - operation: null
+    severity: advisory
+    problem: 'badge_reasons.explains_pem[0] says ''No study on this card measured post-exertional malaise
+      directly'' but cites only pmid:27362406 and pmid:41300853. Every study on the card has measures_pem:
+      false, so the claim holds, but its sources cover two of eight studies.'
+    fix: null
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:33996867].case_definition_quote ('After 6 months of illness, he satisfied the
+      Institute of Medicine criteria for ME/CFS.') is about patient 1 only; the full text says 'all three
+      participants met criteria for ME/CFS', with Table 2. The IOM2015 label is supported for the series,
+      but the quote covers one patient.
+    fix: null
+operations:
+- op: propose
+  target: level
+  value: 1
+  reason:
+  - text: 'A study from Griffith University, Australia, of 12 patients with moderately severe and 6 with
+      severe ME/CFS meeting the International Consensus Criteria, and 13 healthy controls, found more
+      of a type of immature mast cell (CD117+CD34+FcεRI-chymase-) among blood immune cells in moderately
+      severe and severe patients compared with healthy controls. Its authors call it a preliminary study
+      and write that further investigation is required. It meets the wording of level 2 in form (a controlled
+      study with a recognised case definition), but it is a single study with a very small sample, one
+      of the grounds on which the rubric holds a level back, and it has not been repeated by an independent
+      group. The card is therefore at level 1: small studies point towards the hypothesis.'
+    sources:
+    - pmid:27362406
+  - text: The same group later studied mast cell precursors in 11 patients meeting the International Consensus
+      Criteria, 9 people with systemic mastocytosis and 12 healthy controls, using a different method
+      that first separates these cells from the blood. It found no significant differences between groups
+      in the maturity markers CD34 and FcεRI, the markers that defined the population the first study
+      found increased. Because the group is the same, this study cannot be a repeat. The records do not
+      say whether this measures the same thing as the share of blood immune cells reported in the first
+      study, so the card does not decide whether it contradicts that finding.
+    sources:
+    - pmid:29223146
+    - pmid:27362406
+  - text: No other study on this card has measured mast cells, or substances released mainly by mast cells
+      such as tryptase or histamine, in patients with a recognised case definition against a control group.
+      Higher blood MMP-9, an enzyme that mast cells and other cells can release, in 18 patients than in
+      18 controls does not show that the patients' mast cells were the source.
+    sources:
+    - pmid:42327760
+  - text: Two older studies, whose case definitions are not yet verified, cannot count. A study from Harvard
+      of lip salivary gland tissue from 11 patients and controls found that the presence of mast cells
+      was the only one of seven features that differed significantly between the groups. A study from
+      Washington, DC, of 95 patients and 109 controls found no difference in IgE, the antibody that arms
+      mast cells in allergy.
+    sources:
+    - pmid:10884641
+    - pmid:11570618
+  - text: An Austrian study of patients meeting the 2015 Institute of Medicine criteria reports how often
+      patients' records met symptom and treatment-response criteria for mast cell activation, not a measurement
+      against controls (see below). The only controlled treatment trial on this card, of the antihistamine
+      terfenadine in 28 patients, has a case definition that is not yet verified and found no benefit,
+      so it cannot count towards level 4.
+    sources:
+    - pmid:41300853
+    - pmid:8568124
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 0
+    severity: advisory
+    problem: 'level_reason[0] ends ''The card is therefore at level 1: small studies point towards the
+      hypothesis.'' Only one study (pmid:27362406) points towards it on this card; pmid:29223146 found
+      no difference between groups. The plural follows the rung''s wording (''One or more small or uncontrolled
+      studies'') but could be read as more than one supporting study.'
+    fix: 'Write ''a small study points towards the hypothesis'' or quote the rung: ''one or more small
+      or uncontrolled studies point towards it''.'
+  - operation: 0
+    severity: advisory
+    problem: 'The operation answers pre-review findings 1 to 4 and the first audit''s accept_lower (level
+      1): level_reason[0] now gives the rubric''s very-small-sample hold-back with the record''s own words
+      (''This preliminary study'', ''further investigation to determine their role is required''); level_reason[1]
+      drops the card''s own ruling that pmid:29223146 is a different measure and says the records do not
+      decide it; level_reason[2] and [4] are limited to ''on this card''; the unsourced terfenadine mechanism
+      is removed. contested stays null with no reason now written for it; that is the auditor''s decision
+      on the stated uncertainty (second audit, parts 2 and 3), not a gap in this correction. level_reason[3]
+      is carried over unchanged (reflowed only).'
+    fix: null
+  - operation: null
+    severity: advisory
+    problem: 'Internal YAML comments, not reader-facing, still say level 2 and that pmid:29223146 ''does
+      not contradict'' (''FOUNDER RULING (2026-11-02): level 2, not contested ...'' on line 1 and the
+      ''PROPOSED LEVEL'' and ''CONTESTED'' header blocks), and docs/pm/DECISIONS.md (2026-11-02) records
+      the card at level 2. The correction cannot edit comments, but the founder should know the corrected
+      card now proposes level 1, as the first audit accepted, against that earlier logged ruling.'
+    fix: Update the header comments when the card is next edited outside the correction path, and record
+      the level outcome in DECISIONS.md.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: The group field for pmid:42327760 reads 'Theoharides TC, Tufts University School of Medicine,
+      USA; patients from Klimas NG, University of Miami'. In the cached records the last author Theoharides
+      TC has Nova Southeastern University (Institute for Neuro-Immune Medicine, Ft. Lauderdale) as his
+      first affiliation, and Tufts only as his fourth; the first author Chinnappan B is also at Nova Southeastern.
+      Klimas NG's affiliations in the full text are Nova Southeastern University and the Miami Veterans
+      Affairs GRECC, not the University of Miami. The full text says only that the patients 'were recruited
+      (2007-2012) at the Department of Medicine, University of Miami Miller School of Medicine'; no record
+      says the patients came from Klimas. The group field is what independence between studies is judged
+      from, so the wrong institution and the unsourced attribution matter.
+    fix: Write the group as the records give it, for example 'Theoharides TC, Institute for Neuro-Immune
+      Medicine, Nova Southeastern University, USA; patients recruited at the University of Miami Miller
+      School of Medicine', and drop the attribution of the patients to Klimas NG.
+    class: decisive
+    targets:
+    - studies[pmid:42327760].group
+  - operation: null
+    severity: advisory
+    problem: The group fields of pmid:10884641 (Gallagher GT, Harvard School of Dental Medicine), pmid:11570618
+      (Baraniuk JN, Georgetown University) and pmid:8568124 (Peterson PK, Hennepin County Medical Center)
+      put the last author at an affiliation the cached record attaches only to the first author (Woo SB,
+      Repka-Ramirez MS, Steinberg P); the last authors have no affiliation in the records. The institution
+      is the paper's only listed affiliation, so this is a convention, not a wrong fact.
+    fix: Optionally name the first author with the affiliation, or write that the affiliation is the paper's
+      only listed one.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] ('No other study on this card has measured mast cells ... against a control
+      group') and the explains_pem badge reason ('No study on this card measured post-exertional malaise
+      directly') are statements about every study on the card but cite only one or two of them. Both are
+      correct against the cached records (no other study measured mast cells or mediators against controls
+      with a verified case definition; every study has measures_pem false).
+    fix: Optionally cite every study the statement covers.
+  - operation: null
+    severity: advisory
+    problem: pmid:29223146 (ICC, controlled, n=11 patients, at least half of the 18 in pmid:27362406)
+      found no difference in the maturity markers CD34 and FcεRI. The card says the records do not show
+      whether it measures the same thing as the first study's share of blood mononuclear cells, and sets
+      no contested mark. That is consistent with the abstracts (magnetically separated CD117+/Lin- precursors
+      versus a population among unseparated PBMCs), but the auditor should weigh whether it counts as
+      a comparable-quality contradiction.
+    fix: No change needed unless the auditor reads it as a contradiction.
+audits_run: []

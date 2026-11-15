@@ -249,3 +249,19 @@
   - pmid:42082542
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-15
+  card: mast-cell-activation
+  change: First publication at level 1 after correction round 2; the draft had level 2
+  reason: 'Level 1 holds: one small ICC-defined controlled study of blood mast cells, not replicated by
+    an independent group; no contested mark, both badges no, layer dysfunction, and an associated link
+    to orthostatic intolerance from one IOM 2015 cohort are supported by the records.'
+  sources:
+  - pmid:27362406
+  - pmid:29223146
+  - pmid:11570618
+  - pmid:10884641
+  - pmid:8568124
+  - pmid:41300853
+  - pmid:42327760
+  tier: 2
+  decided_by: ai_audit
