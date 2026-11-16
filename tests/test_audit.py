@@ -221,7 +221,7 @@ def test_a_non_carrier_with_a_cached_full_text_shows_the_abstract_only(ready: En
     loader = loader_for({"90000100": jats("Carrier text."), "90000101": jats(LAST_SENTENCE)})
     text = pipeline.build_audit_context(cfg_of(ready), SLUG, NEW_PMID, loader)
     block = record_block(text, PAPER)
-    assert "Abstract only (not a carrier of the level, a badge or the contested mark)" in block
+    assert "Abstract only (not a carrier of the level, a badge, the contested mark or a link)" in block
     assert "A total of 60 patients and 55 controls were compared." in block  # the abstract is there
     assert LAST_SENTENCE not in text and "90000101" not in loader.asked
     assert "Carrier text." in record_block(text, CITED)
@@ -1230,3 +1230,75 @@ def test_apply_round_l_refuses_a_second_run_and_leaves_the_first_files_alone(rea
     assert apply_l(ready, lambda ops: ops["operations"][0].update(value=1)) == 1
     assert "round L already exists" in capsys.readouterr().err
     assert (checks.read_bytes(), applied.read_bytes()) == before
+
+
+# --- the sources of a link are carriers too (DECISIONS 2026-11-16) -----------------------------------------------
+
+LINK_ONLY = "pmid:90000101"  # cited only in links[0].sources of the card below
+SIGNAL_ONLY = "pmid:90000102"  # cited only in an early signal: not a carrier
+FULL_HIDDEN = "HIDDEN-FULLTEXT-SENTENCE-8c2f is only in the cached full text."
+
+
+def link_card(env: Env) -> None:
+    """The draft card with one link whose source is LINK_ONLY and an early signal whose source is SIGNAL_ONLY."""
+    path = env.drafts / f"{SLUG}.yaml"
+    card = yaml.safe_load(path.read_text(encoding="utf-8"))
+    card["links"] = [
+        {"text": "A fictional link.", "sources": [LINK_ONLY], "to": "question:fictional", "support": "proposed"}
+    ]
+    card["early_signals"][0]["sources"] = [SIGNAL_ONLY]
+    for study_id in (LINK_ONLY, SIGNAL_ONLY):
+        card["studies"].append({**card["studies"][0], "id": study_id})
+    path.write_text(yaml.safe_dump(card, sort_keys=False), encoding="utf-8")
+
+
+def test_a_study_cited_only_in_a_link_is_a_carrier_and_one_cited_only_in_a_signal_is_not(ready: Env, tmp_path: Path):
+    link_card(ready)
+    card = pipeline._load_card(ready.drafts / f"{SLUG}.yaml")
+    assert LINK_ONLY in pipeline.carrier_ids(card) and SIGNAL_ONLY not in pipeline.carrier_ids(card)
+    loader = loader_for({"90000100": jats("Carrier."), "90000101": jats(LAST_SENTENCE), "90000102": jats("Hidden.")})
+    out = tmp_path / "card-audit"
+    argv = ["audit-plan", "--card", SLUG, "--out", str(out), *ready.dir_args]
+    assert pipeline.main(argv, fulltext=loader, out=ready.out.append) == 0
+    text = (out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8")
+    link_block = record_block(text, LINK_ONLY)
+    assert LAST_SENTENCE in link_block and "Not truncated (" in link_block and "Abstract only" not in link_block
+    signal_block = record_block(text, SIGNAL_ONLY)
+    assert "Abstract only (not a carrier of the level, a badge, the contested mark or a link)" in signal_block
+    assert "Hidden." not in text and "90000102" not in loader.asked
+
+
+def test_a_link_source_with_no_cached_full_text_gets_the_abstract_and_the_plain_statement(ready: Env, tmp_path: Path):
+    link_card(ready)
+    out = tmp_path / "card-audit"
+    argv = ["audit-plan", "--card", SLUG, "--out", str(out), *ready.dir_args]
+    assert pipeline.main(argv, fulltext=loader_for({}), out=ready.out.append) == 0
+    block = record_block((out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8"), LINK_ONLY)
+    assert "FULL TEXT NOT CACHED: only the abstract is given." in block and "Abstract:" in block
+
+
+def test_record_audit_accepts_a_quote_from_a_link_source_full_text_and_refuses_one_from_a_non_source(
+    ready: Env, tmp_path: Path, monkeypatch, capsys
+):
+    link_card(ready)
+    monkeypatch.setattr(pipeline.citations.CacheReader, "fulltext", lambda self, pmid: FULL_HIDDEN)
+    out = tmp_path / "card-audit"
+    argv = ["audit-plan", "--card", SLUG, "--out", str(out), *ready.dir_args]
+    assert pipeline.main(argv, fulltext=loader_for({"90000100": jats("C.")}), out=ready.out.append) == 0
+    context = (out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8")
+    assert pipeline._abstract_only_ids(context) == {SIGNAL_ONLY}  # follows from carrier_ids: the link source is out
+
+    def run(source: str) -> int:
+        data = {
+            k: v for k, v in audit_data(parts=part_with(evidence=[{"source": source, "quote": FULL_HIDDEN}])).items()
+        }
+        data.pop("paper")
+        path = tmp_path / "rec.yaml"
+        path.write_text(yaml.safe_dump(data), encoding="utf-8")
+        argv = ["record-audit", "--card", SLUG, "--file", str(path), "--out", str(out), *ready.dir_args]
+        return pipeline.main(argv, out=ready.out.append)
+
+    assert run(LINK_ONLY) == 0
+    capsys.readouterr()
+    assert run(SIGNAL_ONLY) == 1  # a study that is a source of neither is refused as before
+    assert "is not found word for word in the cached record of " + SIGNAL_ONLY in capsys.readouterr().err
