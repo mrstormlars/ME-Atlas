@@ -13,17 +13,23 @@ items:
     - pmid:9757853
     source_hash: 64beed09b84709fe28b74d16eb24a2ec23caa8f146aee9c84548ad3ba0a5c36e
   level_reason[0]:
-    text: En studie fra Dinan-gruppen med 14 pasienter diagnostisert etter CDC-kriteriene (versjon ikke oppgitt, så definisjonen
-      krever ikke PEM) og 14 friske frivillige ga kortikotropinfrigjørende hormon (CRH), hjernens signal som setter i gang
-      HPA-aksen. Frigjøringen av ACTH, hypofysehormonet som stimulerer binyrene, og av kortisol var lavere hos pasientene;
-      basalt ACTH og kortisol skilte seg ikke. Kortet er på nivå 2 på grunn av denne studien. En annen studie fra samme gruppe,
-      med 20 pasienter og 20 friske frivillige, fant en mindre økning i kortisol etter en lav dose (1 mikrogram) ACTH; 9 av
-      20 pasienter og 2 av 20 frivillige besto ikke testen ved en grense som forfatterne kaller vilkårlig. Ingen annen gruppe
-      har gjentatt noen av testene med samme resultat.
+    text: En studie fra Dinan-gruppen med 14 pasienter diagnostisert etter CDC-kriteriene (versjon ikke oppgitt, så diagnosekriteriene
+      krever ikke PEM) og 14 friske frivillige ga 100 mikrogram ovint kortikotropinfrigjørende hormon (CRH), hjernens signal
+      som setter i gang HPA-aksen. Frigjøringen av ACTH, hypofysehormonet som stimulerer binyrene, og av kortisol var lavere
+      hos pasientene; basalt ACTH og kortisol skilte seg ikke. En studie med 30 kvinner og 25 friske kontroller (Fukuda, Canadian
+      og Institute of Medicine criteria) rapporterte også lavere ACTH-/kortisolnivåer; den er en kontrollert studie med
+      anerkjente diagnosekriterier og støtter også nivå 2, forenlig med hver av de to delene av kjernepåstanden, selv om sammendraget
+      ikke sier om verdiene var hvileverdier eller stimulerte verdier. En andre studie fra Dinan-gruppen, med 20 pasienter
+      og 20 friske frivillige, fant en mindre økning i kortisol etter en lav dose (1 mikrogram) ACTH; 9 av 20 pasienter og
+      2 av 20 frivillige besto ikke testen ved en grense som forfatterne kaller vilkårlig. En tidligere studie der diagnosekriteriene
+      ikke er verifisert, fant et mindre ACTH-svar på CRH, så den kan ikke telle med. Ingen annen gruppe har gjentatt noen
+      av Dinan-testene med samme resultat og verifiserte diagnosekriterier.
     sources:
     - pmid:9669518
+    - pmid:34254637
     - pmid:9713562
-    source_hash: caf7cabb6dd2435f6a5aac68169f512cba609b5e26db09dfdae38c5e683116c8
+    - pmid:1659582
+    source_hash: 8f80bdf59f3acf6fef23e1887a2e249671e10f00d89de410de8df605c1a2c4a7
   level_reason[1]:
     text: En studie uten felles forfattere med Dinan-studiene testet 37 pasienter som oppfylte CDC-kriteriene (versjon ikke
       oppgitt) og 28 friske kontroller. Fritt kortisol i urin over 24 timer var lavere hos pasientene (antall målt er ikke

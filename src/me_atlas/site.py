@@ -48,6 +48,8 @@ DEFAULT_CONTENT_DIR = PACKAGE_DIR.parents[1] / "content"
 BUILD_MARKER = ".me-atlas-build"
 DEFAULT_LANGUAGE = i18n.DEFAULT_LANGUAGE
 LANGUAGE_STORAGE_KEY = "me-atlas-lang"
+REPO_URL = "https://github.com/mrstormlars/ME-Atlas"
+REPO_ISSUES_URL = REPO_URL + "/issues/new/choose"
 
 # Case definitions: glossary term for the label (or None) and flag key (see _macros.html). The labels are in the
 # string files (case.<id>); the flags' words are flag.no_pem and flag.broad.
@@ -862,7 +864,13 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             source_label=strings["ref.source"],
             sources_label=strings["ref.sources"],
         )
-        auto = {"lroot": "../" * depth, "root": "../" * (depth + (0 if default else 1)), "built": shared.built}
+        auto = {
+            "lroot": "../" * depth,
+            "root": "../" * (depth + (0 if default else 1)),
+            "built": shared.built,
+            "repo": REPO_URL,
+            "repo_issues": REPO_ISSUES_URL,
+        }
 
         def txt(key: str) -> str:
             try:

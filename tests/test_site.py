@@ -1197,6 +1197,7 @@ def test_no_page_loads_anything_from_another_host(proj):
     card = cardlib.load_card(proj.cards / "fictional-hypothesis.yaml")
     allowed = {site.study_url(s.id) for s in card.studies} | {w.url for w in card.working_on_it}
     allowed |= {site.study_url(s) for e in changelog_entries() for s in e["sources"]}
+    allowed |= {site.REPO_URL, site.REPO_ISSUES_URL}  # the footer's error-report line
     seen: set[str] = set()
     for path in html_files(proj.out):
         html = path.read_text(encoding="utf-8")
@@ -1595,6 +1596,7 @@ def test_the_english_tree_is_unchanged_apart_from_the_selector_hreflang_tags_and
             '<li><a href="../map.html"',
             '<li><a href="gaps.html"',
             '<li><a href="../gaps.html"',
+            "<p>Found an error on a card",  # the footer's error-report line
         )
         return "".join(line for line in text.splitlines(keepends=True) if not line.lstrip().startswith(added))
 

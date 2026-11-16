@@ -31,6 +31,10 @@ az storage blob upload-batch --account-name meatlaslpr4z --auth-mode key -s buil
 
 The pattern leaves out the `.me-atlas-build` marker. Files removed from the build stay online until deleted from the `$web` container (`az storage blob delete-batch --account-name meatlaslpr4z --auth-mode key -s '$web'` empties it before an upload). Needs the Azure CLI signed in to the account that owns the storage account.
 
+## Public site on GitHub Pages
+
+`.github/workflows/pages.yml` builds the site with `uv run python -m me_atlas.site build` (approved cards only, never `--drafts`) on every push to `main` and on manual start, uploads `build/` and deploys it. Every `uses:` is pinned to a commit SHA; `tests/test_pages_workflow.py` checks the trigger, the permissions, the pinning and that the build command has no `--drafts`. The workflow cannot run until the repository is public and Pages is enabled with source "GitHub Actions" (a setting on GitHub, not in the repository). The expected address is <https://mrstormlars.github.io/ME-Atlas/> (Norwegian: `nb/`). Founder ruling 2026-11-16 in DECISIONS.
+
 ## Pages
 
 | File | Content |
@@ -43,7 +47,7 @@ The pattern leaves out the `.me-atlas-build` marker. Files removed from the buil
 | `glossary.html` | Every glossary term used on at least one built page, alphabetical, with links back to the pages that use it. |
 | `static/site.css`, `static/site.js` | The only stylesheet and script. |
 
-Every page has the navigation (front page, what changed, methods, glossary), a language selector, `hreflang` links, a small script that remembers the chosen language, and a footer (`footer.review`) saying that the content, including every evidence level, is drafted, checked and decided by AI tools and that no medical or research expert has reviewed it, with the build date. There is no error-report or contact line: none is added until the founder names a contact address. The glossary entry for "contested" says an AI auditor decides it and that no expert has reviewed it (`content/glossary.yaml`, Norwegian in `content/glossary.nb.yaml`).
+Every page has the navigation (front page, what changed, methods, glossary), a language selector, `hreflang` links, a small script that remembers the chosen language, and a footer (`footer.review`) saying that the content, including every evidence level, is drafted, checked and decided by AI tools and that no medical or research expert has reviewed it, with the build date. It also has an error-report line (`footer.report`) that sends a reader to the GitHub issue chooser (`https://github.com/mrstormlars/ME-Atlas/issues/new/choose`) and to the repository; the two addresses are the constants `REPO_URL` and `REPO_ISSUES_URL` in `site.py`. The line promises no response time and no address is published. The glossary entry for "contested" says an AI auditor decides it and that no expert has reviewed it (`content/glossary.yaml`, Norwegian in `content/glossary.nb.yaml`).
 
 ### Sources in text
 
@@ -75,4 +79,4 @@ Rules (checked on every build and in `tests/test_glossary.py`): terms and aliase
 
 Body text is 18 px; secondary text (ladder key, legend, readouts, study details, chips, footer, banner) is 16 px (0.889rem) and never smaller, which a test enforces on the stylesheet (only the visually hidden `.sr` rule is exempt); the layout reflows at 200% text size and at 375 px width (tables become stacked lists); tap targets are at least 44 px (marked terms and reference links get an invisible 44 px hit area that does not change the line height); focus is outlined; reduced motion is respected; no pop-ups. Colours are CSS variables at the top of `site.css`; `tests/test_site.py` checks the text pairs against 4.5:1 and chart marks and the focus outline against 3:1. If you change a colour, run the tests. The browser check (375 px, keyboard, one glossary term by focus and click) is manual.
 
-Not built: search, filters, languages other than English and Norwegian, dark mode, hosting of the public site (only the private preview above). The generated `build/` directory is gitignored.
+Not built: search, filters, languages other than English and Norwegian, dark mode. The generated `build/` directory is gitignored.
