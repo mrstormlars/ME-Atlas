@@ -33,12 +33,9 @@ BROAD_TARGETS = [
     "contested_reason[0]",
     "contested_reason[1]",
     "level_reason[0]",
-    "level_reason[1]",
-    "subgroups[0]",
     "early_signals[0]",
     "badges.diagnostic_marker",
     "badges.explains_pem",
-    "links[0]",
     "studies[pmid:90000100]",
 ]
 CONTESTED_LAST = {"op": "remove_paragraph", "field": "contested.reason", "index": 1}

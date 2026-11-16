@@ -498,3 +498,42 @@ def test_a_pre_review_that_record_review_would_refuse_does_not_count(corr: Corr,
     assert corr.main("correction-plan", SLUG, "--out", str(corr.dir)) == 0
     text = (out / f"{SLUG}-C1.md").read_text(encoding="utf-8")
     assert "Targets the findings name (draft numbering" in text  # B4: the allowed targets are written
+
+
+def test_a_target_that_does_not_exist_on_the_card_is_refused(corr: Corr, capsys):
+    assert corr.pre_review() == 0
+    pre = corr.dir / "review" / f"{SLUG}-card-C1-pre.json"
+    good = json.loads(pre.read_text(encoding="utf-8"))
+    args = ("--card-review", "--pre", "--round", "C1")
+
+    def with_targets(*targets: str) -> dict:
+        entries = [e | {"targets": list(targets)} for e in good["audit_targets"]]
+        return good | {"audit_targets": entries}
+
+    write(pre, with_targets("links[3]"))  # the draft has no links
+    assert record(corr, *args) == 1
+    assert "target links[3] does not exist in the draft: links has 0 item(s)" in capsys.readouterr().err
+    write(pre, with_targets("contested_reason[2]"))
+    assert record(corr, *args) == 1
+    assert "contested_reason has 2 item(s)" in capsys.readouterr().err
+    write(pre, with_targets("studies[pmid:12345]"))
+    assert record(corr, *args) == 1
+    assert "study pmid:12345 is not on the card" in capsys.readouterr().err
+    finding = must_fix(targets=["links[0]"])  # a finding names a missing item too
+    write(pre, good | {"verdict": "reject", "findings": [finding]})
+    assert record(corr, *args) == 1
+    write(pre, with_targets("contested_reason[1]", "studies[pmid:90000100].finding", "level", "contested", "layer"))
+    assert record(corr, *args) == 0  # what exists, and the always-present parts, pass
+    assert pipeline.pre_targets(pipeline._load_card_review(pipeline_cfg(corr), SLUG, "C1-pre")) >= {"level"}
+
+
+def test_a_correction_review_is_checked_against_the_applied_text_of_its_attempt(corr: Corr, capsys):
+    assert corr.plan() == 0
+    remove = {"op": "remove_paragraph", "field": "contested.reason", "index": 0}
+    assert corr.apply(ops_data(remove)) == 0  # one contested paragraph is left
+    cr = corr.dir / "review" / f"{SLUG}-rC1.json"
+    write(cr, {"card": SLUG, "verdict": "reject", "findings": [must_fix(operation=0, targets=["contested_reason[1]"])]})
+    assert record(corr, "--round", "C1") == 1
+    assert "target contested_reason[1] does not exist in the applied text of C1" in capsys.readouterr().err
+    write(cr, {"card": SLUG, "verdict": "reject", "findings": [must_fix(operation=0, targets=["contested_reason[0]"])]})
+    assert record(corr, "--round", "C1") == 0

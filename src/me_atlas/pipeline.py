@@ -1587,7 +1587,7 @@ def _load_card_review(cfg: Config, slug: str, tag: str) -> ReviewFile | None:
         return None
     if review.card != slug or review.paper is not None:
         return None
-    if tag.endswith("-pre") and _correction_review_target_problems(cfg, slug, review, True, correction_number(tag)):
+    if tag.endswith("-pre") and _correction_review_target_problems(cfg, slug, review, True, tag):
         return None  # the step 0 review counts only when `record-review` would accept it (targets, audit_targets)
     return review
 
@@ -1947,9 +1947,37 @@ def apply_ops_file(
 # ---------------------------------------------------------------------------
 
 
-def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool, k: int) -> list[str]:
+def _missing_target_problems(card: cards.Card, where: str, targets: Sequence[str]) -> list[str]:
+    """The targets that name something ``card`` does not have: an indexed item out of range, a study id not on the
+    card. ``level``, ``contested``, the badges and ``layer`` always exist."""
+    counts = {
+        "core_claim": 1,
+        "level_reason": len(cards.paragraphs(card.level_reason)),
+        "contested_reason": len(cards.paragraphs(card.contested.reason)) if card.contested else 0,
+        "badge_reasons.diagnostic_marker": len(_field_paras(card, "badges.diagnostic_marker.reason")),
+        "badge_reasons.explains_pem": len(_field_paras(card, "badges.explains_pem.reason")),
+        "subgroups": len(card.subgroups),
+        "early_signals": len(card.early_signals),
+        "links": len(card.links),
+    }
+    ids = {study.id for study in card.studies}
+    found = []
+    for target in dict.fromkeys(targets):
+        if (m := _INDEXED_TARGET.match(target)) and m.group(1) != "core_claim":
+            n = counts[m.group(1)]
+            if int(m.group(2)) >= n:
+                found.append(f"target {target} does not exist in {where}: {m.group(1)} has {n} item(s)")
+        elif (m := re.match(r"^studies\[([^\]]+)\]", target)) and m.group(1) not in ids:
+            found.append(f"target {target} does not exist in {where}: study {m.group(1)} is not on the card")
+    return found
+
+
+def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool, tag: str) -> list[str]:
     """B1, B2: every ``must_fix`` of a correction-path review carries ``targets`` (and a ``target`` is one of them);
-    the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other."""
+    the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other.
+    Every target names something that exists: in the draft for the ``--pre`` review, in the applied text of the
+    attempt for a correction review or a whole-card review."""
+    k = correction_number(tag)
     problems = [
         f"findings[{i}] is a must_fix without `targets`: name the parts of the card it is about (a non-empty list)"
         for i, f in enumerate(review.findings)
@@ -1960,6 +1988,17 @@ def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFil
         for i, f in enumerate(review.findings)
         if f.target is not None and f.targets and f.target not in f.targets
     ]
+    text_path = cfg.drafts_dir / f"{slug}.yaml" if pre else cfg.applied_dir(slug, None, tag) / f"{slug}.yaml"
+    if text_path.is_file():
+        try:
+            on_card = _load_card(text_path)
+        except (OSError, PipelineError, ValidationError, yaml.YAMLError):
+            on_card = None
+        if on_card is not None:
+            named = [t for f in review.findings for t in f.targets or []]
+            named += [t for e in review.audit_targets or [] for t in e.targets]
+            where = "the draft" if pre else f"the applied text of {tag}"
+            problems += _missing_target_problems(on_card, where, named)
     if not pre:
         if review.audit_targets is not None:
             problems.append("`audit_targets` belongs to the --pre review only")
@@ -2022,7 +2061,7 @@ def record_review(
             if finding.severity == "must_fix" and finding.klass is None
         ]
     if pre or re.fullmatch(rf"C[1-9]\d*{ATTEMPT_RE}", str(n)):
-        problems += _correction_review_target_problems(cfg, slug, review, pre, correction_number(str(n)))
+        problems += _correction_review_target_problems(cfg, slug, review, pre, str(n))
     if problems:
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
     event = {"event": "record-review", "card": slug, "paper": review.paper, "round": n, "verdict": review.verdict}
