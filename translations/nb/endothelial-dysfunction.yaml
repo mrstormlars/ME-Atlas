@@ -135,6 +135,14 @@ items:
     sources:
     - pmid:42625188
     source_hash: 986fc1df93a3c8d061ee03e71ab7267b0073cf279f4ac06c393ce9f6edb79713
+  links[0]:
+    text: En oversiktsartikkel fra 2025 foreslår at endoteldysfunksjon, drevet av oksidativt og nitrosativt stress og av autoantistoffer
+      som forstyrrer reseptorer som regulerer blodkar, kan forklare ortostatisk intoleranse og redusert blodstrøm til vev
+      ved ME/CFS. Oversiktsartikkelen rapporterer ingen egne pasientdata, og den beskriver modellen sin som konseptuell, ikke
+      kvantitativt validert.
+    sources:
+    - pmid:41516145
+    source_hash: b165fbb0d0ccbb92dae26445a10341564d91764464278eae34b00d065b5a464f
   studies[pmid:32154656].finding:
     text: En studie med n=35 pasienter og 20 friske kontroller fant en lavere reaktiv hyperemi-indeks hos pasientene, der
       51 % av pasientene og 20 % av kontrollene lå under grenseverdien for endoteldysfunksjon; pasienter under den rapporterte
