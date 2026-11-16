@@ -23,32 +23,32 @@ items:
     - pmid:32140630
     source_hash: 2782d4c3f8ebb9b018c1687d3e9979eb5aafb78fef7841a72e86fc16f83eb680
   level_reason[1]:
-    text: En senere studie fra den samme klinikken, som ikke oppgir diagnosekriteriene sine, fant et lignende fall under sitting
-      hos 100 alvorlig syke pasienter (24,5%, mot 0,4% hos 15 friske kontroller). Fordi den kommer fra den samme gruppen,
-      teller den ikke som en replikasjon fra andre.
+    text: En senere studie fra den samme klinikken fant et lignende fall under sitting hos 100 alvorlig syke pasienter (24,5%,
+      mot 0,4% hos 15 friske kontroller). Fordi den kommer fra den samme gruppen, teller den ikke som en gjentakelse fra andre.
     sources:
     - pmid:33050553
     - pmid:32140630
-    source_hash: c6e516ad120161377ec2924187f12f889084acd787e1d55eeb60a083d0096829
+    source_hash: a4dd7fabc72569999176d7ab05351cc303bf740f6b8eb193acf4473ae68a880d
   level_reason[2]:
-    text: En tidligere kontrollert studie fra Johns Hopkins, av 23 pasienter som oppfylte CDC-kriteriene (versjon ikke oppgitt,
-      som ikke krever PEM) og 14 friske kontroller, fant en unormal respons på oppreist tilt hos 22 av 23 pasienter og 4 av
-      14 kontroller, inkludert trinn med legemidlet isoproterenol; i det første trinnet, uten legemidler, hos 70% av pasientene
-      og ingen kontroller. En av forfatterne er også forfatter av den nederlandske studien, så de to er ikke uavhengige.
+    text: En tidligere kontrollert studie fra Johns Hopkins University School of Medicine, av 23 pasienter som oppfylte CDC-kriteriene
+      (versjon ikke oppgitt, som ikke krever PEM) og 14 friske kontroller, fant en unormal respons på oppreist tilt hos 22
+      av 23 pasienter og 4 av 14 kontroller, inkludert trinn med legemidlet isoproterenol; i det første trinnet, uten legemidler,
+      hos 70% av pasientene og ingen kontroller. En av forfatterne er også forfatter av den nederlandske studien, så de to
+      er ikke uavhengige.
     sources:
     - pmid:7674527
     - pmid:32140630
-    source_hash: eecc48c8480d329c5ef5af5adc1cf5e583bdd5cbb1f1641e874693282dbaa00f
+    source_hash: c5bac1862c9484f25d4b2cc8f7ed94b21c9f5d42ceca3f24030647c84057e26e
   level_reason[3]:
-    text: En uavhengig studie fra New Jersey, av 62 pasienter som oppfylte Fukuda-definisjonen og 35 kontroller, fant en unormal
-      ståtest hos 53% av pasientene og 20% av kontrollene. Forskjellen lå i lavt karbondioksid i utåndingsluften ved stående
-      stilling (hypokapni; 20,6% mot 2,9%); andelene med ortostatisk takykardi og med fall eller økning i blodtrykket skilte
-      seg ikke signifikant. Den målte ikke blodstrømmen til hjernen, så kortet regner den ikke som en replikasjon av det nederlandske
-      funnet.
+    text: En uavhengig studie fra New Jersey, av 62 pasienter som oppfylte Fukuda-kriteriene og 35 kontroller, fant en unormal
+      ståtest hos 53% av pasientene og 20% av kontrollene. Bare andelen med lavt karbondioksid i utåndingsluften ved stående
+      stilling (hypokapni) skilte seg signifikant (20,6% mot 2,9%); andelene med ortostatisk takykardi og med fall eller økning
+      i blodtrykket skilte seg ikke signifikant. Studien målte ikke blodstrømmen til hjernen, så kortet regner den ikke som
+      en gjentakelse av det nederlandske funnet.
     sources:
     - pmid:17263876
     - pmid:32140630
-    source_hash: b90d74324e9f35fe7c6bfd37d185740a6ce297ae781ddfc9f6459477dbee5cfa
+    source_hash: 80bb802eca57f93c202d401122494faf69c7f5f4c6fba378437da72e6e735bcc
   level_reason[4]:
     text: Mot funnene om blodtrykk og hjertefrekvens fant en befolkningsbasert studie fra Wichita, av 58 pasienter som oppfylte
       Fukuda-definisjonen og 55 friske kontroller, ortostatisk ustabilitet på tilt hos 30% av de kvalifiserte pasientene og
@@ -61,18 +61,18 @@ items:
     source_hash: 094f695c14c5a405ab51b4f26e35f03ed7f02b8e347f4cd9747a555373178f82
   level_reason[5]:
     text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe med kontrollerte diagnosekriterier har gjentatt fallet i blodstrømmen
-      til hjernen. To studier fra et laboratorium i New York fant lavere blodstrømshastighet i hjernen ved tilt (i den ene
-      et fall på 22,5% hos 15 pasienter mot 8,7% hos 11 kontroller), og en studie fra Osaka av 28 unge pasienter og 20 kontroller
-      fant tregere gjenoppretting av oksygen i hjernen ved stående stilling. En studie fra Johns Hopkins av 26 pasienter og
-      23 kontroller fant ingen forskjell i blodstrømshastighet på noe av de målte tidspunktene (liggende, 1 og 5 minutter
-      etter tilt, 5 og 1 minutter før slutten, og ved avbrudd). Diagnosekriteriene i alle fire er ikke kontrollert ennå, så
-      ingen av dem kan støtte eller motsi kortet.'
+      til hjernen. To studier fra New York Medical College fant lavere blodstrømshastighet i hjernen ved tilt (i den ene et
+      fall på 22,5% hos 15 pasienter mot 8,7% hos 11 kontroller), og en studie fra Osaka Medical College av 28 unge pasienter
+      og 20 kontroller fant tregere gjenoppretting av oksygen i hjernen ved stående stilling. En studie fra Johns Hopkins
+      Medical Institutions av 26 pasienter og 23 kontroller fant ingen forskjell i blodstrømshastighet på noe av de målte
+      tidspunktene (liggende, 1 og 5 minutter etter tilt, 5 og 1 minutter før slutten, og ved avbrudd). Diagnosekriteriene
+      i alle fire er ikke kontrollert ennå, så ingen av dem kan støtte eller motsi kortet.'
     sources:
     - pmid:22180650
     - pmid:25277740
     - pmid:12006954
     - pmid:12593133
-    source_hash: fbbbbd342b39cd7cb07f766d1f09a447f38e2a38e080c05d553cfa0562b48a7c
+    source_hash: 3c70117142cdbfa8cd47e37fc351f7e4c4acac56955352e619d5fc14c261bc92
   level_reason[6]:
     text: Kortet når ikke nivå 4. I en placebokontrollert studie av 100 pasienter som oppfylte CDC-kriteriene og hadde et
       fall i blodtrykket ved tilt, ble 7 av 50 som fikk fludrokortison og 5 av 50 som fikk placebo bedre med minst 15 poeng
@@ -87,33 +87,35 @@ items:
   level_reason[7]:
     text: To små studier endret blodstrømmen til hjernen direkte. I en randomisert crossover-studie av 16 pasienter fra den
       nederlandske klinikken reduserte kompresjonsstrømper fallet i blodstrømmen til hjernen under tilt (14% med strømper,
-      25% uten); symptomer var ikke et utfallsmål, og artikkelen oppgir ikke diagnosekriteriene. I studien fra New York av
-      15 pasienter reduserte fenylefrin, som hever blodtrykket, fallet i blodstrømshastighet ved tilt (8,1% mot 22,5% ubehandlet)
-      og den tregere prestasjonen på en oppgave for arbeidsminne; diagnosekriteriene er ikke kontrollert ennå. Ingen av dem
-      kan telle med for nivå 4.
+      25% uten); symptomer var ikke et utfallsmål, og artikkelen oppgir ikke diagnosekriteriene. I studien fra New York Medical
+      College av 15 pasienter reduserte fenylefrin, som hever blodtrykket, fallet i blodstrømshastighet ved tilt (8,1% mot
+      22,5% ubehandlet) og den tregere prestasjonen på en oppgave for arbeidsminne; diagnosekriteriene er ikke kontrollert
+      ennå. Ingen av dem kan telle med for nivå 4.
     sources:
     - pmid:35056360
     - pmid:25277740
-    source_hash: 9a9cd895d845df92977ce28463ccbcd097d8fe1898af69a50aee9183030cfac5
+    source_hash: 41f7d6c69a97e83bd0320f2593a44683d20fbc730557f4b08c319c2951337c5d
   badge_reasons.diagnostic_marker[0]:
     text: Den nederlandske studien satte en nedre grense for normalt ved et fall på 13% i blodstrømmen til hjernen, fra de
-      44 friske kontrollene, og fant et større fall hos 82% til 100% av pasientene avhengig av hjertefrekvens og blodtrykksrespons.
-      Den senere sittestudien kom fra den samme klinikken og oppgir ikke diagnosekriteriene sine. Ingen uavhengig pasientgruppe
+      44 friske kontrollene, og fant et større fall hos 82% til 100% av pasientene, avhengig av hjertefrekvens og blodtrykksrespons.
+      Den senere sittestudien kom fra den samme klinikken, så den er ikke en uavhengig pasientgruppe. Ingen uavhengig pasientgruppe
       har testet denne grenseverdien.
     sources:
     - pmid:32140630
     - pmid:33050553
-    source_hash: ee606602d489519b85fc5c869658d581f2414a3192ddb3e4ee0404ade295bb34
+    source_hash: 5abcd7ed1ec13a45e0b6c4c4cc42a71709c02cbac01355b3073ae73240adfbe7
   badge_reasons.explains_pem[0]:
     text: 'Ingen studie på nivå 2 eller høyere måler PEM og kobler den til blodstrømmen til hjernen hos de samme pasientene.
-      En studie fra den nederlandske klinikken, av pasienter som oppfylte både Fukuda-definisjonen og International Consensus
-      Criteria, fulgte skårer for smerte, utmattelse og konsentrasjon etter en tilt-test hos 278 pasienter og 30 friske kontroller:
-      skårene økte hos pasientene og var fortsatt høyere etter 7 dager, mens kontrollenes ikke endret seg. Størrelsen på fallet
-      i blodstrømmen til hjernen hang ikke sammen med endringen i symptomer. En passiv tilt er ortostatisk stress, ikke fysisk
-      eller mental anstrengelse, så kortet regner den ikke som et direkte mål på PEM.'
+      En studie fra den nederlandske klinikken, av pasienter som oppfylte både diagnosekriteriene for CFS og diagnosekriteriene
+      for ME, fulgte skårer for smerte, utmattelse og konsentrasjon etter en tilt-test hos 278 pasienter og 30 friske kontroller:
+      skårene økte hos pasientene og var fortsatt høyere etter 7 dager. Hos kontrollene var skårene uendret etter tilten,
+      og etter 7 dager hadde bare utmattelsesskåren endret seg, ved å falle. Studien rapporterer ingen signifikant sammenheng
+      mellom fallet i blodstrømmen til hjernen og skårene for smerte, utmattelse eller konsentrasjon på de vurderte tidspunktene,
+      uten å vise dataene. En passiv tilt er ortostatisk stress, ikke fysisk eller mental anstrengelse, så kortet regner den
+      ikke som et direkte mål på PEM.'
     sources:
     - pmid:33585505
-    source_hash: f55b727b534877d87d219295b6b3125c40e6396206a9c22409423328204d46ba
+    source_hash: cf322ab655b753e52d7d9c9e0c36ebbad6f87fdf3f8a10942744fc2d16edc6ff
   subgroups[0]:
     text: 'Studier beskriver flere mønstre ved stående stilling eller tilt: POTS, forsinket ortostatisk hypotensjon, et fall
       i blodstrømmen til hjernen med normal hjertefrekvens og blodtrykksrespons, og lavt karbondioksid i utåndingsluften (hypokapni),
@@ -210,6 +212,8 @@ items:
     source_hash: 3d8c27fcc97f49b49c18dfe3b693416645e9b8492bf94a46d884d4342c7ac21d
   studies[pmid:33585505].finding:
     text: En studie av n=278 pasienter og 30 friske kontroller fant at skårer for smerte, utmattelse og konsentrasjon økte
-      etter en tilt-test hos pasientene og fortsatt var forhøyet etter 7 dager, var uendret hos kontrollene, og ikke hang
-      sammen med størrelsen på fallet i blodstrømmen til hjernen.
-    source_hash: 0faf0154c0d1b82efc7679eef80c7c30c77cca2c31e3cd57f499d98aaba33f3b
+      etter en tilt-test hos pasientene og fortsatt var forhøyet etter 7 dager; hos kontrollene var skårene uendret etter
+      tilten, og etter 7 dager hadde bare utmattelsesskåren endret seg, ved å falle. Det ble ikke funnet noen signifikant
+      sammenheng mellom fallet i blodstrømmen til hjernen og skårene for smerte, utmattelse eller konsentrasjon på de vurderte
+      tidspunktene (data ikke vist).
+    source_hash: 9fd3ead925ebf9a69338ced804e6671a40a0b954884911b4281fc580957a614d

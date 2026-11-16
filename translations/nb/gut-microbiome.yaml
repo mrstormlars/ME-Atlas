@@ -54,15 +54,16 @@ items:
     text: Studiene er uenige om mangfoldet av tarmbakterier. Cornell-studien og den kinesiske studien fant lavere mangfold.
       En polsk studie med 25 pasienter (Fukuda) og 16 kontroller fant færre bakterietyper (lavere artsrikdom), men ingen signifikant
       forskjell i mangfold eller jevnhet. I studien med 106 pasienter var mangfoldet lavere i den enkle sammenligningen, men
-      etter justering ble dette knyttet til irritabel tarm-syndrom heller enn til ME/CFS. En bulgarsk studie hvis diagnosekriterier
-      ennå ikke er kontrollert, fant ingen forskjell i mangfold innen prøver, men små forskjeller i den samlede sammensetningen.
+      etter justering ble dette knyttet til irritabel tarm-syndrom heller enn til ME/CFS. En bulgarsk studie med 76 pasienter
+      som oppfylte IOM 2015-kriteriene og 37 kontroller fant ingen forskjell i mangfold innen prøver, men små forskjeller
+      i den samlede sammensetningen.
     sources:
     - pmid:27338587
     - pmid:41387992
     - pmid:41006438
     - pmid:36758522
     - pmid:42351611
-    source_hash: fb9926a6045dcee5a1ce538255040b420d811fe44e63eca4774e62176eb49645
+    source_hash: 7ea67ed33bdd2b804c5d698718026267101b457b47bd7b5aeb43f7eb66dbd4e2
   level_reason[5]:
     text: Andre studier rapporterer andre bakterier. En studie av norske og belgiske pasienter (diagnosekriterier ennå ikke
       kontrollert) fant mer Alistipes hos norske pasienter, mens den kinesiske studien fant lavere Alistipes; teksten sier
@@ -78,18 +79,18 @@ items:
   level_reason[6]:
     text: Blodmarkører for bakterieprodukter som krysser tarmveggen gir blandede resultater. Cornell-studien fant høyere LPS
       (et bakterietoksin), LPS-bindende protein og løselig CD14 hos pasientene, og en spansk studie med 30 pasienter som oppfylte
-      International Consensus Criteria og 26 kontroller fant høyere LPS, løselig CD14 og zonulin-1. En studie fra Columbia
-      University med 131 pasienter som oppfylte både Fukuda- og Canadian-kriteriene og 86 kontroller fant verken LPS-bindende
-      protein eller løselig CD14 signifikant forhøyet, men fant flere antistoffer mot LPS og flagellin og mer FABP2, en markør
-      for skade på cellene i tarmveggen, som Cornell-studien ikke hadde funnet signifikant forhøyet. Nivået bygger ikke på
-      disse blodmarkørene; trinnene bygger på lavere butyrat i avføring.
+      International Consensus Criteria og 26 kontroller fant høyere LPS, løselig CD14 og zonulin-1. En egen studie fra Columbia
+      University (Alaedini A) med 131 pasienter som oppfylte både Fukuda- og Canadian-kriteriene og 86 kontroller fant verken
+      LPS-bindende protein eller løselig CD14 signifikant forhøyet, men fant flere antistoffer mot LPS og flagellin og mer
+      FABP2, en markør for skade på cellene i tarmveggen, som Cornell-studien ikke hadde funnet signifikant forhøyet. Nivået
+      bygger ikke på disse blodmarkørene; trinnene bygger på lavere butyrat i avføring.
     sources:
     - pmid:27338587
     - pmid:37744357
     - pmid:37396339
     - pmid:36758522
     - pmid:41387992
-    source_hash: 1efdc7fd1a645ed42789ea65c638daf75d7488aeb7b403fe46127a32643c33ea
+    source_hash: b69073dcfa0e5e608ddcbbad83193f9f12e03f846a32bf2997a55bf5f97d59b7
   level_reason[7]:
     text: Ingen kontrollert studie på dette kortet viser at endring av tarmbakteriene endrer sykdommen, så kortet når ikke
       nivå 4. I en randomisert studie med 39 pasienter økte et probiotikum Lactobacillus og Bifidobacteria i avføring; sammendraget
@@ -103,13 +104,14 @@ items:
     source_hash: da7bc2f48c9f77bdaf7a2cce1e9960509e41d797a45ddc109bdaa7154bf742db
   badge_reasons.diagnostic_marker[0]:
     text: Studien med 106 pasienter testet den bakteriebaserte klassifikatoren sin i en andre kohort med 50 pasienter og 50
-      kontroller som den samme forskergruppen hadde samlet inn år tidligere ved de samme amerikanske sentrene; forfatterne
-      skriver at begge kohortene kom fra de samme fem sentrene og at det trengs et bredere geografisk spenn. Ingen studie
-      på dette kortet fra en annen forskergruppe tester markøren.
+      kontroller, rekruttert og prøvetatt år tidligere, som forfatterne kaller en uavhengig ekstern valideringskohort. Begge
+      kohortene kom fra fire av de samme fem amerikanske sentrene, og flere av de samme klinikerne er forfattere på begge
+      artiklene (Levine S, Bateman L, Klimas NG, Montoya JG, Peterson DL). Ingen av artiklene sier om noen pasient er med
+      i begge kohortene, så det kan ikke vises at kohortene er uavhengige pasientgrupper.
     sources:
     - pmid:36758522
     - pmid:28441964
-    source_hash: e7aa373e34a1d52401c01896150a103b15191eb9364dd04e95e4cbcd94808b91
+    source_hash: 892f03d10bfaf97fa3162cb5df68a6743e589e74d2ae56b6a58fec4bfc274443
   badge_reasons.diagnostic_marker[1]:
     text: 'Andre studier på kortet klassifiserte pasienter og kontroller bare innenfor sin egen kohort: Cornell-studien med
       bakterier og blodmarkører, den polske studien med tarmbakterier og den spanske studien med blodmarkører for tarmveggen.'
@@ -127,13 +129,17 @@ items:
     - pmid:26683192
     source_hash: 25b0111b208fee8def392170154401d336e43578143962c6036e2c7e294ee08f
   badge_reasons.explains_pem[1]:
-    text: En treningskohort fra Columbia University med 9 pasienter og 7 kontroller, rekruttert bare etter Fukuda-kriteriene,
-      fant at LPS-bindende protein og løselig CD14 økte etter trening hos kontrollene (P = 0,007, P = 0,008); hos pasientene
-      økte ikke LPS-bindende protein signifikant, og løselig CD14 økte mer moderat (P = 0,021). Artikkelen knytter ikke disse
-      endringene til symptomer.
+    text: En treningskohort med 9 pasienter og 7 kontroller, rekruttert bare etter Fukuda-kriteriene og samlet inn ved Marshfield
+      Clinic og University of Wisconsin-Madison, ble analysert i samme artikkel som studien med 131 pasienter. LPS-bindende
+      protein og løselig CD14 økte etter trening hos kontrollene (P = 0,007, P = 0,008); hos pasientene økte ikke LPS-bindende
+      protein signifikant, og løselig CD14 økte mer moderat (P = 0,021). LPS i blodet økte etter trening hos pasientene (P
+      = 0,008), men ikke hos kontrollene, og IgM-antistoffer mot LPS økte hos pasientene (P = 0,004). Artikkelen knytter ikke
+      disse endringene til symptomer. Begge treningskohortene kommer fra Marshfield Clinic og University of Wisconsin-Madison;
+      artiklene sier ikke om noen deltaker er med i begge.
     sources:
     - pmid:37396339
-    source_hash: 9ec81587d46f5bd4669c4a9d5a89012950eccca2de4e82502aec687384a948b7
+    - pmid:26683192
+    source_hash: d78553c7e30c3105638613f9da65ecb194f88b650822c50e9be710f676456a0a
   subgroups[0]:
     text: Irritabel tarm-syndrom kan markere en undergruppe. I en studie med 50 pasienter og 50 kontroller var bakteriene
       som best skilte pasienter med irritabel tarm-syndrom fra kontrollene, andre enn de som skilte pasienter uten det; i
@@ -150,48 +156,6 @@ items:
     sources:
     - pmid:26683192
     source_hash: 554f97be5e7949768650b0af46d7a7e9b59e16959e311a5e21e8546b3f2f2c3a
-  links[0]:
-    text: En studie med n=106 pasienter som oppfylte både Fukuda-kriteriene og Canadian-kriteriene, og 91 friske kontroller
-      fant selvrapportert irritabel tarm-syndrom hos 35 pasienter og 3 kontroller. Lavere mangfold innenfor prøvene (jevnhet
-      og Shannon-diversitet) ble bare funnet hos pasienter med irritabel tarm-syndrom. Forskjeller i den samlede sammensetningen
-      av tarmbakterier hang ikke sammen med det, og butyrat i avføring var lavere hos pasienter både med og uten det. En tidligere
-      studie med n=50 pasienter og 50 kontroller fra samme forskergruppe fant også at tarmbakteriene var ulike hos pasienter
-      med og uten irritabel tarm-syndrom. Begge studiene kommer fra samme forskergruppe, og ingen uavhengig gruppe har gjentatt
-      dem.
-    sources:
-    - pmid:36758522
-    - pmid:28441964
-    source_hash: 067e1f11a0b38f3866af1e2945b66988d27c8340e99eb0420e84cf968e2d8a22
-  links[1]:
-    text: En oversikt fra 2025 foreslår at endringer i tarmens mikrobiom kan føre til ulike nevrokognitive svekkelser ved
-      ME/CFS gjennom tarm-hjerne-aksen. Dette ble ikke undersøkt direkte hos pasienter.
-    sources:
-    - pmid:41516296
-    source_hash: 85ccfa1482495087519114b5c355ee8d5155fd202b5ee41f601d6c6bcabaa76a
-  links[2]:
-    text: En oversikt fra 2025 foreslår at fordi tarmbakterier også omsetter tryptofan, kan dysbiose endre produksjonen av
-      stoffer fra tryptofan og fenylalanin som lages av tarmbakterier. Det kan muligens påvirke tarmen, hjernen og mikrobiota-tarm-hjerne-aksen.
-      Dette ble ikke undersøkt direkte hos pasienter. Oversikten sier ikke at dette endrer kroppens egen nedbrytning av tryptofan
-      langs kynurenin-veien, som er det det lenkede kortet handler om.
-    sources:
-    - pmid:41516296
-    source_hash: 7e23e5af1e42e21f82fee0c8e8f1ba7d46f50862d8261bc364e988d2e3f99c5e
-  links[3]:
-    text: En oversikt fra 2025 rapporterer at noen forskere mener at overgangen av tarmbakterier eller produktene deres til
-      kroppen, som kan gi betennelse i hele kroppen og endre blod-hjerne-barrieren, kan utløse nevroinflammasjon og ligge
-      bak nevrologiske problemer ved ME/CFS; oversikten rapporterer ingen studie som målte begge deler hos de samme pasientene.
-    sources:
-    - pmid:41516296
-    source_hash: 3620ea35a396aa06de269f13d0275c4b5895ea970d3ce20c11ed453610864960
-  links[4]:
-    text: To oversikter foreslår at bakterieprodukter som krysser tarmveggen kan drive produksjonen av reaktive oksygenmolekyler
-      ved ME/CFS, og den ene nevner også reaktive nitrogenmolekyler og knytter den mer gjennomtrengelige tarmveggen til pasienter
-      med irritabel tarm-syndrom; ingen av dem var en studie av pasienter, og begge sier at det ikke er kjent hva som kommer
-      først.
-    sources:
-    - pmid:41516296
-    - pmid:31330791
-    source_hash: f27d38c571f38e3def32c5bb0b3ca778e423cba10252d90282aa7d46eb3b1b6f
   studies[pmid:36758522].finding:
     text: En studie med n=106 pasienter og 91 friske kontroller fant mindre av de butyratproduserende bakteriene Faecalibacterium
       prausnitzii og Eubacterium rectale, færre kopier av et bakterielt butyratgen og lavere butyrat og acetat i avføring
@@ -225,8 +189,9 @@ items:
       løselig CD14, men høyere antistoffer mot LPS og flagellin og høyere FABP2, en markør for skade på tarmveggens celler,
       hos pasientene; i en egen gruppe på 9 pasienter og 7 kontroller økte LPS-bindende protein og løselig CD14 etter trening
       hos kontrollene (P = 0,007, P = 0,008), mens hos pasientene økte ikke LPS-bindende protein signifikant og løselig CD14
-      økte mer moderat (P = 0,021).
-    source_hash: 2e9cb1d55c55b29d529dd27517f10028be6e3b942b9988b524f9cf4657902ee6
+      økte mer moderat (P = 0,021). LPS i blodet økte etter trening hos pasientene (P = 0,008), men ikke hos kontrollene,
+      og IgM-antistoffer mot LPS økte hos pasientene (P = 0,004).
+    source_hash: 6be457c2adef0492f6c2e0863a6b45fb24d8766ab8f27f489b0f6cd460eb322c
   studies[pmid:26683192].finding:
     text: En studie med n=10 pasienter og 10 matchede friske kontroller fant at etter en maksimal anstrengelsestest økte flere
       av hovedgruppene av avføringsbakterier hos pasientene enn hos kontrollene innen 72 timer, og at bakterielt DNA ble lenger
@@ -243,10 +208,12 @@ items:
       deltakerne.
     source_hash: 24be4d75d3703c4afa143daef5bce663af4cbcbddab03a13f743056136cc63b7
   studies[pmid:42351611].finding:
-    text: En studie av pasienter med ME/CFS, pasienter med langvarig covid og friske kontroller fant ingen signifikant forskjell
-      i mangfold innen prøver, små forskjeller i den samlede sammensetningen av tarmbakterier med stor overlapping, og mer
-      Sutterella og mindre Lachnospiraceae i begge pasientgruppene.
-    source_hash: 1ed38a9c4995a730697a92a1f5299a7c2913533f78aba13acb8458add2448efa
+    text: En studie med 76 pasienter med ME/CFS som oppfylte IOM 2015-kriteriene, 50 pasienter med langvarig covid og 37 friske
+      kontroller fant ingen signifikant forskjell i mangfold innen prøver, små forskjeller i den samlede sammensetningen av
+      tarmbakterier med stor overlapping, og mer Sutterella og mindre Lachnospiraceae i begge pasientgruppene. Fulltekstversjonen
+      rapporterer at poengsummer for affektive, kognitive og mage-tarm-symptomer hadde svakere eller mindre stabile sammenhenger
+      med tarmbakterier enn poengsummer for utmattelse.
+    source_hash: e2e6f69ce19d466d00a2b54d0f3417ed37244b70910901f4a3d4d7154df704d8
   studies[pmid:37516837].finding:
     text: En randomisert placebokontrollert pilotstudie med n=11 pasienter fant ingen signifikant endring i skårer for utmattelse
       eller livskvalitet 1 og 6 måneder etter fekal transplantasjon fra en donor eller fra pasientens egen avføring.
@@ -257,13 +224,12 @@ items:
       for depresjon endret seg ikke signifikant.
     source_hash: ed9040a3ba38252b98588201623c13c26c5cb5b3b05b407a534e497d827b9d7b
   studies[pmid:41516296].finding:
-    text: En oversikt over forskning på tarmens mikrobiom ved ME/CFS. Den sier at det ikke kan sies om endringer i tarmen
-      kommer før, forårsaker eller kommer etter de immunologiske eller metabolske endringene, og foreslår veier via tarm-hjerne-aksen
-      til nevrokognitive symptomer og til tryptofanprodukter som lages av tarmbakterier. Sitert på kartet som kilde til foreslåtte
-      lenker, ikke som evidens for nivået.
-    source_hash: d6909251a842e9f84cdfcfc700efd19511bba9b9ac61d66722f92fb1ba19fb3a
+    text: En oversikt over forskning på tarmens mikrobiom ved ME/CFS; sammendraget sier at endringer i mikrobiomet kan føre
+      til tydelige nevrokognitive svekkelser gjennom tarm-hjerne-aksen, og at overføring av mikrobielle komponenter utløser
+      en immunrespons og systemisk betennelse. Bare bakgrunn, ikke evidens for nivået.
+    source_hash: 29735758f779deff899e915aa5c2e5ecb975207ca7655d6fececb2c16b830e8c
   studies[pmid:31330791].finding:
-    text: En oversikt fra 2019 over foreslåtte sykdomsmekanismer ved ME/CFS; den sier at de årsaksmessige sammenhengene mellom
-      de berørte systemene er ukjente og ikke kan avgjøres av klinisk korrelasjon alene. Sitert på kartet som kilde til foreslåtte
-      lenker, ikke som evidens for nivået.
-    source_hash: 5604f4fa97fb07010e9d370b51fda37bc9cf5491fef3465fdb9709341cf85932
+    text: En oversikt fra 2019 over foreslåtte sykdomsmekanismer ved ME/CFS; sammendraget nevner forstyrrelser i immunologiske
+      og inflammatoriske veier, autonom og nevrologisk dysfunksjon, avvik i muskel- og mitokondriefunksjon, forskyvninger
+      i stoffskiftet, og forstyrrelser i tarmfysiologi eller tarmbakterier. Bare bakgrunn, ikke evidens for nivået.
+    source_hash: b1f69c6487526c592b0a92344f9a0cd593273dea5929d89e3f07270e55d49caa

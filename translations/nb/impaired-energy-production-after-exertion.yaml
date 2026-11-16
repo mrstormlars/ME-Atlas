@@ -14,11 +14,11 @@ items:
   level_reason[0]:
     text: 'En kontrollert studie av 84 pasienter som oppfylte Canadian Consensus Criteria og 71 stillesittende kontroller
       gjentok en maksimal treningstest etter 24 timer. I motsetning til kontrollene gjentok ikke pasientene resultatene fra
-      første dag: oksygenbruk og arbeid sank ved maksimal innsats og ved ventilasjonsterskelen på andre dag. Kortet er på
-      nivå 2 på grunn av denne studien.'
+      første dag: oksygenbruk og arbeid sank ved maksimal innsats og ved ventilasjonsterskelen på andre dag. Trinn 2 bygger
+      på denne studien.'
     sources:
     - pmid:38965566
-    source_hash: 3fabb60108089b54c0f4d089885280967bf578109df0d06a1c34ecd17bd9524c
+    source_hash: e10f8a06451f4847823715143801382d28c8f38c1c6d4a0ebb6677a8ff0ac20c
   level_reason[1]:
     text: 'En studie fra Amsterdam, med Fukuda-kriteriene, som ikke krever PEM, testet 15 kvinnelige pasienter og 15 kontroller
       på to dager. Endringen fra første til andre dag skilte seg mellom gruppene ved den anaerobe terskelen, for arbeidsrate
@@ -60,21 +60,22 @@ items:
     source_hash: 2f9f16860a7c78a2d08a292d5ad0a16c3bc767179f5560b260b711ec157c2c5f
   level_reason[5]:
     text: Mot disse funnene fant en studie fra New York med 58 pasienter og 25 stillesittende kontroller ingen endring i maksimalt
-      oksygenbruk eller oksygenbruk ved ventilasjonsterskelen på andre dag i noen av gruppene; artikkelen rapporterer at 5
-      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte kriteriene fra 1994 (Fukuda),
-      modifisert slik at de krever PEM. Forfatterne antyder at fall som er rapportert andre steder, kan skyldes lavere innsats
-      på andre dag.
+      oksygenbruk eller oksygenbruk ved ventilasjonsterskelen på andre dag i noen av gruppene. Artikkelen rapporterer at 5
+      pasienter og 6 kontroller ikke oppfylte kriteriene for maksimal innsats. Pasientene oppfylte definisjonen fra 1994 (Fukuda),
+      modifisert slik at den krever post-exertional malaise (PEM). Forfatterne antyder at fallet som er rapportert i studien
+      med 84 pasienter, kan skyldes lavere innsats på andre dag.
     sources:
     - pmid:42212259
-    source_hash: 893c452d42ccc4f11020aa74cc767ade572a0e832a1ba232065b3fa03a730a86
+    - pmid:38965566
+    source_hash: de0509857c98d0ac30af7899c1601e4b3f0020d6f2f1d8667a0cfe8dfce3959d
   level_reason[6]:
     text: Studien med 84 pasienter beholdt pasienter som oppfylte kriteriene for maksimal innsats på første test, men ikke
-      på andre, og forfatterne leser slike tilfeller som kjennetegnende for forverring av symptomer etter anstrengelse. Studiens
-      egne resultater viser et fall i pulsreserve på andre test, som forfatterne skriver tyder på at maksimal innsats ikke
-      ble gitt; de rapporterer et lignende fall hos de matchede kontrollene.
+      på andre. Forfatterne leser de av dem som likevel nådde opplevd maksimal innsats på andre test, som kjennetegnende for
+      forverring av symptomer etter anstrengelse. Studiens egne resultater viser et fall i pulsreserve på andre test, som
+      forfatterne skriver tyder på at maksimal innsats ikke ble gitt. De rapporterer et lignende fall hos de matchede kontrollene.
     sources:
     - pmid:38965566
-    source_hash: 8543a7b58b4f68c82ed09623bde4974e31d9f8d2a51f4285e434e71b518f5242
+    source_hash: 05a8af6f9e4ae9c0431ab9f2cc34f84a333d47709f3ca33ea24cccae7b17e96c
   level_reason[7]:
     text: En studie av 16 pasienter og 10 kontroller fra Adelaide fant at arbeidsraten ved ventilasjonsterskelen sank mer
       hos pasientene på andre dag, men fant ingen forskjell mellom gruppene i hvordan oksygenbruket endret seg. To andre toddagersstudier,
@@ -162,12 +163,13 @@ items:
     - pmid:31161646
     source_hash: 23ae43e33099ea7f3914266e58af07d737ba874aef925110f68210a7478d499a
   badge_reasons.explains_pem[2]:
-    text: I en overlappende kohort fra forskningsgruppen bak studien med 84 pasienter brukte 78 pasienter i gjennomsnitt omtrent
-      12,7 dager på å komme seg etter toddagerstesten, mot 2,1 dager for 64 stillesittende kontroller; artikkelen rapporterer
-      treningstestresultatene separat og knytter ikke restitusjon til oksygenbruk eller arbeid.
+    text: I en studie fra forskningsgruppen bak studien med 84 pasienter brukte 78 pasienter i gjennomsnitt omtrent 12,7 dager
+      på å komme seg etter toddagerstesten, mot 2,1 dager for 64 stillesittende kontroller. Artikkelen rapporterer treningstestresultatene
+      separat og knytter ikke restitusjon til oksygenbruk eller arbeid.
     sources:
     - pmid:36984572
-    source_hash: d9d2a77fe69f4f3fc18324f5472b66ee92b39982df3789cb9f6af132ce51f681
+    - pmid:38965566
+    source_hash: 9ed33f873cc36480d26ab96845ae6097335e4c0efe8fab060ac742da884bcb20
   badge_reasons.explains_pem[3]:
     text: New York-studien fant ikke noe fall i oksygenbruk på andre dag. Forfatterne rapporterer, som et foreløpig resultat
       med data som skal publiseres separat, at symptomer etter testen skilte pasientene fra kontrollene på de fleste dager.
@@ -241,8 +243,8 @@ items:
   studies[pmid:34198946].finding:
     text: En studie med n=26 menn med ME/CFS og 25 menn med kronisk utmattelse som ikke oppfyller kriteriene for ME/CFS fant
       at oksygenbruk og arbeidsbelastning ved maksimal anstrengelse og ved ventilasjonsterskelen sank på en ny test 24 timer
-      senere ved ME/CFS, mens sammenligningsgruppens prestasjon ble bedre, uten signifikant endring i dens maksimale arbeidsbelastning.
-    source_hash: 9692d693fe26ad1b24af700aa75947facb0f91858df0c6f8db3a514681e71b79
+      senere ved ME/CFS, mens sammenligningsgruppens prestasjon ble bedre.
+    source_hash: 42b6e52d447cd98fa9c5b45648c4e8e041772f456112036229b48257ec4a3558
   studies[pmid:42212259].finding:
     text: En studie med n=58 pasienter og 25 stillesittende kontroller fant ingen signifikant endring i maksimalt oksygenbruk,
       oksygenbruk ved ventilasjonsterskelen eller ventilatorisk effektivitet fra første til andre dag i noen av gruppene,

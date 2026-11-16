@@ -34,20 +34,22 @@ items:
   level_reason[2]:
     text: 'En newzealandsk studie av 10 pasienter som oppfylte Canadian Consensus Criteria og 10 kontroller fant 27 transkripter
       høyere og 6 lavere hos pasientene, og de fremste var knyttet til betennelse. To britiske studier som brukte CDC-kriteriene
-      (versjon ikke oppgitt), som ikke krever PEM, fant gener med ulikt uttrykk og bekreftet dem med PCR: 16 gener i en studie
-      av 25 pasienter og 25 kontroller, og 88 gener hos 55 pasienter og 75 kontroller. Den første tolket mønsteret sitt som
+      (versjon ikke oppgitt), som ikke krever PEM, fant gener med ulikt uttrykk: en mikroarray-studie av 25 pasienter og 25
+      kontroller, der 16 gener ble bekreftet med PCR i ferske prøver, og en studie som screenet 25 pasienter og 50 blodgivere
+      med mikroarray og bekreftet 88 gener med PCR hos 55 pasienter og 75 kontroller. Den første tolket mønsteret sitt som
       T-celleaktivering.'
     sources:
     - pmid:30791746
     - pmid:16049284
     - pmid:18462164
-    source_hash: d74f3f76e50ee1dc6c860011d5cee8267baf39777072738ca9f5296aa03639dc
+    source_hash: ebf33ccb1299d90ff2ec9e565e217da8e9ed9bb57cbca932514baaad634a7217
   level_reason[3]:
     text: 'Kortet er på nivå 2. Hver gruppe fant noen gener med ulikt uttrykk, men genene og signalveiene er forskjellige
       fra studie til studie: T-celleaktivering, betennelse, lavere interferon- og immunglobulingener, og T-celleutmattelse.
-      Ingen uavhengig gruppe har gjentatt et bestemt funn i en annen kohort, så ingen av funnene er gjentatt. Tolkningen om
-      T-celleutmattelse er ikke konsekvent i kortets egne studier: den australske studien anslo færre utmattede CD8+ T-celler
-      hos pasientene, og en ny analyse av de amerikanske enkeltcelledataene fant ingen signatur for T-celleutmattelse.'
+      Ingen uavhengig gruppe har gjentatt et bestemt funn i en egen kohort, så ingen av funnene er gjentatt. Tolkningen om
+      utmattelse er ikke konsekvent i kortets egne studier: den australske studien anslo færre utmattede CD8+ T-celler hos
+      pasientene, og en studie av langvarig covid som analyserte et offentlig enkeltcelledatasett på nytt, fant ingen forskjell
+      i T-celleutmattelse.'
     sources:
     - pmid:39435656
     - pmid:30791746
@@ -55,16 +57,16 @@ items:
     - pmid:16049284
     - pmid:18462164
     - pmid:41822518
-    source_hash: ebc330811c0b68e62b7ba4ee03f822a914bb2fa7bee26284bbf3c2482779b975
+    source_hash: 43fe27e10ff6f9d5a1a0f840519c99ab7191af9f911bfc9b20ac0440be73b635
   contested_reason[0]:
     text: En studie av fullblod fra 25 pasienter og 25 matchede kontroller fant ingen gener med signifikant ulikt uttrykk.
-      Prøvene ble tatt ved inklusjon, ikke under oppbluss av symptomer. Artikkelen nevner de kanadiske diagnosekriteriene
-      og viser til International Consensus Criteria fra 2011 for dem; begge godtas på alle trinn. Studien hadde en kontrollgruppe
-      og minst halvparten så mange pasienter som hver av studiene ovenfor som brukte Canadian Consensus Criteria, og som den
-      første britiske studien, så den er av sammenlignbar kvalitet med dem.
+      Prøvene ble tatt ved inklusjon, ikke under oppbluss av symptomer. Artikkelen sier at pasientene oppfylte de kanadiske
+      diagnosekriteriene, som godtas på alle trinn. Studien hadde en kontrollgruppe og minst halvparten så mange pasienter
+      som hver av studiene ovenfor som brukte Canadian Consensus Criteria, og som den første britiske studien, så den er av
+      sammenlignbar kvalitet med dem.
     sources:
     - pmid:28172519
-    source_hash: 02d431359968c3ecb1c915ac000e20240a13bd5522843132d7f958848037e9b6
+    source_hash: 057880822fc7b94d90419d3fea28a3acee1374c7713516f0e2784b8c7403b3cb
   contested_reason[1]:
     text: Den britiske gruppen testet 44 av sine tidligere gener på et nytt, blindet sett med prøver fra 64 pasienter som
       oppfylte Fukuda-kriteriene, som ikke krever PEM, og 64 kontroller (artikkelen oppgir også 67 pasienter ett sted). Den
@@ -76,37 +78,44 @@ items:
     source_hash: 989dbf75a17852953e28898d9d2b0afdce1dc880083ac45cd8173e5f6ea81733
   contested_reason[2]:
     text: En studie av 44 par eneggede tvillinger, der den ene tvillingen var syk og den andre frisk, fant heller ingen forskjell
-      i noe transkript i hvite blodceller. De syke tvillingene med kronisk utmattelsessyndrom ble diagnostisert etter kriterier
-      som artikkelen knytter til Fukuda-definisjonen fra 1994 og en artikkel om den fra 2003, men 12 av de 44 hadde i stedet
-      idiopatisk kronisk utmattelse, og analysen slo begge gruppene sammen, så den teller ikke med i den omstridte markeringen.
+      i noe transkript i hvite blodceller. De syke tvillingene hadde kronisk utmattelsessyndrom i 32 par eller idiopatisk
+      kronisk utmattelse i 12 par, så diagnosekriteriene er registrert som annen definisjon, og studien teller ikke med i
+      den omstridte markeringen.
     sources:
     - pmid:19503787
-    source_hash: 3dcdd1622a3c9a4cb7826a2926faaf9555b88d1dbdd239bcc6b4b300a914e20e
+    source_hash: 59975672c6e53b579a70f3a689fea93ad0fd53d838a5be957fc576f60f8ebd25
   badge_reasons.diagnostic_marker[0]:
-    text: To undersøkelser i en ny pasientgruppe er gjort. En genliste fra to tidligere studier av én gruppe ble testet av
-      den samme forskergruppen på et nytt, blindet sett med prøver og skilte ikke pasienter fra kontroller. En studie av 4
-      pasienter undersøkte ett kandidatgen (ESRRA) i offentlige enkeltcelledata fra en amerikansk kohort på 58 personer og
-      fant det høyere i monocytter hos mannlige pasienter, men artikkelen bak datasettet oppgir ikke diagnosekriteriene sine,
-      så undersøkelsen oppfyller ikke merkets test.
+    text: To kontroller i en ny pasientgruppe er gjort. En genliste fra to tidligere studier av én gruppe ble testet av den
+      samme gruppen på et nytt, blindet sett med prøver og skilte ikke pasienter fra kontroller. En enkeltcellestudie av 4
+      pasienter og 4 kontroller undersøkte ett kandidatgen (ESRRA) i det offentlige datasettet GSE214284 og fant det høyere
+      i monocytter hos mannlige pasienter. Artikkelen bak datasettet oppgir ingen diagnosekriterier i sin egen tekst. En annen
+      studie sier at prosjektet og enkeltcelleatlaset kom fra det samme forskningssenteret og at pasientene oppfylte IOM-kriteriene
+      og de kanadiske kriteriene, men dette kortet overfører ikke diagnosekriterier fra én artikkel til en annen, og de to
+      artiklene oppgir kohortens størrelse ulikt (30 pasienter og 28 kontroller i den ene, 28 og 30 i den andre), så undersøkelsen
+      teller ikke med i merkets test.
     sources:
     - pmid:21479222
     - pmid:39394558
     - pmid:38232699
-    source_hash: 9adcf96e12844ba685b066a5b7039283fcc931a5f96d64611dbbcb2404c88384
+    - pmid:39621903
+    source_hash: 80db17544aa70245ca4135e76e93c21ec9182120318f646084f4bbd3941a37b2
   badge_reasons.explains_pem[0]:
     text: 'To studier satte genuttrykk i blodceller i sammenheng med PEM hos de samme pasientene: den ene fant at andelen
-      endrede monocytter økte med hvor alvorlig PEM var, den andre fant en sammenheng med PEM-symptomene. Den ene oppgav ikke
-      diagnosekriterier, og den andre brukte brede kriterier, så ingen av dem oppfyller merkets test.'
+      endrede monocytter økte med hvor alvorlig PEM var, den andre fant en sammenheng med PEM-symptomene. Den ene oppgir ingen
+      diagnosekriterier i sin egen tekst (en annen studie beskriver kriteriene for en kohort fra det samme forskningssenteret,
+      men dette kortet overfører ikke diagnosekriterier fra én artikkel til en annen), og den andre brukte brede kriterier,
+      så ingen av dem oppfyller merkets test.'
     sources:
     - pmid:38232699
     - pmid:28494812
-    source_hash: c1818438782fa944054272ef139ed3c3e04b337412f69a33620f3edd6ec73204
+    - pmid:39621903
+    source_hash: 4417e11705a4971449a229ab4ebd2c0ed82e4e91ccac09ffaeab94f8e17fee51
   subgroups[0]:
-    text: En britisk studie fra 2008 delte 55 pasienter inn i 7 undertyper etter genuttrykket deres, med ulike skårer på et
-      spørreskjema om livskvalitet og ulik alvorlighetsgrad. Denne inndelingen er ikke gjentatt.
+    text: En britisk studie fra 2008 delte 55 pasienter inn i 7 undertyper etter genuttrykket deres, med ulike skårer på en
+      helseundersøkelse (SF-36), ulike kliniske trekk og ulik alvorlighetsgrad. Denne inndelingen er ikke gjentatt.
     sources:
     - pmid:18462164
-    source_hash: aafe2661596bc8697404bf93d0878ddaef351de0ba42e40ae0d0719b11721815
+    source_hash: fa9da5e59000dd3ffe042f0d140734e35034d7a04dbdd1895be43b377dbd6bff
   early_signals[0]:
     text: En enkeltcellestudie av 4 pasienter og 4 kontroller i Kina fant endrede andeler av immuncelletyper, endrede utviklingsveier
       for T- og B-celler og tegn på overaktivitet i B-celler. Den er svært liten og ikke gjentatt.

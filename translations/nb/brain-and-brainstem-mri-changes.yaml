@@ -42,18 +42,17 @@ items:
     source_hash: db0808107f426bec02c3b4a031b59c34e1f47f94ea74ed1a8c4c644c57e3a410
   level_reason[3]:
     text: 'Andre kontrollerte studier fra samme gruppe som studien på nivå 2, med andre mål, rapporterer også forskjeller
-      i hjernestammen: svakere forbindelser mellom hjernestammeregioner under en oppgave (45 pasienter som oppfylte Fukuda-definisjonen,
+      i hjernestammen: svakere forbindelser mellom hjernestammeregioner under en oppgave (45 pasienter som oppfylte Fukuda-kriteriene,
       som ikke krever PEM, og 27 kontroller), et lavere T1-vektet MR-signal i en region i hjernestammen (43 pasienter som
-      oppfylte Fukuda-definisjonen og 27 kontroller), svakere forbindelser mellom pons og lillehjernen under en oppgave (31
+      oppfylte Fukuda-kriteriene og 27 kontroller), svakere forbindelser mellom pons og lillehjernen under en oppgave (31
       pasienter som oppfylte kriteriene Canadian eller International og 15 kontroller), og en større pons og hel hjernestamme
-      ved 7 tesla (10 pasienter og 10 kontroller). Artiklene sier ikke om de deler pasienter, og ingen av disse resultatene
-      er gjentatt av en uavhengig gruppe.'
+      ved 7 tesla (10 pasienter og 10 kontroller). Ingen av disse resultatene er gjentatt av en uavhengig gruppe.'
     sources:
     - pmid:31671321
     - pmid:30497131
     - pmid:38347875
     - pmid:36937672
-    source_hash: fa5c76f05b96f061dfc1e1b8e7c58c582ac3329ecbc7d1b300bbbd379bfd32a2
+    source_hash: dd164d6f6505354950562efd4187270dbc7f97303683dd08be6e1c6ae3c875ed
   level_reason[4]:
     text: 'Kortet står ikke på nivå 3 fordi ingen uavhengig gruppe har funnet det samme resultatet i en egen kohort. En studie
       fra Newcastle i Storbritannia, uten felles forfattere, med 42 pasienter som oppfylte Fukuda-definisjonen (som ikke krever
@@ -88,6 +87,19 @@ items:
     - pmid:15955487
     - pmid:37331007
     source_hash: 5fe8da145b9336f2ac8e8551a8ca7c6b214d567cb74a30fe3ca64e2c42e6e182
+  contested_reason[0]:
+    text: Funnet på nivå 2 bygger på én studie med 18 pasienter som oppfylte International Consensus Criteria og 26 friske
+      kontroller, som fant lavere aksial og gjennomsnittlig diffusivitet i en klynge i mellomhjernen og pons. En senere kontrollert
+      studie fra en annen gruppe (University of the Sunshine Coast), med 43 pasienter med infeksjonsutløst sykdomsstart, diagnostisert
+      som forenlig med Canadian Consensus Criteria, og 43 matchede friske kontroller, fant høyere aksial diffusivitet hos
+      pasientene i flere baner som går gjennom hjernestammen, blant dem lillehjernestilkene, kortikospinalbanen og venstre
+      mediale lemniscus, og ingen signifikant forskjell i gjennomsnittlig diffusivitet. De to studiene brukte ulike metoder
+      (en voxelbasert analyse og en banebasert analyse), og banene overlapper bare delvis, så motsigelsen er delvis. Trinnet
+      er derfor markert som omstridt.
+    sources:
+    - pmid:40624094
+    - pmid:34355438
+    source_hash: 61fc05149dbbbd2ece367d0f7280e9c001696db2802b8968753d3907290bb3b5
   badge_reasons.diagnostic_marker[0]:
     text: Diffusjonsstudien som nivå 2 bygger på, antyder at målene kan bli en bildemarkør, men ingen MR-markør i hjernestammen
       er testet i en ny, uavhengig pasientgruppe med oppgitte diagnosekriterier.
@@ -135,20 +147,6 @@ items:
     - pmid:36937672
     source_hash: 60246ceeda994ded59ce50f87b56c05b75e402c0b4b65a856c2de17491d4ad7d
   links[1]:
-    text: En studie med n=16 av 18 pasienter som oppfylte International-kriteriene (to ble utelatt fra denne analysen) og
-      26 friske kontroller fant at sammenhengen mellom mål fra diffusjons-MR og en selvrapportert skår for informasjonsbehandling
-      (en vurdering fra 1 til 10 av hvor vanskelig det er å behandle informasjon) var annerledes enn hos kontrollene. En studie
-      ved 7 tesla med n=29 pasienter som oppfylte Canadian-kriteriene (17 av dem oppfylte også International-kriteriene) fant
-      at volumet av ett delområde i hippocampus (venstre CA4 body) var større hos pasienter som vurderte den nedsatte konsentrasjonen
-      sin (en alvorlighetsvurdering på fem trinn) som mer alvorlig (r = 0,41). Begge målene er egenvurderinger, ikke kognitive
-      tester. De to studiene kommer fra samme forskergruppe, og det er ikke oppgitt om pasientene overlapper. Korreksjonen
-      for flere sammenligninger i den andre studien gjaldt gruppesammenligningene, ikke korrelasjonene. Små studier som ikke
-      er gjentatt.
-    sources:
-    - pmid:34355438
-    - pmid:39804864
-    source_hash: 71ed736ca795ce260654d54d23597d918e721812775206881b6d784b941c5510
-  links[2]:
     text: Tre studier fra én forskergruppe satte hjernemål i sammenheng med egenvurderte søvnskårer, og retningene er ulike,
       så ingen samlet retning er oppgitt. Hos 16 av 18 pasienter som oppfylte International-kriteriene (to ble utelatt fra
       denne analysen) var sammenhengen mellom mål fra diffusjons-MR og en skår for søvnforstyrrelse (en vurdering fra 1 til
@@ -165,20 +163,20 @@ items:
     - pmid:39804864
     - pmid:35355311
     source_hash: 04b686857340d669dbb8b1079d9a89b25de51ded8edf2e42dd28f55a9ac0b8e7
-  links[3]:
-    text: Tre studier fra én forskergruppe (Griffith University), og dermed ikke uavhengige funn, fant korrelasjoner mellom
-      hjernevolumer og en smerteskår. De peker ikke i samme retning, så ingen retning er oppgitt her. Hos n=10 pasienter som
-      oppfylte både Canadian- og International-kriteriene og 10 friske kontroller, ved 7 tesla, var volumene av pons og hele
-      hjernestammen korrelert med SF-36-skåren for kroppslig smerte, der høyere skår betyr mindre smerte. En studie ved 7
-      tesla med n=29 pasienter som oppfylte Canadian-kriteriene (17 av dem oppfylte også International-kriteriene) fant en
-      korrelasjon mellom volumet av ett delområde i hippocampus (venstre presubiculum head) og smerteskåren. En studie med
-      18 pasienter som oppfylte International-kriteriene og 25 som oppfylte Fukuda-kriteriene rapporterte, hos 16 av pasientene
-      som oppfylte International-kriteriene, en negativ korrelasjon mellom smerteskåren og volumet av to delområder i hippocampus,
-      noe 7 tesla-studien beskriver som en positiv korrelasjon, og fant ingen statistisk signifikant sammenheng med smerte
+  links[2]:
+    text: Tre studier fra én forskergruppe (Griffith University), som derfor ikke er uavhengige funn, fant sammenhenger mellom
+      hjernevolumer og en smerteskår, og de peker ikke samme vei, så ingen retning er oppgitt her. Hos n=10 pasienter som
+      oppfylte både Canadian- og International-kriteriene og 10 friske kontroller, ved 7 tesla, var volumene av pons og hel
+      hjernestamme korrelert med SF-36-skåren for kroppslig smerte, der høyere skår betyr mindre smerte. En studie ved 7 tesla
+      med n=29 pasienter som oppfylte Canadian-kriteriene (17 av dem oppfylte også International-kriteriene) fant en korrelasjon
+      mellom volumet av ett delområde i hippocampus (venstre presubiculum head) og smerteskåren. En studie med 18 pasienter
+      som oppfylte International-kriteriene og 25 som oppfylte Fukuda-kriteriene rapporterte, hos 16 av pasientene som oppfylte
+      International-kriteriene, en negativ korrelasjon mellom smerteskåren og to volumer av delområder i hippocampus, noe
+      studien ved 7 tesla beskriver som en positiv korrelasjon, og fant ingen statistisk signifikant sammenheng med smerte
       i Fukuda-gruppen (24 målt). Korreksjonen for flere sammenligninger som er beskrevet i disse artiklene, gjaldt gruppesammenligningene,
       ikke korrelasjonene. En studie fra en annen gruppe (n=34 pasienter som oppfylte Fukuda- og Canadian-kriteriene og 24
-      kontroller) fant ingen signifikant korrelasjon mellom hjernesignaler i hvile, før og etter anstrengelse, og symptomer,
-      blant dem smerte (data ikke vist). Den målte ikke hjernevolumer. Små studier som ikke er gjentatt.
+      kontroller) fant ingen signifikant korrelasjon mellom hjernesignaler i hvile, før og etter trening, og symptomer, blant
+      dem smerte (data ikke vist); den målte ikke hjernevolumer. Små studier som ikke er gjentatt.
     sources:
     - pmid:36937672
     - pmid:39804864

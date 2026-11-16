@@ -4,80 +4,78 @@ items:
     text: Skade på små nervefibre (småfibernevropati)
     source_hash: 7f774a19eb6df423043a59ed4e30158a2c15c4f6214249259099eab3fc01efcb
   core_claim:
-    text: Hypotesen er at de små nervefibrene i huden og andre vev, som bærer smerte- og temperatursignaler og styrer svetting
-      og blodårer, er skadet eller virker unormalt hos personer med ME/CFS. Forskere leter etter dette med hudbiopsier, konfokal
-      hornhinnemikroskopi av nervene på øyets overflate, varme- og kuldefremkalte potensialer og tester av svettefunksjon.
+    text: Hypotesen er at de små nervefibrene i huden og andre vev, som bærer smerte- og temperatursignaler og styrer svetting,
+      er skadet eller virker unormalt hos personer med ME/CFS. Forskere leter etter dette med hudbiopsier, konfokal hornhinnemikroskopi
+      av nervene på øyets overflate, varme- og kuldefremkalte potensialer og tester av svettefunksjon.
     sources:
     - pmid:37968647
     - pmid:39888240
     - pmid:41576003
-    source_hash: 775639ec717bc6b4fec3b005d6363fa73dbb98d835180b578b1f4189ed4afd72
+    source_hash: 392aea0fe91259b9034ddde33fbf198d25131958b3345aa0e49938b0e6865170
   level_reason[0]:
-    text: En studie fra Boston av 170 pasienter som oppfylte International Consensus Criteria eller IOM 2015-kriteriene fant
-      småfibernevropati ved hudbiopsi hos 52,6% av ME/CFS-pasientene med biopsiresultater og 0,0% av de friske kontrollene
-      med resultater; artikkelen har 54 manglende verdier på tvers av gruppene og oppgir ikke antallet per gruppe. Gjennomsnittlig
-      nervefibertetthet i leggen var 8,79 fibre/mm hos pasienter og 10,15 hos kontroller; artikkelen rapporterer én test på
-      tvers av alle fire gruppene og ingen test av ME/CFS mot kontroller. For hudledningsevne, et mål på nervefunksjonen i
-      svettekjertlene, rapporterer Boston-studien et lavere gjennomsnitt hos pasienter (75,76 mot 82,96 µS), men ingen test
-      mot kontroller. Pasientene var henvist til et senter for dysautonomi, som forfatterne sier kanskje ikke er representativt,
-      og kontrollene kom fra et annet universitets forskningsdatabase. Kortet er på nivå 1 på grunn av denne studien.
+    text: En studie fra Boston av 170 pasienter som oppfylte International Consensus Criteria eller kriteriene fra National
+      Academy of Medicine fant småfibernevropati ved hudbiopsi hos 52,6% av ME/CFS-pasientene med biopsiresultater og 0,0%
+      av de friske kontrollene med resultater; artikkelen har 54 manglende verdier på tvers av gruppene og oppgir ikke antallet
+      per gruppe. Gjennomsnittlig nervefibertetthet i leggen var 8,79 fibre/mm hos pasienter og 10,15 hos kontroller; artikkelen
+      rapporterer én test på tvers av alle fire gruppene og ingen test av ME/CFS mot kontroller. For hudledningsevne, et mål
+      på nervefunksjonen i svettekjertlene, rapporterer Boston-studien et lavere gjennomsnitt hos pasienter (75,76 mot 82,96
+      µS), men ingen test mot kontroller. Pasientene var henvist til et senter for dysautonomi, som forfatterne sier kanskje
+      ikke er representativt, og kontrollene var historiske kontroller fra forfatternes forskningsdatabase om autonom funksjon
+      ved University of Massachusetts. Disse funnene er ikke gjentatt. Kortet er på nivå 1 på grunn av denne studien.
     sources:
     - pmid:41576003
-    source_hash: 9c431c30d1967c7498d1e5f7767c3724fd9b5efb6c565fec999f917da25e4b01
+    source_hash: 3beb947018255758c89e0794b73c1e64bd555cb60a3fef87deed6a183875e701
   level_reason[1]:
-    text: En studie fra Bilbao i Spania av 59 pasienter som oppfylte Fukuda-definisjonen (som ikke krever PEM) og 36 friske
-      kontroller, hovedsakelig om autoantistoffer, fant ingen signifikant forskjell i hudledningsevne i håndflatene eller
-      fotsålene. Dette nullresultatet gjør ikke kortet omstridt, fordi nivå 1 hviler på gjennomsnittene i Boston-studien,
-      som ikke ble testet mot kontroller.
+    text: 'En studie fra gruppen ved Cruces University Hospital i Barakaldo i Spania av 59 pasienter som oppfylte Fukuda-definisjonen
+      (som ikke krever PEM) og 36 friske kontroller, hovedsakelig om autoantistoffer, fant ingen signifikant forskjell i hudledningsevne
+      i håndflatene eller fotsålene. Dette nullresultatet gjør ikke kortet omstridt: studien bruker Fukuda-definisjonen, som
+      rangeres under International Consensus Criteria eller kriteriene fra National Academy of Medicine i Boston-studien,
+      så den er ikke av sammenlignbar kvalitet etter evidensstigen.'
     sources:
     - pmid:42082542
-    source_hash: 5f9f135ae7e6e2d8e6f19b42453b62eee2b8465d512809b1623b1323b9d03731
+    - pmid:41576003
+    source_hash: 3b7262861a33505bdb3d588f72f1ccf869ea5db4aeafb160dc4808f56bf0066b
   level_reason[2]:
-    text: Kortet er ikke på nivå 2 fordi ingen kontrollert sammenligning av ME/CFS-pasienter med kontroller når det gjelder
-      skade på små fibre har både bekreftede diagnosekriterier og et resultat som peker mot skade. To kontrollerte studier
-      fra Bilbao omfattet pasienter med en tidligere ME/CFS-diagnose eller som oppfylte Fukuda-definisjonen; fordi en tidligere
-      diagnose ikke navngir en definisjon, kan disse ikke telle mot nivået. En studie fra Boston av 160 pasienter, der 31%
-      av hudbiopsiene var forenlige med småfibernevropati, kan heller ikke telle fordi diagnosekriteriene ikke er bekreftet
-      ennå.
+    text: Kortet er ikke på nivå 2 fordi Boston-studien, den ene kontrollerte studien med anerkjente diagnosekriterier som
+      peker mot skade, rapporterer testene sine på tvers av fire grupper uten test av ME/CFS mot kontroller, og bruker historiske
+      kontroller og et henvist utvalg. To kontrollerte studier fra gruppen ved Cruces University Hospital omfattet pasienter
+      med en tidligere ME/CFS-diagnose eller som oppfylte Fukuda-definisjonen; fordi en tidligere diagnose ikke navngir en
+      definisjon, kan disse ikke telle mot nivået. En studie av 160 pasienter fra en gruppe i Boston, der 31% av hudbiopsiene
+      var forenlige med småfibernevropati, kan heller ikke telle fordi diagnosekriteriene ikke er bekreftet ennå.
     sources:
+    - pmid:41576003
     - pmid:37968647
     - pmid:39888240
     - pmid:33577778
-    source_hash: 22066cc8e40ff4e8fab6e7c85a84eb69f9bedbe4c4af462b3a4797b74f3bfcad
+    source_hash: 406025517c4b683b313491276ee4bf0f17cb7d7057e8543b10d9f0f2696c8d11
   level_reason[3]:
-    text: I Bilbao-studiene viste 30 pasienter og 30 matchede friske kontroller mer buktede (slyngete) nervefibre i hornhinnen
-      hos pasientene, mens tettheten av nervefibre i hornhinnen, forgreningstettheten og lengden ikke var forskjellig; forfatterne
-      skriver at inkonsistente hornhinneresultater på tvers av studier "might suggest that SFN is not an inherent characteristic
-      of these diseases". En tidligere studie med 50 pasienter og 50 kontroller fant senere hjernerespons på varmestimuli
-      hos pasientene; den senere studien brukte den samme varmetesten og fant ingen signifikant forskjell i responstid, men
-      en lavere varmerespons-amplitude hos pasienter enn hos kontroller (p = 0,028), som den tidligere studien ikke rapporterte
-      for ME/CFS mot kontroller. Hudledningsevne var ikke forskjellig mellom pasienter og kontroller i tre Bilbao-studier.
-      Pasientene i disse studiene kan overlappe.
+    text: I studiene fra Cruces University Hospital hadde 30 pasienter og 30 matchede friske kontroller mer buktede (slyngete)
+      nervefibre i hornhinnen hos pasientene, et funn som ikke er gjentatt av en uavhengig gruppe, mens tettheten av nervefibre
+      i hornhinnen, forgreningstettheten og lengden ikke var forskjellig; forfatterne skriver at inkonsistente hornhinneresultater
+      på tvers av studier "might suggest that SFN is not an inherent characteristic of these diseases". En tidligere studie
+      med 50 pasienter og 50 kontroller fant senere hjernerespons på varmestimuli hos pasientene; den senere studien brukte
+      den samme varmetesten og fant ingen signifikant forskjell i responstid, men en lavere varmerespons-amplitude hos pasienter
+      enn hos kontroller (p = 0,028), et funn som ikke er gjentatt av en uavhengig gruppe. Hudledningsevne var ikke forskjellig
+      mellom pasienter og kontroller i tre studier fra denne gruppen. Disse studiene har felles forfattere; postene som er
+      vist, oppgir ikke om pasientene overlapper.
     sources:
     - pmid:39888240
     - pmid:37968647
     - pmid:42082542
-    source_hash: 54780255440cb5a47de2cdd96d36b75e7262cafba892debbacd659d67210b1cc
+    source_hash: b98576e14784b2e625ec6d3c3da4eaaac0101a9feac5a4306ca88ad5d0f9bd8b
   badge_reasons.diagnostic_marker[0]:
     text: Ingen markør for skade på små fibre er testet i en andre, uavhengig pasientgruppe med bekreftede diagnosekriterier.
-      I én studie der diagnosekriteriene ikke er bekreftet, skilte buktede nervefibre i hornhinnen 30 pasienter fra 30 friske
-      kontroller med en AUC (arealet under ROC-grafen) på 0,690.
+      I én studie der diagnosekriteriene ikke er bekreftet, hadde buktede nervefibre i hornhinnen et areal under kurven på
+      0,690 (p = 0,032), moderat nøyaktighet, for å skille 30 pasienter fra 30 friske kontroller.
     sources:
     - pmid:39888240
-    source_hash: 0a856b428c0e9047585ae8299f19d10b4e632de80a71215aa68a52b74b7a4a49
+    source_hash: ef2ba24c2e2b2bdb5bc45b62e5eab06035dfe694d1c4c2e39beca8753f6badb1
   badge_reasons.explains_pem[0]:
     text: Ingen studie på dette kortet måler PEM direkte og knytter det til skade på små fibre. I én studie, der diagnosekriteriene
       ikke er bekreftet ennå, korrelerte ikke alvorlighetsgraden av tap av nervefibre i hudbiopsier med mål fra en treningstest.
     sources:
     - pmid:33577778
     source_hash: 5f15368ac8da688e2ba1b2c989b14f96affbbb6c179f62f939333ad99ce3f267
-  links[0]:
-    text: En oversikt fra 2023 sier at skade på små nervefibre kan redusere sammentrekningen av vener, slik det sees ved unormal
-      opphoping av blod i bena ved stående stilling ved postural ortostatisk takykardisyndrom (POTS). Observasjonene den viser
-      til gjelder POTS; ingen studie på dette kortet målte begge deler hos pasienter med ME/CFS.
-    sources:
-    - pmid:37054777
-    source_hash: 4d0a3b3df8ed4dc42ccc13a209f92f135fd2dc7f6a85561532bb1c35409d4783
   studies[pmid:41576003].finding:
     text: En studie med n=170 pasienter og 73 historiske friske kontroller fant småfibernevropati ved hudbiopsi hos 52,6%
       av pasientene med biopsiresultater og 0,0% av kontrollene med resultater, og en lavere gjennomsnittlig nervefibertetthet
@@ -110,6 +108,5 @@ items:
     source_hash: c8c0544e6054f0f8a742f42294b06b2c3e319a43c7b65563d273c633c46c7420
   studies[pmid:37054777].finding:
     text: En oversikt over patofysiologien ved trening ved ME/CFS og langvarig covid som også omtaler småfibernevropati og
-      opphoping av blod ved stående stilling ved POTS. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
-      for nivået.
-    source_hash: bc0e4a0717f823732767cb27f0783c2f4b461f1fcf9d8ce3dc3080e69c573a16
+      opphoping av blod ved stående stilling ved POTS. Ikke evidens for nivået.
+    source_hash: 1af3d654924eab878a8abfabbde2cfdad7c371fef897df7c9e305fa1dbdea85d

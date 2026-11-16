@@ -22,16 +22,16 @@ items:
   level_reason[1]:
     text: 'En senere studie fra Bergen i Norge, uten felles forfattere med Berlin-studien, testet pasienter som oppfylte Canadian
       Consensus Criteria med to andre metoder. Økningen i hudens blodstrøm etter at blodstrømmen til armen ble stoppet en
-      kort stund (post-occlusive reactive hyperaemia), målet som ligger nærmest Berlin-indeksen, var lavere hos 39 pasienter
-      enn hos 30 friske personer. Utvidelsen av armens arterie (flow-mediated dilation) var lavere hos 35 pasienter enn hos
-      66 friske kvinner (median 5,9 % mot 7,7 %); denne kontrollgruppen besto bare av kvinner, mens 78 % av pasientene var
-      kvinner. Kortet står på nivå 3 fordi denne uavhengige gruppen fant redusert endotelfunksjon i en egen kohort. Gjentakelsen
-      er delvis: de to gruppene brukte ulike metoder, og artikkelen sier at den ikke hadde noen egen utpekt kontrollgruppe,
-      men brukte friske personer fra to andre studier av de samme forfatterne.'
+      kort stund (post-occlusive reactive hyperaemia) var lavere hos 39 pasienter enn hos 30 friske personer. Utvidelsen av
+      armens arterie (flow-mediated dilation) var lavere hos 35 pasienter enn hos 66 friske kvinner (median 5,9 % mot 7,7
+      %). Denne kontrollgruppen besto bare av kvinner, mens 78 % av pasientene var kvinner. Kortet står på nivå 3 fordi denne
+      uavhengige gruppen fant redusert endotelfunksjon i en egen kohort. Gjentakelsen er delvis: de to gruppene brukte ulike
+      metoder, og artikkelen sier at den ikke hadde noen egen utpekt kontrollgruppe, men brukte friske personer fra to andre
+      studier av de samme forfatterne.'
     sources:
     - pmid:33829023
     - pmid:32154656
-    source_hash: 6f0c3f9abfe6ed88de7cd23391550e2b74889000d28e3e583eba8f0b14fff336
+    source_hash: dab69e1fbc71215def1fa97c76160b30ee1b0c62b63fc1a1363a0faf50783f38
   level_reason[2]:
     text: Bergen-gruppen fant det samme hos 39 pasienter fra RituxME-studien med rituximab, som valgte ut pasienter etter
       Canadian Consensus Criteria, sammenlignet med de samme kontrollgruppene (flow-mediated dilation 5,1 % mot 8,2 %). Siden
@@ -62,17 +62,16 @@ items:
     - pmid:38600563
     source_hash: 7283fab8f656841105ae14ff73abbd5debe73ce91c384be3812659e1bb9d11b1
   level_reason[5]:
-    text: Mot disse funnene fant en studie fra California med 24 pasienter og 24 stillesittende kontroller, som brukte Fukuda-definisjonen
-      med PEM som krav, ingen statistisk signifikant forskjell i reaktiv hyperemi-indeks i hvile (p = 0,07), under restitusjon
-      eller 18 timer etter en anstrengelsestest. Forfatterne brukte Fukuda-definisjonen med PEM som krav og sier at dette
-      tilsvarer International Consensus Criteria; kortet registrerer Fukuda. Fukuda rangeres under Canadian Consensus Criteria
-      på den publiserte evidensstigen, så denne studien bestrider ikke nivået. En studie fra New Zealand med International
-      Consensus Criteria fant ingen forskjell i arteriestivhet mellom pasienter og kontroller i hvile; arteriestivhet er et
-      annet mål enn utvidelsen som er testet ovenfor.
+    text: Mot disse funnene fant en studie fra California med 24 pasienter og 24 stillesittende kontroller ingen statistisk
+      signifikant forskjell i reaktiv hyperemi-indeks i hvile (p = 0,07), under restitusjon eller 18 timer etter en anstrengelsestest.
+      Forfatterne brukte Fukuda-definisjonen med PEM som krav og sier at dette tilsvarer International Consensus Criteria;
+      kortet registrerer Fukuda. Fukuda rangeres under Canadian Consensus Criteria på den publiserte evidensstigen, så denne
+      studien bestrider ikke nivået. En studie fra New Zealand med International Consensus Criteria fant ingen forskjell i
+      arteriestivhet mellom pasienter og kontroller i hvile. Arteriestivhet er et annet mål enn utvidelsen som er testet ovenfor.
     sources:
     - pmid:29426834
     - pmid:33671082
-    source_hash: ebbcf8672690c4e2dd067c1f050e6a0fdac8e5704eefafe9ca3171f603d6859c
+    source_hash: 800552a59a5849274548ec3ff0c7a4fd0ab8337ce0fcf3bc479bd702f197267d
   level_reason[6]:
     text: Studier av unormal blodlevring, vist her som bakgrunn, mangler bekreftede anerkjente diagnosekriterier. En studie
       fra Stellenbosch i Sør-Afrika med 25 pasienter, beskrevet bare som diagnostisert for mer enn seks måneder siden, og
@@ -111,11 +110,12 @@ items:
     text: 'Ingen studie på dette kortet følger symptomer etter en anstrengelsesprøve og knytter dem til endotelfunksjon eller
       blodlevring hos de samme pasientene. To studier målte karfunksjon etter en anstrengelsestest, uten å følge symptomer:
       én fant ingen forskjell i reaktiv hyperemi-indeks 18 timer senere, og én fant at arteriestivheten 48 timer senere falt
-      innenfor kontrollgruppen, men ikke innenfor pasientgruppen (7 i hver ved 48 timer; gruppene ble ikke sammenlignet direkte).'
+      innenfor kontrollgruppen, men ikke innenfor pasientgruppen (7 i hver ved 48 timer). Tabellen i studien oppgir en p-verdi
+      på 0,21 mellom gruppene for augmentation index ved 48 timer.'
     sources:
     - pmid:29426834
     - pmid:33671082
-    source_hash: c6eb48eb55bddb1a0be0f3e15eefb45aa566536aa4026093bca8716c2061c56b
+    source_hash: 213e1312ea6c88c634e507bd100ff545869ed4bdfca2deafc2ac2ee3cba9fe16
   subgroups[0]:
     text: 'Redusert endotelfunksjon kan gjelde for en undergruppe av pasientene: i Berlin-studien lå omtrent halvparten av
       pasientene (18 av 35) under grenseverdien, og de rapporterte mer alvorlig sykdom enn pasientene over den.'
@@ -135,13 +135,6 @@ items:
     sources:
     - pmid:42625188
     source_hash: 986fc1df93a3c8d061ee03e71ab7267b0073cf279f4ac06c393ce9f6edb79713
-  links[0]:
-    text: En oversiktsartikkel fra 2025 foreslår at endoteldysfunksjon, drevet av oksidativt og nitrosativt stress og av autoantistoffformidlet
-      forstyrrelse av reseptorer, kan forklare ortostatisk intoleranse og nedsatt blodstrøm ved ME/CFS. Denne kilden oppgir
-      ingen pasientdata som knytter de to sammen.
-    sources:
-    - pmid:41516145
-    source_hash: 6688b8000dbb9d5b7b7ec603dabe19fbdf13afba98f21777ea7db20e924cd5be
   studies[pmid:32154656].finding:
     text: En studie med n=35 pasienter og 20 friske kontroller fant en lavere reaktiv hyperemi-indeks hos pasientene, der
       51 % av pasientene og 20 % av kontrollene lå under grenseverdien for endoteldysfunksjon; pasienter under den rapporterte
@@ -215,5 +208,5 @@ items:
   studies[pmid:41516145].finding:
     text: En oversiktsartikkel om det biologiske nettverket bak ME/CFS. Den foreslår at endoteldysfunksjon, drevet av oksidativt
       og nitrosativt stress sammen med autoantistoffformidlet forstyrrelse av reseptorer, kan forklare ortostatisk intoleranse
-      og nedsatt perfusjon. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.
-    source_hash: ac2d87c13cd95373992655c6cc989e0bd55e61ed1ca1374c4042506a13f1d530
+      og nedsatt perfusjon. Ikke evidens for nivået.
+    source_hash: fd608163e9d134eecc47bd4f68eaf0c7b594bc10604f197e8416701ae8c08fa8

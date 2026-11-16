@@ -14,23 +14,27 @@ items:
     text: En studie fra Dundee i Skottland, med 47 pasienter som oppfylte CDC-kriteriene (versjon ikke oppgitt) og 34 friske
       frivillige som var innrullert (antallet som ble målt er ikke oppgitt), fant høyere nivåer av isoprostaner i blodet,
       en markør for oksidativ skade på fett, hos pasientene, både hos dem med og dem uten risikofaktorer for hjerte- og karsykdom.
-      En studie fra Antwerpen av 56 pasienter som oppfylte Fukuda-definisjonen og 37 friske kontroller fant høyere peroksider
-      i plasma hos pasientene. Kortet er på nivå 2 på grunn av disse to kontrollerte studiene, som brukte ulike mål.
+      En studie av 56 pasienter som oppfylte CDC-kriteriene (versjon ikke oppgitt) og 37 friske kontroller, polikliniske pasienter
+      ved Maes Clinics i Antwerpen i Belgia, fant høyere peroksider i plasma hos pasientene. Ingen av versjonene av CDC-kriteriene
+      krever forverring etter anstrengelse. Kortet er på nivå 2 på grunn av disse to kontrollerte studiene, som brukte ulike
+      mål.
     sources:
     - pmid:16085177
     - pmid:21455120
-    source_hash: 564de93e4691f870bbf4284087f5ff09fbc7bb7752f5fc74f4b44c027631bc90
+    source_hash: defaca18cc59eeca40767825729b931183d4ba337c27d7061245595d8ba57659
   level_reason[1]:
-    text: 'Andre kontrollerte studier av pasienter som oppfylte Fukuda-definisjonen fant høyere markører for oksidativt stress,
-      hver på et ulikt mål: malondialdehyd og proteinkarbonyler hos 24 kvinner mot 19 i Novi Sad i Serbia; reaktive oksygenmetabolitter
-      i serum i en studie fra Osaka der sammendraget ikke oppgir tallene; og reaktive oksygenforbindelser inne i lymfocytter
-      hos 15 pasienter mot 16 kontroller ved Stanford, der forskjellen ble funnet hos kvinner, men ikke hos menn. Fordi målene
-      er ulike, er ingen av disse en replikasjon av en annen, og hver av dem er ikke replikert.'
+    text: 'Andre kontrollerte studier fant høyere markører for oksidativt stress, hver på et ulikt mål: malondialdehyd og
+      proteinkarbonyler hos 24 kvinner som oppfylte CDC-definisjonen fra 1994, mot 19 friske kvinner i Novi Sad i Serbia;
+      reaktive oksygenmetabolitter i en studie fra Osaka av pasienter diagnostisert etter Fukuda 1994-kriteriene, der sammendraget
+      ikke oppgir tallene; og reaktive oksygenforbindelser inne i lymfocytter hos 15 pasienter mot 16 kontroller ved Stanford,
+      der forskjellen ble funnet hos kvinner, men ikke hos menn. Pasientene ved Stanford ble diagnostisert med National Academy
+      of Medicine-, Fukuda- og Canadian Consensus-kriteriene; hvilken definisjon hver pasient oppfylte, er ikke oppgitt. Fordi
+      målene er ulike, er ingen av disse en replikasjon av en annen, og hver av dem er ikke replikert.'
     sources:
     - pmid:23185200
     - pmid:27224647
     - pmid:40627396
-    source_hash: 84e88bd3815d0cf0507adddaaeb07373c69fcf5eca8cadae5a05ecff80bec456
+    source_hash: e949ecca05df99fadfa7c7c27965c0a07349d1b26e14cab7583467d60516c452
   level_reason[2]:
     text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe har funnet det samme resultatet på det samme målet i en egen kohort
       med bekreftede anerkjente diagnosekriterier. Den eneste andre isoprostanstudien, av 6 pasienter og 6 kontroller i Glasgow,
@@ -73,14 +77,14 @@ items:
       senket et mål på oksidativt stress og bedret sykdommen. En placebokontrollert studie av koenzym Q10 pluss NADH hos 73
       pasienter rapporterte mindre utmattelse enn med placebo og lavere lipidperoksider i blodceller i den behandlede gruppen
       (sammendraget sier ikke om det er mot placebo eller mot utgangsnivået), men diagnosekriteriene er ikke kontrollert ennå.
-      En større placebokontrollert studie av den samme kombinasjonen fra den samme enheten, hos 207 kvinner som oppfylte Fukuda-definisjonen,
+      En større placebokontrollert studie av den samme kombinasjonen fra den samme enheten, hos 207 kvinner som oppfylte Fukuda-kriteriene,
       målte ikke oksidativt stress og rapporterte at skårene for utmattelse endret seg parallelt i de to gruppene. En crossover-studie
-      av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene målte heller ikke oksidativt stress.'
+      av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene rapporterer ikke noe mål på oksidativt stress i sammendraget.'
     sources:
     - pmid:25386668
     - pmid:34444817
     - pmid:10071523
-    source_hash: d4dfb997e63d5b7380e353ee822125e2e36fcf68520c2c67989e14cc53877a49
+    source_hash: ee82d70838df277d8761e34c286a73facd845477949ec5e8f5dbf5780c67338c
   level_reason[6]:
     text: En placebokontrollert studie av ubikinol, den reduserte formen av koenzym Q10, hos 43 pasienter (31 fullførte) rapporterte
       bedring i flere symptomer; diagnosekriteriene er ikke kontrollert ennå.
