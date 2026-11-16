@@ -37,10 +37,10 @@ level: 3
 level_reason:
   - text: >-
       A controlled study of 84 patients meeting the Canadian Consensus Criteria and 71 sedentary
-      controls repeated a maximal exercise test after 24 hours. Unlike controls, patients did not
-      reproduce their first-day results: oxygen use and work fell at peak effort and at the
-      ventilatory threshold on the second day. The card is at level 2 because of this study.
-    sources: [pmid:38965566]
+      controls repeated a maximal exercise test after 24 hours. Unlike controls, patients did
+      not reproduce their first-day results: oxygen use and work fell at peak effort and at the
+      ventilatory threshold on the second day. Rung 2 rests on this study.
+    sources: ['pmid:38965566']
   - text: >-
       A study from Amsterdam, using the Fukuda definition, which does not require post-exertional
       malaise, tested 15 women patients and 15 controls on two days. The change from the first to
@@ -69,19 +69,20 @@ level_reason:
       cohorts. Each has a limit, and rung 3 is contested (see the contested note).
     sources: [pmid:38965566, pmid:20937116, pmid:34198913, pmid:34198946, pmid:31161646]
   - text: >-
-      Against these findings, a study from New York of 58 patients and 25 sedentary controls found no
-      change in peak oxygen use or oxygen use at the ventilatory threshold on the second day in either
-      group; the paper reports that 5 patients and 6 controls did not meet maximal-effort criteria. Its
-      patients met the 1994 (Fukuda) definition modified to require post-exertional malaise. Its
-      authors suggest that falls reported elsewhere may reflect lower effort on the second day.
-    sources: [pmid:42212259]
+      Against these findings, a study from New York of 58 patients and 25 sedentary controls
+      found no change in peak oxygen use or oxygen use at the ventilatory threshold on the
+      second day in either group; the paper reports that 5 patients and 6 controls did not meet
+      maximal-effort criteria. Its patients met the 1994 (Fukuda) definition modified to require
+      post-exertional malaise. Its authors suggest that the fall reported in the 84-patient
+      study may reflect lower effort on the second day.
+    sources: ['pmid:42212259', 'pmid:38965566']
   - text: >-
-      The 84-patient study kept patients who met maximal-effort criteria on the first test but not on
-      the second, and its authors read such cases as emblematic of post-exertion symptom
-      exacerbation. Its own results show a fall in heart-rate reserve on the second test, which its
-      authors write suggests that maximum effort was not given; they report a similar fall in the
-      matched controls.
-    sources: [pmid:38965566]
+      The 84-patient study kept patients who met maximal-effort criteria on the first test but
+      not on the second, and its authors read those who still reached perceived maximal effort
+      on the second test as emblematic of post-exertion symptom exacerbation. Its own results
+      show a fall in heart-rate reserve on the second test, which its authors write suggests
+      that maximum effort was not given; they report a similar fall in the matched controls.
+    sources: ['pmid:38965566']
   - text: >-
       A study of 16 patients and 10 controls from Adelaide found that work rate at the ventilatory
       threshold fell more in patients on the second day, but found no difference between groups in
@@ -169,11 +170,11 @@ badges:
           post-exertional malaise.
         sources: [pmid:31161646]
       - text: >-
-          In an overlapping cohort from the 84-patient study's research group, 78 patients took on
-          average about 12.7 days to recover from the two-day test, against 2.1 days for 64 sedentary
-          controls; the paper reports the exercise test results separately and does not relate recovery
-          to oxygen use or work.
-        sources: [pmid:36984572]
+          In a study from the 84-patient study's research group, 78 patients took on average
+          about 12.7 days to recover from the two-day test, against 2.1 days for 64 sedentary
+          controls; the paper reports the exercise test results separately and does not relate
+          recovery to oxygen use or work.
+        sources: ['pmid:36984572', 'pmid:38965566']
       - text: >-
           The New York study found no fall in oxygen use on the second day. Its authors report, as a
           preliminary result with the data to be published separately, that symptoms after the test
@@ -336,10 +337,10 @@ studies:
     direction: lower
     group: Visser FC, Stichting Cardiozorg, Hoofddorp, The Netherlands (same group as 34198913)
     finding: >-
-      A study of n=26 men with ME/CFS and 25 men with chronic fatigue not meeting ME/CFS criteria found
-      that oxygen use and workload at peak exercise and at the ventilatory threshold fell on a second
-      test 24 hours later in ME/CFS, while the comparison group's performance improved, with no
-      significant change in its peak workload.
+      A study of n=26 men with ME/CFS and 25 men with chronic fatigue not meeting ME/CFS
+      criteria found that oxygen use and workload at peak exercise and at the ventilatory
+      threshold fell on a second test 24 hours later in ME/CFS, while the comparison group's
+      performance improved.
   # --- contradicts ---
   - id: pmid:42212259
     title: Cardiopulmonary exercise test results do not change over two sequential days in patients with chronic fatigue syndrome.
@@ -518,7 +519,7 @@ studies:
     # Same CRC cohort as 38965566 (overlapping participants).
     role: context
     direction: not_applicable
-    group: Hanson MR, Cornell University, Ithaca, USA (same group and cohort as 38965566)
+    group: Hanson MR, Cornell University, Ithaca, USA (same research group as 38965566)
     finding: >-
       A study of n=80 patients tested and 64 sedentary controls (78 patients analysed) found that
       patients took on average about 12.7 days to recover from a two-day exercise test, against 2.1
@@ -537,7 +538,7 @@ studies:
     preregistered: null
     role: context  # metabolite pathways, not oxygen use or work; same CRC cohort as 38965566
     direction: mixed
-    group: Hanson MR, Cornell University, Ithaca, USA (same group and cohort as 38965566)
+    group: Hanson MR, Cornell University, Ithaca, USA (same research group as 38965566)
     finding: >-
       A study of n=60 patients and 45 healthy controls measuring 1157 plasma metabolites around two
       exercise tests 24 hours apart found that in patients, exertion mainly affected lipid-related and
@@ -580,6 +581,7 @@ studies:
     direction: not_applicable
     finding: >-
       A review of exercise pathophysiology in ME/CFS and long COVID; it notes that few studies have directly tested how the body's responses to exercise relate to post-exertional malaise. Cited on the map as the source of a proposed link, not as evidence for the level.
+    group: Systrom DM, Brigham and Women's Hospital, Harvard Medical School, Boston, USA (first author Joseph P, Yale University, New Haven)
   # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
   - id: pmid:42051540
     title: "Pathophysiological mechanisms of post-exertional malaise: an integrative analysis based on the metabolism-immune-neuro interaction model."
@@ -619,5 +621,5 @@ links:
       neuroinflammation; no study on this card measured both in the same patients.
     sources: [pmid:42051540]
 last_checked:
-  date: 2026-11-01
-  by: ai_pair
+  date: 2026-11-16
+  by: ai_audit

@@ -1,0 +1,87 @@
+card: impaired-energy-production-after-exertion
+decision: accept
+parts:
+  - decision_part: "Rung 2: the 84-patient controlled study with CCC patients supports a fall in oxygen use and work on the second of two tests 24 hours apart."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+      - source: pmid:38965566
+        quote: "Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2 with significant declines at peak exertion in work"
+    class: none
+  - decision_part: "The level 3: independent groups (Amsterdam, the Dutch clinic, Oslo in part) found the second-day fall in separate cohorts with accepted case definitions."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:20937116
+        quote: "All patients fulfilled the criteria of Fukuda et al [1] for CFS/ME and reported the start of symptoms after an infectious disease."
+      - source: pmid:20937116
+        quote: "At the anaerobic threshold the group of patients performed worse and the controls improved."
+      - source: pmid:34198913
+        quote: "ME/CFS patients showed a deterioration of performance on CPET2 as reflected by VO2 and workload at peak exercise and ventilatory threshold, whereas ICF patients showed improved performance on CPET2 with no significant change in peak workload."
+      - source: pmid:34198913
+        quote: "There was a higher proportion of fibromyalgia in the patient group with ME/CFS: 25/51 (49%) compared to 7/50 (14%) for the idiopathic chronic fatigue patient group."
+      - source: pmid:31161646
+        quote: "All included patients fulfilled the CCC for ME/CFS (Carruthers et al. 2003)."
+      - source: pmid:31161646
+        quote: "The difference in power output at GET was significantly different between groups"
+      - source: pmid:31161646
+        quote: "VO2 at GET was further reduced in patients from CPET1 to CPET2, but the difference in VO2 at GET did not differ significantly between groups"
+    class: none
+  - decision_part: "The contested mark on rung 3: the New York Fukuda study with controls and more patients contradicts the Amsterdam Fukuda study that rung 3 needs."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:42212259
+        quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+      - source: pmid:42212259
+        quote: "For ME/CFS and CON subjects, there were no significant changes in Peak VO2 between Day 1 and Day 2 studies"
+      - source: pmid:42212259
+        quote: "Five ME/CFS and six sedentary controls did not meet the American College of Sports Medicine (ACSM) criteria."
+      - source: pmid:20937116
+        quote: "Female patients (n = 15) and controls (n = 15) performed a cardiopulmonary exercise test (CPET)"
+    class: none
+  - decision_part: "Rung 2 is not contested: the New York study states the Fukuda definition, below CCC, and does not itself say its cohort is the one the companion IOM 2015 paper describes."
+    rubric: "Another article's description is carried over only when a source says the patient group is the same."
+    evidence:
+      - source: pmid:42212259
+        quote: "Forty-seven women and 11 men with ME/CFS were included in the study."
+      - source: pmid:41293716
+        quote: "We performed serial 2-day cardiopulmonary exercise testing (CPET) in 57 patients with ME/CFS and 25 age- and activity-matched control participants."
+      - source: pmid:42212259
+        quote: "This lack of effort on Day 2 testing could explain the apparent decrement in VO2max noted."
+    class: none
+  - decision_part: "The diagnostic marker badge is no: the two-day markers were tested only within their own cohorts."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:23813081
+        quote: "Follow-up classification analysis differentiated between groups with an overall accuracy of 95.1%."
+      - source: pmid:30871578
+        quote: "ROC curve analysis of the percentage change in WR at VT revealed decreases of - 6.3% to - 9.8% provided optimal sensitivity and specificity respectively for distinguishing between patients with ME/CFS and controls."
+      - source: pmid:42212259
+        quote: "The data do not support using the 2-day CPET protocol to define PEM or disability."
+    class: none
+  - decision_part: "The explains-PEM badge is no: no study links oxygen use or work to symptoms after exertion in the same patients."
+    rubric: "a measured change that is itself the hypothesised abnormality (for example a fall in oxygen use on the second test) does not on its own explain PEM."
+    evidence:
+      - source: pmid:31161646
+        quote: "the absolute change was too small, in our opinion, to indicate any major change in exercise tolerance or explain PEM."
+      - source: pmid:36984572
+        quote: "Detailed exercise test results of the 2-day CPET protocol will be reported separately."
+      - source: pmid:42212259
+        quote: "These results will be reported in a separate publication, but preliminarily, we can report that ME/CFS patients could be differentiated from HCs across most symptoms and for most post-CPET days."
+    class: none
+  - decision_part: "The layer dysfunction: the card describes a measured change in the body on exercise testing."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:38965566
+        quote: "Two sequential cardiopulmonary exercise tests (2-d CPET) provide objective evidence of abnormal responses to exertion in ME/CFS"
+    class: none
+  - decision_part: "The two links at step proposed, each sourced to a peer-reviewed review that states it."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:37054777
+        quote: "However, few studies have directly tested the associations between the physiologic and behavioral manifestations of PEM."
+      - source: pmid:42051540
+        quote: "Subsequently, peripheral inflammation may be transmitted to the central nervous system through disruption of the blood-brain barrier and vagal nerve pathways, activating glial cells and initiating neuroinflammation."
+    class: none
+reasons_summary: "Level 3 holds with rung 3 contested (New York Fukuda study against Amsterdam); rung 2 rests on the CCC 84-patient study and is not contested; both badges no; layer and two proposed links match their sources."
+would_change: "A source stating that the New York cohort is the IOM 2015 cohort of pmid:41293716 (which would make it comparable to the CCC study and contest rung 2); confirmation that the Dutch clinic studies used ICC; a replication of a two-day marker in an independent cohort; a study relating the second-day fall to symptoms in the same patients. Not checked in this audit for lack of room: the sentence on fatigue scores before the second test in pmid:30871578 (full text given but not read); it does not bear on any badge value. No drafting, review or earlier audit reasoning was handed to me."

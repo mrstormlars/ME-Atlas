@@ -1,0 +1,68 @@
+card: impaired-energy-production-after-exertion
+decision: reject
+parts:
+  - decision_part: "The finding of the study of men (pmid:34198946) says the comparison group's performance improved 'with no significant change in its peak workload'. The paper's own results table and results text show that peak workload in the men with idiopathic chronic fatigue rose significantly from day 1 to day 2 (216 to 229 W, p < 0.0001); the clause follows an abstract sentence that the full text contradicts. The clause should be removed or corrected; no level, badge, contested mark, case definition, role or number on the card depends on it."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:34198946
+        quote: "all parameters at the ventilatory threshold and at peak exercise differed significantly between day 1 and day 2 (p all <0.0001 for ME/CFS patients and p ranging between 0.002 and <0.0001 for ICF patients)"
+      - source: pmid:34198946
+        quote: "Workload peak (Watts) 195 (46) 175 (45) <0.0001 216 (56) 229 (58) <0.0001"
+    class: wording
+    target: studies[pmid:34198946].finding
+  - decision_part: "Rung 2: a controlled study with a recognised case definition (CCC, n=84 against 71 sedentary controls) found falls on the second test."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+      - source: pmid:38965566
+        quote: "Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2 with significant declines at peak exertion in work, exercise time"
+    class: none
+  - decision_part: "Rung 3: independent groups in separate cohorts (Amsterdam, Fukuda; Oslo, CCC, in part) found falls on the second test that differed from controls."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:20937116
+        quote: "All patients fulfilled the criteria of Fukuda et al [1] for CFS/ME and reported the start of symptoms after an infectious disease."
+      - source: pmid:20937116
+        quote: "At both exercise tests the patients reached the anaerobic threshold and the maximal exercise at a much lower oxygen consumption than the controls and this worsened in the second test."
+      - source: pmid:20937116
+        quote: "At the anaerobic threshold the group of patients performed worse and the controls improved."
+      - source: pmid:31161646
+        quote: "The difference in power output at GET was significantly different between groups"
+    class: none
+  - decision_part: "Rung 3 contested: the New York study (Fukuda as recorded from its own sentence, controlled, more patients than the Amsterdam study) found no change on day 2; rung 2 is not contested because Fukuda ranks below the CCC of the 84-patient study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:42212259
+        quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+      - source: pmid:42212259
+        quote: "For ME/CFS and CON subjects, there were no significant changes in Peak VO2 between Day 1 and Day 2 studies"
+      - source: pmid:20937116
+        quote: "Female patients (n = 15) and controls (n = 15) performed a cardiopulmonary exercise test (CPET) by cycling at a continuously increased work rate till maximal exertion."
+    class: none
+  - decision_part: "Badge explains_pem false: no study on the card links the fall on the second test to symptoms after exertion in the same patients."
+    rubric: "a measured change that is itself the hypothesised abnormality (for example a fall in oxygen use on the second test) does not on its own explain PEM"
+    evidence:
+      - source: pmid:36984572
+        quote: "Detailed exercise test results of the 2-day CPET protocol will be reported separately."
+      - source: pmid:31161646
+        quote: "Although VO2peak decreased significantly in patients, the absolute change was too small, in our opinion, to indicate any major change in exercise tolerance or explain PEM."
+    class: none
+  - decision_part: "Badge diagnostic_marker false: classification and cut-offs were derived within single cohorts; no second independent group tested them."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:23813081
+        quote: "Follow-up classification analysis differentiated between groups with an overall accuracy of 95.1%."
+      - source: pmid:42212259
+        quote: "The data do not support using the 2-day CPET protocol to define PEM or disability."
+    class: none
+  - decision_part: "Layer dysfunction and the two proposed links, each sourced to a peer-reviewed review that states it."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:37054777
+        quote: "However, few studies have directly tested the associations between the physiologic and behavioral manifestations of PEM."
+      - source: pmid:42051540
+        quote: "Subsequently, peripheral inflammation may be transmitted to the central nervous system through disruption of the blood-brain barrier and vagal nerve pathways, activating glial cells and initiating neuroinflammation."
+    class: none
+reasons_summary: "Level 3 with rung 3 contested, both badges false, layer and links are supported; one study finding (men's Dutch study) says peak workload in the comparison group did not change significantly, which the paper's own results contradict."
+would_change: "Removing or correcting the clause 'with no significant change in its peak workload' in the finding for pmid:34198946 to match its results table would leave nothing objected to. The case definitions of pmid:23813081 and pmid:28782878 remain unverifiable (no cached full text) and the card correctly calls them not yet verified; nothing on the level rests on them. A source stating that the New York cohort (pmid:42212259) is the same group as the IOM 2015 cohort in pmid:41293716 would change its recorded definition and would require re-assessing whether rung 2 is contested."

@@ -1,0 +1,256 @@
+card: impaired-energy-production-after-exertion
+round: 6
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-impaired-energy-production-after-exertion-second.yaml
+- 2026-11-13-impaired-energy-production-after-exertion.yaml
+- 2026-11-15-impaired-energy-production-after-exertion-C2.yaml
+- 2026-11-16-impaired-energy-production-after-exertion-C4.yaml
+- 2026-11-16-impaired-energy-production-after-exertion-C5.yaml
+draft_sha256: 3981010cfb5f60ab1ec4f69c24e1ac636fda9ad236126fa905de8d345f19f1b4
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: level_reason[0] ends with 'The card is at level 2 because of this study.' The card's level
+      is 3, so the reader is given two different levels. The source (pmid:38965566) supports rung 2 resting
+      on this study. It does not support the card being at level 2. This was fixed in round C5, but the
+      fix is not in the held-back draft.
+    fix: Replace the last sentence with 'Rung 2 rests on this study.'
+    targets:
+    - level_reason[0]
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[5] says the New York authors ''suggest that falls reported elsewhere may reflect
+      lower effort on the second day''. In the full text of pmid:42212259 (PMC13213420), the effort explanation
+      is about one study only. After discussing Keller et al. 2024 and the fall in %HRR on CPET-2, it
+      says: ''This lack of effort on Day 2 testing could explain the apparent decrement in VO2max noted.''
+      It does not say this of the other studies.'
+    fix: Write 'Its authors suggest that the fall reported in the 84-patient study may reflect lower effort
+      on the second day', and add pmid:38965566 to the sources.
+    targets:
+    - level_reason[5]
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[6] says pmid:38965566 kept patients who met maximal-effort criteria on the
+      first test but not on the second, ''and its authors read such cases as emblematic of post-exertion
+      symptom exacerbation''. The full text (PMC11229500) keeps all such patients, but it calls only a
+      narrower group emblematic: ''ME/CFS who did not meet heart rate or RER criteria during test 2 but
+      did meet RPE criteria (perception of maximum effort) are emblematic of post-exertion symptom exacerbation''.
+      The card applies the authors'' reading to every patient who failed the criteria on day 2, which
+      is broader than the source.'
+    fix: Write '... and its authors read those who still reached perceived maximal effort on the second
+      test as emblematic of post-exertion symptom exacerbation.'
+    targets:
+    - level_reason[6]
+  - operation: null
+    severity: must_fix
+    problem: badge_reasons.explains_pem[2] begins 'In an overlapping cohort from the 84-patient study's
+      research group'. No cached record says the patients of pmid:36984572 overlap with those of pmid:38965566.
+      PMC10059925 says only 'The present study was part of a larger study to investigate molecular mechanisms
+      of ME/CFS' and 'Detailed exercise test results of the 2-day CPET protocol will be reported separately.'
+      PMC11229500 does not say its patients are those of the recovery study. The shared authors (5 exact,
+      with Hanson MR last author of both) show the same research group, not the same patients. Under the
+      founder ruling of 2026-11-16, a cohort is treated as the same only when a source says so.
+    fix: Write 'In a study from the 84-patient study's research group, 78 patients took on average ...'
+      and add pmid:38965566 as a source for 'the 84-patient study'.
+    targets:
+    - badge_reasons.explains_pem[2]
+  - operation: null
+    severity: must_fix
+    problem: Both group fields say '(same group and cohort as 38965566)'. The shared author names support
+      'same group'. No cached record (PMC10059925, PMC9090259, PMC11229500) says the patients are the
+      same cohort.
+    fix: Change both to '(same research group as 38965566)'.
+    targets:
+    - studies[pmid:36984572].group
+    - studies[pmid:35358096].group
+  - operation: null
+    severity: must_fix
+    problem: Study pmid:37054777 has no group field. Every other study on the card has one.
+    fix: 'Add the group from the cached author list: ''Systrom DM, Brigham and Women''s Hospital, Harvard
+      Medical School, Boston, USA (first author Joseph P, Yale University, New Haven)''.'
+    targets:
+    - studies[pmid:37054777].group
+  - operation: null
+    severity: advisory
+    problem: 'links[0] and studies[pmid:37054777].finding: the cached full text of pmid:37054777 (PMC10088277)
+      has the sentence the link relies on: ''However, few studies have directly tested the associations
+      between the physiologic and behavioral manifestations of PEM.'' The link is therefore sourced. The
+      earlier audits (2026-11-13 part 3, second part 8, C5 part 0) rejected it because they saw only the
+      abstract. The card''s paraphrase (''how the body''s responses to exercise relate to post-exertional
+      malaise'') is close to the source but broader than it, because the source is about the manifestations
+      of PEM.'
+    fix: Stay closer to the source, for example '... notes that few studies have directly tested how the
+      physiological and behavioural signs of post-exertional malaise relate to each other', in both the
+      link text and the study finding. Make sure the auditor is given the full-text sentence.
+  - operation: null
+    severity: advisory
+    problem: contested_reason[0] gives the New York study as 'more patients (58 against 15)'. The card's
+      own n_patients for pmid:42212259 is 53, the patients with maximal tests on both days ('Five ME/CFS
+      and six sedentary controls did not meet the ... ACSM criteria'). Either count is more than half
+      of 15, so the contested mark is not affected.
+    fix: Optionally write '53 patients with maximal tests on both days (58 tested) against 15'.
+  - operation: null
+    severity: advisory
+    problem: contested_reason[1] says the ICC label for pmid:34198913 and pmid:34198946 'is read from
+      a reference number and not confirmed'. Both cached full texts also say severe patients were graded
+      'according to International Consensus Criteria (ICC)' and excluded, and reference [1] is Carruthers
+      et al., International Consensus Criteria. The quote for the men's study cites [1,3], and the women's
+      quote also names Fukuda, so it is not clear which criteria each patient met.
+    fix: Optionally say that the definition is read from reference [1] (the International Consensus Criteria),
+      that the papers grade severity by ICC, and that the same sentence also cites Fukuda.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] calls the two Dutch studies 'retrospective analyses'. Neither full text uses
+      that word. They describe patients selected from the clinic's database ('From a database of patients
+      evaluated for ME/CFS over the period from June 2010 to October 2019'). Also, the PubMed abstract
+      of pmid:34198913 reverses the group sizes and gives fibromyalgia as 'seven ME/CFS patients vs zero
+      ICF patients'. The card follows the body of the paper (51 ME/CFS, 25/51 = 49% against 7/50 = 14%),
+      which is the better reading.
+    fix: Optionally write 'analyses of patients selected from a clinical database'.
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:30871578] is labelled Fukuda, but its quote says patients were diagnosed by
+      'one of three' criteria (Fukuda, CCC or ICC). The label is a conservative floor for a context study,
+      but the card does not say the cohort is mixed.
+    fix: Optionally say where the Adelaide study is described that its patients were diagnosed by Fukuda,
+      CCC or ICC.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'A controlled study of 84 patients meeting the Canadian Consensus Criteria and 71 sedentary controls
+    repeated a maximal exercise test after 24 hours. Unlike controls, patients did not reproduce their
+    first-day results: oxygen use and work fell at peak effort and at the ventilatory threshold on the
+    second day. Rung 2 rests on this study.'
+  sources:
+  - pmid:38965566
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: Against these findings, a study from New York of 58 patients and 25 sedentary controls found no
+    change in peak oxygen use or oxygen use at the ventilatory threshold on the second day in either group;
+    the paper reports that 5 patients and 6 controls did not meet maximal-effort criteria. Its patients
+    met the 1994 (Fukuda) definition modified to require post-exertional malaise. Its authors suggest
+    that the fall reported in the 84-patient study may reflect lower effort on the second day.
+  sources:
+  - pmid:42212259
+  - pmid:38965566
+- op: replace_paragraph
+  field: level_reason
+  index: 6
+  text: The 84-patient study kept patients who met maximal-effort criteria on the first test but not on
+    the second, and its authors read those who still reached perceived maximal effort on the second test
+    as emblematic of post-exertion symptom exacerbation. Its own results show a fall in heart-rate reserve
+    on the second test, which its authors write suggests that maximum effort was not given; they report
+    a similar fall in the matched controls.
+  sources:
+  - pmid:38965566
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 2
+  text: In a study from the 84-patient study's research group, 78 patients took on average about 12.7
+    days to recover from the two-day test, against 2.1 days for 64 sedentary controls; the paper reports
+    the exercise test results separately and does not relate recovery to oxygen use or work.
+  sources:
+  - pmid:36984572
+  - pmid:38965566
+- op: update_study
+  id: pmid:36984572
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same research group as 38965566)
+- op: update_study
+  id: pmid:35358096
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same research group as 38965566)
+- op: update_study
+  id: pmid:37054777
+  set:
+    group: Systrom DM, Brigham and Women's Hospital, Harvard Medical School, Boston, USA (first author
+      Joseph P, Yale University, New Haven)
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: 'The correction resolves the six must_fix findings of the -pre review, one operation each,
+      and adds no claim. Op 0 answers the level_reason[0] finding: it replaces only the last sentence
+      with ''Rung 2 rests on this study.'' Op 1 answers the level_reason[5] finding. PMC13213420 discusses
+      Keller et al. 2024 (84 patients) and its fall in %HRR on CPET-2, then says ''This lack of effort
+      on Day 2 testing could explain the apparent decrement in VO2max noted'', and pmid:38965566 is added
+      as a source. Op 2 answers the level_reason[6] finding. PMC11229500 says ''ME/CFS who did not meet
+      heart rate or RER criteria during test 2 but did meet RPE criteria (perception of maximum effort)
+      are emblematic of post-exertion symptom exacerbation''. Op 3 answers the badge_reasons.explains_pem[2]
+      finding: ''overlapping cohort'' becomes ''a study from ... research group'', and the rest of the
+      sentence is unchanged. Ops 4 and 5 answer the group finding for 36984572 and 35358096: Hanson MR
+      is last author of 36984572, 35358096 and 38965566. Op 6 answers the missing-group finding for 37054777.
+      The PMC10088277 author list gives Systrom DM as corresponding author, at Brigham and Women''s Hospital,
+      Harvard Medical School, Boston, and first author Joseph P at Yale University, New Haven. No level,
+      badge, contested mark or link changes.'
+    fix: None needed; recorded so the auditor can see which finding each operation answers.
+  - operation: null
+    severity: advisory
+    problem: 'Internal YAML comments still say the patients are the same cohort, which the corrected group
+      fields no longer claim. They are ''# Same CRC cohort as 38965566 (overlapping participants).'' on
+      study 36984572, ''# same CRC cohort as 38965566'' on study 35358096, and ''# Overlaps: same CRC
+      cohort as 36984572 ... and 35358096'' on study 38965566. They are not reader-facing, but they contradict
+      the corrected fields.'
+    fix: In a later edit, change these comments to 'same research group' so they agree with the group
+      fields.
+  - operation: null
+    severity: advisory
+    problem: 'The optional advisory items of the -pre review are not addressed: the paraphrase in links[0]
+      and studies[pmid:37054777].finding, the 58 against 53 count in contested_reason[0], the ICC wording
+      in contested_reason[1], ''retrospective analyses'' in level_reason[2], and the mixed case definitions
+      of the Adelaide study. None of them changes a level, badge or contested mark.'
+    fix: Optional, in a later round.
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: 'studies[pmid:34198913] and level_reason[2]: the card''s numbers (51 women with ME/CFS, 50
+      with idiopathic chronic fatigue; fibromyalgia 49% against 14%) match the cached full text (Methods:
+      ''leaving 51 female patients with data from a 2-day CPET protocol''; Results: ''25/51 (49%) compared
+      to 7/50 (14%)''), but the cached abstract states the reverse (''Fifty-one female patients with ICF
+      ... 50 female ME/CFS patients'') and ''seven ME/CFS patients vs zero ICF patients'' for fibromyalgia.
+      A reader who checks only the abstract will see a mismatch.'
+    fix: Optionally note on the study that the numbers are taken from the paper's Methods and Results,
+      which differ from its abstract.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] calls the two Dutch clinic studies 'retrospective analyses of a clinical
+      database'. The cached full texts describe selecting patients from a clinic database of 2-day CPETs
+      done between June 2010 and October 2019 for clinical reasons, which is retrospective in substance,
+      but neither text uses the word.
+    fix: Optionally write 'analyses of patients selected from the clinic's database of tests done for
+      clinical reasons', which is closer to the sources' wording.
+  - operation: null
+    severity: advisory
+    problem: contested_reason[0] gives 'more patients (58 against 15)' for the New York study. The rubric
+      counts patients in the measurement that bears on the finding; the paper's Table 2 covers those who
+      reached maximal effort on both days (5 of 58 patients and 6 of 25 controls did not), which is the
+      card's own n_patients 53 / n_controls 19. The conclusion (at least half the sample size of the 15-patient
+      study) holds either way.
+    fix: Optionally write '(53 patients in the analysis, against 15)' so the number matches the rubric's
+      sample-size rule and the study entry.
+  - operation: null
+    severity: advisory
+    problem: 'studies[pmid:30871578]: the case_definition_quote says patients were diagnosed by one of
+      three definitions (Fukuda, CCC or ICC); the paper does not say how many met each. The label ''Fukuda''
+      reads as the lowest of the three permitted definitions, which is a conservative ranking, but the
+      quote does not state that all patients met Fukuda.'
+    fix: Optionally note on the study that patients met any one of Fukuda, CCC or ICC and that the card
+      ranks the cohort at the lowest of the three.
+audits_run:
+- 2026-11-16-impaired-energy-production-after-exertion-C6.yaml
+- 2026-11-16-impaired-energy-production-after-exertion-C6-second.yaml
+valve:
+  audit:
+    file: 2026-11-16-impaired-energy-production-after-exertion-C6-valve-audit.yaml
+    passed: true

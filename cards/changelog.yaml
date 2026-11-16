@@ -384,3 +384,23 @@
   - pmid:40143349
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: impaired-energy-production-after-exertion
+  change: First publication at level 3 after correction round 6 and a wording fix
+  reason: Level 3 holds with rung 3 contested (New York Fukuda study against Amsterdam); rung 2 rests
+    on the CCC 84-patient study and is not contested; both badges no; layer and two proposed links match
+    their sources.
+  sources:
+  - pmid:38965566
+  - pmid:20937116
+  - pmid:34198913
+  - pmid:31161646
+  - pmid:42212259
+  - pmid:41293716
+  - pmid:23813081
+  - pmid:30871578
+  - pmid:36984572
+  - pmid:37054777
+  - pmid:42051540
+  tier: 2
+  decided_by: ai_audit
