@@ -2,6 +2,16 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — Link rounds: each link decided on its own, the wording valve applies; the nine links get one new attempt (founder ruling)
+
+- After the link round of 2026-11-16 restored two of the eleven removed links, nine were still out: `brain-and-brainstem-mri-changes` (1), `hpa-axis-cortisol` (3) and `gut-microbiome` (4 proposed; the link to `tryptophan-kynurenine-metabolism` was not proposed, no record states it). The auditors had found six of them supported but rejected each card's round as a whole over one link or one clause.
+- Asked "Skal de ni gjenværende lenkene få et nytt forsøk med endrede regler? Jeg anbefaler ja, med to endringer: hver lenke avgjøres for seg, og sikkerhetsventilen gjelder også for lenkerunder.", the founder answered: "Ja til begge".
+- **Each link is decided on its own.** The audit record of a link round gives a decision per link; an accepted link is published even when another link of the same card is rejected. Each published link still needs two agreeing audits; the second audit runs for the links the first did not reject.
+- **The wording-only safety valve applies to link texts** at the map review and at the audit, as it exists for correction rounds (the finder classifies `decisive` or `wording`; the orchestrator removes or rewords only the named sentence of the link text, removal when in doubt; code refuses a fix that touches anything but that text; one fix check by `card-reviewer`). Nothing else about the valve changes.
+- **One new attempt** for the nine links, through the changed link round.
+- Changes: the orchestrator defaults of 2026-11-16 "one audit decides all links of a card together" and "no wording valve in a link round". The other link-round defaults stand as defaults.
+- Why: the conclusions a reader relies on still need two agreeing audits per link, but a supported link should not fall with another link, or with a clause that removing it resolves.
+
 ## 2026-11-16 — The eleven links removed in the correction rounds get a new trial (founder ruling)
 
 - Eleven links on five cards were removed in the correction rounds of 2026-11-14/15: `gut-microbiome` (5: symptom:gastrointestinal-symptoms, symptom:cognitive-impairment, tryptophan-kynurenine-metabolism, neuroinflammation, oxidative-nitrosative-stress), `hpa-axis-cortisol` (3: symptom:sleep-disturbance, symptom:cognitive-impairment, question:what-keeps-it-going), `endothelial-dysfunction` (1: orthostatic-intolerance-cerebral-blood-flow), `small-fibre-neuropathy` (1: symptom:orthostatic-intolerance), `brain-and-brainstem-mri-changes` (1: symptom:cognitive-impairment). Most went because the auditor then saw only the abstract of a link's source and could not match the statement to it, and a correction could only remove. Since 2026-11-16 the audit context gives the cached full text of link sources.

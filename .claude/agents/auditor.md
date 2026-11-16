@@ -73,8 +73,30 @@ When the context file is the audit of a corrected draft, each part of a `reject`
 - A part that supports the card has `class: none` (or no `class`). In an `accept` every part is such a part; an `accept` with an objecting part is refused. A `reject` needs at least one objecting part, and every part of it has a `class`.
 - A `reject` whose objecting parts are all `wording` does not end the audits: a second auditor still audits the card, and when the two records agree that only wording is at issue the orchestrator fixes the sentences and a check follows. Any `decisive` part, in either record, takes the normal path.
 
+## A link round (each link decided on its own)
+
+When the context file says in its header that it is a link round (first or second audit), the change is a set of links added to a published card, and you decide each link on its own. The header lists the links to decide as `links[n]`: `to`, in the numbering of the card with the change applied (section 2). Your record has, besides the shape above:
+
+```yaml
+decision: reject            # accept only when every link is accepted; otherwise reject. accept_lower is not available.
+link_decisions:
+  - {to: other-card, decision: accept}
+  - {to: symptom:example, decision: reject}
+parts:
+  - decision_part: "The link to symptom:example: what is not supported by the cited record."
+    rubric: "..."
+    evidence: [...]
+    class: decisive         # decisive | wording | none
+    target: links[3]        # the link the part objects to, as numbered in the context
+```
+
+- `link_decisions` has exactly one entry for each link the header lists, no other, each `accept` or `reject`. The record's `decision` is `accept` when every entry is `accept`, else `reject`. Code refuses a record whose `decision` does not follow from the entries.
+- Every part of a `reject` has `class`: `decisive`, `wording` or `none` (a part that supports a link). A part that objects names its link with `target: links[n]`, for `wording` and for `decisive` alike. Every link you decide `reject` has at least one objecting part naming it; a link you decide `accept` has none. In an `accept` record every part supports.
+- The `class` rule is the one above, verbatim: `wording` only if resolving it touches none of level, badges, contested mark, layer, links, case definition, a study's role, or any number. In a link round the "links" of that rule are the link's target (`to`), its `support` step and its `sources`: a part resolved by removing or rewording a clause of the link's `text` alone is `wording`; a part that says the cited record does not state the link, or that the step is higher than the record supports, is `decisive`. When in doubt it is `decisive`. For an objecting part, `decision_part` names the clause and what is wrong with it, since the orchestrator and the fix check read it.
+- A link rejected on `decisive` parts only is dropped, and the second audit (a fresh auditor) decides only the links you did not reject that way. A link rejected on `wording` parts only goes on to the second audit and, if both audits leave only wording at issue, to a wording fix and a check. Decide each link on the cited records; do not let another link's weakness decide it.
+
 ## Format retry
 
-If code rejected your record, you may be given a retry note (`<name>.retry.md`): the validation errors, the path of the context file and the path of the record that was rejected. Read the context file, the rejected record and the errors, and write the record again to the path you were given. This task fixes the format only: a quote that is not word for word in the cited record, a source id that is not in the context file, a rubric text that is not word for word in the rubric, a missing field. The `decision` and the `accepted_level` stay exactly as they were, and code refuses a retry that changes either. If a quote cannot be repaired, take the statement out of the `evidence` list and out of your reasons rather than change the decision. You get one retry; a second failure is final.
+If code rejected your record, you may be given a retry note (`<name>.retry.md`): the validation errors, the path of the context file and the path of the record that was rejected. Read the context file, the rejected record and the errors, and write the record again to the path you were given. This task fixes the format only: a quote that is not word for word in the cited record, a source id that is not in the context file, a rubric text that is not word for word in the rubric, a missing field. The `decision`, the `accepted_level` and every `link_decisions` entry stay exactly as they were, and code refuses a retry that changes any of them. If a quote cannot be repaired, take the statement out of the `evidence` list and out of your reasons rather than change the decision. You get one retry; a second failure is final.
 
 Reply with the decision and, for `accept_lower`, the level, nothing else.

@@ -423,3 +423,46 @@
   - pmid:41516145
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: brain-and-brainstem-mri-changes
+  change: 'Links added: symptom:cognitive-impairment'
+  reason: 'The cognitive-impairment link at step 2 is supported: cited studies with ICC, CCC/ICC or Fukuda
+    cohorts related MRI measures to self-rated cognitive scores in the same patients, and the text reports
+    each result, its correction status and the null study correctly.'
+  sources:
+  - pmid:29021956
+  - pmid:34355438
+  - pmid:35355311
+  - pmid:39804864
+  - pmid:38347875
+  - pmid:42539798
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-16
+  card: hpa-axis-cortisol
+  change: 'Links added: symptom:sleep-disturbance, symptom:cognitive-impairment, question:what-keeps-it-going'
+  reason: 'All three links are accepted at step proposed: each is stated by a peer-reviewed review, and
+    the patient studies that found no relation are written out without raising the step.'
+  sources:
+  - pmid:41516296
+  - pmid:11282703
+  - pmid:40713801
+  - pmid:31330791
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-16
+  card: gut-microbiome
+  change: 'Links added: symptom:gastrointestinal-symptoms, symptom:cognitive-impairment, neuroinflammation,
+    oxidative-nitrosative-stress'
+  reason: 'All four links accepted: the two symptom links rest on controlled studies with recognised case
+    definitions that measured both ends in the same patients, and the two proposed links are stated in
+    peer-reviewed reviews.'
+  sources:
+  - pmid:36758522
+  - pmid:28441964
+  - pmid:42351611
+  - pmid:41006438
+  - pmid:41516296
+  - pmid:31330791
+  tier: 2
+  decided_by: ai_audit

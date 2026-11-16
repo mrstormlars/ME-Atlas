@@ -1,0 +1,55 @@
+card: hpa-axis-cortisol
+decision: accept
+link_decisions:
+  - {to: "symptom:sleep-disturbance", decision: accept}
+  - {to: "symptom:cognitive-impairment", decision: accept}
+  - {to: "question:what-keeps-it-going", decision: accept}
+parts:
+  - decision_part: "The link to symptom:sleep-disturbance at step proposed: a peer-reviewed 2025 review states that abnormal HPA-axis hormone levels in ME/CFS have been associated with worse sleep difficulties, which is what step 1 requires."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "Another mechanism discussed in ME/CFS pathogenesis involves a neuroendocrine impairment, which is manifested by abnormal levels of hormones produced by the HPA axis [53]."
+      - source: pmid:41516296
+        quote: "This has been associated with worsening of certain clinical manifestations, such as sleep and concentration difficulties, as well as fatigue debilitation [54]."
+    class: none
+  - decision_part: "The link to symptom:sleep-disturbance: the two cohort studies that measured both ends found no relation, and the link text says so, as the rubric asks; the 121-patient study is correctly described as of unverified case definition and the 24-patient study as meeting CCC, ICC and IOM 2015, so the link stays at step 1."
+    rubric: "A study that measured both ends and found no relation is recorded as a"
+    evidence:
+      - source: pmid:11282703
+        quote: "They obtained 24-hour urine collections from 121 consecutive clinic patients with chronic fatigue syndrome and 64 comparison subjects without the syndrome."
+      - source: pmid:11282703
+        quote: "Lower levels of urinary free cortisol were not related to medication use, sleep disturbance, or disability levels."
+      - source: pmid:40713801
+        quote: "All patients fulfilled the Canadian Consensus Criteria, the International Consensus Criteria and the IOM criteria"
+      - source: pmid:40713801
+        quote: "is an observer-rated tool comprising 12 items that assess fatigue-related multisystem symptom burden, including pain, sleep disturbance, and cognitive dysfunction"
+      - source: pmid:40713801
+        quote: "None of the associations remained significant after correction for multiple comparisons, and these results should be interpreted with considerable caution due to the small sample sizes."
+    class: none
+  - decision_part: "The link to symptom:cognitive-impairment at step proposed: the same review states the association with concentration difficulties; the 24-patient study's two scales (mental fatigue; a multisystem scale including cognitive dysfunction) showed no correlation surviving correction, and the text says so."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "This has been associated with worsening of certain clinical manifestations, such as sleep and concentration difficulties, as well as fatigue debilitation [54]."
+      - source: pmid:40713801
+        quote: "evaluates mental fatigue over the past month based on 14 self-rated items"
+      - source: pmid:40713801
+        quote: "is an observer-rated tool comprising 12 items that assess fatigue-related multisystem symptom burden, including pain, sleep disturbance, and cognitive dysfunction"
+      - source: pmid:40713801
+        quote: "None of the associations remained significant after correction for multiple comparisons, and these results should be interpreted with considerable caution due to the small sample sizes."
+    class: none
+  - decision_part: "The link to question:what-keeps-it-going at step proposed: a peer-reviewed 2019 review states that HPA-axis dysfunction with hypocortisolism could add a perturbed regulatory loop that may help perpetuate an altered homeostasis, and lists HPA axis dysregulation among conditions that could shift cells to an alternative resting steady state; a review cannot carry more than step 1."
+    rubric: "Oxford-only evidence stays at step 1, and a source that is a review"
+    evidence:
+      - source: pmid:31330791
+        quote: "could be dysfunctional in ME/CFS due to the hypocortisolism previously suggested to play a role in the condition [169,170]."
+      - source: pmid:31330791
+        quote: "This possibility could weave another perturbed regulatory loop into the system, which may aid in perpetuating an altered homeostasis."
+      - source: pmid:31330791
+        quote: "These adverse conditions could include energy stress, inflammation, HPA axis dysregulation, or pathogen exposure."
+      - source: pmid:31330791
+        quote: "that could result in the cell shifting to an alternative resting steady state"
+    class: none
+reasons_summary: "All three links are accepted at step proposed: each is stated by a peer-reviewed review, and the cohort studies that found no relation are written out in the link text."
+would_change: "A cohort study with a recognised case definition reporting a relation between cortisol or HPA-axis measures and sleep disturbance or cognitive symptoms in the same patients could support step 2 for those links; a finding that the 2025 or 2019 review does not state these links, or a retraction of either review, would remove them. The 121-patient urinary cortisol study (pmid:11282703) has no cached full text and its case definition is unverified; the link text already says so and does not rest on it."

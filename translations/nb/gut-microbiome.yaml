@@ -156,6 +156,61 @@ items:
     sources:
     - pmid:26683192
     source_hash: 554f97be5e7949768650b0af46d7a7e9b59e16959e311a5e21e8546b3f2f2c3a
+  links[0]:
+    text: En studie med n=106 pasienter som oppfylte både Fukuda-kriteriene og Canadian-kriteriene og 91 friske kontroller
+      fant selvrapportert irritabel tarm-syndrom hos 35 pasienter og 3 kontroller. Lavere mangfold innenfor prøvene (jevnhet
+      og Shannon-mangfold) ble bare funnet hos pasienter med irritabel tarm-syndrom, sammenlignet med kontroller uten det.
+      Når pasienter med og uten irritabel tarm-syndrom ble sammenlignet direkte, var den samlede sammensetningen av tarmbakterier
+      ikke forskjellig, og ingen bakteriearter skilte seg etter korreksjon for flere tester. Butyrat i avføring var lavere
+      hos pasienter både med og uten det. En tidligere studie med n=50 pasienter (Fukuda- og/eller Canadian-kriteriene) og
+      50 kontroller fant irritabel tarm-syndrom hos 21 pasienter og ingen kontroller, og at bakteriene som skilte pasienter
+      med det fra kontroller, var andre enn de som skilte pasienter uten det. De to studiene har ti forfattere til felles,
+      og ingen uavhengig gruppe på dette kortet har gjentatt sammenhengen. En studie med n=76 pasienter som oppfylte IOM 2015-kriteriene,
+      50 pasienter med langvarig covid og 37 kontroller fant at tarmbakterier forklarte lite eller ingenting av variasjonen
+      i skårer for mage- og tarmsymptomer (R2 nær null eller negativ i én av to metoder, noe som taler mot et stabilt bidrag),
+      i modeller på tvers av alle tre gruppene justert for gruppe.
+    sources:
+    - pmid:36758522
+    - pmid:28441964
+    - pmid:42351611
+    source_hash: 00ee60b747473a57bf0d5fcad43cf49c116d4f5c910429e5d3a651c036217ac6
+  links[1]:
+    text: En studie med n=25 pasienter som oppfylte Fukuda-kriteriene og 16 friske kontroller målte tarmbakterier og prestasjon
+      på Trail Making Test, en tidtatt papir-og-blyant-test av eksekutive funksjoner. Den rapporterte en signifikant sammenheng
+      mellom den samlede sammensetningen av tarmbakterier og skårer på Trail Making Test del B (p = 0,025) og forskjellen
+      del B minus del A (p = 0,007), i en analyse av pasienter og kontroller samlet. Forfatterne sier at personer med dårligere
+      skårer i hver av gruppene hadde lignende sammensetning av tarmbakterier. Hos pasientene korrelerte åtte bakterieslekter
+      med tiden på del B (alle med en korrelasjonskoeffisient på minst 0,4 i størrelse, alle i retning av bedre prestasjon
+      ved høyere forekomst). Hos kontrollene var mønsteret et annet (29 korrelasjoner, 9 i den retningen og 20 i motsatt retning).
+      Forfatterne påpeker at forstyrrende faktorer som kosthold, medisiner og livsstil ikke kan utelukkes. Dette er ikke gjentatt.
+      En oversiktsartikkel fra 2025 foreslår at endringer i tarmmikrobiomet kan føre til bestemte nevrokognitive svekkelser
+      ved ME/CFS gjennom tarm-hjerne-aksen. Oversiktsartikkelen er ikke en studie av pasienter. En studie med n=76 pasienter
+      som oppfylte IOM 2015-kriteriene, 50 pasienter med langvarig covid og 37 kontroller, fra den samme gruppen som oversiktsartikkelen,
+      målte tarmbakterier og kognitive symptomskårer utledet fra spørreskjemaer, og rapporterte svakere eller mindre stabile
+      signaler for kognitive skårer enn for skårer knyttet til utmattelse, i modeller på tvers av alle tre gruppene.
+    sources:
+    - pmid:41006438
+    - pmid:41516296
+    - pmid:42351611
+    source_hash: 48af56599eeb840ee684cbe113c208febeeb6cde96067c2b8490bd965552d2ca
+  links[2]:
+    text: En oversiktsartikkel fra 2025 oppgir at noen forskere mener at overgangen av tarmbakterier eller produkter fra dem
+      inn i kroppen, som kan utløse nevroinflammasjon, kan ligge bak nevrologiske forstyrrelser ved ME/CFS. Oversiktsartikkelen
+      er ikke en studie av pasienter.
+    sources:
+    - pmid:41516296
+    source_hash: 96b690fc60bc9011bedb872da528e4fdf99b02275ca8eaa796517b1040f91892
+  links[3]:
+    text: To oversiktsartikler foreslår koblinger fra bakterieprodukter i tarmen til reaktive oksygen- og nitrogenforbindelser.
+      En oversiktsartikkel fra 2025 beskriver at bakterielt endotoksin kommer ut i blodet og aktiverer en betennelsesvei,
+      hvoretter immunceller produserer cytokiner og reaktive oksygenforbindelser. Den nevner ikke oksidativt stress i denne
+      passasjen. En oversiktsartikkel fra 2019 foreslår at en frie radikaler-respons (reaktive oksygen- og nitrogenforbindelser)
+      på bakterieprodukter fra tarmen kan forklare rapporter om økt oksidativt stress ved ME/CFS, og sier at årsakssammenhenger
+      mellom de berørte systemene er ukjente. Ingen av oversiktsartiklene er en studie av pasienter.
+    sources:
+    - pmid:41516296
+    - pmid:31330791
+    source_hash: ad2225608af6bb294c3e62b4f3e81c2d06c223a1cd73edd8b91223f75d964731
   studies[pmid:36758522].finding:
     text: En studie med n=106 pasienter og 91 friske kontroller fant mindre av de butyratproduserende bakteriene Faecalibacterium
       prausnitzii og Eubacterium rectale, færre kopier av et bakterielt butyratgen og lavere butyrat og acetat i avføring

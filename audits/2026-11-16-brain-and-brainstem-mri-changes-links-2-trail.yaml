@@ -1,0 +1,121 @@
+card: brain-and-brainstem-mri-changes
+card_sha256: 211f6688f9e8574b19b6c7f4151252e9bfa6c67fe6d99084b49e6addf8fa3ef3
+rounds:
+- round: 1
+  proposal:
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: Studies from Griffith University related MRI measures to self-rated cognitive symptoms in patients,
+      with mixed results and no overall direction. In 16 to 18 patients meeting the International Consensus
+      Criteria, diffusion MRI measures related to a self-rated information processing score (1 to 10)
+      differently than in controls, in regions that include the hippocampus and corpus callosum, after
+      a correction across all regressions run. A second paper on the same cohort found larger volumes
+      of several hippocampal subfields going with a worse score in 16 of these patients, and no such association
+      in the 24 patients meeting only the Fukuda criteria; the paper does not state that these correlations
+      were corrected for multiple comparisons. A 7 Tesla study of n=29 patients (described by its authors
+      as a different cohort) found a larger left CA4 body volume going with worse self-rated concentration
+      (r=0.41, p=0.034), also without a stated correction for multiple correlations. In n=31 patients
+      at 7 Tesla, a self-rated memory score correlated positively with connectivity between two cerebellar
+      vermis regions and negatively with another pair. A study of n=37 patients meeting the Canadian or
+      International criteria, which correlated diffusion MRI measures with clinical measures including
+      WHODAS domains, found no correlation that survived correction for multiple comparisons. The scores
+      are self-reported, the groups are small, and none of this has been replicated by another group.
+    sources:
+    - pmid:34355438
+    - pmid:35355311
+    - pmid:39804864
+    - pmid:38347875
+    - pmid:42539798
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: reject
+    findings:
+    - class: decisive
+      item: links[0]
+      severity: must_fix
+      problem: 'A study on the card that measured both ends in the same patients is missing from the sources.
+        pmid:29021956 (Newcastle, no authors shared with the Griffith group, 42 patients meeting the Fukuda
+        definition; full text PMC5633338) reports, in ''Exploratory analyses in the patient group'', Table
+        4: total intracranial volume and grey matter volume related negatively to the Cognitive Failures
+        Questionnaire total (TIV -0.483, p=0.001; GM -0.689, p=0.002) and to the FIS cognitive subscale
+        (TIV -0.336, p=0.032; GM -0.663, p=0.004), with no relation for white matter volume (CFQ 0.340,
+        p=0.114). The link text instead opens ''Studies from Griffith University related MRI measures
+        to self-rated cognitive symptoms'' and closes ''none of this has been replicated by another group'',
+        which presents the evidence as coming from one group only.'
+      fix: 'Add pmid:29021956 to sources and one sentence: a study from a different group (Newcastle)
+        of 42 patients meeting the Fukuda definition (which does not require post-exertional malaise)
+        found, in exploratory regressions, smaller total intracranial and grey matter volumes going with
+        higher self-rated cognitive failure and cognitive fatigue impact scores, and no such relation
+        for white matter volume; the paper does not state a correction for multiple comparisons for these
+        regressions. Reword the opening sentence so it no longer says all the studies are from Griffith
+        University, and keep the closing limit accurate (for example: no result has been repeated with
+        the same measure).'
+    - item: links[0]
+      severity: advisory
+      problem: '''In 16 to 18 patients meeting the International Consensus Criteria'': for the information
+        processing regressions in pmid:34355438, the full text says one ICC patient was omitted for missing
+        clinical data (Procinfo, Phys_all and SDS) and one Procinfo outlier was also omitted, which leaves
+        16 of the 18. The range is not wrong but is vaguer than the source.'
+      fix: Write '16 of 18 patients meeting the International Consensus Criteria (two left out of this
+        analysis)', as the sleep link on the card already does.
+    - item: links[0]
+      severity: advisory
+      problem: 'The text states the correction status for every study except pmid:38347875, whose memory
+        correlations are reported with p-FDR (Table 4: 0.0083 and 0.013). A reader may group it with the
+        uncorrected ones.'
+      fix: Add 'after false discovery rate correction' to the 7 Tesla connectivity sentence.
+- round: 2
+  proposal:
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: Studies related MRI measures to self-rated cognitive symptoms in patients, with mixed results
+      and no overall direction. A Newcastle study of 42 patients meeting the Fukuda definition (which
+      does not require post-exertional malaise), in exploratory regressions, found smaller total intracranial
+      and grey matter volumes going with higher self-rated cognitive failure and cognitive fatigue impact
+      scores, and no such relation for white matter volume; the paper does not state a correction for
+      multiple comparisons for these regressions, and its authors advise caution. Studies from Griffith
+      University gave mixed results. In 16 of 18 patients meeting the International Consensus Criteria
+      (two left out of this analysis), diffusion MRI measures related to a self-rated information processing
+      score (1 to 10) differently than in controls, in regions that include the hippocampus and corpus
+      callosum, after a correction across all regressions run. A second paper on the same cohort found
+      larger volumes of several hippocampal subfields going with a worse score in 16 of these patients,
+      and no such association in the 24 patients meeting only the Fukuda criteria; the paper does not
+      state that these correlations were corrected for multiple comparisons. A 7 Tesla study of n=29 patients
+      (described by its authors as a different cohort) found a larger left CA4 body volume going with
+      worse self-rated concentration (r=0.41, p=0.034), also without a stated correction for multiple
+      correlations. In n=31 patients at 7 Tesla, a self-rated memory score correlated positively with
+      connectivity between two cerebellar vermis regions and negatively with another pair, after false
+      discovery rate correction. A study of n=37 patients meeting the Canadian or International criteria,
+      which correlated diffusion MRI measures with clinical measures including WHODAS domains, found no
+      correlation that survived correction for multiple comparisons. The scores are self-reported and
+      the groups are small, and no result has been repeated with the same measure.
+    sources:
+    - pmid:29021956
+    - pmid:34355438
+    - pmid:35355311
+    - pmid:39804864
+    - pmid:38347875
+    - pmid:42539798
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings:
+    - item: links[0]
+      severity: advisory
+      problem: '''its authors advise caution'': in pmid:29021956 (PMC5633338, discussion) the caution
+        (''these findings in the present study should be interpreted with caution'') is given for the
+        total intracranial volume findings (the group difference and its associations with symptom severity),
+        which the same paragraph says ''appeared to be driven by'' grey matter and CSF volumes. The clause
+        is broadly right but slightly wider than the sentence it rests on.'
+      fix: Optionally narrow to 'its authors advise caution about the total intracranial volume findings'.
+links:
+- to: symptom:cognitive-impairment
+  outcome: published
+audits_run:
+- 2026-11-16-brain-and-brainstem-mri-changes-links-2.yaml
+- 2026-11-16-brain-and-brainstem-mri-changes-links-2-second.yaml
+outcome: published

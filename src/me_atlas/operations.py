@@ -22,6 +22,8 @@ One more exists only for a link round on a published card (``me_atlas.link_round
 weekly ``apply`` and a correction round refuse it:
 
 * ``add_link``          append one link (``to``, ``support``, ``text``, ``sources``) as the last item of ``links``
+* ``set_link_text``     replace the ``text`` of the link whose target is ``to`` (the wording valve of a link round; it
+                        changes nothing else of the link)
 
 Sourced-text fields: ``level_reason``, ``contested.reason``, ``badges.diagnostic_marker.reason``,
 ``badges.explains_pem.reason`` (one sourced text or a list of paragraphs), and ``subgroups`` and
@@ -272,6 +274,14 @@ class AddLink(_Op):
     sources: Annotated[list[StudyId], Field(min_length=1)]
 
 
+class SetLinkText(_Op):
+    """Link rounds only (the wording valve, ``me_atlas.link_round``): replace the text of the link to ``to``."""
+
+    op: Literal["set_link_text"]
+    to: NonEmptyStr
+    text: NonEmptyStr
+
+
 class Propose(_Op):
     """Set the level, the contested mark or a badge. Always tier 2.
 
@@ -321,11 +331,12 @@ Operation = Annotated[
     | RemoveParagraph
     | RemoveLink
     | AddSentence
-    | AddLink,
+    | AddLink
+    | SetLinkText,
     Field(discriminator="op"),
 ]
 CORRECTION_ONLY_OPS = ("update_study", "remove_paragraph", "remove_link", "add_sentence")
-LINK_ROUND_ONLY_OPS = ("add_link",)
+LINK_ROUND_ONLY_OPS = ("add_link", "set_link_text")
 
 
 class OpsFile(_Op):
@@ -371,7 +382,7 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
     An operation that adds a study with ``preprint: true``, or cites a preprint study (one of ``preprints``:
     see ``preprint_ids``) in its sources, is also tier 2: preprint changes are decided by the founder.
     """
-    if isinstance(op, (Propose, RemoveLink, AddLink)):
+    if isinstance(op, (Propose, RemoveLink, AddLink, SetLinkText)):
         return 2  # a link is part of the causal map: decided like a level (spec section 6)
     if isinstance(op, AddStudy):
         return 2 if op.study.preprint or op.study.id in preprints else 1
@@ -862,6 +873,35 @@ def _apply_add_link(lines: list[str], data: dict[str, Any], op: AddLink) -> list
     return [*lines[: loc.end], *item, *lines[loc.end :]]
 
 
+def _apply_set_link_text(lines: list[str], data: dict[str, Any], op: SetLinkText) -> list[str]:
+    links = data.get("links")
+    link = next((x for x in links or [] if isinstance(x, dict) and x.get("to") == op.to), None)
+    if link is None:
+        raise OperationError(f"the card has no link to '{op.to}'")
+    index = links.index(link)
+    link["text"] = op.text
+    loc = _locate(lines, ["links"])
+    ci, starts = _list_item_starts(lines, loc, "links")
+    a, b = _item_range(lines, loc, starts, ci, index)
+    key_col = ci + 2  # the keys of an item sit after its "- "
+    k = next(
+        (
+            i
+            for i in range(a, b)
+            if (lines[i][key_col:] if i == a else lines[i]).lstrip(" ").startswith("text:")
+            and (i == a or _indent(lines[i]) == key_col)
+        ),
+        None,
+    )
+    if k is None:
+        raise OperationError(f"the link to '{op.to}' has no `text` key at the expected place; cannot splice")
+    end = next((i for i in range(k + 1, b) if _is_content(lines[i]) and _indent(lines[i]) <= key_col), b)
+    while end - 1 > k and not _is_content(lines[end - 1]):  # a comment or blank line after the text stays
+        end -= 1
+    head = " " * ci + "- " if k == a else " " * key_col
+    return [*lines[:k], f"{head}text: >-", *_folded(op.text, key_col + 2), *lines[end:]]
+
+
 def _validation_problems(data: dict[str, Any]) -> list[str]:
     try:
         card = Card.model_validate(data)
@@ -944,6 +984,8 @@ def apply_operations(text: str, operations: list[Operation] | OpsFile, *, valida
                 lines = _apply_remove_link(lines, data, op)
             elif isinstance(op, AddLink):
                 lines = _apply_add_link(lines, data, op)
+            elif isinstance(op, SetLinkText):
+                lines = _apply_set_link_text(lines, data, op)
             else:
                 lines = _apply_propose(lines, data, op)
         except OperationError as exc:

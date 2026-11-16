@@ -550,7 +550,66 @@ studies:
 # Other reading: The card could also sit in the dysfunction layer (what goes wrong in the body); a 2025 review says it cannot be said whether gut changes precede, cause or follow immune or metabolic changes (pmid:41516296), and no source given here states a link that expresses the dysfunction reading.
 # Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 layer: mechanism
-links: []
+links:
+  - to: symptom:gastrointestinal-symptoms
+    support: associated
+    text: >-
+      A study of n=106 patients meeting both the Fukuda and Canadian criteria and 91 healthy
+      controls found self-reported irritable bowel syndrome in 35 patients and 3 controls. Lower
+      diversity within samples (evenness and Shannon diversity) was found only in patients with
+      irritable bowel syndrome, compared with controls without it. Comparing patients with and
+      without irritable bowel syndrome directly, the overall make-up of gut bacteria did not
+      differ, and no bacterial species differed after correction for multiple testing. Stool
+      butyrate was lower in patients both with and without it. An earlier study of n=50 patients
+      (Fukuda and/or Canadian criteria) and 50 controls found irritable bowel syndrome in 21
+      patients and no controls, and that the bacteria separating patients with it from controls
+      differed from those separating patients without it. The two studies share ten authors, and
+      no independent group on this card has repeated the relation. A study of n=76 patients
+      meeting the 2015 IOM criteria, 50 patients with long COVID and 37 controls found that gut
+      bacteria explained little or none of the variation in gastrointestinal symptom scores
+      (near-zero or negative R2 in one of two methods, arguing against a stable contribution),
+      in models across all three groups adjusted for group.
+    sources: ['pmid:36758522', 'pmid:28441964', 'pmid:42351611']
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: >-
+      A study of n=25 patients meeting the Fukuda criteria and 16 healthy controls measured gut
+      bacteria and performance on the Trail Making Test, a timed paper-and-pencil test of
+      executive function. It reported a significant relation between overall gut bacterial
+      make-up and Trail Making Test part B scores (p = 0.025) and the part B minus part A
+      difference (p = 0.007), in an analysis of patients and controls together; the authors
+      state that people with worse scores in either group had similar gut bacterial make-up.
+      Within the patients, eight bacterial genera correlated with part B time (all with a
+      correlation coefficient of at least 0.4 in size, all in the direction of better
+      performance with higher abundance); in controls the pattern differed (29 correlations, 9
+      in that direction and 20 in the opposite one). The authors note that confounding by diet,
+      medication and lifestyle cannot be excluded. This has not been repeated. A 2025 review
+      proposes that changes in the gut microbiome may lead to distinct neurocognitive
+      impairments in ME/CFS through the gut-brain axis; the review is not a study in patients. A
+      study of n=76 patients meeting the 2015 IOM criteria, 50 patients with long COVID and 37
+      controls, by the same group as the review, measured gut bacteria and questionnaire-derived
+      cognitive symptom scores and reported weaker or less stable signals for cognitive scores
+      than for fatigue-related scores, in models across all three groups.
+    sources: ['pmid:41006438', 'pmid:41516296', 'pmid:42351611']
+  - to: neuroinflammation
+    support: proposed
+    text: >-
+      A 2025 review reports that some researchers believe the passage of gut bacteria or their
+      products into the body, which can trigger neuroinflammation, may underlie neurological
+      disturbances in ME/CFS; the review is not a study in patients.
+    sources: ['pmid:41516296']
+  - to: oxidative-nitrosative-stress
+    support: proposed
+    text: >-
+      Two reviews propose links from gut bacterial products to reactive oxygen and nitrogen
+      species. A 2025 review describes bacterial endotoxin entering the circulation and
+      activating an inflammatory pathway, after which immune cells produce cytokines and
+      reactive oxygen species; it does not mention oxidative stress in this passage. A 2019
+      review proposes that a free-radical response (reactive oxygen and nitrogen species) to
+      bacterial products from the gut could explain reports of raised oxidative stress in
+      ME/CFS, and states that causal links between the affected systems are unknown. Neither
+      review is a study in patients.
+    sources: ['pmid:41516296', 'pmid:31330791']
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-16
   by: ai_audit

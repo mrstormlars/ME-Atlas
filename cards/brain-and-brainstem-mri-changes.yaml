@@ -623,6 +623,34 @@ links:
       controls) found no significant correlation between brain signals at rest, before and after exercise, and
       symptoms including pain (data not shown); it did not measure brain volumes. Small and unreplicated.
     sources: [pmid:36937672, pmid:39804864, pmid:35355311, pmid:34975370]
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: >-
+      Studies related MRI measures to self-rated cognitive symptoms in patients, with mixed
+      results and no overall direction. A Newcastle study of 42 patients meeting the Fukuda
+      definition (which does not require post-exertional malaise), in exploratory regressions,
+      found smaller total intracranial and grey matter volumes going with higher self-rated
+      cognitive failure and cognitive fatigue impact scores, and no such relation for white
+      matter volume; the paper does not state a correction for multiple comparisons for these
+      regressions, and its authors advise caution. Studies from Griffith University gave mixed
+      results. In 16 of 18 patients meeting the International Consensus Criteria (two left out
+      of this analysis), diffusion MRI measures related to a self-rated information processing
+      score (1 to 10) differently than in controls, in regions that include the hippocampus and
+      corpus callosum, after a correction across all regressions run. A second paper on the same
+      cohort found larger volumes of several hippocampal subfields going with a worse score in
+      16 of these patients, and no such association in the 24 patients meeting only the Fukuda
+      criteria; the paper does not state that these correlations were corrected for multiple
+      comparisons. A 7 Tesla study of n=29 patients (described by its authors as a different
+      cohort) found a larger left CA4 body volume going with worse self-rated concentration
+      (r=0.41, p=0.034), also without a stated correction for multiple correlations. In n=31
+      patients at 7 Tesla, a self-rated memory score correlated positively with connectivity
+      between two cerebellar vermis regions and negatively with another pair, after false
+      discovery rate correction. A study of n=37 patients meeting the Canadian or International
+      criteria, which correlated diffusion MRI measures with clinical measures including WHODAS
+      domains, found no correlation that survived correction for multiple comparisons. The
+      scores are self-reported and the groups are small, and no result has been repeated with
+      the same measure.
+    sources: ['pmid:29021956', 'pmid:34355438', 'pmid:35355311', 'pmid:39804864', 'pmid:38347875', 'pmid:42539798']
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-16
   by: ai_audit

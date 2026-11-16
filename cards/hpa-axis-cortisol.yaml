@@ -639,7 +639,41 @@ studies:
 # Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 # Other reading: pmid:31330791 P23 (a perturbed regulatory loop) and P24 (a shift to an alternative resting steady state) give a reason to read the card as mechanism ('why it does not resolve'); expressed as the link to question:what-keeps-it-going.
 layer: dysfunction
-links: []
+links:
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: >-
+      A 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been
+      associated with worse sleep difficulties; the review did not test this itself. A study of
+      121 clinic patients and 64 comparison subjects, whose case definition is not yet verified,
+      found lower 24-hour urinary free cortisol in patients and reported that the lower levels
+      were not related to sleep disturbance. A study of 24 patients meeting the Canadian,
+      International and IOM 2015 criteria and 24 matched controls found that none of the
+      exploratory correlations between blood steroid levels and scores on two symptom scales
+      (one of which includes sleep disturbance among its items) remained significant after
+      correction for multiple comparisons.
+    sources: ['pmid:41516296', 'pmid:11282703', 'pmid:40713801']
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: >-
+      The same 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been
+      associated with worse concentration difficulties; the review did not test this itself. A
+      study of 24 patients meeting the Canadian, International and IOM 2015 criteria and 24
+      matched controls found that none of the exploratory correlations between blood steroid
+      levels and scores on two symptom scales (a mental fatigue scale, and a multisystem scale
+      that includes cognitive dysfunction among its items) remained significant after correction
+      for multiple comparisons.
+    sources: ['pmid:41516296', 'pmid:40713801']
+  - to: question:what-keeps-it-going
+    support: proposed
+    text: >-
+      A 2019 review suggests that the link between cortisol-driven stress responses and the gut
+      through the HPA axis could be dysfunctional in ME/CFS because of the low cortisol
+      suggested by earlier work, which could add another perturbed regulatory loop that may help
+      perpetuate an altered homeostasis. It also lists HPA-axis dysregulation among conditions
+      that could shift cells to an alternative resting steady state. It was not studied directly
+      in patients.
+    sources: ['pmid:31330791']
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-16
   by: ai_audit

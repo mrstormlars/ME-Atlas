@@ -1,0 +1,57 @@
+card: hpa-axis-cortisol
+decision: accept
+link_decisions:
+  - {to: symptom:sleep-disturbance, decision: accept}
+  - {to: symptom:cognitive-impairment, decision: accept}
+  - {to: question:what-keeps-it-going, decision: accept}
+parts:
+  - decision_part: "The link to symptom:sleep-disturbance at step proposed: the 2025 review states that abnormal HPA-axis hormone levels have been associated with worse sleep difficulties, and it is a narrative review that did not test this itself."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "Another mechanism discussed in ME/CFS pathogenesis involves a neuroendocrine impairment, which is manifested by abnormal levels of hormones produced by the HPA axis [53]."
+      - source: pmid:41516296
+        quote: "This has been associated with worsening of certain clinical manifestations, such as sleep and concentration difficulties, as well as fatigue debilitation [54]."
+      - source: pmid:41516296
+        quote: "To conduct this narrative review, a comprehensive search of peer-reviewed articles written in English was performed"
+    class: none
+  - decision_part: "The link to symptom:sleep-disturbance: the studies that measured both ends and found no relation are written out in the link text, the 121-patient study with its case definition marked as not verified, and the 24-patient study (CCC, ICC and IOM 2015) with its exploratory correlations that did not survive correction; neither is used to raise the step."
+    rubric: "A study that measured both ends and found no relation is recorded as a"
+    evidence:
+      - source: pmid:11282703
+        quote: "They obtained 24-hour urine collections from 121 consecutive clinic patients with chronic fatigue syndrome and 64 comparison subjects without the syndrome."
+      - source: pmid:11282703
+        quote: "Lower levels of urinary free cortisol were not related to medication use, sleep disturbance, or disability levels."
+      - source: pmid:40713801
+        quote: "All patients fulfilled the Canadian Consensus Criteria, the International Consensus Criteria and the IOM criteria (Carruthers et al., 2003; Carruthers et al., 2011; Institute of Medicine, 2015)."
+      - source: pmid:40713801
+        quote: "is an observer-rated tool comprising 12 items that assess fatigue-related multisystem symptom burden, including pain, sleep disturbance, and cognitive dysfunction"
+      - source: pmid:40713801
+        quote: "None of the associations remained significant after correction for multiple comparisons, and these results should be interpreted with considerable caution due to the small sample sizes."
+    class: none
+  - decision_part: "The link to symptom:cognitive-impairment at step proposed: the same 2025 review states the association with worse concentration difficulties; the 24-patient study's two scales (a mental fatigue scale and a multisystem scale that includes cognitive dysfunction) showed no correlation that survived correction, as the link text says."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "This has been associated with worsening of certain clinical manifestations, such as sleep and concentration difficulties, as well as fatigue debilitation [54]."
+      - source: pmid:40713801
+        quote: "evaluates mental fatigue over the past month based on 14 self-rated items"
+      - source: pmid:40713801
+        quote: "is an observer-rated tool comprising 12 items that assess fatigue-related multisystem symptom burden, including pain, sleep disturbance, and cognitive dysfunction"
+      - source: pmid:40713801
+        quote: "None of the associations remained significant after correction for multiple comparisons, and these results should be interpreted with considerable caution due to the small sample sizes."
+    class: none
+  - decision_part: "The link to question:what-keeps-it-going at step proposed: the 2019 review states that a dysfunctional cortisol-gut loop through the HPA axis could help perpetuate an altered homeostasis, and lists HPA axis dysregulation among conditions that could shift cells to an alternative resting steady state; it is a review, so the step cannot be higher than proposed."
+    rubric: "Oxford-only evidence stays at step 1, and a source that is a review"
+    evidence:
+      - source: pmid:31330791
+        quote: "Further, the linkage of cortisol-driven stress responses to the gut through the hypothalamic-pituitary-adrenal (HPA) axis [168] could be dysfunctional in ME/CFS due to the hypocortisolism previously suggested to play a role in the condition [169,170]."
+      - source: pmid:31330791
+        quote: "This possibility could weave another perturbed regulatory loop into the system, which may aid in perpetuating an altered homeostasis."
+      - source: pmid:31330791
+        quote: "These adverse conditions could include energy stress, inflammation, HPA axis dysregulation, or pathogen exposure."
+      - source: pmid:31330791
+        quote: "They elicit a conserved homeostatic cell danger response [172] that could result in the cell shifting to an alternative resting steady state and contribute to ME/CFS pathology [34]."
+    class: none
+reasons_summary: "All three links are accepted at step proposed: each is stated by a peer-reviewed review, and the patient studies that found no relation are written out without raising the step."
+would_change: "A study in an ME/CFS cohort with a recognised case definition that measured cortisol or HPA-axis hormones and sleep or cognitive symptoms in the same patients and reported a relation would be needed for step 2; a correction showing that the cited review sentences do not refer to ME/CFS, or that the FibroFatigue Scale items differ from those described, would change the decision on the affected link. The full text of pmid:11282703 is not cached; the link relies only on its abstract sentence on sleep disturbance."

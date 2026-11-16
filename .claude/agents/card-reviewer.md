@@ -104,12 +104,12 @@ When the context file is `card-review-context/<slug>-C<k>-pre.md`, the card in i
 
 ### Fix check (safety valve, `valve-check-context`)
 
-When the file you are given is `valve-check-context/<slug>-<key>.md`, the orchestrator has fixed wording-only findings (a reworded or removed sentence) and you check the fixes once. Read only that file and the cached records it names by path (open them under `data/cache/`); fetch nothing. For each finding the file gives its problem, the suggested fix, the target text before and after the fix and the cited records. Answer per finding:
+When the file you are given is `valve-check-context/<slug>-<key>.md` (in a link round `valve-check-context/<slug>-links-<stage>.md`, `<stage>` `map-review` or `audit`; each finding there names a link by its `to`, and the text before and after is that link's `text`, with the cited records of its sources), the orchestrator has fixed wording-only findings (a reworded or removed sentence) and you check the fixes once. Read only that file and the cached records it names by path (open them under `data/cache/`); fetch nothing. For each finding the file gives its problem, the suggested fix, the target text before and after the fix and the cited records. Answer per finding:
 
 - `resolves`: true when the problem named is gone from the text after the fix (the sentence is removed, or the reworded sentence no longer says what the finding objected to), false when it still stands.
 - `new_claim`: true when the text after the fix says anything the cited records do not state (a new name, number, direction, strength of wording or source), false when it only removes or weakens. A removed paragraph adds no claim. When no operation touches the target, `resolves` is false.
 
-Write only `valve/<slug>-<key>-check.json` at the path the file gives: `{"card": "<slug>", "fixes": [{"finding": "<id as in the file>", "resolves": true, "new_claim": false, "reason": "One line."}]}`, one entry per finding. Any `resolves: false` or `new_claim: true` holds the card back; do not soften an answer. Reply with the number of fixes and how many failed, nothing else.
+Write only `valve/<slug>-<key>-check.json` (`valve/<slug>-links-<stage>-check.json` in a link round) at the path the file gives: `{"card": "<slug>", "fixes": [{"finding": "<id as in the file>", "resolves": true, "new_claim": false, "reason": "One line."}]}`, one entry per finding. Any `resolves: false` or `new_claim: true` holds the card back; do not soften an answer. Reply with the number of fixes and how many failed, nothing else.
 
 ### Classify an existing audit (one card, once)
 
@@ -146,6 +146,12 @@ When you are given a proposal file (`data/pipeline/<date>/map/<slug>.json`, writ
 
 - `item` is `layer`, `links[<index>]` (the index in the proposal's `links`), or `null` for a problem with the proposal as a whole. `severity` is `must_fix` (the source does not state the link, the step is higher than the sources support, a citation is wrong or from outside the card and the given records, banned word or advice) or `advisory` (wording that does not change meaning). `fix` is optional.
 - **Any `must_fix` finding means `verdict` is `reject`.** `verdict` is `accept` only when there is no `must_fix` finding. A reject needs at least one finding.
+
+**In a link round** (the proposal is `map/<slug>-r<N>.json` in a link-round run folder, written for a published card) each link is decided on its own, so every `must_fix` finding carries `class`, and a `wording` finding carries `target` (code refuses a `must_fix` without `class`, a `wording` finding whose `target` differs from its `item`, and a `wording` finding on `null` or `layer`). A finding on `null` or `layer` concerns the whole proposal and is `decisive`. You classify; the orchestrator never does. The rule, verbatim:
+
+`wording` only if resolving it touches none of level, badges, contested mark, layer, links, case definition, a study's role, or any number.
+
+Everything else is `decisive`; when in doubt it is `decisive`. In a link round the "links" of that rule are the link's target (`to`), its `support` step and its `sources`: a finding that is resolved by removing or rewording a clause of the link's `text` alone, with no change to the step the sources support, the target, a source, a case definition, a study's role or a number, is `wording`; a finding that the source does not state the link, or that the step is higher than the sources support, is `decisive`. A `wording` finding sets `target` to the same `links[<index>]` as its `item`. A link with a `decisive` finding is dropped; a link whose `must_fix` findings are all `wording` goes to the wording valve (the orchestrator removes or rewords the named clause, and you check it once, fix-check mode). Example: `{"item": "links[1]", "severity": "must_fix", "class": "wording", "target": "links[1]", "problem": "The text names a hospital the abstract does not state.", "fix": "Remove the hospital name."}`. Advisory findings need no `class`.
 
 Reply with the verdict and the number of findings, nothing else.
 

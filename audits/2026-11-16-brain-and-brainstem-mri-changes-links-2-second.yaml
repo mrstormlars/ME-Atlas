@@ -1,0 +1,49 @@
+card: brain-and-brainstem-mri-changes
+decision: accept
+link_decisions:
+  - {to: symptom:cognitive-impairment, decision: accept}
+parts:
+  - decision_part: "The link to symptom:cognitive-impairment at step 2 (associated): an ICC-defined cohort in which diffusion MRI and a self-rated information processing score were measured in the same patients, with a relation reported after correction across all regressions; 16 of 18 patients entered this analysis."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:34355438
+        quote: "18 ME/CFS patients who met International Consensus Criteria (ICC)"
+      - source: pmid:34355438
+        quote: "For ME/CFSICC and HC, DTI parameter interaction-with-group regressions were abnormal for the clinical measures of information processing score"
+      - source: pmid:34355438
+        quote: "One ME/CFSICC patient was omitted from group interaction analysis due to missing clinical information (Procinfo, Phys_all and SDS)."
+      - source: pmid:34355438
+        quote: "The FDR after accounting for the multiple interaction regressions performed was also computed."
+    class: none
+  - decision_part: "The link text on the hippocampal volume studies of the same group: larger volumes with a worse score in 16 ICC patients and none in the Fukuda patients, and at 7 Tesla a larger left CA4 body with worse concentration in a cohort the authors call different; the link text correctly notes that no correlation correction is stated."
+    rubric: "Fukuda | Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:35355311
+        quote: "with larger volumes associated with poorer information processing score"
+      - source: pmid:35355311
+        quote: "There were no statistically significant associations between pain, phys_all, and procinfo with hippocampal subfield volumes in ME/CFSFukuda patients."
+      - source: pmid:39804864
+        quote: "left CA4 body volume (r = 0.41, p = 0.034)"
+      - source: pmid:39804864
+        quote: "in a different cohort of ME/CFS patients [20]"
+      - source: pmid:39804864
+        quote: "Multiple comparison correction was applied to account for testing across the three groups."
+    class: none
+  - decision_part: "The link text on the Newcastle Fukuda cohort, the 7 Tesla connectivity study and the diffusion study with no surviving correlation: each matches its record, and the null result is written out in the link text."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:29021956
+        quote: "Participants were not selected according to any criteria other than fulfilling the Fukuda diagnostic criteria of CFS"
+      - source: pmid:29021956
+        quote: "The multiple regression shows these negative associations for GM and CSF volumes, but not WM volume."
+      - source: pmid:29021956
+        quote: "these findings in the present study should be interpreted with caution."
+      - source: pmid:38347875
+        quote: "We recruited 31 ME/CFS patients (see Table 1), fulfilling the CCC and/or ICC definitions of diagnosis"
+      - source: pmid:38347875
+        quote: "a negative correlation was detected with FC between vermis X and vermis crus II (p = 0.013), while a positive correlation was detected with FC between vermis X and vermis VIIb (p = 0.008"
+      - source: pmid:42539798
+        quote: "However, we did not find any significant differences between these metrics after adjusting for multiple comparisons."
+    class: none
+reasons_summary: "The cognitive-impairment link is accepted at step 2: an ICC cohort related diffusion MRI to a self-rated information processing score after correction, and the text states the mixed, uncorrected and null results as the records give them."
+would_change: "A record showing that the information processing regressions in the ICC cohort did not survive the stated correction, or that the patients in these analyses did not meet the stated case definitions, would change this decision; a statement in the link text found not to match its source would make it a reject."
