@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — A correction may add one sentence an audit finding asks for; one more round for the last two cards (founder rulings)
+
+After the runs of 2026-11-15/16, two drafts were still held back: `impaired-energy-production-after-exertion` (its round C2 audit found rung 2 cannot be called uncontested while the records do not settle which case definition the contradicting New York cohort met) and `herpesvirus-reactivation` (its round C1 audit asked for the trigger-or-consequence reading to be written out, with two quoted sources, and the link path found no supported link target). The founder said: "Enig i ditt forslag til regelendring: En korreksjon får legge til én setning når et revisjonsfunn uttrykkelig etterlyser den, og bare med kilden og sitatet revisoren selv har oppgitt." The founder also agreed that both cards get one more round.
+
+- **One added sentence per audit finding.** A correction may add one sentence when an objecting part of an audit record the round answers expressly asks for a missing statement, citing only sources that part quotes, in an existing free-text field that part's target names or the pre-drafting review ties it to, at most once per part. Code refuses anything else; the added sentence never adds a study, a link or a number not in the quoted source, and never changes the level, a badge, the contested mark or the layer. The quotes are carried into the trail, and the review agent checks the sentence against them like any other claim.
+- **One more round each**: `impaired-energy-production-after-exertion` round C3 and `herpesvirus-reactivation` its unused round C2 (logged exceptions, as `REOPENED_ROUNDS`).
+- Changes: the 2026-11-14 default "what a correction may do" ("it may not add a study or a paragraph", "it never adds a fact") and the 2026-11-15/16 rule that a correction deletes rather than rewrites now have this one exception. Everything else stands.
+- Why: a held-back card should be able to answer an auditor who names the missing statement and its source, without the drafter choosing what to add.
+
 ## 2026-11-15/16 — Author facts by code, deletion-only corrections, more revisions while findings shrink, one more round for the last seven cards (founder rulings)
 
 Seven drafts were still held back after the correction rounds of 2026-11-15. None stranded on a disagreement about the level; almost all stranded before any audit because the drafter introduced a new error while fixing an old one, most often an author or group fact (a shared-author count, a group naming the last author as first, site names used for independence), and the attempts ran out at the review stages while the number of findings was falling. Four points were put to the founder, who answered: "Enig i anbefalingene tine". Standing instruction for the runs: "Kjør ett om gangen, ikke flere parallelt, slik at ikke 5-timerskvoten overskrides (om den likevel overskrides, fortsett når den er nullsilt)."
