@@ -1,0 +1,121 @@
+card: brain-and-brainstem-mri-changes
+card_sha256: 211f6688f9e8574b19b6c7f4151252e9bfa6c67fe6d99084b49e6addf8fa3ef3
+rounds:
+- round: 1
+  proposal:
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: Two studies from one research group (Griffith University) related brain MRI measures to a self-rated
+      cognitive symptom score; they are not cognitive tests. In 16 of 18 patients meeting the International
+      criteria (two were left out of this analysis) and 26 healthy controls, the relation between diffusion
+      MRI measures (in regions including the hippocampus, parahippocampal gyrus and corpus callosum) and
+      an information processing score (a 1 to 10 rating of difficulty processing information) differed
+      from that in controls. A study at 7 Tesla of n=29 patients meeting the Canadian criteria (17 of
+      them also the International criteria) found that the volume of one hippocampal subfield (left CA4
+      body) was larger in patients who rated their impaired concentration (a five-point severity rating)
+      as more severe (r = 0.41, p = 0.034). Both studies share authors, and whether their patients overlap
+      is not stated. The 7 Tesla study's correction for multiple comparisons applied to the group comparisons,
+      not to the correlations. Small and unreplicated.
+    sources:
+    - pmid:34355438
+    - pmid:39804864
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: reject
+    findings:
+    - item: links[0]
+      severity: must_fix
+      problem: 'A study already on the card measured both ends in the same patients and is missing from
+        the text and sources, including a no-relation result. 35355311 (full text PMC9321967) is the same
+        cohort as 34355438 (''Our recent findings with DTI parameters on the same cohort also showed abnormal
+        regressions with "procinfo" in the hippocampus (Thapaliya et al., 2021)''). It correlated the
+        same 1-10 information processing score (procinfo) with hippocampal subfield volumes. In the International-criteria
+        group (N = 16) procinfo ''showed strong positive associations'' with the left subiculum head (r
+        = 0.715, p = 0.009), CA1 head, molecular layer HP head, whole hippocampus head and right subiculum
+        head, ''with larger volumes associated with poorer information processing score''. In the Fukuda
+        group (N = 24): ''There were no statistically significant associations between pain, phys_all,
+        and procinfo with hippocampal subfield volumes in ME/CFS Fukuda patients.'' The rubric requires
+        a study that measured both ends and found no relation to be stated in the link text. The opening
+        ''Two studies from one research group'' is therefore also incomplete. The sleep link on this card
+        already cites 35355311 for the same kind of result.'
+      fix: 'Add pmid:35355311 to sources. Add one sentence: in the same cohort as the diffusion study,
+        larger volumes of several hippocampal subfields went with a worse information processing score
+        in 16 International-criteria patients, while the 24 Fukuda patients (a definition that does not
+        require post-exertional malaise) showed no significant association. Say that the two analyses
+        use the same patients and are not independent. Its correction for multiple comparisons (FDR) applied
+        to the group differences, not to the correlations. Change the count of studies to match.'
+    - item: links[0]
+      severity: must_fix
+      problem: '''Both studies share authors, and whether their patients overlap is not stated.'' The
+        cached records do address this. 39804864 (PMC11729965) says its result ''supports our recent report
+        of a positive correlation between hippocampal subfield volumes and "Impaired concentration" in
+        a different cohort of ME/CFS patients [20]''. Reference 20 is 35355311, and 35355311 says it analysed
+        the same cohort as 34355438. So the 7 Tesla study''s authors describe its patients as a different
+        cohort from the 34355438/35355311 patients. Saying overlap is ''not stated'' contradicts the records.'
+      fix: 'Replace the sentence with one sourced to 39804864 and 35355311. For example: ''The 7 Tesla
+        study''s authors describe its patients as a different cohort from the earlier study''s, but all
+        the studies come from the same group, so they are not independent.'' Keep the shared-author point
+        (Thapaliya K, Marshall-Gradisnik S and Barnden L are on both PubMed records).'
+    - item: links[0]
+      severity: advisory
+      problem: 38347875, on the card (31 patients meeting the CCC and/or ICC, 7 Tesla, same group), also
+        correlated a self-rated 'impaired memory' score (five-point severity scale) with functional connectivity.
+        It found a negative correlation for vermis X to vermis crus II (p-FDR 0.013) and a positive one
+        for vermis X to vermis VIIb (p-FDR 0.0083) (Table 4, PMC10859529). This is a relation in the same
+        patients, not a null, so leaving it out does not overstate the link. But the text presents the
+        evidence as two studies.
+      fix: Optionally add 38347875 with its numbers, or word the opening so that it does not imply these
+        are the only studies on the card relating brain MRI to a self-rated cognitive symptom.
+    - item: links[0]
+      severity: advisory
+      problem: '''they are not cognitive tests'' is true of the scores the link reports. But 34355438
+        also regressed the Stroop effect and mean Stroop reaction time, which it calls ''a cognitive performance
+        measure'', against diffusion in the same patients. Table 3 names significant regressions only
+        for Procinfo, Resp, Phys_all and SDS. The text says ''five regressors'', and the fifth is not
+        named, so a Stroop null is not stated explicitly. A reader may assume that no cognitive test was
+        examined.'
+      fix: 'Optionally add: ''The diffusion study also tested Stroop test scores and reported no Stroop
+        result among its significant findings.'''
+- round: 2
+  proposal:
+  - to: symptom:cognitive-impairment
+    support: associated
+    text: Three studies from one research group (Griffith University) related brain MRI measures to self-rated
+      cognitive symptom scores, not cognitive tests. In patients meeting the International criteria and
+      26 healthy controls, the relation between diffusion MRI measures (including in the hippocampus)
+      and an information processing score (a 1 to 10 rating of difficulty processing information) differed
+      from that in controls. A second paper, on the same cohort and so not an independent finding, reported
+      that larger volumes of several hippocampal subfields went with a worse information processing score
+      in the International-criteria patients, while the 24 patients meeting only the Fukuda criteria (which
+      do not require post-exertional malaise) showed no significant association. A study at 7 Tesla of
+      n=29 patients meeting the Canadian criteria (17 of them also the International criteria) found that
+      the volume of one hippocampal subfield (left CA4 body) was larger in patients who rated their impaired
+      concentration (a five-point severity rating) as more severe (r = 0.41). The authors of the 7 Tesla
+      study describe its patients as a different cohort from the earlier ones, but all three come from
+      the same group, so they are not independent. The diffusion study also tested Stroop test scores
+      and lists no Stroop result among its main significant findings. The multiple-comparison correction
+      in the two volume studies is described for the group comparisons, not for these correlations. Small
+      and unreplicated.
+    sources:
+    - pmid:34355438
+    - pmid:35355311
+    - pmid:39804864
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings:
+    - item: links[0]
+      severity: advisory
+      problem: 38347875, already on the card (31 patients meeting the CCC and/or ICC, 7 Tesla, same group),
+        also reports correlations between a self-rated 'impaired memory' score (five-point scale) and
+        functional connectivity between cerebellar vermis regions (p-FDR 0.0083 and 0.013, Table 4, PMC10859529).
+        It is a relation, not a null, and the text does not claim to list every study, so this does not
+        change the step.
+      fix: Optionally add it in a later round, as a fourth study from the same group.
+audits_run:
+- 2026-11-16-brain-and-brainstem-mri-changes-links.yaml
+outcome: the first audit decided reject; no second audit was run (sequential audits)

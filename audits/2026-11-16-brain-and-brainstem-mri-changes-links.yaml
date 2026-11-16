@@ -1,0 +1,30 @@
+card: brain-and-brainstem-mri-changes
+decision: reject
+parts:
+  - decision_part: "The added link to symptom:cognitive-impairment leaves out a study already on the card that measured both ends in a recognised-definition cohort and found no relation after correction (pmid:42539798). The link text does not say so and the study is not among the link's sources, and the opening sentence counts only three studies."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:42539798
+        quote: "37 ME/CFS participants were recruited after meeting the Canadian Consensus Criteria (CCC) (4) or International Consensus Criteria (ICC) (5) and had received a formal diagnosis of ME/CFS by a physician."
+      - source: pmid:42539798
+        quote: "Additionally, this study will explore the correlation between DTI and DKI metrics and cognitive measures in both ME/CFS and long COVID."
+      - source: pmid:42539798
+        quote: "Domains of WHODAS 2.0 includes cognitive, mobility, self-care, interpersonal-relation, life activity and society."
+      - source: pmid:42539798
+        quote: "We found significant uncorrected correlations between DTI, DKI metrics and clinical measures in ME/CFS and long COVID. However, we did not find any significant differences between these metrics after adjusting for multiple comparisons."
+  - decision_part: "The link text says three studies from the group related brain MRI measures to self-rated cognitive symptom scores. A fourth study on the card, from the same group and in a CCC/ICC cohort, related functional connectivity to self-reported memory scores (pmid:38347875). The link neither cites nor mentions it, so its account of the evidence is incomplete."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:38347875
+        quote: "We recruited 31 ME/CFS patients (see Table 1), fulfilling the CCC and/or ICC definitions of diagnosis (Carruthers et al., 2003, 2011)."
+      - source: pmid:38347875
+        quote: "Correlation analyses of connectivity with clinical scores in ME/CFS patients detected associations between FC and 'duration of illness' and 'memory scores' in salience network hubs and cerebellum vermis"
+  - decision_part: "Supporting: the step 'associated' itself is reachable. An ICC cohort had hippocampal volumes and a self-rated information processing score measured in the same patients, and a relation was reported. The objection is the missing null study, not the step."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:35355311
+        quote: "18 ME/CFS patients meeting the ICC criteria (Carruthers et al., 2011)"
+      - source: pmid:35355311
+        quote: "in ME/CFSICC patients with larger volumes associated with poorer information processing score"
+reasons_summary: "Cognitive-impairment link rejected: it omits a CCC/ICC study on the card (pmid:42539798) that correlated diffusion MRI with self-rated cognitive impairment and found nothing after multiple-comparison correction, and it omits a same-group memory-score study (pmid:38347875)."
+would_change: "A redraft that names pmid:42539798 as a context study in the link text and its sources, saying that its DTI/DKI correlations with clinical measures, including the WHODAS cognitive domain, did not survive multiple-comparison correction. It should also mention pmid:38347875 (functional connectivity and self-reported memory scores) or say why it is left out, and correct the 'three studies' count. The other statements checked against pmid:34355438, pmid:35355311 and pmid:39804864 matched their full texts. One caveat: the Stroop sentence rests on Table 3 and the abstract of pmid:34355438. Its Table S1 is not in the cached text, so whether Stroop appears there cannot be checked."
