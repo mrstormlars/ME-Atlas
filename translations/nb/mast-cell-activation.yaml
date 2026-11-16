@@ -11,33 +11,35 @@ items:
     - pmid:41300853
     source_hash: b9220cf260c807442454498c8cc1eafd6c91551a600f145d825ebf27147f37d9
   level_reason[0]:
-    text: En studie fra Griffith University i Australia med 12 pasienter med moderat alvorlig og 6 med alvorlig ME/CFS som
+    text: 'En studie fra Griffith University i Australia, av 12 pasienter med moderat alvorlig og 6 med alvorlig ME/CFS som
       oppfylte International Consensus Criteria, og 13 friske kontroller, fant flere av en type umodne mastceller (CD117+CD34+FcεRI-chymase-)
       blant immuncellene i blodet hos pasienter med moderat alvorlig og alvorlig sykdom sammenlignet med friske kontroller.
-      Kortet er på nivå 2 på grunn av denne studien. Den er liten og er ikke gjentatt av en uavhengig gruppe.
+      Forfatterne kaller den en foreløpig studie og skriver at videre undersøkelser er nødvendige. Den oppfyller ordlyden
+      for nivå 2 i form (en kontrollert studie med anerkjente diagnosekriterier), men den er én enkelt studie med en svært
+      liten utvalgsstørrelse, en av grunnene til at evidensstigen holder et nivå tilbake, og den er ikke gjentatt av en uavhengig
+      gruppe. Kortet er derfor på nivå 1: små studier peker mot hypotesen.'
     sources:
     - pmid:27362406
-    source_hash: 9f8f1decfcc120ac29a7378ecb8c95a86da1a8c76453644f6cd020579500534c
+    source_hash: 83e8280c5d0c1450a332da2fa534ddd8f6873ad7498d046c7654485373f55b09
   level_reason[1]:
     text: Den samme gruppen undersøkte senere forstadier til mastceller hos 11 pasienter som oppfylte International Consensus
       Criteria, 9 personer med systemisk mastocytose og 12 friske kontroller, med en annen metode som først skiller disse
       cellene ut fra blodet. Den fant ingen signifikante forskjeller mellom gruppene i modenhetsmarkørene CD34 og FcεRI, markørene
       som definerte populasjonen den første studien fant økt. Fordi gruppen er den samme, kan ikke denne studien være en replikasjon.
-      Kortet regner modenhetsmarkørene, målt i de utskilte forstadiecellene, som et annet mål enn andelen av immuncellene
-      i blodet som den første studien rapporterte (sammendragene oppgir ikke den nøyaktige nevneren), så den regnes ikke som
-      en motsigelse av den.
+      Kildene sier ikke om dette måler det samme som andelen av immuncellene i blodet som den første studien rapporterte,
+      så kortet avgjør ikke om den motsier funnet.
     sources:
     - pmid:29223146
     - pmid:27362406
-    source_hash: 581b80c6d05c23a1d41395955006e7137d2e0f1ec72ede917b6d472c5943da61
+    source_hash: 06a5b98810d42699b1592645ea3ee58a4deb2b4cda847ebba4c00303e52babd5
   level_reason[2]:
-    text: Ingen andre studier har målt mastceller, eller stoffer som hovedsakelig frigjøres av mastceller, som tryptase eller
-      histamin, hos pasienter med anerkjente diagnosekriterier opp mot en kontrollgruppe. Høyere MMP-9 i blodet, et enzym
-      som mastceller og andre celler kan frigjøre, hos 18 pasienter enn hos 18 kontroller viser ikke at pasientenes mastceller
-      var kilden.
+    text: Ingen andre studier på dette kortet har målt mastceller, eller stoffer som hovedsakelig frigjøres av mastceller,
+      som tryptase eller histamin, hos pasienter med anerkjente diagnosekriterier opp mot en kontrollgruppe. Høyere MMP-9
+      i blodet, et enzym som mastceller og andre celler kan frigjøre, hos 18 pasienter enn hos 18 kontroller viser ikke at
+      pasientenes mastceller var kilden.
     sources:
     - pmid:42327760
-    source_hash: 4f8ce5a4f2f70e779130bc91c3b60103cc334c71a64f9c66fdf52795de718d32
+    source_hash: 6e159633b249c34582e401d3574737b577a5e40212de8ce49622b663ce93759c
   level_reason[3]:
     text: To eldre studier, hvis diagnosekriterier ikke er kontrollert ennå, kan ikke telle. En studie fra Harvard av vev
       fra spyttkjertler i leppen hos 11 pasienter og kontroller fant at forekomst av mastceller var det eneste av sju trekk
@@ -50,13 +52,12 @@ items:
   level_reason[4]:
     text: En østerriksk studie av pasienter som oppfylte IOM 2015-kriteriene rapporterer hvor ofte pasientenes journaler oppfylte
       kriterier for symptomer og behandlingsrespons ved mastcelleaktivering, ikke en måling opp mot kontroller (se under).
-      Den eneste kontrollerte behandlingsstudien, av antihistaminet terfenadin hos 28 pasienter, har diagnosekriterier som
-      ikke er kontrollert ennå, fant ingen nytte, og blokkerer én virkning av histamin i stedet for å endre mastcellene, så
-      den kan ikke telle med for nivå 4.
+      Den eneste kontrollerte behandlingsstudien på dette kortet, av antihistaminet terfenadin hos 28 pasienter, har diagnosekriterier
+      som ikke er kontrollert ennå og fant ingen nytte, så den kan ikke telle med for nivå 4.
     sources:
     - pmid:41300853
     - pmid:8568124
-    source_hash: 2b6db2d735cba19838b309631f6bfb11166682f4688b5a6ac37abb154f717565
+    source_hash: d2679726fed22e2de69d814af914e75d1911a47c9c67907091dc4fc7af23f204
   badge_reasons.diagnostic_marker[0]:
     text: Ingen mastcellemarkør er testet i en andre, uavhengig pasientgruppe. Den eneste senere studien av mastceller i blod
       kom fra den samme gruppen og testet ikke den første studiens funn som markør.

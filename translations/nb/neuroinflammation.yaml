@@ -12,13 +12,15 @@ items:
     source_hash: e9f14a13d914c613bc30badf8e9372e15161dc7dddfe2ce00665ab16a663763e
   level_reason[0]:
     text: En kontrollert diffusjons-MR-studie av 67 pasienter, med en diagnose i samsvar med Canadian Consensus Criteria bekreftet
-      av to klinikere, og 67 friske kontroller fant utbredte forskjeller i hvit substans som forfatterne tolker som nevroinflammasjon;
-      dette er studien nivået bygger på, og ingen annen studie på dette kortet gjentar dette målet. Forfatterne kaller metoden
-      et indirekte mål på nevroinflammasjon, og en publisert rettelse endret tolkningen av én markør fra cellulær infiltrasjon
-      til endring i cellenes form eller en kronisk uttømming av mikroglia.
+      av to klinikere, og 67 friske kontroller fant utbredte forskjeller i hvit substans som forfatterne tolker som nevroinflammasjon.
+      Dette er studien nivået bygger på, og ingen annen studie på dette kortet gjentar dette målet (ikke replikert). Forfatterne
+      kaller metoden et indirekte mål på nevroinflammasjon. En publisert rettelse endret tolkningen av én markør fra cellulær
+      infiltrasjon til endring i cellenes form eller en kronisk uttømming av mikroglia, og la til en tolkning av den lavere
+      hindered water ratio som cytotoksisk-liknende ødem og ikke vasogent ødem.
     sources:
     - pmid:41834684
-    source_hash: 8136e9d11fd317e1154491b03c3ae9f8b443a12faa39664173747af79ae4cff7
+    - pmid:42227214
+    source_hash: 54052f3b3536d9eabb2243d2c6c99be5646b2595ab075260f92722270bd41bd3
   level_reason[1]:
     text: 'Mindre bildestudier med diagnosekriterier som ikke er kontrollert ennå, peker i samme retning: en PET-studie av
       9 pasienter fant høyere binding av en markør for aktiverte mikroglia eller astrocytter, og en MR-spektroskopistudie
@@ -135,3 +137,10 @@ items:
       bipolar lidelse og multippel sklerose som eksempeltilstander. Sitert på kartet som kilde til en foreslått lenke, ikke
       som evidens for nivået.
     source_hash: cfa1e6c94e6bc36c1547950f985c66807ec886ae00d3c9d4427483757f93be5d
+  studies[pmid:42227214].finding:
+    text: En publisert rettelse (erratum) til pmid:41834684, ikke en ny pasientstudie. Den endrer tolkningen av den lavere
+      restricted fraction (NII-RF) fra økt infiltrasjon av inflammatoriske celler til endring i cellenes form eller en kronisk
+      uttømming av mikroglia. Den tolker den lavere hindered water ratio som cellesvelling eller cytotoksisk-liknende ødem
+      og ikke vasogent ødem, og fjerner én setning i Discussion. Rettelsen oppgir ingen endring i gruppeforskjellene i Table
+      2.
+    source_hash: 0324b0d4caafbab366e3bb0fd6246b88e16808fbf2fd0d29ae38b862bcca08ec

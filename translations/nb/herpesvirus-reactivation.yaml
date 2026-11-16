@@ -47,11 +47,16 @@ items:
       pasientene enn hos kontrollene på tre av seks månedlige tidspunkter, og HHV-7 var høyere hos de lett eller moderat rammede
       pasientene på to tidspunkter, med tendenser på de andre. Epstein-Barr-virus og herpes simplex-virus 1 skilte seg ikke.
       Forfatterne tolker virus-DNA-et som langvarig, vedvarende infeksjon heller enn akutt eller nylig infeksjon. Kortet når
-      ikke nivå 3: denne studien målte mengden virus-DNA i spytt, fant forskjeller bare i undergrupper på noen få tidspunkter,
-      og gjentar ikke funnet av aktiv infeksjon i blod.'
+      ikke nivå 3: denne spyttmålingen fant forskjeller bare i undergrupper på noen få tidspunkter. Den samme studien undersøkte
+      også 189 lagrede prøver med ddPCR for aktiv replikasjon av hvilket som helst av ni herpesvirus. HHV-7-DNA ble ikke funnet
+      i noen, og HHV-6A- og HHV-6B-DNA bare hos henholdsvis én og to friske kontroller. Artikkelen oppgir ikke hvor mange
+      av de 189 prøvene som kom fra pasienter (en tidligere antistoffmåling i samme biobank omfattet 132 personer med ME/CFS,
+      76 friske kontroller og 27 personer med multippel sklerose), så det kan ikke avgjøres om denne målingen hadde minst
+      halvparten av de 200 pasientene i Riga-studien. Av den grunn er kortet ikke markert som omstridt.'
     sources:
     - pmid:34422848
-    source_hash: b1374aefcdb3c23460eb2f4accf27f93a8f96f292f944c71390f5c53670a32cc
+    - pmid:36653846
+    source_hash: e731e0d0c9f08f8b82ad79d1a46bf770f97b2c46ceb787929251d202aa34dfb8
   level_reason[4]:
     text: Placebokontrollerte studier av antivirale legemidler er gjennomført, men for hver av dem er diagnosekriteriene ennå
       ikke kontrollert, så de kan ikke telle mot nivå 4. I en studie med 24 pasienter, valgt ut etter antistoffer mot Epstein-Barr-virus
@@ -67,13 +72,13 @@ items:
   level_reason[5]:
     text: En tredje randomisert studie, av valacyclovir hos en undergruppe av pasienter med markører for Epstein-Barr-virus,
       rapporterte en større økning i en aktivitetsskår med valacyclovir enn med placebo; sammendraget oppgir verken utvalgsstørrelse
-      eller statistisk test. En ikke-randomisert studie av 192 pasienter som forfatterne mente hadde reaktivert HHV-6- eller
-      HHV-7-infeksjon ut fra PCR på hvite blodceller, og som fikk valaciclovir, valganciclovir eller artesunat, sammenlignet
-      med 63 ubehandlede pasienter, rapporterte hvor ofte virusene ble uoppdagbare i blod, ikke om symptomene endret seg.
+      eller statistisk test. En studie av 192 pasienter som forfatterne mente hadde reaktivert HHV-6- eller HHV-7-infeksjon
+      ut fra PCR på hvite blodceller, og som fikk valaciclovir, valganciclovir eller artesunat, sammenlignet med 63 ubehandlede
+      pasienter, rapporterer i sammendraget hvor ofte virusene ble uoppdagbare i blod, og rapporterer ikke symptomer.
     sources:
     - pmid:18019402
     - pmid:35102619
-    source_hash: 3cbc35b01c8dec236bc4f80a5cd9c8974f426c404aa77fba139683a5d56ffb7f
+    source_hash: 33f01e85f65b5e6fb7440a740fac9d655f8b91f527993d66259e06fe675ef81a
   level_reason[6]:
     text: For Epstein-Barr-virus er funnene blandede. Studien fra Bulgaria fant Epstein-Barr-virus-DNA i cellefritt plasma
       hos 24,1% av pasientene og 4% av kontrollene, og aktiv infeksjon etter studiens kriterier hos 12 pasienter og 1 kontroll.
@@ -84,15 +89,20 @@ items:
     - pmid:28604802
     source_hash: 11d0a8ae0e10e032dfddf3fe6be7cda2683ef9c9dbf376ccef5d319f55b757d8
   level_reason[7]:
-    text: Noen studier med diagnosekriterier som ennå ikke er kontrollert, fant ingen forskjell. Én av dem, med 26 pasienter
+    text: Noen studier med diagnosekriterier som ennå ikke er kontrollert, fant ingen forskjell. En av dem, med 26 pasienter
       og 50 matchede kontroller i Atlanta (52 rekruttert), isolerte verken HHV-6 eller HHV-7 fra noens blodceller og fant
       ingen forskjell i HHV-6- eller HHV-7-DNA i blodceller, som dette kortet regner som en markør på latent, ikke aktiv,
       infeksjon. Et flersentersøk etter virusets arvemateriale i blod, avføring og spytt fant ingen konsekvente forskjeller
       mellom pasienter og kontroller, bortsett fra færre anellovirus (en familie av virus som ikke er herpesvirus) hos pasientene.
+      Når det gjelder årsaksretningen, sier studien fra London at reaktivering av herpesvirus kan være en årsak til eller
+      en følge av den forstyrrede immunfunksjonen som sees ved ME/CFS, og den bulgarske studien tar opp muligheten for at
+      pasienter med ME/CFS er mottakelige for akutte virusinfeksjoner som følge av immundysfunksjon.
     sources:
     - pmid:10913395
     - pmid:37526404
-    source_hash: 9c9be5ca0f245471f3664cbdcf09477f862d6dfde808e42d4acf0ce63fb5564f
+    - pmid:34422848
+    - pmid:32129496
+    source_hash: 2168ae5bef03871219e40bb1d1c61511117e24b45a7c7389ffcd3d34561f59dc
   badge_reasons.diagnostic_marker[0]:
     text: Ingen markør på dette kortet er testet i en annen, uavhengig pasientgruppe med kontrollerte diagnosekriterier. Antistoffer
       mot dUTPase fra Epstein-Barr-virus var høyere hos pasienter i to studier fra den samme gruppen i Ohio; den siste studien
@@ -110,13 +120,13 @@ items:
     - pmid:22927850
     source_hash: e3398174be41ac4e8000826116add4293a7301115c0fd43350b7ac2916f96ac0
   subgroups[0]:
-    text: De antivirale studiene valgte ut pasienter etter antistoffer mot Epstein-Barr-virus eller HHV-6. I studien av spytt
+    text: To av de antivirale studiene valgte ut pasienter etter antistoffer mot Epstein-Barr-virus eller HHV-6. I spyttstudien
       fra London var HHV-6B høyere hovedsakelig hos alvorlig rammede pasienter.
     sources:
     - pmid:2849717
     - pmid:23959519
     - pmid:34422848
-    source_hash: ba81e15587b38e46cd385c750c4c17438ba7bca098efac930317faa299e3dcdd
+    source_hash: 448f6619549a14de51a5ee17630adddfa3f7aa6a05ca0b250305fb8795a5ef4f
   early_signals[0]:
     text: En studie med n=13 pasienter og 10 friske kontroller fant at Epstein-Barr-virus ble skilt ut i oppspytt hos 11 av
       13 pasienter og 5 av 10 kontroller, med høyere virusmengde hos pasientene; HHV-6-nivåene skilte seg ikke. Ikke gjentatt

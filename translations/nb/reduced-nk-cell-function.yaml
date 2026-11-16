@@ -19,18 +19,18 @@ items:
     - pmid:27099524
     - pmid:21619669
     - pmid:22571715
-    - pmid:20520837
     source_hash: 14772d0f04ba215ea733ae64df6d45a34a7ce2c6b4dcd5debf702f205a66c777
   level_reason[1]:
-    text: En fjerde Fukuda-studie, med 176 pasienter og 230 kontroller, kommer fra en gruppe i Miami uten forfattere felles
-      med den australske gruppens studie med 39 pasienter; dens siste forfatter var medforfatter på studien med 95 pasienter
-      sammen med den australske gruppen, en indirekte kobling. Kortet er på nivå 3 fordi en uavhengig gruppe fant det samme
-      resultatet i en separat kohort.
+    text: En fjerde studie, med 176 pasienter og 230 kontroller, brukte CDC-kriteriene for klinisk diagnose uten å oppgi versjon,
+      noe rubrikken rangerer likt med Fukuda. Den kommer fra en gruppe i Miami uten forfattere felles med den australske gruppens
+      studie med 39 pasienter; dens siste forfatter var medforfatter på studien med 95 pasienter sammen med den australske
+      gruppen, en indirekte kobling. Kortet er på nivå 3 fordi en uavhengig gruppe fant det samme resultatet i en separat
+      kohort.
     sources:
     - pmid:20520837
     - pmid:27099524
     - pmid:21619669
-    source_hash: ff1f43d33727592e25bf8b871b37c01ec6177b177d5d598602f1f6ecbeb0cddd
+    source_hash: a3786fed1377797eb39d208cf0cdd462c804d892f5837a8227858bd0f7f7c9f3
   level_reason[2]:
     text: Mot disse funnene fant en studie som oppfylte Canadian Consensus Criteria (48 pasienter og 52 kontroller i hele
       studien; NK-dreping målt hos 39 pasienter og 44 kontroller) ingen forskjell (se merknaden om omstridt), det samme gjorde
@@ -60,14 +60,13 @@ items:
     source_hash: f744ccbd73b672cb170e3ac2ad65400cf26a91d3612e94cd6c847cea378ef8a7
   contested_reason[1]:
     text: Med 39 pasienter i den målingen er studien med Canadian Consensus Criteria av sammenlignbar kvalitet med den australske
-      gruppens Fukuda-studier med 39 og 65 pasienter, men ikke med studien med 95 pasienter eller Miami-studien med 176 pasienter.
+      gruppens Fukuda-studier med 39 og 65 pasienter. Den er ikke av sammenlignbar kvalitet med Miami-studien med 176 pasienter.
     sources:
     - pmid:28694809
     - pmid:27099524
     - pmid:22571715
-    - pmid:21619669
     - pmid:20520837
-    source_hash: 057f954cd02793409f5c0b41f4b3f48dc04ee63b84893a77fabbb42f1a02cef1
+    source_hash: 361f5731e149f9123bbae9703e033fe76d7906945edafd48919fce64a0222cfc
   contested_reason[2]:
     text: Trinn 3 hviler på den australske gruppens studie med 39 pasienter og Miami-studien som funn fra uavhengige grupper;
       det er omstridt fordi en studie av sammenlignbar kvalitet motsier den første. Trinn 2 hviler fortsatt på Miami-studien,
@@ -93,27 +92,28 @@ items:
     source_hash: fcc9bd52043530512c58889f59babb92abe6ee6041b602396cc0261f4e23fcf5
   badge_reasons.diagnostic_marker[0]:
     text: Ingen studie på dette kortet rapporterer NK-dreping validert som diagnostisk markør i en andre, uavhengig pasientgruppe.
-      En Fukuda-studie med 176 pasienter og 230 kontroller fant at NK-dreping var en god prediktor for CFS-status i sin egen
-      kohort. En studie med Canadian Consensus Criteria konkluderte med at målingene ikke var nyttige diagnostiske markører,
-      en multisenterstudie konkluderte med at analysen ikke var klar for klinisk bruk, og en familiestudie fant lav antistoffavhengig
-      NK-dreping også hos slektninger uten sykdommen.
+      En studie med 176 pasienter og 230 kontroller som brukte CDC-kriteriene for klinisk diagnose (versjon ikke oppgitt)
+      fant at NK-dreping var en god prediktor for CFS-status i sin egen kohort. En studie med Canadian Consensus Criteria
+      konkluderte med at målingene ikke var nyttige diagnostiske markører, en multisenterstudie konkluderte med at analysen
+      ikke var klar for klinisk bruk, og en familiestudie fant lav antistoffavhengig NK-dreping også hos slektninger uten
+      sykdommen.
     sources:
     - pmid:20520837
     - pmid:28694809
     - pmid:37013608
     - pmid:33777500
-    source_hash: df9a453ae4b1048cee0a660e41285c38b7f89643d70b7431f70e2ff40b4bc38e
+    source_hash: 309be5837eebe26ce06af73679dd1a46e15ae35d2c063cc6253c7003000b287f
   badge_reasons.explains_pem[0]:
-    text: De fire Fukuda-studiene som støtter hypotesen rapporterer ingen direkte måling av PEM, for eksempel en treningstest
-      gjentatt to dager på rad, i sammendragene eller de åpne fulltekstene. Studien med 65 pasienter oppgir, blant deltakernes
-      symptomer, andelen som rapporterer svakhet mer enn 24 timer etter trening; dette er et selvrapportert symptom, ikke
-      en test.
+    text: Fire av studiene som støtter hypotesen (tre med Fukuda, én med CDC-kriteriene for klinisk diagnose uten oppgitt
+      versjon) rapporterer ingen direkte måling av PEM, for eksempel en treningstest gjentatt to dager på rad, i sammendragene
+      eller de åpne fulltekstene. Studien med 65 pasienter oppgir, blant deltakernes symptomer, andelen som rapporterer svakhet
+      mer enn 24 timer etter trening; dette er et selvrapportert symptom, ikke en test.
     sources:
     - pmid:27099524
     - pmid:20520837
     - pmid:21619669
     - pmid:22571715
-    source_hash: e337c535b882c420f44e016e4ec04cca5808c815f25f18ecac486d888fe09b56
+    source_hash: f753a40f65e232a6fec845fc1bc2b39f90acee2e066acae51af6f0b378c6b934
   badge_reasons.explains_pem[1]:
     text: De to små støttende studiene som brukte en CDC-definisjon der versjonen ikke er navngitt, rapporterer ingen direkte
       måling av PEM i sammendragene; ingen åpen fulltekst var tilgjengelig.
