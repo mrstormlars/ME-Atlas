@@ -17,19 +17,12 @@ The site is built in every language that has a file in `content/i18n/`: English 
 - The build validates every input card (the same rules as `uv run python -m me_atlas.cards validate`), the change log and the glossary first. If anything fails it prints every problem, exits with code 1 and writes nothing (an earlier build stays as it was).
 - The output directory is emptied before each build. A directory that is not empty and not a previous build (no `.me-atlas-build` marker file) is never deleted; the build stops instead.
 - The citation check (`me_atlas.citations`) is not part of the build; it needs the local cache.
-- Without `--drafts` only `cards/` is read, and an invalid draft does not matter. The one exception: a published card may link to a card that exists only in `drafts/` (held back). The public build shows that link on the map page as the target's name followed by "(not yet published)", with no link and no page, and leaves it out of the map; a target in neither folder is still an M2 error. With `--drafts` a draft replaces the card with the same slug, every page gets the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. A draft build is shared only as the private preview below, never as the public site.
+- Without `--drafts` only `cards/` is read, and an invalid draft does not matter. The one exception: a published card may link to a card that exists only in `drafts/` (held back). The public build shows that link on the map page as the target's name followed by "(not yet published)", with no link and no page, and leaves it out of the map; a target in neither folder is still an M2 error. With `--drafts` a draft replaces the card with the same slug, every page gets the banner "Draft preview — not published" and `<meta name="robots" content="noindex">`. A draft build is a local preview only, never the public site.
 - Unused glossary terms are printed as `warning:` lines. They do not fail the build.
 
-## Private preview on Azure
+## Private preview on Azure (removed)
 
-A draft build is hosted for a few readers (founder ruling 2026-11-03) as an Azure Storage static website (Norway East), storage account `meatlaslpr4z`, address <https://meatlaslpr4z.z1.web.core.windows.net/> (Norwegian: `/nb/`). Anyone with the link can read it; it is not listed anywhere, and every draft page carries the banner and `noindex`. It is not updated automatically. To update it after a change is merged to `main`:
-
-```bash
-uv run python -m me_atlas.site build --drafts
-az storage blob upload-batch --account-name meatlaslpr4z --auth-mode key -s build -d '$web' --pattern '[!.]*' --overwrite
-```
-
-The pattern leaves out the `.me-atlas-build` marker. Files removed from the build stay online until deleted from the `$web` container (`az storage blob delete-batch --account-name meatlaslpr4z --auth-mode key -s '$web'` empties it before an upload). Needs the Azure CLI signed in to the account that owns the storage account.
+A draft build was hosted as an Azure Storage static website from 2026-11-03. The founder had it deleted on 2026-11-16, when the public site went up on GitHub Pages; the storage account no longer exists and its address is dead. A draft build is now only a local preview.
 
 ## Public site on GitHub Pages
 
