@@ -1,0 +1,202 @@
+card: brain-and-brainstem-mri-changes
+round: 2
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-brain-and-brainstem-mri-changes-second.yaml
+- 2026-11-13-brain-and-brainstem-mri-changes.yaml
+draft_sha256: 1329d6eed455b5921ad379bdd229db6462485ae01f222bfbc2cd4144072a0d23
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'The card has contested: null, but pmid:40624094 meets the rubric''s comparable-quality test
+      against the study level 2 rests on (pmid:34355438). Case definition: ''ME/CFS patients were independently
+      interviewed by two clinicians to confirm a CCC-consistent diagnosis of ME/CFS'' (CCC ranks with
+      ICC). It has a control group: 43 post-infectious patients against 43 matched healthy controls. Its
+      43 patients are more than half of the 18 ICC patients in pmid:34355438. It contradicts the finding.
+      pmid:34355438 found ''decreased axial diffusivity (p = .001) and mean diffusivity (p = .01) in the
+      descending cortico-cerebellar tract in the midbrain and pons'', a tract that runs ''to the ventral
+      pons middle cerebellar peduncle''. pmid:40624094 found ''significantly higher axial diffusivity
+      (AD)'' in projection fibres including the ''left inferior cerebellar peduncle, middle cerebellar
+      peduncle, left superior cerebellar peduncle ... corticospinal tract, and left medial lemniscus'',
+      and ''No significant group differences were found for fractional anisotropy, mean diffusivity, or
+      radial diffusivity'', which it calls ''in contrast to previous studies that reported changes in
+      these diffusion metrics in ME/CFS''. level_reason[2] itself calls this ''the opposite direction
+      to the level 2 study'', yet the study''s role is ''context'' and rung 2 is not marked contested.'
+    fix: Propose a contested mark on rung 2, with a contested reason sourced to pmid:40624094 and pmid:34355438
+      that quotes the higher axial diffusivity and the absence of a mean diffusivity difference. Change
+      the role of pmid:40624094 to 'contradicts'. The auditor decides the mark. The evidence supports
+      level 2 with rung 2 contested, not level 3.
+    targets:
+    - contested
+    - studies[pmid:40624094].role
+  - operation: null
+    severity: must_fix
+    problem: 'links[1] says of pmid:34355438 and pmid:39804864: ''whether their patients overlap is not
+      stated''. The records do state it, in two steps. pmid:39804864 writes: ''Our previous study [20]
+      also showed a positive correlation between ''Pain'' and hippocampal subfield volumes in a different
+      cohort of ME/CFS''. Its reference 20 is pmid:35355311. pmid:35355311 writes: ''Our recent findings
+      with DTI parameters on the same cohort'' (Thapaliya et al., 2021, which is pmid:34355438). So the
+      7 Tesla cohort is described as different from the cohort of pmid:34355438.'
+    fix: 'Replace the clause with what the records say: pmid:39804864 describes its cohort as different
+      from that of the group''s earlier hippocampal study (pmid:35355311), which analysed the same patients
+      as pmid:34355438. Keep ''The two studies are from the same research group'' and ''Small and unreplicated''.
+      If that sentence is added, add pmid:35355311 to the link''s sources.'
+    targets:
+    - links[1]
+  - operation: null
+    severity: advisory
+    problem: pmid:36937672 is not consistent within itself. The abstract says '10 ME/CFS (CCC or ICC criteria)',
+      but the full-text quote on the card says 'fulfilling the CCC and ICC criteria'. early_signals[0]
+      ('meeting the Canadian and International criteria'), links[0] and links[3] ('meeting both the Canadian
+      and International criteria') follow the full text only.
+    fix: Write 'meeting the Canadian or International criteria (the full text says both)', or drop 'both'.
+      The CCC label stands either way.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[1] is redundant: ''It did not report the brainstem difference, and did not
+      report a brainstem result either way''. In a whole-brain voxel-based analysis (pmid:42539798), the
+      significant clusters lay in the left supplementary motor area, the left cingulum and the corpus
+      callosum, so no brainstem cluster reached significance at its threshold. The sentence is accurate
+      but could be clearer.'
+    fix: 'For example: ''Its whole-brain analysis reported significant clusters only outside the brainstem;
+      its authors describe their results as in line with the earlier study.'''
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] says pmid:40624094 has 'no authors shared with the level 2 study'. That is
+      true by the author facts. However, its last author, Shan ZY, is a co-author of pmid:31671321 and
+      pmid:30497131, which the card attributes to the same Griffith group. Two of its authors (Kwiatek
+      R, Del Fante P) are also on pmid:21560176.
+    fix: Optionally add that one author also co-authored two earlier studies from the Griffith group,
+      so readers can judge independence.
+operations:
+- op: update_study
+  id: pmid:40624094
+  set:
+    role: contradicts
+- op: propose
+  target: contested
+  value:
+  - 2
+  reason:
+  - text: The level 2 finding rests on one study of 18 patients meeting the International Consensus Criteria
+      and 26 healthy controls, which found lower axial and mean diffusivity in a midbrain and pons cluster.
+      A later controlled study from a different group (University of the Sunshine Coast), of 43 patients
+      with an infection-triggered onset, diagnosed as consistent with the Canadian Consensus Criteria,
+      and 43 matched healthy controls, found higher axial diffusivity in patients in several tracts that
+      pass through the brainstem, including the cerebellar peduncles, the corticospinal tract and the
+      left medial lemniscus, and no significant difference in mean diffusivity. The two studies used different
+      methods (a voxel-based analysis and a tract-based analysis), and the tracts overlap only partly,
+      so the conflict is partial. The rung is therefore marked contested.
+    sources:
+    - pmid:40624094
+    - pmid:34355438
+- op: remove_link
+  to: symptom:cognitive-impairment
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 1
+    severity: advisory
+    problem: 'Operations 0 and 1 answer audit part 2 of both records and review finding 1 (targets contested,
+      studies[pmid:40624094].role); operation 2 answers review finding 2 (target links[1]). The contested
+      reason matches the records: pmid:34355438 ''decreased axial diffusivity (p = .001) and mean diffusivity
+      (p = .01) in the descending cortico-cerebellar tract in the midbrain and pons'' in 18 ICC patients
+      against 26 controls; pmid:40624094 ''PI-ME/CFS (n = 43) and matched HCs (n = 43)'', ''CCC-consistent
+      diagnosis'', higher AD in projection fibres including the ''left inferior cerebellar peduncle, middle
+      cerebellar peduncle, left superior cerebellar peduncle ... corticospinal tract, and left medial
+      lemniscus'', and ''There were no significant group differences in TBSS for FA, MD, and RD in the
+      PI-ME/CFS group''. One phrase goes slightly beyond the words of the record: ''several tracts that
+      pass through the brainstem'' is an anatomical gloss; pmid:40624094 calls them ''association and
+      projection fibres'' and does not use the word brainstem. The same gloss is already in level_reason[2]
+      and both audits use it, and it does not change the level or the mark.'
+    fix: Optionally write 'several projection tracts, including the cerebellar peduncles, the corticospinal
+      tract and the left medial lemniscus'.
+  - operation: 1
+    severity: advisory
+    problem: '''A later controlled study from a different group'' is true by the author facts (no author
+      shared with pmid:34355438), but its last author, Shan ZY, co-authored pmid:30497131 and pmid:31671321
+      from the Griffith group, and Kwiatek RA and Del Fante P co-authored pmid:21560176. This does not
+      change the comparable-quality test, which has no independence criterion for a contradicting study.'
+    fix: Optionally say 'with no authors shared with that study' instead of 'a different group'.
+  - operation: null
+    severity: advisory
+    problem: 'Internal YAML comments are now stale and contradict the card: the header line ''FOUNDER
+      RULING (2026-11-02): ... not contested ... Both stay context'', the comment ''# Null for now, pending
+      FOUNDER QUESTIONS 1 (42539798) and 2 (40624094)'' above contested, the section comment ''# --- context:
+      later diffusion studies (FOUNDER QUESTIONS 1 and 2) ---'' above pmid:40624094 (now role contradicts),
+      and the causal-map comment that still lists a link to symptom:cognitive-impairment. By DECISIONS.md
+      (two agreeing auditors override an earlier founder ruling on card content) the ruling is history,
+      not a constraint, and these comments are not reader-facing, but they will mislead the next reader
+      of the file.'
+    fix: When the card is next edited, mark the 2026-11-02 ruling as superseded by the audits of 2026-11-13,
+      move pmid:40624094 under the contradicts section and drop the cognitive-impairment mention from
+      the causal-map comment.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[3] says of pmid:31671321, pmid:30497131, pmid:38347875 and pmid:36937672: ''The
+      papers do not say whether they share patients.'' The cached full text of pmid:31671321 (PMC6835065)
+      says ''We scanned 27 healthy control (HC) and 45 ME/CFS subjects who met Fukuda criteria ... See
+      (Barnden et al., 2018) for more details on subject selection'', and its reference list resolves
+      Barnden et al., 2018 to pmid:30497131, which also has 27 healthy controls. One paper thus points
+      to another for how its subjects were selected, so the blanket statement that the papers say nothing
+      on shared patients is not what the records show, and it leads a reader to treat the two Fukuda studies
+      as possibly separate cohorts.'
+    fix: Remove the sentence 'The papers do not say whether they share patients.' The rest of the paragraph,
+      including 'none of these results has been repeated by an independent group', stands without it.
+    class: wording
+    target: level_reason[3]
+    targets:
+    - level_reason[3]
+  - operation: null
+    severity: advisory
+    problem: The group field of pmid:40624094 says '(same cohort as 41834684)'. pmid:41834684 is not on
+      the card and has no cached record, so this note cannot be checked against the cache.
+    fix: Drop the parenthesis, or add a cached record that supports it.
+  - operation: null
+    severity: advisory
+    problem: links[0] (respiratory symptoms) says 'the correlations were not corrected for multiple comparisons'.
+      The cached full text of pmid:36937672 describes Bonferroni correction for the group comparisons
+      and Spearman correlations with no correction mentioned. It does not state outright that no correction
+      was applied. links[2] words the same point more exactly.
+    fix: 'For example: ''the paper describes correction for multiple comparisons only for the group comparisons,
+      not for the correlations.'''
+  - operation: null
+    severity: advisory
+    problem: For pmid:36937672 the abstract says '10 ME/CFS (CCC or ICC criteria)', while the full-text
+      sentence quoted on the card says 'fulfilling the CCC and ICC criteria'. The card follows the full
+      text ('Canadian and International criteria' in early_signals[0], links[0] and links[2]). This is
+      defensible, but the two cached sources differ.
+    fix: No change is needed for the label (CCC either way). The wording could say 'Canadian criteria'
+      alone to stay within both sources.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] and contested.reason[0] describe the tracts in pmid:40624094 as tracts 'that
+      pass through the brainstem'. The cached record lists the tracts (left inferior, middle and left
+      superior cerebellar peduncles, corticospinal tract, left medial lemniscus) but does not itself call
+      them brainstem tracts. The description is standard anatomy and does not change the comparison, but
+      it is not stated in the record.
+    fix: Optionally say 'tracts including the cerebellar peduncles, the corticospinal tract and the left
+      medial lemniscus' without the anatomical gloss.
+  - operation: null
+    severity: advisory
+    problem: contested.reason[0] calls pmid:40624094 'a different group (University of the Sunshine Coast)',
+      and level_reason[2] says it shares no authors with the level 2 study. Both are correct per the author
+      facts. However, its last author, Shan ZY, is a co-author of pmid:31671321 and pmid:30497131 from
+      the Griffith group. This does not affect the contested mark, which needs comparable quality and
+      not independence.
+    fix: Optionally note the shared co-author with the two earlier Griffith papers.
+audits_run:
+- 2026-11-15-brain-and-brainstem-mri-changes-C2.yaml
+- 2026-11-15-brain-and-brainstem-mri-changes-C2-second.yaml
+valve:
+  card-review:
+    file: 2026-11-15-brain-and-brainstem-mri-changes-C2-valve-card-review.yaml
+    passed: true

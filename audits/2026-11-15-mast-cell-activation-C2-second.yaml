@@ -1,0 +1,99 @@
+card: mast-cell-activation
+decision: accept
+parts:
+  - decision_part: "The level 1: one small controlled study in an ICC-defined cohort points towards the hypothesis."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:27362406
+        quote: "CFS/ME patients were classified according to the 2011 International Consensus Criteria."
+      - source: pmid:27362406
+        quote: "We report significant increase of naïve MCs in moderate and severe CFS/ME patients compared with healthy controls."
+    class: none
+  - decision_part: "Level 2 held back: the only supporting controlled study is very small and preliminary, and the later study from the same authors is not an independent repeat and found no group differences in maturity markers."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group; no preregistration;"
+    evidence:
+      - source: pmid:27362406
+        quote: "healthy controls (n=13, mean age 42.69 ± SD3.87 years) were included in this study."
+      - source: pmid:27362406
+        quote: "This preliminary study investigates mast cell phenotypes from PBMCs in healthy controls."
+      - source: pmid:29223146
+        quote: "There were no significant differences in maturity MCPs, CD154, and CD2/CD25 expression between groups pre and post Poly I:C stimulation."
+      - source: pmid:29223146
+        quote: "This pilot investigation provides a novel methodology to characterise MCPs in a rapid, inexpensive and less invasive fashion."
+    class: none
+  - decision_part: "No contested mark: the later ICC study measured magnetically separated mast cell progenitors, so the abstract does not show that it measured the same quantity (share of blood mononuclear cells) that the first study found increased."
+    rubric: "at least one study of comparable or higher quality contradicts the finding that supports it"
+    evidence:
+      - source: pmid:29223146
+        quote: "Following autoMACS magnetic separation, CD117+/Lin-MCPs were stimulated with Poly I:C for 24hr."
+      - source: pmid:27362406
+        quote: "LSRFortessa X-20 Flow cytometry was used for the identification of phenotypic peripheral mast cell population in PBMCs"
+    class: none
+  - decision_part: "The two older controlled studies do not count towards the level because their case definitions are not stated in the records."
+    rubric: "Cohorts without a stated case definition."
+    evidence:
+      - source: pmid:10884641
+        quote: "Only the presence of mast cells was statistically significant between the 2 groups."
+      - source: pmid:11570618
+        quote: "IgE was measured by quantitative ELISA (sandwich) immunoassay in 95 CFS and 109 non-CFS control subjects."
+    class: none
+  - decision_part: "Higher serum MMP-9 in a CCC-defined cohort does not support the level, since the record does not identify mast cells as its source."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:42327760
+        quote: "MMP-9 could be released from microglia (26), but also from mast cells (MC) (27)."
+      - source: pmid:42327760
+        quote: "The source of either IL-11 or MMP-9 in the serum of patients with ME/CFS is not presently known (15)."
+    class: none
+  - decision_part: "Level 4 not reached: the only controlled treatment trial has no stated case definition and found no benefit; the Austrian study has no control group."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:8568124
+        quote: "Thirty patients with CFS were enrolled in a 2-month, double-blind, placebo-controlled trial of terfenadine."
+      - source: pmid:8568124
+        quote: "No therapeutic benefit from terfenadine could be detected in terms of symptom amelioration, improved physical or social functioning, health perceptions, or mental health."
+      - source: pmid:41300853
+        quote: "Limitations of our study include its reliance on self-reported data in the CCCFS patient cohort, the retrospective design of the ME/CFS-MCA patient cohort, and potential differences in MCAS diagnostic procedure."
+    class: none
+  - decision_part: "Badge diagnostic_marker false: no mast cell marker has been tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:27362406
+        quote: "Peripheral MCs may be present in CFS/ME pathology however, further investigation to determine their role is required."
+      - source: pmid:29223146
+        quote: "Peripheral MCPs may be present in CFS/ME pathophysiology, however further investigation is required to determine their immunological role."
+    class: none
+  - decision_part: "Badge explains_pem false: no cited study measured post-exertional malaise directly; the Austrian study worked from records and self-reports."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:41300853
+        quote: "The primary objective of the here described studies was to identify clinically meaningful subgroups of ME/CFS patients based on self-reported symptoms, lifestyle factors, disease characteristics and already existing medical reports, rather than to perform biological validation."
+    class: none
+  - decision_part: "The link to symptom:orthostatic-intolerance at step associated: one IOM 2015 cohort in which both ends were assessed in the same patients and a relation was reported; the link text states the overlap of criteria and the absence of measured mediators."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:41300853
+        quote: "The study cohort consists of 383 patients who visited the office of a neurologist in Vienna specializing in ME/CFS between March 2019 and April 2022 and who met the IOM diagnostic criteria for ME/CFS [31]."
+      - source: pmid:41300853
+        quote: "a pathological result from a tilt table test or a Schellong/NASA 10 min lean test was required."
+      - source: pmid:41300853
+        quote: "In the ME/CFS patient group with increased MCA, OI was significantly more prevalent in 70.3% of patients (n = 45), compared to 49.7% (n = 84) in the group without MCA (p = 0.005; Figure 4A)."
+      - source: pmid:41300853
+        quote: "(1) cardiovascular system, with hypotension, tachycardia, syncope, or presyncope;"
+      - source: pmid:41300853
+        quote: "laboratory testing was conducted in only 3.1% of the ME/CFS patients (n = 12)."
+    class: none
+  - decision_part: "The layer dysfunction: the hypothesis concerns a measurable abnormality of an immune cell type."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:27362406
+        quote: "Mast cells (MCs) mediate inflammation through neuropeptides and cytokines, along with histamine and reactive oxygen species (ROS)."
+    class: none
+  - decision_part: "The n=3 case series is kept as an unreplicated early signal with no control group and does not carry the level."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:33996867
+        quote: "Clinical features of interest included strong histories of allergies in all three patients, two of whom had elevations in plasma histamine."
+    class: none
+reasons_summary: "Level 1 stands: one small preliminary ICC-defined controlled study (18 patients, 13 controls), not independently repeated; badges false, no contested mark, layer and associated link to orthostatic intolerance supported."
+would_change: "An independent group finding the same increase in blood mast cell populations in a separate cohort with a recognised case definition would support level 2 or 3; full text of pmid:29223146 showing it measured the same share of blood mononuclear cells and found no difference would raise a contested mark. Unverifiable, and not needed for the level, badges, layer or link: the institutions named on the card (Griffith University, Harvard, Washington, DC) are not in the records given; the early signal's statements that infection was test-confirmed in one patient, that histamine was judged against a laboratory reference range and that tryptase was normal in one patient, and its IOM 2015 case definition, are not in the abstract shown for pmid:33996867; the full texts of pmid:27362406 and pmid:29223146 are not cached, so only their abstracts were checked."

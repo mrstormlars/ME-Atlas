@@ -1,0 +1,408 @@
+card: hpa-axis-cortisol
+round: 2
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-hpa-axis-cortisol-second.yaml
+- 2026-11-13-hpa-axis-cortisol.yaml
+draft_sha256: bdeb907a84616066c18586b78ef14814c180c60031968eeda439640c67e8d3e4
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'The card says the London study (pmid:11502777) ''used the same CRH test as the Dinan group''
+      (level_reason[1]) and ''gave the same CRH test'' (level_reason[2], contested_reason[1]). The records
+      contradict this: pmid:9669518 ''ACTH and cortisol responses were measured following the administration
+      of 100 microg ovine CRH''; pmid:11502777 ''We measured ACTH and cortisol responses to human CRH''.
+      contested_reason[2] then judges the contradiction on that wrong premise.'
+    fix: 'Replace ''the same CRH test'' with what the records say: the Dinan study gave 100 micrograms
+      of ovine CRH, the London study gave human CRH (dose not stated in its abstract). Restate contested_reason[2]
+      on these facts: the comparable-quality rule (same case-definition rank, controls, 37 against 14)
+      does not require the same preparation, but the card must say the two studies used different CRH
+      preparations.'
+    targets:
+    - level_reason[1]
+    - level_reason[2]
+    - contested_reason[1]
+    - contested_reason[2]
+  - operation: null
+    severity: must_fix
+    problem: '''A study from King''s College London'' and ''A later study from King''s College London'':
+      the cached record of pmid:11502777 names ''Department of Psychological Medicine, Institute of Psychiatry
+      and Guy''s, King''s and St Thomas'' School of Medicine, London''. ''King''s College London'' is
+      not in the record.'
+    fix: Write 'A study from London (Institute of Psychiatry and Guy's, King's and St Thomas' School of
+      Medicine)' or simply 'A London study'.
+    targets:
+    - level_reason[1]
+    - contested_reason[1]
+  - operation: null
+    severity: must_fix
+    problem: '''after correction for multiple testing, cortisol was not among the hormones that differed
+      between groups'' holds only for the three-group tests. The full text (PMC11369000) reports the pairwise
+      comparisons as BH-adjusted: ''the BH procedure was utilized to determine the statistical significance
+      of potential differences when comparing two independent groups (Table S4)'' and ''in our male cohort,
+      ME/CFSmm displayed lower circulating levels of cortisol (p = 0.0260) ... compared to HC''. As written,
+      a reader would think the men''s result did not survive correction.'
+    fix: 'Say: in the three-group test, cortisol was not among the hormones that differed after correction;
+      in the BH-adjusted pairwise comparison, men with mild or moderate illness (n=8) had lower cortisol
+      than male controls (n=17, p = 0.026); no difference in women.'
+    targets:
+    - level_reason[3]
+    - studies[pmid:38724880].finding
+  - operation: null
+    severity: must_fix
+    problem: The card says the Uppsala study (pmid:40713801) measured 'morning plasma cortisol'. Neither
+      the abstract nor the cached full text (PMC12291238) states the time of sampling; the text says only
+      'Blood plasma steroid levels' and 'EDTA plasma sampling'.
+    fix: Write 'plasma cortisol' and drop 'morning'.
+    targets:
+    - level_reason[2]
+    - level_reason[3]
+    - studies[pmid:40713801].finding
+  - operation: null
+    severity: must_fix
+    problem: 'The card calls the share improving on the Wellness scale ''the trial''s main measure'' and
+      the 5-point improvement ''a secondary measure'', and rests ''On the trial''s main measure, level
+      4 is not reached'' on that. The abstract of pmid:9757853 names neither a primary nor a secondary
+      outcome. The card also leaves out two results the abstract reports for hydrocortisone: a greater
+      mean Wellness improvement (6.3 vs 1.7 points, P=.06) and ''a higher average improvement in Wellness
+      score on more days than did placebo recipients (P<.001)''. Leaving those out changes how a reader
+      weighs the trial.'
+    fix: 'Remove ''main measure'' and ''secondary measure'' unless a cached record states them. Report
+      the results as the abstract gives them: no difference in the number improving (P=.31), and the 5-point
+      improvement (P=.04) and the days-improved measure (P<.001) in favour of hydrocortisone, with ''Statistical
+      evidence of improvement was not seen with other self-rating scales'' and adrenal suppression in
+      12. Give the reason level 4 is not reached on those facts: mixed results within one trial, not repeated
+      (the Leuven trial tested a different treatment), and the London crossover trial''s case definition
+      is not verified.'
+    targets:
+    - level_reason[5]
+    - studies[pmid:9757853].finding
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[0] says the card is at level 2 ''because of this study'' (pmid:9669518, CDC
+      criteria version not stated), and the contested mark is reasoned only against that study. But pmid:34254637
+      has role ''supports'', a stricter case definition (quote: ''diagnosed according to Fukuda, Canadian,
+      and Institute of Medicine criteria''), controls (30 women against 25), and found ''significantly
+      lower levels of adrenocorticotropin (ACTH)/cortisol'', which supports the core claim''s ''cortisol
+      output is low''. If that study can carry level 2 on its own, then pmid:9669518 is not the only study
+      the rung needs, and the contradiction by pmid:11502777 (CDC, which ranks below CCC) no longer settles
+      the contested mark by itself. The card has to say which study or studies level 2 rests on. If pmid:34254637
+      counts, it also has to say whether pmid:40713801 (CCC/ICC/IOM, 24 against 24, no difference in plasma
+      cortisol, at least half of 30) contradicts it, given that the pmid:34254637 abstract does not say
+      whether its values were resting or stimulated.'
+    fix: State explicitly whether pmid:34254637 carries level 2 and why or why not, and keep its role
+      consistent with that. Reason the contested mark on rung 2 for every study the rung rests on, using
+      the comparable-quality rule (case-definition rank, controls, at least half the sample size of the
+      measurement concerned).
+    targets:
+    - level_reason[0]
+    - level_reason[2]
+    - contested
+    - contested_reason[2]
+  - operation: null
+    severity: must_fix
+    problem: '''Two studies suggest sex differences ... Not repeated.'' The card cites pmid:40713801 elsewhere,
+      and its full text reports ''No significant differences in absolute steroid levels were observed
+      between the ME/CFS and control groups, either in the combined cohort or within gender-stratified
+      groups'' (16 women and 8 men with ME/CFS, 16 and 8 controls; CCC/ICC/IOM). That is a cited study,
+      with a stricter case definition, that looked in both sexes and found no difference. ''Not repeated''
+      hides it.'
+    fix: Add that a study with CCC/ICC/IOM criteria (pmid:40713801) found no difference in plasma cortisol
+      in women (16 patients) or men (8 patients) analysed separately.
+    targets:
+    - subgroups[0]
+  - operation: null
+    severity: advisory
+    problem: level_reason[0] says 'No other group has repeated either test with the same result.' pmid:1659582
+      (NIH, no shared author with the Dinan studies), cited on the card, earlier found 'attenuated net
+      integrated ACTH responses to oCRH'. Its case definition is not verified, so it cannot count, but
+      level_reason[4] lists only its basal cortisol findings.
+    fix: In level_reason[4], add its smaller ACTH response to ovine CRH, noting the unverified case definition.
+  - operation: null
+    severity: advisory
+    problem: level_reason[4] and subgroups[0] describe pmid:18160468 as 'a flatter rise in morning saliva
+      cortisol'. The abstract says 'an attenuated morning cortisol profile' and 'an attenuated morning
+      cortisol response'.
+    fix: 'Use the abstract''s wording: ''an attenuated morning saliva cortisol profile''.'
+  - operation: null
+    severity: advisory
+    problem: The pmid:34254637 abstract writes 'lower levels of adrenocorticotropin (ACTH)/cortisol',
+      which is ambiguous between the two hormones and a pairing. The card reads it as 'lower ACTH and
+      cortisol levels' (level_reason[2], subgroups[1], studies finding).
+    fix: Quote the abstract's 'ACTH/cortisol' or say that the abstract reports them together.
+  - operation: null
+    severity: advisory
+    problem: 'Places: the full text of pmid:38724880 says its plasma samples came from ''the UK ME/CFS
+      Biobank'', so ''a study from Austria and Chile'' may make readers think the patients were Austrian
+      or Chilean. The full text of pmid:40713801 says patients were ''diagnosed at the Gottfries clinic
+      in Göteborg'', and its first author is in Melbourne. Its group field gives Westermeier F''s affiliation
+      as Universidad Bernardo O''Higgins, but the record gives his first affiliation as FH Joanneum, Graz.'
+    fix: Say 'authors in Austria and Chile, samples from the UK ME/CFS Biobank' and 'patients diagnosed
+      in Göteborg, Sweden', or describe the studies without places. Use the record's first affiliation
+      in the group field.
+  - operation: null
+    severity: advisory
+    problem: level_reason[6] says the Leuven trial found no difference in 'any other measure'. The abstract
+      lists fatigue, well-being, the Abbreviated Fatigue Questionnaire, the SF-36 factor scores and the
+      HADS.
+    fix: Write 'or the other measures reported in the abstract'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[7] reports the rise in the cortisol response to CRH among treatment responders.
+      It leaves out that pmid:11502777 says, looking at all subjects, 'the ACTH and cortisol responses
+      to human CRH and the insulin stress test did not differ' after active versus placebo treatment.
+    fix: Add the all-subjects result before the responder result.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[3] and contested_reason[3] say the London study used ''the same low-dose ACTH
+      test'' as the Dinan group. Both gave 1 microgram, but the sampling differed (pmid:9713562: 0, +30,
+      +40 min at 1400 h; pmid:10594524: intravenous Synacthen bolus, samples up to 60 min).'
+    fix: Write 'the same 1 microgram ACTH dose'.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study from the Dinan group of 14 patients diagnosed by CDC criteria (version not stated, so
+    the definition does not require post-exertional malaise) and 14 healthy volunteers gave 100 micrograms
+    of ovine corticotropin-releasing hormone (CRH), the brain signal that starts the HPA axis. The release
+    of ACTH, the pituitary hormone that stimulates the adrenal glands, and of cortisol was lower in patients;
+    basal ACTH and cortisol did not differ. The card is at level 2 because of this study. A study of 30
+    women and 25 healthy controls (Fukuda, Canadian and Institute of Medicine criteria) also reported
+    lower ACTH/cortisol levels, but its abstract does not say whether the values were resting or stimulated,
+    so the card does not rest level 2 on it. A second study by the Dinan group, of 20 patients and 20
+    healthy volunteers, found a smaller rise in cortisol after a low dose (1 microgram) of ACTH; 9 of
+    20 patients and 2 of 20 volunteers failed the test at a cut-off the authors call arbitrary. An earlier
+    study whose case definition is not verified found a smaller ACTH response to CRH, so it cannot count.
+    No other group has repeated either Dinan test with the same result and a verified case definition.
+  sources:
+  - pmid:9669518
+  - pmid:34254637
+  - pmid:9713562
+  - pmid:1659582
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: A study with no authors shared with the Dinan studies tested 37 patients meeting CDC criteria
+    (version not stated) and 28 healthy controls. Urinary free cortisol over 24 hours was lower in patients
+    (number measured not stated in the abstract). It gave human CRH, whereas the Dinan study gave 100
+    micrograms of ovine CRH (the dose is not stated in the abstract of the 37-patient study), so the two
+    studies used different CRH preparations. Baseline cortisol before the human CRH test was higher in
+    patients. ACTH responses to CRH and to two other challenge tests were normal, similar in the two groups,
+    and the authors write that their results "do not support previous findings" of reduced central responses
+    of the HPA axis. The cortisol responses to CRH and to d-fenfluramine showed a trend to be lower in
+    patients that was significant only after adjusting for ACTH responses.
+  sources:
+  - pmid:11502777
+  - pmid:9669518
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: The card is not at level 3 because no independent study has repeated the same result. The 37-patient
+    study gave human CRH, not ovine CRH, and found normal ACTH responses, with a lower cortisol response
+    only after adjustment, so it did not reproduce the blunted ACTH response. The study of 30 women and
+    25 healthy controls reported lower ACTH/cortisol levels, but this is a different blood measure, and
+    the abstract does not say whether the values were resting or stimulated. A study of patients meeting
+    the Canadian, International and 2015 IOM criteria found no difference in plasma cortisol. Level 2
+    rests on the Dinan CRH study. If the 30-woman study were counted as a second basis for level 2, the
+    plasma cortisol study of 24 patients (stricter case definition than CDC, with 24 controls) may contradict
+    it, depending on the measure, which the abstract does not specify.
+  sources:
+  - pmid:9669518
+  - pmid:11502777
+  - pmid:34254637
+  - pmid:40713801
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: Other studies with a recognised case definition did not find the same. A study of 20 patients
+    meeting CDC criteria and 20 matched controls gave the same 1 microgram ACTH dose as the Dinan group
+    (the sampling differed) and found no differences in baseline cortisol or cortisol responses. A study
+    of 24 patients meeting the Canadian, International and 2015 IOM criteria and 24 matched controls found
+    no significant difference in plasma cortisol, measured with mass spectrometry; cortisol did not differ
+    before correction for multiple testing either, nor in women or men analysed separately. A study of
+    women (20 with mild or moderate and 24 with severe illness, 12 controls) and men (8 and 6, 17 controls),
+    meeting the Canadian and/or Fukuda criteria, reported two results. In the three-group test, cortisol
+    was not among the hormones that differed after correction for multiple testing. In the pairwise comparison
+    adjusted by the Benjamini-Hochberg (BH) procedure, men with mild or moderate illness (n=8) had lower
+    cortisol than male controls (n=17; p = 0.0260), and women did not differ.
+  sources:
+  - pmid:10594524
+  - pmid:40713801
+  - pmid:38724880
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'In a placebo-controlled trial of 56 women and 14 men meeting the 1988 CDC definition (which does
+    not require post-exertional malaise), patients took hydrocortisone, a cortisol tablet, or placebo
+    for about 12 weeks. The number of patients improving on a wellness scale did not differ (20 of 30
+    on hydrocortisone, 19 of 35 on placebo, P = .31). Hydrocortisone recipients had a greater improvement
+    in mean wellness score (6.3 vs 1.7 points; P=.06), more of them recorded an improvement of 5 or more
+    points (53% against 29%, P = .04), and they had a higher average improvement on more days (P<.001).
+    Statistical evidence of improvement was not seen with other self-rating scales, and suppression of
+    adrenal glucocorticoid responsiveness was documented in 12 patients on hydrocortisone and none on
+    placebo. Level 4 is not reached: the results within this one trial are mixed, it has not been repeated
+    with the same treatment (a later crossover trial tested a lower dose with fludrocortisone), and the
+    case definition of the crossover trial that favoured hydrocortisone is not verified.'
+  sources:
+  - pmid:9757853
+  - pmid:12829200
+  - pmid:9989716
+- op: replace_paragraph
+  field: level_reason
+  index: 6
+  text: A larger placebo-controlled crossover trial of 100 patients meeting the 1994 CDC (Fukuda) definition,
+    of whom 80 completed three months of 5 mg hydrocortisone with 50 micrograms of fludrocortisone and
+    three months of placebo, found no difference in fatigue, well-being or the other measures reported
+    in the abstract. It used a lower hydrocortisone dose and added fludrocortisone, so it did not test
+    the same treatment as the 1998 trial.
+  sources:
+  - pmid:12829200
+  - pmid:9757853
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: A crossover trial of 32 patients found that fatigue fell more on low-dose hydrocortisone than
+    on placebo (p = 0.009), but its case definition is not yet verified, so it cannot count towards level
+    4. The HPA study of 37 patients treated 32 of its patients with hydrocortisone in the same kind of
+    crossover; whether these are the same patients is not stated. Looking at all subjects, the ACTH and
+    cortisol responses to human CRH and the insulin stress test did not differ between active and placebo
+    treatment. In the patients who improved, the cortisol response to CRH rose, reversing the blunted
+    response seen before. This is a change within the patients who improved, not a comparison with controls,
+    and it has not been repeated. A trial of fludrocortisone alone in 100 patients meeting CDC criteria
+    found no difference from placebo; it was tested as a treatment for low blood pressure on standing,
+    not for low cortisol.
+  sources:
+  - pmid:9989716
+  - pmid:11502777
+  - pmid:11150109
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: A later study, with no authors shared with the first, gave human CRH (the first study gave 100
+    micrograms of ovine CRH; the dose is not stated in the abstract of the later study) to 37 patients
+    meeting CDC criteria (version not stated) and 28 healthy controls. ACTH responses were similar in
+    the two groups, and the cortisol response showed a trend to be lower in patients that was significant
+    only after adjusting for ACTH responses. The authors write that their results "do not support previous
+    findings" of reduced central responses of the HPA axis.
+  sources:
+  - pmid:11502777
+  - pmid:9669518
+- op: replace_paragraph
+  field: contested.reason
+  index: 2
+  text: The two studies used different CRH preparations, which the comparable-quality rule does not address.
+    The rule asks for the same or a stricter case definition (CDC criteria in both), a control group and
+    at least half as many patients (37 against 14), and the later study meets all three, so it is of comparable
+    quality and contradicts the study on which level 2 rests. Rung 2 is therefore contested. The card
+    does not rest level 2 on the study of 30 women and 25 healthy controls, whose abstract reports lower
+    ACTH/cortisol without saying whether the values were resting or stimulated. If that study were counted
+    as a second basis for the rung, the plasma cortisol study of 24 patients meeting the Canadian, International
+    and 2015 IOM criteria and 24 controls, which found no difference, might contradict it; that depends
+    on the measure, which the abstract does not specify. Rung 2 is contested on either reading.
+  sources:
+  - pmid:11502777
+  - pmid:9669518
+  - pmid:34254637
+  - pmid:40713801
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: Two studies suggest sex differences, using different measures; the men's result rests on 8 patients.
+    Not repeated. A population-based study, whose case definition is not yet verified, found an attenuated
+    morning saliva cortisol profile in women but not men. A study meeting the Canadian and/or Fukuda criteria
+    found lower plasma cortisol in men with mild or moderate illness (n=8) in the BH-adjusted pairwise
+    comparison. A study meeting the Canadian, International and 2015 IOM criteria found no significant
+    difference in plasma cortisol in women (16 patients) or men (8 patients) analysed separately.
+  sources:
+  - pmid:18160468
+  - pmid:38724880
+  - pmid:40713801
+- op: update_study
+  id: pmid:38724880
+  set:
+    finding: A study of women (20 with mild or moderate and 24 with severe illness, 12 healthy controls)
+      and men (8 and 6, 17 healthy controls) found that, in the three-group test, cortisol was not among
+      the hormones that differed after correction for multiple testing; in the BH-adjusted pairwise comparison,
+      men with mild or moderate illness (n=8) had lower plasma cortisol than male controls (n=17; p =
+      0.0260), and women did not differ.
+- op: update_study
+  id: pmid:40713801
+  set:
+    finding: A study of n=24 patients and 24 age- and gender-matched controls found no difference in plasma
+      cortisol even before correction for multiple testing (means 138.064 in controls and 135.157 in patients,
+      p 0.718), and none in women or men analysed separately.
+- op: update_study
+  id: pmid:9757853
+  set:
+    finding: A placebo-controlled trial of 56 women and 14 men found no difference in the share improving
+      on a wellness scale (20 of 30 on hydrocortisone, 19 of 35 on placebo, P = .31); mean wellness improvement
+      was 6.3 vs 1.7 points (P=.06), 53% against 29% improved by 5 points or more (P = .04), and average
+      improvement was higher on more days on hydrocortisone (P<.001); other self-rating scales showed
+      no statistical evidence of improvement, and adrenal suppression occurred in 12 patients on hydrocortisone
+      and none on placebo.
+- op: remove_link
+  to: symptom:sleep-disturbance
+- op: remove_link
+  to: symptom:cognitive-impairment
+- op: remove_link
+  to: question:what-keeps-it-going
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 0
+    severity: must_fix
+    problem: Answers review finding 6, but the reason it gives is not in the rubric. level_reason[0] says
+      pmid:34254637 'also reported lower ACTH/cortisol levels, but its abstract does not say whether the
+      values were resting or stimulated, so the card does not rest level 2 on it'. The same reason comes
+      back in level_reason[2] ('If the 30-woman study were counted as a second basis for level 2...')
+      and in contested_reason[2] ('The card does not rest level 2 on the study of 30 women...'). Rung
+      2 needs 'A controlled study in patients with a recognised case definition supports it'. The core
+      claim is 'cortisol output is low, or the cortisol response to stimulation is blunted', so lower
+      ACTH/cortisol supports it whether the values were resting or stimulated. pmid:34254637 is a controlled
+      study (30 women against 25 age-matched healthy controls) with a recognised case definition ('diagnosed
+      according to Fukuda, Canadian, and Institute of Medicine criteria'), has role `supports`, and the
+      second audit (Part 1) counted it towards level 2. Leaving it out because the measure is unspecified
+      is a criterion outside the rubric. In level_reason[2], '(stricter case definition than CDC, with
+      24 controls)' also judges pmid:40713801 against the wrong study. The study it might contradict is
+      pmid:34254637 (Fukuda, Canadian and IOM), not a CDC study. Ops 2 and 8 carry the same problem.
+    fix: 'Say that pmid:34254637 also supports level 2: a controlled study with Fukuda, Canadian and IOM
+      criteria found lower ACTH/cortisol, consistent with either part of the core claim. Say that whether
+      pmid:40713801 (CCC/ICC/IOM, 24 against 24, at least half of 30) contradicts it cannot be told from
+      the abstract, because the abstract of pmid:34254637 does not say whether the values were resting
+      or stimulated. Ground the contested mark on the rubric sentence ''contested when a study of comparable
+      quality contradicts any study the rung needs'': pmid:11502777 contradicts pmid:9669518. Drop ''stricter
+      case definition than CDC'' or compare against pmid:34254637''s definition. Do not write that the
+      card ''does not rest level 2'' on pmid:34254637.'
+    class: decisive
+    targets:
+    - level_reason[0]
+    - level_reason[2]
+    - contested_reason[2]
+  - operation: 3
+    severity: advisory
+    problem: '''and women did not differ'' (level_reason[3], and the pmid:38724880 finding in op 10) is
+      inferred: the cached full text lists the significant female pairwise differences (11-deoxycortisol,
+      17α-hydroxyprogesterone, progesterone), and cortisol is not among them. Table S4 is not in the cache.'
+    fix: Optionally write 'and no difference in cortisol was reported in women'.
+  - operation: 13
+    severity: advisory
+    problem: After the three links are removed (ops 13-15), the YAML comment above `layer` still says
+      the other reading is 'expressed as the link to question:what-keeps-it-going'. That link no longer
+      exists. The comment is not shown to readers, but it is now wrong.
+    fix: Update or remove the comment when the card is next touched.
+  - operation: null
+    severity: advisory
+    problem: 'Two place statements were outside this correction''s targets and are unchanged. level_reason[4]
+      still says ''a study from Oxford'' for pmid:9494707; the second audit named it unverifiable, although
+      the cached author record gives the first affiliation as Warneford Hospital, Oxford. The group field
+      of pmid:38724880 still gives Westermeier F''s affiliation as Universidad Bernardo O''Higgins, but
+      the record''s first affiliation is FH Joanneum, Graz. Also noted: the full text of pmid:40713801
+      states ''All blood samples were collected from fasted participants in the AM'', so removing ''morning''
+      (ops 2, 3, 11) only weakens the text. That is acceptable, but ''morning'' was in the record.'
+    fix: null
+audits_run: []

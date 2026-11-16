@@ -82,6 +82,8 @@ class PubMedRecord(BaseModel):
     journal: str | None
     year: int | None
     authors: list[str]
+    # Per author (same order and length as ``authors``): the affiliation strings of the record, empty when it has none.
+    affiliations: list[list[str]] = []
     publication_types: list[str]
     mesh_terms: list[str]
     mesh_major: list[str] = []  # descriptors marked major topic, or with a major-topic qualifier
@@ -127,18 +129,21 @@ def _year(article: ET.Element) -> int | None:
     return None
 
 
-def _authors(article: ET.Element) -> list[str]:
+def _authors_affiliations(article: ET.Element) -> tuple[list[str], list[list[str]]]:
+    """The author names and, parallel to them, each author's ``AffiliationInfo/Affiliation`` strings."""
     names: list[str] = []
+    affiliations: list[list[str]] = []
     for author in article.findall("AuthorList/Author"):
         collective = _text(author.find("CollectiveName"))
-        if collective:
-            names.append(collective)
-            continue
-        name = " ".join(p for p in (_text(author.find("LastName")), _text(author.find("Initials"))) if p)
-        name = name or _text(author.find("ForeName"))
+        name = collective
+        if not name:
+            name = " ".join(p for p in (_text(author.find("LastName")), _text(author.find("Initials"))) if p)
+            name = name or _text(author.find("ForeName"))
         if name:
             names.append(name)
-    return names
+            found = (_text(a) for a in author.findall("AffiliationInfo/Affiliation"))
+            affiliations.append([a for a in found if a])
+    return names, affiliations
 
 
 def _doi(citation: ET.Element, pubmed_data: ET.Element | None) -> str | None:
@@ -219,7 +224,8 @@ def parse_article(article: ET.Element) -> PubMedRecord:
         abstract=_abstract(art),
         journal=_text(art.find("Journal/Title")) or _text(art.find("Journal/ISOAbbreviation")) or None,
         year=_year(art),
-        authors=_authors(art),
+        authors=_authors_affiliations(art)[0],
+        affiliations=_authors_affiliations(art)[1],
         publication_types=publication_types,
         mesh_terms=mesh_terms,
         mesh_major=mesh_major,

@@ -1,0 +1,105 @@
+card: hpa-axis-cortisol
+round: 2
+stage: audit
+attempt: C2-revised
+classification:
+- finding: first.parts[7]
+  class: wording
+  target: level_reason[4]
+  problem: level_reason[4] calls pmid:9494707 'a study from Oxford'. No record in the context file says
+    where it was done, and the word reads like the Oxford case definition, which the card has not verified.
+- finding: first.parts[8]
+  class: wording
+  target: contested_reason[3]
+  problem: contested_reason[3] calls pmid:10594524 'a London study'. Its record does not say where it
+    was done, so the place cannot be matched to a sentence.
+- finding: first.parts[9]
+  class: wording
+  target: studies[pmid:41516296].finding
+  problem: The finding for pmid:41516296 says the review covers 'abnormal HPA-axis hormone levels' and
+    is 'cited on the map as the source of proposed links'. The abstract only mentions endocrine alterations,
+    and the card has no links.
+- finding: first.parts[10]
+  class: wording
+  target: studies[pmid:31330791].finding
+  problem: The finding for pmid:31330791 says the review states that causal links 'cannot be discerned
+    from clinical correlation alone' and that it is cited on the map for links. The abstract does not
+    say this, and the card has no links.
+- finding: second.parts[6]
+  class: wording
+  target: level_reason[4]
+  problem: level_reason[4] calls the 22-patient study 'a study from Oxford'. Its record names no place
+    or institution, so the statement cannot be matched to the record, and with an unverified case definition
+    a reader may take it for an Oxford-criteria cohort.
+- finding: second.parts[7]
+  class: wording
+  target: contested_reason[3]
+  problem: contested_reason[3] calls the 1 microgram Synacthen study 'a London study'. Its record names
+    no place or institution, so the statement cannot be matched to the record.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: 'Several studies cannot count towards the level because their case definition is not yet verified.
+    They point in both directions: lower evening plasma cortisol and lower urinary cortisol in 30 patients
+    compared with 72 volunteers; lower urinary cortisol in 121 clinic patients compared with 64 people
+    without the illness; a flatter rise in morning saliva cortisol in women, but not men, in a population-based
+    study of 75 people with the illness and 110 well controls; and no difference in saliva or urinary
+    cortisol in 22 patients.'
+  sources:
+  - pmid:1659582
+  - pmid:11282703
+  - pmid:18160468
+  - pmid:9494707
+- op: replace_paragraph
+  field: contested.reason
+  index: 3
+  text: The Dinan group's low-dose ACTH study is not needed for level 2, which rests on its CRH study.
+    With the same 1 microgram ACTH test, that study found a smaller cortisol rise in 20 patients than
+    in 20 volunteers, and another study found no difference between 20 patients and 20 controls; both
+    used CDC criteria and a control group.
+  sources:
+  - pmid:9713562
+  - pmid:10594524
+- op: update_study
+  id: pmid:41516296
+  set:
+    finding: A review of gut microbiome research in ME/CFS.
+- op: update_study
+  id: pmid:31330791
+  set:
+    finding: A 2019 review of proposed disease mechanisms in ME/CFS.
+check:
+  passed: true
+  fixes:
+  - finding: first.parts[7]
+    resolves: true
+    new_claim: false
+    reason: '''in a study from Oxford'' is removed; the remaining numbers and directions match the four
+      cached abstracts (30 vs 72, 121 vs 64, 75 vs 110 with the effect in women only, 22 patients with
+      no difference).'
+  - finding: first.parts[8]
+    resolves: true
+    new_claim: false
+    reason: '''a London study'' becomes ''another study''; 20 vs 20, CDC criteria, a smaller rise in pmid:9713562
+      and no difference in pmid:10594524 all match the cached abstracts.'
+  - finding: first.parts[9]
+    resolves: true
+    new_claim: false
+    reason: The HPA-axis hormone wording and the map-links sentence are removed; the cached record shows
+      a review of the gut microbiome in ME/CFS.
+  - finding: first.parts[10]
+    resolves: true
+    new_claim: false
+    reason: The 'cannot be discerned' sentence and the map-links sentence are removed; the cached record
+      is a 2019 review of pathological mechanisms in ME/CFS.
+  - finding: second.parts[6]
+    resolves: true
+    new_claim: false
+    reason: The place name is removed from level_reason[4]; nothing in the text after the fix goes beyond
+      the cached abstracts.
+  - finding: second.parts[7]
+    resolves: true
+    new_claim: false
+    reason: The place name is removed from contested_reason[3]; the remaining sentence matches the cached
+      abstracts of pmid:9713562 and pmid:10594524.

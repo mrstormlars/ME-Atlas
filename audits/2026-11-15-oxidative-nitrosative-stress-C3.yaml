@@ -1,0 +1,119 @@
+card: oxidative-nitrosative-stress
+decision: accept
+parts:
+  - decision_part: "The level 2: two controlled studies in patients meeting CDC criteria (version not named) found higher oxidative-stress markers (plasma isoprostanes in Dundee, plasma peroxides in Antwerp)."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:21455120
+        quote: "made using the Centres for Disease Control and Prevention (CDC) criteria [29]."
+      - source: pmid:21455120
+        quote: "All subjects with ME/CFS were outpatients admitted to the Maes Clinics, Antwerp, Belgium."
+      - source: pmid:21455120
+        quote: "Plasma peroxide concentrations were significantly higher in patients with ME/CFS than in normal controls."
+      - source: pmid:16085177
+        quote: "Forty-seven patients (18 males, 29 females, mean age 48 [19--63] years) who fulfilled the Centres for Disease Control classification for CFS and 34 healthy volunteers (13 males, 21 females, 46 [19--63] years) were enrolled in the study."
+      - source: pmid:16085177
+        quote: "Patients had significantly increased levels of isoprostanes (group 1, P=0.007; group 2, P=0.03, unpaired t test compared to controls)"
+    class: none
+  - decision_part: "The CDC criteria without a named version count as a recognised definition flagged as not requiring PEM, as the card's level_reason states."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:23185200
+        quote: "Patients were included in the study if they met the 1994 CDC definition"
+    class: none
+  - decision_part: "Level 3 not reached: the controlled studies with a recognised definition each used a different measure, and the only other isoprostane study (6 patients) has an unverified definition and shares authors with the Dundee study."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:19422646
+        quote: "Six male CFS patients and six healthy controls performed an incremental exercise test to exhaustion and a submaximal exercise bout to exhaustion."
+      - source: pmid:19422646
+        quote: "F(2)-isoprostanes were higher (P<0.05) in CFS patients at rest and this difference persisted immediately and 24 h post-exercise."
+      - source: pmid:23185200
+        quote: "Levels of MDA were measured using the OxiSelect MDA Adduct ELISA kit"
+      - source: pmid:27224647
+        quote: "Resting condition yielded higher d-ROMs, higher OSI, and lower BAP in patients with CFS than in healthy volunteers"
+      - source: pmid:40627396
+        quote: "Comparing 16 HC, 15 LC, and 15 ME/CFS donors, DCFDA staining shows higher total MFI ROS levels in ME/CFS"
+      - source: pmid:40627396
+        quote: "were diagnosed by a physician using the National Academy of Medicine (8), Fukuda (36), and Canadian Consensus criteria (37)."
+    class: none
+  - decision_part: "No contested mark: the comparable-quality null malondialdehyde study (40 women, 1994 CDC) contradicts the 24-patient malondialdehyde study, which the level does not need; no comparable study contradicts the isoprostane or plasma peroxide finding, and the other null results have unverified case definitions."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:21119582
+        quote: "Forty women aged 15-45 years who fulfilled the 1994 Centers for Disease Control's diagnostic criteria for chronic fatigue syndrome (CFS) with no comorbidities were recruited and were age matched to a control group of 40 healthy women."
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345), when subdivided according to the level of MDA, a difference was found in the subgroup of high-level MDA (P=.034)."
+      - source: pmid:23185200
+        quote: "Twenty-four women aged 15-45 who fulfilled the diagnostic criteria for CFS with no comorbidities were recruited and were age matched to a control group of 19 healthy women."
+      - source: pmid:21552194
+        quote: "there were no significant differences between ME/CFS and controls"
+      - source: pmid:19906518
+        quote: "Therefore our study does not suggest that GSH is reduced in the brain in myalgic encephalomyelitis."
+      - source: pmid:22281935
+        quote: "We found elevated ventricular lactate and decreased GSH in patients with CFS and MDD relative to HVs."
+      - source: pmid:20010505
+        quote: "Plasma CoQ10 has been assayed in 58 patients with ME/CFS and in 22 normal controls"
+    class: none
+  - decision_part: "Level 4 not reached: the trial that measured lipid peroxides has an unverified case definition, the Fukuda trial of the same combination measured no oxidative-stress marker and found parallel change between groups, and the NADH and ubiquinol trials report no oxidative-stress measure in their abstracts."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25386668
+        quote: "lipoperoxides (p<0.05) were significantly lower in blood mononuclear cells of the treated group"
+      - source: pmid:34444817
+        quote: "had a confirmed diagnosis of ME/CFS according to the 1994 CDC/Fukuda case definition [4]"
+      - source: pmid:34444817
+        quote: "FIS-40 domain scores evolved in parallel between groups over the course of the study."
+      - source: pmid:10071523
+        quote: "8 of 26 (31%) responded favorably to NADH in contrast to 2 of 26 (8%) to placebo"
+      - source: pmid:27125909
+        quote: "a total of 31 patients (N = 17 in the ubiquinol group and 14 in the placebo group) completed the study"
+    class: none
+  - decision_part: "Diagnostic marker badge no: no marker was tested in a second independent group; plasma peroxides discriminated poorly and the Stanford further test was a small case study."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:21455120
+        quote: "The residualized plasma peroxide values showed no significant diagnostic performance for ME/CFS, where the area under the ROC curve was only 62.6%."
+      - source: pmid:40627396
+        quote: "Although the comparisons from the fPOP cohort are a small case study"
+    class: none
+  - decision_part: "Explains PEM badge no: the only PEM-related result is a correlation with a symptom item, not a direct PEM measure after an exertion challenge."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis."
+    evidence:
+      - source: pmid:16085177
+        quote: "CFS symptoms correlated with isoprostane levels, but only in group 2 low CV risk CFS patients (isoprostanes correlated with; total symptom score P=0.005; joint pain P=0.002; postexertional malaise P=0.027, Pearson)."
+    class: none
+  - decision_part: "Link to symptom:post-exertional-neuroimmune-exhaustion at step associated: one CDC-defined cohort measured isoprostanes and a post-exertional malaise score in the same patients and reports a correlation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:16085177
+        quote: "CFS symptoms correlated with isoprostane levels, but only in group 2 low CV risk CFS patients"
+    class: none
+  - decision_part: "Links to endothelial-dysfunction, hpa-axis-cortisol, autonomic-imbalance and symptom:sleep-disturbance at step proposed: each source states the link without a direct patient test."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516145
+        quote: "Endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion."
+      - source: pmid:27766535
+        quote: "HPA axis hypoactivity in ME/CFS is most likely a consequence and not a cause of a wide variety of activated immune-inflammatory and O&NS pathways in that illness."
+      - source: pmid:16610951
+        quote: "Although the exact mechanism is unclear, results suggest a common link between oxidative stress, immune system dysfunction and potassium imbalance in CFS patients leading to impaired sympatho-vagal balance strongly reflected in abnormal HRV."
+      - source: pmid:29759891
+        quote: "In this review, we propose a heuristic framework in which reciprocal interactions of immune, oxidative and nitrosative stress, and mitochondrial pathways may drive sleep abnormalities across potentially neuroprogressive disorders."
+    class: none
+  - decision_part: "Layer dysfunction: the card's evidence is measured oxidative-stress markers in patients."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:40627396
+        quote: "we find both ME/CFS and LC donors exhibit signs of elevated oxidative stress, especially in the memory subset."
+    class: none
+  - decision_part: "Subgroup and early signal from the Stanford study (15 patients, 16 controls), labelled as not repeated, with its mixed case definitions stated."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:40627396
+        quote: "While ME/CFS females exhibit higher total ROS and mitochondrial calcium levels, males have normal ROS levels, with pronounced mitochondrial lipid oxidative damage."
+      - source: pmid:40627396
+        quote: "Both ME/CFS males and females exhibit significantly higher GSH levels, compared to controls (Fig. 3C)."
+    class: none
+reasons_summary: "Level 2 rests on two controlled CDC-defined studies with different measures; no same-measure independent repeat, no comparable contradiction of a needed study, no qualifying trial, badges no, links match their sources."
+would_change: "An independent controlled study with a recognised definition repeating raised isoprostanes or plasma peroxides would support level 3; a comparable study finding no difference in either would make level 2 contested; a verified recognised case definition for the coenzyme Q10 plus NADH trial (pmid:25386668, full text not cached) with lipid peroxides lowered against placebo would bear on level 4. Unverifiable from the context (no affiliations shown, full texts not cached), but not needed by the level, badges or links: the place names Dundee (pmid:16085177), Osaka (pmid:27224647), Glasgow (pmid:19422646), 'same Novi Sad clinic' (pmid:21119582) and 'same unit' (pmid:25386668); whether d-ROMs (pmid:27224647) and plasma peroxides (pmid:21455120) are the same measure cannot be read from the records."

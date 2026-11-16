@@ -416,6 +416,7 @@ def test_record_review_validates_the_card_review_file(corr: Corr, capsys):
         "operation": None,
         "severity": "must_fix",
         "class": "decisive",
+        "targets": ["core_claim"],
         "problem": "A link that its source does not state.",
     }
 
@@ -496,7 +497,14 @@ def test_a_first_attempt_card_review_reject_leaves_the_round_open_and_the_trail_
     assert corr.trail()["card_review"] == {
         "verdict": "reject",
         "findings": [
-            {"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+            {
+                "operation": None,
+                "severity": "must_fix",
+                "class": "decisive",
+                "targets": ["core_claim"],
+                "problem": "A problem.",
+                "fix": None,
+            }
         ],
     }
     assert corr.trail()["audits_run"] == []
@@ -508,7 +516,9 @@ def test_a_card_review_reject_with_the_revised_attempt_used_ends_the_round_with_
     assert corr.plan() == 0 and corr.apply() == 0 and corr.review() == 0 and corr.card_review("reject") == 0
     assert apply_revised(corr) == 0 and review_revised(corr) == 0 and card_review_revised(corr, "reject") == 0
     assert corr.publish() == 0
-    corr.assert_held_back("whole-card review rejected; the revised attempt is used", corr.pub.draft_bytes)
+    corr.assert_held_back(
+        "whole-card review rejected; the decisive findings did not fall (1, then 1)", corr.pub.draft_bytes
+    )
     assert "Correction rounds used: 1 of 1" in corr.report()
     assert not corr.pub.log.exists()
     names = corr.names()

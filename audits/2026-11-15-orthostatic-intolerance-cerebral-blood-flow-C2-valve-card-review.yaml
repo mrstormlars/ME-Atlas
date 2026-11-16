@@ -1,0 +1,53 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+round: 2
+stage: card-review
+attempt: C2
+classification:
+- finding: findings[0]
+  class: wording
+  target: badge_reasons.explains_pem[0]
+  problem: The explains_pem reason says 'The size of the fall in blood flow to the brain was not related
+    to the pain, fatigue or concentration scores at any time point assessed.' The cached full text of
+    pmid:33585505 (PMC7874746) says only 'No significant relation was found between CBF reduction and
+    differences in NRS for pain, fatigue, or concentration (data not shown).' It does not say which time
+    points were analysed, so 'at any time point assessed' is not in the source, and 'not related' is stronger
+    than 'no significant relation'.
+- finding: findings[1]
+  class: wording
+  target: studies[pmid:33585505].finding
+  problem: The study finding ends 'The fall in blood flow to the brain was not related to the pain, fatigue
+    or concentration scores at any time point assessed.' As above, the cached full text (PMC7874746) reports
+    only 'No significant relation was found between CBF reduction and differences in NRS for pain, fatigue,
+    or concentration (data not shown)', with no time points named.
+operations:
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'No study at level 2 or above measures post-exertional malaise and links it to blood flow to the
+    brain in the same patients. A study from the Dutch clinic, of patients meeting both the criteria for
+    CFS and the criteria for ME, tracked pain, fatigue and concentration scores after a tilt test in 278
+    patients and 30 healthy controls: scores rose in patients and were still higher after 7 days. In controls
+    the scores were unchanged after the tilt, and at 7 days only the fatigue score had changed, falling.
+    A passive tilt is orthostatic stress rather than physical or mental effort, so the card does not count
+    it as a direct measure of post-exertional malaise.'
+  sources:
+  - pmid:33585505
+- op: update_study
+  id: pmid:33585505
+  set:
+    finding: A study of n=278 patients and 30 healthy controls found that pain, fatigue and concentration
+      scores rose after a tilt test in patients and were still raised after 7 days; in controls the scores
+      were unchanged after the tilt, and at 7 days only the fatigue score had changed, falling.
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The objected sentence is removed; the rest of the reason is unchanged and the appended citation
+      is the study already cited (pmid:33585505), so nothing is added.
+  - finding: findings[1]
+    resolves: true
+    new_claim: false
+    reason: The objected sentence is removed from the study finding; the remaining text is unchanged,
+      so the fix only removes.

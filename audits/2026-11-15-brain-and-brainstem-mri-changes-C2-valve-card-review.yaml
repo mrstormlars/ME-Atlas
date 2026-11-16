@@ -1,0 +1,40 @@
+card: brain-and-brainstem-mri-changes
+round: 2
+stage: card-review
+attempt: C2
+classification:
+- finding: findings[0]
+  class: wording
+  target: level_reason[3]
+  problem: 'level_reason[3] says of pmid:31671321, pmid:30497131, pmid:38347875 and pmid:36937672: ''The
+    papers do not say whether they share patients.'' The cached full text of pmid:31671321 (PMC6835065)
+    says ''We scanned 27 healthy control (HC) and 45 ME/CFS subjects who met Fukuda criteria ... See (Barnden
+    et al., 2018) for more details on subject selection'', and its reference list resolves Barnden et
+    al., 2018 to pmid:30497131, which also has 27 healthy controls. One paper thus points to another for
+    how its subjects were selected, so the blanket statement that the papers say nothing on shared patients
+    is not what the records show, and it leads a reader to treat the two Fukuda studies as possibly separate
+    cohorts.'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: 'Other controlled studies from the same group as the level 2 study, using different measures,
+    also report brainstem differences: weaker connections between brainstem regions during a task (45
+    patients meeting the Fukuda definition, which does not require post-exertional malaise, and 27 controls),
+    a lower T1-weighted MRI signal in a brainstem region (43 patients meeting the Fukuda definition and
+    27 controls), weaker connections between the pons and the cerebellum during a task (31 patients meeting
+    the Canadian or International criteria and 15 controls), and a larger pons and whole brainstem at
+    7 Tesla (10 patients and 10 controls). None of these results has been repeated by an independent group.'
+  sources:
+  - pmid:31671321
+  - pmid:30497131
+  - pmid:38347875
+  - pmid:36937672
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The sentence 'The papers do not say whether they share patients.' is removed; the remaining
+      text and numbers are unchanged from before and cite only the same four studies.

@@ -1,0 +1,121 @@
+card: brain-and-brainstem-mri-changes
+decision: accept
+parts:
+  - decision_part: "Level 2: one controlled diffusion MRI study in patients meeting the International Consensus Criteria found lower axial and mean diffusivity in a midbrain and pons cluster, and the Fukuda group did not differ."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34355438
+        quote: "After these exclusions, 25 ME/CFS patients met Fukuda criteria (Fukuda, 1994), and 18 ME/CFS patients met ICC criteria (Carruthers et al., 2011)."
+      - source: pmid:34355438
+        quote: "detected significant clusters (a) with decreased axial diffusivity (p = .001) and mean diffusivity (p = .01)"
+      - source: pmid:34355438
+        quote: "and HC did not detect significant clusters"
+    class: none
+  - decision_part: "Not level 3: no independent group has reproduced the diffusion finding. The Newcastle study measured white matter volume, not diffusion, and two Barnden-led studies found no group difference in volume."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:29021956
+        quote: "Reductions in WM volume in the patient group were seen primarily in the midbrain, pons and right temporal lobe."
+      - source: pmid:29021956
+        quote: "Participants were not selected according to any criteria other than fulfilling the Fukuda diagnostic criteria of CFS"
+      - source: pmid:29021956
+        quote: "leaving 28 of 30 healthy control participants for final analysis"
+      - source: pmid:21560176
+        quote: "They met both the Fukuda (1) and Canadian (36) criteria for CFS."
+      - source: pmid:21560176
+        quote: "The total GM, WM and CSF volumes from VBM analysis showed no significant difference between the CFS and NC subjects."
+      - source: pmid:21560176
+        quote: "No inter-group comparisons detected significant regional differences with the voxel threshold set at uvP < 0.001."
+      - source: pmid:30497131
+        quote: "VBM did not find group differences in regional grey matter or white matter volumes."
+    class: none
+  - decision_part: "The later Griffith diffusion study (CCC or ICC, 37 patients, 27 controls) found differences in the supplementary motor area, cingulum and corpus callosum. It comes from the same group, so it cannot count as an independent repeat, and its authors describe their results as in line with the earlier study."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:42539798
+        quote: "37 ME/CFS participants were recruited after meeting the Canadian Consensus Criteria (CCC) (4) or International Consensus Criteria (ICC) (5)"
+      - source: pmid:42539798
+        quote: "in the left supplementary motor area (SMA-L) of the medial frontal gyrus in ME/CFS compared to healthy controls"
+      - source: pmid:42539798
+        quote: "Our findings align with previous findings where decreased AD and MD and also increased FA were reported in people living with ME/CFS compared to healthy controls (28)."
+    class: none
+  - decision_part: "Contested mark on rung 2: the Sunshine Coast study (CCC-consistent, 43 patients against 43 matched controls, controlled) found higher, not lower, axial diffusivity in tracts that pass through the brainstem, and no difference in mean diffusivity. Its case definition ranks with ICC, it has a control group, and its sample is more than half of 18."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:40624094
+        quote: "were independently interviewed by two clinicians to confirm a CCC-consistent"
+      - source: pmid:40624094
+        quote: "the diffusion MRI results were compared between PI-ME/CFS (n = 43) and matched HCs (n = 43)"
+      - source: pmid:40624094
+        quote: "PI-ME/CFS participants showed significantly higher axial diffusivity (AD) in several association and projection fibres compared to HCs."
+      - source: pmid:40624094
+        quote: "left inferior cerebellar peduncle, middle cerebellar peduncle, left superior cerebellar peduncle, right superior corona radiata, right posterior corona radiata, right sagittal stratum, corticospinal tract, and left medial lemniscus"
+      - source: pmid:40624094
+        quote: "No significant group differences were found for fractional anisotropy, mean diffusivity, or radial diffusivity."
+    class: none
+  - decision_part: "Diagnostic marker badge: no. The level 2 study only suggests its measures could become an imaging marker; no brainstem MRI marker has been tested in a second, independent group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:34355438
+        quote: "could potentially act as an imaging biomarker of abnormal pathophysiology in ME/CFS"
+    class: none
+  - decision_part: "Explains PEM badge: no. The Georgetown exercise study (Fukuda and Canadian criteria) reports no significant correlation between brain signals and symptoms. The study of 15 women relates brain changes to symptoms, but its case definition cannot be read from its record, so it cannot count."
+    rubric: "The link must connect the proposed mechanism to the symptoms after exertion in the same patients"
+    evidence:
+      - source: pmid:34975370
+        quote: "meeting Fukuda (Fukuda et al., 1994) and Carruthers Canadian Consensus Criteria for CFS"
+      - source: pmid:34975370
+        quote: "The age and gender regressed BOLD values had no significant correlations with measures of fatigue, pain, tenderness, depression, and other subjective symptoms (all R < 0.3, data not shown)."
+      - source: pmid:28216087
+        quote: "Changes in brain activity were significantly related to symptoms for patients (p<0.05)."
+    class: none
+  - decision_part: "Studies whose case definition is unverified (Stanford, Nijmegen, Melbourne, and the study of 15 women) are kept out of the level and the PEM badge."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies"
+    evidence:
+      - source: pmid:25353054
+        quote: "Bilateral white matter volumes were reduced in CFS"
+      - source: pmid:15955487
+        quote: "We observed significant reductions in global gray matter volume in both cohorts of CFS patients, as compared to matched control participants."
+      - source: pmid:37331007
+        quote: "However, no significant group differences in white matter properties were observed"
+    class: none
+  - decision_part: "Hippocampal volume findings come from the same group (one using the level 2 cohort), so they are not an independent repeat."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:35355311
+        quote: "had significantly larger volume in the left subiculum head (p < 0.001), left presubiculum head (p = 0.0020)"
+      - source: pmid:35355311
+        quote: "Two ME/CFSICC patients and one ME/CFSFukuda patients were excluded from analysis due to inadequate segmentation."
+      - source: pmid:39804864
+        quote: "Our study found significantly larger volumes in the left hippocampal subfields of both long COVID and ME/CFS patients compared to HC."
+    class: none
+  - decision_part: "Layer: measurable dysfunction. The card is about measurable brain and brainstem changes on MRI."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:36937672
+        quote: "Group comparisons with HC detected significantly larger volumes in ME/CFS for pons (p = 0.004) and whole brainstem (p = 0.01)"
+    class: none
+  - decision_part: "Link to respiratory symptoms at step 2 (associated): a 7 Tesla study of patients meeting the Canadian and International criteria related midbrain and whole-brainstem volume to breathing difficulty in the same patients. The correlations were not corrected for multiple comparisons, as the card says."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:36937672
+        quote: "10 ME/CFS patients fulfilling the CCC and ICC criteria"
+      - source: pmid:36937672
+        quote: "We showed that smaller midbrain and whole brainstem volumes were associated with more severe"
+      - source: pmid:36937672
+        quote: "Correction for multiple group comparisons was implemented using the Bonferroni method. Then Spearman correlations were performed"
+    class: none
+  - decision_part: "Links to sleep disturbance and pain at step 2 (associated): studies with recognised case definitions measured brain volumes and symptom scores in the same patients and report relations whose directions differ. The card gives no direction."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:35355311
+        quote: "and four hippocampus subfield volumes in ME/CFSICC patients, with larger volumes associated with more severe SDS"
+      - source: pmid:39804864
+        quote: "and whole hippocampal body volume (r = 0.45, p = 0.022)"
+      - source: pmid:39804864
+        quote: "0 represented very severe symptoms and 100 indicatedno symptoms"
+      - source: pmid:39804864
+        quote: "Our previous study [20] also showed a positive correlation between"
+    class: none
+reasons_summary: "Level 2 rests on one controlled ICC diffusion study, with no independent repeat; rung 2 is contested by a comparable CCC study finding the opposite direction; both badges no; layer and associated links are supported by the cited records."
+would_change: "An independent group finding lower brainstem diffusivity in a separate CCC/ICC/IOM cohort would support level 3. If a reading of the same-group 2026 whole-brain diffusion study (pmid:42539798) shows it as a failed repeat, its role would change from context to contradicts, but the level and the contested mark would stay the same. These statements cannot be checked because the full text is not cached: the case definitions of pmid:28216087, pmid:25353054, pmid:15955487 and pmid:37331007, and the institutions named in the group field for pmid:28216087. The card treats these studies as not counting, the conservative reading. A verified CCC/ICC/IOM definition for pmid:28216087 could make it relevant to the PEM badge. No drafting reasoning, review findings or earlier audit was given to this auditor."

@@ -1,0 +1,229 @@
+card: impaired-energy-production-after-exertion
+round: 2
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-impaired-energy-production-after-exertion-second.yaml
+- 2026-11-13-impaired-energy-production-after-exertion.yaml
+draft_sha256: 3981010cfb5f60ab1ec4f69c24e1ac636fda9ad236126fa905de8d345f19f1b4
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: level_reason[0] ends 'The card is at level 2 because of this study.' The draft's level is
+      3, so a reader is told two different levels. Pmid:38965566 supports rung 2 ('Participants with ME/CFS
+      (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs ... separated
+      by 24 h'; 'Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2'). It does not set
+      the card's level on its own.
+    fix: Replace the last sentence with 'Rung 2 rests on this study.' (or remove it). Leave the level
+      statement to level_reason[4].
+    targets:
+    - level_reason[0]
+  - operation: null
+    severity: must_fix
+    problem: 'contested_reason[1] says the ICC label for the two Dutch clinic studies ''is read from a
+      reference number and not confirmed''. The cached full texts confirm it. In pmid:34198913 (PMC8229058)
+      and pmid:34198946 (PMC8230194), reference 1 is ''Carruthers B.M. ... Myalgic encephalomyelitis:
+      International Consensus Criteria J. Intern. Med. 2011''. The women''s paper also excludes patients
+      ''graded as having severe ME/CFS according to ICC ... [1]'', and the men''s paper excludes those
+      ''graded as having severe ME/CFS according to the international consensus criteria (ICC)''. This
+      matters for the contested mark. Under the rubric, ICC ranks above Fukuda, so the New York Fukuda-based
+      study (pmid:42212259) is not of comparable quality to these two studies. Rung 3 is contested only
+      if it needs a study that the New York study can contradict (the Amsterdam Fukuda study, pmid:20937116).
+      The draft does not ask whether rung 3 also stands on the ICC Dutch studies, which use an idiopathic
+      chronic fatigue comparison group rather than healthy controls, and the Oslo CCC study, which reproduced
+      the result only in part.'
+    fix: Remove 'is read from a reference number and not confirmed'. State that both papers cite the 2011
+      International Consensus Criteria as their ME criteria (reference 1). Keep the caveat that the comparison
+      group has idiopathic chronic fatigue rather than being healthy controls. Then restate, from the
+      rubric, which studies rung 3 needs and whether the New York study is of comparable quality to each
+      of them, so the auditor can decide whether the contested mark on rung 3 still holds.
+    targets:
+    - contested_reason[1]
+    - contested
+  - operation: null
+    severity: must_fix
+    problem: Study pmid:37054777 has no 'group' field. Every other study on the card has one, including
+      the other review, pmid:42051540.
+    fix: Add a group from the cached author facts, for example 'Systrom DM, Brigham and Women's Hospital,
+      Harvard Medical School, Boston, USA (first author Joseph P, Yale University, New Haven, USA)'. Optionally
+      add that Cook DB is also on 42212259, as the author facts list.
+    targets:
+    - studies[pmid:37054777].group
+  - operation: null
+    severity: must_fix
+    problem: 'badge_reasons.explains_pem[2] calls pmid:36984572 ''an overlapping cohort from the 84-patient
+      study''s research group''. The group fields of pmid:36984572 and pmid:35358096 say ''same group
+      and cohort as 38965566''. No cached record says the cohorts overlap. The records show shared authors
+      (5 exact for 36984572, 4 exact for 35358096, per the author facts). They also show test sites that
+      overlap (36984572: Ithaca, Los Angeles and Weill-Cornell in New York City; 38965566: Ithaca College,
+      Weill Cornell Medicine and ID Med, Torrance). 36984572 says ''Detailed exercise test results of
+      the 2-day CPET protocol will be reported separately''. Even so, ''same cohort'' or ''overlapping
+      cohort'' is an inference, not a statement in the records.'
+    fix: Write 'From the 84-patient study's research group (shared authors), 78 patients ...' in badge_reasons.explains_pem[2].
+      In both group fields, replace 'same group and cohort as 38965566' with 'same group as 38965566 (shared
+      authors)'. Name the overlap only if a cached record states it.
+    targets:
+    - badge_reasons.explains_pem[2]
+    - studies[pmid:36984572].group
+    - studies[pmid:35358096].group
+  - operation: null
+    severity: advisory
+    problem: Study pmid:42212259 has n_patients 53 and n_controls 19, but its finding and the card's text
+      use 58 and 25. 53 and 19 are not stated in the record. They are worked out from 'Five ME/CFS and
+      six sedentary controls did not meet the American College of Sports Medicine (ACSM) criteria' (58
+      - 5, 25 - 6). The comparable-quality test against both the 15-patient and the 84-patient study gives
+      the same result with either number.
+    fix: Either record the record's 58 and 25, or keep 53/19 and note in the finding that these are the
+      patients and controls with maximal tests on both days (58 and 25 enrolled).
+  - operation: null
+    severity: advisory
+    problem: Study pmid:30871578 is labelled Fukuda. Its quote says patients had been diagnosed 'based
+      on one of three widely accepted diagnostic criteria' (Fukuda, CCC or ICC). The quote supports a
+      mixed cohort whose loosest admissible definition is Fukuda. It does not show that every patient
+      met Fukuda.
+    fix: Keep the Fukuda label as the conservative reading, but say in the finding that patients were
+      diagnosed by any of Fukuda, CCC or ICC.
+  - operation: null
+    severity: advisory
+    problem: 'level_reason[2] calls the Dutch clinic studies ''retrospective analyses of a clinical database''.
+      The records say the data were taken from a clinical database (pmid:34198946: ''From a database of
+      patients evaluated for ME/CFS over the period from June 2010 to October 2019''; pmid:34198913: ''subtracted
+      from the clinical database''), but neither uses the word ''retrospective''. The 49% against 14%
+      fibromyalgia figure comes from the women''s paper''s Results (''25/51 (49%) compared to 7/50 (14%)'').
+      That paper''s own abstract gives ''seven ME/CFS patients vs zero ICF patients'', which matches the
+      men''s paper.'
+    fix: Write 'analyses of data from a clinical database'. Optionally cite the Results section for the
+      fibromyalgia figure.
+  - operation: null
+    severity: advisory
+    problem: 'links[0]: the cached full text of pmid:37054777 (PMC10088277) does contain the sentence
+      the earlier audits could not find in the abstract: ''However, few studies have directly tested the
+      associations between the physiologic and behavioral manifestations of PEM.'' The link is therefore
+      sourced. The card paraphrases it as ''how the body''s responses to exercise relate to post-exertional
+      malaise'', which is close but not the source''s framing.'
+    fix: 'Optionally stay closer to the source: ''notes that few studies have directly tested how the
+      physiological and behavioural manifestations of post-exertional malaise are associated''.'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'A controlled study of 84 patients meeting the Canadian Consensus Criteria and 71 sedentary controls
+    repeated a maximal exercise test after 24 hours. Unlike controls, patients did not reproduce their
+    first-day results: oxygen use and work fell at peak effort and at the ventilatory threshold on the
+    second day. Rung 2 rests on this study.'
+  sources:
+  - pmid:38965566
+- op: replace_paragraph
+  field: contested.reason
+  index: 1
+  text: The two Dutch clinic studies of women and men point the same way. Both papers cite the International
+    Consensus Criteria together with the Fukuda definition for the ME/CFS diagnosis, and grade severity
+    by the International Consensus Criteria; the card records ICC. They compare patients with people who
+    have chronic fatigue without ME/CFS rather than with healthy controls. As recorded, the New York study's
+    Fukuda-based definition ranks below ICC, so it is not of comparable quality to these two studies.
+    Rung 3 is contested through the Amsterdam Fukuda study, which the New York study matches on case definition,
+    with a control group and more patients (58 against 15).
+  sources:
+  - pmid:34198913
+  - pmid:34198946
+  - pmid:42212259
+  - pmid:20937116
+- op: replace_paragraph
+  field: contested.reason
+  index: 3
+  text: 'Rung 2 rests on the 84-patient study and is not contested: the New York study''s own sentence
+    names the 1994 (Fukuda) definition, modified to require post-exertional malaise, which ranks below
+    the Canadian Consensus Criteria. A companion paper by the same authors, which appears to describe
+    the same cohort (57 patients and 25 controls), names the 2015 IOM definition; the records do not settle
+    which reading is right, and if the cohort met the IOM definition, rung 2 would also be contested.
+    The card records Fukuda, from the New York study''s own sentence.'
+  sources:
+  - pmid:38965566
+  - pmid:42212259
+  - pmid:41293716
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 2
+  text: From the 84-patient study's research group (shared authors), 78 patients took on average about
+    12.7 days to recover from the two-day test, against 2.1 days for 64 sedentary controls; the paper
+    reports the exercise test results separately and does not relate recovery to oxygen use or work.
+  sources:
+  - pmid:36984572
+  - pmid:38965566
+- op: update_study
+  id: pmid:36984572
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same group as 38965566, shared authors)
+- op: update_study
+  id: pmid:35358096
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same group as 38965566, shared authors)
+- op: update_study
+  id: pmid:37054777
+  set:
+    group: Systrom DM, Brigham and Women's Hospital, Harvard Medical School, Boston, USA (first author
+      Joseph P, Yale University, New Haven, USA; Cook DB is also on 42212259)
+    finding: A review of exercise pathophysiology in ME/CFS and long COVID; it describes overlap between
+      the two in blood-flow and gas-exchange findings on exercise testing. Not evidence for the level.
+- op: remove_link
+  to: question:closest-to-symptoms
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 6
+    severity: advisory
+    problem: Resolves the first review's finding on pmid:37054777. The new finding ('describes overlap
+      between the two in blood-flow and gas-exchange findings on exercise testing. Not evidence for the
+      level.') matches the cached abstract ('Hemodynamic and gas exchange derangements in PASC have substantial
+      overlap with those observed with ME/CFS'). It drops the map sentence and the unsourced 'few studies'
+      statement. After operation 7 removes the link, no sentence on the card still cites pmid:37054777
+      or question:closest-to-symptoms. The group matches the record's authors (Joseph P first, Systrom
+      DM last, Cook DB also on 42212259). This answers second audit part 9 and first audit part 4 together
+      with operation 7.
+    fix: None needed.
+  - operation: 1
+    severity: advisory
+    problem: Resolves the first review's finding on contested_reason[1]. The cached full texts support
+      the new wording. The women's paper (PMC8229058) cites refs [1],[3] for the ME/CFS criteria, and
+      both papers' reference lists hold the International Consensus Criteria and Fukuda. Both papers grade
+      severity by the ICC ('graded as having severe ME/CFS according to ... ICC'). The comparison is now
+      tied to the recorded label ('As recorded'), so the claim is no stronger than before. The closing
+      sentence ('Rung 3 is contested through the Amsterdam Fukuda study ... (58 against 15)') repeats
+      contested_reason[0] and adds no new fact to the card. A reader may still not see that the New York
+      study would be of comparable quality if the Dutch studies were read as Fukuda; the YAML comment
+      says so, but the reader-facing text does not.
+    fix: Optionally add, in a later edit, that the comparison would change if the Dutch studies were read
+      as Fukuda.
+  - operation: null
+    severity: advisory
+    problem: Operations 0, 2, 3, 4, 5 and 7 are unchanged from the first attempt and still match their
+      records. The authors shared between 36984572, 35358096 and 38965566 are confirmed (Keller, Moore,
+      Stevens J, Stevens SR, Mao, Chia, Levine, Franconi, Hanson). Every operation acts on a target in
+      the context's list. The YAML comments for 36984572, 35358096 and 38965566 still say 'same CRC cohort'
+      and so contradict the reader-facing 'same group, shared authors'. Readers do not see these comments.
+    fix: Align the comments with 'same group, shared authors' when the card is next edited.
+card_review:
+  verdict: accept
+  findings:
+  - operation: null
+    severity: advisory
+    problem: contested.reason[0] and contested.reason[1] give the New York study's size as 'more patients
+      (58 against 15)'. The full text (PMC13213420) reports its day-to-day results for 'those ME/CFS patients
+      and controls who achieved maximal effort on both tests' (5 patients and 6 controls did not), and
+      the card's own n_patients for pmid:42212259 is 53. The rubric counts patients in the measurement
+      that bears on the finding. The conclusion does not change, since 53 is still more than half of 15.
+    fix: Optionally write '53 analysed patients against 15', or '58 patients, 53 analysed', so the number
+      matches the card's n_patients and the rubric's sample-size rule.
+  - operation: null
+    severity: advisory
+    problem: level_reason[6] says the 84-patient study 'kept patients who met maximal-effort criteria
+      on the first test but not on the second, and its authors read such cases as emblematic of post-exertion
+      symptom exacerbation'. The full text (PMC11229500) calls 'emblematic' only those who missed the
+      heart rate or RER criteria on test 2 'but did meet RPE criteria'.
+    fix: Optionally add 'who still met the perceived-effort criterion' after 'such cases'.
+audits_run:
+- 2026-11-15-impaired-energy-production-after-exertion-C2.yaml

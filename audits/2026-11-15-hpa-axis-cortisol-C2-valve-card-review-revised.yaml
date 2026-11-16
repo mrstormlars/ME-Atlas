@@ -1,0 +1,30 @@
+card: hpa-axis-cortisol
+round: 2
+stage: card-review
+attempt: C2-revised
+classification:
+- finding: findings[0]
+  class: wording
+  target: studies[pmid:12829200].finding
+  problem: The finding of pmid:12829200 says the trial found no difference 'in fatigue, well-being or
+    any other measure'. The cached abstract (the only cached source; no full text) reports no difference
+    in fatigue, well-being, the Abbreviated Fatigue Questionnaire, the SF-36 Mental and Physical Factor
+    scores and the Hospital Anxiety and Depression Scale; it does not say no other measure in the trial
+    differed. 'Any other measure' is stronger than the record, and level_reason[6] already uses the record's
+    limit ('the other measures reported in the abstract').
+operations:
+- op: update_study
+  id: pmid:12829200
+  set:
+    finding: A placebo-controlled crossover trial of n=80 patients who completed both arms (100 enrolled)
+      found no difference between low-dose hydrocortisone with fludrocortisone and placebo in fatigue
+      or well-being.
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The overreaching 'or any other measure' is removed; the remaining claim (n=80 completers of
+      100 enrolled, crossover, placebo-controlled, no difference in fatigue or well-being) is stated in
+      the cached abstract, so the fix only weakens.

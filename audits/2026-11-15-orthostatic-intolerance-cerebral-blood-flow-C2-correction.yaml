@@ -1,0 +1,265 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+round: 2
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-orthostatic-intolerance-cerebral-blood-flow-second.yaml
+- 2026-11-13-orthostatic-intolerance-cerebral-blood-flow.yaml
+- 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C1-second.yaml
+- 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C1.yaml
+draft_sha256: 35ead89d7ae1b0245b41663df23ef39c881e6cdee1b24abb7f19fbc166c2dd19
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'The explains_pem reason says the controls'' scores ''did not change'' after the tilt, and
+      the study finding says the scores ''were unchanged in controls''. The cached full text of pmid:33585505
+      (PMC7874746) says: ''In HC only, the NRS for fatigue decreased significantly (p = 0.004)'' at 7
+      days. The abstract''s ''Values for all symptoms were unchanged for HC pre- and post-HUT'' does not
+      cover the 7-day result. The badge reason also says the fall in blood flow ''was not related to the
+      change in symptoms''. The paper says: ''No significant relations were found between the reduction
+      in percentage of CBF and NRS for pain, fatigue, or concentration at all time points assessed (data
+      not shown).'' That is a relation to the scores at each time point, not to the change in them.'
+    fix: 'Remove the controls clause, or replace it with what the full text states: controls'' pain and
+      concentration scores did not rise, and their fatigue score fell at 7 days. Replace ''was not related
+      to the change in symptoms'' with ''was not related to the pain, fatigue or concentration scores
+      at any time point assessed''. Keep the value false.'
+    targets:
+    - badge_reasons.explains_pem[0]
+    - studies[pmid:33585505].finding
+  - operation: null
+    severity: must_fix
+    problem: 'pmid:33050553 is labelled case_definition ''none'', and level_reason[1] and the diagnostic_marker
+      reason say the sitting study ''does not name its case definition''. The cached full text (PMC7712289)
+      says: ''During the first visit, it was determined whether patients satisfied the criteria for CFS
+      and ME, taking the exclusion criteria into account [ 4 , 5 ].'' In the same record, reference 4
+      is Carruthers et al., ''Myalgic encephalomyelitis: International Consensus Criteria'' (2011), and
+      reference 5 is Fukuda et al. 1994. The paper does name its criteria, by reference. The card reads
+      this sentence differently from the near-identical sentence in pmid:33585505, which it labels ICC.'
+    fix: Relabel pmid:33050553 from the cached full text, quoting the sentence above with the label that
+      sentence supports (as for pmid:33585505), and set case_definition_source to fulltext. In level_reason[1]
+      and the diagnostic_marker reason, remove 'which does not name its case definition' / 'does not name
+      its case definition'. Keep the point that it comes from the same clinic, so it is not an independent
+      repeat.
+    targets:
+    - studies[pmid:33050553].case_definition
+    - studies[pmid:33050553].case_definition_quote
+    - level_reason[1]
+    - badge_reasons.diagnostic_marker[0]
+  - operation: null
+    severity: must_fix
+    problem: The group field of pmid:25277740 says 'same numbers as 38682242'. pmid:38682242 is not on
+      the card and has no cached record in the context, so the statement cannot be checked against any
+      record.
+    fix: Remove '; same numbers as 38682242' from the group field.
+    targets:
+    - studies[pmid:25277740].group
+  - operation: null
+    severity: advisory
+    problem: 'Second audit part 4 said the reference list of pmid:33585505 is not in the record. The cached
+      full text (PMC7874746) does contain it: reference 1 is Fukuda et al. 1994 and reference 3 is Carruthers
+      et al., ''Myalgic encephalomyelitis: international consensus criteria'' (2011). The ICC label and
+      the explains_pem reason''s ''both the Fukuda definition and the International Consensus Criteria''
+      are therefore supported by the cached record.'
+    fix: Optionally make the reference mapping visible (for example in the quote's context), so a reader
+      or auditor can see why '(1)' and '(3)' mean Fukuda and ICC.
+  - operation: null
+    severity: advisory
+    problem: 'Second-audit part 6 of C1 says no record states an institution. The cached PubMed records
+      do give affiliations: Johns Hopkins University School of Medicine for pmid:7674527, Johns Hopkins
+      Medical Institutions for pmid:12593133, New York Medical College, Valhalla, for pmid:22180650 and
+      pmid:25277740, and Osaka Medical College for pmid:12006954. The place names in level_reason[2],
+      [5] and [7] are supported by the records.'
+    fix: No change needed. If the auditor still objects, name the institution exactly as the affiliation
+      gives it.
+  - operation: null
+    severity: advisory
+    problem: The group fields of pmid:7674527 ('Rowe PC also on 32140630, 11150109, 12593133') and pmid:11150109
+      ('Rowe PC also on 7674527, 32140630') are incomplete. Per the computed author facts, Rowe PC is
+      also on 33050553, 35056360 and 33585505 (and on 12593133 for 11150109).
+    fix: Complete the lists or drop them.
+  - operation: null
+    severity: advisory
+    problem: level_reason[3] says of pmid:17263876 that 'The difference lay in low carbon dioxide in the
+      breath'. The abstract reports that hypocapnia was the only abnormality with a significantly different
+      rate, which is close but slightly interpretive.
+    fix: Consider 'Only the rate of low carbon dioxide in the breath on standing differed significantly
+      (20.6% against 2.9%)'.
+operations:
+- op: update_study
+  id: pmid:33050553
+  set:
+    case_definition: ICC
+    case_definition_source: fulltext
+    case_definition_quote: During the first visit, it was determined whether patients satisfied the criteria
+      for CFS and ME, taking the exclusion criteria into account [4,5].
+- op: update_study
+  id: pmid:33585505
+  set:
+    finding: A study of n=278 patients and 30 healthy controls found that pain, fatigue and concentration
+      scores rose after a tilt test in patients and were still raised after 7 days; in controls the scores
+      were unchanged after the tilt, and at 7 days only the fatigue score had changed, falling. The fall
+      in blood flow to the brain was not related to the pain, fatigue or concentration scores at any time
+      point assessed.
+- op: update_study
+  id: pmid:25277740
+  set:
+    group: Stewart JM, New York Medical College, Valhalla, USA (same laboratory as 22180650)
+- op: replace_paragraph
+  field: level_reason
+  index: 1
+  text: A later study from the same clinic found a similar fall while sitting in 100 severely ill patients
+    (24.5%, against 0.4% in 15 healthy controls). Being from the same group, it does not count as a repeat
+    by others.
+  sources:
+  - pmid:33050553
+  - pmid:32140630
+- op: replace_paragraph
+  field: level_reason
+  index: 2
+  text: An earlier controlled study from Johns Hopkins University School of Medicine, of 23 patients meeting
+    the CDC criteria (version not stated, which does not require post-exertional malaise) and 14 healthy
+    controls, found an abnormal response to upright tilt in 22 of 23 patients and 4 of 14 controls, including
+    stages with the drug isoproterenol; in the first stage, without drugs, 70% of patients and no controls.
+    One of its authors is also an author of the Dutch study, so the two are not independent.
+  sources:
+  - pmid:7674527
+  - pmid:32140630
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: An independent study from New Jersey, of 62 patients meeting the Fukuda definition and 35 controls,
+    found an abnormal standing test in 53% of patients and 20% of controls. Only the rate of low carbon
+    dioxide in the breath on standing (hypocapnia) differed significantly (20.6% against 2.9%); rates
+    of orthostatic tachycardia and of a fall or rise in blood pressure did not differ significantly. It
+    did not measure blood flow to the brain, so the card does not count it as a repeat of the Dutch finding.
+  sources:
+  - pmid:17263876
+  - pmid:32140630
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'The card does not reach level 3: no independent group with a verified case definition has repeated
+    the fall in blood flow to the brain. Two studies from New York Medical College found lower blood flow
+    velocity in the brain on tilt (in one, a fall of 22.5% in 15 patients against 8.7% in 11 controls),
+    and a study from Osaka Medical College of 28 young patients and 20 controls found slower recovery
+    of brain oxygen on standing. A study from Johns Hopkins Medical Institutions of 26 patients and 23
+    controls found no difference in blood flow velocity at any of the measured time points (supine, 1
+    and 5 minutes after tilt, 5 and 1 minutes before the end, and at termination). The case definitions
+    of all four are not yet verified, so none of them can support or contradict the card.'
+  sources:
+  - pmid:22180650
+  - pmid:25277740
+  - pmid:12006954
+  - pmid:12593133
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: Two small studies changed blood flow to the brain directly. In a randomised crossover study of
+    16 patients from the Dutch clinic, compression stockings reduced the fall in blood flow to the brain
+    during tilt (14% with stockings, 25% without); symptoms were not an outcome and the paper does not
+    name the case definition. In the New York Medical College study of 15 patients, phenylephrine, which
+    raises blood pressure, reduced the fall in blood flow velocity on tilt (8.1% against 22.5% untreated)
+    and the slowing on a working-memory task; its case definition is not yet verified. Neither can count
+    towards level 4.
+  sources:
+  - pmid:35056360
+  - pmid:25277740
+- op: replace_paragraph
+  field: badges.diagnostic_marker.reason
+  index: 0
+  text: The Dutch study set a lower limit of normal at a 13% fall in blood flow to the brain, from its
+    44 healthy controls, and found a larger fall in 82% to 100% of patients depending on their heart rate
+    and blood pressure response. The later sitting study came from the same clinic, so it is not an independent
+    patient group. No independent patient group has tested this cut-off.
+  sources:
+  - pmid:32140630
+  - pmid:33050553
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'No study at level 2 or above measures post-exertional malaise and links it to blood flow to the
+    brain in the same patients. A study from the Dutch clinic, of patients meeting both the criteria for
+    CFS and the criteria for ME, tracked pain, fatigue and concentration scores after a tilt test in 278
+    patients and 30 healthy controls: scores rose in patients and were still higher after 7 days. In controls
+    the scores were unchanged after the tilt, and at 7 days only the fatigue score had changed, falling.
+    The size of the fall in blood flow to the brain was not related to the pain, fatigue or concentration
+    scores at any time point assessed. A passive tilt is orthostatic stress rather than physical or mental
+    effort, so the card does not count it as a direct measure of post-exertional malaise.'
+  sources:
+  - pmid:33585505
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 0
+    severity: advisory
+    problem: 'The ICC label for pmid:33050553 is supported by the cached full text (PMC7712289): the quoted
+      sentence cites [4,5], and in that record''s reference list ref 4 is Carruthers et al., ''Myalgic
+      encephalomyelitis: International Consensus Criteria'', and ref 5 is Fukuda et al. 1994; the Methods
+      also score severity ''according to the International Consensus Criteria (ICC)''. But the quote itself
+      names no definition, and the correction context prints this full text with ''The reference list
+      is left out'', so an auditor reading only the context cannot see the mapping (the objection the
+      second audit of 2026-11-13 raised for pmid:33585505). The YAML comment above the entry still says
+      ''Names no definition; the ICC sentence is about severity scoring only'', which now contradicts
+      the label.'
+    fix: When the card is next edited, update the internal comment to give the reference mapping (ref
+      4 = Carruthers 2011 ICC, ref 5 = Fukuda 1994), as the comment on pmid:33585505 does. A correction
+      operation cannot edit comments, so this does not block.
+  - operation: 9
+    severity: advisory
+    problem: The explains_pem reason now says 'patients meeting both the criteria for CFS and the criteria
+      for ME', which is the record's wording and answers part 5 of the 2026-11-13 second audit. The study
+      entry for pmid:33585505 still carries the ICC label. That label rests on the cached reference list
+      (ref 1 = Fukuda 1994, ref 3 = Carruthers 2011 ICC), which is correct against the cache but not visible
+      in the quote.
+    fix: No change needed. If the auditor objects again, point to the reference list in data/cache/europepmc/PMC7874746.xml.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: The explains_pem reason says 'The size of the fall in blood flow to the brain was not related
+      to the pain, fatigue or concentration scores at any time point assessed.' The cached full text of
+      pmid:33585505 (PMC7874746) says only 'No significant relation was found between CBF reduction and
+      differences in NRS for pain, fatigue, or concentration (data not shown).' It does not say which
+      time points were analysed, so 'at any time point assessed' is not in the source, and 'not related'
+      is stronger than 'no significant relation'.
+    fix: 'Write: ''The paper reports no significant relation between the fall in blood flow to the brain
+      and the changes in pain, fatigue or concentration scores (data not shown).'' Remove ''at any time
+      point assessed''.'
+    class: wording
+    target: badge_reasons.explains_pem[0]
+    targets:
+    - badge_reasons.explains_pem[0]
+  - operation: null
+    severity: must_fix
+    problem: The study finding ends 'The fall in blood flow to the brain was not related to the pain,
+      fatigue or concentration scores at any time point assessed.' As above, the cached full text (PMC7874746)
+      reports only 'No significant relation was found between CBF reduction and differences in NRS for
+      pain, fatigue, or concentration (data not shown)', with no time points named.
+    fix: Replace with 'no significant relation was found between the fall in blood flow to the brain and
+      the changes in pain, fatigue or concentration scores (data not shown).'
+    class: wording
+    target: studies[pmid:33585505].finding
+    targets:
+    - studies[pmid:33585505].finding
+  - operation: null
+    severity: advisory
+    problem: level_reason[4] says the Wichita study (pmid:16378795) 'contradicts the 23-patient Johns
+      Hopkins study' while it also says the abstract does not give how many patients were tilted. The
+      rubric measures comparable quality by the patients in the measurement that bears on the finding
+      (at least 12 here). This does not affect the contested mark, because the level rests on the blood-flow
+      finding of pmid:32140630, which the Wichita study did not measure, but the wording is firmer than
+      the abstract allows.
+    fix: Consider 'found the opposite pattern to the 23-patient Johns Hopkins study' or say that comparability
+      cannot be fully checked because the number tilted is not reported.
+audits_run:
+- 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C2.yaml
+- 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C2-second.yaml
+valve:
+  card-review:
+    file: 2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C2-valve-card-review.yaml
+    passed: true

@@ -18,7 +18,7 @@ from test_publish_card import PUB_DATE, Pub, whole
 
 from me_atlas import pipeline
 
-FLAGS = {"": [], "-revised": ["--revised"], "-revised2": ["--revised2"]}
+FLAGS = {suffix: [suffix.replace("-", "--", 1)] if suffix else [] for suffix in pipeline.ATTEMPT_SUFFIXES}
 
 
 @pytest.fixture
@@ -41,7 +41,7 @@ def pre_plan(c: Corr, k: int = 1, *extra: str) -> int:
     return c.main("card-review-plan", SLUG, "--pre", "--round", f"C{k}", "--out", str(c.dir), *extra)
 
 
-def attempt(c: Corr, suffix: str, review: str = "accept", card: str | None = "accept") -> None:
+def attempt(c: Corr, suffix: str, review: str = "accept", card: str | None = "accept", decisive: int = 1) -> None:
     """One attempt (``""``, ``-revised``, ``-revised2``): ops, apply, correction review and, when that accepts and
     ``card`` is given, the whole-card review. Every step must pass."""
     ops = ops_data(EARLY_SIGNAL if suffix else CONTESTED_LAST)
@@ -50,7 +50,16 @@ def attempt(c: Corr, suffix: str, review: str = "accept", card: str | None = "ac
     ops_file.write_text(json.dumps(ops), encoding="utf-8")
     flag = FLAGS[suffix]
     assert c.main("apply", SLUG, str(ops_file), "--round", "C1", *flag, "--run-dir", str(c.dir)) == 0
-    bad = [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+    bad = [
+        {
+            "operation": 0,
+            "severity": "must_fix",
+            "class": "decisive",
+            "targets": ["core_claim"],
+            "problem": f"A problem {i}.",
+        }
+        for i in range(decisive)
+    ]
     review_file = c.dir / "review" / f"{SLUG}-rC1{suffix}.json"
     review_file.parent.mkdir(parents=True, exist_ok=True)
     review_file.write_text(
@@ -61,7 +70,16 @@ def attempt(c: Corr, suffix: str, review: str = "accept", card: str | None = "ac
         found = (
             []
             if card == "accept"
-            else [{"operation": None, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+            else [
+                {
+                    "operation": None,
+                    "severity": "must_fix",
+                    "class": "decisive",
+                    "targets": ["core_claim"],
+                    "problem": f"A problem {i}.",
+                }
+                for i in range(decisive)
+            ]
         )
         card_file = c.dir / "review" / f"{SLUG}-card-C1{suffix}.json"
         card_file.write_text(
@@ -129,9 +147,17 @@ def test_record_review_pre_validates_like_the_other_whole_card_review(corr: Corr
         "operation": None,
         "severity": "must_fix",
         "class": "decisive",
+        "targets": ["core_claim"],
         "problem": "A link that its source does not state.",
     }
-    base = {"card": SLUG, "paper": None, "verdict": "reject", "findings": [must_fix]}
+    recorded = json.loads(path.read_text(encoding="utf-8"))
+    base = {
+        "card": SLUG,
+        "paper": None,
+        "verdict": "reject",
+        "findings": [must_fix],
+        "audit_targets": recorded["audit_targets"],
+    }
 
     def run(data: dict, *extra: str) -> int:
         path.write_text(json.dumps(data), encoding="utf-8")
@@ -172,6 +198,7 @@ def test_correction_plan_includes_every_pre_review_finding_under_the_same_limits
         {
             "operation": None,
             "severity": "must_fix",
+            "targets": ["studies[pmid:90000100]"],
             "problem": "The label Fukuda is not in the record.",
             "fix": "Relabel.",
         },
@@ -259,9 +286,11 @@ def test_cr_reject_then_cr_reject_ends_the_round_with_no_audit(corr: Corr, capsy
     assert corr.plan() == 0
     attempt(corr, "", "reject")
     attempt(corr, "-revised", "reject")
-    assert "is already used" in apply_refused(corr, "-revised2", capsys)
+    assert "did not fall (1, then 1)" in apply_refused(corr, "-revised2", capsys)
     assert corr.publish() == 0
-    corr.assert_held_back("correction rejected in review; the revised attempt is used", corr.pub.draft_bytes)
+    corr.assert_held_back(
+        "correction rejected in review; the decisive findings did not fall (1, then 1)", corr.pub.draft_bytes
+    )
     assert "Correction rounds used: 1 of 1" in corr.report()
     assert pipeline.correction_round_state(cfg_of(corr), SLUG) == (1, None)
     assert not any("-C1.yaml" in n for n in corr.names())
@@ -271,9 +300,11 @@ def test_wcr_reject_then_wcr_reject_ends_the_round_with_no_audit(corr: Corr, cap
     assert corr.plan() == 0
     attempt(corr, "", "accept", "reject")
     attempt(corr, "-revised", "accept", "reject")
-    assert "is already used" in apply_refused(corr, "-revised2", capsys)
+    assert "did not fall (1, then 1)" in apply_refused(corr, "-revised2", capsys)
     assert corr.publish() == 0
-    corr.assert_held_back("whole-card review rejected; the revised attempt is used", corr.pub.draft_bytes)
+    corr.assert_held_back(
+        "whole-card review rejected; the decisive findings did not fall (1, then 1)", corr.pub.draft_bytes
+    )
     assert "Correction rounds used: 1 of 1" in corr.report()
     assert pipeline.correction_round_state(cfg_of(corr), SLUG) == (1, None)
 
@@ -284,7 +315,9 @@ def test_wcr_reject_then_cr_reject_allows_a_third_attempt_and_a_reject_of_it_end
     attempt(corr, "-revised", "reject")
     attempt(corr, "-revised2", "reject")
     assert corr.publish() == 0
-    corr.assert_held_back("correction rejected in review; both revised attempts are used", corr.pub.draft_bytes)
+    corr.assert_held_back(
+        "correction rejected in review; the decisive findings did not fall (1, then 1)", corr.pub.draft_bytes
+    )
     assert pipeline.correction_round_state(cfg_of(corr), SLUG) == (1, None)
     verdicts = []
     for suffix in ("", "-revised", "-revised2"):
@@ -324,9 +357,19 @@ def test_a_publish_between_attempts_keeps_the_round_open_and_the_earlier_trails_
 # --- P6: the two reopened rounds ------------------------------------------------------------------------------------
 
 
-def test_only_the_two_named_cards_may_run_round_c2():
-    assert pipeline.REOPENED_ROUNDS == {"oxidative-nitrosative-stress": 2, "small-fibre-neuropathy": 2}
-    assert pipeline.max_correction_rounds("oxidative-nitrosative-stress") == 2
+def test_only_the_named_cards_may_run_round_c2_and_oxidative_round_c3():
+    assert pipeline.REOPENED_ROUNDS == {
+        "oxidative-nitrosative-stress": 3,
+        "small-fibre-neuropathy": 2,
+        "mast-cell-activation": 2,
+        "impaired-energy-production-after-exertion": 2,
+        "brain-and-brainstem-mri-changes": 2,
+        "orthostatic-intolerance-cerebral-blood-flow": 2,
+        "hpa-axis-cortisol": 2,
+        "herpesvirus-reactivation": 2,
+    }
+    assert pipeline.max_correction_rounds("oxidative-nitrosative-stress") == 3
+    assert pipeline.max_correction_rounds("mast-cell-activation") == 2
     assert pipeline.max_correction_rounds("small-fibre-neuropathy") == 2
     assert pipeline.max_correction_rounds("any-other-card") == pipeline.MAX_CORRECTION_ROUNDS == 1
 

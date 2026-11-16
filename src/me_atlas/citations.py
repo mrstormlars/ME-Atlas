@@ -23,6 +23,10 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
 * C9 (warning) a non-null ``group`` names at least one author of the record (last name and first initial)
 * C10 every numeral in a free-text item occurs in a source the item cites, or equals a structured field of one
   (a warning, an error where ``numbers_level`` is ERROR: the checks of newly applied texts)
+* C11 a statement about authors that the cached author lists contradict: a stated count of shared authors, "no
+  shared authors" / "independent groups" for studies that share authors, a ``group`` naming the first or last
+  author wrongly, or "<name> also on <pmid>" where the name is not on that record (a warning, an error at the
+  level of C10)
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -34,7 +38,7 @@ from __future__ import annotations
 import argparse
 import re
 import unicodedata
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
@@ -63,7 +67,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C10, or LOAD when the file could not be read as a card
+    code: str  # C1..C11, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -675,6 +679,349 @@ def check_numbers(file: str, card, cache: CacheReader, level: str = WARNING) -> 
     return issues
 
 
+# ---------------------------------------------------------------------------
+# Author facts (C11 and the contexts of the drafter, the reviewer and the valve)
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class AuthorList:
+    """The authors of one cached record in record order, with each author's affiliations (may be empty)."""
+
+    authors: tuple[str, ...]
+    affiliations: tuple[tuple[str, ...], ...] = ()
+
+
+@dataclass(frozen=True)
+class SharedAuthors:
+    """Two studies and the authors they share: ``exact`` (same name after the C9 normalisation) and ``loose``
+    (same last name and same first initial; never fewer than ``exact``)."""
+
+    first: str
+    second: str
+    exact: int
+    loose: int
+    names: tuple[str, ...]
+
+
+def _split_name(name: str) -> tuple[str, str]:
+    """(last name, initials) of a record author ``<last> <initials>``; initials are empty for a collective author
+    or a name with no initials."""
+    last, _, initials = name.rpartition(" ")
+    if last and re.fullmatch(r"[^\W\d_]+", initials) and initials.isupper():
+        return last, initials
+    return name, ""
+
+
+def exact_author_key(name: str) -> str:
+    """The same name after NFKD, marks removed, case folded (the C9 normalisation)."""
+    return _strip_marks(name).casefold()
+
+
+def loose_author_key(name: str) -> tuple[str, str]:
+    """Last name and first initial, normalised; a collective author is its full name."""
+    last, initials = _split_name(_strip_marks(name))
+    return last.casefold(), initials[:1].casefold()
+
+
+def shared_authors(a: AuthorList, b: AuthorList) -> tuple[int, int, list[str]]:
+    """(exact, loose, names): the distinct authors two lists share by each match; ``names`` are the shared authors
+    by the loose match, in the spelling of ``a`` (with the other spelling when it differs)."""
+    exact_b = {exact_author_key(n): n for n in b.authors}
+    loose_b: dict[tuple[str, str], str] = {}
+    for n in b.authors:
+        loose_b.setdefault(loose_author_key(n), n)
+    exact: set[str] = set()
+    loose: dict[tuple[str, str], str] = {}
+    for n in a.authors:
+        if (key := exact_author_key(n)) in exact_b:
+            exact.add(key)
+        if (lkey := loose_author_key(n)) in loose_b and lkey not in loose:
+            other = loose_b[lkey]
+            loose[lkey] = n if exact_author_key(other) == exact_author_key(n) else f"{n} (as {other})"
+    return len(exact), len(loose), list(loose.values())
+
+
+def author_facts(lists: Mapping[str, AuthorList]) -> list[SharedAuthors]:
+    """The pairs of studies (in the order of ``lists``) that share at least one author by either match."""
+    ids = list(lists)
+    out: list[SharedAuthors] = []
+    for i, first in enumerate(ids):
+        for second in ids[i + 1 :]:
+            exact, loose, names = shared_authors(lists[first], lists[second])
+            if loose:
+                out.append(SharedAuthors(first, second, exact, loose, tuple(names)))
+    return out
+
+
+def study_author_list(cache: CacheReader, study_id: str) -> AuthorList | None:
+    """The cached author list of a study (PubMed record, or the Europe PMC preprint record), None when the record
+    is missing or has no authors."""
+    if study_id.startswith("pmid:"):
+        record = cache.record(study_id.removeprefix("pmid:"))
+        if isinstance(record, str) or not record.authors:
+            return None
+        affiliations = tuple(tuple(a) for a in record.affiliations)
+        if len(affiliations) != len(record.authors):
+            affiliations = ()
+        return AuthorList(tuple(record.authors), affiliations)
+    if study_id.startswith("doi:"):
+        try:
+            preprint = cache.preprint(study_id)
+        except EuropePmcError:
+            return None
+        return AuthorList(tuple(preprint.authors)) if preprint is not None and preprint.authors else None
+    return None
+
+
+def card_author_lists(card, cache: CacheReader) -> tuple[dict[str, AuthorList], list[str]]:
+    """The author lists of the studies on ``card`` that have one, and the ids of those that have none."""
+    lists: dict[str, AuthorList] = {}
+    missing: list[str] = []
+    for study in card.studies:
+        found = study_author_list(cache, study.id)
+        if found is None:
+            missing.append(study.id)
+        else:
+            lists[study.id] = found
+    return lists, missing
+
+
+_AFFILIATION_CHARS = 160
+_NAMES_SHOWN = 12
+
+
+def _first_last_line(study_id: str, found: AuthorList) -> str:
+    def person(i: int) -> str:
+        text = found.authors[i]
+        affiliations = found.affiliations[i] if found.affiliations else ()
+        if affiliations:
+            first = affiliations[0]
+            text += f" ({first[:_AFFILIATION_CHARS]}{'…' if len(first) > _AFFILIATION_CHARS else ''})"
+        return text
+
+    n = len(found.authors)
+    last = f"; last author {person(n - 1)}" if n > 1 else ""
+    return f"- {study_id}: {n} author(s); first author {person(0)}{last}"
+
+
+def author_facts_section(card, cache: CacheReader) -> str:
+    """The "Author facts" section of a context file, computed from the cached records of the studies on ``card``."""
+    lists, missing = card_author_lists(card, cache)
+    lines = ["## Author facts (computed by code from the cached records)", ""]
+    if lists:
+        lines += ["Studies with a cached author list (first and last author, with their first affiliation if any):"]
+        lines += [_first_last_line(i, found) for i, found in lists.items()]
+    else:
+        lines.append("No study on the card has a cached author list.")
+    lines.append("")
+    pairs = author_facts(lists)
+    if pairs:
+        lines.append(
+            "Pairs of cited studies that share at least one author (exact = same name after normalisation; "
+            "loose = same last name and first initial):"
+        )
+        for p in pairs:
+            shown = ", ".join(p.names[:_NAMES_SHOWN]) + (
+                f", and {len(p.names) - _NAMES_SHOWN} more" if len(p.names) > _NAMES_SHOWN else ""
+            )
+            lines.append(f"- {p.first} and {p.second}: {p.exact} exact, {p.loose} loose: {shown}")
+        lines.append("Every other pair of cited studies shares no author by name in the records.")
+    else:
+        lines.append("No pair of cited studies shares an author by name in the records.")
+    if missing:
+        lines.append(f"No cached author list (these studies are not covered): {', '.join(missing)}.")
+    lines += ["", "State authors, shared-author counts and positions only as given here.", ""]
+    return "\n".join(lines)
+
+
+_COUNT_WORDS = "|".join(_UNIT_WORDS + _TEEN_WORDS + ["twenty"])
+_N = rf"(?P<n>\d+|{_COUNT_WORDS})"
+_AUTHOR = r"(?:co-?)?authors?"
+_COUNT_PATTERNS = [
+    re.compile(rf"\bshare[sd]?\s+(?:exactly\s+)?{_N}\s+(?:of\s+(?:their|the)\s+)?{_AUTHOR}\b", re.IGNORECASE),
+    re.compile(rf"\b{_N}\s+(?:shared|common)\s+{_AUTHOR}\b", re.IGNORECASE),
+    re.compile(rf"\b{_N}\s+{_AUTHOR}\s+in\s+common\b", re.IGNORECASE),
+]
+# before a number, these make it a bound or an estimate, not a count
+_NOT_EXACT = re.compile(
+    r"(?:at\s+least|at\s+most|more\s+than|fewer\s+than|less\s+than|over|under|up\s+to|about|around|roughly|"
+    r"approximately|nearly|almost|only|just)\s+$",
+    re.IGNORECASE,
+)
+_NO_SHARED_PATTERNS = [
+    re.compile(rf"\bno\s+{_AUTHOR}\s+(?:are\s+|were\s+)?shared\b", re.IGNORECASE),
+    re.compile(rf"\bshar(?:e|es|ed|ing)\s+no\s+{_AUTHOR}\b", re.IGNORECASE),
+    re.compile(rf"\bno\s+shared\s+{_AUTHOR}\b", re.IGNORECASE),
+    re.compile(rf"\bno\s+{_AUTHOR}\s+in\s+common\b", re.IGNORECASE),
+    re.compile(r"\bno\s+author\s+overlap\b", re.IGNORECASE),
+    re.compile(r"\bindependent\s+(?:research\s+)?groups\b(?!\s+of\b)", re.IGNORECASE),
+]
+# before the phrase, these make it a negation or a qualified statement: not checked
+_QUALIFIED = re.compile(
+    r"\b(?:not|never|nor|neither|partly|partially|largely|barely|hardly|unlikely|whether|if)\b|n[’']t\b",
+    re.IGNORECASE,
+)
+_DESCRIPTIVE_COUNTERPART = re.compile(r"\s+with\s+(?:the|a|an|that|this|its|their|those|these)\b", re.IGNORECASE)
+_WITH_COUNTERPART = re.compile(chr(92) + "s+with" + chr(92) + "b", re.IGNORECASE)
+_GROUP_POSITION = re.compile(r"\b(?P<pos>first|last)\s+author\b(?![’'])", re.IGNORECASE)
+_ALSO_ON = re.compile(r"(?P<names>[^;()]*?)\s+also\s+on\s+(?P<pmids>\d+(?:\s*(?:,|and|&)\s*\d+)*)", re.IGNORECASE)
+_PMID_RE = re.compile(r"\d+")
+
+
+def _count_value(token: str) -> int:
+    return (
+        int(token)
+        if token.isdigit()
+        else int(_WORD_NUMBERS[token.casefold()])
+        if token.casefold() in _WORD_NUMBERS
+        else -1
+    )
+
+
+def _cited_author_lists(
+    sources: Sequence[str], cache: CacheReader, memo: dict[str, AuthorList | None]
+) -> dict[str, AuthorList]:
+    found: dict[str, AuthorList] = {}
+    for source in dict.fromkeys(sources):
+        if source not in memo:
+            memo[source] = study_author_list(cache, source)
+        if (got := memo[source]) is not None:
+            found[source] = got
+    return found
+
+
+def _pair_counts(lists: Mapping[str, AuthorList]) -> list[tuple[str, str, int, int]]:
+    ids = list(lists)
+    return [(a, b, *shared_authors(lists[a], lists[b])[:2]) for i, a in enumerate(ids) for b in ids[i + 1 :]]
+
+
+def _check_free_text_authors(file: str, card, cache: CacheReader, level: str) -> list[CitationIssue]:
+    """C11 (a) and (b): a free-text item that states how many authors studies share, or that they share none, against
+    the author lists of the studies the item cites. Only items that cite at least two studies with a list."""
+    issues: list[CitationIssue] = []
+    memo: dict[str, AuthorList | None] = {}
+    for locator, item in english_items(card).items():
+        if locator == "name" or _FINDING_RE.match(locator) or not item.sources:
+            continue
+        lists = _cited_author_lists(item.sources, cache, memo)
+        if len(lists) < 2:
+            continue
+        kind = re.sub(r"\[\d+\]", "", locator)
+        pairs = _pair_counts(lists)
+        shown = "; ".join(f"{a} and {b}: {e} exact, {n} loose" for a, b, e, n in pairs[:6])
+        text = " ".join(item.text.split())
+        for pattern in _COUNT_PATTERNS:
+            for m in pattern.finditer(text):
+                if _NOT_EXACT.search(text[: m.start("n")]):
+                    continue
+                if _DESCRIPTIVE_COUNTERPART.match(text, m.end()):
+                    continue  # "shares two authors with the Swedish study": the study named may not be cited here
+                value = _count_value(m.group("n"))
+                if value < 0 or any(e <= value <= n for _a, _b, e, n in pairs):
+                    continue
+                issues.append(
+                    CitationIssue(
+                        file,
+                        kind,
+                        "C11",
+                        level,
+                        f"the text says {m.group(0)!r}, but the records of the cited studies give: {shown}",
+                    )
+                )
+        if not all(e >= 1 for _a, _b, e, _n in pairs):
+            continue
+        for number, pattern in enumerate(_NO_SHARED_PATTERNS):
+            for m in pattern.finditer(text):
+                if number < len(_NO_SHARED_PATTERNS) - 1 and _WITH_COUNTERPART.match(text, m.end()):
+                    continue  # "no authors are shared with the earlier study": the study named may not be cited here
+                if _QUALIFIED.search(text[max(0, m.start() - 30) : m.start()]):
+                    continue
+                issues.append(
+                    CitationIssue(
+                        file,
+                        kind,
+                        "C11",
+                        level,
+                        f"the text says {m.group(0)!r}, but every pair of the cited studies shares at least one "
+                        f"author by exact name in the records: {shown}",
+                    )
+                )
+    return issues
+
+
+def _last_name_in(author: str, text: str) -> bool:
+    """Whether the last name (or the collective name) of a record author occurs in ``text`` as whole words."""
+    last, _initials = _split_name(_strip_marks(author))
+    return re.search(rf"(?<!\w)(?i:{re.escape(last)})(?!\w)", _strip_marks(text)) is not None
+
+
+def _name_token(token: str) -> str | None:
+    """``token`` when it reads as ``<Last> <INITIALS>`` (capitalised words, then 1-3 capital letters), else None."""
+    words = token.split()
+    if len(words) < 2 or not (words[-1].isalpha() and words[-1].isupper() and len(words[-1]) <= 3):
+        return None
+    return " ".join(words) if all(w[0].isupper() for w in words[:-1]) else None
+
+
+def _check_group_authors(file: str, study: Study, cache: CacheReader, level: str) -> list[CitationIssue]:
+    """C11 (c) and (d): positions and "also on" claims in a study's ``group`` against the cached author lists."""
+    if study.group is None:
+        return []
+    group = " ".join(study.group.split())
+    issues: list[CitationIssue] = []
+    own = study_author_list(cache, study.id)
+    if own is not None:
+        for m in _GROUP_POSITION.finditer(group):
+            tail = re.split(r"[;()]", group[m.end() :], maxsplit=1)[0][:40]
+            if not re.match(r"\s*(?:(?:Dr|Prof)\.?\s+)?[A-Z]", tail):
+                continue  # "first author at ...", "first author, same institute": no name is claimed
+            record_author = own.authors[0 if m.group("pos").lower() == "first" else -1]
+            if author_in_group(record_author, tail) or _last_name_in(record_author, tail):
+                continue
+            issues.append(
+                CitationIssue(
+                    file,
+                    study.id,
+                    "C11",
+                    level,
+                    f"group says {m.group(0)}{tail.rstrip()!r} but the {m.group('pos').lower()} author of the "
+                    f"record is {record_author}",
+                )
+            )
+    memo: dict[str, AuthorList | None] = {}
+    for m in _ALSO_ON.finditer(group):
+        tokens = [t.strip() for t in re.split(r"\s+and\s+|\s*&\s*|,\s*", m.group("names").strip())]
+        names = [n for t in tokens if (n := _name_token(t)) is not None]
+        for pmid in _PMID_RE.findall(m.group("pmids")):
+            other = _cited_author_lists([f"pmid:{pmid}"], cache, memo).get(f"pmid:{pmid}")
+            if other is None:
+                continue
+            for name in names:
+                probe = AuthorList((name,))
+                if shared_authors(probe, other)[1] or any(author_in_group(a, name) for a in other.authors):
+                    continue
+                issues.append(
+                    CitationIssue(
+                        file,
+                        study.id,
+                        "C11",
+                        level,
+                        f"group says {name!r} is also on {pmid}, but that record's authors do not include that name",
+                    )
+                )
+    return issues
+
+
+def check_authors(file: str, card, cache: CacheReader, level: str = WARNING) -> list[CitationIssue]:
+    """C11: statements about authors against the cached author lists (see docs/citation-check.md). Issues are keyed
+    by the kind of item (or the study) and the words, never by a paragraph's index. In doubt nothing is reported."""
+    issues = _check_free_text_authors(file, card, cache, level)
+    for study in card.studies:
+        issues += _check_group_authors(file, study, cache, level)
+    return issues
+
+
 def _context(text: str, numeral: str) -> str:
     """A few words around the first place ``numeral`` appears in ``text``, for the message."""
     flat = " ".join(text.split())
@@ -704,6 +1051,7 @@ def check_file(path: Path, cache: CacheReader, numbers_level: str = WARNING) -> 
     for study in card.studies:
         issues += check_study(file, study, cache)
     issues += check_numbers(file, card, cache, numbers_level)
+    issues += check_authors(file, card, cache, numbers_level)
     return issues
 
 

@@ -1,0 +1,69 @@
+card: hpa-axis-cortisol
+decision: reject
+parts:
+  - decision_part: "The level 2: a controlled study with a recognised case definition supports lower ACTH and cortisol output in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:9669518
+        quote: "A sample of 14 patients with CDC-diagnosed CFS were compared with 14 healthy volunteers."
+      - source: pmid:9669518
+        quote: "The release of ACTH was significantly attenuated in the CFS group (P < 0.005), as was the release of cortisol (P < 0.05)."
+      - source: pmid:34254637
+        quote: "Thirty women with ME/CSF (group 1) diagnosed according to Fukuda, Canadian, and Institute of Medicine criteria, at Stanford University, were enrolled and compared with 25 age-matched healthy controls."
+    class: none
+  - decision_part: "Level 3 not reached: no independent group reproduced the CRH or low-dose ACTH result with a recognised case definition, and the plasma cortisol study found no difference."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:11502777
+        quote: "ACTH responses to human CRH, the insulin stress test, and D- fenfluramine were similar for patient and control groups."
+      - source: pmid:10594524
+        quote: "There were no significant differences in baseline cortisol or cortisol responses between patients and controls."
+      - source: pmid:40713801
+        quote: "Cortisol (F) 138.064 135.157 62.304 61.887 0.718 -0.047"
+    class: none
+  - decision_part: "Level 4 not reached: the one trial with a recognised case definition missed its main count, and a combination trial found no effect."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:9757853
+        quote: "The number of patients showing improvement on the Wellness scale was 19 (54.3%) of 35 placebo recipients vs 20 (66.7%) of 30 hydrocortisone recipients (P =.31)."
+      - source: pmid:12829200
+        quote: "Low-dose combination therapy of hydrocortisone and fludrocortisone was not effective in patients with chronic fatigue syndrome."
+    class: none
+  - decision_part: "The contested mark at rung 2: the 37-patient CDC study with controls, more than half the 14 patients of the CRH study, found normal ACTH responses to CRH."
+    rubric: "Comparable quality means all three: the same or a stricter case definition"
+    evidence:
+      - source: pmid:11502777
+        quote: "We measured ACTH and cortisol responses to human CRH, the insulin stress test, and D-fenfluramine in 37 medication-free patients with CDC-defined chronic fatigue syndrome but no comorbid psychiatric disorders and 28 healthy controls."
+      - source: pmid:11502777
+        quote: "All patients (n = 37) had a pituitary challenge test (human CRH)"
+    class: none
+  - decision_part: "Both badges false: the low-dose ACTH cut-off was not confirmed in a second cohort, and no study measures PEM and links it to cortisol."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:10594524
+        quote: "We tested 20 subjects suffering from CFS according to the criteria of the Center for Diseases Control without psychiatric comorbidity and 20 matched healthy controls."
+      - source: pmid:11150897
+        quote: "Plasma adrenocorticotropin, epinephrine, prolactin and thyrotropin responses 4 min after exercise were lower in the CFS group"
+    class: none
+  - decision_part: "Layer dysfunction with no links: the card describes a measured hormone abnormality."
+    rubric: "Every node sits in exactly one layer, from root to experience"
+    evidence:
+      - source: pmid:11282703
+        quote: "Urinary free cortisol was significantly lower in the subjects with chronic fatigue syndrome regardless of the presence or absence of current or past comorbid psychiatric illness."
+    class: none
+  - decision_part: "level_reason[4] calls the 22-patient study 'a study from Oxford'. Its record names no place or institution, so the statement cannot be matched to the record, and with an unverified case definition a reader may take it for an Oxford-criteria cohort."
+    rubric: "Flagged as broad. Evidence resting only on Oxford-defined cohorts cannot raise a hypothesis above level 1."
+    evidence:
+      - source: pmid:9494707
+        quote: "Basal activity of the HPA was assessed using salivary and urinary cortisol collection over a 24-hour period in 22 (12 male; 10 female) patients meeting criteria for CFS and appropriate controls."
+    class: wording
+    target: level_reason[4]
+  - decision_part: "contested_reason[3] calls the 1 microgram Synacthen study 'a London study'. Its record names no place or institution, so the statement cannot be matched to the record."
+    rubric: "with the contradicting study linked on the card and the reason written in plain sentences"
+    evidence:
+      - source: pmid:10594524
+        quote: "We tested 20 subjects suffering from CFS according to the criteria of the Center for Diseases Control without psychiatric comorbidity and 20 matched healthy controls."
+    class: wording
+    target: contested_reason[3]
+reasons_summary: "Level 2, the contested mark at rung 2, both badges and the layer are supported; two place names (Oxford, London) are not in the cited records and need rewording."
+would_change: "Removing 'from Oxford' in level_reason[4] and 'London' in contested_reason[3], or a record in the context file that states those affiliations, would leave nothing at issue. An independent replication of the CRH or low-dose ACTH result with a recognised case definition would bear on level 3."

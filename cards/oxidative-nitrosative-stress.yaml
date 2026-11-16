@@ -105,21 +105,26 @@ core_claim:
 level: 2
 level_reason:
   - text: >-
-      A study from Dundee, Scotland, with 47 patients meeting the CDC criteria (version not named) and 34
-      healthy volunteers enrolled (the number measured is not stated) found higher blood levels of
-      isoprostanes, a marker of oxidative damage to fats, in patients, both in those with and in those
-      without cardiovascular risk factors. A study from Antwerp of 56 patients meeting the Fukuda
-      definition and 37 healthy controls found higher plasma peroxides in patients. The card is at level 2
+      A study from Dundee, Scotland, with 47 patients meeting the CDC criteria (version not
+      named) and 34 healthy volunteers enrolled (the number measured is not stated) found higher
+      blood levels of isoprostanes, a marker of oxidative damage to fats, in patients, both in
+      those with and in those without cardiovascular risk factors. A study of 56 patients
+      meeting the CDC criteria (version not named) and 37 healthy controls, outpatients of the
+      Maes Clinics in Antwerp, Belgium, found higher plasma peroxides in patients. Neither
+      version of the CDC criteria requires post-exertional malaise. The card is at level 2
       because of these two controlled studies, which used different measures.
-    sources: [pmid:16085177, pmid:21455120]
+    sources: ['pmid:16085177', 'pmid:21455120']
   - text: >-
-      Other controlled studies of patients meeting the Fukuda definition found higher oxidative-stress
-      markers, each on a different measure: malondialdehyde and protein carbonyls in 24 women against 19 in Novi Sad, Serbia; reactive oxygen
-      metabolites in serum in a study from Osaka whose abstract does not give the numbers; and reactive
-      oxygen species inside lymphocytes in 15 patients against 16 controls at Stanford, where the
-      difference was found in women but not in men. Because the measures differ, none of these is a repeat
-      of another, and each is unreplicated.
-    sources: [pmid:23185200, pmid:27224647, pmid:40627396]
+      Other controlled studies found higher oxidative-stress markers, each on a different
+      measure: malondialdehyde and protein carbonyls in 24 women meeting the 1994 CDC definition
+      against 19 healthy women in Novi Sad, Serbia; reactive oxygen metabolites in a study from
+      Osaka of patients diagnosed by the Fukuda 1994 criteria, whose abstract does not give the
+      numbers; and reactive oxygen species inside lymphocytes in 15 patients against 16 controls
+      at Stanford, where the difference was found in women but not in men. The Stanford patients
+      were diagnosed using the National Academy of Medicine, Fukuda and Canadian Consensus
+      criteria; which definition each patient met is not stated. Because the measures differ,
+      none of these is a repeat of another, and each is unreplicated.
+    sources: ['pmid:23185200', 'pmid:27224647', 'pmid:40627396']
   - text: >-
       The card does not reach level 3: no independent group has found the same result on the same measure
       in a separate cohort with a confirmed recognised case definition. The only other isoprostane study, of
@@ -148,16 +153,17 @@ level_reason:
       not differ in another of 26 people in all.
     sources: [pmid:27224647, pmid:40627396, pmid:20010505, pmid:21552194, pmid:22281935, pmid:19906518]
   - text: >-
-      The card does not reach level 4: no controlled trial in patients with a confirmed recognised case
-      definition has lowered an oxidative-stress measure and improved the illness. A placebo-controlled
-      trial of coenzyme Q10 plus NADH in 73 patients reported less fatigue than with placebo and lower
-      lipid peroxides in blood cells of the treated group (the abstract does not say whether against
-      placebo or against baseline), but its case definition is not yet verified. A larger
-      placebo-controlled trial of
-      the same combination from the same unit, in 207 women meeting the Fukuda definition, did not measure
-      oxidative stress and reported that fatigue scores changed in parallel in the two groups. A crossover
-      trial of NADH alone in 26 patients meeting the CDC criteria did not measure oxidative stress either.
-    sources: [pmid:25386668, pmid:34444817, pmid:10071523]
+      The card does not reach level 4: no controlled trial in patients with a confirmed
+      recognised case definition has lowered an oxidative-stress measure and improved the
+      illness. A placebo-controlled trial of coenzyme Q10 plus NADH in 73 patients reported less
+      fatigue than with placebo and lower lipid peroxides in blood cells of the treated group
+      (the abstract does not say whether against placebo or against baseline), but its case
+      definition is not yet verified. A larger placebo-controlled trial of the same combination
+      from the same unit, in 207 women meeting the Fukuda definition, did not measure oxidative
+      stress and reported that fatigue scores changed in parallel in the two groups. A crossover
+      trial of NADH alone in 26 patients meeting the CDC criteria reports no oxidative-stress
+      measure in its abstract.
+    sources: ['pmid:25386668', 'pmid:34444817', 'pmid:10071523']
   - text: >-
       A placebo-controlled trial of ubiquinol, the reduced form of coenzyme Q10, in 43 patients (31
       completed) reported improvement in several symptoms; its case definition is not yet verified.
@@ -213,7 +219,7 @@ studies:
     preregistered: null
     role: supports
     direction: higher
-    group: Belch JJ, Ninewells Hospital and Medical School, University of Dundee, Scotland
+    group: Belch JJ, Vascular Diseases Research Unit, Ninewells Hospital and Medical School, Dundee, Scotland
     finding: >-
       A study with n=47 patients and 34 healthy volunteers enrolled (number measured not stated) found
       higher plasma isoprostanes in patients; in
@@ -224,9 +230,9 @@ studies:
     cohort: me_cfs
     # "CDC criteria [29]": reference 29 in the full text is Fukuda et al. 1994, Ann Intern Med (resolved by the
     # reference list, per the 2026-11-02 ruling).
-    case_definition: Fukuda
+    case_definition: CDC_unspecified
     case_definition_source: fulltext
-    case_definition_quote: "The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention (CDC) criteria [29]."
+    case_definition_quote: The diagnosis “ME/CFS” was made using the Centres for Disease Control and Prevention (CDC) criteria [29].
     design: controlled
     n_patients: 56
     n_controls: 37
@@ -376,7 +382,7 @@ studies:
     preregistered: null
     role: context
     direction: no_difference
-    group: Maes M / Bosmans E, Maes Clinics (same group as 21455120, 20010505)
+    group: Maes M / Bosmans E, Piyavate Hospital, Bangkok, Thailand (shares authors with 21455120 and 20010505)
     finding: >-
       A study of n=40 patients and 24 healthy controls found no difference in whole-blood glutathione
       peroxidase activity, an antioxidant enzyme, between patients and controls.
@@ -632,5 +638,5 @@ links:
       cited on this card's link to hpa-axis-cortisol, so the two review sources are not independent.
     sources: [pmid:29759891]
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-15
+  by: ai_audit

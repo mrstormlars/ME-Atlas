@@ -52,7 +52,15 @@ def review_revised(c: Corr, verdict: str = "accept") -> int:
     findings = (
         []
         if verdict == "accept"
-        else [{"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem."}]
+        else [
+            {
+                "operation": 0,
+                "severity": "must_fix",
+                "class": "decisive",
+                "targets": ["core_claim"],
+                "problem": "A problem.",
+            }
+        ]
     )
     path.write_text(json.dumps({"card": SLUG, "verdict": verdict, "findings": findings}), encoding="utf-8")
     return c.main("record-review", SLUG, "--round", "C1", "--revised", "--run-dir", str(c.dir))
@@ -93,7 +101,14 @@ def live_format_trail(c: Corr, verdict: str = "reject", date: str = PUB_DATE) ->
         "review": {
             "verdict": verdict,
             "findings": [
-                {"operation": 0, "severity": "must_fix", "class": "decisive", "problem": "A problem.", "fix": None}
+                {
+                    "operation": 0,
+                    "severity": "must_fix",
+                    "class": "decisive",
+                    "targets": ["core_claim"],
+                    "problem": "A problem.",
+                    "fix": None,
+                }
             ],
         },
     }
@@ -145,7 +160,7 @@ def test_revised_is_only_for_a_correction_round(env: Env, capsys):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps({"card": SLUG, "paper": "pmid:90000101", "operations": []}), encoding="utf-8")
     assert env.cli("apply", SLUG, str(path), "--round", "1", "--revised") == 1
-    assert "--revised is only for a correction round" in capsys.readouterr().err
+    assert "are only for a correction round" in capsys.readouterr().err
     assert env.cli("record-review", SLUG, "90000101", "--round", "1", "--revised") == 1
 
 
