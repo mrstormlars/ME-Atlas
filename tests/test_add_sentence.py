@@ -39,7 +39,7 @@ def corr(env: Env, tmp_path: Path) -> Corr:
     c = Corr(Pub(env, tmp_path), tmp_path)
     parts = [
         part("pmid:90000100", TITLE_100, **{"class": "wording", "target": "early_signals[0]"}),
-        part("pmid:90000100", TITLE_100, **{"class": "decisive"}),
+        part("pmid:90000100", "20 patients and 20 controls were compared.", **{"class": "decisive"}),
     ]
     c.pub.audits_of_card(whole("reject", parts=parts), whole("reject"))
     assert c.pub.publish() == 0 and not c.card.exists()
@@ -174,10 +174,10 @@ def test_the_text_is_one_sentence_and_the_target_is_a_free_text_item_that_is_no_
         parse_ops(ops_data(sentence(corr) | change))
 
 
-def test_a_number_the_quoted_source_does_not_have_fails_c10_as_an_error(corr: Corr):
+def test_a_number_the_quoted_source_does_not_have_is_refused(corr: Corr):
     assert corr.pre_review() == 0
     assert corr.apply(ops_data(sentence(corr, text="A further 777 patients were seen."))) == 1
-    assert "C10 ERROR" in errors(corr)
+    assert "states the number(s) 777" in errors(corr)
 
 
 def test_only_a_correction_round_may_add_a_sentence(corr: Corr):
@@ -207,3 +207,11 @@ def test_publish_card_checks_the_condition_again(corr: Corr):
     assert corr.publish() == 0
     assert not corr.card.exists()
     assert "does not quote" in corr.report()
+
+
+def test_a_number_must_be_in_the_quotes_of_the_part_not_merely_in_another_cited_source(corr: Corr):
+    assert corr.pre_review() == 0
+    text = "It had 20 controls."  # 20 is in the abstract of pmid:90000100, which early_signals[0] cites
+    assert corr.apply(ops_data(sentence(corr, 0, text=text))) == 1  # part 0 quotes only the title
+    assert "not in the quotes of that audit part" in errors(corr)
+    assert corr.apply(ops_data(sentence(corr, 1, target="early_signals[0]", text=text))) == 0  # part 1 quotes it

@@ -1487,8 +1487,9 @@ def add_sentence_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_
 
     Each must answer (a) an objecting part of an audit record the round answers (`objecting_audit_parts`), cite
     (b) only sources that part quotes and that are studies on the card, go (c) to the part's own ``target`` or to a
-    target the step 0 review gives that part in ``audit_targets``, and be (d) the only one for that part in the file.
-    The free-text target and the one-sentence rule are the operation's own validation."""
+    target the step 0 review gives that part in ``audit_targets``, state no number that the part's quotes of those
+    sources lack, and be (d) the only one for that part in the file. The free-text target and the one-sentence rule
+    are the operation's own validation."""
     sentences = [(i, op) for i, op in enumerate(ops.operations) if isinstance(op, AddSentence)]
     if not sentences:
         return []
@@ -1518,6 +1519,16 @@ def add_sentence_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_
             found.append(
                 f"operations[{i}] adds a sentence to {op.target}, which is neither the target of that audit part nor "
                 "one the step 0 review gives it in audit_targets"
+            )
+        numerals, numeral_problems = citations.free_text_numerals(op.text)
+        quote_tokens = citations.source_number_tokens(
+            " ".join(e.quote for e in part.evidence if e.source in op.sources)
+        )
+        found += [f"operations[{i}]: {problem}" for problem in numeral_problems]
+        if missing := [n for n in dict.fromkeys(numerals) if n not in quote_tokens]:
+            found.append(
+                f"operations[{i}] states the number(s) {', '.join(missing)}, which are not in the quotes of that audit "
+                "part for the sentence's sources"
             )
         if key in seen:
             found.append(f"operations[{i}] is a second added sentence for {key[0]} part {key[1]}: one per audit part")
