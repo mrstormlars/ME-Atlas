@@ -1,0 +1,61 @@
+card: herpesvirus-reactivation
+round: 3
+stage: card-review
+attempt: C3
+classification:
+- finding: findings[0]
+  class: wording
+  target: level_reason[5]
+  problem: 'level_reason[5] calls pmid:35102619 ''A non-randomised study'' and says it ''reported how
+    often the viruses became undetectable in blood, not whether symptoms changed''. The cached record
+    (abstract only, no full text cached) says nothing about how patients were allocated: it describes
+    a study group of 192 cases given valaciclovir, valganciclovir or artesunate and a control group of
+    63 ''similar patients with ME/CFS ... not taking any antiviral drugs'', with no statement that allocation
+    was or was not random. It also only shows that the abstract does not report symptoms; the paper as
+    a whole cannot be checked. Both statements say more than the record.'
+- finding: findings[1]
+  class: wording
+  target: subgroups[0]
+  problem: 'subgroups[0] says ''The antiviral trials selected patients by their antibodies to Epstein-Barr
+    virus or HHV-6.'' This holds for the two cited trials (pmid:2849717: antibodies to EBV early antigen
+    or nuclear antigen; pmid:23959519: elevated IgG titres against HHV-6 and EBV), but the card also describes
+    pmid:18019402 as a randomised trial in an ''EBV subset'' whose abstract does not say the subset was
+    chosen by antibodies, and pmid:35102619 selected patients by blood leukocyte PCR, not antibodies.
+    ''The antiviral trials'' reads as all of them.'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: A third randomised trial, of valacyclovir in a subset of patients with Epstein-Barr virus markers,
+    reported a larger rise in an activity score with valacyclovir than with placebo; its abstract gives
+    no sample size or statistical test. A study of 192 patients the authors classed as having reactivated
+    HHV-6 or HHV-7 infection by PCR of blood white cells, given valaciclovir, valganciclovir or artesunate,
+    compared with 63 untreated patients; its abstract reports how often the viruses became undetectable
+    in blood and does not report symptoms.
+  sources:
+  - pmid:18019402
+  - pmid:35102619
+- op: replace_paragraph
+  field: subgroups
+  index: 0
+  text: Two of the antiviral trials selected patients by their antibodies to Epstein-Barr virus or HHV-6.
+    In the London saliva study, HHV-6B was higher mainly in severely affected patients.
+  sources:
+  - pmid:2849717
+  - pmid:23959519
+  - pmid:34422848
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: '''Non-randomised'' is dropped and the symptom statement is narrowed to what the abstract
+      reports (192 treated, 63 untreated controls, PCR-negative rates, no symptom outcome), all as in
+      pmid:35102619; the rewritten sentence lacks a main verb but adds nothing.'
+  - finding: findings[1]
+    resolves: true
+    new_claim: false
+    reason: '''Two of the antiviral trials'' no longer reads as all trials; pmid:2849717 (EBV early/nuclear
+      antigen antibodies) and pmid:23959519 (elevated IgG to HHV-6 and EBV) both state antibody-based
+      selection.'

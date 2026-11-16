@@ -1,0 +1,103 @@
+card: herpesvirus-reactivation
+decision: accept
+parts:
+  - decision_part: "The level 2: a controlled study in a Fukuda-defined cohort (Riga, 200 patients, 150 controls) found active double HHV-6 and HHV-7 infection, a herpesvirus-only marker, only in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study"
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively)"
+      - source: pmid:36653846
+        quote: "Nested PCR (nPCR) was used to amplify HHV-6A/B, HHV-7, and B19V-specific genomic sequences in the DNA isolated from the peripheral blood (a marker of persistent infection) and cell-free blood plasma (a marker of an active infection)."
+      - source: pmid:22927850
+        quote: "Active viral infection including concurrent infection was found in 64.8% (70/108) of patients and in 13.3% (12/90) of practically healthy persons."
+    class: none
+  - decision_part: "Not level 3: the independent London study measured salivary DNA, found differences only in subgroups at some time points, and its authors read the DNA as persistent rather than acute infection; the Bulgarian study shares an author with the Riga group and found no active HHV-6."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:34422848
+        quote: "HHV-6B viral DNA concentrations were on average 6.2-fold higher in ME/CFS_SA patients than in HC: the differences were significant at months 1 (P = 0.039), 3 (P = 0.030), and 5 (P = 0.029)"
+      - source: pmid:34422848
+        quote: "indicating that these are longstanding, persistent infections rather than acute/recent infections"
+      - source: pmid:32129496
+        quote: "No ME/CFS and control individuals with active CMV and HHV-6 infection were observed."
+    class: none
+  - decision_part: "Not level 4: the antiviral trials do not state a case definition in the records given, and their primary results do not show the outcome changing (acyclovir similar to placebo; valganciclovir MFI-20 difference not significant)."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:2849717
+        quote: "Of the 24 patients who completed the trial, similar numbers improved with acyclovir therapy and with placebo (11 and 10, respectively)."
+      - source: pmid:23959519
+        quote: "VGCV patients experienced a greater improvement by MFI-20 at 9 months from baseline compared to placebo patients but this difference was not statistically significant."
+      - source: pmid:23959519
+        quote: "Thirty CFS patients with elevated IgG antibody titers against HHV-6 and EBV were randomized 2:1 to receive valganciclovir (VGCV) or placebo for 6 months in a double-blind, placebo-controlled trial."
+    class: none
+  - decision_part: "No contested mark: the Bulgarian study (58 patients) is under half the 200 patients of the Riga study, and the London saliva study has 30 patients."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:32129496
+        quote: "In the study were included 58 patients with ME/CFS and 50 healthy controls."
+      - source: pmid:36653846
+        quote: "200 patients with clinically diagnosed ME/CFS and 150 apparently healthy individuals were enrolled in this study."
+      - source: pmid:34422848
+        quote: "Saliva samples were collected from 30 people living with ME/CFS at monthly intervals for 6 months"
+    class: none
+  - decision_part: "No contested mark from the London plasma ddPCR screen: the paper does not give how many of the 189 samples came from patients, and the card writes out the finding and the missing number."
+    rubric: "When the sources do not state the number of patients in the measurement that contradicts the finding, the contested mark is not set, but the contradicting finding and the missing number are written out on the card."
+    evidence:
+      - source: pmid:34422848
+        quote: "were screened by ddPCR to detect potential active (lytic) replication of any of the nine HHVs"
+      - source: pmid:34422848
+        quote: "HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative (Table 1)."
+      - source: pmid:34422848
+        quote: "plasma samples from 132 people with ME/CFS, 76 HC participants and 27 people with multiple sclerosis (MS) in the UKMEB were measured by ELISA"
+    class: none
+  - decision_part: "Diagnostic marker badge no: the dUTPase antibody findings come from abstracts that state no case definition, and no marker is shown tested in a second, independent group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:28303641
+        quote: "the ME/CFS cohort had higher anti-EBV-dUTPase antibodies than in both GWI patients (P = 0.0008) and controls (P < 0.0001)"
+      - source: pmid:41451845
+        quote: "The results of this study demonstrate a significant increase in dUTPase IgG antibodies to the herpesviruses Epstein-Barr virus (EBV), human herpesvirus-6 (HHV-6) and varicella zoster virus (VZV) in ME/CFS compared to healthy-controls (p < 0.001)."
+    class: none
+  - decision_part: "Explains-PEM badge no: the Riga 2012 study recorded malaise after exertion as a symptom and a questionnaire item, not by a direct exertion measure."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:22927850
+        quote: "Severity of fatigue was evaluated by Fatigue Severity Scale (FSS) with maximal score of 72 points"
+      - source: pmid:22927850
+        quote: "Subfebrility, lymphadenopathy, malaise after exertion, muscle pain, multijoint pain, sleep disturbances, and headaches of new type were more frequent in patients with active viral infection/coinfection than in patients with latent infection and without infection."
+    class: none
+  - decision_part: "Layer mechanism, with the trigger-or-consequence ambiguity written out with sources."
+    rubric: "When no source carries a link for the other reading, it is enough that the ambiguity is written out with a source"
+    evidence:
+      - source: pmid:34422848
+        quote: "Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS."
+      - source: pmid:32129496
+        quote: "Another possibility is that patients with ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction."
+    class: none
+  - decision_part: "Link to symptom:flu-like-symptoms at step associated: the Fukuda-defined Riga 2012 cohort measured active infection and swollen lymph nodes in the same patients and reports a relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:22927850
+        quote: "Definite relationship was observed between active betaherpesvirus infection and subfebrility, lymphadenopathy and malaise after exertion"
+      - source: pmid:22927850
+        quote: "corresponding to the 1994 CDC definition and 90 practically healthy persons (55 females, 35 males; mean age 39 years) were investigated for evidence of HHV-6, HHV-7 and B19 infection/coinfection."
+    class: none
+  - decision_part: "Link to symptom:post-exertional-neuroimmune-exhaustion at step associated, with the London study's contrary finding written out in the link text."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:22927850
+        quote: "Postexertional malaise (23/38, 60.5%, mean score 5.23"
+      - source: pmid:34422848
+        quote: "PEM and Pain were negatively correlated with HHV-6B"
+    class: none
+  - decision_part: "Link to endothelial-dysfunction at step proposed, sourced to a peer-reviewed review."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:38675914
+        quote: "We suggest that the chronicity of ME/CFS symptoms and the multisystemic nature of the disease may be partly attributable to herpesvirus-induced endothelial maladaptation."
+    class: none
+reasons_summary: "Level 2 holds on the Fukuda-defined Riga study of 200 patients; no independent replication of the plasma finding, no trial with a verified case definition, no contradicting study of comparable known size; badges no, layer and three links supported."
+would_change: "An independent study with a recognised case definition reproducing active HHV-6/HHV-7 infection in plasma would bear on level 3; the patient count of the London 189-sample plasma screen, if at least 100, would make it a candidate contradicting study. Not checked: the early-signal counts for pmid:40143349 (11 of 13 patients, 5 of 10 controls) are not in its abstract, the only text given for that non-carrier; the London statement of no positive correlation with the PEM score rests on the correlations the text lists (supplementary tables not given); the full texts of pmid:2849717, pmid:23959519, pmid:18019402, pmid:35102619, pmid:10913395, pmid:37526404, pmid:28303641 and pmid:41451845 are not cached, so their case definitions remain unverifiable, which the card states and which keeps them out of the level."
