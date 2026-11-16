@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — The auditor gets the full text of link sources; one more round for the energy card (founder ruling)
+
+Proposed to the founder: "Gi revisoren fulltekst også for lenkekilder, og kjør én runde til på energikortet (C6)." The founder: "Ja, merge og ny runde".
+
+- **Full text for link sources.** The audit context gives the cached full text, uncut, of every study a link on the card cites, as it already does for the studies that carry the level, a badge or the contested mark. A link source with no cached full text is given with its abstract and the same "full text not cached" statement as such a study.
+- **One more round for `impaired-energy-production-after-exertion`** (round C6, a logged exception, as `REOPENED_ROUNDS`).
+- Changes: the 2026-11-13 ruling "Source text for the auditor" (full text only for the sources that carry a level, a badge or a contested mark; `carrier_ids`, `docs/pipeline.md`, "Full text for carriers") now covers the sources of links too. The review contexts already name the cached full text of every cited study and do not change.
+- Why: the energy card's round C5 audit rejected a link because the statement it rests on is not in the review's abstract; the statement is in the cached full text, which the audit context did not give, because a link's source was not a carrier.
+
 ## 2026-11-16 — Three rubric clarifications; one more round for the last two cards (founder ruling)
 
 The founder: "Jeg godtar de tre presiseringene. Prøv på nytt." The three clarifications, proposed to the founder in Norwegian and written into functional spec section 3 in English (every review, drafting and audit context embeds that section):
