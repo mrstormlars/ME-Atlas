@@ -1,0 +1,45 @@
+card: herpesvirus-reactivation
+decision: reject
+parts:
+  - decision_part: "Supporting part: the level-2 finding itself. The 200-patient Riga study is controlled, uses the Fukuda definition read from the full text, and reports active double HHV-6 and HHV-7 infection (cell-free plasma DNA) only in patients. On its own this meets the level-2 wording."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study"
+      - source: pmid:36653846
+        quote: "cell-free blood plasma (a marker of an active infection)"
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively)"
+    class: none
+  - decision_part: "contested: null, and level_reason[3], which presents the London plasma screen only as herpesvirus DNA being 'rarely detected ... in plasma from one or two subjects'. The card does not say that the plasma HHV-6A and HHV-6B detections were in healthy controls and that HHV-7 was not found in any plasma. That is a negative result for the same marker the level rests on (herpesvirus DNA in cell-free plasma as a sign of active infection), in a controlled cohort meeting the Canadian Consensus and/or Fukuda criteria, so the same or a stricter case definition. The record does not say how many ME/CFS patients were among the 189 plasma samples screened. It may be fewer than or at least 100, half of the 200 in the Riga study, so I cannot tell from the records whether this is a study of comparable quality that contests level 2. The card leaves the question unaddressed instead of resolving it. This affects the contested mark and the London study's role, so it is decisive."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:34422848
+        quote: "were screened by ddPCR to detect potential active (lytic) replication of any of the nine HHVs."
+      - source: pmid:34422848
+        quote: "HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative (Table 1)."
+      - source: pmid:34422848
+        quote: "PLASMA HHV-6B Positive 2§ 87.14"
+      - source: pmid:34422848
+        quote: "§HC (2)"
+      - source: pmid:34422848
+        quote: "concentrations of IgG antibodies against HSV-1, HSV-2, VZV, EBV, CMV and HHV-6 in plasma samples from 132 people with ME/CFS, 76 HC participants and 27 people with multiple sclerosis (MS) in the UKMEB were measured by ELISA."
+      - source: pmid:34422848
+        quote: "were re-assessed by clinical research staff to ensure compliance with the Canadian Consensus (22)"
+    class: decisive
+  - decision_part: "Contested-mark rule applied to the London plasma screen. A study with a control group and the same or a stricter case definition that found no plasma herpesvirus DNA in patients contests level 2 if its patient count in that measurement is at least half the sample of the study it contradicts. The card must settle that question with sourced reasons. The records given do not settle it, so the card cannot be accepted with contested: null."
+    rubric: "A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "Two hundred patients [130 (65%) female and 70 (35%) male, mean age 38 ± 12]"
+      - source: pmid:34422848
+        quote: "MS patients, who also have samples stored in the UK ME/CFS Biobank, were not included in the longitudinal study due to low HHV DNA positivity in plasma and PBMC."
+    class: decisive
+  - decision_part: "layer: mechanism and links. The rubric names this hypothesis as one that could sit in two layers, as a trigger or as a consequence of immune dysfunction, and requires one layer plus a link that expresses the other reading. The card's links go only to symptom:flu-like-symptoms and endothelial-dysfunction. No link expresses the reading that herpesvirus reactivation is a trigger, or that it follows immune dysfunction, although a cited study states both possibilities. This affects layer and links, so it is decisive."
+    rubric: "A card that could sit in two layers (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one layer and a link that expresses the other reading; the ambiguity is written out, not hidden."
+    evidence:
+      - source: pmid:34422848
+        quote: "Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS."
+    class: decisive
+reasons_summary: "Rejected: the card does not settle whether the London plasma screen, which found no plasma HHV-6/HHV-7 DNA in patients, contests level 2; the records do not show its patient count, and no link expresses the trigger-or-consequence reading the layer rule requires."
+would_change: "A record giving the number of ME/CFS patients among the 189 plasma samples screened in pmid:34422848 would decide whether it contradicts level 2 at comparable quality. That number goes with a card that says the plasma HHV-6A/B detections were in controls and that HHV-7 was absent from plasma, and that sets or rules out a contested mark with sourced reasons. A sourced link expressing the other layer reading (reactivation as trigger, or as consequence of immune dysfunction) would resolve the layer objection. Unverifiable for lack of cached full text: no statement the level depends on; the trial and Atlanta abstracts (pmid:2849717, pmid:23959519, pmid:18019402, pmid:35102619, pmid:10913395, pmid:37526404) were not needed for level 2."
