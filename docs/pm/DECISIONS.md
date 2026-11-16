@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — The five links for the bridge search pilot (founder ruling)
+
+- The founder said: "Jeg følger din anbefaling, test ut de 5 forbindelsene du foreslo for del C". The five links searched in Part C of `docs/plan-wider-sources.md` are: oxidative-nitrosative-stress → endothelial-dysfunction; autonomic-imbalance → orthostatic-intolerance-cerebral-blood-flow; reduced-nk-cell-function → herpesvirus-reactivation; tryptophan-kynurenine-metabolism → neuroinflammation; autoimmunity-autoantibodies-b-cells → orthostatic-intolerance-cerebral-blood-flow. All five were at step `proposed` in the map report that day.
+- Why: they were proposed as pairs where both ends are measurable quantities. The pilot produces a report only (`docs/pm/bridge-pilot.md`); it changes no card, the site or the weekly pipeline. The positive control, the base-rate pairs and the other choices the plan left open are recorded in the protocol as orchestrator defaults.
+
 ## 2026-11-16 — The orchestrator defaults in use are confirmed; the domain waits (founder rulings)
 
 - **The orchestrator defaults that were used are permanent.** The founder said: "Bekrefter standardvalgene vi brukte, la dem bli permanent." This is read as covering every choice recorded in this file or in a plan as an orchestrator default or as "for the founder to confirm" that was in use when the 20 cards were published, among them: the cap of four revised attempts per correction round while the decisive findings fall (2026-11-15/16); the three check retries being shared by a round's attempts, not three per attempt (2026-11-16); the valve removing a sentence rather than rewording it when in doubt (2026-11-15); and the defaults listed at the bottom of `docs/plan-causal-map.md`, `docs/plan-drawn-map.md` and `docs/plan-hypothesis-and-link-survey.md`. They are rulings from now on; the founder changes them like any other ruling. The reading of the scope is the orchestrator's, not the founder's words.
