@@ -57,6 +57,7 @@ from me_atlas.http import load_dotenv
 from me_atlas.operations import (
     CORRECTION_ONLY_OPS,
     AddParagraph,
+    AddSentence,
     AddStudy,
     OperationError,
     OpsFile,
@@ -88,7 +89,9 @@ REOPENED_ROUNDS = {
     "small-fibre-neuropathy": 2,
     # DECISIONS 2026-11-15/16 ("one new round for each of the seven"): one more round each, under the new path.
     "mast-cell-activation": 2,
-    "impaired-energy-production-after-exertion": 2,
+    # DECISIONS 2026-11-16 (one added sentence; one more round for the last two cards): a third round for the first;
+    # `herpesvirus-reactivation` keeps its unused round C2 (below).
+    "impaired-energy-production-after-exertion": 3,
     "brain-and-brainstem-mri-changes": 2,
     "orthostatic-intolerance-cerebral-blood-flow": 2,
     "hpa-axis-cortisol": 2,
@@ -1336,9 +1339,9 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     """A2: what the operations file of a correction round may hold. Empty when it holds nothing else.
 
     No paper; at least one operation; only ``replace_paragraph``, ``remove_paragraph``, ``update_study``,
-    ``remove_link`` and ``propose``; a ``propose`` on ``level`` only to a value lower than the draft's, on a badge only
-    to false, on ``contested`` freely. Nothing that adds a study or a paragraph: a correction removes or weakens a
-    claim, it never adds a fact.
+    ``remove_link``, ``propose`` and ``add_sentence`` (see `add_sentence_problems`); a ``propose`` on ``level`` only
+    to a value lower than the draft's, on a badge only to false, on ``contested`` freely. Nothing that adds a study or
+    a paragraph: a correction removes or weakens a claim and adds only the one sentence an audit part asks for.
     """
     found: list[str] = []
     if ops.paper is not None:
@@ -1349,7 +1352,7 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
         if isinstance(op, (AddStudy, AddParagraph)):
             found.append(
                 f"operations[{i}] is {op.op}: a correction may hold replace_paragraph, remove_paragraph, "
-                "update_study, remove_link and propose only (it never adds a fact)"
+                "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
             )
         elif isinstance(op, Propose):
             if op.target == "level" and not (isinstance(op.value, int) and op.value < draft_level):
@@ -1479,15 +1482,59 @@ def _target_permitted(op: Any, target: str, allowed: set[str]) -> bool:
     return False
 
 
+def add_sentence_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_card: cards.Card) -> list[str]:
+    """S2: the ``add_sentence`` operations of attempt ``tag`` that the ruling of DECISIONS 2026-11-16 does not allow.
+
+    Each must answer (a) an objecting part of an audit record the round answers (`objecting_audit_parts`), cite
+    (b) only sources that part quotes and that are studies on the card, go (c) to the part's own ``target`` or to a
+    target the step 0 review gives that part in ``audit_targets``, and be (d) the only one for that part in the file.
+    The free-text target and the one-sentence rule are the operation's own validation."""
+    sentences = [(i, op) for i, op in enumerate(ops.operations) if isinstance(op, AddSentence)]
+    if not sentences:
+        return []
+    base = _round_base(tag)
+    parts = {(name, i): part for name, i, part, _d in objecting_audit_parts(cfg, slug, correction_number(tag))}
+    pre = _load_card_review(cfg, slug, f"{base}-pre")
+    given = {(e.record, e.part): set(e.targets) for e in (pre.audit_targets if pre is not None else None) or []}
+    on_card = {study.id for study in draft_card.studies}
+    seen: set[tuple[str, int]] = set()
+    found: list[str] = []
+    for i, op in sentences:
+        key = (op.answers.record, op.answers.part)
+        part = parts.get(key)
+        if part is None:
+            found.append(
+                f"operations[{i}] answers {key[0]} part {key[1]}, which is not an objecting part of an audit record "
+                "this round answers"
+            )
+            continue
+        quoted = {e.source for e in part.evidence}
+        if bad := [x for x in op.sources if x not in quoted or x not in on_card]:
+            found.append(
+                f"operations[{i}] cites {', '.join(bad)}, which that audit part does not quote (or the card does not "
+                "cite)"
+            )
+        if op.target != part.target and op.target not in given.get(key, set()):
+            found.append(
+                f"operations[{i}] adds a sentence to {op.target}, which is neither the target of that audit part nor "
+                "one the step 0 review gives it in audit_targets"
+            )
+        if key in seen:
+            found.append(f"operations[{i}] is a second added sentence for {key[0]} part {key[1]}: one per audit part")
+        seen.add(key)
+    return found
+
+
 def correction_target_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_card: cards.Card) -> list[str]:
-    """B3: the operations of attempt ``tag`` that change something no finding names (empty when none)."""
+    """B3: the operations of attempt ``tag`` that change something no finding names (empty when none). An
+    ``add_sentence`` has no target here: it is allowed only through `add_sentence_problems`."""
     allowed = allowed_targets(cfg, slug, tag, draft_card)
     targets, _survivors = _correction_op_targets(draft_card, ops)
     return [
         f"operations[{i}] changes {t}, which no finding names"
         for i, (op, t) in enumerate(zip(ops.operations, targets, strict=True))
         if t is not None and not _target_permitted(op, t, allowed)
-    ]
+    ] + add_sentence_problems(cfg, slug, tag, ops, draft_card)
 
 
 def _draft_problem(cfg: Config, slug: str, base: str) -> str | None:
@@ -2891,6 +2938,8 @@ def describe_op(op: Any, base: dict[str, Any]) -> str:
         return f"Remove paragraph {op.index} of `{op.field}`"
     if isinstance(op, RemoveLink):
         return f"Remove the link to `{op.to}`"
+    if isinstance(op, AddSentence):
+        return f"Add a sentence to `{op.target}` (sources {', '.join(op.sources)}): {op.text}"
     assert isinstance(op, Propose)
     paragraphs = " ".join(f"{p.text} [{', '.join(p.sources)}]" for p in op.reason or [])
     if op.target == "level":
@@ -3502,13 +3551,18 @@ def _first_publication_refusal(cfg: Config, slug: str) -> str | None:
 
 CORRECTION_LIMITS = (
     "Limits of a correction (the code enforces them). The ops file has `paper` null and at least one operation, and "
-    "may hold `replace_paragraph`, `remove_paragraph`, `update_study`, `remove_link` and `propose` only. A `propose` "
+    "may hold `replace_paragraph`, `remove_paragraph`, `update_study`, `remove_link`, `propose` and `add_sentence` "
+    "only. A `propose` "
     "on `level` may only lower the level (the value must be lower than the draft's); a `propose` on a badge may only "
     "set it to false; a `propose` on `contested` may add, change or remove the mark. No `add_study` and no "
     "`add_paragraph`. `update_study` takes `id` and `set` (a map of study fields; not `id`, not `preprint`); a "
     "recognised case definition needs `case_definition_source` and `case_definition_quote`, `unverified` needs both "
     "null. `remove_paragraph` takes `field` and `index` and cannot leave `level_reason` empty, nor "
     "`contested.reason` while the card is contested, nor a true badge without a reason. `remove_link` takes `to`. "
+    '`add_sentence` (`target`, `text`, `sources`, `answers`: `{"record": <audit record file>, "part": <index>}`) '
+    "appends one sentence to an existing free-text item, only when an objecting audit part expressly asks for a "
+    "missing statement (section 9): one sentence, at most one per part, citing only sources that part quotes, saying "
+    "no more than its quotes, and only to that part's target or one the step 0 review gives it. "
     "A finding that cannot be resolved from the records shown below is resolved by removing or weakening the claim, "
     "never by adding a fact: do not cite anything that is not in the records of section 4."
 )
@@ -3525,6 +3579,35 @@ def _pre_review_lines(review: ReviewFile) -> list[str]:
             lines.append(f"  - targets: {', '.join(finding.targets)}")
         if finding.fix:
             lines.append(f"  - fix: {finding.fix}")
+    return lines
+
+
+def _added_sentence_lines(cfg: Config, slug: str, k: int, pre_review: ReviewFile | None) -> list[str]:
+    """Section 9 of the correction context: per objecting audit part its quoted evidence and the targets an
+    ``add_sentence`` answering it may use (DECISIONS 2026-11-16)."""
+    given = {(e.record, e.part): e.targets for e in (pre_review.audit_targets if pre_review else None) or []}
+    lines = [
+        '## 9. Added sentences (the one exception to "delete rather than rewrite")',
+        "",
+        "Only when an objecting audit part below expressly asks for a missing statement, you may add one sentence "
+        "(`add_sentence`) answering it: one sentence, at most one per part, citing only sources that part quotes, "
+        "saying no more than its quotes, appended to the part's own target or a target listed for it. Otherwise "
+        "remove or weaken.",
+        "",
+    ]
+    parts = objecting_audit_parts(cfg, slug, k)
+    if not parts:
+        return [*lines, "No objecting audit part: no `add_sentence` is allowed.", ""]
+    for name, i, part, _decision in parts:
+        targets = list(dict.fromkeys([*([part.target] if part.target else []), *given.get((name, i), [])]))
+        lines += [
+            f"### {name}, part {i}",
+            "",
+            f"- decision_part: {part.decision_part}",
+            *[f"- quote: {e.source}: {e.quote}" for e in part.evidence],
+            f"- allowed targets: {', '.join(f'`{t}`' for t in targets) or '(none)'}",
+            "",
+        ]
     return lines
 
 
@@ -3622,6 +3705,7 @@ def build_correction_context(
         citations.author_facts_section(card, citations.CacheReader(cfg.cache_dir)).replace(
             "## Author facts", "## 8. Author facts", 1
         ),
+        *_added_sentence_lines(cfg, slug, k, pre_review),
     ]
     return "\n".join(parts)
 
@@ -5515,6 +5599,28 @@ def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _added_sentences(cfg: Config, slug: str, tag: str) -> list[dict[str, Any]]:
+    """S3: the ``add_sentence`` operations of attempt ``tag`` as the trail records them: target, text, the audit part
+    answered and the quotes of that part's evidence (the sources and quotes the sentence may rest on)."""
+    r = _load_round(cfg, slug, "", tag)
+    if r is None or r.ops is None:
+        return []
+    parts = {(n, i): part for n, i, part, _d in objecting_audit_parts(cfg, slug, correction_number(tag))}
+    out = []
+    for op in r.ops.operations:
+        if isinstance(op, AddSentence):
+            part = parts.get((op.answers.record, op.answers.part))
+            out.append(
+                {
+                    "target": op.target,
+                    "text": op.text,
+                    "answers": {"record": op.answers.record, "part": op.answers.part},
+                    "quotes": [{"source": e.source, "quote": e.quote} for e in part.evidence] if part else [],
+                }
+            )
+    return out
+
+
 def correction_trail(
     cfg: Config, slug: str, tag: str, draft_bytes: bytes, answered: list[Path], audits_run: list[str]
 ) -> dict[str, Any]:
@@ -5556,6 +5662,8 @@ def correction_trail(
             "findings": _finding_dicts(pre_review.findings),
         }
     trail |= {"operations": operations, "checks": checks, "review": review}
+    if added := _added_sentences(cfg, slug, tag):
+        trail["added_sentences"] = added
     if (card_review := _load_card_review(cfg, slug, tag)) is not None:
         trail["card_review"] = {
             "verdict": card_review.verdict,

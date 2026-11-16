@@ -362,7 +362,7 @@ def test_only_the_named_cards_may_run_round_c2_and_oxidative_round_c3():
         "oxidative-nitrosative-stress": 3,
         "small-fibre-neuropathy": 2,
         "mast-cell-activation": 2,
-        "impaired-energy-production-after-exertion": 2,
+        "impaired-energy-production-after-exertion": 3,
         "brain-and-brainstem-mri-changes": 2,
         "orthostatic-intolerance-cerebral-blood-flow": 2,
         "hpa-axis-cortisol": 2,

@@ -192,6 +192,64 @@ class RemoveParagraph(_Op):
     index: Annotated[int, Field(strict=True, ge=0)]
 
 
+# The free-text items an added sentence may go to (translation-key style, draft numbering): a paragraph of a reason, a
+# subgroup or an early signal, or a study's finding. Not core_claim, not a link.
+SENTENCE_TARGET = re.compile(
+    r"^(?:(?:level_reason|contested_reason|badge_reasons\.(?:diagnostic_marker|explains_pem)|subgroups|early_signals)"
+    r"\[\d+\]|studies\[(?:pmid:\d+|doi:\S+)\]\.finding)$"
+)
+_SENTENCE_FIELD = {
+    "level_reason": "level_reason",
+    "contested_reason": "contested.reason",
+    "badge_reasons.diagnostic_marker": "badges.diagnostic_marker.reason",
+    "badge_reasons.explains_pem": "badges.explains_pem.reason",
+    "subgroups": "subgroups",
+    "early_signals": "early_signals",
+}
+# One sentence: it ends with one ".", "?" or "!" and holds no other sentence end (".", "?" or "!", optionally
+# followed by a closing quote or bracket) followed by whitespace and a capital letter or digit.
+_SENTENCE_END = re.compile(r"""[.?!]["')\]]*\s+[A-Z0-9]""")
+
+
+class SentenceAnswer(_Op):
+    """The audit part an added sentence answers: the audit record's file name and the index of the part."""
+
+    record: NonEmptyStr
+    part: Annotated[int, Field(strict=True, ge=0)]
+
+
+class AddSentence(_Op):
+    """Correction rounds only: append one sentence to an existing free-text item (``target``, in the draft's numbering),
+    after its text and one space. For a paragraph, any listed source the paragraph does not yet cite is added to its
+    ``sources``. ``answers`` names the objecting audit part that asks for the statement (the pipeline checks it)."""
+
+    op: Literal["add_sentence"]
+    target: NonEmptyStr
+    text: NonEmptyStr
+    sources: Annotated[list[StudyId], Field(min_length=1)]
+    answers: SentenceAnswer
+
+    @field_validator("text")
+    @classmethod
+    def _one_sentence(cls, value: str) -> str:
+        value = _collapse(value)
+        if not re.search(r"[.?!]$", value) or re.search(r"[.?!]{2,}$", value):
+            raise ValueError("an added sentence ends with exactly one '.', '?' or '!'")
+        if _SENTENCE_END.search(value):
+            raise ValueError("an added sentence is one sentence: no sentence end followed by a capital or a digit")
+        return value
+
+    @field_validator("target")
+    @classmethod
+    def _free_text_target(cls, value: str) -> str:
+        if not SENTENCE_TARGET.match(value):
+            raise ValueError(
+                "an added sentence goes to level_reason[n], contested_reason[n], badge_reasons.<badge>[n], "
+                f"subgroups[n], early_signals[n] or studies[<id>].finding; got {value!r}"
+            )
+        return value
+
+
 class RemoveLink(_Op):
     """Correction rounds only: remove the link whose target is ``to``."""
 
@@ -240,10 +298,10 @@ class Propose(_Op):
 
 
 Operation = Annotated[
-    AddStudy | AddParagraph | ReplaceParagraph | Propose | UpdateStudy | RemoveParagraph | RemoveLink,
+    AddStudy | AddParagraph | ReplaceParagraph | Propose | UpdateStudy | RemoveParagraph | RemoveLink | AddSentence,
     Field(discriminator="op"),
 ]
-CORRECTION_ONLY_OPS = ("update_study", "remove_paragraph", "remove_link")
+CORRECTION_ONLY_OPS = ("update_study", "remove_paragraph", "remove_link", "add_sentence")
 
 
 class OpsFile(_Op):
@@ -297,6 +355,8 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
         return 2 if op.id in preprints else 1
     if isinstance(op, RemoveParagraph):
         return 1
+    if isinstance(op, AddSentence):
+        return 2 if any(src in preprints for src in op.sources) else 1
     if isinstance(op, ReplaceParagraph) and op.field == "core_claim":
         return 2  # it states what the hypothesis is
     return 2 if any(src in preprints for src in op.sources) else 1
@@ -750,6 +810,37 @@ def _validation_problems(data: dict[str, Any]) -> list[str]:
     return [f"[{rule}] {path}: {message}" for rule, path, message in check_card(card, str(data.get("slug", "")))]
 
 
+def _resolve_add_sentence(
+    data: dict[str, Any], op: AddSentence, left: dict[str, list[int]]
+) -> ReplaceParagraph | UpdateStudy:
+    """The ordinary operation an ``add_sentence`` stands for: the item's text plus the sentence (and the new sources of
+    a paragraph). ``left`` holds, per field, the draft index of each paragraph still there, so that the target, in the
+    draft's numbering, finds its paragraph after an earlier ``remove_paragraph`` of the same file."""
+    if op.target.startswith("studies["):
+        study_id = op.target[len("studies[") : -len("].finding")]
+        study = next((x for x in data.get("studies") or [] if isinstance(x, dict) and x.get("id") == study_id), None)
+        if study is None:
+            raise OperationError(f"study id '{study_id}' is not on this card")
+        return UpdateStudy(op="update_study", id=study_id, set={"finding": f"{study['finding']} {op.text}"})
+    prefix, _, rest = op.target.rpartition("[")
+    draft_index = int(rest[:-1])
+    field = _SENTENCE_FIELD[prefix]
+    parent, key = _get(data, field)
+    paras = _as_list(parent.get(key))
+    survivors = left.setdefault(field, list(range(len(paras))))
+    if draft_index not in survivors:
+        raise OperationError(f"{op.target} is not on the card (the draft's paragraph {draft_index} is removed)")
+    current = paras[survivors.index(draft_index)]
+    sources = [*current["sources"], *(x for x in op.sources if x not in current["sources"])]
+    return ReplaceParagraph(
+        op="replace_paragraph",
+        field=field,
+        index=survivors.index(draft_index),
+        text=f"{current['text']} {op.text}",
+        sources=sources,
+    )
+
+
 def apply_operations(text: str, operations: list[Operation] | OpsFile, *, validate: bool = True) -> str:
     """Apply operations in order to card YAML text and return the new text.
 
@@ -771,8 +862,16 @@ def apply_operations(text: str, operations: list[Operation] | OpsFile, *, valida
         raise OperationError("the card does not validate before the operations:\n" + "\n".join(problems))
 
     lines = text.split("\n")
+    left: dict[str, list[int]] = {}  # field -> the draft index of each paragraph still there (for add_sentence)
     for n, op in enumerate(ops):
         try:
+            if isinstance(op, AddSentence):
+                op = _resolve_add_sentence(data, op, left)
+            elif isinstance(op, RemoveParagraph) and op.field != "core_claim":
+                parent, key = _get(data, op.field)
+                still = left.setdefault(op.field, list(range(len(_as_list(parent.get(key))))))
+                if op.index < len(still):
+                    del still[op.index]
             if isinstance(op, AddStudy):
                 lines = _apply_study(lines, data, op)
             elif isinstance(op, (AddParagraph, ReplaceParagraph)):
