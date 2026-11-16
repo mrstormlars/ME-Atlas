@@ -31,10 +31,17 @@ Eight relations A → B. The founder chose the five on 2026-11-16 (DECISIONS). O
 import itertools, random
 from pathlib import Path
 from me_atlas import cards as cardlib
-cards = sorted((cardlib.load_card(p) for p in Path("cards").glob("*.yaml") if p.name != "changelog.yaml"), key=lambda c: c.slug)
+
+cards = sorted(
+    (cardlib.load_card(p) for p in Path("cards").glob("*.yaml") if p.name != "changelog.yaml"), key=lambda c: c.slug
+)
 by = {c.slug: c for c in cards}
+
+
 def linked(a, b):
     return any(l.to == b for l in by[a].links) or any(l.to == a for l in by[b].links)
+
+
 pairs = [(a, b) for a, b in itertools.combinations(sorted(by), 2) if not linked(a, b)]
 print(len(by), "cards;", len(pairs), "unlinked pairs")
 print(random.Random(20261116).sample(pairs, 2))
