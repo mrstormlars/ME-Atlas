@@ -438,3 +438,15 @@
   - pmid:42539798
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: hpa-axis-cortisol
+  change: 'Links added: symptom:sleep-disturbance, symptom:cognitive-impairment, question:what-keeps-it-going'
+  reason: 'All three links are accepted at step proposed: each is stated by a peer-reviewed review, and
+    the patient studies that found no relation are written out without raising the step.'
+  sources:
+  - pmid:41516296
+  - pmid:11282703
+  - pmid:40713801
+  - pmid:31330791
+  tier: 2
+  decided_by: ai_audit

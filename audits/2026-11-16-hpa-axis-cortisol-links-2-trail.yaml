@@ -1,0 +1,65 @@
+card: hpa-axis-cortisol
+card_sha256: 0bb3418ae7172153b37d0a18912f9a0a81027be28be1634cedc39718ffe1113f
+rounds:
+- round: 1
+  proposal:
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: A 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been associated
+      with worse sleep difficulties; the review did not test this itself. A study of 121 clinic patients
+      and 64 comparison subjects, whose case definition is not yet verified, found lower 24-hour urinary
+      free cortisol in patients and reported that the lower levels were not related to sleep disturbance.
+      A study of 24 patients meeting the Canadian, International and IOM 2015 criteria and 24 matched
+      controls found that none of the exploratory correlations between blood steroid levels and scores
+      on two symptom scales (one of which includes sleep disturbance among its items) remained significant
+      after correction for multiple comparisons.
+    sources:
+    - pmid:41516296
+    - pmid:11282703
+    - pmid:40713801
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: The same 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been associated
+      with worse concentration difficulties; the review did not test this itself. A study of 24 patients
+      meeting the Canadian, International and IOM 2015 criteria and 24 matched controls found that none
+      of the exploratory correlations between blood steroid levels and scores on two symptom scales (a
+      mental fatigue scale, and a multisystem scale that includes cognitive dysfunction among its items)
+      remained significant after correction for multiple comparisons.
+    sources:
+    - pmid:41516296
+    - pmid:40713801
+  - to: question:what-keeps-it-going
+    support: proposed
+    text: A 2019 review suggests that the link between cortisol-driven stress responses and the gut through
+      the HPA axis could be dysfunctional in ME/CFS because of the low cortisol suggested by earlier work,
+      which could add another perturbed regulatory loop that may help perpetuate an altered homeostasis.
+      It also lists HPA-axis dysregulation among conditions that could shift cells to an alternative resting
+      steady state. It was not studied directly in patients.
+    sources:
+    - pmid:31330791
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings:
+    - item: links[2]
+      severity: advisory
+      problem: The text says 'because of the low cortisol suggested by earlier work'. PMC6787592 section
+        4.3 says 'due to the hypocortisolism previously suggested to play a role in the condition'. The
+        review says earlier work suggested that low cortisol plays a role, not that earlier work suggested
+        low cortisol exists, and the cached text does not say what that earlier work was. The meaning
+        is close and no claim is stronger, so this is advisory.
+      fix: Keep closer to the source, for example 'because of the low cortisol (hypocortisolism) that,
+        the review says, has previously been suggested to play a role in the condition'.
+links:
+- to: symptom:sleep-disturbance
+  outcome: published
+- to: symptom:cognitive-impairment
+  outcome: published
+- to: question:what-keeps-it-going
+  outcome: published
+audits_run:
+- 2026-11-16-hpa-axis-cortisol-links-2.yaml
+- 2026-11-16-hpa-axis-cortisol-links-2-second.yaml
+outcome: published
