@@ -312,7 +312,15 @@ studies:
 # Other reading: A mechanism reading also exists, in which small fibre damage is one form of dysautonomia upstream of vascular changes such as shunting of blood past the muscle capillaries (pmid:37054777, pmid:33577778); no card or open question covers peripheral oxygen extraction or shunting, so that link waits for such a card or question.
 # Second pass 2026-11-06 (data/pipeline/2026-11-06-map-pass2/): links from review full texts.
 layer: dysfunction
-links: []
+links:
+  - to: symptom:orthostatic-intolerance
+    support: proposed
+    text: >-
+      A 2023 review states that small nerve fibre damage can reduce the tightening of veins, as
+      seen with abnormal pooling of blood in the legs on standing in postural orthostatic
+      tachycardia syndrome (POTS). The observation it cites is in POTS; the review is not a
+      study of ME/CFS patients.
+    sources: ['pmid:37054777']
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-16
   by: ai_audit
