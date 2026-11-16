@@ -130,7 +130,7 @@ When you are given a proposal file (`data/pipeline/<date>/map/<slug>.json`, writ
    - `directional`: is there temporal order (A before B in patients), an intervention on A that changes B, or a mediation analysis? A cross-sectional association does not qualify; a review alone never does. Say which of the three it is.
    State the highest step the sources support; the auditor decides.
 3. **Citations.** Every source id is in the card's `studies` (or the record is named in the proposal as one to add as a `context` study); sample sizes, case definition and design match the record; an Oxford-only cohort is flagged. A study that measured both ends and found no relation is recorded as `context` and the link text says so.
-4. **Wording and layer.** Neutral wording, no treatment advice, no banned word; unreplicated findings labelled. The layer is one of the four; if the card could sit in two, the other reading is written as a link and the ambiguity is stated, not hidden. The target exists (a card slug, `symptom:<id>` or `question:<id>`), is not the card itself, and is not linked twice.
+4. **Wording and layer.** Neutral wording, no treatment advice, no banned word; unreplicated findings labelled. The layer is one of the four; if the card could sit in two, the other reading is written as a link and the ambiguity is stated, not hidden; when no source carries such a link, the ambiguity written out with a source is enough (spec section 3). The target exists (a card slug, `symptom:<id>` or `question:<id>`), is not the card itself, and is not linked twice.
 
 **What you write:** only the review file at the path you were given, the same verdict and findings shape as translation mode (code rejects other keys):
 

@@ -97,6 +97,8 @@ Quality factors applied at every rung: case definition, sample size, controls, p
 | Oxford (only) | Flagged as broad. Evidence resting only on Oxford-defined cohorts cannot raise a hypothesis above level 1. |
 | None stated, or not yet checked | Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from. |
 
+**Whose text the definition comes from.** A study is recorded with the definition its own text states. Another article's description is carried over only when a source says the patient group is the same. Comparability is judged by the recorded definition, and the uncertainty is written out on the card. (Founder ruling 2026-11-16.)
+
 ### The two badges
 
 Shown on every card, separate from the bar, each yes or no:
@@ -109,6 +111,8 @@ Separate tracks for mechanism, diagnosis and treatment were rejected because the
 ### Contested evidence
 
 A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it. Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts. Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured. A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs.
+
+**Unknown patient count.** When the sources do not state the number of patients in the measurement that contradicts the finding, the contested mark is not set, but the contradicting finding and the missing number are written out on the card. (Founder ruling 2026-11-16.)
 
 - **Who decides:** the auditor, as a tier 2 decision (see section 6), with the contradicting study linked on the card and the reason written in plain sentences, split into short paragraphs with their own sources when it needs more than two. AI may propose a conflict; it never sets one.
 - **How it is shown:** the bar is filled up to the highest uncontested rung; the rung or rungs under dispute are drawn as a **hatched segment**. The card lists both sides.
@@ -128,7 +132,7 @@ The ladder grades one thing: how far the evidence for a hypothesis has come. A s
 | Measurable dysfunction | `dysfunction` | What goes wrong in the body? |
 | Symptom | `symptom` | What does the patient experience? |
 
-The first four layers hold hypothesis cards. The symptom layer is not hypotheses: it is a fixed list taken from the accepted case definitions, each symptom sourced to the document that lists it. A card that could sit in two layers (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one layer and a link that expresses the other reading; the ambiguity is written out, not hidden.
+The first four layers hold hypothesis cards. The symptom layer is not hypotheses: it is a fixed list taken from the accepted case definitions, each symptom sourced to the document that lists it. A card that could sit in two layers (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one layer and a link that expresses the other reading; the ambiguity is written out, not hidden. When no source carries a link for the other reading, it is enough that the ambiguity is written out with a source (founder ruling 2026-11-16).
 
 **Links.** A link from one node to another grades a narrower claim than the ladder: "A drives B in ME/CFS patients". It has three steps:
 

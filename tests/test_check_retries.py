@@ -144,9 +144,9 @@ def test_a_real_failed_check_writes_an_errors_file_and_prints_its_path(corr: Cor
     assert f"{SLUG}-rC1-errors.md" in " ".join(corr.env.out)
 
 
-def test_the_energy_card_gets_a_fourth_round_and_no_fifth():
+def test_the_energy_card_gets_a_fifth_round_and_no_sixth():
     slug = "impaired-energy-production-after-exertion"
-    assert pipeline.REOPENED_ROUNDS[slug] == 4
-    assert pipeline.max_correction_rounds(slug) == 4
+    assert pipeline.REOPENED_ROUNDS[slug] == 5
+    assert pipeline.max_correction_rounds(slug) == 5
     assert pipeline.max_correction_rounds("a-card-not-named") == pipeline.MAX_CORRECTION_ROUNDS
-    assert 4 <= pipeline.max_correction_rounds(slug) < 5  # C4 is allowed, C5 is refused (k > max)
+    assert 5 <= pipeline.max_correction_rounds(slug) < 6  # C5 is allowed, C6 is refused (k > max)
