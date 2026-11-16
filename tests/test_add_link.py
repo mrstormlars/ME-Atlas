@@ -114,3 +114,48 @@ def test_a_correction_round_refuses_add_link_and_names_it():
 
     found = correction_ops_problems(file(LINK), 2)
     assert any("operations[0] is add_link" in p for p in found)
+
+
+# --- set_link_text (the wording valve of a link round) ----------------------------------------------------
+
+SET = {"op": "set_link_text", "to": "other-fictional-card", "text": "A reworded fictional link text."}
+
+
+def test_set_link_text_replaces_only_the_text_lines_of_the_named_link():
+    old = with_links(card_text())
+    new = apply_operations(old, file(SET), validate=False)
+    before, after = yaml.safe_load(old)["links"], yaml.safe_load(new)["links"]
+    assert after[0]["text"] == SET["text"] and after[1] == before[1]
+    assert {k: v for k, v in after[0].items() if k != "text"} == {k: v for k, v in before[0].items() if k != "text"}
+    assert blocks(old, new) == [
+        (["      A fictional review proposes a link."], ["      A reworded fictional link text."])
+    ]
+    assert "  # a comment above the first link" in new
+    assert yaml.safe_load(new)["studies"] == yaml.safe_load(old)["studies"]
+
+
+def test_set_link_text_of_the_second_link_leaves_the_first_alone():
+    old = with_links(card_text())
+    new = apply_operations(old, file({**SET, "to": "symptom:fictional-symptom"}), validate=False)
+    assert yaml.safe_load(new)["links"][0] == yaml.safe_load(old)["links"][0]
+    assert yaml.safe_load(new)["links"][1]["text"] == SET["text"]
+
+
+def test_set_link_text_gives_the_text_an_add_link_would_have_written():
+    base = card_text()
+    added = apply_operations(base, file({**LINK, "text": SET["text"]}), validate=False)
+    fixed = apply_operations(
+        apply_operations(base, file(LINK), validate=False), file({**SET, "to": LINK["to"]}), validate=False
+    )
+    assert added == fixed  # byte for byte: a stage text can be re-derived either way
+
+
+def test_set_link_text_is_tier_2_and_refuses_an_unknown_link_and_bad_fields():
+    assert tiers(file(SET)) == [2]
+    with pytest.raises(OperationError, match="has no link to 'no-such-link'"):
+        apply_operations(with_links(card_text()), file({**SET, "to": "no-such-link"}), validate=False)
+    with pytest.raises(OperationError, match="has no link to"):
+        apply_operations(card_text(), file(SET), validate=False)  # a card without links
+    for change in ({"text": ""}, {"text": "  "}, {"support": "proposed"}, {"sources": ["pmid:90000100"]}, {"to": ""}):
+        with pytest.raises(OperationError):
+            file({**SET, **change})

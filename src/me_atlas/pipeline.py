@@ -67,6 +67,7 @@ from me_atlas.operations import (
     RemoveLink,
     RemoveParagraph,
     ReplaceParagraph,
+    SetLinkText,
     UpdateStudy,
     apply_operations,
     parse_ops,
@@ -81,7 +82,16 @@ MAX_ROUNDS = 2
 # The one redraft after an auditor's accept_lower (E3): files carry "L" where a round carries 1 or 2. It counts neither
 # as round 1 nor as round 2 and allows no further round.
 REDRAFT = "L"
-LINK_ROUND_COMMANDS = ("link-apply", "record-map-review", "link-audit-plan", "record-link-audit", "link-publish")
+LINK_ROUND_COMMANDS = (
+    "link-apply",
+    "record-map-review",
+    "link-audit-plan",
+    "record-link-audit",
+    "link-valve-apply",
+    "link-valve-check-plan",
+    "record-link-valve-check",
+    "link-publish",
+)
 # The correction of a held-back draft (rounds C1, C2, ...): at most this many rounds per card (contract A3).
 MAX_CORRECTION_ROUNDS = 1
 # Logged exceptions (DECISIONS 2026-11-15: two cards stranded on the sequence of the 2026-11-14 path, each gets round
@@ -359,8 +369,17 @@ class AuditPart(_Classified):
     evidence: list[AuditEvidence]
 
 
+class LinkDecision(_M):
+    """The audit's decision on one link of a link round (``me_atlas.link_round``)."""
+
+    to: NonEmptyStr
+    decision: Literal["accept", "reject"]
+
+
 class AuditRecord(_M):
-    """What the auditor writes: one decision on one change (``paper`` set) or on a whole card (``paper`` absent)."""
+    """What the auditor writes: one decision on one change (``paper`` set) or on a whole card (``paper`` absent).
+
+    ``link_decisions`` is for the audit of a link round only: one decision per link."""
 
     card: Slug
     paper: StudyId | None = None
@@ -369,6 +388,7 @@ class AuditRecord(_M):
     parts: Annotated[list[AuditPart], Field(min_length=1)]
     reasons_summary: NonEmptyStr
     would_change: NonEmptyStr
+    link_decisions: list[LinkDecision] | None = None
 
     @model_validator(mode="after")
     def _level_and_summary(self) -> AuditRecord:
@@ -1359,7 +1379,7 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     if not ops.operations:
         found.append("a correction needs at least one operation")
     for i, op in enumerate(ops.operations):
-        if isinstance(op, (AddStudy, AddParagraph, AddLink)):
+        if isinstance(op, (AddStudy, AddParagraph, AddLink, SetLinkText)):
             found.append(
                 f"operations[{i}] is {op.op}: a correction may hold replace_paragraph, remove_paragraph, "
                 "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
@@ -2293,6 +2313,9 @@ def build_audit_context(
     redraft: bool = False,
     card_text_from: Path | None = None,
     applied_round: int | None = None,
+    applied_file: Path | None = None,
+    round_links: Sequence[str] | None = None,
+    second: bool = False,
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -2307,6 +2330,9 @@ def build_audit_context(
 
     ``applied_round`` n (a link round, ``me_atlas.link_round``; ``key`` None) makes the change the diff of
     ``applied/<slug>-r<n>/`` against the card, with the applied card shown in full in section 2.
+    ``applied_file`` takes the applied card from that file instead (the link round's stage text); ``round_links``
+    (the ``to`` of the links the audit decides) makes the context say that it is a link round and name those links
+    only, ``second`` that it is the second audit of the round.
     """
     base = _base_card(cfg, slug)
     source = card_text_from if card_text_from is not None and key is None and not redraft else base
@@ -2324,10 +2350,11 @@ def build_audit_context(
             else _last_applied_round(cfg, slug, key or "")
         )
         applied = cfg.applied_dir(slug, key, n)
-        if not (applied / f"{slug}.yaml").is_file():
-            raise PipelineError(f"no applied result in {applied}; run `apply` first")
+        applied_path = applied_file or applied / f"{slug}.yaml"
+        if not applied_path.is_file():
+            raise PipelineError(f"no applied result in {applied_path.parent}; run `apply` first")
         # The diff is built from the comment-free texts, not read from changes.diff (which shows comments).
-        applied_text = strip_yaml_comments((applied / f"{slug}.yaml").read_text(encoding="utf-8"))
+        applied_text = strip_yaml_comments(applied_path.read_text(encoding="utf-8"))
         diff = "".join(
             difflib.unified_diff(
                 (base_text + "\n").splitlines(keepends=True),
@@ -2336,7 +2363,7 @@ def build_audit_context(
                 tofile=f"applied/{slug}.yaml",
             )
         )
-        applied_card = _load_card(applied / f"{slug}.yaml")
+        applied_card = _load_card(applied_path)
         study_ids += [s.id for s in applied_card.studies]
         carriers = carrier_ids(applied_card)  # E1: the carriers of the card once the change is in
         what = (
@@ -2387,12 +2414,29 @@ def build_audit_context(
         card_format = cfg.card_format_path.read_text(encoding="utf-8")
     except OSError as exc:
         raise PipelineError(f"cannot read the card format {cfg.card_format_path}: {exc}") from exc
+    link_round_note: list[str] = []
+    if round_links is not None:
+        numbered = {x.to: i for i, x in enumerate(applied_card.links)}
+        link_round_note = [
+            f"**This is a link round ({'the second' if second else 'the first'} audit).** Decide each link below on "
+            "its own: the record needs `link_decisions` with one entry `{to, decision}` (`accept` or `reject`) for "
+            "each of these links and no other; `decision` is `accept` only when every link is `accept`, else "
+            "`reject` (`accept_lower` is not available). In a `reject` every part has a `class` (`decisive`, `wording` "
+            "or `none`), and a part that objects (`decisive` or `wording`) names its link with "
+            "`target: links[n]` (the numbering of the card with the change applied, section 2). Every link you "
+            "reject has an objecting part naming it; a link you accept has none.",
+            "",
+            "The links to decide:",
+            *(f"- `links[{numbered[to]}]`: `{to}`" for to in round_links),
+            "",
+        ]
     parts = [
         f"# Audit context: {subject}",
         "",
         "This is everything you may rely on. Cite only the records in section 3, by the id in their heading, and "
         "quote them word for word. Name a rubric clause by copying text from sections 4 or 5.",
         "",
+        *link_round_note,
         *change_section,
         "",
         *card_section,
@@ -2500,6 +2544,11 @@ def _retry_problem(source: Path, record: AuditRecord) -> str | None:
             f"a format retry cannot change the answer: the invalid record decided {earlier['decision']}, "
             f"this one decides {record.decision}"
         )
+    if isinstance(earlier.get("link_decisions"), list):
+        was = {x.get("to"): x.get("decision") for x in earlier["link_decisions"] if isinstance(x, dict)}
+        now = {x.to: x.decision for x in record.link_decisions or []}
+        if was != now:
+            return "a format retry cannot change the answer: the link_decisions differ from the invalid record's"
     level = earlier.get("accepted_level")
     if level is not None and level != record.accepted_level:
         return (
@@ -2536,6 +2585,7 @@ def validate_audit_record(
     context_path: Path,
     redraft: bool | str = False,
     require_class: bool = False,
+    extra_check: Callable[[AuditRecord], list[str]] | None = None,
 ) -> AuditRecord:
     """Check an audit record against its context file and the cache; raise PipelineError listing every problem.
 
@@ -2545,7 +2595,9 @@ def validate_audit_record(
     a verbatim excerpt (at least ``MIN_RUBRIC_CHARS`` characters) of functional spec section 2 or 3. With
     ``require_class`` (a new record of a correction round) every part of a ``reject`` says ``class`` (``decisive``,
     ``wording`` or ``none`` for a part that supports the card) with at least one objecting part, and an ``accept``
-    has no objecting part; a record written before the valve is read without it, as unclassified.
+    has no objecting part; a record written before the valve is read without it, as unclassified. ``extra_check``
+    (the audit of a link round) returns more problems for a record that passed the schema; without it a record that
+    holds ``link_decisions`` is refused: they are for a link round only.
     """
     try:
         record = AuditRecord.model_validate(raw)
@@ -2572,6 +2624,10 @@ def validate_audit_record(
             problems.append(f"accepted_level {record.accepted_level} must be lower than the level {ceiling}")
     if require_class:
         problems += _class_problems(record)
+    if extra_check is not None:
+        problems += extra_check(record)
+    elif record.link_decisions is not None:
+        problems.append("link_decisions is for the audit of a link round only")
     cited = _context_record_ids(context)
     abstract_only = _abstract_only_ids(context)
     reader = citations.CacheReader(cfg.cache_dir)
@@ -2657,6 +2713,8 @@ def record_audit(
     out_dir: Path | None = None,
     redraft: bool | str = False,
     retry: bool = False,
+    context_file: Path | None = None,
+    extra_check: Callable[[AuditRecord], list[str]] | None = None,
 ) -> AuditRecord:
     """Validate the record the auditor wrote and log it. A change is ``slug`` and ``key`` (the file is
     ``audit/<slug>-<key>.yaml``, or ``...-second.yaml``); a whole card is ``slug`` with ``key`` None and ``file``.
@@ -2666,6 +2724,9 @@ def record_audit(
     A record that fails validation is kept as ``<name>.invalid-1.yaml`` and ``<name>.retry.md`` is written (B3): one
     format retry follows (``retry=True``, implied when ``invalid-1`` exists); its failure is final
     (``<name>.invalid-2.yaml``).
+
+    ``context_file`` (a whole-card record) names the audit context when it is not the default one, and ``extra_check``
+    the further problems of a record (the audit of a link round, ``me_atlas.link_round``).
     """
     if key is not None:
         path = file or cfg.audit_path(slug, key, second, redraft)
@@ -2674,7 +2735,7 @@ def record_audit(
         if file is None:
             raise PipelineError("a whole-card audit needs --file PATH (the record the auditor wrote)")
         path = file
-        context_path = (out_dir or cfg.run_dir) / "audit-context" / f"{slug}{_round_tag(redraft)}.md"
+        context_path = context_file or (out_dir or cfg.run_dir) / "audit-context" / f"{slug}{_round_tag(redraft)}.md"
     invalid1, invalid2, retry_note = (_sibling(path, e) for e in (".invalid-1.yaml", ".invalid-2.yaml", ".retry.md"))
     if invalid2.exists():
         raise PipelineError(f"{path.name} failed validation twice ({invalid2.name}); the format retry is used")
@@ -2700,7 +2761,8 @@ def record_audit(
             source=path,
             context_path=context_path,
             redraft=redraft,
-            require_class=is_correction_round(redraft),
+            require_class=is_correction_round(redraft) or extra_check is not None,
+            extra_check=extra_check,
         )
     except PipelineError as exc:
         if retry:
@@ -6404,9 +6466,10 @@ def _build_parser() -> argparse.ArgumentParser:
     lap = sub.add_parser(
         "link-audit-plan",
         parents=[common],
-        help="link round: write the change audit's context DIR/audit-context/<slug>-links.md (--run-dir DIR)",
+        help="link round: write the change audit's context DIR/audit-context/<slug>-links[-second].md (--run-dir DIR)",
     )
     lap.add_argument("slug")
+    lap.add_argument("--second", action="store_true", help="the second audit's context (links the first kept)")
 
     rla = sub.add_parser(
         "record-link-audit",
@@ -6415,6 +6478,15 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     rla.add_argument("slug")
     rla.add_argument("--second", action="store_true", help="the second (sequential) audit")
+
+    for name, text in (
+        ("link-valve-apply", "apply the wording fix of link texts DIR/valve/<slug>-links-<stage>.json"),
+        ("link-valve-check-plan", "write the card-reviewer's fix-check context for a stage's link wording fix"),
+        ("record-link-valve-check", "validate the card-reviewer's fix check of a stage's link wording fix"),
+    ):
+        lv = sub.add_parser(name, parents=[common], help="link round: " + text + " (--run-dir DIR)")
+        lv.add_argument("slug")
+        lv.add_argument("--stage", required=True, choices=("map-review", "audit"), help="the stage that opened it")
 
     lp = sub.add_parser(
         "link-publish",
