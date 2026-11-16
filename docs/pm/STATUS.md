@@ -23,9 +23,8 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 
 For the founder to decide:
 
-- The orchestrator defaults in DECISIONS that are still marked "for the founder to confirm" (2026-11-15 and later: the cap of four revisions per round, how the three check retries are shared, and the detailed valve and number-check choices).
 - Part C of `docs/plan-wider-sources.md` (bridge search pilot): the founder picks the links to search for.
-- Whether to register the domain me-atlas.org.
+- The domain me-atlas.org waits until the founder sees whether the site draws interest (DECISIONS 2026-11-16).
 
 To build or fix:
 

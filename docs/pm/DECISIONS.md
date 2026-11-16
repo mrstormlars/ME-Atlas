@@ -2,6 +2,12 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — The orchestrator defaults in use are confirmed; the domain waits (founder rulings)
+
+- **The orchestrator defaults that were used are permanent.** The founder said: "Bekrefter standardvalgene vi brukte, la dem bli permanent." This is read as covering every choice recorded in this file or in a plan as an orchestrator default or as "for the founder to confirm" that was in use when the 20 cards were published, among them: the cap of four revised attempts per correction round while the decisive findings fall (2026-11-15/16); the three check retries being shared by a round's attempts, not three per attempt (2026-11-16); the valve removing a sentence rather than rewording it when in doubt (2026-11-15); and the defaults listed at the bottom of `docs/plan-causal-map.md`, `docs/plan-drawn-map.md` and `docs/plan-hypothesis-and-link-survey.md`. They are rulings from now on; the founder changes them like any other ruling. The reading of the scope is the orchestrator's, not the founder's words.
+- **The domain me-atlas.org is not registered for now.** The founder said: "Vi venter med domene til jeg ser om dette vekker noen interesse." The site stays at its GitHub Pages address.
+- **The empty Azure resource group is deleted** on the founder's request ("Slett den tomme ressursgruppen i Azure."), after the storage account in it was removed earlier the same day.
+
 ## 2026-11-16 — The Azure draft preview is deleted (founder ruling)
 
 - The founder said: "Slett gjerne Azure-nettsiden, den trenger vi ikke lengre nå." The storage account that hosted the draft preview was deleted on 2026-11-16; the public site on GitHub Pages replaces it. Why: with all 20 cards published and the site public, a second address with an older draft build could only mislead a reader.
