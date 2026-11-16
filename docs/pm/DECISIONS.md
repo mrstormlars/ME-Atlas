@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — The Azure draft preview is deleted (founder ruling)
+
+- The founder said: "Slett gjerne Azure-nettsiden, den trenger vi ikke lengre nå." The storage account that hosted the draft preview was deleted on 2026-11-16; the public site on GitHub Pages replaces it. Why: with all 20 cards published and the site public, a second address with an older draft build could only mislead a reader.
+- This ends the 2026-11-03 ruling on the private preview. The preview address in earlier entries and in the history is dead.
+
 ## 2026-11-16 — Hosting on GitHub Pages; error reports through GitHub issues (founder ruling)
 
 The founder, on where to host the public site: "Ja, da bruker vi Github Pages." And on the contact address for error reports: "Kontaktadresse kan vel være lenke til Github issues."
