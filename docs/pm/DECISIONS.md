@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — Up to three check retries per correction round; one more round for the energy card (founder ruling)
+
+The founder: "Ja, bygg inn endringen og gi energikortet en ny runde", accepting the proposal "feilede mekaniske sjekker får inntil tre nye forsøk per runde, og drafteren får den nøyaktige feilmeldingen ... Energikortet får da én runde til som loggført unntak."
+
+- **Up to three check retries per correction round.** When a correction attempt fails the mechanical checks (ops problems, the target guard, the validator, the citation checks C1-C11), the drafter may write it again, up to three times per round, shared by the round's attempts. Each retry's ops and checks files are kept in the trail. The drafter of a retry is given the exact check output: rule, location and message of every failed check. Reviews, revisions and audits are unchanged.
+- **One more round for `impaired-energy-production-after-exertion`** (round C4, a logged exception, as `REOPENED_ROUNDS`).
+- Changes: the rule "one check retry per round" (the 2026-11-14 correction path; `docs/pipeline.md`, "The revised attempts": "if the check retry was used by the first attempt, a revised attempt that fails its checks ends the round") now allows three. Everything else stands.
+- Why: the checks are deterministic and involve no judgement, so a retry cannot buy a different answer from a reviewer or auditor. The energy card's round C3 ended on check failures without its correction reaching a reviewer or auditor: the first attempt failed the target guard and its one retry failed the number check on 84.
+
 ## 2026-11-16 — Where an added sentence may go when the audit part names a structured item (orchestrator correction, not a new ruling)
 
 The clause that an added sentence must go in a free-text field the audit part's target names, or that the pre-drafting review ties the part to, was the orchestrator's (contract clause (c)), not the founder's. The founder's words limit the addition to an audit finding that expressly asks for it and to the source and quote the auditor gave; they do not say where the sentence goes. For `herpesvirus-reactivation` round C2 the pre-drafting review tied the audit part that asks for the trigger-or-consequence reading only to `layer`, so the code refused the very sentence the ruling allows. Corrected to match the ruling: when the audit part is tied only to structured items, the sentence may go in the free-text field where the card explains that item: `layer` and `level` in the last paragraph of `level_reason`, `contested` in the last paragraph of `contested.reason`, a badge in the last paragraph of its reason, `studies[<id>]` in that study's `finding`. All other conditions stand. The drafter's first operations file of that round, written from the context before this correction and never applied, is kept under the round folder as superseded; the round's attempt is drafted from the corrected context.
