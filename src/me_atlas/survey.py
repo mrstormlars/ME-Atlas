@@ -6,6 +6,7 @@ Command line (all offline; reads ``data/cache/pubmed/`` and ``config/``; see ``d
     uv run python -m me_atlas.survey themes [--suggest SLUG | --context HEADING [--limit N]]
     uv run python -m me_atlas.survey pairs [--unlinked] [--context SLUG-A SLUG-B [--limit N]]
     uv run python -m me_atlas.survey record-candidates FILE --context CONTEXT-FILE
+    uv run python -m me_atlas.survey bridge run | validate    (PubMed searches; see me_atlas.bridge)
 
 Code counts and sorts; an agent reads only the context files written here; the founder decides. Nothing here
 writes to ``cards/`` or ``drafts/``. Counting uses MeSH headings and whole-word terms only.
@@ -1037,11 +1038,19 @@ def build_parser() -> argparse.ArgumentParser:
     rc.add_argument("file", type=Path, help="the agent's JSON file")
     rc.add_argument("--context", type=Path, required=True, help="the context file the agent was given")
     common(rc, cards=True, candidates=True)
+
+    sub.add_parser("bridge", help="bridge search pilot: `bridge run` and `bridge validate` (see `bridge --help`)")
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
+def main(argv: Sequence[str] | None = None, **bridge_options) -> int:
+    """Entry point. ``survey bridge ...`` goes to ``me_atlas.bridge`` (``bridge_options`` are its test hooks)."""
+    words = sys.argv[1:] if argv is None else list(argv)
+    if words[:1] == ["bridge"]:
+        from me_atlas import bridge
+
+        return bridge.main(words[1:], **bridge_options)
+    args = build_parser().parse_args(words)
     handlers = {
         "check-themes": cmd_check_themes,
         "themes": cmd_themes,
