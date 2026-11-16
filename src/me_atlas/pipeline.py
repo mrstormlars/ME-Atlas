@@ -56,6 +56,8 @@ from me_atlas.cards import CHANGELOG_NAME, NonEmptyStr, Slug, StudyId
 from me_atlas.http import load_dotenv
 from me_atlas.operations import (
     CORRECTION_ONLY_OPS,
+    LINK_ROUND_ONLY_OPS,
+    AddLink,
     AddParagraph,
     AddSentence,
     AddStudy,
@@ -79,6 +81,7 @@ MAX_ROUNDS = 2
 # The one redraft after an auditor's accept_lower (E3): files carry "L" where a round carries 1 or 2. It counts neither
 # as round 1 nor as round 2 and allows no further round.
 REDRAFT = "L"
+LINK_ROUND_COMMANDS = ("link-apply", "record-map-review", "link-audit-plan", "record-link-audit", "link-publish")
 # The correction of a held-back draft (rounds C1, C2, ...): at most this many rounds per card (contract A3).
 MAX_CORRECTION_ROUNDS = 1
 # Logged exceptions (DECISIONS 2026-11-15: two cards stranded on the sequence of the 2026-11-14 path, each gets round
@@ -1356,7 +1359,7 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     if not ops.operations:
         found.append("a correction needs at least one operation")
     for i, op in enumerate(ops.operations):
-        if isinstance(op, (AddStudy, AddParagraph)):
+        if isinstance(op, (AddStudy, AddParagraph, AddLink)):
             found.append(
                 f"operations[{i}] is {op.op}: a correction may hold replace_paragraph, remove_paragraph, "
                 "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
@@ -1936,6 +1939,11 @@ def apply_ops_file(
             if op.op in CORRECTION_ONLY_OPS
         ]
         ops_errors += [
+            f"operations[{i}] is {op.op}: only a link round (`link-apply`) may use it"
+            for i, op in enumerate(ops.operations)
+            if op.op in LINK_ROUND_ONLY_OPS
+        ]
+        ops_errors += [
             f"operations[{i}] is replace_paragraph of core_claim: only a correction round (--round C<k>) may use it"
             for i, op in enumerate(ops.operations)
             if isinstance(op, ReplaceParagraph) and op.field == "core_claim"
@@ -2284,6 +2292,7 @@ def build_audit_context(
     *,
     redraft: bool = False,
     card_text_from: Path | None = None,
+    applied_round: int | None = None,
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -2295,6 +2304,9 @@ def build_audit_context(
     ``card_text_from`` (a whole-card audit only) takes the card text from that file instead of the card file, and
     nothing else changes: the context is built exactly as for the card file, so it does not show that the text is a
     correction. The card is still named by the card file's path.
+
+    ``applied_round`` n (a link round, ``me_atlas.link_round``; ``key`` None) makes the change the diff of
+    ``applied/<slug>-r<n>/`` against the card, with the applied card shown in full in section 2.
     """
     base = _base_card(cfg, slug)
     source = card_text_from if card_text_from is not None and key is None and not redraft else base
@@ -2302,9 +2314,15 @@ def build_audit_context(
     base_text = strip_yaml_comments(source.read_text(encoding="utf-8"))
     study_ids = [s.id for s in base_card.studies]
     carriers = carrier_ids(base_card)
-    if key is not None or redraft:
+    if key is not None or redraft or applied_round is not None:
         paper_id = _paper_id_of_key(cfg, key) if key is not None else None
-        n: Round_ = REDRAFT if redraft else _last_applied_round(cfg, slug, key or "")
+        n: Round_ = (
+            applied_round
+            if applied_round is not None
+            else REDRAFT
+            if redraft
+            else _last_applied_round(cfg, slug, key or "")
+        )
         applied = cfg.applied_dir(slug, key, n)
         if not (applied / f"{slug}.yaml").is_file():
             raise PipelineError(f"no applied result in {applied}; run `apply` first")
@@ -2321,7 +2339,13 @@ def build_audit_context(
         applied_card = _load_card(applied / f"{slug}.yaml")
         study_ids += [s.id for s in applied_card.studies]
         carriers = carrier_ids(applied_card)  # E1: the carriers of the card once the change is in
-        what = f"the change from paper `{paper_id}`" if paper_id else "the redraft of the whole card"
+        what = (
+            f"the change from paper `{paper_id}`"
+            if paper_id
+            else "the links added to the published card"
+            if applied_round is not None
+            else "the redraft of the whole card"
+        )
         subject = f"card `{slug}` and {what} (round {n})"
         change_section = [
             "## 1. The proposed change (the diff of the card)",
@@ -2331,6 +2355,8 @@ def build_audit_context(
             "```",
         ]
         card_section = [f"## 2. The card as it stands (`{base}`)", "", "```yaml", base_text, "```"]
+        if applied_round is not None:
+            card_section += ["", "The card with the change applied:", "", "```yaml", applied_text, "```"]
     else:
         subject = f"the whole card `{slug}`"
         change_section = [
@@ -2444,8 +2470,8 @@ def _proposed_level(cfg: Config, slug: str, key: str | None, redraft: bool | str
     """The level an accept_lower must be below: the level in the last applied result of a change (the redraft's
     applied result in round L, the corrected card's in a correction round), or the card's own for a whole-card
     audit."""
-    if redraft:
-        path = cfg.applied_dir(slug, key, REDRAFT if redraft is True else redraft) / f"{slug}.yaml"
+    if redraft is True or redraft == REDRAFT or is_correction_round(redraft):  # not a link round (``links``)
+        path = cfg.applied_dir(slug, key, REDRAFT if redraft is True else str(redraft)) / f"{slug}.yaml"
     elif key is not None:
         path = cfg.applied_dir(slug, key, _last_applied_round(cfg, slug, key)) / f"{slug}.yaml"
     else:
@@ -3083,6 +3109,8 @@ def describe_op(op: Any, base: dict[str, Any]) -> str:
         return f"Remove the link to `{op.to}`"
     if isinstance(op, AddSentence):
         return f"Add a sentence to `{op.target}` (sources {', '.join(op.sources)}): {op.text}"
+    if isinstance(op, AddLink):
+        return f"Add a {op.support} link to `{op.to}` (sources {', '.join(op.sources)}): {op.text}"
     assert isinstance(op, Propose)
     paragraphs = " ".join(f"{p.text} [{', '.join(p.sources)}]" for p in op.reason or [])
     if op.target == "level":
@@ -5004,6 +5032,8 @@ def _op_headline(op: Any, base: dict[str, Any]) -> str:
         return f"Removed paragraph {op.index} of {op.field}"
     if isinstance(op, RemoveLink):
         return f"Removed the link to {op.to}"
+    if isinstance(op, AddLink):
+        return f"Added a link to {op.to}"
     assert isinstance(op, Propose)
     if op.target == "level":
         return f"Proposed level {base.get('level')} -> {op.value}"
@@ -5021,6 +5051,8 @@ def _op_sources(op: Any) -> list[str]:
         return [op.id]
     if isinstance(op, (RemoveParagraph, RemoveLink)):
         return []
+    if isinstance(op, AddLink):
+        return list(op.sources)
     assert isinstance(op, Propose)
     return [s for p in op.reason or [] for s in p.sources]
 
@@ -5774,6 +5806,12 @@ def publication_changelog(cfg: Config, pub: CardPublication) -> tuple[Path, str]
         "tier": 2,
         "decided_by": "ai_audit",
     }
+    return append_changelog_entry(cfg, entry, pub.date)
+
+
+def append_changelog_entry(cfg: Config, entry: dict[str, Any], date: str) -> tuple[Path, str]:
+    """The new text of ``cards/changelog.yaml`` with ``entry`` appended (the earlier text is kept byte for byte);
+    checked with the change-log validator before it is returned."""
     path = cfg.cards_dir / CHANGELOG_NAME
     existing = path.read_text(encoding="utf-8") if path.is_file() else ""
     dumped = yaml.safe_dump([entry], sort_keys=False, allow_unicode=True, default_flow_style=False, width=100)
@@ -5783,7 +5821,7 @@ def publication_changelog(cfg: Config, pub: CardPublication) -> tuple[Path, str]
         log.write_text(text, encoding="utf-8", newline="\n")
         for card in {e["card"] for e in yaml.safe_load(text)}:
             (Path(tmp) / f"{card}.yaml").write_text("", encoding="utf-8")
-        issues = cards.validate_changelog_file(log, today=dt.date.fromisoformat(pub.date))
+        issues = cards.validate_changelog_file(log, today=dt.date.fromisoformat(date))
     if issues:
         raise PipelineError("the new change-log entry does not validate:\n" + "\n".join(map(str, issues)))
     return path, text
@@ -6346,6 +6384,48 @@ def _build_parser() -> argparse.ArgumentParser:
         help="C<k>: publish (or hold back) after correction round C<k>, from that round's files",
     )
 
+    la = sub.add_parser(
+        "link-apply",
+        parents=[common],
+        help="link round: apply the link-drafter's proposal (DIR/map/<slug>-r<N>.json) to a copy of a published "
+        "card and run the checks (--run-dir DIR)",
+    )
+    la.add_argument("slug")
+    la.add_argument("--round", type=int, choices=(1, 2), required=True, help="the proposal round")
+
+    rmr = sub.add_parser(
+        "record-map-review",
+        parents=[common],
+        help="link round: validate the card-reviewer's map review DIR/map-review/<slug>-r<N>.json (--run-dir DIR)",
+    )
+    rmr.add_argument("slug")
+    rmr.add_argument("--round", type=int, choices=(1, 2), required=True, help="the proposal round")
+
+    lap = sub.add_parser(
+        "link-audit-plan",
+        parents=[common],
+        help="link round: write the change audit's context DIR/audit-context/<slug>-links.md (--run-dir DIR)",
+    )
+    lap.add_argument("slug")
+
+    rla = sub.add_parser(
+        "record-link-audit",
+        parents=[common],
+        help="link round: validate the audit record DIR/audit/<slug>-links[-second].yaml (--run-dir DIR)",
+    )
+    rla.add_argument("slug")
+    rla.add_argument("--second", action="store_true", help="the second (sequential) audit")
+
+    lp = sub.add_parser(
+        "link-publish",
+        parents=[common],
+        help="link round: add the links to cards/<slug>.yaml when the checks, the map review and both audits "
+        "allow it, else hold the card back (--run-dir DIR)",
+    )
+    lp.add_argument("slug")
+    lp.add_argument("--date", type=_date, metavar="YYYY-MM-DD", help="default: today")
+    lp.add_argument("--dry-run", action="store_true", help="write only DIR/link-report.md")
+
     cp = sub.add_parser(
         "content-paths",
         help="fail when a commit without the pipeline marker changes cards/, drafts/, translations/ or audits/",
@@ -6433,6 +6513,11 @@ def main(
                 raise PipelineError("publish-card needs --run-dir DIR (the folder audit-plan --card --out made)")
             date = args.date or today or dt.date.today()
             run_dir = args.run_dir
+        elif args.command in LINK_ROUND_COMMANDS:
+            if not args.run_dir:
+                raise PipelineError(f"{args.command} needs --run-dir DIR (the folder of the link round)")
+            date = (args.date or today or dt.date.today()) if args.command == "link-publish" else None
+            run_dir = args.run_dir
         elif args.command in ("valve-apply", "valve-check-plan", "record-valve-check", "record-audit-classification"):
             if not args.run_dir:
                 raise PipelineError(f"{args.command} needs --run-dir DIR (the folder of the correction round)")
@@ -6480,6 +6565,10 @@ def _dispatch(
     date: dt.date | None,
     out: Callable[[str], None],
 ) -> int:
+    if args.command in LINK_ROUND_COMMANDS:
+        from me_atlas import link_round  # imported here: me_atlas.link_round imports this module
+
+        return link_round.dispatch(args, cfg, fulltext, date, out)
     if args.command == "prepare":
         assert date is not None
         summary = prepare(

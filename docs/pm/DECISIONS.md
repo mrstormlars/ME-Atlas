@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — The eleven links removed in the correction rounds get a new trial (founder ruling)
+
+- Eleven links on five cards were removed in the correction rounds of 2026-11-14/15: `gut-microbiome` (5: symptom:gastrointestinal-symptoms, symptom:cognitive-impairment, tryptophan-kynurenine-metabolism, neuroinflammation, oxidative-nitrosative-stress), `hpa-axis-cortisol` (3: symptom:sleep-disturbance, symptom:cognitive-impairment, question:what-keeps-it-going), `endothelial-dysfunction` (1: orthostatic-intolerance-cerebral-blood-flow), `small-fibre-neuropathy` (1: symptom:orthostatic-intolerance), `brain-and-brainstem-mri-changes` (1: symptom:cognitive-impairment). Most went because the auditor then saw only the abstract of a link's source and could not match the statement to it, and a correction could only remove. Since 2026-11-16 the audit context gives the cached full text of link sources.
+- Asked "Skal de elleve fjernede lenkene prøves på nytt når del C er ferdig?", the founder answered: "Ja, prøv dem på nytt".
+- Each link is tried again through the link path (`link-drafter` from cached records, `card-reviewer` in map mode, the auditor's tier 2 decision). The old link text is a starting point only. A link comes back only when a cached record states what it rests on and the reviewer and the auditor accept it; otherwise it stays out, with the reason recorded. No level, badge, contested mark or layer changes.
+- Why: the links were removed as unverifiable from an abstract, not shown false; the auditor can now read the full text.
+
 ## 2026-11-16 — The five links for the bridge search pilot (founder ruling)
 
 - The founder said: "Jeg følger din anbefaling, test ut de 5 forbindelsene du foreslo for del C". The five links searched in Part C of `docs/plan-wider-sources.md` are: oxidative-nitrosative-stress → endothelial-dysfunction; autonomic-imbalance → orthostatic-intolerance-cerebral-blood-flow; reduced-nk-cell-function → herpesvirus-reactivation; tryptophan-kynurenine-metabolism → neuroinflammation; autoimmunity-autoantibodies-b-cells → orthostatic-intolerance-cerebral-blood-flow. All five were at step `proposed` in the map report that day.
