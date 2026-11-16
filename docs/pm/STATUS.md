@@ -28,7 +28,6 @@ For the founder to decide:
 
 To build or fix:
 
-- `pipeline translation-plan` plans only cards changed in a weekly run; text that goes stale through a correction round needed a one-off script on 2026-11-16.
 - No path adds a link to a held-back draft (an auditor step and an operation are missing).
 - A proper-noun check (institution and place names against the cached record) is not built; a first count gave too many false hits.
 - The whole-card review gate applies to correction rounds only, not to the first publication of a new draft.

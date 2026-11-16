@@ -1026,6 +1026,102 @@ def test_translation_plan_stops_on_an_unreadable_translation_file(ready: Env, ca
     assert "must equal the file name" in capsys.readouterr().err
 
 
+# --- translation-plan --stale ---------------------------------------------------------
+
+
+def stale_plan(env: Env) -> dict:
+    return load(env.run / "translation-plan.json")
+
+
+def test_stale_plan_lists_a_stale_item_in_the_weekly_shape(env: Env):
+    write_norwegian(env)
+    text = env.draft_text()
+    assert "A fictional study of 100 patients" in text
+    (env.drafts / f"{SLUG}.yaml").write_text(
+        text.replace("A fictional study of 100 patients", "A changed fictional study of 100 patients", 1),
+        encoding="utf-8",
+    )
+    assert not env.run.exists()  # the command makes the run folder; no weekly run is needed
+    assert env.cli("translation-plan", "--stale") == 0
+    plan = stale_plan(env)
+    assert set(plan) == {"lang", "cards", "untranslated_cards"} and plan["untranslated_cards"] == []
+    assert [(c["slug"], c["file"]) for c in plan["cards"]] == [(SLUG, str(env.drafts / f"{SLUG}.yaml"))]
+    assert {i["item"]: i["reason"] for i in plan["cards"][0]["items"]} == {"contested_reason[0]": "already_stale"}
+    entry = load(env.run / "translate" / f"{SLUG}.json")
+    assert set(entry) == {"slug", "lang", "card", "items"} and entry["card"] == plan["cards"][0]["file"]
+    assert set(entry["items"][0]) == {"item", "reason", "english", "sources", "previous_translation"}
+    assert entry["items"][0]["english"].startswith("A changed fictional study")
+    assert entry["items"][0]["previous_translation"].startswith("NB A fictional study")
+    assert not (env.run / "final").exists() and not (env.run / "papers.json").exists()
+
+
+def test_stale_plan_lists_a_missing_item_with_no_previous_translation(env: Env):
+    write_norwegian(env, skip=("early_signals[0]",))
+    assert env.cli("translation-plan", "--stale") == 0
+    plan = stale_plan(env)
+    assert [i["reason"] for i in plan["cards"][0]["items"]] == ["already_missing"]
+    item = load(env.run / "translate" / f"{SLUG}.json")["items"][0]
+    assert item["item"] == "early_signals[0]" and item["previous_translation"] is None
+
+
+def test_stale_plan_reads_the_draft_when_a_card_and_a_draft_both_exist(env: Env):
+    write_norwegian(env)  # in step with the draft as it is now
+    shutil.copy(env.drafts / f"{SLUG}.yaml", env.cards / f"{SLUG}.yaml")
+    text = env.draft_text()
+    (env.cards / f"{SLUG}.yaml").write_text(
+        text.replace("A fictional study of 100 patients", "An older fictional study of 100 patients", 1),
+        encoding="utf-8",
+    )  # the card is older text; the sidecar matches the draft, which wins
+    assert env.cli("translation-plan", "--stale") == 0
+    assert stale_plan(env)["cards"] == []
+    # the other way round: the draft changes, the card does not, and the draft's text is what is planned
+    (env.drafts / f"{SLUG}.yaml").write_text(
+        text.replace("A fictional study of 100 patients", "A draft-only study of 100 patients", 1), encoding="utf-8"
+    )
+    assert env.cli("translation-plan", "--stale") == 0
+    entry = stale_plan(env)["cards"][0]
+    assert entry["file"] == str(env.drafts / f"{SLUG}.yaml")
+    assert entry["items"][0]["item"] == "contested_reason[0]"
+
+
+def test_stale_plan_does_not_plan_a_card_whose_items_are_all_fresh(env: Env):
+    write_norwegian(env)
+    assert env.cli("translation-plan", "--stale") == 0
+    plan = stale_plan(env)
+    assert plan["cards"] == [] and plan["untranslated_cards"] == []
+    assert not (env.run / "translate").exists()
+
+
+def test_stale_plan_lists_a_card_with_no_translation_file_as_untranslated(env: Env):
+    (env.translations / "nb").mkdir(parents=True)
+    assert env.cli("translation-plan", "--stale") == 0
+    plan = stale_plan(env)
+    assert plan["cards"] == [] and plan["untranslated_cards"] == [SLUG]
+    assert not (env.run / "translate").exists()
+
+
+def test_stale_plan_needs_a_run_dir_and_writes_nothing(env: Env, capsys):
+    write_norwegian(env)
+    assert pipeline.main(["translation-plan", "--stale", *env.dir_args]) == 1
+    assert "--run-dir" in capsys.readouterr().err
+    assert not env.pipeline.exists()
+
+
+def test_stale_plan_stops_on_a_translation_file_with_no_english_card(env: Env, capsys):
+    write_norwegian(env)
+    (env.drafts / f"{SLUG}.yaml").unlink()
+    assert env.cli("translation-plan", "--stale") == 1
+    assert SLUG in capsys.readouterr().err
+    assert not (env.run / "translation-plan.json").exists()
+
+
+def test_stale_plan_stops_on_an_unreadable_translation_file(env: Env, capsys):
+    write_norwegian(env)
+    (env.translations / "nb" / f"{SLUG}.yaml").write_text("slug: wrong-name\nitems: {}\n", encoding="utf-8")
+    assert env.cli("translation-plan", "--stale") == 1
+    assert "must equal the file name" in capsys.readouterr().err
+
+
 def test_report_has_a_translation_section_only_after_the_plan_was_made(ready: Env):
     write_norwegian(ready)
     accept_replacing(ready, "90000201")
