@@ -1,0 +1,231 @@
+card: herpesvirus-reactivation
+round: 3
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-herpesvirus-reactivation-second.yaml
+- 2026-11-13-herpesvirus-reactivation.yaml
+- 2026-11-15-herpesvirus-reactivation-C1.yaml
+- 2026-11-16-herpesvirus-reactivation-C2.yaml
+draft_sha256: 9ba2233505ed6a969add486718abc22b3f8432dae0ba4e8bf2b99d7662670395
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[3] says only that the London study (pmid:34422848) ''does not repeat the finding
+      of active infection in blood''. The cached full text (PMC8378328) shows that the study did test
+      blood plasma for active infection and found almost nothing. ''Serum samples (189) ... were screened
+      by ddPCR to detect potential active (lytic) replication of any of the nine HHVs. HHV DNA was rarely
+      detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining
+      HHVs always negative (Table 1).'' Table 1 gives HHV-6A in plasma in 1 sample (''HC (1)''), HHV-6B
+      in 2 (''HC (2)''), and HHV-7 positive in 0 of 182. So every plasma HHV-6 detection was in a healthy
+      control, and HHV-7 was found in no one. This is the same marker level 2 rests on: HHV DNA in cell-free
+      plasma, which pmid:36653846 uses as a marker of active infection. The case definition is the same
+      or stricter (Canadian Consensus and/or CDC-1994), and the study had controls. The record does not
+      say how many of the 189 screened samples came from ME/CFS patients. The serology pool was 132 ME/CFS,
+      76 HC and 27 MS. So it cannot be told whether the measurement reaches 100 patients, half of the
+      200 in pmid:36653846. Under the founder ruling of 2026-11-16 (''Unknown patient count''), contested:
+      null is correct. But the contradicting finding and the missing number must then be written out on
+      the card, and they are not. As written, level_reason[3] reads as if blood was not tested.'
+    fix: 'Keep contested: null. In level_reason[3] (source pmid:34422848), state that the London group
+      also screened 189 stored plasma samples by ddPCR for active herpesvirus replication. Say that HHV-7
+      DNA was found in none, and HHV-6A and HHV-6B only in one and two healthy controls. Say that the
+      paper does not give how many of the 189 samples came from ME/CFS patients (the serology pool was
+      132 ME/CFS, 76 controls, 27 MS), so it cannot be told whether this measurement had at least half
+      the 200 patients of the Riga study. Say that for this reason the card is not marked contested. Replace
+      ''does not repeat the finding of active infection in blood'' with this.'
+    class: decisive
+    targets:
+    - contested
+    - level_reason[3]
+  - operation: null
+    severity: must_fix
+    problem: 'The card sets layer: mechanism, but nowhere states the other reading. In that reading, reactivation
+      is a consequence of immune dysfunction, or ME/CFS makes people susceptible to infection. Three earlier
+      audit parts raised this (2026-11-13 part 4, C1 part 6, C2 part 3), and the draft is unchanged. The
+      cached records state the ambiguity. pmid:34422848 (abstract): ''Herpesvirus reactivation might be
+      a cause or consequence of dysregulated immune function seen in ME/CFS.'' pmid:32129496 (full text):
+      ''Another possibility is that patients with ME/CFS are susceptible to acute viral infections as
+      a consequence of immune dysfunction.'' Under the rubric (section 3, Layers; founder ruling 2026-11-16),
+      the ambiguity must be written out with a source, or expressed as a link.'
+    fix: 'Add one sourced sentence: the cited London study says herpesvirus reactivation might be a cause
+      or a consequence of the immune dysregulation seen in ME/CFS (pmid:34422848), and the Bulgarian study
+      raises the possibility that patients are susceptible to viral infections as a consequence of immune
+      dysfunction (pmid:32129496). Put it in core_claim, or add it as a link that expresses the other
+      reading if an immune-dysfunction card exists. Say no more than these quotes.'
+    class: decisive
+    targets:
+    - layer
+    - core_claim
+  - operation: null
+    severity: must_fix
+    problem: The group field of pmid:22927850 says 'Rasa S is an author of both' (22927850 and 36653846).
+      The author facts computed from the cached records give the shared authors of this pair as 'Krumina
+      A, Murovska M' only. Rasa S is not listed as shared (36653846 lists 'Rasa-Dzelzkaleja S'). The context
+      says to state shared authors only as given there.
+    fix: Replace '(Rasa S is an author of both)' with '(Krumina A and Murovska M are authors of both)'.
+    class: decisive
+    targets:
+    - studies[pmid:22927850].group
+  - operation: null
+    severity: advisory
+    problem: links[1] says the London study 'found no positive correlation between HHV-6B or HHV-7 DNA
+      levels and a questionnaire score for post-exertional malaise'. The full text never states this outright.
+      It lists the domains that correlated with HHV-6B and HHV-7 (sleep, pain, neurocognition, autonomic,
+      neuroendocrine, immune), and PEM is not among them. It reports a negative PEM correlation with HHV-6B
+      during acute episodes (r = -0.647). The reading is supported, but by omission.
+    fix: Write 'reported no positive correlation' instead of 'found no positive correlation'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[7] and studies[pmid:10913395].finding call lymphocyte DNA 'a marker of latent
+      rather than active infection' as this card's own reading. The Atlanta abstract does not say this.
+      The meaning of blood-cell DNA as a marker of persistent infection comes from pmid:36653846 ('peripheral
+      blood (a marker of persistent infection)').
+    fix: Attribute the marker reading to the Riga paper's definition, or drop the clause.
+  - operation: null
+    severity: advisory
+    problem: level_reason[5] says the Kyiv study (pmid:35102619) 'reported how often the viruses became
+      undetectable in blood, not whether symptoms changed'. Only the abstract is cached, and the abstract
+      does not report symptoms. Whether the paper itself does cannot be checked. studies[pmid:35102619].finding
+      words this correctly ('symptoms are not reported in the abstract').
+    fix: Write 'its abstract reports how often ... and not whether symptoms changed'.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: 'A study from London, with no authors shared with the Riga studies, measured herpesvirus DNA in
+    saliva every month for six months in 30 patients from the UK ME/CFS Biobank (16 severely, 14 mildly
+    or moderately affected), meeting the Canadian Consensus Criteria and/or the Fukuda definition, and
+    16 healthy controls in the saliva measurements (the abstract says 14 controls). It found higher HHV-6B
+    and HHV-7 DNA levels in saliva: HHV-6B was higher in the 16 severely affected patients than in controls
+    at three of six monthly time points, and HHV-7 was higher in the mildly or moderately affected patients
+    at two time points, with trends at the others. Epstein-Barr virus and herpes simplex virus 1 did not
+    differ. The authors read the viral DNA as longstanding, persistent infection rather than acute or
+    recent infection. The card does not reach level 3: this saliva measurement found differences only
+    in subgroups at a few time points. The same study also screened 189 stored samples by ddPCR for active
+    replication of any of nine herpesviruses. HHV-7 DNA was found in none, and HHV-6A and HHV-6B DNA only
+    in one and two healthy controls. The paper does not give how many of the 189 samples came from patients
+    (an earlier antibody measurement in the same biobank covered 132 people with ME/CFS, 76 healthy controls
+    and 27 people with multiple sclerosis), so it cannot be told whether this measurement had at least
+    half the 200 patients of the Riga study; for this reason the card is not marked contested.'
+  sources:
+  - pmid:34422848
+  - pmid:36653846
+- op: add_sentence
+  target: level_reason[7]
+  text: On the direction of cause, the London study says herpesvirus reactivation might be a cause or
+    consequence of the dysregulated immune function seen in ME/CFS, and the Bulgarian study raises the
+    possibility that patients with ME/CFS are susceptible to acute viral infections as a consequence of
+    immune dysfunction.
+  sources:
+  - pmid:34422848
+  - pmid:32129496
+  answers:
+    record: 2026-11-15-herpesvirus-reactivation-C1.yaml
+    part: 6
+- op: update_study
+  id: pmid:22927850
+  set:
+    group: Murovska M, Riga Stradins University, Riga, Latvia (same group as 36653846; Krumina A and Murovska
+      M are authors of both)
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: accept
+  findings:
+  - operation: 0
+    severity: advisory
+    problem: 'Op 0 answers pre-review finding 1 and audit parts 2013 part 2/3 and C2 part 1/2 (contested,
+      level_reason[3]). Every number checks against the cached full text PMC8378328: ''Serum samples (189)
+      ... were screened by ddPCR to detect potential active (lytic) replication of any of the nine HHVs'';
+      Table 1 plasma HHV-6A positive 1 (HC (1)), HHV-6B positive 2 (HC (2)), HHV-7 positive 0 / negative
+      182; the 132/76/27 serology pool is quoted. The patient count of the screen is indeed not given,
+      so contested: null follows the founder ruling ''Unknown patient count''. Two small wording points:
+      the 189 samples were not all stored samples but those selected for high CMV/EBV IgG titres or seropositivity
+      to at least five of six HHVs, and the paper says it screened for ''potential'' active replication.'
+    fix: Optionally write 'screened 189 selected stored samples by ddPCR for potential active replication'.
+  - operation: 1
+    severity: advisory
+    problem: Op 1 answers pre-review finding 2 and C1 part 6 (also 2013 part 4, C2 part 3); level_reason[7]
+      is an allowed target for that part, and the sentence says no more than the two quotes (pmid:34422848
+      abstract; pmid:32129496 full text). It is appended to a paragraph that opens 'Some studies whose
+      case definitions are not yet verified found no difference', while the London and Bulgarian studies
+      have verified definitions; a reader could briefly link the two. The trigger reading has no source
+      quote and is rightly not written.
+    fix: None needed now; a later round could move the sentence to core_claim, which the finding also
+      allowed.
+added_sentences:
+- target: level_reason[7]
+  text: On the direction of cause, the London study says herpesvirus reactivation might be a cause or
+    consequence of the dysregulated immune function seen in ME/CFS, and the Bulgarian study raises the
+    possibility that patients with ME/CFS are susceptible to acute viral infections as a consequence of
+    immune dysfunction.
+  answers:
+    record: 2026-11-15-herpesvirus-reactivation-C1.yaml
+    part: 6
+  quotes:
+  - source: pmid:34422848
+    quote: Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen
+      in ME/CFS.
+  - source: pmid:32129496
+    quote: Another possibility is that patients with ME/CFS are susceptible to acute viral infections
+      as a consequence of immune dysfunction.
+card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[5] calls pmid:35102619 ''A non-randomised study'' and says it ''reported how
+      often the viruses became undetectable in blood, not whether symptoms changed''. The cached record
+      (abstract only, no full text cached) says nothing about how patients were allocated: it describes
+      a study group of 192 cases given valaciclovir, valganciclovir or artesunate and a control group
+      of 63 ''similar patients with ME/CFS ... not taking any antiviral drugs'', with no statement that
+      allocation was or was not random. It also only shows that the abstract does not report symptoms;
+      the paper as a whole cannot be checked. Both statements say more than the record.'
+    fix: Drop 'non-randomised' (for example 'A study of 192 patients ... compared with 63 untreated patients')
+      and write 'its abstract reports how often the viruses became undetectable in blood and does not
+      report symptoms', as the study's own finding field already does.
+    class: wording
+    target: level_reason[5]
+    targets:
+    - level_reason[5]
+  - operation: null
+    severity: must_fix
+    problem: 'subgroups[0] says ''The antiviral trials selected patients by their antibodies to Epstein-Barr
+      virus or HHV-6.'' This holds for the two cited trials (pmid:2849717: antibodies to EBV early antigen
+      or nuclear antigen; pmid:23959519: elevated IgG titres against HHV-6 and EBV), but the card also
+      describes pmid:18019402 as a randomised trial in an ''EBV subset'' whose abstract does not say the
+      subset was chosen by antibodies, and pmid:35102619 selected patients by blood leukocyte PCR, not
+      antibodies. ''The antiviral trials'' reads as all of them.'
+    fix: Write 'Two placebo-controlled antiviral trials selected patients by their antibodies to Epstein-Barr
+      virus or HHV-6.'
+    class: wording
+    target: subgroups[0]
+    targets:
+    - subgroups[0]
+  - operation: null
+    severity: advisory
+    problem: level_reason[7] says the Atlanta PCR of blood cells (pmid:10913395) is something 'this card
+      treats as a marker of latent rather than active infection', and the study's finding says the same.
+      That reading is the card's own; the cited record concludes 'no evidence that active or latent infection
+      ... is associated'. The Riga full texts (pmid:22927850, pmid:36653846) state that leukocyte DNA
+      is their marker of persistent/latent infection, but neither is cited in this paragraph.
+    fix: Either cite the Riga paper that defines leukocyte DNA as a marker of latent/persistent infection
+      for that clause, or add that the Atlanta authors found no evidence for active or latent infection.
+  - operation: null
+    severity: advisory
+    problem: links[1] says the London study 'found no positive correlation between HHV-6B or HHV-7 DNA
+      levels and a questionnaire score for post-exertional malaise'. The cached full text lists the significant
+      correlations (none positive with PEM) and a negative PEM correlation with HHV-6B on sick days (r
+      = -0.647); it does not state the absence in so many words, and the per-domain values are in Supplementary
+      Table 7, which is not cached.
+    fix: Optionally write 'reported no positive correlation' to make clear the absence is read from the
+      correlations the paper reports.
+audits_run:
+- 2026-11-16-herpesvirus-reactivation-C3.yaml
+- 2026-11-16-herpesvirus-reactivation-C3-second.yaml
+valve:
+  card-review:
+    file: 2026-11-16-herpesvirus-reactivation-C3-valve-card-review.yaml
+    passed: true

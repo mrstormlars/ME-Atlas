@@ -92,11 +92,13 @@ REOPENED_ROUNDS = {
     # DECISIONS 2026-11-16 (one added sentence; one more round for the last two cards): a third round for the first;
     # `herpesvirus-reactivation` keeps its unused round C2 (below).
     # DECISIONS 2026-11-16 (up to three check retries per round): a fourth round (C4) for the same card.
-    "impaired-energy-production-after-exertion": 4,
+    # DECISIONS 2026-11-16 (three rubric clarifications): a fifth round (C5) for it, and a third (C3) for
+    # `herpesvirus-reactivation`.
+    "impaired-energy-production-after-exertion": 5,
     "brain-and-brainstem-mri-changes": 2,
     "orthostatic-intolerance-cerebral-blood-flow": 2,
     "hpa-axis-cortisol": 2,
-    "herpesvirus-reactivation": 2,
+    "herpesvirus-reactivation": 3,
 }
 # The safety valve for wording-only findings (DECISIONS 2026-11-15, "A safety valve for wording-only findings"): the
 # stages of a correction attempt that can open it, in order. A key names the valve of one stage of one attempt

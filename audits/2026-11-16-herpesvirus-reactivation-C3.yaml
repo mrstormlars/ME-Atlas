@@ -1,0 +1,99 @@
+card: herpesvirus-reactivation
+decision: accept
+parts:
+  - decision_part: "The level 2: a controlled study in a Fukuda-defined cohort (200 patients, 150 controls) found active HHV-6 and HHV-7 markers in cell-free plasma more often in patients, with active double HHV-6 and HHV-7 infection only in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "with a clinically diagnosed ME/CFS corresponding to 1994 Fukuda Centers for Disease Control and Prevention criteria and 150 age and gender matched apparently healthy individuals were included in this cross-sectional study"
+      - source: pmid:36653846
+        quote: "cell-free blood plasma (a marker of an active infection)"
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively)"
+      - source: pmid:36653846
+        quote: "Whereas markers of active infection/co-infection (virus genomic sequences in DNA from blood plasma) were detected in 45% (90/200) of the patients with ME/CFS and 8.7% (13/150) of the healthy individuals (p < 0.0001)."
+    class: none
+  - decision_part: "Not level 3: the second plasma study is by the same Riga group, and the independent London study measured saliva DNA, found differences only in subgroups at some time points, and read it as persistent infection."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:22927850
+        quote: "Viksna Ludmila 2 Murovska Modra 1"
+      - source: pmid:36653846
+        quote: "Shoenfeld Yehuda 3 Murovska Modra 1 the VirA project"
+      - source: pmid:34422848
+        quote: "the differences were significant at months 1 (P = 0.039), 3 (P = 0.030), and 5 (P = 0.029), with a trend toward higher viral load across all time points"
+      - source: pmid:34422848
+        quote: "indicating that these are longstanding, persistent infections rather than acute/recent infections"
+    class: none
+  - decision_part: "No contested mark from the Bulgarian study: it found no active HHV-6 infection, but with 58 patients it has less than half the 200 patients of the study the rung rests on."
+    rubric: "and at least half the sample size of the study it contradicts"
+    evidence:
+      - source: pmid:32129496
+        quote: "In the study were included 58 patients with ME/CFS and 50 healthy controls."
+      - source: pmid:32129496
+        quote: "No ME/CFS and control individuals with active CMV and HHV-6 infection were observed."
+    class: none
+  - decision_part: "No contested mark from the London plasma ddPCR screen: it contradicts the plasma finding, but the number of patients among the 189 samples is not stated; the card writes out the finding and the missing number."
+    rubric: "When the sources do not state the number of patients in the measurement that contradicts the finding, the contested mark is not set, but the contradicting finding and the missing number are written out on the card."
+    evidence:
+      - source: pmid:34422848
+        quote: "were screened by ddPCR to detect potential active (lytic) replication of any of the nine HHVs"
+      - source: pmid:34422848
+        quote: "HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative"
+      - source: pmid:34422848
+        quote: "plasma samples from 132 people with ME/CFS, 76 HC participants and 27 people with multiple sclerosis (MS) in the UKMEB were measured by ELISA"
+    class: none
+  - decision_part: "The antiviral trials do not count towards level 4 or contest the level, because their case definitions are recorded as not yet verified; the card describes their results without overstating them."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:2849717
+        quote: "Of the 24 patients who completed the trial, similar numbers improved with acyclovir therapy and with placebo (11 and 10, respectively)."
+      - source: pmid:23959519
+        quote: "VGCV patients experienced a greater improvement by MFI-20 at 9 months from baseline compared to placebo patients but this difference was not statistically significant."
+    class: none
+  - decision_part: "Diagnostic marker badge no: the dUTPase antibody findings come from one group and no marker has been tested in a second independent group with a stated case definition."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:28303641
+        quote: "the ME/CFS cohort had higher anti-EBV-dUTPase antibodies than in both GWI patients (P = 0.0008) and controls (P < 0.0001)"
+      - source: pmid:41451845
+        quote: "The results of this study demonstrate a significant increase in dUTPase IgG antibodies to the herpesviruses Epstein-Barr virus (EBV), human herpesvirus-6 (HHV-6) and varicella zoster virus (VZV) in ME/CFS compared to healthy-controls (p < 0.001)."
+    class: none
+  - decision_part: "Explains PEM badge no: the 108-patient Riga study recorded malaise after exertion as a symptom only, with no exertion challenge."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:22927850
+        quote: "Subfebrility, lymphadenopathy, malaise after exertion, muscle pain, multijoint pain, sleep disturbances, and headaches of new type were more frequent in patients with active viral infection/coinfection than in patients with latent infection and without infection."
+    class: none
+  - decision_part: "Layer mechanism: the trigger-or-consequence ambiguity is written out on the card with sources."
+    rubric: "When no source carries a link for the other reading, it is enough that the ambiguity is written out with a source"
+    evidence:
+      - source: pmid:34422848
+        quote: "Herpesvirus reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS."
+      - source: pmid:32129496
+        quote: "Another possibility is that patients with ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction."
+    class: none
+  - decision_part: "Links to symptom:flu-like-symptoms and symptom:post-exertional-neuroimmune-exhaustion at associated: a Fukuda-defined cohort measured active infection and the symptoms in the same patients and reports a relation; the London study's contrary PEM correlation is written into the link text."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:22927850
+        quote: "corresponding to the 1994 CDC definition and 90 practically healthy persons"
+      - source: pmid:22927850
+        quote: "Definite relationship was observed between active betaherpesvirus infection and subfebrility, lymphadenopathy and malaise after exertion"
+      - source: pmid:34422848
+        quote: "PEM and Pain were negatively correlated with HHV-6B"
+    class: none
+  - decision_part: "Link to endothelial-dysfunction at proposed: a peer-reviewed review states the link."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:38675914
+        quote: "We suggest that the chronicity of ME/CFS symptoms and the multisystemic nature of the disease may be partly attributable to herpesvirus-induced endothelial maladaptation."
+    class: none
+  - decision_part: "The sputum study (13 patients, 10 controls) is presented only as an early signal, not as support for the level."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:40143349
+        quote: "We found that ME/CFS patients released EBV at a significantly higher level compared to controls (p = 0.0256)."
+    class: none
+reasons_summary: "Level 2 rests on one controlled Fukuda-defined Riga study of 200 patients; no independent replication of the plasma finding, no comparable contradicting study with a known patient count, both badges no, layer and links supported by their sources."
+would_change: "An independent study with a recognised case definition repeating the active plasma HHV-6/HHV-7 finding would support level 3; a contradicting study of comparable quality with at least 100 patients in the measurement (for example a stated patient count for the London 189-sample plasma screen) would set a contested mark. Not verifiable from the records given, and not needed for any decision here: the counts 11 of 13 and 5 of 10 in the early signal (pmid:40143349, abstract only), the 'Ohio' affiliation in the diagnostic-marker reason (pmid:28303641, pmid:41451845, full text not cached), and the crossover design and 24-patient selection details of the acyclovir trial beyond its abstract (pmid:2849717, full text not cached)."

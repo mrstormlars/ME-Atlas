@@ -2,6 +2,18 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — Three rubric clarifications; one more round for the last two cards (founder ruling)
+
+The founder: "Jeg godtar de tre presiseringene. Prøv på nytt." The three clarifications, proposed to the founder in Norwegian and written into functional spec section 3 in English (every review, drafting and audit context embeds that section):
+
+1. **Case definition.** A study is recorded with the definition its own text states. Another article's description is carried over only when a source says the patient group is the same. Comparability is judged by the recorded definition, and the uncertainty is written out on the card.
+2. **Unknown patient count.** When the sources do not state the number of patients in the measurement that contradicts the finding, the contested mark is not set, but the contradicting finding and the missing number are written out on the card.
+3. **Layer without a link.** When no source carries a link for the other reading, it is enough that the ambiguity is written out with a source.
+
+- **One more round each** (logged exceptions, as `REOPENED_ROUNDS`): `impaired-energy-production-after-exertion` round C5, then `herpesvirus-reactivation` round C3, one card and one agent at a time.
+- Changes: section 3 "Accepted case definitions", "Contested evidence" (the comparable-quality rule, for a contradicting measurement whose patient count no source states) and "Causal map and links" (the rule that a card in two possible layers gets a link expressing the other reading). Everything else stands.
+- Why: the last two cards were held back on these three questions. The round C2 and C4 audits of the energy card disagreed on how to treat a case definition known only from a companion paper, and the herpesvirus audit asked for a count and a link that no cached record gives.
+
 ## 2026-11-16 — Up to three check retries per correction round; one more round for the energy card (founder ruling)
 
 The founder: "Ja, bygg inn endringen og gi energikortet en ny runde", accepting the proposal "feilede mekaniske sjekker får inntil tre nye forsøk per runde, og drafteren får den nøyaktige feilmeldingen ... Energikortet får da én runde til som loggført unntak."

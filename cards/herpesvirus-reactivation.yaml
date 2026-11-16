@@ -87,18 +87,25 @@ level_reason:
       larger Riga study, it does not contest level 2.
     sources: [pmid:32129496, pmid:36653846]
   - text: >-
-      A study from London, with no authors shared with the Riga studies, measured herpesvirus DNA in
-      saliva every month for six months in 30 patients from the UK ME/CFS Biobank (16 severely, 14
-      mildly or moderately affected), meeting the Canadian Consensus Criteria and/or the Fukuda
-      definition, and 16 healthy controls in the saliva measurements (the abstract says 14 controls).
-      It found higher HHV-6B and HHV-7 DNA levels in saliva: HHV-6B was higher in the 16 severely
-      affected patients than in controls at three of six monthly time points, and HHV-7 was higher in
-      the mildly or moderately affected patients at two time points, with trends at the others.
-      Epstein-Barr virus and herpes simplex virus 1 did not differ. The authors read the viral DNA
-      as longstanding, persistent infection rather than acute or recent infection. The card does not
-      reach level 3: this study measured viral DNA load in saliva, found differences only in
-      subgroups at a few time points, and does not repeat the finding of active infection in blood.
-    sources: [pmid:34422848]
+      A study from London, with no authors shared with the Riga studies, measured herpesvirus
+      DNA in saliva every month for six months in 30 patients from the UK ME/CFS Biobank (16
+      severely, 14 mildly or moderately affected), meeting the Canadian Consensus Criteria
+      and/or the Fukuda definition, and 16 healthy controls in the saliva measurements (the
+      abstract says 14 controls). It found higher HHV-6B and HHV-7 DNA levels in saliva: HHV-6B
+      was higher in the 16 severely affected patients than in controls at three of six monthly
+      time points, and HHV-7 was higher in the mildly or moderately affected patients at two
+      time points, with trends at the others. Epstein-Barr virus and herpes simplex virus 1 did
+      not differ. The authors read the viral DNA as longstanding, persistent infection rather
+      than acute or recent infection. The card does not reach level 3: this saliva measurement
+      found differences only in subgroups at a few time points. The same study also screened 189
+      stored samples by ddPCR for active replication of any of nine herpesviruses. HHV-7 DNA was
+      found in none, and HHV-6A and HHV-6B DNA only in one and two healthy controls. The paper
+      does not give how many of the 189 samples came from patients (an earlier antibody
+      measurement in the same biobank covered 132 people with ME/CFS, 76 healthy controls and 27
+      people with multiple sclerosis), so it cannot be told whether this measurement had at
+      least half the 200 patients of the Riga study; for this reason the card is not marked
+      contested.
+    sources: ['pmid:34422848', 'pmid:36653846']
   - text: >-
       Placebo-controlled trials of antiviral drugs have been run, but for each the case definition is
       not yet verified, so they cannot count towards level 4. In a trial of 24 patients selected by
@@ -112,12 +119,13 @@ level_reason:
     sources: [pmid:2849717, pmid:23959519]
   - text: >-
       A third randomised trial, of valacyclovir in a subset of patients with Epstein-Barr virus
-      markers, reported a larger rise in an activity score with valacyclovir than with placebo; its
-      abstract gives no sample size or statistical test. A non-randomised study of 192 patients the
-      authors classed as having reactivated HHV-6 or HHV-7 infection by PCR of blood white cells, given
-      valaciclovir, valganciclovir or artesunate, compared with 63 untreated patients, reported how
-      often the viruses became undetectable in blood, not whether symptoms changed.
-    sources: [pmid:18019402, pmid:35102619]
+      markers, reported a larger rise in an activity score with valacyclovir than with placebo;
+      its abstract gives no sample size or statistical test. A study of 192 patients the authors
+      classed as having reactivated HHV-6 or HHV-7 infection by PCR of blood white cells, given
+      valaciclovir, valganciclovir or artesunate, compared with 63 untreated patients; its
+      abstract reports how often the viruses became undetectable in blood and does not report
+      symptoms.
+    sources: ['pmid:18019402', 'pmid:35102619']
   - text: >-
       For Epstein-Barr virus the findings are mixed. The Bulgarian study found Epstein-Barr virus DNA
       in cell-free plasma in 24.1% of patients and 4% of controls, and active infection by the
@@ -126,13 +134,17 @@ level_reason:
       of patients and 42% of donors, a difference that was not significant.
     sources: [pmid:32129496, pmid:28604802]
   - text: >-
-      Some studies whose case definitions are not yet verified found no difference. One of 26 patients
-      and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone's blood
-      cells and found no difference in HHV-6 or HHV-7 DNA in blood cells, which this card treats as a
-      marker of latent rather than active infection. A multicentre search for viral genetic material
-      in blood, stool and saliva found no consistent differences between patients and controls other
-      than fewer anelloviruses (a family of viruses that are not herpesviruses) in patients.
-    sources: [pmid:10913395, pmid:37526404]
+      Some studies whose case definitions are not yet verified found no difference. One of 26
+      patients and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from
+      anyone's blood cells and found no difference in HHV-6 or HHV-7 DNA in blood cells, which
+      this card treats as a marker of latent rather than active infection. A multicentre search
+      for viral genetic material in blood, stool and saliva found no consistent differences
+      between patients and controls other than fewer anelloviruses (a family of viruses that are
+      not herpesviruses) in patients. On the direction of cause, the London study says
+      herpesvirus reactivation might be a cause or consequence of the dysregulated immune
+      function seen in ME/CFS, and the Bulgarian study raises the possibility that patients with
+      ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction.
+    sources: ['pmid:10913395', 'pmid:37526404', 'pmid:34422848', 'pmid:32129496']
 # Contested: null (founder ruling 2026-11-02). Rung 2 rests on 36653846 (200 patients); a comparable contradicting
 # study would need at least 100 patients; 32129496 has 58.
 contested: null
@@ -162,9 +174,9 @@ badges:
       sources: [pmid:22927850]
 subgroups:
   - text: >-
-      The antiviral trials selected patients by their antibodies to Epstein-Barr virus or HHV-6. In
-      the London saliva study, HHV-6B was higher mainly in severely affected patients.
-    sources: [pmid:2849717, pmid:23959519, pmid:34422848]
+      Two of the antiviral trials selected patients by their antibodies to Epstein-Barr virus or
+      HHV-6. In the London saliva study, HHV-6B was higher mainly in severely affected patients.
+    sources: ['pmid:2849717', 'pmid:23959519', 'pmid:34422848']
 working_on_it: []
 early_signals:
   - text: >-
@@ -215,7 +227,7 @@ studies:
     preregistered: null
     role: supports
     direction: higher
-    group: Murovska M, Riga Stradins University, Riga, Latvia (same group as 36653846; Rasa S is an author of both)
+    group: Murovska M, Riga Stradins University, Riga, Latvia (same group as 36653846; Krumina A and Murovska M are authors of both)
     finding: >-
       A study of n=108 patients and 90 healthy controls found active HHV-6, HHV-7 or parvovirus B19
       infection in 70 of 108 patients and 12 of 90 controls, and reported a link between active HHV-6
@@ -517,5 +529,5 @@ links:
       unconfirmed.
     sources: [pmid:38675914]
 last_checked:
-  date: 2026-11-02
-  by: ai_pair
+  date: 2026-11-16
+  by: ai_audit

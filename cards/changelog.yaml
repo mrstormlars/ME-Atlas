@@ -365,3 +365,22 @@
   - pmid:33585505
   tier: 1
   decided_by: founder
+- date: 2026-11-16
+  card: herpesvirus-reactivation
+  change: First publication at level 2 after correction round 3 and a wording fix
+  reason: Level 2 rests on one controlled Fukuda-defined Riga study of 200 patients; no independent replication
+    of the plasma finding, no comparable contradicting study with a known patient count, both badges no,
+    layer and links supported by their sources.
+  sources:
+  - pmid:36653846
+  - pmid:22927850
+  - pmid:34422848
+  - pmid:32129496
+  - pmid:2849717
+  - pmid:23959519
+  - pmid:28303641
+  - pmid:41451845
+  - pmid:38675914
+  - pmid:40143349
+  tier: 2
+  decided_by: ai_audit
