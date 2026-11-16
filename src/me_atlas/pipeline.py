@@ -57,6 +57,7 @@ from me_atlas.http import load_dotenv
 from me_atlas.operations import (
     CORRECTION_ONLY_OPS,
     AddParagraph,
+    AddSentence,
     AddStudy,
     OperationError,
     OpsFile,
@@ -88,7 +89,10 @@ REOPENED_ROUNDS = {
     "small-fibre-neuropathy": 2,
     # DECISIONS 2026-11-15/16 ("one new round for each of the seven"): one more round each, under the new path.
     "mast-cell-activation": 2,
-    "impaired-energy-production-after-exertion": 2,
+    # DECISIONS 2026-11-16 (one added sentence; one more round for the last two cards): a third round for the first;
+    # `herpesvirus-reactivation` keeps its unused round C2 (below).
+    # DECISIONS 2026-11-16 (up to three check retries per round): a fourth round (C4) for the same card.
+    "impaired-energy-production-after-exertion": 4,
     "brain-and-brainstem-mri-changes": 2,
     "orthostatic-intolerance-cerebral-blood-flow": 2,
     "hpa-axis-cortisol": 2,
@@ -103,6 +107,9 @@ VALVE_STAGES = ("correction-review", "card-review", "audit")
 # records of round C1 predate the classification, so a card-reviewer classifies them once; if every finding is wording,
 # the audit-stage valve may run on that closed round. The value is the round. No other slug can use this.
 CLASSIFICATION_EXCEPTION = {"orthostatic-intolerance-cerebral-blood-flow": 1}
+# Check retries of a correction round (DECISIONS 2026-11-16): a failed attempt may be applied again this many times per
+# round, shared by the round's attempts; the failed tries are kept as ``...-attempt<i>``.
+MAX_CHECK_RETRIES = 3
 # The attempts of a correction round, in order: the first, then up to MAX_REVISIONS revised attempts, each after a
 # reject at the correction review or the whole-card review (DECISIONS 2026-11-15/16: while the decisive findings fall).
 # Tags of files: C1, C1-revised, C1-revised2, ... C1-revised<MAX_REVISIONS>.
@@ -1336,9 +1343,9 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     """A2: what the operations file of a correction round may hold. Empty when it holds nothing else.
 
     No paper; at least one operation; only ``replace_paragraph``, ``remove_paragraph``, ``update_study``,
-    ``remove_link`` and ``propose``; a ``propose`` on ``level`` only to a value lower than the draft's, on a badge only
-    to false, on ``contested`` freely. Nothing that adds a study or a paragraph: a correction removes or weakens a
-    claim, it never adds a fact.
+    ``remove_link``, ``propose`` and ``add_sentence`` (see `add_sentence_problems`); a ``propose`` on ``level`` only
+    to a value lower than the draft's, on a badge only to false, on ``contested`` freely. Nothing that adds a study or
+    a paragraph: a correction removes or weakens a claim and adds only the one sentence an audit part asks for.
     """
     found: list[str] = []
     if ops.paper is not None:
@@ -1349,7 +1356,7 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
         if isinstance(op, (AddStudy, AddParagraph)):
             found.append(
                 f"operations[{i}] is {op.op}: a correction may hold replace_paragraph, remove_paragraph, "
-                "update_study, remove_link and propose only (it never adds a fact)"
+                "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
             )
         elif isinstance(op, Propose):
             if op.target == "level" and not (isinstance(op.value, int) and op.value < draft_level):
@@ -1479,15 +1486,95 @@ def _target_permitted(op: Any, target: str, allowed: set[str]) -> bool:
     return False
 
 
+def sentence_targets(card: cards.Card, tied: Sequence[str]) -> list[str]:
+    """The items an ``add_sentence`` for an audit part may go to: each target the part is tied to (its own ``target``,
+    its ``audit_targets``) and, for a structured one, the free-text item where the card explains it, in the draft's
+    numbering: ``layer`` and ``level`` the last paragraph of ``level_reason``, ``contested`` the last of
+    ``contested_reason`` (if any), ``badges.<b>`` the last of ``badge_reasons.<b>`` (if any), ``studies[<id>]`` and
+    ``studies[<id>].<field>`` that study's ``finding``. Links stay out."""
+    found: list[str] = []
+    for target in tied:
+        found.append(target)
+        mapped = None
+        if target in ("layer", "level"):
+            mapped = ("level_reason", len(cards.paragraphs(card.level_reason)))
+        elif target == "contested" and card.contested:
+            mapped = ("contested_reason", len(cards.paragraphs(card.contested.reason)))
+        elif target in ("badges.diagnostic_marker", "badges.explains_pem"):
+            key = target.replace("badges.", "badge_reasons.")
+            mapped = (key, len(_field_paras(card, target + ".reason")))
+        elif m := re.match(r"^(studies\[[^\]]+\])(?:\.\w+)?$", target):
+            found.append(m.group(1) + ".finding")
+        if mapped and mapped[1]:
+            found.append(f"{mapped[0]}[{mapped[1] - 1}]")
+    return list(dict.fromkeys(found))
+
+
+def add_sentence_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_card: cards.Card) -> list[str]:
+    """S2: the ``add_sentence`` operations of attempt ``tag`` that the ruling of DECISIONS 2026-11-16 does not allow.
+
+    Each must answer (a) an objecting part of an audit record the round answers (`objecting_audit_parts`), cite
+    (b) only sources that part quotes and that are studies on the card, go (c) to the part's own ``target`` or to a
+    target the step 0 review gives that part in ``audit_targets``, state no number that the part's quotes of those
+    sources lack, and be (d) the only one for that part in the file. The free-text target and the one-sentence rule
+    are the operation's own validation."""
+    sentences = [(i, op) for i, op in enumerate(ops.operations) if isinstance(op, AddSentence)]
+    if not sentences:
+        return []
+    base = _round_base(tag)
+    parts = {(name, i): part for name, i, part, _d in objecting_audit_parts(cfg, slug, correction_number(tag))}
+    pre = _load_card_review(cfg, slug, f"{base}-pre")
+    given = {(e.record, e.part): set(e.targets) for e in (pre.audit_targets if pre is not None else None) or []}
+    on_card = {study.id for study in draft_card.studies}
+    seen: set[tuple[str, int]] = set()
+    found: list[str] = []
+    for i, op in sentences:
+        key = (op.answers.record, op.answers.part)
+        part = parts.get(key)
+        if part is None:
+            found.append(
+                f"operations[{i}] answers {key[0]} part {key[1]}, which is not an objecting part of an audit record "
+                "this round answers"
+            )
+            continue
+        quoted = {e.source for e in part.evidence}
+        if bad := [x for x in op.sources if x not in quoted or x not in on_card]:
+            found.append(
+                f"operations[{i}] cites {', '.join(bad)}, which that audit part does not quote (or the card does not "
+                "cite)"
+            )
+        tied = [*([part.target] if part.target else []), *sorted(given.get(key, set()))]
+        if op.target not in sentence_targets(draft_card, tied):
+            found.append(
+                f"operations[{i}] adds a sentence to {op.target}, which is neither the target of that audit part nor "
+                "one the step 0 review gives it in audit_targets, nor the item that explains one of them"
+            )
+        numerals, numeral_problems = citations.free_text_numerals(op.text)
+        quote_tokens = citations.source_number_tokens(
+            " ".join(e.quote for e in part.evidence if e.source in op.sources)
+        )
+        found += [f"operations[{i}]: {problem}" for problem in numeral_problems]
+        if missing := [n for n in dict.fromkeys(numerals) if n not in quote_tokens]:
+            found.append(
+                f"operations[{i}] states the number(s) {', '.join(missing)}, which are not in the quotes of that audit "
+                "part for the sentence's sources"
+            )
+        if key in seen:
+            found.append(f"operations[{i}] is a second added sentence for {key[0]} part {key[1]}: one per audit part")
+        seen.add(key)
+    return found
+
+
 def correction_target_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_card: cards.Card) -> list[str]:
-    """B3: the operations of attempt ``tag`` that change something no finding names (empty when none)."""
+    """B3: the operations of attempt ``tag`` that change something no finding names (empty when none). An
+    ``add_sentence`` has no target here: it is allowed only through `add_sentence_problems`."""
     allowed = allowed_targets(cfg, slug, tag, draft_card)
     targets, _survivors = _correction_op_targets(draft_card, ops)
     return [
         f"operations[{i}] changes {t}, which no finding names"
         for i, (op, t) in enumerate(zip(ops.operations, targets, strict=True))
         if t is not None and not _target_permitted(op, t, allowed)
-    ]
+    ] + add_sentence_problems(cfg, slug, tag, ops, draft_card)
 
 
 def _draft_problem(cfg: Config, slug: str, base: str) -> str | None:
@@ -1529,7 +1616,7 @@ def _load_card_review(cfg: Config, slug: str, tag: str) -> ReviewFile | None:
         return None
     if review.card != slug or review.paper is not None:
         return None
-    if tag.endswith("-pre") and _correction_review_target_problems(cfg, slug, review, True, correction_number(tag)):
+    if tag.endswith("-pre") and _correction_review_target_problems(cfg, slug, review, True, tag):
         return None  # the step 0 review counts only when `record-review` would accept it (targets, audit_targets)
     return review
 
@@ -1642,9 +1729,11 @@ def _attempt_chain(cfg: Config, slug: str, base: str) -> list[str]:
 def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revision: int = 0) -> dict[str, Any]:
     """`apply --round C<k> [--revised[2-4]]`: apply a correction's operations, check them (A2, A4).
 
-    Writes ``checks/<slug>-rC<k>.json`` and ``applied/<slug>-rC<k>/`` as for other rounds. At most two attempts after
-    failed checks: a second is allowed only after a failed first one, whose ops and checks files are kept as
-    ``...-attempt1``. After a review reject the drafter gets a revised attempt (``--revised``, ``--revised2``, ...,
+    Writes ``checks/<slug>-rC<k>.json`` and ``applied/<slug>-rC<k>/`` as for other rounds. After failed checks the
+    attempt may be applied again while the round has used fewer than ``MAX_CHECK_RETRIES`` retries (shared by its
+    attempts); each failed try's ops, checks and errors files are kept as ``...-attempt<i>``, and a failed try writes
+    ``checks/<slug>-rC<k>-errors.md`` (`_check_errors_text`) for the drafter.
+    After a review reject the drafter gets a revised attempt (``--revised``, ``--revised2``, ...,
     files ``...-rC<k>-revised<i>...``) while fewer than ``MAX_REVISIONS`` exist and the decisive findings fell since
     the last reject of the same review (`_revision_state`). The draft in ``drafts/`` is never touched.
     """
@@ -1671,22 +1760,23 @@ def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revi
         if problem := _draft_problem(cfg, slug, base):
             raise PipelineError(problem)
     checks_file = cfg.checks_path(slug, None, n)
-    first_checks = cfg.checks_path(slug, None, f"{n}-attempt1")
-    first_ops = cfg.ops_path(slug, None, f"{n}-attempt1")
-    attempt = 1
+    kept = _kept_tries(cfg, slug, n)
+    attempt = kept + 1  # the try of this attempt tag (the next one when its checks failed)
     if checks_file.exists():
-        if first_checks.exists():
-            raise PipelineError(f"both attempts of correction round {n} are used; there is no third")
         if _read_json(checks_file).get("passed"):
             raise PipelineError(f"correction round {n} passed its checks; it is not applied a second time")
-        if n != base and cfg.checks_path(slug, None, f"{base}-attempt1").exists():
+        if _check_retries_used(cfg, slug, base) >= MAX_CHECK_RETRIES:
             raise PipelineError(
-                f"the retry after failed checks of round {base} was used by the first attempt; "
-                "a revised attempt that fails the checks ends the round"
+                f"all {MAX_CHECK_RETRIES} check retries of round {base} are used: a further try after failed "
+                "checks is refused, the round ends"
             )
-        checks_file.replace(first_checks)  # the first attempt failed; keep its record, this is the second
+        # the last try failed; keep its record (and its errors file), this is the next try
+        checks_file.replace(cfg.checks_path(slug, None, f"{n}-attempt{attempt}"))
+        errors_file = _errors_path(cfg, slug, n)
+        if errors_file.exists():
+            errors_file.replace(_errors_path(cfg, slug, f"{n}-attempt{attempt}"))
         shutil.rmtree(cfg.applied_dir(slug, None, n), ignore_errors=True)
-        attempt = 2
+        attempt += 1
 
     ops: OpsFile | None = None
     ops_errors: list[str] = []
@@ -1731,9 +1821,64 @@ def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revi
     if new_text is not None:
         _check_applied(cfg, slug, draft, draft_text, new_text, cfg.applied_dir(slug, None, n), result)
     _finish_checks(cfg, result, ops_errors, None, n)
-    if attempt == 1 and not result["passed"] and ops_path.is_file():
-        shutil.copyfile(ops_path, first_ops)  # the drafter rewrites the ops file for attempt 2; keep the first
+    if not result["passed"]:
+        used = _check_retries_used(cfg, slug, base)
+        left = MAX_CHECK_RETRIES - used
+        errors_file = _errors_path(cfg, slug, n)
+        _write_text(errors_file, _check_errors_text(cfg, slug, base, n, result, left))
+        result["errors_file"] = str(errors_file)
+        if left > 0 and ops_path.is_file():
+            # the drafter rewrites the ops file for the retry; keep this one
+            shutil.copyfile(ops_path, cfg.ops_path(slug, None, f"{n}-attempt{attempt}"))
     return result
+
+
+def _kept_tries(cfg: Config, slug: str, tag: str) -> int:
+    """How many failed tries of attempt ``tag`` are kept as ``<tag>-attempt<i>`` checks files (each is one retry)."""
+    return sum(1 for i in range(1, MAX_CHECK_RETRIES + 1) if cfg.checks_path(slug, None, f"{tag}-attempt{i}").exists())
+
+
+def _check_retries_used(cfg: Config, slug: str, base: str) -> int:
+    """The check retries round ``base`` has used, over all its attempts (a file ``...-attempt1`` of a round run under
+    the one-retry rule counts as one)."""
+    return sum(_kept_tries(cfg, slug, base + suffix) for suffix in ATTEMPT_SUFFIXES)
+
+
+def _errors_path(cfg: Config, slug: str, tag: str) -> Path:
+    path = cfg.checks_path(slug, None, tag)
+    return path.with_name(f"{path.stem}-errors.md")
+
+
+_OPS_LOCATION = re.compile(r"operations\[\d+\]")
+_VALIDATOR_LINE = re.compile(r"^.+?\.yaml: (?P<path>.*?): \[[^\]]+\] ", re.DOTALL)
+
+
+def _check_errors_text(cfg: Config, slug: str, base: str, tag: str, result: dict[str, Any], left: int) -> str:
+    """``checks/<slug>-r<tag>-errors.md``: every error that failed the try (ops problems, validator issues, new
+    citation errors), as rule, location and the message of the checks file; no warnings, no preexisting problems."""
+    rows: list[tuple[str, str, str]] = []
+    for message in result["ops_errors"]:
+        found = _OPS_LOCATION.search(message)
+        rows.append(("ops", found.group(0) if found else "(the ops file)", message))
+    for message in result["validator"]:
+        found = _VALIDATOR_LINE.match(message)
+        rows.append(("validator", found.group("path") if found else "(see the message)", message))
+    for row in _new_errors(result):
+        rows.append((row["code"], row["study"], row["message"]))
+    lines = [
+        f"# Check errors of {cfg.checks_path(slug, None, tag).name}",
+        "",
+        "These errors made the checks fail. Fix exactly these and change nothing else.",
+        (
+            f"Check retries left in round {base}: {left} of {MAX_CHECK_RETRIES}."
+            if left > 0
+            else f"Check retries left in round {base}: none (all {MAX_CHECK_RETRIES} are used)."
+        ),
+        "",
+    ]
+    for i, (rule, location, message) in enumerate(rows, 1):
+        lines += [f"{i}. rule: {rule}", f"   location: {location}", "   message: " + message.replace("\n", "\n   ")]
+    return "\n".join(lines) + "\n"
 
 
 def apply_ops_file(
@@ -1889,9 +2034,37 @@ def apply_ops_file(
 # ---------------------------------------------------------------------------
 
 
-def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool, k: int) -> list[str]:
+def _missing_target_problems(card: cards.Card, where: str, targets: Sequence[str]) -> list[str]:
+    """The targets that name something ``card`` does not have: an indexed item out of range, a study id not on the
+    card. ``level``, ``contested``, the badges and ``layer`` always exist."""
+    counts = {
+        "core_claim": 1,
+        "level_reason": len(cards.paragraphs(card.level_reason)),
+        "contested_reason": len(cards.paragraphs(card.contested.reason)) if card.contested else 0,
+        "badge_reasons.diagnostic_marker": len(_field_paras(card, "badges.diagnostic_marker.reason")),
+        "badge_reasons.explains_pem": len(_field_paras(card, "badges.explains_pem.reason")),
+        "subgroups": len(card.subgroups),
+        "early_signals": len(card.early_signals),
+        "links": len(card.links),
+    }
+    ids = {study.id for study in card.studies}
+    found = []
+    for target in dict.fromkeys(targets):
+        if (m := _INDEXED_TARGET.match(target)) and m.group(1) != "core_claim":
+            n = counts[m.group(1)]
+            if int(m.group(2)) >= n:
+                found.append(f"target {target} does not exist in {where}: {m.group(1)} has {n} item(s)")
+        elif (m := re.match(r"^studies\[([^\]]+)\]", target)) and m.group(1) not in ids:
+            found.append(f"target {target} does not exist in {where}: study {m.group(1)} is not on the card")
+    return found
+
+
+def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFile, pre: bool, tag: str) -> list[str]:
     """B1, B2: every ``must_fix`` of a correction-path review carries ``targets`` (and a ``target`` is one of them);
-    the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other."""
+    the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other.
+    Every target names something that exists: in the draft for the ``--pre`` review, in the applied text of the
+    attempt for a correction review or a whole-card review."""
+    k = correction_number(tag)
     problems = [
         f"findings[{i}] is a must_fix without `targets`: name the parts of the card it is about (a non-empty list)"
         for i, f in enumerate(review.findings)
@@ -1902,6 +2075,17 @@ def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFil
         for i, f in enumerate(review.findings)
         if f.target is not None and f.targets and f.target not in f.targets
     ]
+    text_path = cfg.drafts_dir / f"{slug}.yaml" if pre else cfg.applied_dir(slug, None, tag) / f"{slug}.yaml"
+    if text_path.is_file():
+        try:
+            on_card = _load_card(text_path)
+        except (OSError, PipelineError, ValidationError, yaml.YAMLError):
+            on_card = None
+        if on_card is not None:
+            named = [t for f in review.findings for t in f.targets or []]
+            named += [t for e in review.audit_targets or [] for t in e.targets]
+            where = "the draft" if pre else f"the applied text of {tag}"
+            problems += _missing_target_problems(on_card, where, named)
     if not pre:
         if review.audit_targets is not None:
             problems.append("`audit_targets` belongs to the --pre review only")
@@ -1964,7 +2148,7 @@ def record_review(
             if finding.severity == "must_fix" and finding.klass is None
         ]
     if pre or re.fullmatch(rf"C[1-9]\d*{ATTEMPT_RE}", str(n)):
-        problems += _correction_review_target_problems(cfg, slug, review, pre, correction_number(str(n)))
+        problems += _correction_review_target_problems(cfg, slug, review, pre, str(n))
     if problems:
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
     event = {"event": "record-review", "card": slug, "paper": review.paper, "round": n, "verdict": review.verdict}
@@ -2891,6 +3075,8 @@ def describe_op(op: Any, base: dict[str, Any]) -> str:
         return f"Remove paragraph {op.index} of `{op.field}`"
     if isinstance(op, RemoveLink):
         return f"Remove the link to `{op.to}`"
+    if isinstance(op, AddSentence):
+        return f"Add a sentence to `{op.target}` (sources {', '.join(op.sources)}): {op.text}"
     assert isinstance(op, Propose)
     paragraphs = " ".join(f"{p.text} [{', '.join(p.sources)}]" for p in op.reason or [])
     if op.target == "level":
@@ -3502,13 +3688,18 @@ def _first_publication_refusal(cfg: Config, slug: str) -> str | None:
 
 CORRECTION_LIMITS = (
     "Limits of a correction (the code enforces them). The ops file has `paper` null and at least one operation, and "
-    "may hold `replace_paragraph`, `remove_paragraph`, `update_study`, `remove_link` and `propose` only. A `propose` "
+    "may hold `replace_paragraph`, `remove_paragraph`, `update_study`, `remove_link`, `propose` and `add_sentence` "
+    "only. A `propose` "
     "on `level` may only lower the level (the value must be lower than the draft's); a `propose` on a badge may only "
     "set it to false; a `propose` on `contested` may add, change or remove the mark. No `add_study` and no "
     "`add_paragraph`. `update_study` takes `id` and `set` (a map of study fields; not `id`, not `preprint`); a "
     "recognised case definition needs `case_definition_source` and `case_definition_quote`, `unverified` needs both "
     "null. `remove_paragraph` takes `field` and `index` and cannot leave `level_reason` empty, nor "
     "`contested.reason` while the card is contested, nor a true badge without a reason. `remove_link` takes `to`. "
+    '`add_sentence` (`target`, `text`, `sources`, `answers`: `{"record": <audit record file>, "part": <index>}`) '
+    "appends one sentence to an existing free-text item, only when an objecting audit part expressly asks for a "
+    "missing statement (section 9): one sentence, at most one per part, citing only sources that part quotes, saying "
+    "no more than its quotes, and only to that part's target or one the step 0 review gives it. "
     "A finding that cannot be resolved from the records shown below is resolved by removing or weakening the claim, "
     "never by adding a fact: do not cite anything that is not in the records of section 4."
 )
@@ -3525,6 +3716,39 @@ def _pre_review_lines(review: ReviewFile) -> list[str]:
             lines.append(f"  - targets: {', '.join(finding.targets)}")
         if finding.fix:
             lines.append(f"  - fix: {finding.fix}")
+    return lines
+
+
+def _added_sentence_lines(cfg: Config, slug: str, k: int, pre_review: ReviewFile | None) -> list[str]:
+    """Section 9 of the correction context: per objecting audit part its quoted evidence and the targets an
+    ``add_sentence`` answering it may use (DECISIONS 2026-11-16)."""
+    given = {(e.record, e.part): e.targets for e in (pre_review.audit_targets if pre_review else None) or []}
+    draft = _load_card(cfg.drafts_dir / f"{slug}.yaml")
+    lines = [
+        '## 9. Added sentences (the one exception to "delete rather than rewrite")',
+        "",
+        "Only when an objecting audit part below expressly asks for a missing statement, you may add one sentence "
+        "(`add_sentence`) answering it: one sentence, at most one per part, citing only sources that part quotes, "
+        "saying no more than its quotes, appended to the part's own target, a target listed for it, or the free-text "
+        "item that explains one of them (level and layer: the last `level_reason` paragraph; contested: the last "
+        "`contested_reason`; a badge: the last of its reason; a study: its `finding`). Otherwise "
+        "remove or weaken.",
+        "",
+    ]
+    parts = objecting_audit_parts(cfg, slug, k)
+    if not parts:
+        return [*lines, "No objecting audit part: no `add_sentence` is allowed.", ""]
+    for name, i, part, _decision in parts:
+        tied = [*([part.target] if part.target else []), *given.get((name, i), [])]
+        targets = sentence_targets(draft, tied)
+        lines += [
+            f"### {name}, part {i}",
+            "",
+            f"- decision_part: {part.decision_part}",
+            *[f"- quote: {e.source}: {e.quote}" for e in part.evidence],
+            f"- allowed targets: {', '.join(f'`{t}`' for t in targets) or '(none)'}",
+            "",
+        ]
     return lines
 
 
@@ -3622,6 +3846,7 @@ def build_correction_context(
         citations.author_facts_section(card, citations.CacheReader(cfg.cache_dir)).replace(
             "## Author facts", "## 8. Author facts", 1
         ),
+        *_added_sentence_lines(cfg, slug, k, pre_review),
     ]
     return "\n".join(parts)
 
@@ -5275,15 +5500,20 @@ def correction_outcome(cfg: Config, slug: str, date: str, tag: str, *, exception
     applied_path = cfg.applied_dir(slug, None, attempt) / f"{slug}.yaml"
     if applied_path.is_file():
         pub.would_text = applied_path.read_text(encoding="utf-8")
+    limit = (
+        f"; all {MAX_CHECK_RETRIES} check retries of the round are used"
+        if _check_retries_used(cfg, slug, tag) >= MAX_CHECK_RETRIES
+        else ""
+    )
     if r.ops is None:
-        return held(f"correction failed checks: {r.ops_problem}")
+        return held(f"correction failed checks: {r.ops_problem}{limit}")
     if ops_problems := correction_ops_problems(r.ops, draft_card.level) + correction_target_problems(
         cfg, slug, attempt, r.ops, draft_card
     ):
-        return held("correction failed checks: " + "; ".join(ops_problems))
+        return held("correction failed checks: " + "; ".join(ops_problems) + limit)
     if r.checks is None or not r.checks.get("passed"):
         why = _check_failure_summary(r.checks) if r.checks is not None else "it was never applied (no check result)"
-        return held(f"correction failed checks: {why}")
+        return held(f"correction failed checks: {why}{limit}")
     if r.review is None:
         return held("correction rejected in review: no review was recorded")
     if not _stage_accepted(cfg, slug, attempt, "correction-review", r.review):
@@ -5515,6 +5745,28 @@ def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _added_sentences(cfg: Config, slug: str, tag: str) -> list[dict[str, Any]]:
+    """S3: the ``add_sentence`` operations of attempt ``tag`` as the trail records them: target, text, the audit part
+    answered and the quotes of that part's evidence (the sources and quotes the sentence may rest on)."""
+    r = _load_round(cfg, slug, "", tag)
+    if r is None or r.ops is None:
+        return []
+    parts = {(n, i): part for n, i, part, _d in objecting_audit_parts(cfg, slug, correction_number(tag))}
+    out = []
+    for op in r.ops.operations:
+        if isinstance(op, AddSentence):
+            part = parts.get((op.answers.record, op.answers.part))
+            out.append(
+                {
+                    "target": op.target,
+                    "text": op.text,
+                    "answers": {"record": op.answers.record, "part": op.answers.part},
+                    "quotes": [{"source": e.source, "quote": e.quote} for e in part.evidence] if part else [],
+                }
+            )
+    return out
+
+
 def correction_trail(
     cfg: Config, slug: str, tag: str, draft_bytes: bytes, answered: list[Path], audits_run: list[str]
 ) -> dict[str, Any]:
@@ -5556,6 +5808,8 @@ def correction_trail(
             "findings": _finding_dicts(pre_review.findings),
         }
     trail |= {"operations": operations, "checks": checks, "review": review}
+    if added := _added_sentences(cfg, slug, tag):
+        trail["added_sentences"] = added
     if (card_review := _load_card_review(cfg, slug, tag)) is not None:
         trail["card_review"] = {
             "verdict": card_review.verdict,
@@ -6233,6 +6487,8 @@ def _dispatch(
         if result["passed"]:
             out("PASSED" + (" (no change proposed)" if result["no_change"] else f"; applied card: {result['applied']}"))
             return 0
+        if result.get("errors_file"):
+            out(f"errors for the drafter: {result['errors_file']}")
         out("FAILED")
         return 1
     if args.command == "record-review":

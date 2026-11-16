@@ -1,0 +1,288 @@
+card: herpesvirus-reactivation
+round: 2
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-herpesvirus-reactivation-second.yaml
+- 2026-11-13-herpesvirus-reactivation.yaml
+- 2026-11-15-herpesvirus-reactivation-C1.yaml
+draft_sha256: 9ba2233505ed6a969add486718abc22b3f8432dae0ba4e8bf2b99d7662670395
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[3] says only that the London study ''does not repeat the finding of active
+      infection in blood'', and studies[pmid:34422848].finding describes only the saliva results. The
+      cached full text (PMC8378328) reports a plasma screen that points the other way on the marker level
+      2 rests on. Serum/plasma samples (189) from UK ME/CFS Biobank participants, chosen for high IgG
+      titres or seropositivity to at least five of six HHVs, ''were screened by ddPCR to detect potential
+      active (lytic) replication of any of the nine HHVs. HHV DNA was rarely detected, with HSV-2, HHV-6A
+      and HHV-6B detected in plasma from one or two subjects and the remaining HHVs always negative (Table
+      1)''. Table 1 gives HHV-7 plasma positive 0 (negative 182), HHV-6A plasma positive 1 (HC), HHV-6B
+      plasma positive 2 (HC), so no ME/CFS plasma sample had HHV-6 or HHV-7 DNA. The Riga study (pmid:36653846)
+      found active (plasma) HHV-6A/B, HHV-7 or B19V infection in 45% (90/200) of patients and active double
+      HHV-6A/B + HHV-7 infection only in patients. The London study meets two of the three comparable-quality
+      conditions (Canadian Consensus and/or CDC-1994, which is the same as or stricter than Fukuda, and
+      healthy controls). The third condition, at least half of the 200 patients, cannot be settled from
+      the record. The screen drew on serology from 132 people with ME/CFS, 76 HC and 27 people with MS,
+      and the record does not say how many of the 189 screened samples were from ME/CFS patients. By subtraction
+      the number is between 86 (if every HC and MS sample was screened) and 132, which spans the threshold
+      of 100. The card neither states the plasma result nor weighs it, and contested: null is given without
+      its reason.'
+    fix: 'In level_reason[3] (and the study''s finding), state the plasma result from the record: 189
+      samples, selected by antibody titre, were screened by ddPCR for active replication; HHV-7 DNA was
+      found in no plasma sample, and HHV-6A or HHV-6B DNA only in plasma from one or two healthy controls
+      (Table 1). Add that the record does not give the number of ME/CFS patients among the 189 samples
+      (at most 132), so whether this measurement reaches half of the 200 Riga patients cannot be read
+      from the record. Note that the methods differ (ddPCR vs nested PCR; samples selected by serology).
+      Leave the contested mark to the auditor, but give the card the facts it needs for that decision.
+      Quote numbers only from the record.'
+    class: decisive
+    targets:
+    - contested
+    - level_reason[3]
+    - studies[pmid:34422848].finding
+  - operation: null
+    severity: must_fix
+    problem: 'The card sets layer ''mechanism'', but no link expresses the other reading and the ambiguity
+      is not written out, as functional spec section 3 requires (''A card that could sit in two layers
+      (for example herpesvirus reactivation as trigger or as consequence of immune dysfunction) gets one
+      layer and a link that expresses the other reading''). Two cited records state the other reading.
+      pmid:34422848 (abstract): ''Herpesvirus reactivation might be a cause or consequence of dysregulated
+      immune function seen in ME/CFS.'' pmid:32129496 (full text PMC7687071): ''Another possibility is
+      that patients with ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction.''
+      Neither of the two earlier rounds resolved this.'
+    fix: Add one link at step 'proposed' that expresses the other reading, sourced to pmid:34422848 (and
+      optionally pmid:32129496), quoting only what those sentences say (reactivation 'might be a cause
+      or consequence' of dysregulated immune function). Its target must be an existing card for immune
+      dysfunction, or a question:<id> if no such card exists. In the link text, say that the card is placed
+      in the mechanism layer and that the cited sources also allow reactivation to be read as a consequence
+      of immune dysfunction. Do not claim patient data for this link.
+    class: decisive
+    targets:
+    - layer
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[7] says the Atlanta study''s HHV-6/HHV-7 DNA in blood cells is something ''this
+      card treats as a marker of latent rather than active infection'', and studies[pmid:10913395].finding
+      says ''a marker of latent infection in this card''s scope''. This is the card''s own reasoning,
+      and no source is cited for it. The cited abstract does not support it: it says ''We found no evidence
+      that active or latent infection with HHV-6A, HHV-6B, HHV-7 ... is associated with chronic fatigue
+      syndrome''. The only record on the card that reads blood-cell DNA as a marker is pmid:36653846:
+      ''DNA isolated from the peripheral blood (a marker of persistent infection) and cell-free blood
+      plasma (a marker of an active infection)''. That record says ''persistent'', not ''latent'', and
+      it is not cited in that paragraph. This reading decides whether the Atlanta result bears on the
+      active-infection finding that the level rests on.'
+    fix: 'Either remove the clause from both places, or attribute the reading to its source: ''which the
+      Riga study (pmid:36653846) uses as a marker of persistent infection'', with pmid:36653846 added
+      to that paragraph''s sources. Keep what the abstract states: no virus was isolated by co-culture,
+      and DNA was found in 3 of 26 patients and 14 of 50 controls (HHV-6) and in 2 patients and 12 controls
+      (HHV-7), with no significant differences.'
+    class: decisive
+    targets:
+    - level_reason[7]
+    - studies[pmid:10913395].finding
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[5] calls pmid:35102619 ''a non-randomised study'' and says it ''reported how
+      often the viruses became undetectable in blood, not whether symptoms changed''. The only cached
+      record is the abstract. The abstract does not say whether allocation was randomised, and it is the
+      abstract, not the paper, that does not report symptoms. studies[pmid:35102619].finding words this
+      correctly: ''symptoms are not reported in the abstract''. The PCR was of blood leukocytes (''confirmed
+      based on blood leukocyte PCR'').'
+    fix: Remove 'non-randomised' (or say that the abstract does not state how patients were allocated).
+      Change the end to 'its abstract reports how often the viruses became undetectable by PCR of blood
+      white cells, not whether symptoms changed.'
+    class: wording
+    target: level_reason[5]
+    targets:
+    - level_reason[5]
+  - operation: null
+    severity: advisory
+    problem: level_reason[0] and studies[pmid:36653846].finding say the Riga paper 'gives no counts' for
+      active double HHV-6 + HHV-7 infection. The cached full text has no counts in its text, but Fig.
+      4 ('Frequency of persistent HHV-6A/B, HHV-7 and B19V infection/co-infection (%) in latent (a) or
+      active (b) phase') shows frequencies as an image that cannot be read from the record.
+    fix: Say 'the text of the paper gives no counts for it (a figure shows frequencies)'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[4] calls the acyclovir trial (pmid:2849717) 'a trial of 24 patients'. The abstract
+      says 27 were enrolled and 3 were withdrawn for nephrotoxicity; 24 completed. The 11 and 10 refer
+      to those who completed.
+    fix: Say '24 patients who completed the trial (27 enrolled)'.
+  - operation: null
+    severity: advisory
+    problem: 'The C1 audit (part 5) objected that the counts in early_signals[0] (11 of 13 patients, 5
+      of 10 controls) could not be matched to the abstract of pmid:40143349. The cached full text (PMC11946815,
+      Results 3.1) states them: ''ME/CFS patients more frequently (85%, 11/13) released EBV compared to
+      HD (50%, 5/10)''. The sentence is supported, and the label ''Not yet repeated'' is present.'
+    fix: No change to the numbers is needed. If the correction answers that audit part, it should rest
+      on the full-text sentence above rather than remove the counts.
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: A study from Riga, Latvia, of 200 patients meeting the Fukuda definition, which does not require
+    post-exertional malaise, and 150 healthy controls looked for viral DNA in cell-free blood plasma,
+    which the authors use as a marker of active infection. Active double HHV-6 and HHV-7 infection was
+    found only in patients (p < 0.0001); the text of the paper gives no counts for it (a figure shows
+    frequencies). Markers of active HHV-6, HHV-7 or parvovirus B19 (not a herpesvirus) infection together
+    were found in 45% of patients and 8.7% of controls. The card is at level 2 because of the herpesvirus-only
+    result of this study. No independent group has repeated it, so it is unreplicated.
+  sources:
+  - pmid:36653846
+- op: replace_paragraph
+  field: level_reason
+  index: 3
+  text: 'A study from London, with no authors shared with the Riga studies, measured herpesvirus DNA in
+    saliva every month for six months in 30 patients from the UK ME/CFS Biobank (16 severely, 14 mildly
+    or moderately affected), meeting the Canadian Consensus Criteria and/or the Fukuda definition, and
+    16 healthy controls in the saliva measurements (the abstract says 14 controls). It found higher HHV-6B
+    and HHV-7 DNA levels in saliva: HHV-6B was higher in the 16 severely affected patients than in controls
+    at three of six monthly time points, and HHV-7 was higher in the mildly or moderately affected patients
+    at two time points, with trends at the others. Epstein-Barr virus and herpes simplex virus 1 did not
+    differ. The authors read the viral DNA as longstanding, persistent infection rather than acute or
+    recent infection. The same study also screened plasma samples (189) by droplet digital PCR for active
+    (lytic) replication of nine herpesviruses: herpesvirus DNA was rarely detected, HHV-6A, HHV-6B and
+    herpes simplex virus 2 were found in plasma from one or two subjects, and the remaining viruses, including
+    HHV-7, were always negative. The record does not say how many of the 189 samples came from patients;
+    antibodies had been measured earlier in plasma from 132 people with ME/CFS, 76 healthy controls and
+    27 people with multiple sclerosis, so whether this measurement reaches half of the 200 Riga patients
+    cannot be read from the record. The methods also differ (droplet digital PCR against nested PCR).
+    The card does not reach level 3: this study measured viral DNA load in saliva, found differences only
+    in subgroups at a few time points, and does not repeat the finding of active infection in blood.'
+  sources:
+  - pmid:34422848
+  - pmid:36653846
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: 'A third randomised trial, of valacyclovir in a subset of patients with Epstein-Barr virus markers,
+    reported a larger rise in an activity score with valacyclovir than with placebo; its abstract gives
+    no sample size or statistical test. A study of 192 patients the authors classed as having reactivated
+    HHV-6 or HHV-7 infection by PCR of blood white cells, given valaciclovir, valganciclovir or artesunate,
+    compared with 63 untreated patients: its abstract reports how often the viruses became undetectable
+    by PCR of blood white cells, not whether symptoms changed, and does not state how patients were allocated.'
+  sources:
+  - pmid:18019402
+  - pmid:35102619
+- op: replace_paragraph
+  field: level_reason
+  index: 7
+  text: 'Some studies whose case definitions are not yet verified found no difference. One of 26 patients
+    and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone''s blood
+    cells and found no significant difference in HHV-6 or HHV-7 DNA in blood cells: HHV-6 DNA in 3 of
+    26 patients and 14 of 50 controls, HHV-7 DNA in 2 patients and 12 controls. A multicentre search for
+    viral genetic material in blood, stool and saliva found no consistent differences between patients
+    and controls other than fewer anelloviruses (a family of viruses that are not herpesviruses) in patients.
+    The card is placed in the mechanism layer; a cited study states that herpesvirus reactivation might
+    be a cause or consequence of dysregulated immune function seen in ME/CFS.'
+  sources:
+  - pmid:10913395
+  - pmid:37526404
+  - pmid:34422848
+- op: update_study
+  id: pmid:34422848
+  set:
+    finding: 'A study of n=30 patients (16 severely, 14 mildly or moderately affected) and 16 healthy
+      controls in the saliva measurements (the abstract says 14 controls), sampling saliva monthly for
+      six months, found higher HHV-6B DNA levels in the 16 severely affected patients and higher HHV-7
+      DNA levels in patients than in controls at some time points, and no difference for Epstein-Barr
+      virus or herpes simplex virus 1. In a screen of 189 plasma samples by droplet digital PCR for active
+      replication, herpesvirus DNA was rarely detected: HHV-6A, HHV-6B and herpes simplex virus 2 were
+      found in plasma from one or two subjects and the other viruses, including HHV-7, were always negative;
+      the record does not say how many of the samples came from patients.'
+- op: update_study
+  id: pmid:10913395
+  set:
+    finding: A study of n=26 patients and 50 matched controls (52 recruited) isolated no HHV-6 or HHV-7
+      from blood cells and, by PCR of lymphocytes, found HHV-6 DNA in 3 of 26 patients and 14 of 50 controls
+      and HHV-7 DNA in 2 patients and 12 controls, with no significant differences.
+checks:
+  passed: true
+  errors: []
+review:
+  verdict: reject
+  findings:
+  - operation: 1
+    severity: must_fix
+    problem: 'Op 1 answers audit 2026-11-13 part 2 (and part 3, pre-review finding 1). It does so with
+      replace_paragraph and adds three new sentences of fact to level_reason[3]: the plasma screen (''screened
+      plasma samples (189) by droplet digital PCR ... including HHV-7, were always negative''), the meta-statement
+      on patient numbers with the 132/76/27 serology counts, and ''The methods also differ (droplet digital
+      PCR against nested PCR)''. It also adds pmid:36653846 as a source. None of these facts was on the
+      card before. The content matches the cached full text of pmid:34422848 (Results: ''Serum samples
+      (189) ... were screened by ddPCR to detect potential active (lytic) replication of any of the nine
+      HHVs. HHV DNA was rarely detected, with HSV-2, HHV-6A and HHV-6B detected in plasma from one or
+      two subjects and the remaining HHVs always negative (Table 1)''; Figure 2 ''plasma (n = 189)'').
+      But under the correction limits (context sections 3 and 9; DECISIONS 2026-11-16) a correction adds
+      a fact only through one add_sentence per objecting audit part. That sentence cites only the sources
+      the part quotes and says no more than its quotes. Part 2 quotes neither the number 189 nor nested
+      PCR, which comes from pmid:36653846, a source part 2 does not quote. This statement bears on the
+      contested decision.'
+    fix: 'Restore level_reason[3] to its draft text and answer audit 2026-11-13 part 2 with a single add_sentence
+      (answers: {record: 2026-11-13-herpesvirus-reactivation.yaml, part: 2}, sources [pmid:34422848])
+      appended to level_reason[3]. The sentence uses only part 2''s quotes, for example: ''The same study
+      screened plasma by ddPCR for potential active (lytic) replication of nine herpesviruses: HHV DNA
+      was rarely detected, with HSV-2, HHV-6A and HHV-6B in plasma from one or two subjects and the remaining
+      herpesviruses always negative, and antibodies had earlier been measured in plasma from 132 people
+      with ME/CFS, 76 healthy controls and 27 people with multiple sclerosis.'' Leave out 189, nested
+      PCR and pmid:36653846.'
+    class: decisive
+    targets:
+    - level_reason[3]
+    - contested
+  - operation: 4
+    severity: must_fix
+    problem: Op 4 adds a second new sentence of fact about the same plasma screen to studies[pmid:34422848].finding
+      ('In a screen of 189 plasma samples by droplet digital PCR ... the record does not say how many
+      of the samples came from patients'). Audit part 2 may give rise to at most one added sentence, and
+      op 1 already adds that statement to level_reason[3]. The number 189 is not in part 2's quotes either.
+    fix: Restore the study's finding to its draft text, or put the single add_sentence for part 2 here
+      instead of in level_reason[3], but not in both places.
+    class: decisive
+    targets:
+    - studies[pmid:34422848].finding
+  - operation: 3
+    severity: must_fix
+    problem: Op 3 appends 'The card is placed in the mechanism layer; a cited study states that herpesvirus
+      reactivation might be a cause or consequence of dysregulated immune function seen in ME/CFS.' and
+      adds pmid:34422848 to the paragraph's sources, through replace_paragraph. The wording matches the
+      quote of audit 2026-11-13 part 4 and 2026-11-15-C1 part 6 ('Herpesvirus reactivation might be a
+      cause or consequence of dysregulated immune function seen in ME/CFS.'). But an added sentence is
+      allowed only as add_sentence with an 'answers' reference, so that its quotes are carried into the
+      trail and code checks it. Folded into a replace_paragraph, it escapes that check.
+    fix: 'Leave the layer sentence out of the replace_paragraph and add it as an add_sentence to level_reason[7]
+      (answers: {record: 2026-11-15-herpesvirus-reactivation-C1.yaml, part: 6} or 2026-11-13 part 4),
+      sources [pmid:34422848], with the same text.'
+    class: decisive
+    targets:
+    - level_reason[7]
+    - layer
+  - operation: 3
+    severity: advisory
+    problem: Pre-review finding 3 asked only for the unsourced clause 'which this card treats as a marker
+      of latent rather than active infection' to be removed. Op 3 also rewrites the Atlanta sentence and
+      moves the counts into the paragraph ('HHV-6 DNA in 3 of 26 patients and 14 of 50 controls, HHV-7
+      DNA in 2 patients and 12 controls'). The counts match the pmid:10913395 abstract and were already
+      in that study's finding, so this adds no new fact to the card. It is still a rewrite beyond what
+      the finding needed.
+    fix: Delete only the clause and keep the rest of the sentence as drafted, with 'no significant difference'
+      if wanted.
+  - operation: 1
+    severity: advisory
+    problem: '''how many of the 189 samples came from patients'': the screened samples included people
+      with multiple sclerosis (Table 1: HSV-2 plasma positive in MS (1)), so ''patients'' is ambiguous.
+      Table 1 also attributes the HHV-6A and HHV-6B plasma positives to healthy controls, which the card
+      does not say.'
+    fix: If the sentence is kept in a later form, say 'people with ME/CFS' rather than 'patients'.
+  - operation: null
+    severity: advisory
+    problem: Audit 2026-11-15-C1 part 5 (sputum counts 11 of 13 and 5 of 10 in early_signals[0]) gets
+      no operation. The cached full text PMC11946815 states them ('ME/CFS patients more frequently (85%,
+      11/13) released EBV compared to HD (50%, 5/10)'), so the claim is supported and no change is needed.
+      The layer rule also asks for a link expressing the other reading, which a correction cannot add;
+      a sentence in level_reason[7] writes out the ambiguity but does not supply that link. The auditor
+      decides both points.
+    fix: No change required. Note for the auditor that the counts rest on the cached full text.
+audits_run: []

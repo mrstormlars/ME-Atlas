@@ -33,12 +33,9 @@ BROAD_TARGETS = [
     "contested_reason[0]",
     "contested_reason[1]",
     "level_reason[0]",
-    "level_reason[1]",
-    "subgroups[0]",
     "early_signals[0]",
     "badges.diagnostic_marker",
     "badges.explains_pem",
-    "links[0]",
     "studies[pmid:90000100]",
 ]
 CONTESTED_LAST = {"op": "remove_paragraph", "field": "contested.reason", "index": 1}
@@ -429,6 +426,7 @@ def test_apply_allows_a_second_attempt_after_a_failed_first_and_keeps_the_first(
     assert names == [
         f"{SLUG}-rC1-attempt1.json",
         f"{SLUG}-rC1.json",
+        f"{SLUG}-rC1-attempt1-errors.md",
         f"{SLUG}-rC1-attempt1.json",
         f"{SLUG}-rC1.json",
     ]
@@ -437,15 +435,6 @@ def test_apply_allows_a_second_attempt_after_a_failed_first_and_keeps_the_first(
     assert json.loads((corr.dir / "ops" / f"{SLUG}-rC1-attempt1.json").read_text(encoding="utf-8")) == bad
     second = json.loads((corr.dir / "checks" / f"{SLUG}-rC1.json").read_text(encoding="utf-8"))
     assert second["passed"] is True and second["attempt"] == 2
-
-
-def test_apply_refuses_a_third_attempt_and_an_apply_after_a_passed_attempt(corr: Corr, capsys):
-    bad = ops_data({"op": "remove_link", "to": "nowhere"})
-    assert corr.apply(bad) == 1 and corr.apply(bad) == 1
-    before = (corr.dir / "checks" / f"{SLUG}-rC1.json").read_bytes()
-    assert corr.apply(ops_data()) == 1
-    assert "both attempts" in capsys.readouterr().err
-    assert (corr.dir / "checks" / f"{SLUG}-rC1.json").read_bytes() == before
 
 
 def test_apply_after_a_passed_attempt_is_refused(corr: Corr, capsys):

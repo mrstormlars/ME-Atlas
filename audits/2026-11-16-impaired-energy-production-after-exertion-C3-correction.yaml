@@ -1,0 +1,225 @@
+card: impaired-energy-production-after-exertion
+round: 3
+revision_rule: falling-decisive
+answered:
+- 2026-11-13-impaired-energy-production-after-exertion-second.yaml
+- 2026-11-13-impaired-energy-production-after-exertion.yaml
+- 2026-11-15-impaired-energy-production-after-exertion-C2.yaml
+draft_sha256: 3981010cfb5f60ab1ec4f69c24e1ac636fda9ad236126fa905de8d345f19f1b4
+pre_card_review:
+  verdict: reject
+  findings:
+  - operation: null
+    severity: must_fix
+    problem: 'level_reason[0] ends ''The card is at level 2 because of this study.'' The card''s level
+      is 3 (level: 3, and level_reason[4] says ''The card is at level 3 because independent groups found
+      parts of the same result''). A reader is told two different levels. What pmid:38965566 supports
+      is rung 2 (a controlled CCC study, 84 patients and 71 sedentary controls), not the card''s level.'
+    fix: Replace the last sentence with 'Rung 2 rests on this study.' (or equivalent), so that it names
+      the rung, not the card's level.
+    targets:
+    - level_reason[0]
+  - operation: null
+    severity: must_fix
+    problem: 'contested_reason[3] states as settled that ''Rung 2 rests on the 84-patient study and is
+      not contested: the New York study uses the Fukuda definition, which ranks below the Canadian Consensus
+      Criteria'', and contested.rungs is [3] only. The cached New York full text (PMC13213420) says ''They
+      all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional
+      malaise (Table 1).'' The word ''both'' announces two definitions but names one. The companion paper
+      pmid:41293716 (PMC12640868), by 8 of the same authors, reports 57 patients ''F:M = 46:11'' with
+      ''an average age of 38.6 +/- 9.6 years'', 25 sedentary controls ''F:M = 20:5'', and a Godin score
+      of ''27.7 +/- 35.5'' in patients; the New York paper reports 58 patients aged 38.6 +/- 9.6, 47 women
+      and 11 men, 25 controls (20 women, 5 men) and the same Godin score 27.7 +/- 35.5. The companion
+      paper says these patients ''met the 2015 IOM case definition''. The records therefore do not establish
+      that the New York cohort is Fukuda only. If IOM 2015 applies, the New York study is of comparable
+      quality to the rung 2 study under the rubric: IOM 2015 ranks with CCC, it has a control group, and
+      its 53 patients with maximal tests on both days (the measurement that bears on the finding) are
+      more than half of 84. It found ''no significant changes in Peak VO2 between Day 1 and Day 2'' and
+      no change in VO2 at VT, which contradicts the second-day fall that rung 2 rests on. This is the
+      objection of the C2 audit (part 0) and of the first audit (part 2), and the draft still asserts
+      the uncontested reading. The card label ''Fukuda'' on pmid:42212259 is the only named definition
+      in its own sentence, but the card must not use it to close the question.'
+    fix: 'Do not state that rung 2 is not contested on the ground that the New York study is Fukuda only.
+      On these records, the reading the evidence supports is that the uncontested status of rung 2 cannot
+      be established: either set contested.rungs to [2, 3] and write in contested_reason[3] that the New
+      York study (53 patients with maximal tests on both days, 19 controls) found no second-day change
+      and that a companion paper by the same authors, on a cohort with the same age, sex split, controls
+      and activity score, names the 2015 IOM definition, so it may be of comparable quality to the 84-patient
+      CCC study; or, if the drafter keeps rung 2 uncontested, the reason must say only what the records
+      say (the New York sentence names the 1994 definition modified to require PEM and says ''both'' without
+      naming the second; the companion paper names IOM 2015) and leave the decision to the auditor. The
+      auditor decides the mark.'
+    targets:
+    - contested
+    - contested_reason[3]
+    - studies[pmid:42212259].case_definition
+  - operation: null
+    severity: must_fix
+    problem: 'The study entry for pmid:37054777 (the review ''Exercise Pathophysiology in Myalgic Encephalomyelitis/Chronic
+      Fatigue Syndrome and Postacute Sequelae of SARS-CoV-2: More in Common Than Not?'') has no ''group''
+      field. Every other study on the card has one, including the other review, pmid:42051540.'
+    fix: 'Add a group from the cached author list (section 5 of the context): last author Systrom DM,
+      Brigham and Women''s Hospital, Harvard Medical School, Boston, USA (first author Joseph P, Yale
+      University, New Haven).'
+    targets:
+    - studies[pmid:37054777].group
+  - operation: null
+    severity: must_fix
+    problem: 'The group of pmid:35358096 reads ''Hanson MR, Cornell University, Ithaca, USA (same group
+      and cohort as 38965566)''. The shared group is in the records (Hanson MR last author on both; Keller,
+      Moore, Levine, Chia, Franconi, Mao, Stevens J, Shungu shared). ''Same cohort'' is not stated in
+      either cached record, and the records point the other way in part: pmid:35358096 reports 60 patients
+      and 45 controls tested at ''Ithaca College, Weill Cornell Medicine, and Workwell Foundation'', while
+      pmid:38965566 reports 90 patients and 81 controls consented ''across the three test sites'' with
+      screening in Los Angeles, New York City and upstate New York. A reader would take the two as one
+      cohort.'
+    fix: Write 'same group as 38965566' (drop 'and cohort'), or 'same group as 38965566; whether the cohorts
+      overlap is not stated in the records'.
+    targets:
+    - studies[pmid:35358096].group
+  - operation: null
+    severity: advisory
+    problem: 'links[0] and studies[pmid:37054777].finding: both audits rejected the link because they
+      saw only the abstract, which has no such sentence. The cached full text (PMC10088277), named in
+      this context, does: ''However, few studies have directly tested the associations between the physiologic
+      and behavioral manifestations of PEM.'' The card''s paraphrase (''how the body''s responses to exercise
+      relate to post-exertional malaise'') is close but not the source''s wording, and the auditor will
+      need to find the sentence in the full text.'
+    fix: Keep the link at step proposed, and bring the wording closer to the full text, for example 'notes
+      that few studies have directly tested the associations between the physiological and behavioural
+      manifestations of post-exertional malaise'. The correction should point the auditor to the full
+      text, not the abstract.
+  - operation: null
+    severity: advisory
+    problem: contested_reason[0] gives 'more patients (58 against 15)'. The rubric counts the patients
+      in the measurement that bears on the finding; the New York results table covers the 53 patients
+      who met maximal-effort criteria on both days. The conclusion (comparable quality) holds with 53.
+    fix: Write '53 patients with maximal tests on both days, against 15' or '58 patients (53 analysed)'.
+  - operation: null
+    severity: advisory
+    problem: level_reason[2] calls the two Dutch clinic studies 'retrospective analyses of a clinical
+      database'. Neither cached full text uses the word 'retrospective'. They say the data were 'subtracted
+      from the clinical database' (women) and selected 'From a database of patients evaluated for ME/CFS
+      over the period from June 2010 to October 2019' (men), which supports the description in substance.
+    fix: Write 'analyses of patients selected from a clinic's database' to match the records.
+  - operation: null
+    severity: advisory
+    problem: 'contested_reason[1] says the ICC label ''is read from a reference number and not confirmed''.
+      In both cached full texts reference 1 is ''Myalgic encephalomyelitis: International Consensus Criteria''
+      (Carruthers 2011), and the men''s paper also excludes patients ''graded as having severe ME/CFS
+      according to the international consensus criteria (ICC)''. The weaker wording is safe but understates
+      what the records show.'
+    fix: 'Optional: ''read from a citation to the International Consensus Criteria'' instead of ''not
+      confirmed''.'
+  - operation: null
+    severity: advisory
+    problem: 'badge_reasons.explains_pem[2] (''an overlapping cohort from the 84-patient study''s research
+      group'') and the group of pmid:36984572 (''same group and cohort as 38965566'') rest on an inference.
+      The records support overlap without stating it: same three sites (Ithaca, Los Angeles, New York
+      City), the same screening physicians, 81 controls enrolled in both, and pmid:36984572 says ''Detailed
+      exercise test results of the 2-day CPET protocol will be reported separately''.'
+    fix: 'Optional: ''a cohort from the same research group and test sites'' and, in the group field,
+      ''same group as 38965566''.'
+  - operation: null
+    severity: advisory
+    problem: studies[pmid:30871578].case_definition is 'Fukuda', but the quote says patients were diagnosed
+      under one of Fukuda, CCC or ICC. The label is the floor of a mixed cohort, which is the conservative
+      reading.
+    fix: 'Optional: say in the finding or the group note that the cohort mixed Fukuda, CCC and ICC diagnoses.'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 0
+  text: 'A controlled study of 84 patients meeting the Canadian Consensus Criteria and 71 sedentary controls
+    repeated a maximal exercise test after 24 hours. Unlike controls, patients did not reproduce their
+    first-day results: oxygen use and work fell at peak effort and at the ventilatory threshold on the
+    second day. Rung 2 rests on this study.'
+  sources:
+  - pmid:38965566
+- op: replace_paragraph
+  field: level_reason
+  index: 4
+  text: The card is at level 3 because independent groups found parts of the same result in separate cohorts.
+    Each has a limit, and rungs 2 and 3 are contested (see the contested note).
+  sources:
+  - pmid:38965566
+  - pmid:20937116
+  - pmid:34198913
+  - pmid:34198946
+  - pmid:31161646
+- op: propose
+  target: contested
+  value:
+  - 2
+  - 3
+  reason:
+  - text: Rung 3 rests on independent studies that found the same result as the 84-patient study, whose
+      patients met the Canadian Consensus Criteria. The clearest, a Fukuda study of 15 women patients
+      and 15 controls from Amsterdam, is contradicted by a study from New York of 58 patients and 25 sedentary
+      controls that found no significant change in peak oxygen use between the first and second day. Its
+      patients met the 1994 case definition modified to require post-exertional malaise. With the same
+      case definition, a control group and 53 (= 58 - 5) patients with maximal tests, against 15, it is
+      of comparable quality.
+    sources:
+    - pmid:20937116
+    - pmid:42212259
+    - pmid:38965566
+  - text: The two Dutch clinic studies of women and men point the same way, but the case definition recorded
+      for them (International Consensus Criteria) is read from a citation to the International Consensus
+      Criteria next to the Fukuda criteria, and they compare patients with people who have chronic fatigue
+      without ME/CFS rather than with healthy controls.
+    sources:
+    - pmid:34198913
+    - pmid:34198946
+  - text: 'The Oslo study, which meets the Canadian Consensus Criteria, found the same result only in
+      part: power output at the threshold fell more in patients than in controls, but the changes in oxygen
+      use did not differ between groups.'
+    sources:
+    - pmid:31161646
+  - text: 'Rung 2 rests on the 84-patient study. The New York study found no significant change in peak
+      oxygen use from the first to the second day. Whether it is of comparable quality to the 84-patient
+      study depends on its case definition, which the records do not settle: its own sentence says its
+      patients met both the 1994 case definition, modified to require post-exertional malaise, but names
+      no second definition, while a companion paper by the same authors, on 57 patients with the same
+      age (38.6 ± 9.6 years) and the same weekly leisure activity score in patients (27.7 ± 35.5), says
+      its patients met the 2015 IOM definition. If the 2015 IOM definition applies, it ranks with the
+      Canadian Consensus Criteria and, with a control group and 53 (= 58 - 5) patients with maximal tests
+      against 84, the New York study would be of comparable quality to the 84-patient study. Rung 2 is
+      therefore marked as contested too; the card records Fukuda for the New York study from its own sentence.'
+    sources:
+    - pmid:38965566
+    - pmid:42212259
+    - pmid:41293716
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 2
+  text: In a cohort from the same research group and test sites as the 84-patient study, 78 patients took
+    on average about 12.7 days to recover from the two-day test, against 2.1 days for 64 sedentary controls;
+    the paper reports the exercise test results separately and does not relate recovery to oxygen use
+    or work.
+  sources:
+  - pmid:36984572
+- op: update_study
+  id: pmid:35358096
+  set:
+    group: Hanson MR, Cornell University, Ithaca, USA (same group as 38965566; whether the cohorts overlap
+      is not stated in the records)
+- op: update_study
+  id: pmid:37054777
+  set:
+    group: Systrom DM, Brigham and Women's Hospital, Harvard Medical School, Boston, USA (first author
+      Joseph P, Yale University, New Haven)
+    finding: A review of exercise pathophysiology in ME/CFS and long COVID; its abstract says the mechanistic
+      underpinnings of such symptoms are poorly understood and describes exercise pathophysiologic commonalities
+      between the two conditions. Kept as context, not as evidence for the level.
+- op: remove_link
+  to: question:closest-to-symptoms
+checks:
+  passed: false
+  errors:
+  - 'badge_reasons.explains_pem C10: the number 84 (…up and test sites as the 84-patient study, 78 patien…)
+    does not occur in the cited source(s) pmid:36984572 nor equal year, n_patients or n_controls of one'
+review:
+  verdict: null
+  findings: []
+audits_run: []
