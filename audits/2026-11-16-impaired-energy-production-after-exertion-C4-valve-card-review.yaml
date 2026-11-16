@@ -1,0 +1,36 @@
+card: impaired-energy-production-after-exertion
+round: 4
+stage: card-review
+attempt: C4
+classification:
+- finding: findings[0]
+  class: wording
+  target: level_reason[5]
+  problem: 'level_reason[5] says of the New York study (pmid:42212259): ''Its authors suggest that falls
+    reported elsewhere may reflect lower effort on the second day.'' The cached full text (PMC13213420)
+    makes the effort argument only about the 84-patient study (Keller et al., 2024): after quoting its
+    heart-rate-reserve sentence it says ''This lack of effort on Day 2 testing could explain the apparent
+    decrement in VO2 max noted'', and contrasts ''In contrast to Keller ... we were able to obtain maximal
+    effort ... on Day 2 in all but five patients''. It does not put forward lower effort as the explanation
+    for the falls reported by the other studies it lists (VanNess, Vermeulen, Hodges, Nelson, Van Campen).
+    ''Falls reported elsewhere'' extends the authors'' suggestion to all the supporting studies on this
+    card, including the Amsterdam study, which the source does not do.'
+operations:
+- op: replace_paragraph
+  field: level_reason
+  index: 5
+  text: Against these findings, a study from New York of 58 patients and 25 sedentary controls found no
+    change in peak oxygen use or oxygen use at the ventilatory threshold on the second day in either group;
+    the paper reports that 5 patients and 6 controls did not meet maximal-effort criteria. Its patients
+    met the 1994 (Fukuda) definition modified to require post-exertional malaise.
+  sources:
+  - pmid:42212259
+check:
+  passed: true
+  fixes:
+  - finding: findings[0]
+    resolves: true
+    new_claim: false
+    reason: The sentence that applied the authors' lower-effort explanation to 'falls reported elsewhere'
+      is removed; the rest of level_reason[5] is unchanged, so the fix only removes text and states nothing
+      new.
