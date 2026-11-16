@@ -1,0 +1,29 @@
+card: endothelial-dysfunction
+decision: accept
+parts:
+  - decision_part: "The added link to orthostatic-intolerance-cerebral-blood-flow at step 1 (proposed): a peer-reviewed source states the link."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516145
+        quote: "Endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion."
+      - source: pmid:41516145
+        quote: "Finally, endothelial dysfunction, driven by oxidative and nitrosative stress, contributes to impaired vascular regulation. This may explain the frequent findings of orthostatic intolerance, reduced tissue perfusion, and increased cardiovascular risk in ME/CFS patients."
+      - source: pmid:41516145
+        quote: "is-preprint no"
+    class: none
+  - decision_part: "The source is a review with no patient data, so the link cannot go above step 1; the proposed step is the one the rubric allows, and the link text's statements that the review reports no data of its own and calls its model conceptual are in the source."
+    rubric: "a source that is a review (`design: other`) cannot carry step 2 or 3."
+    evidence:
+      - source: pmid:41516145
+        quote: "No new data were created or analyzed in this study."
+      - source: pmid:41516145
+        quote: "The proposed cycle represents a conceptual integrative framework, grounded in convergent evidence from multiple biological domains, rather than a quantitatively validated causal model."
+    class: none
+  - decision_part: "The link does not change the card's level, badges, contested mark or layer."
+    rubric: "A link never raises a card's level."
+    evidence:
+      - source: pmid:41516145
+        quote: "This review synthesizes current evidence across these interconnected biological domains and highlights key gaps that must be addressed to improve diagnostic and prognostic accuracy."
+    class: none
+reasons_summary: "Link from endothelial dysfunction to orthostatic intolerance at step proposed is supported: a peer-reviewed 2025 review states it, with no patient data, as the link text says."
+would_change: "A finding that the target card orthostatic-intolerance-cerebral-blood-flow does not exist or does not cover orthostatic intolerance or reduced perfusion, a retraction of PMID 41516145, or a source showing it is not peer reviewed would change this decision. Moving the link to step 2 would need an ME/CFS cohort study with a recognised case definition measuring both endothelial function and orthostatic intolerance in the same patients."

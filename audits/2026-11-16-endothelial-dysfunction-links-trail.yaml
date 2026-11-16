@@ -1,0 +1,39 @@
+card: endothelial-dysfunction
+card_sha256: 87ac9f7394d566eb2f3046bf6708f3b28ba5baf844ea339f955ca3767cd70d85
+rounds:
+- round: 1
+  proposal:
+  - to: orthostatic-intolerance-cerebral-blood-flow
+    support: proposed
+    text: A 2025 review proposes that endothelial dysfunction, driven by oxidative and nitrosative stress
+      and by autoantibodies that interfere with vessel-regulating receptors, may explain orthostatic intolerance
+      and reduced tissue blood flow in ME/CFS. The review reports no patient data of its own, and it describes
+      its model as conceptual rather than quantitatively validated.
+    sources:
+    - pmid:41516145
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings:
+    - item: links[0]
+      severity: advisory
+      problem: 'The proposal''s `why` says none of the card''s studies measured endothelial function together
+        with an orthostatic measure in the same patients. pmid:32154656 (on the card, CCC, 35 vs 20) did
+        measure the reactive hyperaemia index and the COMPASS-31 autonomic symptom score (whose domains
+        include orthostatic regulation) in the same patients, and reports in its full text (PMC7261521):
+        "No significant correlation was found neither with cognitive scores, muscle pain, nor with COMPASS-31
+        score assessing autonomous dysfunction (not shown)"; COMPASS-31 also did not differ between patients
+        with and without endothelial dysfunction (p = 0.5, 24 patients with data). COMPASS-31 is a composite
+        autonomic score, not a measure of orthostatic intolerance or cerebral blood flow, so this does
+        not meet the spec section 3 rule for a study that measured both ends, and the link text stands
+        as written at step 1.'
+      fix: Optionally add one sourced sentence, e.g. 'A study of n=35 patients on this card found no significant
+        correlation between the reactive hyperaemia index and a composite autonomic symptom score (COMPASS-31),
+        which includes orthostatic symptoms.' with pmid:32154656 added to the link's sources; or leave
+        the text as is and correct the reasoning in future proposals.
+audits_run:
+- 2026-11-16-endothelial-dysfunction-links.yaml
+- 2026-11-16-endothelial-dysfunction-links-second.yaml
+outcome: published
