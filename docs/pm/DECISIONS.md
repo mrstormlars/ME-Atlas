@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-16 — Hosting on GitHub Pages; error reports through GitHub issues (founder ruling)
+
+The founder, on where to host the public site: "Ja, da bruker vi Github Pages." And on the contact address for error reports: "Kontaktadresse kan vel være lenke til Github issues."
+
+- **The public site is hosted on GitHub Pages**, built from `main` by `.github/workflows/pages.yml` (approved cards only, never drafts). Why: free, no account or server to run, and the repository is already on GitHub. It goes live only when the repository is public and Pages is enabled with source "GitHub Actions"; the private Azure preview is unchanged.
+- **Error reports go through GitHub issues.** Every page's footer links to the issue chooser and to the repository. Why: no personal address is published, and the issue forms (`.github/ISSUE_TEMPLATE/`) already collect what a correction needs. The site promises no response time.
+
 ## 2026-11-16 — The auditor gets the full text of link sources; one more round for the energy card (founder ruling)
 
 Proposed to the founder: "Gi revisoren fulltekst også for lenkekilder, og kjør én runde til på energikortet (C6)." The founder: "Ja, merge og ny runde".

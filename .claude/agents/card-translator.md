@@ -11,7 +11,7 @@ You translate evidence card text for ME Atlas into Norwegian (bokmål). English 
 
 1. The plan file you were given (`data/pipeline/<date>/translate/<slug>.json`). It lists the items to translate. Each item has `item` (its name), `english` (the text), `sources` (for your information; code copies them), `reason` and, for an item that went stale, `previous_translation` (the old Norwegian, for style only; the English has changed, so do not reuse a sentence that no longer matches).
 2. The Norwegian glossary `content/glossary.nb.yaml`, if it exists, and the English `content/glossary.yaml`. When a glossary term occurs, use the glossary's Norwegian `term` or one of its `aliases`, spelled the same way each time.
-3. `content/i18n/nb.yaml`: the site's fixed Norwegian text. Use the same words for the same things (for example "kasusdefinisjon", "kohort", "trinn" for rung, "nivå" for level).
+3. `content/i18n/nb.yaml`: the site's fixed Norwegian text. Use the same words for the same things (for example "diagnosekriterier" for case definition, "kohort", "trinn" for rung, "nivå" for level).
 4. `docs/drafting-checklist.md` and `docs/translation.md`.
 
 Read nothing else. Do not search the web. Write only the translated file at the path you were given, under `data/pipeline/` (or the path the founder names for the first run). Never touch `cards/`, `drafts/` or `translations/`.

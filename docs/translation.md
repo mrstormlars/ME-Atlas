@@ -74,6 +74,7 @@ The names of the items (locators) are fixed by `translations.english_items`:
 | `level_reason[i]` | paragraph i of `level_reason` (a single text is paragraph 0) |
 | `contested_reason[i]` | paragraph i of `contested.reason` (only while the card is contested) |
 | `badge_reasons.diagnostic_marker[i]`, `badge_reasons.explains_pem[i]` | paragraph i of the badge's reason (only when there is one) |
+| `links[i]` | the text of link i in `links` |
 | `subgroups[i]` | subgroup i |
 | `early_signals[i]` | early signal i |
 | `studies[<id>].finding` | the `finding` of the study with that id |
