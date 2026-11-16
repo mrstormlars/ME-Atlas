@@ -91,7 +91,8 @@ REOPENED_ROUNDS = {
     "mast-cell-activation": 2,
     # DECISIONS 2026-11-16 (one added sentence; one more round for the last two cards): a third round for the first;
     # `herpesvirus-reactivation` keeps its unused round C2 (below).
-    "impaired-energy-production-after-exertion": 3,
+    # DECISIONS 2026-11-16 (up to three check retries per round): a fourth round (C4) for the same card.
+    "impaired-energy-production-after-exertion": 4,
     "brain-and-brainstem-mri-changes": 2,
     "orthostatic-intolerance-cerebral-blood-flow": 2,
     "hpa-axis-cortisol": 2,
@@ -106,6 +107,9 @@ VALVE_STAGES = ("correction-review", "card-review", "audit")
 # records of round C1 predate the classification, so a card-reviewer classifies them once; if every finding is wording,
 # the audit-stage valve may run on that closed round. The value is the round. No other slug can use this.
 CLASSIFICATION_EXCEPTION = {"orthostatic-intolerance-cerebral-blood-flow": 1}
+# Check retries of a correction round (DECISIONS 2026-11-16): a failed attempt may be applied again this many times per
+# round, shared by the round's attempts; the failed tries are kept as ``...-attempt<i>``.
+MAX_CHECK_RETRIES = 3
 # The attempts of a correction round, in order: the first, then up to MAX_REVISIONS revised attempts, each after a
 # reject at the correction review or the whole-card review (DECISIONS 2026-11-15/16: while the decisive findings fall).
 # Tags of files: C1, C1-revised, C1-revised2, ... C1-revised<MAX_REVISIONS>.
@@ -1725,9 +1729,11 @@ def _attempt_chain(cfg: Config, slug: str, base: str) -> list[str]:
 def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revision: int = 0) -> dict[str, Any]:
     """`apply --round C<k> [--revised[2-4]]`: apply a correction's operations, check them (A2, A4).
 
-    Writes ``checks/<slug>-rC<k>.json`` and ``applied/<slug>-rC<k>/`` as for other rounds. At most two attempts after
-    failed checks: a second is allowed only after a failed first one, whose ops and checks files are kept as
-    ``...-attempt1``. After a review reject the drafter gets a revised attempt (``--revised``, ``--revised2``, ...,
+    Writes ``checks/<slug>-rC<k>.json`` and ``applied/<slug>-rC<k>/`` as for other rounds. After failed checks the
+    attempt may be applied again while the round has used fewer than ``MAX_CHECK_RETRIES`` retries (shared by its
+    attempts); each failed try's ops, checks and errors files are kept as ``...-attempt<i>``, and a failed try writes
+    ``checks/<slug>-rC<k>-errors.md`` (`_check_errors_text`) for the drafter.
+    After a review reject the drafter gets a revised attempt (``--revised``, ``--revised2``, ...,
     files ``...-rC<k>-revised<i>...``) while fewer than ``MAX_REVISIONS`` exist and the decisive findings fell since
     the last reject of the same review (`_revision_state`). The draft in ``drafts/`` is never touched.
     """
@@ -1754,22 +1760,23 @@ def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revi
         if problem := _draft_problem(cfg, slug, base):
             raise PipelineError(problem)
     checks_file = cfg.checks_path(slug, None, n)
-    first_checks = cfg.checks_path(slug, None, f"{n}-attempt1")
-    first_ops = cfg.ops_path(slug, None, f"{n}-attempt1")
-    attempt = 1
+    kept = _kept_tries(cfg, slug, n)
+    attempt = kept + 1  # the try of this attempt tag (the next one when its checks failed)
     if checks_file.exists():
-        if first_checks.exists():
-            raise PipelineError(f"both attempts of correction round {n} are used; there is no third")
         if _read_json(checks_file).get("passed"):
             raise PipelineError(f"correction round {n} passed its checks; it is not applied a second time")
-        if n != base and cfg.checks_path(slug, None, f"{base}-attempt1").exists():
+        if _check_retries_used(cfg, slug, base) >= MAX_CHECK_RETRIES:
             raise PipelineError(
-                f"the retry after failed checks of round {base} was used by the first attempt; "
-                "a revised attempt that fails the checks ends the round"
+                f"all {MAX_CHECK_RETRIES} check retries of round {base} are used: a further try after failed "
+                "checks is refused, the round ends"
             )
-        checks_file.replace(first_checks)  # the first attempt failed; keep its record, this is the second
+        # the last try failed; keep its record (and its errors file), this is the next try
+        checks_file.replace(cfg.checks_path(slug, None, f"{n}-attempt{attempt}"))
+        errors_file = _errors_path(cfg, slug, n)
+        if errors_file.exists():
+            errors_file.replace(_errors_path(cfg, slug, f"{n}-attempt{attempt}"))
         shutil.rmtree(cfg.applied_dir(slug, None, n), ignore_errors=True)
-        attempt = 2
+        attempt += 1
 
     ops: OpsFile | None = None
     ops_errors: list[str] = []
@@ -1814,9 +1821,64 @@ def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revi
     if new_text is not None:
         _check_applied(cfg, slug, draft, draft_text, new_text, cfg.applied_dir(slug, None, n), result)
     _finish_checks(cfg, result, ops_errors, None, n)
-    if attempt == 1 and not result["passed"] and ops_path.is_file():
-        shutil.copyfile(ops_path, first_ops)  # the drafter rewrites the ops file for attempt 2; keep the first
+    if not result["passed"]:
+        used = _check_retries_used(cfg, slug, base)
+        left = MAX_CHECK_RETRIES - used
+        errors_file = _errors_path(cfg, slug, n)
+        _write_text(errors_file, _check_errors_text(cfg, slug, base, n, result, left))
+        result["errors_file"] = str(errors_file)
+        if left > 0 and ops_path.is_file():
+            # the drafter rewrites the ops file for the retry; keep this one
+            shutil.copyfile(ops_path, cfg.ops_path(slug, None, f"{n}-attempt{attempt}"))
     return result
+
+
+def _kept_tries(cfg: Config, slug: str, tag: str) -> int:
+    """How many failed tries of attempt ``tag`` are kept as ``<tag>-attempt<i>`` checks files (each is one retry)."""
+    return sum(1 for i in range(1, MAX_CHECK_RETRIES + 1) if cfg.checks_path(slug, None, f"{tag}-attempt{i}").exists())
+
+
+def _check_retries_used(cfg: Config, slug: str, base: str) -> int:
+    """The check retries round ``base`` has used, over all its attempts (a file ``...-attempt1`` of a round run under
+    the one-retry rule counts as one)."""
+    return sum(_kept_tries(cfg, slug, base + suffix) for suffix in ATTEMPT_SUFFIXES)
+
+
+def _errors_path(cfg: Config, slug: str, tag: str) -> Path:
+    path = cfg.checks_path(slug, None, tag)
+    return path.with_name(f"{path.stem}-errors.md")
+
+
+_OPS_LOCATION = re.compile(r"operations\[\d+\]")
+_VALIDATOR_LINE = re.compile(r"^.+?\.yaml: (?P<path>.*?): \[[^\]]+\] ", re.DOTALL)
+
+
+def _check_errors_text(cfg: Config, slug: str, base: str, tag: str, result: dict[str, Any], left: int) -> str:
+    """``checks/<slug>-r<tag>-errors.md``: every error that failed the try (ops problems, validator issues, new
+    citation errors), as rule, location and the message of the checks file; no warnings, no preexisting problems."""
+    rows: list[tuple[str, str, str]] = []
+    for message in result["ops_errors"]:
+        found = _OPS_LOCATION.search(message)
+        rows.append(("ops", found.group(0) if found else "(the ops file)", message))
+    for message in result["validator"]:
+        found = _VALIDATOR_LINE.match(message)
+        rows.append(("validator", found.group("path") if found else "(see the message)", message))
+    for row in _new_errors(result):
+        rows.append((row["code"], row["study"], row["message"]))
+    lines = [
+        f"# Check errors of {cfg.checks_path(slug, None, tag).name}",
+        "",
+        "These errors made the checks fail. Fix exactly these and change nothing else.",
+        (
+            f"Check retries left in round {base}: {left} of {MAX_CHECK_RETRIES}."
+            if left > 0
+            else f"Check retries left in round {base}: none (all {MAX_CHECK_RETRIES} are used)."
+        ),
+        "",
+    ]
+    for i, (rule, location, message) in enumerate(rows, 1):
+        lines += [f"{i}. rule: {rule}", f"   location: {location}", "   message: " + message.replace("\n", "\n   ")]
+    return "\n".join(lines) + "\n"
 
 
 def apply_ops_file(
@@ -5438,15 +5500,20 @@ def correction_outcome(cfg: Config, slug: str, date: str, tag: str, *, exception
     applied_path = cfg.applied_dir(slug, None, attempt) / f"{slug}.yaml"
     if applied_path.is_file():
         pub.would_text = applied_path.read_text(encoding="utf-8")
+    limit = (
+        f"; all {MAX_CHECK_RETRIES} check retries of the round are used"
+        if _check_retries_used(cfg, slug, tag) >= MAX_CHECK_RETRIES
+        else ""
+    )
     if r.ops is None:
-        return held(f"correction failed checks: {r.ops_problem}")
+        return held(f"correction failed checks: {r.ops_problem}{limit}")
     if ops_problems := correction_ops_problems(r.ops, draft_card.level) + correction_target_problems(
         cfg, slug, attempt, r.ops, draft_card
     ):
-        return held("correction failed checks: " + "; ".join(ops_problems))
+        return held("correction failed checks: " + "; ".join(ops_problems) + limit)
     if r.checks is None or not r.checks.get("passed"):
         why = _check_failure_summary(r.checks) if r.checks is not None else "it was never applied (no check result)"
-        return held(f"correction failed checks: {why}")
+        return held(f"correction failed checks: {why}{limit}")
     if r.review is None:
         return held("correction rejected in review: no review was recorded")
     if not _stage_accepted(cfg, slug, attempt, "correction-review", r.review):
@@ -6420,6 +6487,8 @@ def _dispatch(
         if result["passed"]:
             out("PASSED" + (" (no change proposed)" if result["no_change"] else f"; applied card: {result['applied']}"))
             return 0
+        if result.get("errors_file"):
+            out(f"errors for the drafter: {result['errors_file']}")
         out("FAILED")
         return 1
     if args.command == "record-review":

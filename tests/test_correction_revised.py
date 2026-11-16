@@ -194,28 +194,28 @@ def test_the_check_retry_of_the_revised_attempt_is_allowed_when_the_first_did_no
     names = sorted(p.name for p in corr.dir.rglob("*revised*") if p.is_file())
     assert f"{SLUG}-rC1-revised-attempt1.json" in names  # ops and checks of the failed attempt are kept
     assert sum(1 for n in names if n == f"{SLUG}-rC1-revised-attempt1.json") == 2
-    assert apply_revised(corr, ops_data(BAD)) == 1 and "both attempts" in capsys.readouterr().err
+    assert apply_revised(corr, ops_data(BAD)) == 1 and "passed its checks" in capsys.readouterr().err
     first = checks(corr, f"{SLUG}-rC1-revised-attempt1.json")
     assert first["passed"] is False and checks(corr, f"{SLUG}-rC1-revised.json")["passed"] is True
 
 
-def test_a_revised_attempt_that_fails_ends_the_round_when_the_first_attempt_used_the_retry(corr: Corr, capsys):
+def test_a_revised_attempt_that_fails_ends_the_round_when_the_first_attempt_used_all_retries(corr: Corr, capsys):
     assert corr.plan() == 0
-    assert corr.apply(ops_data(BAD)) == 1 and corr.apply() == 0  # the check retry of the first attempt
+    assert all(corr.apply(ops_data(BAD)) == 1 for _ in range(3)) and corr.apply() == 0  # three check retries
     assert corr.review("reject") == 0
     assert apply_revised(corr, ops_data(BAD)) == 1
     assert apply_revised(corr) == 1  # no retry left
-    assert "was used by the first attempt" in capsys.readouterr().err
+    assert "all 3 check retries of round C1 are used" in capsys.readouterr().err
     assert not (corr.dir / "checks" / f"{SLUG}-rC1-revised-attempt1.json").exists()
     assert corr.publish() == 0
     assert "Held back: correction failed checks:" in corr.report()
     assert pipeline.correction_round_state(_cfg(corr), SLUG) == (1, None)  # the revised trail closes the round
 
 
-def test_the_check_retry_of_the_first_attempt_does_not_repeat(corr: Corr, capsys):
+def test_the_check_retries_of_the_first_attempt_are_three(corr: Corr, capsys):
     assert corr.plan() == 0
-    assert corr.apply(ops_data(BAD)) == 1 and corr.apply(ops_data(BAD)) == 1
-    assert corr.apply() == 1 and "both attempts" in capsys.readouterr().err
+    assert all(corr.apply(ops_data(BAD)) == 1 for _ in range(4))
+    assert corr.apply() == 1 and "all 3 check retries" in capsys.readouterr().err
 
 
 # --- R3: the last attempt reaches the audit -------------------------------------------------------------

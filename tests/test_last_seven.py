@@ -449,7 +449,9 @@ def test_c4_one_new_round_for_each_of_the_seven_and_a_third_for_oxidative_nitros
         "herpesvirus-reactivation",
     ]
     assert all(pipeline.max_correction_rounds(slug) == 2 for slug in seven)
-    assert pipeline.max_correction_rounds("impaired-energy-production-after-exertion") == 3  # DECISIONS 2026-11-16
+    assert (
+        pipeline.max_correction_rounds("impaired-energy-production-after-exertion") == 4
+    )  # DECISIONS 2026-11-16 (check retries)
     assert pipeline.max_correction_rounds("oxidative-nitrosative-stress") == 3
     assert pipeline.max_correction_rounds("small-fibre-neuropathy") == 2
     assert pipeline.max_correction_rounds("a-card-that-was-never-corrected") == 1
