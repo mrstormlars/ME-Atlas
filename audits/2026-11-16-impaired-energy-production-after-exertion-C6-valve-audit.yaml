@@ -1,0 +1,31 @@
+card: impaired-energy-production-after-exertion
+round: 6
+stage: audit
+attempt: C6
+classification:
+- finding: first.parts[0]
+  class: wording
+  target: studies[pmid:34198946].finding
+  problem: The finding of the study of men (pmid:34198946) says the comparison group's performance improved
+    'with no significant change in its peak workload'. The paper's own results table and results text
+    show that peak workload in the men with idiopathic chronic fatigue rose significantly from day 1 to
+    day 2 (216 to 229 W, p < 0.0001); the clause follows an abstract sentence that the full text contradicts.
+    The clause should be removed or corrected; no level, badge, contested mark, case definition, role
+    or number on the card depends on it.
+operations:
+- op: update_study
+  id: pmid:34198946
+  set:
+    finding: A study of n=26 men with ME/CFS and 25 men with chronic fatigue not meeting ME/CFS criteria
+      found that oxygen use and workload at peak exercise and at the ventilatory threshold fell on a second
+      test 24 hours later in ME/CFS, while the comparison group's performance improved.
+check:
+  passed: true
+  fixes:
+  - finding: first.parts[0]
+    resolves: true
+    new_claim: false
+    reason: The clause 'with no significant change in its peak workload' is removed; the remaining text
+      only says the ICF group's performance improved on day 2, which both the abstract ('ICF patients
+      showed improved performance on CPET2') and the full text ('ICF participants improved their CPET
+      performance') state.

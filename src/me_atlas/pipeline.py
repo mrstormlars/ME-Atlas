@@ -94,7 +94,8 @@ REOPENED_ROUNDS = {
     # DECISIONS 2026-11-16 (up to three check retries per round): a fourth round (C4) for the same card.
     # DECISIONS 2026-11-16 (three rubric clarifications): a fifth round (C5) for it, and a third (C3) for
     # `herpesvirus-reactivation`.
-    "impaired-energy-production-after-exertion": 5,
+    # DECISIONS 2026-11-16 (the auditor gets the full text of link sources): a sixth round (C6) for the energy card.
+    "impaired-energy-production-after-exertion": 6,
     "brain-and-brainstem-mri-changes": 2,
     "orthostatic-intolerance-cerebral-blood-flow": 2,
     "hpa-axis-cortisol": 2,
@@ -2186,7 +2187,7 @@ def _cached_preprint(cfg: Config, doi: str) -> europepmc.PreprintRecord:
     return record
 
 
-ABSTRACT_ONLY_NOTE = "Abstract only (not a carrier of the level, a badge or the contested mark)."
+ABSTRACT_ONLY_NOTE = "Abstract only (not a carrier of the level, a badge, the contested mark or a link)."
 FULLTEXT_NOT_CACHED_NOTE = (
     "FULL TEXT NOT CACHED: only the abstract is given. A statement on the card that is not in this abstract may "
     "stand in the full text; it cannot be checked here."
@@ -2194,15 +2195,18 @@ FULLTEXT_NOT_CACHED_NOTE = (
 
 
 def carrier_ids(card: cards.Card) -> set[str]:
-    """E1: the study ids cited in ``level_reason``, ``contested.reason`` and the reason of each badge.
+    """E1: the study ids cited in ``level_reason``, ``contested.reason``, the reason of each badge and the sources of
+    each link (DECISIONS 2026-11-16).
 
-    These are the sources that carry the level, a badge or the contested mark; the auditor gets their full text.
+    These are the sources that carry the level, a badge, the contested mark or a link; the auditor gets their full text.
     """
     found: list[str] = cards.reason_sources(card.level_reason)
     if card.contested is not None:
         found += cards.reason_sources(card.contested.reason)
     found += cards.reason_sources(card.badges.diagnostic_marker.reason)
     found += cards.reason_sources(card.badges.explains_pem.reason)
+    for link in card.links:
+        found += link.sources
     return set(found)
 
 
