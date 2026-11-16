@@ -11,7 +11,7 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 - **Repository settings** (2026-11-16, as in `docs/plan-open-repository.md`): branch protection on `main` (pull request required, no force push, no deletion, also for admins), secret scanning with push protection, private vulnerability reporting, Discussions, description, topics and homepage. Error reports come in through the issue forms; the site footer links to them.
 - **Norwegian.** Every card item, the glossary, the methods text and the site strings are translated and in step with the English (`uv run python -m me_atlas.translations check` reports no stale item).
 - **Outreach.** The founder sent the email to the Norwegian ME Association on 2026-11-16. No medical or research expert has reviewed the content, and the site says so.
-- **Built and documented:** PubMed and Europe PMC fetch (`docs/fetch.md`), card format and validator (`docs/card-format.md`), mechanical citation checks C1-C11 (`docs/citation-check.md`), the weekly pipeline with review, audit, correction path and safety valve (`docs/pipeline.md`, command `/ukentlig`), the site generator (`docs/site.md`), translations (`docs/translation.md`), the causal map (`docs/map.md`), the survey tooling and the gaps page (`docs/survey.md`), preprints as early signals.
+- **Built and documented:** PubMed and Europe PMC fetch (`docs/fetch.md`), card format and validator (`docs/card-format.md`), mechanical citation checks C1-C11 (`docs/citation-check.md`), the weekly pipeline with review, audit, correction path and safety valve (`docs/pipeline.md`, command `/ukentlig`), the site generator (`docs/site.md`), translations (`docs/translation.md`), the causal map (`docs/map.md`), the survey tooling, the gaps page and the bridge search (`docs/survey.md`), preprints as early signals.
 
 ## Active priorities (max 3)
 
@@ -23,7 +23,7 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 
 For the founder to decide:
 
-- Part C of `docs/plan-wider-sources.md` (bridge search pilot): the founder picks the links to search for.
+- The bridge search pilot (Part C of `docs/plan-wider-sources.md`) has run on the founder's five links; the report is `docs/pm/bridge-pilot.md`. The positive control passed and the two base-rate pairs drew no accepted hit, but the reviewer rejected 9 of 21 extracted rows (43%, above the limit of one in five). The founder rules whether the results are useful enough to show, and whether the follow-up plan for indirect evidence goes ahead.
 - The domain me-atlas.org waits until the founder sees whether the site draws interest (DECISIONS 2026-11-16).
 
 To build or fix:

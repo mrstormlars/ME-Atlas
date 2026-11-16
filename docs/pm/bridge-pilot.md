@@ -122,4 +122,98 @@ Results are written in the fixed framing: "Reported in other conditions (systema
 
 ## Results
 
-Not yet run.
+Run on 2026-11-16, after the protocol commit (`ecc84a9`), with `uv run python -m me_atlas.survey bridge run` and the queries in `config/bridge_pilot.yaml` unchanged. The `bridge-surveyor` agent read one context file per arm with hits (10 files, 127 records); every file passed `survey bridge validate`. A fresh `card-reviewer` checked the 21 `yes` rows against the cached records: 12 accepted, 9 rejected. No deviation from the protocol.
+
+Every source below is a record fetched from PubMed and cached under `data/cache/bridge/pubmed/`; titles are as PubMed gives them, and every quote is copied from the record's title or abstract. **Review quality is not graded**: the project has no published criteria for it. Nothing here is a finding about ME/CFS, and no intervention studied in another condition is an option for ME/CFS.
+
+### Counts
+
+| Question | General: hits | General: screened | Long COVID: reviews | Long COVID: original studies (count only) |
+|---|---|---|---|---|
+| Q1 oxidative stress → endothelial dysfunction | 94 | 10 (restricted form, 10 hits) | 1 | 8 |
+| Q2 autonomic imbalance → orthostatic intolerance | 26 | 26 | 1 | 29 |
+| Q3 NK cell function → herpesvirus reactivation | 13 | 13 | 0 | 3 |
+| Q4 tryptophan/kynurenine → neuroinflammation | 17 | 17 | 0 | 2 |
+| Q5 autoimmunity → orthostatic intolerance | 7 | 7 | 0 | 6 |
+| C1 autoimmunity → autonomic imbalance (positive control) | 17 | 17 | 0 | 3 |
+| B1 circadian rhythm / orthostatic intolerance (base rate) | 6 | 6 | 0 | 1 |
+| B2 circadian rhythm / oxidative stress (base rate) | 90 | 29 (restricted form, 29 hits) | 0 | 0 |
+
+Each long COVID arm with one hit was screened in full. The query text of every arm is in `config/bridge_pilot.yaml`.
+
+### Outcome per question and arm
+
+Rows: `yes` / `no` / `animal_or_cell_only` as the surveyor wrote them; "accepted" is after the reviewer.
+
+**Q1 oxidative-nitrosative-stress → endothelial-dysfunction.**
+- General (10 screened; 3 yes, 6 no, 1 animal or cell only; 1 accepted): *reported in other conditions.* Reported in other conditions (review, population: critically ill patients). Not studied in ME/CFS.
+  - pmid:17713412, "Antioxidant therapy in critical care--is the microcirculation the primary target?" (2007): "The microcirculation is particularly susceptible to oxidative stress that causes hemodynamic instability, leading to multiple organ failure due to systemic inflammatory response syndrome." Direction A → B; not a meta-analysis. PubMed tags it Systematic Review, but the record calls itself "not a systematic review of the clinical evidence".
+- Long COVID (1 screened; 1 no): *no review found.*
+
+**Q2 autonomic-imbalance → orthostatic-intolerance-cerebral-blood-flow.**
+- General (26 screened; 9 yes, 17 no; 5 accepted, one of them `inconsistent`): *mixed.* Reported in other conditions (systematic reviews, populations below), with one meta-analysis reporting the relation for one kind of measure and not another. Not studied in ME/CFS.
+  - pmid:31888497, "Heart rate and heart rate variability comparison between postural orthostatic tachycardia syndrome versus healthy participants; a systematic review and meta-analysis." (2019). Population: people with POTS compared with healthy participants; meta-analysis, 20 studies. "POTS patients have a higher HR than healthy patients after HUTT and lower HRV in terms of time domain measure but not in terms of frequency domain measure." Relation inconsistent.
+  - pmid:39538129, "Postural orthostatic tachycardia syndrome after COVID-19 vaccination: A systematic review." (2024). Population: people with POTS after COVID-19 vaccination; 10 studies, 7 of them case reports or case series. "Diagnostic findings across studies included elevated norepinephrine levels and reduced heart rate variability."
+  - pmid:37531984, "Cardiovascular disease in space: A systematic review." (2023). Population: astronauts after spaceflight; 35 studies in the whole review. "Orthostatic intolerance studies found astronauts experienced altered heart rate variability, baroreflex response, and blood pressure changes post-flight."
+  - pmid:35863181, "Varicella-zoster virus infection and autonomic dysfunction." (2022). Population: people with varicella-zoster virus infection; 45 studies, 2 of them on cardiovascular dysfunction. "(1) VZV infection rarely produces orthostatic hypotension, which involves diffuse sympathetic dysfunction by polyneuropathy." Direction A → B.
+  - pmid:33947784, "Natural History of Afferent Baroreflex Failure in Adults." (2021). Population: adults with afferent baroreflex failure. "ABF should be suspected in patients with prior head and neck cancer treated by radiation or surgery who present with labile hypertension and orthostatic hypotension." PubMed tags it Systematic Review; the reviewer notes the record describes a single-centre retrospective chart review, not a review of studies.
+- Long COVID (1 screened; 1 no): *no review found.*
+
+**Q3 reduced-nk-cell-function → herpesvirus-reactivation.**
+- General (13 screened; 13 no): *no review found.*
+- Long COVID (0 hits): *no review found.*
+
+**Q4 tryptophan-kynurenine-metabolism → neuroinflammation.**
+- General (17 screened; 4 yes, 11 no, 2 animal or cell only; 2 accepted, one of them `inconsistent`): *mixed.* Reported in other conditions (systematic reviews, populations: affective and psychotic disorders; treatment-resistant depression and suicidality), with localized and inconsistent findings in one of them. Not studied in ME/CFS.
+  - pmid:42014469, "Multimodal microglial and kynurenine pathway alterations across the affective-psychosis spectrum: a systematic review of patterns, heterogeneity, and dimensional implications." (2026). Population: major depressive disorder, bipolar disorder and schizophrenia. "KP findings were localized and regionally dissociated, including cingulate QUIN-related microglial signals and reduced hippocampal QUIN immunoreactivity in single cohorts." Relation inconsistent.
+  - pmid:28412922, "Abnormalities in Kynurenine Pathway Metabolism in Treatment-Resistant Depression and Suicidality: A Systematic Review." (2017). Population: people with treatment-resistant depression and suicidality. "Several lines of evidence suggest that neuroinflammation is accompanied by a dysregulation of the kynurenine pathway (KP) in both TRD and suicidal individuals, resulting in an imbalance of neuroactive metabolites." Direction B → A (neuroinflammation acting on the pathway), the reverse of the map's proposed link. The reviewer notes the sentence is the abstract's framing; the abstract reports no results of its own.
+- Long COVID (0 hits): *no review found.*
+
+**Q5 autoimmunity-autoantibodies-b-cells → orthostatic-intolerance-cerebral-blood-flow.**
+- General (7 screened; 1 yes, 6 no; 1 accepted): *reported in other conditions.* Reported in other conditions (systematic review, population: patients with POTS and neurogenic orthostatic hypotension). Not studied in ME/CFS.
+  - pmid:28738696, "The role of autoantibodies in the syndromes of orthostatic intolerance: a systematic review." (2017): "Recent evidence has shown the presence of adrenergic and cholinergic receptor antibodies in patients with POTS and orthostatic hypotension." Association; no direction stated.
+- Long COVID (0 hits): *no review found.*
+
+### Positive control
+
+**C1 autoimmunity-autoantibodies-b-cells → autonomic-imbalance.** General (17 screened; 4 yes, 13 no; 3 accepted, all `present`): *reported in other conditions.* Long COVID (0 hits): *no review found.* The control passes, so the other results are interpreted.
+- pmid:29697012, "Heart rate variability in patients with systemic lupus erythematosus: a systematic review and methodological considerations." (2018). Population: patients with systemic lupus erythematosus; 11 studies. "Patients with systemic lupus erythematosus have abnormal heart rate variability, which reflects cardiac autonomic dysfunction and may be related to inflammatory cytokines but not necessarily to disease activity."
+- pmid:29291895, "Evidence of reduced parasympathetic autonomic regulation in inflammatory joint disease: A meta-analyses study." (2018). Population: adults with rheumatoid arthritis or spondyloarthritis compared with healthy controls; meta-analysis, 35 studies. "Patients with IJD have cardiac parasympathetic AD which is related to inflammation." The reviewer notes the result rests on rheumatoid arthritis; the pooled differences for spondyloarthritis were not significant.
+- pmid:25151910, "Autonomic function and rheumatoid arthritis: a systematic review." (2014). Population: patients with rheumatoid arthritis; 40 studies. "ANS dysfunction is prevalent in ~60% of RA patients."
+
+### Base-rate pairs
+
+B1 (6 screened) and B2 (29 screened): every row `no`, both long COVID arms 0 hits. Outcome *no review found* in all four arms.
+
+Against the criterion (protocol point 7):
+- (a) General arm with outcome *reported in other conditions* or *mixed*: 0 of 2 base-rate pairs, against 4 of 5 founder questions (Q1, Q2, Q4, Q5).
+- (b) Accepted `yes` rows per pair: 0 for the base-rate pairs, against a mean of 1.8 per founder question (1, 5, 0, 2, 1).
+
+The criterion is met: the arbitrary pairs drew hits from PubMed (B2 had 90) but no accepted statement on the relation. Two pairs, both with the circadian card at one end, are a very small sample; this is a weak check, not a measured false-positive rate.
+
+### Reviewer agreement
+
+The reviewer rejected **9 of 21 `yes` rows (43%)**, above the protocol's limit of about one in five. By the protocol's own rule, **abstract screening as done here is too unreliable to scale.** The rejections:
+
+- Wrong field only (4): studies pooled not given where the record states it (pmid:32281951, C1, 20 publications; pmid:42359947, Q2, 21 studies; pmid:40332237, Q1, 197 articles, also direction should be A → B); meta-analysis flag false where PubMed lists Meta-Analysis (pmid:11296464, Q2). These four were on the relation; strict rejection removes them from the counts. Counting them as accepted would not change any outcome.
+- Substance (5):
+  - pmid:29673103 (Q1): the quote is the review's background premise, not its finding. Its finding concerns an intervention trial with a result that differed by population, and the record does not show the effect runs through oxidative stress.
+  - pmid:34409762 (Q2): about a change in autonomic function after surgery; the only sentence linking it to orthostatic intolerance is speculative.
+  - pmid:20552588 (Q2): the record only says the association "needs further investigation"; it reports no finding.
+  - pmid:32244523 and pmid:32061259 (Q4): "inflammation" there means cytokines measured mostly in blood, not neuroinflammation as the card's themes define it.
+
+The reviewer also flagged five accepted rows as weaker than the row suggests (noted with each source above): one record that calls itself not a systematic review, one single-centre chart review tagged Systematic Review, one review of mostly case reports, one result resting on one of its two conditions, and one framing sentence with no results.
+
+### Limitations
+
+- Abstract-only screening, by one agent, with a reject rate of 43% at review.
+- Review quality is not graded; PubMed's publication type was taken as given, and two accepted records are not reviews of studies.
+- The end terms are the cards' theme entries, not tuned to the question. Some pull in neighbouring topics (cytokine "inflammation" for neuroinflammation; surgery and spaceflight for autonomic imbalance).
+- Publication bias: reviews that found nothing are less likely to be published.
+- A relation shown in one condition need not hold in ME/CFS. In several accepted sources the autonomic change has a cause specific to that population (nerve damage after varicella-zoster infection, baroreflex failure after head and neck treatment, spaceflight).
+- The long COVID arm returned almost nothing: 2 reviews over 8 questions, both screened `no`. The originals counts (0 to 29) show some primary studies exist; reviews without ME/CFS mention on these relations had not appeared by the run date.
+- The positive control shares its A end with Q5, and both base-rate pairs share the circadian card.
+
+### For the founder to judge
+
+Whether the results for Q1, Q2, Q4 and Q5 are useful enough to show (protocol point 7). Ideally one researcher or Science for ME reader is asked the same.
