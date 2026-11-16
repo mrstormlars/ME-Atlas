@@ -1,0 +1,59 @@
+card: brain-and-brainstem-mri-changes
+decision: accept
+link_decisions:
+  - {to: symptom:cognitive-impairment, decision: accept}
+parts:
+  - decision_part: "The link to symptom:cognitive-impairment at step 2 (associated): several cited studies in cohorts with a recognised case definition measured an MRI measure and a self-rated cognitive score in the same patients and report a relation."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:34355438
+        quote: "For ME/CFSICC and HC, DTI parameter interaction-with-group regressions were abnormal for the clinical measures of information processing score, SF36 physical, sleep disturbance score and respiration rate in both grey and white matter regions."
+      - source: pmid:34355438
+        quote: "An FDR of 0.05 for the 140 statistical designs applied here was achieved by requiring a cluster p < .018."
+      - source: pmid:34355438
+        quote: "The DTI parameters AD, MD and RD formed significant clusters in the hippocampus and parahippocampal gyrus."
+      - source: pmid:34355438
+        quote: "One ME/CFSICC patient was omitted from group interaction analysis due to missing clinical information (Procinfo, Phys_all and SDS)."
+      - source: pmid:38347875
+        quote: "We recruited 31 ME/CFS patients (see Table 1), fulfilling the CCC and/or ICC definitions of diagnosis (Carruthers et al., 2003, 2011)."
+      - source: pmid:38347875
+        quote: "a negative correlation was detected with FC between vermis X and vermis crus II (p = 0.013), while a positive correlation was detected with FC between vermis X and vermis VIIb (p = 0.008, see Figure 5)"
+    class: none
+  - decision_part: "The Newcastle sentence of the link: Fukuda cohort flagged as not requiring PEM, exploratory regressions, smaller total intracranial and grey matter volume with higher cognitive failure and cognitive fatigue scores, no relation for white matter, no stated correction, authors advise caution."
+    rubric: "Oxford-only evidence stays at step 1, and a source that is a review (`design: other`) cannot carry step 2 or 3."
+    evidence:
+      - source: pmid:29021956
+        quote: "Participants were not selected according to any criteria other than fulfilling the Fukuda diagnostic criteria of CFS (Fukuda et al., 1994)."
+      - source: pmid:29021956
+        quote: "Exploratory analyses in the patient group related segment volume and TIV to several illness characteristics using simple and multiple regression analyses"
+      - source: pmid:29021956
+        quote: "These show negative associations between TIV and almost all questionnaire measures of symptom severity. The multiple regression shows these negative associations for GM and CSF volumes, but not WM volume."
+      - source: pmid:29021956
+        quote: "these findings in the present study should be interpreted with caution"
+    class: none
+  - decision_part: "The hippocampal sentences of the link: in the same Griffith cohort larger subfield volumes went with a worse information processing score in the ICC group and not in the Fukuda group, without a stated correction for the correlations; in the 7 Tesla cohort a larger left CA4 body went with worse concentration (r=0.41, p=0.034), with correction stated only across the three groups."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:35355311
+        quote: "multiple hippocampus subfield volumes (Table 4) in ME/CFSICC patients with larger volumes associated with poorer information processing score"
+      - source: pmid:35355311
+        quote: "There were no statistically significant associations between pain, phys_all, and procinfo with hippocampal subfield volumes in ME/CFSFukuda patients."
+      - source: pmid:35355311
+        quote: "Correction for multiple comparisons was implemented using false discovery rate (FDR)."
+      - source: pmid:39804864
+        quote: "and left CA4 body volume (r = 0.41, p = 0.034), indicating that a larger volume is associated with greater impairment in concentration."
+      - source: pmid:39804864
+        quote: "in a different cohort of ME/CFS patients [20]"
+      - source: pmid:39804864
+        quote: "Multiple comparison correction was applied to account for testing across the three groups."
+    class: none
+  - decision_part: "The null study in the link: 37 patients meeting the Canadian or International criteria, diffusion measures correlated with clinical measures including WHODAS domains, no correlation surviving correction; the link text states it, as the rubric requires."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:42539798
+        quote: "Correlation analysis was performed between DTI, DKI metrics and clinical measures such as duration of illness, fatigue severity, SF36 domains and WHODAS domains."
+      - source: pmid:42539798
+        quote: "We found significant uncorrected correlations between DTI, DKI metrics and clinical measures in ME/CFS and long COVID. However, we did not find any significant differences between these metrics after adjusting for multiple comparisons."
+    class: none
+reasons_summary: "The cognitive-impairment link at step 2 is supported: cited studies with ICC, CCC/ICC or Fukuda cohorts related MRI measures to self-rated cognitive scores in the same patients, and the text reports each result, its correction status and the null study correctly."
+would_change: "A cited record showing a stated number, direction or correction in the link text to be wrong, or a study in the card with a recognised case definition that measured an MRI measure and a cognitive score and found no relation that the link text leaves out, would change this decision. No drafting reasoning, review findings or earlier audit verdict were given to this auditor."

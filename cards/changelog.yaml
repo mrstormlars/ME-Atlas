@@ -423,3 +423,18 @@
   - pmid:41516145
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: brain-and-brainstem-mri-changes
+  change: 'Links added: symptom:cognitive-impairment'
+  reason: 'The cognitive-impairment link at step 2 is supported: cited studies with ICC, CCC/ICC or Fukuda
+    cohorts related MRI measures to self-rated cognitive scores in the same patients, and the text reports
+    each result, its correction status and the null study correctly.'
+  sources:
+  - pmid:29021956
+  - pmid:34355438
+  - pmid:35355311
+  - pmid:39804864
+  - pmid:38347875
+  - pmid:42539798
+  tier: 2
+  decided_by: ai_audit
