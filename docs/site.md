@@ -33,7 +33,7 @@ The pattern leaves out the `.me-atlas-build` marker. Files removed from the buil
 
 ## Public site on GitHub Pages
 
-`.github/workflows/pages.yml` builds the site with `uv run python -m me_atlas.site build` (approved cards only, never `--drafts`) on every push to `main` and on manual start, uploads `build/` and deploys it. Every `uses:` is pinned to a commit SHA; `tests/test_pages_workflow.py` checks the trigger, the permissions, the pinning and that the build command has no `--drafts`. The workflow cannot run until the repository is public and Pages is enabled with source "GitHub Actions" (a setting on GitHub, not in the repository). The expected address is <https://mrstormlars.github.io/ME-Atlas/> (Norwegian: `nb/`). Founder ruling 2026-11-16 in DECISIONS.
+`.github/workflows/pages.yml` builds the site with `uv run python -m me_atlas.site build` (approved cards only, never `--drafts`) on every push to `main` and on manual start, uploads `build/` and deploys it. Every `uses:` is pinned to a commit SHA; `tests/test_pages_workflow.py` checks the trigger, the permissions, the pinning and that the build command has no `--drafts`. The workflow needs the repository to be public and Pages enabled with source "GitHub Actions" (a setting on GitHub, not in the repository); both were done on 2026-11-16, and the first run deployed the site. The address is <https://mrstormlars.github.io/ME-Atlas/> (Norwegian: `nb/`). Founder ruling 2026-11-16 in DECISIONS.
 
 ## Pages
 

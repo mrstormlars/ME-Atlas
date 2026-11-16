@@ -8,7 +8,7 @@ ME Atlas aims to contribute to solving ME/CFS. It collects and grades what is kn
 
 It is for researchers, and for patients and carers, as readers of equal weight. Each hypothesis has a card: what it claims, the studies that bear on it (with sample size and case definition beside each), what contradicts it, and how far along the evidence ladder it is. The site shows no ranking of "most promising" ideas and never says a hypothesis is right or wrong.
 
-A draft preview of the site is at <https://meatlaslpr4z.z1.web.core.windows.net/> (Norwegian: `/nb/`). It is a draft build and says so on every page.
+The site is at <https://mrstormlars.github.io/ME-Atlas/> (Norwegian: `nb/`). It is rebuilt from the approved cards on every change to `main`.
 
 ## How grading works
 
