@@ -1,0 +1,50 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+date: '2026-11-16'
+kind: restore (tier 1, at the founder's request)
+note: 'Restores a sourced null result removed by the round C2 safety-valve fix (audits/2026-11-15-orthostatic-intolerance-cerebral-blood-flow-C2-valve-card-review.yaml).
+  The whole-card review finding behind that fix is partly contradicted by the cached full text (PMC7874746):
+  "No significant relations were found between the reduction in percentage of CBF and NRS for pain, fatigue,
+  or concentration at all time points assessed (data not shown)." Only "not related" was stronger than
+  the source; the restored sentences use the source''s wording. Founder: "Kan vi få den mistede setningen
+  (kildebelagt nullfunn) inn igjen før vi merger?"'
+card_sha256_before: f63dd5cf9b74c124cc5780aaad508b365797cb8a15f5c5137257bb47b187afe9
+operations:
+- op: replace_paragraph
+  field: badges.explains_pem.reason
+  index: 0
+  text: 'No study at level 2 or above measures post-exertional malaise and links it to blood flow to the
+    brain in the same patients. A study from the Dutch clinic, of patients meeting both the criteria for
+    CFS and the criteria for ME, tracked pain, fatigue and concentration scores after a tilt test in 278
+    patients and 30 healthy controls: scores rose in patients and were still higher after 7 days. In controls
+    the scores were unchanged after the tilt, and at 7 days only the fatigue score had changed, falling.
+    The study reports no significant relation between the fall in blood flow to the brain and the pain,
+    fatigue or concentration scores at the time points assessed, without showing the data. A passive tilt
+    is orthostatic stress rather than physical or mental effort, so the card does not count it as a direct
+    measure of post-exertional malaise.'
+  sources:
+  - pmid:33585505
+- op: update_study
+  id: pmid:33585505
+  set:
+    finding: A study of n=278 patients and 30 healthy controls found that pain, fatigue and concentration
+      scores rose after a tilt test in patients and were still raised after 7 days; in controls the scores
+      were unchanged after the tilt, and at 7 days only the fatigue score had changed, falling. No significant
+      relation was found between the fall in blood flow to the brain and the pain, fatigue or concentration
+      scores at the time points assessed (data not shown).
+checks: cards validate OK; citations check 0 errors (no C10/C11 issue)
+check:
+  by: card-reviewer (narrow check against the cached full text)
+  passed: true
+  answers:
+  - finding: restore[0]
+    resolves: true
+    new_claim: false
+    reason: 'PMC7874746 Results: ''No significant relations were found between the reduction in percentage
+      of CBF and NRS for pain, fatigue, or concentration at all time points assessed (data not shown)'';
+      the sentence restates this, including ''without showing the data'', and is no stronger.'
+  - finding: restore[1]
+    resolves: true
+    new_claim: false
+    reason: 'Same Results sentence in PMC7874746 (and the Discussion: ''No significant relation was found
+      between CBF reduction and differences in NRS ... (data not shown)''); wording matches, ''data not
+      shown'' kept.'

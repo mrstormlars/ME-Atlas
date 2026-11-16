@@ -357,3 +357,11 @@
   - pmid:29759891
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: orthostatic-intolerance-cerebral-blood-flow
+  change: Restored the sourced null result (no significant relation between the fall in brain blood flow and the symptom scores) in the explains_pem reason and the finding of pmid:33585505
+  reason: The round 2 wording fix had removed it on a finding the cached full text partly contradicts; restored in the source's wording at the founder's request and checked by the review agent.
+  sources:
+  - pmid:33585505
+  tier: 1
+  decided_by: founder
