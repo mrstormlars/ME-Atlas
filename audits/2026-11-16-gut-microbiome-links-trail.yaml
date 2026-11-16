@@ -1,0 +1,211 @@
+card: gut-microbiome
+card_sha256: 44fb83048e6671dd14d7b741db0ac7e4d56958d2f26ddbd7005d138a97f608d0
+rounds:
+- round: 1
+  proposal:
+  - to: symptom:gastrointestinal-symptoms
+    support: associated
+    text: A study of n=106 patients meeting both the Fukuda and Canadian criteria and 91 healthy controls
+      found self-reported irritable bowel syndrome in 35 patients and 3 controls. Lower diversity within
+      samples (evenness and Shannon diversity) was found only in patients with irritable bowel syndrome,
+      the overall make-up of gut bacteria differed from controls in patients both with and without it,
+      and stool butyrate was lower in patients with and without it. An earlier study of n=50 patients
+      (Fukuda and/or Canadian criteria) and 50 controls found irritable bowel syndrome in 21 patients
+      and no controls, and that the bacteria separating patients with it from controls differed from those
+      separating patients without it; the two studies share several authors. A study of n=76 patients
+      meeting the 2015 IOM criteria, 50 patients with long COVID and 37 controls found that gastrointestinal
+      symptom scores showed weaker or less stable associations with gut bacteria than fatigue scores did.
+    sources:
+    - pmid:36758522
+    - pmid:28441964
+    - pmid:42351611
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: A 2025 review proposes that changes in the gut microbiome may lead to distinct neurocognitive
+      impairments in ME/CFS through the gut-brain axis; it was not studied directly in patients. A study
+      of n=76 patients meeting the 2015 IOM criteria, 50 patients with long COVID and 37 controls, which
+      measured gut bacteria and questionnaire-derived cognitive symptom scores, found weaker or less stable
+      associations for cognitive scores than for fatigue scores.
+    sources:
+    - pmid:41516296
+    - pmid:42351611
+  - to: neuroinflammation
+    support: proposed
+    text: A 2025 review reports that some researchers believe the passage of gut bacteria or their products
+      into the body, which can trigger neuroinflammation, may underlie neurological disturbances in ME/CFS;
+      the review is not a study in patients.
+    sources:
+    - pmid:41516296
+  - to: oxidative-nitrosative-stress
+    support: proposed
+    text: Two reviews propose links from gut bacterial products to reactive molecules. A 2025 review describes
+      bacterial endotoxin entering the circulation and activating an inflammatory pathway, after which
+      immune cells produce cytokines and reactive oxygen species. A 2019 review proposes that a free-radical
+      response (reactive oxygen and nitrogen species) to bacterial products from the gut could explain
+      reports of raised oxidative stress in ME/CFS, and states that causal links between the affected
+      systems are unknown. Neither review is a study in patients.
+    sources:
+    - pmid:41516296
+    - pmid:31330791
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: reject
+    findings:
+    - item: links[0]
+      severity: must_fix
+      problem: 'Missing no-relation results from the same patients in pmid:36758522. The link text gives
+        only the comparisons of each IBS subgroup with controls. It leaves out the paper''s direct comparisons
+        of patients with and without IBS: ''Beta diversity did not differ between ME/CFS without and with
+        sr-IBS'' and ''Model 4 [ME/CFS with sr-IBS vs. ME/CFS without sr-IBS] did not reveal significant
+        species differences after false discovery rate (FDR) adjustment'' (PMC10183837). The rubric says
+        a study that measured both ends and found no relation is recorded and the link text says so. Without
+        these sentences the text reads as a stronger IBS-microbiome relation than the paper reports.'
+      fix: 'Add one sentence, for example: ''Comparing patients with and without irritable bowel syndrome
+        directly, the overall make-up of gut bacteria did not differ, and no bacterial species differed
+        after correction for multiple testing.'' Also say that the lower evenness and Shannon diversity
+        in patients with irritable bowel syndrome was ''compared with controls without it'', as the source
+        states.'
+    - item: links[0]
+      severity: must_fix
+      problem: 'The finding is not labelled as unreplicated (drafting checklist line 7). Both studies
+        that relate IBS to gut bacteria come from the same Columbia group: they share ten authors (Williams,
+        Che, Bateman, Klimas, Komaroff, Levine, Montoya, Peterson, Hornig, Lipkin, per both author lists).
+        The only other study on the card that measured gut bacteria and gastrointestinal symptoms (pmid:42351611)
+        found a weak or near-zero signal. The text says ''the two studies share several authors'' but
+        never says the relation has not been repeated by an independent group, which other published links
+        do (for example cards/autonomic-imbalance.yaml). The drafter''s reason for leaving this out, that
+        ''the records do not state it'', does not apply: the statement is about the studies on the card.'
+      fix: 'Add: ''No independent group on this card has repeated the relation.'' Or: ''The relation has
+        not been repeated by an independent group.'''
+    - item: links[0]
+      severity: must_fix
+      problem: The text overstates pmid:42351611 for gastrointestinal outcomes. It says gastrointestinal
+        scores 'showed weaker or less stable associations with gut bacteria than fatigue scores did'.
+        That phrase is from the Discussion. The Results section of the same record (3.6) says 'Several
+        domains, particularly affective, gastrointestinal, and HAMD-related measures, had near-zero or
+        negative pooled out-of-fold R2 in mixOmics, arguing against a stable microbiome contribution after
+        adjustment for age, BMI, sex, and patient group'. It also says that microbiome-added value beyond
+        covariates was small overall (delta R2 about 0.00-0.02 in glmnet; no benefit in mixOmics). This
+        is close to a no-relation result, and the link text must say so rather than imply a weaker positive
+        association. The paper also states that the regressions were adjusted for patient group, so they
+        were not restricted to the 76 ME/CFS patients; the text does not say this.
+      fix: 'Write, for example: ''found that gut bacteria explained little or none of the variation in
+        gastrointestinal symptom scores (near-zero or negative R2 in one of two methods, arguing against
+        a stable contribution), in models across all three groups adjusted for group; fatigue-related
+        scores showed the strongest, though still small, associations.'''
+    - item: links[0]
+      severity: advisory
+      problem: 'On the step: ''associated'' can rest on pmid:36758522 (CCC, 106 vs 91). The authors report
+        a relation (''alpha diversity differences are associated with sr-IBS rather than ME/CFS''; deficient
+        propionate ''only found in ME/CFS subjects with sr-IBS''; a significant ME/CFS*sr-IBS interaction
+        for SCFAs). But that paper''s direct within-patient comparisons were null for beta diversity and
+        for species. The direct comparison of patients with and without IBS (''Comparisons involving the
+        ME/CFS + IBS subgroup (vs. controls and vs. ME/CFS without IBS) showed stronger associations'')
+        is in pmid:28441964, whose case definition is recorded as Fukuda (''and/or'' Canadian), from the
+        same group. IBS as a target of symptom:gastrointestinal-symptoms is supported: the ICC (pmid:21777306,
+        PMC3427890) lists ''nausea, abdominal pain, bloating, irritable bowel syndrome'' under gastro-intestinal.
+        The auditor decides the step.'
+    - item: links[1]
+      severity: must_fix
+      problem: The text contradicts itself. The first sentence says of the link 'it was not studied directly
+        in patients'. The second sentence describes pmid:42351611, which measured gut bacteria and questionnaire-derived
+        cognitive scores in the same participants. The review being a non-patient source is what the text
+        should say, not that the link was never studied in patients.
+      fix: 'Replace ''it was not studied directly in patients'' with ''the review is not a study in patients''.
+        The step stays ''proposed'': pmid:42351611 reports only ''weaker or less stable signals'' for
+        cognitive outcomes, from regressions across ME/CFS, long COVID and controls adjusted for patient
+        group, which is not a reported relation in ME/CFS patients.'
+    - item: links[1]
+      severity: advisory
+      problem: All four authors of the review pmid:41516296 (Nikolova, Donchev, Vaseva, Ivanov) are also
+        authors of pmid:42351611 (PubMed author lists). The text cites the two as separate sources without
+        saying this. Also, the regressions in pmid:42351611 pooled the three groups ('adjustment for age,
+        BMI, sex, and patient group'); 'which measured gut bacteria and ... cognitive symptom scores'
+        could be read as a within-patient analysis.
+      fix: Optionally add 'by the same group' and 'in models across all three groups'.
+    - item: links[3]
+      severity: advisory
+      problem: '''reactive molecules'' is vague for a link into a card about reactive oxygen or nitrogen
+        species outweighing antioxidant defences. The 2025 review (PMC12785659, section 4.3) states only
+        that immune cells produce reactive oxygen species after TLR-4 activation; it does not mention
+        oxidative stress. The 2019 review (PMC6787592, section 4.2) explicitly ties the free-radical response
+        to ''reports of elevated oxidative stress''. The text is accurate; the opening sentence could
+        say ''reactive oxygen and nitrogen species''. Its last clause, ''causal links between the affected
+        systems are unknown'' (section 5.2), is general to all systems in the review''s Table 1, which
+        the wording reflects acceptably.'
+- round: 2
+  proposal:
+  - to: symptom:gastrointestinal-symptoms
+    support: associated
+    text: A study of n=106 patients meeting both the Fukuda and Canadian criteria and 91 healthy controls
+      found self-reported irritable bowel syndrome in 35 patients and 3 controls. Lower diversity within
+      samples (evenness and Shannon diversity) was found only in patients with irritable bowel syndrome,
+      compared with controls without it. Comparing patients with and without irritable bowel syndrome
+      directly, the overall make-up of gut bacteria did not differ, and no bacterial species differed
+      after correction for multiple testing. Stool butyrate was lower in patients both with and without
+      it. An earlier study of n=50 patients (Fukuda and/or Canadian criteria) and 50 controls found irritable
+      bowel syndrome in 21 patients and no controls, and that the bacteria separating patients with it
+      from controls differed from those separating patients without it. The two studies share ten authors,
+      and no independent group on this card has repeated the relation. A study of n=76 patients meeting
+      the 2015 IOM criteria, 50 patients with long COVID and 37 controls found that gut bacteria explained
+      little or none of the variation in gastrointestinal symptom scores (near-zero or negative R2 in
+      one of two methods, arguing against a stable contribution), in models across all three groups adjusted
+      for group.
+    sources:
+    - pmid:36758522
+    - pmid:28441964
+    - pmid:42351611
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: A 2025 review proposes that changes in the gut microbiome may lead to distinct neurocognitive
+      impairments in ME/CFS through the gut-brain axis; the review is not a study in patients. A study
+      of n=76 patients meeting the 2015 IOM criteria, 50 patients with long COVID and 37 controls, by
+      the same group as the review, measured gut bacteria and questionnaire-derived cognitive symptom
+      scores and reported weaker or less stable signals for cognitive scores than for fatigue-related
+      scores, in models across all three groups.
+    sources:
+    - pmid:41516296
+    - pmid:42351611
+  - to: neuroinflammation
+    support: proposed
+    text: A 2025 review reports that some researchers believe the passage of gut bacteria or their products
+      into the body, which can trigger neuroinflammation, may underlie neurological disturbances in ME/CFS;
+      the review is not a study in patients.
+    sources:
+    - pmid:41516296
+  - to: oxidative-nitrosative-stress
+    support: proposed
+    text: Two reviews propose links from gut bacterial products to reactive oxygen and nitrogen species.
+      A 2025 review describes bacterial endotoxin entering the circulation and activating an inflammatory
+      pathway, after which immune cells produce cytokines and reactive oxygen species; it does not mention
+      oxidative stress in this passage. A 2019 review proposes that a free-radical response (reactive
+      oxygen and nitrogen species) to bacterial products from the gut could explain reports of raised
+      oxidative stress in ME/CFS, and states that causal links between the affected systems are unknown.
+      Neither review is a study in patients.
+    sources:
+    - pmid:41516296
+    - pmid:31330791
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings:
+    - item: links[0]
+      severity: advisory
+      problem: 'All round-1 findings are resolved. Checked against PMC10183837, PMC5405467 and PMC13296197:
+        35/106 and 3/91; 21 of 50 and none of 50; the direct with-versus-without comparisons (beta diversity,
+        Model 4 after FDR); ten shared authors, recomputed from both PubMed author lists (Bateman, Che,
+        Hornig, Klimas, Komaroff, Levine, Lipkin, Montoya, Peterson, Williams); 76/50/37. One small point
+        remains: ''gut bacteria explained little or none of the variation in gastrointestinal symptom
+        scores'' is directly supported only for mixOmics (near-zero or negative R2). For glmnet the paper
+        says only that the strongest outcomes were fatigue and physiosomatic composites ''rather than
+        affective or gastrointestinal domains'', with microbiome-added value of about 0.00-0.02 over covariates
+        for any outcome. The parenthetical scopes the claim, so the meaning holds.'
+      fix: Optionally write 'explained little of the variation (near-zero or negative R2 in one of two
+        methods ...)'.
+audits_run:
+- 2026-11-16-gut-microbiome-links.yaml
+outcome: the first audit decided reject; no second audit was run (sequential audits)

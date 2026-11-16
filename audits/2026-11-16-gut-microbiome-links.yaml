@@ -1,0 +1,63 @@
+card: gut-microbiome
+decision: reject
+parts:
+  - decision_part: "links[1] (to symptom:cognitive-impairment) is set at support 'proposed' and its text gives as the only patient data a study that found weaker or less stable signals. It leaves out the Polish study on the card (41006438, Fukuda), which measured gut bacteria and an objective cognitive test in the same patients and reports a relation. By the rubric that study meets the requirement for step 2 'associated', so 'proposed' is not the step the rubric supports. 'Not studied directly in patients' is also untrue for this link, because two studies on the card measured both ends in patients. The link's step and its account of which studies bear on it must be redone."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:41006438
+        quote: "180 were excluded as they did not meet the Fukuda criteria"
+      - source: pmid:41006438
+        quote: "PERMANOVA analysis revealed significant interactions between the gut microbial composition and cognitive function measures"
+      - source: pmid:41006438
+        quote: "In the CFS, a correlation of TMT B score was observed with 8 genera"
+      - source: pmid:41006438
+        quote: "To our knowledge, this is the first study to measure the association between the enteric bacteria composition and objectively measured cognitive function using a validated test"
+      - source: pmid:42351611
+        quote: "derived symptom-domain and composite variables were generated for downstream phenotype screening, including pure fatigue, physiosomatic, autonomic, gastrointestinal, cognitive, sleep, or phenome-related composites"
+      - source: pmid:42351611
+        quote: "whereas affective, cognitive, and gastrointestinal outcomes showed weaker or less stable signals"
+    class: decisive
+  - decision_part: "links[1] stands at step 1 only if no patient study reports a relation. The review it cites does state the link, but the step-1 definition requires that the link has not been studied directly in patients."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "microbiome changes may lead to distinct neurocognitive impairments observed in ME/CFS patients"
+    class: decisive
+  - decision_part: "links[0] (to symptom:gastrointestinal-symptoms) at 'associated' is supported. Two studies (Fukuda and Canadian criteria) measured gut bacteria and irritable bowel syndrome in the same patients and report a relation. The counts, the direct comparison by irritable bowel syndrome status and the null result for gastrointestinal scores in the Bulgarian study all match their records."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:36758522
+        quote: "In the analytic sub-cohort, 35 out of the 106 (33.0%) ME/CFS cases reported sr-IBS, while only 3 out of the 91 control subjects (3.3%) reported sr-IBS."
+      - source: pmid:36758522
+        quote: "Evenness and Shannon diversities were only lower in ME/CFS with sr-IBS compared with healthy controls without sr-IBS"
+      - source: pmid:36758522
+        quote: "Beta diversity did not differ between ME/CFS without and with sr-IBS."
+      - source: pmid:36758522
+        quote: "Model 4 did not reveal significant species differences after false discovery rate (FDR) adjustment"
+      - source: pmid:28441964
+        quote: "IBS was diagnosed in 21 of 50 ME/CFS patients (42%) and none of 50 controls."
+      - source: pmid:28441964
+        quote: "Bacterial taxa predictive of ME/CFS patients with IBS were distinct from taxa associated with ME/CFS patients without IBS."
+      - source: pmid:42351611
+        quote: "Several domains, particularly affective, gastrointestinal, and HAMD-related measures, had near-zero or negative pooled out-of-fold R2 in mixOmics, arguing against a stable microbiome contribution after adjustment for age, BMI, sex, and patient group."
+    class: none
+  - decision_part: "links[2] (to neuroinflammation) at 'proposed' is supported: the 2025 review states the link, and no study on the card measured both ends."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "and trigger neuroinflammation, some researchers believe that this process may be the basis for neurological disturbances in ME/CFS patients."
+    class: none
+  - decision_part: "links[3] (to oxidative-nitrosative-stress) at 'proposed' is supported by the two reviews. The text matches what the reviews say."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "increased endotoxin levels disrupt the epithelial barrier, enter the circulation and activate the inflammatory TLR-4 pathway"
+      - source: pmid:41516296
+        quote: "as well as reactive oxygen species are being produced by immune cells, thus enhancing systemic inflammation and symptom severity"
+      - source: pmid:31330791
+        quote: "Therefore, excessive free radical generation as such an antimicrobial response to circulating antagonists of enteric origin could provide one explanation for the reports of elevated oxidative stress in the disorder."
+      - source: pmid:31330791
+        quote: "However, the causal links between them are unknown and cannot be discerned purely on the basis of clinical correlation."
+    class: none
+reasons_summary: "Three of the four links are supported, but the cognitive-impairment link is set at 'proposed' and leaves out a Fukuda study on the card that related gut bacteria to an objective cognitive test in the same patients, so its step is not the one the rubric supports."
+would_change: "A redraft of links[1] that grades the link at the step the rubric supports, given 41006438, and names both 41006438 (relation reported) and 42351611 (weaker or less stable signals) as patient studies. Links[0], [2] and [3] may stay as written. No auditor reasoning, review findings or earlier verdicts were given to this audit."
