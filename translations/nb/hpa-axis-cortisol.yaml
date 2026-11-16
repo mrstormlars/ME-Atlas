@@ -17,8 +17,8 @@ items:
       krever ikke PEM) og 14 friske frivillige ga 100 mikrogram ovint kortikotropinfrigjørende hormon (CRH), hjernens signal
       som setter i gang HPA-aksen. Frigjøringen av ACTH, hypofysehormonet som stimulerer binyrene, og av kortisol var lavere
       hos pasientene; basalt ACTH og kortisol skilte seg ikke. En studie med 30 kvinner og 25 friske kontroller (Fukuda, Canadian
-      og Institute of Medicine criteria) rapporterte også lavere ACTH-/kortisolnivåer; den er en kontrollert studie med
-      anerkjente diagnosekriterier og støtter også nivå 2, forenlig med hver av de to delene av kjernepåstanden, selv om sammendraget
+      og Institute of Medicine criteria) rapporterte også lavere ACTH-/kortisolnivåer; den er en kontrollert studie med anerkjente
+      diagnosekriterier og støtter også nivå 2, forenlig med hver av de to delene av kjernepåstanden, selv om sammendraget
       ikke sier om verdiene var hvileverdier eller stimulerte verdier. En andre studie fra Dinan-gruppen, med 20 pasienter
       og 20 friske frivillige, fant en mindre økning i kortisol etter en lav dose (1 mikrogram) ACTH; 9 av 20 pasienter og
       2 av 20 frivillige besto ikke testen ved en grense som forfatterne kaller vilkårlig. En tidligere studie der diagnosekriteriene
@@ -206,6 +206,39 @@ items:
     sources:
     - pmid:34254637
     source_hash: 606b6ff5bb6a7716745f37ca685dfdb60bfef2649d8cbe86b327b0e648e06aba
+  links[0]:
+    text: En oversiktsartikkel fra 2025 sier at unormale nivåer av hormoner i HPA-aksen ved ME/CFS har vært satt i sammenheng
+      med mer søvnvansker. Oversiktsartikkelen testet ikke dette selv. En studie av 121 klinikkpasienter og 64 sammenligningspersoner,
+      med diagnosekriterier som ennå ikke er verifisert, fant lavere fritt kortisol i urin over 24 timer hos pasientene og
+      rapporterte at de lavere nivåene ikke hang sammen med søvnforstyrrelse. En studie av 24 pasienter som oppfylte Canadian-,
+      International- og IOM 2015-kriteriene og 24 matchede kontroller fant at ingen av de utforskende korrelasjonene mellom
+      steroidnivåer i blodet og skårer på to symptomskalaer (der den ene har søvnforstyrrelse blant sine punkter) var signifikante
+      etter korreksjon for flere sammenligninger.
+    sources:
+    - pmid:41516296
+    - pmid:11282703
+    - pmid:40713801
+    source_hash: 3cb7fe3d50275cf89f4dcb138a4a9ac9e8ee625ff7574850df211fe6a9b4d194
+  links[1]:
+    text: Den samme oversiktsartikkelen fra 2025 sier at unormale nivåer av hormoner i HPA-aksen ved ME/CFS har vært satt
+      i sammenheng med mer konsentrasjonsvansker. Oversiktsartikkelen testet ikke dette selv. En studie av 24 pasienter som
+      oppfylte Canadian-, International- og IOM 2015-kriteriene og 24 matchede kontroller fant at ingen av de utforskende
+      korrelasjonene mellom steroidnivåer i blodet og skårer på to symptomskalaer (en skala for mental utmattelse og en skala
+      for flere organsystemer som har kognitiv dysfunksjon blant sine punkter) var signifikante etter korreksjon for flere
+      sammenligninger.
+    sources:
+    - pmid:41516296
+    - pmid:40713801
+    source_hash: d1be75bdfcee5003a9577cbb031b31c55142d44784347119ed938d78568286eb
+  links[2]:
+    text: En oversiktsartikkel fra 2019 antyder at koblingen mellom kortisolstyrte stressresponser og tarmen via HPA-aksen
+      kan fungere dårlig ved ME/CFS på grunn av det lave kortisolet som tidligere arbeid har antydet. Det kan legge til enda
+      en forstyrret reguleringssløyfe som kan bidra til å opprettholde en endret homeostase. Den lister også opp dysregulering
+      av HPA-aksen blant tilstander som kan flytte celler over i en alternativ stabil hviletilstand. Dette ble ikke studert
+      direkte hos pasienter.
+    sources:
+    - pmid:31330791
+    source_hash: 4ad10fc77173a207f5714f6283b234c63c8507fc180117d55e67cfdd83ee6a59
   studies[pmid:9669518].finding:
     text: En studie med n=14 pasienter og 14 friske frivillige fant lavere frigjøring av ACTH (P < 0,005) og kortisol (P <
       0,05) etter kortikotropinfrigjørende hormon hos pasientene, uten forskjell i basalt ACTH eller kortisol.

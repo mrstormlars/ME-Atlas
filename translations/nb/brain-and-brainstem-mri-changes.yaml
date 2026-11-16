@@ -183,6 +183,34 @@ items:
     - pmid:35355311
     - pmid:34975370
     source_hash: 76556ddfe8415121523f21e223580413e3b06548e9c025790737ddf970ea2fea
+  links[3]:
+    text: Studier har satt MR-mål i sammenheng med selvrapporterte kognitive symptomer hos pasienter, med blandede resultater
+      og uten noen samlet retning. En studie fra Newcastle med 42 pasienter som oppfylte Fukuda-kriteriene (som ikke krever
+      PEM) fant i utforskende regresjoner at mindre totalt intrakranielt volum og mindre volum av grå substans fulgte med
+      høyere selvrapporterte skårer for kognitiv svikt og for virkningen av kognitiv utmattelse, og at det ikke var noen slik
+      sammenheng for volumet av hvit substans. Artikkelen oppgir ikke noen korreksjon for flere sammenligninger for disse
+      regresjonene, og forfatterne råder til forsiktighet. Studier fra Griffith University ga blandede resultater. Hos 16
+      av 18 pasienter som oppfylte International Consensus Criteria (to ble utelatt fra denne analysen) hang diffusjons-MR-mål
+      annerledes sammen med en selvrapportert skår for informasjonsbehandling (1 til 10) enn hos kontroller, i områder som
+      omfatter hippocampus og corpus callosum, etter en korreksjon på tvers av alle regresjonene som ble kjørt. En andre artikkel
+      om den samme kohorten fant at større volum av flere hippocampale subfelt fulgte med en dårligere skår hos 16 av disse
+      pasientene, og ingen slik sammenheng hos de 24 pasientene som bare oppfylte Fukuda-kriteriene. Artikkelen oppgir ikke
+      at disse korrelasjonene ble korrigert for flere sammenligninger. En 7 tesla-studie med n=29 pasienter (beskrevet av
+      forfatterne som en annen kohort) fant at et større volum av venstre CA4-kropp fulgte med dårligere selvrapportert konsentrasjon
+      (r=0,41, p=0,034), også uten oppgitt korreksjon for flere korrelasjoner. Hos n=31 pasienter ved 7 tesla korrelerte en
+      selvrapportert minneskår positivt med konnektiviteten mellom to områder i lillehjernens vermis og negativt med et annet
+      par, etter korreksjon for falsk oppdagelsesrate. En studie med n=37 pasienter som oppfylte Canadian- eller International-kriteriene,
+      og som korrelerte diffusjons-MR-mål med kliniske mål, blant dem WHODAS-domener, fant ingen korrelasjon som holdt etter
+      korreksjon for flere sammenligninger. Skårene er selvrapporterte og gruppene er små, og ingen resultater er gjentatt
+      med det samme målet.
+    sources:
+    - pmid:29021956
+    - pmid:34355438
+    - pmid:35355311
+    - pmid:39804864
+    - pmid:38347875
+    - pmid:42539798
+    source_hash: 7268a018898c0bf700f250ab40e2cc11abcf105d3322cf12837097e25a3d9d3e
   studies[pmid:34355438].finding:
     text: En studie med n=18 pasienter som oppfylte International Consensus Criteria og 26 friske kontroller fant lavere aksial
       og gjennomsnittlig diffusivitet i en klynge i mellomhjernen og pons og høyere transversal diffusivitet i medulla; de
