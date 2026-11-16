@@ -95,7 +95,7 @@ Above the lists, a section `gaps-summary` ("At a glance" / "Kort oppsummert") sh
 
 ## Out of scope
 
-- A pipeline subcommand that merges the proposals into a draft. For now a layer and links are copied into the draft by hand (the founder, or a chat session at the founder's request), and only once the auditor has accepted them.
+- A pipeline subcommand that merges the proposals into a draft, and a way to set or change a layer through the pipeline. A layer is still copied into a draft by hand (the founder, or a chat session at the founder's request), and only once the auditor has accepted it. Links of a published card are added by a link round (`link-apply` ... `link-publish`: map review, two sequential audits, change log and trail; `docs/pipeline.md`, "Adding links to a published card (link round)"), which does not change the layer.
 - Contested marks on links, subgroup-specific maps and automatic link proposals from the weekly run.
 - A principle that stays: nodes and gaps are counted, never weighted, scored or ranked (no "number of symptoms explained" score, no weights on link steps).
 - Done 2026-11-06: the first mapping (16 cards placed, 17 links, symptom list from the ICC 2011, four editorial open questions); rulings in DECISIONS. Done 2026-11-06: a second pass with the review full texts as plain text with numbered paragraphs (`data/pipeline/2026-11-06-map-pass2/reviews/`), six more proposed links. Still open: a verifiable IOM 2015 or CCC record for the symptom list. The drawn map (built, see "The drawing") had its own plan: `docs/plan-drawn-map.md`.

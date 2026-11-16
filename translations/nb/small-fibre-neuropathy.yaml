@@ -76,6 +76,13 @@ items:
     sources:
     - pmid:33577778
     source_hash: 5f15368ac8da688e2ba1b2c989b14f96affbbb6c179f62f939333ad99ce3f267
+  links[0]:
+    text: En oversiktsartikkel fra 2023 oppgir at skade på små nervefibre kan svekke sammentrekningen av vener. Det sees ved
+      unormal opphopning av blod i bena ved stående stilling ved posturalt ortostatisk takykardisyndrom (POTS). Observasjonen
+      den viser til, er gjort ved POTS. Oversiktsartikkelen er ikke en studie av ME/CFS-pasienter.
+    sources:
+    - pmid:37054777
+    source_hash: 593e2f0f9dca6ef286746c8a608285606e18b3a172691fe7554f79d82793bc85
   studies[pmid:41576003].finding:
     text: En studie med n=170 pasienter og 73 historiske friske kontroller fant småfibernevropati ved hudbiopsi hos 52,6%
       av pasientene med biopsiresultater og 0,0% av kontrollene med resultater, og en lavere gjennomsnittlig nervefibertetthet

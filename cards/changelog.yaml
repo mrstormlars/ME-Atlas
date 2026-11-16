@@ -404,3 +404,22 @@
   - pmid:42051540
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: small-fibre-neuropathy
+  change: 'Links added: symptom:orthostatic-intolerance'
+  reason: A peer-reviewed 2023 review states that small fibre neuropathy can reduce venoconstriction with
+    venous pooling on standing (in POTS) and discusses it for ME/CFS; this supports a step 1 (proposed)
+    link to orthostatic intolerance, and the link text states its limits.
+  sources:
+  - pmid:37054777
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-16
+  card: endothelial-dysfunction
+  change: 'Links added: orthostatic-intolerance-cerebral-blood-flow'
+  reason: 'Link from endothelial dysfunction to orthostatic intolerance at step proposed is supported:
+    a peer-reviewed 2025 review states it, with no patient data, as the link text says.'
+  sources:
+  - pmid:41516145
+  tier: 2
+  decided_by: ai_audit

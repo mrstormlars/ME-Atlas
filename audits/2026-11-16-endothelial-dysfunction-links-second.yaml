@@ -1,0 +1,31 @@
+card: endothelial-dysfunction
+decision: accept
+parts:
+  - decision_part: "The added link from endothelial-dysfunction to orthostatic-intolerance-cerebral-blood-flow at step 1 (proposed), sourced to one peer-reviewed review that states the link."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516145
+        quote: "This review synthesizes current evidence across these interconnected biological domains and highlights key gaps that must be addressed to improve diagnostic and prognostic accuracy."
+      - source: pmid:41516145
+        quote: "Endothelial dysfunction driven by oxidative and nitrosative stress, along with autoantibody-mediated receptor interference, may explain orthostatic intolerance and impaired perfusion."
+      - source: pmid:41516145
+        quote: "This may explain the frequent findings of orthostatic intolerance, reduced tissue perfusion, and increased cardiovascular risk in ME/CFS patients."
+    class: none
+  - decision_part: "The link text: the review is described as proposing the link through oxidative and nitrosative stress and autoantibodies against vessel-regulating receptors, with no patient data of its own and a model it calls conceptual rather than quantitatively validated."
+    rubric: "an agent's or the founder's own reasoning is not"
+    evidence:
+      - source: pmid:41516145
+        quote: "The presence of autoantibodies targeting vasoregulatory receptors reinforces the link between immune dysregulation and vascular pathology."
+      - source: pmid:41516145
+        quote: "No new data were created or analyzed in this study."
+      - source: pmid:41516145
+        quote: "The proposed cycle represents a conceptual integrative framework, grounded in convergent evidence from multiple biological domains, rather than a quantitatively validated causal model."
+    class: none
+  - decision_part: "The step is not set higher than the source allows, and the link does not touch the card's level, which stays at 3."
+    rubric: "a source that is a review (`design: other`) cannot carry step 2 or 3"
+    evidence:
+      - source: pmid:41516145
+        quote: "Data sharing is not applicable to this article."
+    class: none
+reasons_summary: "The added proposed link to orthostatic intolerance is stated in a peer-reviewed 2025 review, and the link text matches that review's abstract, conclusions and data statement."
+would_change: "A retraction of pmid:41516145, or a finding that it is not peer reviewed, would change this decision. So would a correction showing that the target card orthostatic-intolerance-cerebral-blood-flow does not cover orthostatic intolerance; that card's content was not in the context file. Raising the link to associated would need an ME/CFS cohort study with a recognised case definition that measured endothelial function and orthostatic intolerance in the same patients."

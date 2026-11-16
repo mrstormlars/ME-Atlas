@@ -1,0 +1,86 @@
+card: small-fibre-neuropathy
+card_sha256: addfb06d964bdc5f9e4cf957b680edd9343b1cf5bab5b687a45b9f3aec90d2c4
+rounds:
+- round: 1
+  proposal:
+  - to: symptom:orthostatic-intolerance
+    support: proposed
+    text: A 2023 review states that small nerve fibre damage can reduce the tightening of veins on standing,
+      as seen with abnormal pooling of blood in the legs on standing in postural orthostatic tachycardia
+      syndrome (POTS). The observation it cites is in POTS; the review did not test this in ME/CFS patients,
+      and no study on this card measured both in ME/CFS patients.
+    sources:
+    - pmid:37054777
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: reject
+    findings:
+    - item: links[0]
+      severity: must_fix
+      problem: 'The closing clause ''no study on this card measured both in ME/CFS patients'' is contradicted
+        by the cached full texts of studies on the card. 41576003 (PMC12829881) evaluated ME/CFS patients
+        ''for evaluation of orthostatic intolerance'' with a 70-degree tilt test and also took skin biopsies
+        for small fiber neuropathy in the same patients. Its methods add: ''The relationship between lightheadedness
+        during head-up tilt (absent versus present) and QASAT domains was evaluated using the binary logistic
+        regression model.'' 37968647 (PMC10648633) ran the tilt test (POTS in 31% of ME/CFS) and Sudoscan
+        and heat/cold evoked potentials in the same patients. Its discussion says ''patients without neuropathy
+        showed better cardiovagal functioning and lower HR''. 39888240, 42082542 and 42286686 also ran
+        tilt tests alongside small fibre or sudomotor measures. The drafter''s ''why'' says the same thing
+        wrongly: it checked only 33577778. A reader would wrongly conclude that no patient data on this
+        link exists. That bears directly on whether the link could sit at a higher step.'
+      fix: Remove the clause. Or replace it with an accurate statement checked against the cached full
+        texts, for example that studies on this card measured small fibre function and tilt-test responses
+        in the same ME/CFS patients (cite them). Then say what they report, or do not report, about the
+        relation in ME/CFS patients alone. Note that 37968647 has an unverified case definition and cannot
+        support 'associated'. Every study used this way must be cited in the link's sources.
+    - item: links[0]
+      severity: advisory
+      problem: '''can reduce the tightening of veins on standing'' moves ''on standing'' onto venoconstriction.
+        The source says ''SFN and distal axonopathy can reduce venoconstriction, as seen with abnormal
+        lower extremity venous pooling upon standing ... in POTS''. The meaning is close, but ''on standing''
+        belongs to the pooling.'
+      fix: '''can reduce the tightening of veins, as seen with abnormal pooling of blood in the legs on
+        standing in ...''.'
+    - item: layer
+      severity: advisory
+      problem: No problem. The proposed layer 'dysfunction' equals the card's layer. The target symptom:orthostatic-intolerance
+        exists in content/symptoms.yaml and is not already linked. The source pmid:37054777 is on the
+        card as a context study. The quoted sentence is verbatim in PMC10088277 (section 'Inadequate Biventricular
+        Preload'), so step 'proposed' is supported by the review.
+- round: 2
+  proposal:
+  - to: symptom:orthostatic-intolerance
+    support: proposed
+    text: A 2023 review states that small nerve fibre damage can reduce the tightening of veins, as seen
+      with abnormal pooling of blood in the legs on standing in postural orthostatic tachycardia syndrome
+      (POTS). The observation it cites is in POTS; the review is not a study of ME/CFS patients.
+    sources:
+    - pmid:37054777
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings:
+    - item: links[0]
+      severity: advisory
+      problem: 'Both round-1 findings are resolved. The false clause ''no study on this card measured
+        both in ME/CFS patients'' is removed. ''on standing'' now belongs to the pooling, as in the source.
+        The source sentence is verbatim in PMC10088277 (''SFN and distal axonopathy can reduce venoconstriction,
+        as seen with abnormal lower extremity venous pooling upon standing ... in POTS''). The text says
+        the observation is in POTS and that the review is not a study of ME/CFS patients, so ''proposed''
+        is the highest step this single source supports. Layer ''dysfunction'' equals the card''s. pmid:37054777
+        is on the card as context. The target exists and is not linked twice. No banned word or advice.
+        A note for the auditor: card studies measured small fibre function and tilt-test responses in
+        the same patients. In 41576003 (ICC or IOM 2015) the methods name a logistic regression of tilt
+        lightheadedness against QASAT domains, but no result of it appears in the cached full text. 37968647
+        says ''patients without neuropathy showed better cardiovagal functioning and lower HR'' but has
+        an unverified case definition. Neither reports a relation that would lift the link to step 2.
+        Neither reports a null that the link text must state.'
+      fix: None needed for this round. A step-2 claim would need its own round that reads those full texts.
+audits_run:
+- 2026-11-16-small-fibre-neuropathy-links.yaml
+- 2026-11-16-small-fibre-neuropathy-links-second.yaml
+outcome: published

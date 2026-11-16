@@ -18,6 +18,11 @@ Three more operations exist only for the correction of a held-back draft (a corr
 * ``remove_paragraph``  remove paragraph ``index`` of a sourced-text field
 * ``remove_link``       remove the link whose target is ``to``
 
+One more exists only for a link round on a published card (``me_atlas.link_round``, see ``docs/pipeline.md``); the
+weekly ``apply`` and a correction round refuse it:
+
+* ``add_link``          append one link (``to``, ``support``, ``text``, ``sources``) as the last item of ``links``
+
 Sourced-text fields: ``level_reason``, ``contested.reason``, ``badges.diagnostic_marker.reason``,
 ``badges.explains_pem.reason`` (one sourced text or a list of paragraphs), and ``subgroups`` and
 ``early_signals`` (lists of sourced texts, one per item).
@@ -257,6 +262,16 @@ class RemoveLink(_Op):
     to: NonEmptyStr
 
 
+class AddLink(_Op):
+    """Link rounds only: append one link as the last item of ``links``. Always tier 2 (a link is part of the map)."""
+
+    op: Literal["add_link"]
+    to: NonEmptyStr
+    support: Literal["proposed", "associated", "directional"]
+    text: NonEmptyStr
+    sources: Annotated[list[StudyId], Field(min_length=1)]
+
+
 class Propose(_Op):
     """Set the level, the contested mark or a badge. Always tier 2.
 
@@ -298,10 +313,19 @@ class Propose(_Op):
 
 
 Operation = Annotated[
-    AddStudy | AddParagraph | ReplaceParagraph | Propose | UpdateStudy | RemoveParagraph | RemoveLink | AddSentence,
+    AddStudy
+    | AddParagraph
+    | ReplaceParagraph
+    | Propose
+    | UpdateStudy
+    | RemoveParagraph
+    | RemoveLink
+    | AddSentence
+    | AddLink,
     Field(discriminator="op"),
 ]
 CORRECTION_ONLY_OPS = ("update_study", "remove_paragraph", "remove_link", "add_sentence")
+LINK_ROUND_ONLY_OPS = ("add_link",)
 
 
 class OpsFile(_Op):
@@ -347,7 +371,7 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
     An operation that adds a study with ``preprint: true``, or cites a preprint study (one of ``preprints``:
     see ``preprint_ids``) in its sources, is also tier 2: preprint changes are decided by the founder.
     """
-    if isinstance(op, (Propose, RemoveLink)):
+    if isinstance(op, (Propose, RemoveLink, AddLink)):
         return 2  # a link is part of the causal map: decided like a level (spec section 6)
     if isinstance(op, AddStudy):
         return 2 if op.study.preprint or op.study.id in preprints else 1
@@ -802,6 +826,42 @@ def _apply_remove_link(lines: list[str], data: dict[str, Any], op: RemoveLink) -
     return lines[:a] + lines[b:]
 
 
+def _apply_add_link(lines: list[str], data: dict[str, Any], op: AddLink) -> list[str]:
+    if op.to == data.get("slug"):
+        raise OperationError(f"a card cannot link to itself ('{op.to}')")
+    links = data.get("links")
+    if any(isinstance(x, dict) and x.get("to") == op.to for x in links or []):
+        raise OperationError(f"the card already has a link to '{op.to}'")
+    if links is None:
+        data["links"] = links = []
+    assert isinstance(links, list)
+    links.append({"to": op.to, "support": op.support, "text": op.text, "sources": list(op.sources)})
+    try:
+        loc = _locate(lines, ["links"])
+    except OperationError:
+        loc = None
+    ci, starts = (0, []) if loc is None else _list_item_starts(lines, loc, "links")
+    col = ci if starts else 2
+    pad = " " * col
+    item = [
+        f"{pad}- to: {_scalar(op.to)}",
+        f"{pad}  support: {op.support}",
+        f"{pad}  text: >-",
+        *_folded(op.text, col + 4),
+        f"{pad}  sources: {_flow_list(list(op.sources))}",
+    ]
+    if loc is None:  # no links key at all: put it before the top-level last_checked, else at the end
+        at = next((i for i, ln in enumerate(lines) if ln.startswith("last_checked:")), None)
+        if at is None:
+            at = len(lines)
+            while at > 0 and not lines[at - 1].strip():
+                at -= 1
+        return [*lines[:at], "links:", *item, *lines[at:]]
+    if not starts:  # `links: []` or `links: null`
+        return _replace_lines(lines, loc, [f"{loc.key}:", *item])
+    return [*lines[: loc.end], *item, *lines[loc.end :]]
+
+
 def _validation_problems(data: dict[str, Any]) -> list[str]:
     try:
         card = Card.model_validate(data)
@@ -882,6 +942,8 @@ def apply_operations(text: str, operations: list[Operation] | OpsFile, *, valida
                 lines = _apply_remove_paragraph(lines, data, op)
             elif isinstance(op, RemoveLink):
                 lines = _apply_remove_link(lines, data, op)
+            elif isinstance(op, AddLink):
+                lines = _apply_add_link(lines, data, op)
             else:
                 lines = _apply_propose(lines, data, op)
         except OperationError as exc:

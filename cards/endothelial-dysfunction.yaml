@@ -574,7 +574,16 @@ studies:
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 layer: dysfunction
-links: []
+links:
+  - to: orthostatic-intolerance-cerebral-blood-flow
+    support: proposed
+    text: >-
+      A 2025 review proposes that endothelial dysfunction, driven by oxidative and nitrosative
+      stress and by autoantibodies that interfere with vessel-regulating receptors, may explain
+      orthostatic intolerance and reduced tissue blood flow in ME/CFS. The review reports no
+      patient data of its own, and it describes its model as conceptual rather than
+      quantitatively validated.
+    sources: ['pmid:41516145']
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-16
   by: ai_audit

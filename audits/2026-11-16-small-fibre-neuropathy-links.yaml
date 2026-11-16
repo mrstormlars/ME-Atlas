@@ -1,0 +1,37 @@
+card: small-fibre-neuropathy
+decision: accept
+parts:
+  - decision_part: "The proposed link to symptom:orthostatic-intolerance at step 1 (proposed), sourced to the 2023 review pmid:37054777."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:37054777
+        quote: "This review illustrates exercise pathophysiologic commonalities between PASC and ME/CFS that will help guide future diagnostics and treatment."
+      - source: pmid:37054777
+        quote: "The prevalence of small fiber neuropathy (SFN) seems to be high in PASC and ME/CFS."
+      - source: pmid:37054777
+        quote: "Small fibers regulate microvascular tone through sympathetic and parasympathetic cholinergic synapses on perivascular myocytes."
+      - source: pmid:37054777
+        quote: "SFN and distal axonopathy can reduce venoconstriction, as seen with abnormal lower extremity venous pooling upon standing and low norepinephrine release following sympathetic nervous system stimulation in POTS."
+    class: none
+  - decision_part: "The target node: orthostatic intolerance is named by the review as a symptom shared in ME/CFS, so the link points to a symptom the source places in ME/CFS."
+    rubric: "The symptom layer is not hypotheses: it is a fixed list taken from the accepted case definitions, each symptom sourced to the document that lists it."
+    evidence:
+      - source: pmid:37054777
+        quote: "Clinical overlap between PASC and myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) has been observed, with shared symptoms including intractable fatigue, postexertional malaise, and orthostatic intolerance."
+      - source: pmid:37054777
+        quote: "Orthostatic intolerance, described in most patients with ME/CSF, is a common finding in adolescents with PASC"
+    class: none
+  - decision_part: "The step is not overstated: the source is a review, so step 1 is the highest step it can carry, and the link text says the cited observation is in POTS and that the review is not a study of ME/CFS patients."
+    rubric: "a source that is a review (`design: other`) cannot carry step 2 or 3"
+    evidence:
+      - source: pmid:37054777
+        quote: "Relevant literature was identified via PubMed and was reviewed by the authors for inclusion."
+    class: none
+  - decision_part: "The change touches no level, badge, contested mark or layer; the card stays at level 1 and the link does not raise it."
+    rubric: "A link never raises a card's level."
+    evidence:
+      - source: pmid:37054777
+        quote: "Hemodynamic and gas exchange derangements in PASC have substantial overlap with those observed with ME/CFS, suggestive of shared mechanisms."
+    class: none
+reasons_summary: "A peer-reviewed 2023 review states that small fibre neuropathy can reduce venoconstriction with venous pooling on standing (in POTS) and discusses it for ME/CFS; this supports a step 1 (proposed) link to orthostatic intolerance, and the link text states its limits."
+would_change: "The decision would change if the review were retracted or shown not to be peer reviewed, if the link were moved above step 1 on this review alone, or if the link text claimed the venous pooling observation was made in ME/CFS patients. A study in an ME/CFS cohort with a recognised case definition measuring both small fibre damage and orthostatic intolerance in the same patients would be needed for step 2. No drafting or review reasoning was handed to me."

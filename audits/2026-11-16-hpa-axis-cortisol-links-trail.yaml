@@ -1,0 +1,120 @@
+card: hpa-axis-cortisol
+card_sha256: 0bb3418ae7172153b37d0a18912f9a0a81027be28be1634cedc39718ffe1113f
+rounds:
+- round: 1
+  proposal:
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: A 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been associated
+      with worse sleep difficulties, citing an earlier review; the 2025 review did not test this itself.
+    sources:
+    - pmid:41516296
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: The same 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been associated
+      with worse concentration difficulties, citing an earlier review; the 2025 review did not test this
+      itself.
+    sources:
+    - pmid:41516296
+  - to: question:what-keeps-it-going
+    support: proposed
+    text: A 2019 review suggests that HPA-axis dysfunction in ME/CFS, linked to the low cortisol suggested
+      by earlier work, could add another perturbed regulatory loop that may help perpetuate an altered
+      homeostasis; it was not studied directly in patients.
+    sources:
+    - pmid:31330791
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: reject
+    findings:
+    - item: links[0]
+      severity: must_fix
+      problem: 'A study already on the card measured both ends in the same patients and found no relation,
+        and the link text does not say so. pmid:11282703 (Cleare et al. 2001, context, case definition
+        unverified: ''well-characterized patients'') measured 24-hour urinary free cortisol in 121 clinic
+        patients, and its abstract states: ''Lower levels of urinary free cortisol were not related to
+        medication use, sleep disturbance, or disability levels.'' Spec section 3 says a study that measured
+        both ends and found no relation is recorded as `context` and the link text says so. The proposal''s
+        `why` (''The card''s study findings record HPA measures only and no sleep or cognitive measure'')
+        is wrong for this study. The step `proposed` and the review quote are otherwise correct: PMC12785659
+        section 3.4 says HPA-axis hormone abnormality ''has been associated with worsening of certain
+        clinical manifestations, such as sleep and concentration difficulties'' [54], and ref 54 is Tomas,
+        Newton and Watson 2013, ''A Review of Hypothalamic-Pituitary-Adrenal Axis Function in Chronic
+        Fatigue Syndrome''.'
+      fix: 'Keep `proposed`, add pmid:11282703 to `sources`, and add a sentence such as: ''A study of
+        121 clinic patients, whose case definition is not yet verified, found that lower 24-hour urinary
+        free cortisol was not related to sleep disturbance.'' The study is already `context` on the card,
+        so its role is unchanged.'
+    - item: links[1]
+      severity: advisory
+      problem: 'The step `proposed` and the wording match PMC12785659 (''sleep and concentration difficulties'',
+        ref 54, a review). One study on the card comes close to measuring both ends but does not measure
+        cognition itself: pmid:40713801 (CCC, 24 v 24) ran exploratory Spearman correlations between steroid
+        levels and the Mental Fatigue Scale and FibroFatigue Scale totals (the full text says the FibroFatigue
+        Scale includes ''sleep disturbance, and cognitive dysfunction'' items), and ''None of the associations
+        remained significant after correction for multiple comparisons.'' These are composite fatigue
+        and symptom-burden scores, not a cognitive or sleep measure, so this is not a required no-relation
+        statement.'
+      fix: 'Optionally add, for links[1] and links[0]: ''A study of 24 patients (CCC) found no correlation,
+        after correction for multiple comparisons, between steroid levels and fatigue and symptom-burden
+        scales that include cognitive and sleep items.'' Cite pmid:40713801.'
+    - item: links[2]
+      severity: advisory
+      problem: 'The step `proposed` is correct (pmid:31330791 is a review, and the text says the idea
+        was not studied in patients). The sentence it paraphrases is narrower: ''the linkage of cortisol-driven
+        stress responses to the gut through the hypothalamic-pituitary-adrenal (HPA) axis [168] could
+        be dysfunctional in ME/CFS due to the hypocortisolism previously suggested ... This possibility
+        could weave another perturbed regulatory loop into the system, which may aid in perpetuating an
+        altered homeostasis.'' The text drops the gut part. The broader reading is still supported by
+        sections 5.1 (''HPA axis dysregulation'' among conditions that could shift cells to ''an alternative
+        resting steady state'') and the end of 5.1 (''interact with the previously suggested HPA dysregulation
+        ... contribute to the perpetuation of an alternative resting homeostasis'').'
+      fix: Optionally say 'a dysfunctional link between cortisol-driven stress responses and the gut through
+        the HPA axis', or cite the section 5.1 wording for the broader statement.
+- round: 2
+  proposal:
+  - to: symptom:sleep-disturbance
+    support: proposed
+    text: A 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been associated
+      with worse sleep difficulties, citing an earlier review; the 2025 review did not test this itself.
+      A study of 121 clinic patients and 64 comparison subjects, whose case definition is not yet verified,
+      found lower 24-hour urinary free cortisol in patients and reported that the lower levels were not
+      related to sleep disturbance. A study of 24 patients meeting the Canadian, International and IOM
+      2015 criteria and 24 matched controls found that none of the exploratory correlations between blood
+      steroid levels and scores on two symptom scales (one of which includes sleep disturbance among its
+      items) remained significant after correction for multiple comparisons.
+    sources:
+    - pmid:41516296
+    - pmid:11282703
+    - pmid:40713801
+  - to: symptom:cognitive-impairment
+    support: proposed
+    text: The same 2025 review states that abnormal levels of HPA-axis hormones in ME/CFS have been associated
+      with worse concentration difficulties, citing an earlier review; the 2025 review did not test this
+      itself. A study of 24 patients meeting the Canadian, International and IOM 2015 criteria and 24
+      matched controls found that none of the exploratory correlations between blood steroid levels and
+      scores on two symptom scales (a mental fatigue scale, and a multisystem scale that includes cognitive
+      dysfunction among its items) remained significant after correction for multiple comparisons.
+    sources:
+    - pmid:41516296
+    - pmid:40713801
+  - to: question:what-keeps-it-going
+    support: proposed
+    text: A 2019 review suggests that the link between cortisol-driven stress responses and the gut through
+      the HPA axis could be dysfunctional in ME/CFS because of the low cortisol suggested by earlier work,
+      which could add another perturbed regulatory loop that may help perpetuate an altered homeostasis.
+      It also lists HPA-axis dysregulation among conditions that could shift cells to an alternative resting
+      steady state. It was not studied directly in patients.
+    sources:
+    - pmid:31330791
+  checks:
+    passed: true
+    errors: []
+  map_review:
+    verdict: accept
+    findings: []
+audits_run:
+- 2026-11-16-hpa-axis-cortisol-links.yaml
+outcome: the first audit decided reject; no second audit was run (sequential audits)
