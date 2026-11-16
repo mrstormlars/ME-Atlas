@@ -1,0 +1,41 @@
+card: hpa-axis-cortisol
+decision: reject
+parts:
+  - decision_part: "links[0] and links[1]: the clause that the 2025 review states the association 'citing an earlier review' cannot be matched to the record. The review's sentence carries only a bare reference number, and the reference list is not part of the cached full text, so the claim that the cited work is a review is unverifiable and cannot stand as written."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "This has been associated with worsening of certain clinical manifestations, such as sleep and concentration difficulties, as well as fatigue debilitation [54]."
+  - decision_part: "links[0] (to symptom:sleep-disturbance) and links[1] (to symptom:cognitive-impairment) at support proposed: apart from the clause above, the step is met, because a peer-reviewed review states that abnormal HPA-axis hormone levels are associated with worse sleep and concentration difficulties, and it presents no new patient data."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "Another mechanism discussed in ME/CFS pathogenesis involves a neuroendocrine impairment, which is manifested by abnormal levels of hormones produced by the HPA axis [53]."
+      - source: pmid:41516296
+        quote: "This has been associated with worsening of certain clinical manifestations, such as sleep and concentration difficulties, as well as fatigue debilitation [54]."
+      - source: pmid:41516296
+        quote: "No new data were created or analyzed in this study."
+  - decision_part: "The null findings in links[0] and links[1] match the records: the urinary cortisol study reported no relation to sleep disturbance, and the case definition of that study is correctly given as not yet verified. In the CCC/ICC/IOM study, none of the exploratory steroid-symptom correlations survived correction, and its FibroFatigue scale includes sleep disturbance and cognitive dysfunction. The link texts say this, and both links stay at proposed."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:11282703
+        quote: "They obtained 24-hour urine collections from 121 consecutive clinic patients with chronic fatigue syndrome and 64 comparison subjects without the syndrome."
+      - source: pmid:11282703
+        quote: "Lower levels of urinary free cortisol were not related to medication use, sleep disturbance, or disability levels."
+      - source: pmid:40713801
+        quote: "All patients fulfilled the Canadian Consensus Criteria, the International Consensus Criteria and the IOM criteria"
+      - source: pmid:40713801
+        quote: "is an observer-rated tool comprising 12 items that assess fatigue-related multisystem symptom burden, including pain, sleep disturbance, and cognitive dysfunction"
+      - source: pmid:40713801
+        quote: "None of the associations remained significant after correction for multiple comparisons, and these results should be interpreted with considerable caution due to the small sample sizes."
+  - decision_part: "links[2] (to question:what-keeps-it-going) at support proposed is supported: the 2019 review states that HPA-axis dysfunction tied to hypocortisolism could add a perturbed regulatory loop that may help perpetuate an altered homeostasis. It also lists HPA axis dysregulation among conditions that could shift cells to an alternative resting steady state."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:31330791
+        quote: "This possibility could weave another perturbed regulatory loop into the system, which may aid in perpetuating an altered homeostasis."
+      - source: pmid:31330791
+        quote: "These adverse conditions could include energy stress, inflammation, HPA axis dysregulation, or pathogen exposure."
+      - source: pmid:31330791
+        quote: "could result in the cell shifting to an alternative resting steady state and contribute to ME/CFS pathology"
+reasons_summary: "The three proposed links are supported at step 1, but links[0] and links[1] say the 2025 review was 'citing an earlier review', which the cached record (no reference list) cannot confirm."
+would_change: "Remove 'citing an earlier review' from links[0] and links[1], or replace it with something the record shows (for example that the review cites earlier work). The support levels, sources and the other sentences of all three links can stay as they are. That claim can be verified only by a cached reference list of pmid:41516296 that shows reference 54 is a review."
