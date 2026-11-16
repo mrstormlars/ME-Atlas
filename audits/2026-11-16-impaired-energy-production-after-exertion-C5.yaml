@@ -1,0 +1,79 @@
+card: impaired-energy-production-after-exertion
+decision: reject
+parts:
+  - decision_part: "links[0] (to question:closest-to-symptoms, proposed) and studies[pmid:37054777].finding: the link rests only on the claim that the review 'notes that few studies have directly tested how the body's responses to exercise relate to post-exertional malaise'. The review is given as abstract only, and no sentence in that abstract states this or states the link; the claim cannot be matched to the record, so the link is not shown to have a source that states it."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:37054777
+        quote: "The mechanistic underpinnings of such symptoms are poorly understood."
+      - source: pmid:37054777
+        quote: "This review illustrates exercise pathophysiologic commonalities between PASC and ME/CFS that will help guide future diagnostics and treatment."
+    class: decisive
+  - decision_part: "Rung 2: a controlled study in patients meeting the Canadian Consensus Criteria found that patients, unlike controls, did not reproduce their first-day results."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+      - source: pmid:38965566
+        quote: "Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2"
+    class: none
+  - decision_part: "Level 3: an independent group (Amsterdam, Fukuda, 15 women and 15 controls) found the same day-2 fall in patients against a rise in controls."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:20937116
+        quote: "All patients fulfilled the criteria of Fukuda et al [1] for CFS/ME and reported the start of symptoms after an infectious disease."
+      - source: pmid:20937116
+        quote: "At the anaerobic threshold the group of patients performed worse and the controls improved."
+    class: none
+  - decision_part: "Contested mark on rung 3: the New York study (Fukuda modified to require PEM, sedentary controls, more patients than the Amsterdam study) found no day-2 change and is of comparable quality to the Amsterdam study that rung 3 needs."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:42212259
+        quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+      - source: pmid:42212259
+        quote: "For ME/CFS and CON subjects, there were no significant changes in Peak VO2 between Day 1 and Day 2 studies"
+      - source: pmid:42212259
+        quote: "Five ME/CFS and six sedentary controls did not meet the American College of Sports Medicine (ACSM) criteria."
+    class: none
+  - decision_part: "Rung 2 not contested: the New York study's recorded definition (Fukuda) ranks below the Canadian Consensus Criteria of the 84-patient study."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+      - source: pmid:42212259
+        quote: "They all met both the 1994 case definition of ME/CFS, modified to require endorsement of post-exertional malaise (Table 1)."
+    class: none
+  - decision_part: "Badge explains_pem = false: no study on the card relates the day-2 change to symptoms after exertion in the same patients."
+    rubric: "a measured change that is itself the hypothesised abnormality (for example a fall in oxygen use on the second test) does not on its own explain PEM."
+    evidence:
+      - source: pmid:31161646
+        quote: "Although VO2peak decreased significantly in patients, the absolute change was too small, in our opinion, to indicate any major change in exercise tolerance or explain PEM."
+      - source: pmid:36984572
+        quote: "Detailed exercise test results of the 2-day CPET protocol will be reported separately."
+    class: none
+  - decision_part: "Badge diagnostic_marker = false: the classification and cut-off results are within single cohorts, and the largest contradicting study rejects the protocol as a marker."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:23813081
+        quote: "Follow-up classification analysis differentiated between groups with an overall accuracy of 95.1%."
+      - source: pmid:30871578
+        quote: "16 ME/CFS patients and 10 healthy controls underwent CPET on a cycle-ergometer on 2-consecutive days."
+      - source: pmid:42212259
+        quote: "The data do not support using the 2-day CPET protocol to define PEM or disability."
+    class: none
+  - decision_part: "Layer dysfunction: the card describes a measured change in oxygen use and work after exertion."
+    rubric: "What goes wrong in the body?"
+    evidence:
+      - source: pmid:38965566
+        quote: "Unlike CTL, ME/CFS failed to reproduce CPET-1 measures during CPET-2"
+    class: none
+  - decision_part: "links[1] to neuroinflammation, proposed: the 2026 systematic review states the chain from mitochondrial dysfunction to neuroinflammation."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:42051540
+        quote: "mitochondrial dysfunction and metabolic abnormalities may act as potential initiating factors in PEM"
+      - source: pmid:42051540
+        quote: "activating glial cells and initiating neuroinflammation"
+    class: none
+reasons_summary: "Level 3 with rung 3 contested and both badges false are supported, but the link to the open question rests on a statement about a review that its abstract does not contain."
+would_change: "A record of pmid:37054777 (full text or abstract) containing the sentence the link attributes to it, or a different peer-reviewed source that states the link to question:closest-to-symptoms, or removal of that link, would let the rest of the card be accepted as it stands. Not decisive here: the New York study (pmid:42212259) describes a 2020 study by Davenport et al. of 51 women and 10 sedentary controls with a comparable day-2 fall in both groups; it is not among the records and could not be assessed. The ICC recorded for pmid:34198913 and pmid:34198946 is read from a reference number, as the card states; it does not change rung 3, which is contested either way. Carriers without cached full text (pmid:23813081, pmid:28782878, pmid:8618560): the statements the card makes about them were matched to their abstracts."
