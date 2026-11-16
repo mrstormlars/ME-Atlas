@@ -215,3 +215,67 @@ def test_a_number_must_be_in_the_quotes_of_the_part_not_merely_in_another_cited_
     assert corr.apply(ops_data(sentence(corr, 0, text=text))) == 1  # part 0 quotes only the title
     assert "not in the quotes of that audit part" in errors(corr)
     assert corr.apply(ops_data(sentence(corr, 1, target="early_signals[0]", text=text))) == 0  # part 1 quotes it
+
+
+@pytest.fixture
+def two_paragraphs(env: Env, tmp_path: Path) -> Corr:
+    """The draft's level_reason has two paragraphs; the audit part is decisive and has no target of its own."""
+    draft = yaml.safe_load(env.drafts.joinpath(f"{SLUG}.yaml").read_text(encoding="utf-8"))
+    first = draft["level_reason"]
+    draft["level_reason"] = [first, {"text": "A second fictional reason.", "sources": ["pmid:90000100"]}]
+    env.drafts.joinpath(f"{SLUG}.yaml").write_text(yaml.safe_dump(draft, sort_keys=False), encoding="utf-8")
+    c = Corr(Pub(env, tmp_path), tmp_path)
+    c.pub.draft_bytes = c.draft.read_bytes()
+    c.pub.audits_of_card(
+        whole("reject", parts=[part("pmid:90000100", TITLE_100, **{"class": "decisive"})]), whole("reject")
+    )
+    assert c.pub.publish() == 0 and not c.card.exists()
+    return c
+
+
+def mine(c: Corr) -> dict:
+    wanted = "A statement is missing."
+    name, i, _p, _d = next(
+        x for x in pipeline.objecting_audit_parts(cfg_of(c), SLUG, 1) if x[2].decision_part == wanted
+    )
+    return {"record": name, "part": i}
+
+
+def test_a_part_tied_to_layer_or_level_may_add_to_the_last_level_reason_paragraph_only(two_paragraphs: Corr):
+    c = two_paragraphs
+    assert c.pre_review(targets=["layer"]) == 0
+    last = sentence(c, target="level_reason[1]") | {"answers": mine(c)}
+    earlier = sentence(c, target="level_reason[0]") | {"answers": mine(c)}
+    assert c.apply(ops_data(earlier)) == 1
+    assert "neither the target of that audit part" in errors(c)
+    assert c.apply(ops_data(last)) == 0
+    assert applied(c)["level_reason"][1]["text"].endswith(SENTENCE)
+
+
+def test_contested_maps_to_the_last_contested_paragraph_and_a_study_to_its_finding(corr: Corr):
+    assert corr.pre_review(targets=["contested", "studies[pmid:90000100].case_definition"]) == 0
+    earlier = sentence(corr, 1, target="contested_reason[0]")
+    assert corr.apply(ops_data(earlier)) == 1
+    finding = sentence(corr, 1, target="studies[pmid:90000100].finding")
+    assert corr.apply(ops_data(finding)) == 0  # the second attempt after a failed first
+    assert applied(corr)["studies"][0]["finding"].endswith(SENTENCE)
+
+
+def test_a_link_target_is_not_mapped_and_the_mapping_is_listed_in_the_context(corr: Corr):
+    cfg = cfg_of(corr)
+    from me_atlas import cards
+
+    card = cards.load_card(corr.draft)
+    assert pipeline.sentence_targets(card, ["contested", "badges.explains_pem", "links[0]", "layer"]) == [
+        "contested",
+        "contested_reason[1]",
+        "badges.explains_pem",
+        "badge_reasons.explains_pem[0]",
+        "links[0]",
+        "layer",
+        "level_reason[0]",
+    ]
+    assert corr.pre_review(targets=["contested"]) == 0 and corr.plan() == 0
+    text = (corr.dir / "correction-context" / f"{SLUG}-C1.md").read_text(encoding="utf-8")
+    assert "`contested_reason[1]`" in text.split("## 9. Added sentences")[1]
+    assert cfg

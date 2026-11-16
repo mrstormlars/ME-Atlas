@@ -1482,6 +1482,30 @@ def _target_permitted(op: Any, target: str, allowed: set[str]) -> bool:
     return False
 
 
+def sentence_targets(card: cards.Card, tied: Sequence[str]) -> list[str]:
+    """The items an ``add_sentence`` for an audit part may go to: each target the part is tied to (its own ``target``,
+    its ``audit_targets``) and, for a structured one, the free-text item where the card explains it, in the draft's
+    numbering: ``layer`` and ``level`` the last paragraph of ``level_reason``, ``contested`` the last of
+    ``contested_reason`` (if any), ``badges.<b>`` the last of ``badge_reasons.<b>`` (if any), ``studies[<id>]`` and
+    ``studies[<id>].<field>`` that study's ``finding``. Links stay out."""
+    found: list[str] = []
+    for target in tied:
+        found.append(target)
+        mapped = None
+        if target in ("layer", "level"):
+            mapped = ("level_reason", len(cards.paragraphs(card.level_reason)))
+        elif target == "contested" and card.contested:
+            mapped = ("contested_reason", len(cards.paragraphs(card.contested.reason)))
+        elif target in ("badges.diagnostic_marker", "badges.explains_pem"):
+            key = target.replace("badges.", "badge_reasons.")
+            mapped = (key, len(_field_paras(card, target + ".reason")))
+        elif m := re.match(r"^(studies\[[^\]]+\])(?:\.\w+)?$", target):
+            found.append(m.group(1) + ".finding")
+        if mapped and mapped[1]:
+            found.append(f"{mapped[0]}[{mapped[1] - 1}]")
+    return list(dict.fromkeys(found))
+
+
 def add_sentence_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_card: cards.Card) -> list[str]:
     """S2: the ``add_sentence`` operations of attempt ``tag`` that the ruling of DECISIONS 2026-11-16 does not allow.
 
@@ -1515,10 +1539,11 @@ def add_sentence_problems(cfg: Config, slug: str, tag: str, ops: OpsFile, draft_
                 f"operations[{i}] cites {', '.join(bad)}, which that audit part does not quote (or the card does not "
                 "cite)"
             )
-        if op.target != part.target and op.target not in given.get(key, set()):
+        tied = [*([part.target] if part.target else []), *sorted(given.get(key, set()))]
+        if op.target not in sentence_targets(draft_card, tied):
             found.append(
                 f"operations[{i}] adds a sentence to {op.target}, which is neither the target of that audit part nor "
-                "one the step 0 review gives it in audit_targets"
+                "one the step 0 review gives it in audit_targets, nor the item that explains one of them"
             )
         numerals, numeral_problems = citations.free_text_numerals(op.text)
         quote_tokens = citations.source_number_tokens(
@@ -3636,12 +3661,15 @@ def _added_sentence_lines(cfg: Config, slug: str, k: int, pre_review: ReviewFile
     """Section 9 of the correction context: per objecting audit part its quoted evidence and the targets an
     ``add_sentence`` answering it may use (DECISIONS 2026-11-16)."""
     given = {(e.record, e.part): e.targets for e in (pre_review.audit_targets if pre_review else None) or []}
+    draft = _load_card(cfg.drafts_dir / f"{slug}.yaml")
     lines = [
         '## 9. Added sentences (the one exception to "delete rather than rewrite")',
         "",
         "Only when an objecting audit part below expressly asks for a missing statement, you may add one sentence "
         "(`add_sentence`) answering it: one sentence, at most one per part, citing only sources that part quotes, "
-        "saying no more than its quotes, appended to the part's own target or a target listed for it. Otherwise "
+        "saying no more than its quotes, appended to the part's own target, a target listed for it, or the free-text "
+        "item that explains one of them (level and layer: the last `level_reason` paragraph; contested: the last "
+        "`contested_reason`; a badge: the last of its reason; a study: its `finding`). Otherwise "
         "remove or weaken.",
         "",
     ]
@@ -3649,7 +3677,8 @@ def _added_sentence_lines(cfg: Config, slug: str, k: int, pre_review: ReviewFile
     if not parts:
         return [*lines, "No objecting audit part: no `add_sentence` is allowed.", ""]
     for name, i, part, _decision in parts:
-        targets = list(dict.fromkeys([*([part.target] if part.target else []), *given.get((name, i), [])]))
+        tied = [*([part.target] if part.target else []), *given.get((name, i), [])]
+        targets = sentence_targets(draft, tied)
         lines += [
             f"### {name}, part {i}",
             "",
