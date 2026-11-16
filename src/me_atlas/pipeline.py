@@ -4721,6 +4721,18 @@ def record_audit_classification(cfg: Config, slug: str, n: str) -> Path:
 # ---------------------------------------------------------------------------
 
 
+def _plan_item(locator: str, reason: str, english: Any, sidecar: Any) -> dict[str, Any]:
+    """One item of a translate file: the English text and sources and the sidecar's current text (or None)."""
+    previous = sidecar.items.get(locator)
+    return {
+        "item": locator,
+        "reason": reason,
+        "english": english[locator].text,
+        "sources": english[locator].sources,
+        "previous_translation": previous.text if previous else None,
+    }
+
+
 def translation_plan(cfg: Config, lang: str = "nb") -> dict[str, Any]:
     """Which translated items the accepted changes of this run made stale, and what the translator has to do.
 
@@ -4757,22 +4769,52 @@ def translation_plan(cfg: Config, lang: str = "nb") -> dict[str, Any]:
                 reason = "made_stale"
             else:
                 reason = f"already_{result.status}"
-            previous = sidecar.items.get(locator)
-            items.append(
-                {
-                    "item": locator,
-                    "reason": reason,
-                    "english": english[locator].text,
-                    "sources": english[locator].sources,
-                    "previous_translation": previous.text if previous else None,
-                }
-            )
+            items.append(_plan_item(locator, reason, english, sidecar))
         plan["cards"].append({"slug": slug, "file": str(final_path), "items": items})
         _write_json(
             cfg.f("translate", f"{slug}.json"), {"slug": slug, "lang": lang, "card": str(final_path), "items": items}
         )
     _write_json(cfg.f("translation-plan.json"), plan)
     _log(cfg, {"event": "translation-plan", "lang": lang, "cards": len(plan["cards"])})
+    return plan
+
+
+def translation_plan_stale(cfg: Config, lang: str = "nb") -> dict[str, Any]:
+    """The translated items that are stale, missing or invalid now, outside a weekly run (a correction round, a hand
+    edit). Reads every ``translations/<lang>/<slug>.yaml`` against the English card that ``translations check`` uses
+    (a draft wins over a card) and writes the same files as ``translation_plan``: ``translate/<slug>.json`` for each
+    card with something to translate and ``translation-plan.json``. Every reason is ``already_<status>``. A card with
+    no translation file is listed, not planned. Reads no weekly-run file and writes no ``final/``.
+    """
+    sidecars, problems = translations.load_language(cfg.translations_dir, lang)
+    if problems:
+        raise PipelineError("a translation file cannot be read:\n" + "\n".join(problems))
+    english_files = translations.english_cards(cfg.cards_dir, cfg.drafts_dir)
+    orphans = sorted(set(sidecars) - set(english_files))
+    if orphans:
+        raise PipelineError(
+            f"translation file(s) with no English card in {cfg.cards_dir}/ or {cfg.drafts_dir}/: " + ", ".join(orphans)
+        )
+    plan: dict[str, Any] = {"lang": lang, "cards": [], "untranslated_cards": []}
+    for slug, path in sorted(english_files.items()):
+        sidecar = sidecars.get(slug)
+        if sidecar is None:
+            plan["untranslated_cards"].append(slug)
+            continue
+        card = _load_card(path)
+        english = translations.english_items(card)
+        result = translations.check_card(card, sidecar, lang)
+        items = [
+            _plan_item(locator, f"already_{r.status}", english, sidecar)
+            for locator, r in result.items.items()
+            if r.status != "fresh"
+        ]
+        if not items:
+            continue
+        plan["cards"].append({"slug": slug, "file": str(path), "items": items})
+        _write_json(cfg.f("translate", f"{slug}.json"), {"slug": slug, "lang": lang, "card": str(path), "items": items})
+    _write_json(cfg.f("translation-plan.json"), plan)
+    _log(cfg, {"event": "translation-plan", "lang": lang, "stale": True, "cards": len(plan["cards"])})
     return plan
 
 
@@ -6276,6 +6318,11 @@ def _build_parser() -> argparse.ArgumentParser:
         "translation-plan", parents=[common], help="list the translated items the accepted changes made stale"
     )
     plan.add_argument("--lang", default="nb", help="default: %(default)s")
+    plan.add_argument(
+        "--stale",
+        action="store_true",
+        help="plan the items stale, missing or invalid now, outside a weekly run (needs --run-dir)",
+    )
 
     sub.add_parser("report", parents=[common], help="write report.md")
 
@@ -6389,6 +6436,10 @@ def main(
         elif args.command in ("valve-apply", "valve-check-plan", "record-valve-check", "record-audit-classification"):
             if not args.run_dir:
                 raise PipelineError(f"{args.command} needs --run-dir DIR (the folder of the correction round)")
+            run_dir = args.run_dir
+        elif args.command == "translation-plan" and args.stale:
+            if not args.run_dir:
+                raise PipelineError("translation-plan --stale needs --run-dir DIR (the folder for the plan files)")
             run_dir = args.run_dir
         elif args.command in ("correction-plan", "card-review-plan"):
             if not (args.out or args.run_dir):
@@ -6621,7 +6672,7 @@ def _dispatch(
         out(str(cfg.f("audit-sample.json")))
         return 0
     if args.command == "translation-plan":
-        plan = translation_plan(cfg, args.lang)
+        plan = translation_plan_stale(cfg, args.lang) if args.stale else translation_plan(cfg, args.lang)
         for entry in plan["cards"]:
             made_stale = [i["item"] for i in entry["items"] if i["reason"] == "made_stale"]
             out(
