@@ -1,0 +1,68 @@
+card: gut-microbiome
+decision: accept
+link_decisions:
+  - {to: "symptom:gastrointestinal-symptoms", decision: accept}
+  - {to: "symptom:cognitive-impairment", decision: accept}
+  - {to: neuroinflammation, decision: accept}
+  - {to: oxidative-nitrosative-stress, decision: accept}
+parts:
+  - decision_part: "links[0] to symptom:gastrointestinal-symptoms at step associated: two controlled studies in cohorts meeting the Fukuda and Canadian criteria measured gut bacteria and irritable bowel syndrome in the same patients and report a relation; the text also records the shared authors and the weak signal for gastrointestinal scores in the 2015 IOM cohort."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:36758522
+        quote: "The study included stool samples from 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS"
+      - source: pmid:36758522
+        quote: "In the analytic sub-cohort, 35 out of the 106 (33.0%) ME/CFS cases reported sr-IBS, while only 3 out of the 91 control subjects (3.3%) reported sr-IBS."
+      - source: pmid:36758522
+        quote: "Evenness and Shannon diversities were only lower in ME/CFS with sr-IBS compared with healthy controls without sr-IBS"
+      - source: pmid:36758522
+        quote: "Beta diversity did not differ between ME/CFS without and with sr-IBS."
+      - source: pmid:36758522
+        quote: "Model 4 did not reveal significant species differences after false discovery rate (FDR) adjustment"
+      - source: pmid:36758522
+        quote: "In contrast, butyrate was lower in both ME/CFS subjects without sr-IBS and with sr-IBS compared with healthy controls without sr-IBS"
+      - source: pmid:28441964
+        quote: "IBS was diagnosed in 21 of 50 ME/CFS patients (42%) and none of 50 controls."
+      - source: pmid:28441964
+        quote: "Bacterial taxa predictive of ME/CFS patients with IBS were distinct from taxa associated with ME/CFS patients without IBS."
+      - source: pmid:42351611
+        quote: "Several domains, particularly affective, gastrointestinal, and HAMD-related measures, had near-zero or negative pooled out-of-fold R2 in mixOmics, arguing against a stable microbiome contribution after adjustment for age, BMI, sex, and patient group."
+    class: none
+  - decision_part: "links[1] to symptom:cognitive-impairment at step associated: a controlled Fukuda study measured gut bacteria and Trail Making Test scores in the same patients and reports a relation; the review and the 2015 IOM cohort are described in their actual roles."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:41006438
+        quote: "After undergoing the initial eligibility assessment, 180 were excluded as they did not meet the Fukuda criteria"
+      - source: pmid:41006438
+        quote: "PERMANOVA analysis revealed significant interactions between the gut microbial composition and cognitive function measures: specifically, TMT Part B scores (Fig. 3A) and the difference between TMT Part B and Part A scores (Fig. 3B), with p-values of 0.025 and 0.007, respectively."
+      - source: pmid:41006438
+        quote: "In the CFS, a correlation of TMT B score was observed with 8 genera, and all of those relationships are negative"
+      - source: pmid:41006438
+        quote: "In comparison, 29 correlations were noted between TMT B score and genera in the HCs; 9 of them were negative, while 20 correlations were positive."
+      - source: pmid:41006438
+        quote: "potential confounding factors such as diet, medication, and lifestyle may influence these relationships"
+      - source: pmid:41516296
+        quote: "microbiome changes may lead to distinct neurocognitive impairments observed in ME/CFS patients"
+      - source: pmid:42351611
+        quote: "whereas affective, cognitive, and gastrointestinal outcomes showed weaker or less stable signals"
+    class: none
+  - decision_part: "links[2] to neuroinflammation at step proposed: a peer-reviewed review states the link and the text says it is not a study in patients."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "some researchers believe that this process may be the basis for neurological disturbances in ME/CFS patients"
+      - source: pmid:41516296
+        quote: "This review offers the readers a broad perspective on the topic on ME/CFS"
+    class: none
+  - decision_part: "links[3] to oxidative-nitrosative-stress at step proposed: two peer-reviewed reviews state a route from gut bacterial products to reactive oxygen or nitrogen species; the text reports their wording and caveats accurately."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:41516296
+        quote: "as well as reactive oxygen species are being produced by immune cells, thus enhancing systemic inflammation and symptom severity"
+      - source: pmid:31330791
+        quote: "Therefore, excessive free radical generation as such an antimicrobial response to circulating antagonists of enteric origin could provide one explanation for the reports of elevated oxidative stress in the disorder."
+      - source: pmid:31330791
+        quote: "However, the causal links between them are unknown and cannot be discerned purely on the basis of clinical correlation."
+    class: none
+reasons_summary: "All four gut-microbiome links match their cited records at the step claimed: two associated links rest on controlled, case-defined cohorts that measured both ends, and two proposed links rest on peer-reviewed reviews."
+would_change: "A correction showing that the irritable bowel syndrome or Trail Making Test analyses do not relate gut bacteria to the symptom in the same ME/CFS patients, or an equally strong cohort finding no relation, would change the associated links (the second would be recorded as context). The cognitive link rests on one small Fukuda study (25 patients) whose within-patient genus correlations report no p values; a failed replication would weigh against it. The proposed links would change only if the reviews were retracted or misquoted."

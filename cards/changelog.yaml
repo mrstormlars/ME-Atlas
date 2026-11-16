@@ -450,3 +450,19 @@
   - pmid:31330791
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-16
+  card: gut-microbiome
+  change: 'Links added: symptom:gastrointestinal-symptoms, symptom:cognitive-impairment, neuroinflammation,
+    oxidative-nitrosative-stress'
+  reason: 'All four links accepted: the two symptom links rest on controlled studies with recognised case
+    definitions that measured both ends in the same patients, and the two proposed links are stated in
+    peer-reviewed reviews.'
+  sources:
+  - pmid:36758522
+  - pmid:28441964
+  - pmid:42351611
+  - pmid:41006438
+  - pmid:41516296
+  - pmid:31330791
+  tier: 2
+  decided_by: ai_audit
