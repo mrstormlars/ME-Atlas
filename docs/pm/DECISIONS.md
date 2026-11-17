@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — Errata and corrections to a cited paper: three founder rulings
+
+- The plan `docs/plan-errata.md` (pull request 75) asked three questions; the founder answered: "Følger dine anbefalinger for alle tre spørsmålene." The recommendations were the plan's A(a), B(a) and C(a):
+- **A. The pipeline decides the card change.** An erratum or published correction to a cited study goes through drafter → review → audit like a new paper, not to the founder as a retraction does.
+- **B. An erratum can move a level, a badge or the contested mark only by changing the corrected study** (its numbers, its role, its finding). The erratum itself never counts as a study for the ladder and is never a source of a level or badge reason.
+- **C. Other notices are out of scope until one occurs.** Expressions of concern and "corrected and republished" notices have no case in the cache; the parser records unknown notice types in the run manifest so the first one is seen.
+- Why: an erratum is published text about a study the card already cites, and the audit already guards every level, badge and link move; the founder is not a subject expert and should not be the one to judge what a correction means for a finding.
+
 ## 2026-11-17 — Idea bank: seven guidelines, maintenance leaves the priority list, wave 1 is the "What is missing" page (founder rulings)
 
 - **Seven guidelines for every idea from `docs/pm/IDEAS.md`.** Proposed by the project manager; the founder answered: "De 7 føringene er OK."
