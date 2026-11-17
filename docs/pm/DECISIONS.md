@@ -2,6 +2,12 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — A path for correcting the text of a published card is to be built (founder ruling)
+
+- The weekly run of 2026-11-17 left three wording points on published cards (`reduced-nk-cell-function`, `autoimmunity-autoantibodies-b-cells`, `oxidative-nitrosative-stress`), and the clean-up found that the pipeline has no way to make them: the correction round and its wording valve work only on a held-back draft, the weekly `apply` refuses `update_study`, and no step changes the text of a link already on a card. The functional spec (section 6, point 9) expects corrections to go "the same way".
+- Asked to choose between building that path (A) and asking for the three fixes explicitly as a founder-requested change (B), the founder answered: "gå for alternativ A". The three fixes wait for the path and go through it.
+- Why (the project manager's recommendation, accepted): wrong wording on a published card will come again, most of all when readers start reporting errors, and the path should exist before then; none of the three points changes a number or a finding, so they can wait.
+
 ## 2026-11-17 — The whole-card review gate also holds for first publication
 
 - A new draft reaches `cards/` only with an accepting whole-card review by the review agent of the draft as it stands; the review is tied to the draft by a sha256 written by code, so a draft changed after the review is refused (`docs/pipeline.md`, "First publication"; pull request 74, merged by the founder's instruction "Please flett alle 3 PR-ene"). This replaces the earlier statement in this file that the gate covers correction rounds only.
