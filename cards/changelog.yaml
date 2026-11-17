@@ -490,3 +490,18 @@
   - pmid:30915066
   tier: 1
   decided_by: ai_pair
+- date: 2026-11-17
+  card: reduced-nk-cell-function
+  change: 'Correction: the finding and group of pmid:30915066 reworded'
+  reason: The finding says the erratum replaces "lytic units" with "specific lysis in percent" "in the
+    text and in the legend and axis label of Figure 2". The cached erratum (PMC6421501) says the term
+    "has now been replaced with 'specific lysis in percent'" "in all places where it occurred", names
+    the legend for Figures 2D,F and a Results paragraph, and says of the figure itself only that "there
+    was a mistake in Figure 2 as published" and that the term "should be replaced by 'Specific lysis,
+    %'". It does not use the words "axis label", and the figure's corrected wording is "Specific lysis,
+    %", not "specific lysis in percent". The rest of the finding (no change to the scientific conclusions,
+    no new data) matches the record.
+  sources:
+  - pmid:30915066
+  tier: 1
+  decided_by: ai_pair

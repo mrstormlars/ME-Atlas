@@ -1,0 +1,68 @@
+card: reduced-nk-cell-function
+card_sha256: 0bef5f6fdc11b54e43c56691e46b4c2162278939357fe214adab277b30d4618a
+origin: 'data/pipeline/2026-11-17/report.md: the reviewer''s advisory notes on the accepted pair reduced-nk-cell-function
+  + pmid:30915066 (review/reduced-nk-cell-function-30915066-r1.json)'
+request:
+- target: studies[pmid:30915066].finding
+  problem: The finding says the term was replaced "in the legend and axis label of Figure 2". The reviewer
+    noted that the erratum says the figure was corrected to read "Specific lysis, %", does not use the
+    words "axis label", and says the term was replaced in all places where it occurred.
+- target: studies[pmid:30915066].group
+  problem: The group names only Karolinska Institutet; the reviewer noted that the record also gives the
+    University of Bergen for the last author (Bryceson YT), as the card's entry for pmid:28694809 does.
+review:
+  verdict: accept
+  findings:
+  - class: wording
+    target: studies[pmid:30915066].finding
+    severity: advisory
+    problem: The finding says the erratum replaces "lytic units" with "specific lysis in percent" "in
+      the text and in the legend and axis label of Figure 2". The cached erratum (PMC6421501) says the
+      term "has now been replaced with 'specific lysis in percent'" "in all places where it occurred",
+      names the legend for Figures 2D,F and a Results paragraph, and says of the figure itself only that
+      "there was a mistake in Figure 2 as published" and that the term "should be replaced by 'Specific
+      lysis, %'". It does not use the words "axis label", and the figure's corrected wording is "Specific
+      lysis, %", not "specific lysis in percent". The rest of the finding (no change to the scientific
+      conclusions, no new data) matches the record.
+    fix: 'Reword to what the erratum states, for example: "It replaces the term ''lytic units'' with ''specific
+      lysis in percent'' in all places where it occurred, including a Results paragraph and the legend
+      of Figures 2D and 2F, and corrects Figure 2 to read ''Specific lysis, %''; it states that the errors
+      do not change the scientific conclusions of the article. It reports no new data."'
+    targets:
+    - studies[pmid:30915066].finding
+  - class: wording
+    target: studies[pmid:30915066].group
+    severity: advisory
+    problem: 'The group reads "Theorell J, Bryceson YT, Karolinska Institutet, Stockholm, Sweden (same
+      group as pmid:28694809)". The cached record of pmid:30915066 gives Bryceson YT two affiliations:
+      "Department of Medicine, Huddinge, Karolinska Institutet, Stockholm, Sweden" and "Department of
+      Clinical Science, University of Bergen, Bergen, Norway", and the card''s entry for pmid:28694809
+      names both. The entry is incomplete rather than wrong; no name in it is absent from the record.'
+    fix: 'Add the second affiliation as the record gives it: "Theorell J, Bryceson YT, Karolinska Institutet,
+      Stockholm, Sweden, and University of Bergen, Norway (same group as pmid:28694809)".'
+    targets:
+    - studies[pmid:30915066].group
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:30915066
+    set:
+      finding: A published erratum to pmid:28694809. It replaces the term "lytic units" with "specific
+        lysis in percent" in all places where it occurred, including a Results paragraph and the legend
+        of Figures 2D and 2F, and corrects Figure 2 to read "Specific lysis, %"; it states that the errors
+        do not change the scientific conclusions of the article. It reports no new data.
+      group: Theorell J, Bryceson YT, Karolinska Institutet, Stockholm, Sweden, and University of Bergen,
+        Norway (same group as pmid:28694809)
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings: []
+tier:
+  tier: 1
+  why:
+  - the texts differ in free text only and every answered finding is wording
+audits_run: []
+outcome: published

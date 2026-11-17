@@ -472,10 +472,11 @@ studies:
     direction: not_applicable
     finding: >-
       A published erratum to pmid:28694809. It replaces the term "lytic units" with "specific
-      lysis in percent" in the text and in the legend and axis label of Figure 2, and states
+      lysis in percent" in all places where it occurred, including a Results paragraph and the
+      legend of Figures 2D and 2F, and corrects Figure 2 to read "Specific lysis, %"; it states
       that the errors do not change the scientific conclusions of the article. It reports no new
       data.
-    group: Theorell J, Bryceson YT, Karolinska Institutet, Stockholm, Sweden (same group as pmid:28694809)
+    group: Theorell J, Bryceson YT, Karolinska Institutet, Stockholm, Sweden, and University of Bergen, Norway (same group as pmid:28694809)
     corrects: pmid:28694809
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
