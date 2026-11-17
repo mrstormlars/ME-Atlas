@@ -13,7 +13,7 @@ import pytest
 import yaml
 
 from me_atlas import cards as cardlib
-from me_atlas import i18n, site
+from me_atlas import export, i18n, site
 from me_atlas.glossary import Glossary, GlossaryEntry
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -1198,6 +1198,7 @@ def test_no_page_loads_anything_from_another_host(proj):
     allowed = {site.study_url(s.id) for s in card.studies} | {w.url for w in card.working_on_it}
     allowed |= {site.study_url(s) for e in changelog_entries() for s in e["sources"]}
     allowed |= {site.REPO_URL, site.REPO_ISSUES_URL}  # the footer's error-report line
+    allowed |= {export.LICENCE_URL}  # the data page's licence
     allowed |= {site.REPO_URL + "/tree/main/audits", site.REPO_URL + "/pulls?q=is%3Apr"}  # the methods page
     seen: set[str] = set()
     for path in html_files(proj.out):
@@ -1275,6 +1276,15 @@ def test_build_result_lists_every_written_file(proj):
         "glossary.html",
         "site.css",
         "site.js",
+        "data.html",  # the data page and the data folder (tests/test_export.py checks their content)
+        "me-atlas.json",
+        "hypotheses.csv",
+        "studies.csv",
+        "links.csv",
+        "card-format.md",
+        "README.txt",
+        "listed.bib",
+        "listed.ris",
     }
 
 
@@ -1598,6 +1608,8 @@ def test_the_english_tree_is_unchanged_apart_from_the_selector_hreflang_tags_and
             '<li><a href="gaps.html"',
             '<li><a href="../gaps.html"',
             "<p>Found an error on a card",  # the footer's error-report line
+            "<p>Download the data",  # the footer's link to the data page
+            '<p class="data-links',  # the citation files under the studies heading of a card page
         )
         return "".join(line for line in text.splitlines(keepends=True) if not line.lstrip().startswith(added))
 

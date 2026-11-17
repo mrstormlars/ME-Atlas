@@ -4,9 +4,9 @@ Builds plain HTML from approved cards (and, with ``--drafts``, drafts) into a di
 
     uv run python -m me_atlas.site build [--drafts] [--out build]
 
-Pages: front page, one page per hypothesis, glossary, what changed, causal map, gaps, methods. English is written
+Pages: front page, one page per hypothesis, glossary, what changed, causal map, gaps, methods, data. English is written
 at the top of the output directory and every other language in ``content/i18n/`` in a folder of its own
-(``build/nb/``).
+(``build/nb/``). ``data/`` (shared) holds the open data and the citation files (``me_atlas.export``).
 No external fonts, scripts or styles; every page works from ``file://``. See ``docs/site.md``, ``docs/translation.md``.
 """
 
@@ -27,7 +27,7 @@ from jinja2 import ChoiceLoader, Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup, escape
 
 from me_atlas import cards as cardlib
-from me_atlas import i18n, map_draw, translations
+from me_atlas import export, i18n, map_draw, translations
 from me_atlas import map as maplib
 from me_atlas.cards import Card, ChangeLogEntry, SourcedText, Study
 from me_atlas.glossary import (
@@ -45,6 +45,7 @@ PACKAGE_DIR = Path(__file__).parent
 TEMPLATE_DIR = PACKAGE_DIR / "templates"
 STATIC_DIR = PACKAGE_DIR / "static"
 DEFAULT_CONTENT_DIR = PACKAGE_DIR.parents[1] / "content"
+DEFAULT_CARD_FORMAT = PACKAGE_DIR.parents[1] / "docs" / "card-format.md"
 BUILD_MARKER = ".me-atlas-build"
 DEFAULT_LANGUAGE = i18n.DEFAULT_LANGUAGE
 LANGUAGE_STORAGE_KEY = "me-atlas-lang"
@@ -973,6 +974,16 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         methods_note=txt0["untranslated.methods"] if methods_fallback else None,
     )
 
+    render(
+        "data.html",
+        "data.html",
+        txt0["page.data"],
+        cards=[lc.card for lc in local_cards],
+        data_files=export.DATA_FILES,
+        citation=export.citation_text(shared.built),
+        licence_url=export.LICENCE_URL,
+    )
+
     used_terms = [e for e in localised.glossary.entries if e.key in uses]
     used_terms.sort(key=lambda e: i18n.sort_key(code, e.term))
     glossary_note = txt0["untranslated.glossary"] if (not default and localised.none_translated) else None
@@ -998,6 +1009,7 @@ def build(
     content_dir: Path | None = None,
     i18n_dir: Path | None = None,
     translations_dir: Path | None = None,
+    card_format: Path | None = None,
 ) -> BuildResult:
     """Build the site in every language that has a file in ``i18n_dir``. If any input fails validation nothing is
     written and ``errors`` says why.
@@ -1005,6 +1017,7 @@ def build(
     The Norwegian glossary is looked for next to the English one (``glossary.nb.yaml``), card translations in
     ``translations_dir/<lang>/`` (default: ``translations/`` next to ``cards/``) and the methods text in
     ``content_dir/methods/<lang>.html``. Whatever is missing falls back to English, with a note on the page.
+    ``data/card-format.md`` is a copy of ``card_format`` (default: ``docs/card-format.md`` of the package's repository).
     """
     today = today or dt.date.today()
     cards_dir, out_dir, glossary_path = Path(cards_dir), Path(out_dir), Path(glossary_path)
@@ -1012,9 +1025,13 @@ def build(
     content_dir = Path(content_dir) if content_dir is not None else DEFAULT_CONTENT_DIR
     i18n_dir = Path(i18n_dir) if i18n_dir is not None else content_dir / "i18n"
     translations_dir = Path(translations_dir) if translations_dir is not None else cards_dir.parent / "translations"
+    card_format = Path(card_format) if card_format is not None else DEFAULT_CARD_FORMAT
     result = BuildResult()
 
     unpublished = _unpublished_cards(cards_dir, drafts_dir)
+    if not card_format.is_file():
+        result.errors = [f"{card_format}: the card format document is missing (it is copied to data/card-format.md)"]
+        return result
     problems, glossary = _check_inputs(cards_dir, drafts_dir, glossary_path, today, content_dir, unpublished)
     if glossary is None:
         result.errors = problems
@@ -1105,7 +1122,35 @@ def build(
         target.parent.mkdir(exist_ok=True)
         target.write_bytes(source.read_bytes())
         result.written.append(target)
+    result.written += _write_data(out_dir / "data", shared, card_format)
     return result
+
+
+def _write_data(data_dir: Path, shared: _Shared, card_format: Path) -> list[Path]:
+    """The open data and the citation files, written next to ``static/``; shared by every language."""
+    json_text, _ = export.dataset_json(
+        shared.cards, shared.map_content, built=shared.built, draft_preview=shared.drafts
+    )
+    texts = {
+        "me-atlas.json": json_text,
+        "hypotheses.csv": export.hypotheses_csv(shared.cards, shared.map_content),
+        "studies.csv": export.studies_csv(shared.cards),
+        "links.csv": export.links_csv(shared.cards, shared.map_content),
+        "README.txt": export.readme(built=shared.built, draft_preview=shared.drafts),
+    }
+    for card in shared.cards:
+        texts[f"{export.CITATIONS_DIR}/{card.slug}.bib"] = export.bibtex(card.studies, study_url)
+        texts[f"{export.CITATIONS_DIR}/{card.slug}.ris"] = export.ris(card.studies, study_url)
+    written: list[Path] = []
+    for name, text in sorted(texts.items()):
+        target = data_dir / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(text.encode("utf-8"))  # bytes: CSV and RIS keep their CRLF line ends
+        written.append(target)
+    target = data_dir / "card-format.md"
+    target.write_bytes(card_format.read_bytes())
+    written.append(target)
+    return written
 
 
 # ---------------------------------------------------------------------------
@@ -1125,6 +1170,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     b.add_argument("--content-dir", type=Path, default=Path("content"), help=argparse.SUPPRESS)
     b.add_argument("--i18n-dir", type=Path, default=None, help=argparse.SUPPRESS)
     b.add_argument("--translations-dir", type=Path, default=None, help=argparse.SUPPRESS)
+    b.add_argument("--card-format", type=Path, default=None, help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
 
     result = build(
@@ -1135,6 +1181,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         content_dir=args.content_dir,
         i18n_dir=args.i18n_dir,
         translations_dir=args.translations_dir,
+        card_format=args.card_format,
     )
     for error in result.errors:
         print(error, file=sys.stderr)

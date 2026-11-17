@@ -91,6 +91,7 @@
 </ul>
 
 <h2>{{ txt("card.studies") }}</h2>
+<p class="data-links small">{{ t("card.cite", bib=root ~ "data/citations/" ~ card.slug ~ ".bib", ris=root ~ "data/citations/" ~ card.slug ~ ".ris") }}</p>
 {{ study_group(txt("card.supports"), groups.supports, txt("card.supports_empty")) }}
 {{ study_group(txt("card.contradicts"), groups.contradicts, txt("card.contradicts_empty")) }}
 {{ study_group(txt("card.other"), groups.other, txt("card.other_empty"), txt("card.other_note")) }}

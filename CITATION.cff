@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this dataset or the site, please cite it as below."
+title: "ME Atlas: evidence cards on the causes of ME/CFS and long COVID"
+type: dataset
+authors:
+  - name: "ME Atlas contributors"
+repository-code: "https://github.com/mrstormlars/ME-Atlas"
+url: "https://mrstormlars.github.io/ME-Atlas/"
+license: CC-BY-4.0
+abstract: "Each bar shows how far the evidence for one proposed cause of ME/CFS has come, from an idea to a causal case. The site gives no treatment advice."
+keywords:
+  - ME/CFS
+  - long COVID
+  - evidence
