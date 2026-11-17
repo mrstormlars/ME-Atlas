@@ -17,7 +17,7 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 
 ## Active priorities (max 3)
 
-1. **Rebuild the "What is missing" page with the replication list (idea I-01, wave 1).** The page loses the text copied from the cards and links to them instead, with tables and charts before prose; the list of level 2 findings that lack one independent replication is added. No plan yet: a `/brainstorm` plan in `docs/` comes first. The seven guidelines for ideas are in DECISIONS 2026-11-17.
+1. **Rebuild the "What is missing" page with the replication list (idea I-01, wave 1).** The plan is `docs/plan-gaps-page-rebuild.md`; built on `feat/gaps-page-rebuild`, awaiting merge. The page now has tables and no text copied from the cards, and the level 2 group links to each card's reason for its level. The seven guidelines for ideas are in DECISIONS 2026-11-17.
 2. **Close the known gaps in the pipeline** (see "Open items", "To build or fix").
 
 ## Running upkeep (not a priority; DECISIONS 2026-11-17)

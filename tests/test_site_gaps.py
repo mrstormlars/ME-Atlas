@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 import pytest
-from test_site import Node, Site, make_card, norm, page, write_card
+from test_site import Node, Site, add_study, make_card, norm, page, write_card
 from test_site_map import map_content, map_link
 
 from me_atlas import cards as cardlib
@@ -26,8 +26,36 @@ QUESTIONS = [{"id": "own", "layer": "mechanism", "text": "What keeps the fiction
 BANNED_ON_PAGE = ("promising", "hopeful", "needs funding", "should be studied", "most", "best", "priority")
 
 
+def study_groups(card: dict, *groups: str | None) -> dict:
+    """The two supporting studies of the base card get these `group` labels (None: no label)."""
+    supporting = [st for st in card["studies"] if st["role"] == "supports"]
+    for st, group in zip(supporting, groups, strict=True):
+        st.pop("group", None)
+        if group is not None:
+            st["group"] = group
+    return card
+
+
 def cards() -> list[dict]:
-    """Six cards at levels 0-5, plus a lonely one. lvl-3 is contested."""
+    """Six cards at levels 0-5, plus a lonely one. lvl-3 is contested. Texts carry marker strings that must never
+    reach the page. lvl-2 has one supporting study with a group and one without; lvl-3 has the same group twice and a
+    third supporting study from another group."""
+    marked = {"core_claim": {"text": "MARKER-CORE-CLAIM", "sources": ["pmid:00000001"]}}
+    lvl2 = make_card(
+        "lvl-2",
+        "Fictional level 2 idea",
+        2,
+        layer="mechanism",
+        level_reason={"text": "MARKER-LEVEL-REASON lvl-2.", "sources": ["pmid:00000001"]},
+        links=[
+            map_link("symptom:s-assoc", "A fictional study measured both.", "associated", ["pmid:00000002"]),
+            map_link("symptom:s-mixed", "A fictional study measured both too.", "associated", ["pmid:00000002"]),
+        ],
+        **marked,
+    )
+    lvl3 = make_card("lvl-3", "Fictional level 3 idea", 3, contested_rungs=[3], **marked)
+    study_groups(lvl3, "Group A", "Group A")
+    add_study(lvl3, "pmid:00000006", "Fukuda", role="supports", direction="lower", group="Group B")
     return [
         make_card(
             "lvl-0",
@@ -50,17 +78,8 @@ def cards() -> list[dict]:
                 map_link("lvl-0", "A fictional review proposes a card link.", "proposed", ["pmid:00000003"]),
             ],
         ),
-        make_card(
-            "lvl-2",
-            "Fictional level 2 idea",
-            2,
-            layer="mechanism",
-            links=[
-                map_link("symptom:s-assoc", "A fictional study measured both.", "associated", ["pmid:00000002"]),
-                map_link("symptom:s-mixed", "A fictional study measured both too.", "associated", ["pmid:00000002"]),
-            ],
-        ),
-        make_card("lvl-3", "Fictional level 3 idea", 3, contested_rungs=[3]),
+        study_groups(lvl2, "Group X", None),
+        lvl3,
         make_card("lvl-4", "Fictional level 4 idea", 4),
         make_card("lvl-5", "Fictional level 5 idea", 5),
         make_card("lonely", "Fictional lonely idea", 0),
@@ -79,25 +98,31 @@ def gaps_site(tmp_path) -> Site:
     return proj
 
 
-def section(doc: Node, section_id: str) -> list[Node]:
-    """The elements of the main text after this h2 and before the next one."""
-    out: list[Node] = []
-    inside = False
-    for node in doc.find("main").walk():
-        if node.tag == "h2":
-            inside = node.get("id") == section_id
+def sec(doc: Node, section_id: str) -> Node:
+    node = doc.find("section", id=section_id)
+    assert node is not None, section_id
+    return node
+
+
+def hypothesis_rows(doc: Node) -> dict[str, list[Node]]:
+    """Slug-less view of the by-level table: card name -> its cells (th first, then the td cells)."""
+    table = sec(doc, "gaps-next-rung").find("table")
+    rows: dict[str, list[Node]] = {}
+    for tr in table.find_all("tr"):
+        th = tr.find("th")
+        if th.get("scope") != "row":
             continue
-        if inside:
-            out.append(node)
-    return out
+        rows[norm(th.text())] = [th, *tr.find_all("td")]
+    return rows
 
 
-def section_text(doc: Node, section_id: str) -> str:
-    return norm(" ".join(n.text() for n in section(doc, section_id) if n.tag in ("p", "li")))
+def cell_texts(cells: list[Node]) -> list[str]:
+    return [norm(c.text()) for c in cells]
 
 
-def items(doc: Node, section_id: str) -> list[str]:
-    return [norm(n.text()) for n in section(doc, section_id) if n.tag == "li"]
+def link_rows(doc: Node) -> list[list[Node]]:
+    table = sec(doc, "gaps-untested-links").find("table")
+    return [[tr.find("th"), *tr.find_all("td")] for tr in table.find("tbody").find_all("tr")]
 
 
 # --- the page ---
@@ -126,161 +151,258 @@ def test_the_page_is_built_in_both_languages_with_the_navigation_entry_after_the
         ]
 
 
-def test_the_five_sections_have_their_ids(gaps_site):
+def test_the_sections_come_in_order_and_the_removed_lists_and_their_ids_are_gone(gaps_site):
+    for rel in ("gaps.html", "nb/gaps.html"):
+        doc = page(gaps_site.out, rel)
+        assert [s.get("id") for s in doc.find("main").find_all("section")] == [
+            "gaps-summary",
+            "gaps-next-rung",
+            "gaps-untested-links",
+        ]
+        ids = {n.get("id") for n in doc.walk() if n.get("id")}
+        assert not ids & {"gaps-unlinked-symptoms", "gaps-step1-symptoms", "gaps-unlinked-cards"}
+        assert "gaps-level-2" in ids
+        # every in-page link points at an id that exists
+        for a in doc.find_all("a"):
+            href = a.get("href") or ""
+            if href.startswith("#"):
+                assert href[1:] in ids, (rel, href)
+
+
+# --- the hypotheses by level ---
+
+
+def test_each_card_has_a_row_grouped_by_level_0_to_5_and_by_name_within_a_level(gaps_site):
     doc = page(gaps_site.out, "gaps.html")
-    assert [h.get("id") for h in doc.find_all("h2")] == [
-        None,  # the summary heading; its section carries the id
-        "gaps-unlinked-symptoms",
-        "gaps-step1-symptoms",
-        "gaps-untested-links",
-        "gaps-next-rung",
-        "gaps-unlinked-cards",
-    ]
-
-
-# --- lists 1 and 2 ---
-
-
-def test_list_1_shows_a_symptom_with_no_link_and_not_one_with_an_associated_link(gaps_site):
-    doc = page(gaps_site.out, "gaps.html")
-    listed = items(doc, "gaps-unlinked-symptoms")
-    assert len(listed) == 1
-    assert listed[0].startswith("Fictional unlinked symptom")
-    assert "Listed in: pmid:00000005" in listed[0]
-    assert "Fictional associated symptom" not in " ".join(listed)
-    link = [n for n in section(doc, "gaps-unlinked-symptoms") if n.tag == "li"][0].find("a")
-    assert link.get("href") == "map.html#symptom-s-none"
-
-
-def test_list_2_shows_a_proposed_only_symptom_with_its_hypotheses_and_not_one_that_also_has_an_associated_link(
-    gaps_site,
-):
-    doc = page(gaps_site.out, "gaps.html")
-    listed = items(doc, "gaps-step1-symptoms")
-    assert len(listed) == 1
-    assert listed[0].startswith("Fictional proposed-only symptom")
-    assert "Listed in: doi:10.0000/fictional.5" in listed[0]
-    assert "Linked from: Fictional level 1 idea, Fictional level 0 idea" in listed[0]
-    li = [n for n in section(doc, "gaps-step1-symptoms") if n.tag == "li"][0]
-    hrefs = [a.get("href") for a in li.find_all("a")]
-    assert "hypotheses/lvl-0.html" in hrefs and "hypotheses/lvl-1.html" in hrefs
-    assert "Fictional mixed symptom" not in " ".join(listed)
-
-
-# --- list 3 ---
-
-
-def test_list_3_groups_a_proposed_link_under_its_target_with_the_maps_reference_numbers(gaps_site):
-    out = gaps_site.out
-    doc = page(out, "gaps.html")
-    nodes = section(doc, "gaps-untested-links")
-    heads = [h for h in nodes if h.tag == "h3"]
-    # node order: cards first, then symptoms, then questions
-    assert [norm(h.text()) for h in heads] == [
-        "Fictional level 0 idea",
-        "Fictional proposed-only symptom",
-        "Fictional mixed symptom",
-        "What keeps the fictional signal low?",
-    ]
-    assert heads[0].find("a").get("href") == "hypotheses/lvl-0.html"
-    assert heads[1].find("a").get("href") == "map.html#symptom-s-prop"
-    assert heads[3].find("a").get("href") == "map.html#question-own"
-    lists = [n for n in nodes if n.tag == "ul"]
-    prop = [norm(li.text()) for li in lists[1].find_all("li")]
-    assert prop[1].startswith("From Fictional level 0 idea: A fictional review proposes a link. — proposed [1]")
-    assert prop[0].startswith("From Fictional level 1 idea: A fictional case report suggests a link. — proposed [1]")
-    # lvl-1 cites pmid:00000002 first, then 00000001: the second link carries number 2, as on the map page
-    gap_li = lists[2].find_all("li")[0]
-    assert norm(gap_li.text()).endswith("— proposed [2]")
-    gap_refs = [a.get("href") for a in gap_li.find_all("a", "ref")]
-    assert gap_refs == ["hypotheses/lvl-1.html#study-pmid:00000001"]
-    map_items = page(out, "map.html").find("article", id="card-lvl-1").find_all("li")
-    on_map = [li for li in map_items if "proposes another." in li.text()]
-    assert len(on_map) == 1
-    assert norm(on_map[0].text()).endswith("— proposed [2]")
-    assert [a.get("href") for a in on_map[0].find_all("a", "ref")] == gap_refs
-
-
-def test_list_3_has_the_rubric_sentence_and_no_associated_link(gaps_site):
-    doc = page(gaps_site.out, "gaps.html")
-    text = section_text(doc, "gaps-untested-links")
-    assert "Step 2 requires a study with a recognised case definition that measured both ends" in text
-    assert "A fictional study measured both" not in text
-
-
-# --- list 4 ---
-
-
-def test_list_4_has_a_group_for_each_level_and_a_next_rung_sentence_for_levels_0_to_4_only(gaps_site):
-    doc = page(gaps_site.out, "gaps.html")
-    nodes = section(doc, "gaps-next-rung")
-    heads = [norm(n.text()) for n in nodes if n.tag == "h3"]
+    table = sec(doc, "gaps-next-rung").find("table")
+    assert "gaps-table" in table.classes
+    heads = [norm(th.text()) for th in table.find("thead").find_all("th")]
     assert heads == [
-        "Level 5: Causal case built",
-        "Level 4: Tested by intervention",
-        "Level 3: Repeated by others",
-        "Level 2: Backed in a defined group",
-        "Level 1: First signs",
-        "Level 0: Proposed",
+        "Hypothesis",
+        "Level",
+        "Contested at rung",
+        "Supporting studies",
+        "Research groups",
+        "Contradicting studies",
+        "Links out",
     ]
-    sentences = [norm(n.text()) for n in nodes if n.tag == "p" and "The next rung" in n.text()]
-    assert len(sentences) == 5
-    assert sentences[0].startswith("The next rung, Causal case built, requires: Several independent lines")
-    assert sentences[4].startswith("The next rung, First signs, requires: One or more small or uncontrolled")
-    # the level 5 group is followed directly by the level 4 heading: no requirement sentence in between
-    between = []
-    seen = False
-    for n in nodes:
-        if n.tag == "h3" and "Level 5" in n.text():
-            seen = True
-            continue
-        if seen and n.tag == "h3":
-            break
-        if seen and n.tag == "p":
-            between.append(n)
-    assert between == []
+    assert list(hypothesis_rows(doc)) == [
+        "Fictional level 0 idea",
+        "Fictional lonely idea",
+        "Fictional level 1 idea",
+        "Fictional level 2 idea",
+        "Fictional level 3 idea",
+        "Fictional level 4 idea",
+        "Fictional level 5 idea",
+    ]
+    assert len(table.find_all("tbody")) == 6  # one body per level that has a card
+    level_headers = [norm(tr.find("th").text()) for tr in table.find_all("tr", "gaps-level-row")]
+    assert level_headers[:2] == ["Level 0: Proposed", "Level 1: First signs"]
+    assert level_headers[3:] == [
+        "Level 3: Repeated by others",
+        "Level 4: Tested by intervention",
+        "Level 5: Causal case built",
+    ]
 
 
-def test_list_4_marks_a_contested_card_and_only_that_card(gaps_site):
+def test_the_counts_in_each_row_and_the_cells_carry_labels_for_the_narrow_layout(gaps_site):
+    rows = hypothesis_rows(page(gaps_site.out, "gaps.html"))
+    # name, level, contested, supporting, groups, contradicting, links
+    assert cell_texts(rows["Fictional level 0 idea"]) == [
+        "Fictional level 0 idea",
+        "0 Proposed",
+        "",
+        "2",
+        "0, 2 studies with no group stated",
+        "1",
+        "2",
+    ]
+    assert cell_texts(rows["Fictional level 1 idea"])[3:] == ["2", "0, 2 studies with no group stated", "1", "3"]
+    assert cell_texts(rows["Fictional level 3 idea"]) == [
+        "Fictional level 3 idea",
+        "3 Repeated by others",
+        "3",
+        "3",
+        "2",
+        "1",
+        "0",
+    ]
+    assert cell_texts(rows["Fictional level 5 idea"])[2:4] == ["", "2"]
+    labels = [td.get("data-label") for td in rows["Fictional level 3 idea"][1:]]
+    assert labels == [
+        "Level",
+        "Contested at rung",
+        "Supporting studies",
+        "Research groups",
+        "Contradicting studies",
+        "Links out",
+    ]
+
+
+def test_a_supporting_study_with_no_group_is_stated_and_not_counted_as_a_group(gaps_site):
+    rows = hypothesis_rows(page(gaps_site.out, "gaps.html"))
+    # lvl-2: one study with `group: Group X` and one with no group
+    assert cell_texts(rows["Fictional level 2 idea"])[3:5] == ["2", "1, 1 study with no group stated"]
+    # the same label on two studies is one group; no study is without a group, so nothing is stated
+    assert cell_texts(rows["Fictional level 3 idea"])[3:5] == ["3", "2"]
+    assert "no group" not in norm(" ".join(cell_texts(rows["Fictional level 3 idea"])))
+
+
+def test_the_next_rungs_are_stated_once_above_the_table_and_not_per_card(gaps_site):
     doc = page(gaps_site.out, "gaps.html")
-    li = [n for n in section(doc, "gaps-next-rung") if n.tag == "li"]
-    contested = [norm(n.text()) for n in li if "contested" in n.text()]
-    assert contested == ["Fictional level 3 idea This hypothesis is contested at rung 3; the reason is on its card."]
-    assert len(li) == 7
-    links = {norm(n.find("a").text()): n.find("a").get("href") for n in li}
-    assert links["Fictional level 5 idea"] == "hypotheses/lvl-5.html"
+    section = sec(doc, "gaps-next-rung")
+    dts = [norm(d.text()) for d in section.find_all("dt")]
+    assert dts == [
+        "Level 1: First signs",
+        "Level 2: Backed in a defined group",
+        "Level 3: Repeated by others",
+        "Level 4: Tested by intervention",
+        "Level 5: Causal case built",
+    ]
+    meanings = [norm(d.text()) for d in section.find_all("dd")]
+    assert meanings[2] == "An independent group has reproduced the finding in a separate cohort."
+    text = norm(section.text())
+    assert text.count("An independent group has reproduced the finding") == 1
 
 
-# --- list 5 ---
-
-
-def test_list_5_shows_a_card_with_no_links_and_not_a_linked_one(gaps_site):
+def test_level_2_has_its_own_heading_an_intro_and_rows_that_link_to_the_reason_on_the_card(gaps_site):
+    for rel in ("gaps.html", "nb/gaps.html"):
+        doc = page(gaps_site.out, rel)
+        h3 = doc.find("h3", id="gaps-level-2")
+        assert h3 is not None, rel
+        assert sec(doc, "gaps-next-rung").find("h3", id="gaps-level-2") is h3
+        hrefs = [a.get("href") for a in doc.find_all("a")]
+        assert hrefs.count("hypotheses/lvl-2.html#level-reason") == 1, rel
     doc = page(gaps_site.out, "gaps.html")
-    listed = items(doc, "gaps-unlinked-cards")
-    assert "Fictional lonely idea" in listed
-    assert "Fictional level 0 idea" not in listed  # it links out and is linked to
-    assert "Fictional level 2 idea" not in listed
+    assert norm(doc.find("h3", id="gaps-level-2").text()) == "Level 2: not yet repeated by an independent group"
+    intro = norm(doc.find("h3", id="gaps-level-2").parent.text())
+    assert "count studies on the card and do not judge which finding is closest to replication" in intro
+    assert "the reason for the level is on the card" in intro
+    # only the level 2 rows link to the reason; the other levels' level cells carry no link
+    rows = hypothesis_rows(doc)
+    assert rows["Fictional level 3 idea"][1].find("a") is None
+    # the anchor exists on the card page, on the level reason heading
+    for rel in ("hypotheses/lvl-2.html", "nb/hypotheses/lvl-2.html"):
+        card = page(gaps_site.out, rel)
+        heading = card.find("h2", id="level-reason")
+        assert heading is not None and "level-reason" in [n.get("id") for n in card.walk()]
+
+
+def test_level_2_group_is_absent_when_no_card_is_at_level_2(tmp_path):
+    proj = Site(tmp_path)
+    content = map_content(tmp_path, SYMPTOMS, QUESTIONS)
+    for card in cards():
+        if card["slug"] != "lvl-2":
+            write_card(proj.cards, card)
+    assert proj.build(content_dir=content).errors == []
+    doc = page(proj.out, "gaps.html")
+    assert doc.find("h3", id="gaps-level-2") is None
+    assert not any(a.get("href") == "#gaps-level-2" for a in doc.find_all("a"))
+
+
+def test_a_contested_card_shows_its_rung_and_only_that_card(gaps_site):
+    rows = hypothesis_rows(page(gaps_site.out, "gaps.html"))
+    contested = {name: cell_texts(cells)[2] for name, cells in rows.items() if cell_texts(cells)[2]}
+    assert contested == {"Fictional level 3 idea": "3"}
+
+
+# --- the untested links ---
+
+
+def test_one_row_per_proposed_link_sorted_by_target_then_source_with_no_link_text(gaps_site):
+    doc = page(gaps_site.out, "gaps.html")
+    rows = link_rows(doc)
+    got = [(norm(r[0].text()), norm(r[1].text()), norm(r[2].text())) for r in rows]
+    assert got == [
+        ("Fictional level 1 idea", "Fictional level 0 idea", "proposed"),
+        ("Fictional level 1 idea", "Fictional mixed symptom", "proposed"),
+        ("Fictional level 0 idea", "Fictional proposed-only symptom", "proposed"),
+        ("Fictional level 1 idea", "Fictional proposed-only symptom", "proposed"),
+        ("Fictional level 0 idea", "What keeps the fictional signal low?", "proposed"),
+    ]
+    assert f"Count: {len(rows)}" in norm(sec(doc, "gaps-untested-links").text())
+    hrefs = [(r[0].find("a").get("href"), r[1].find("a").get("href"), r[3].find("a").get("href")) for r in rows]
+    assert hrefs[0] == ("hypotheses/lvl-1.html", "hypotheses/lvl-0.html", "map.html#card-lvl-1")
+    assert hrefs[1][1] == "map.html#symptom-s-mixed"
+    assert hrefs[4] == ("hypotheses/lvl-0.html", "map.html#question-own", "map.html#card-lvl-0")
+    # the map page has the article the row points to
+    map_page = page(gaps_site.out, "map.html")
+    for _, _, target in hrefs:
+        assert map_page.find("article", id=target.split("#")[1]) is not None
+    # no associated link, no link text, no reference numbers
+    text = norm(sec(doc, "gaps-untested-links").text())
+    assert "associated" not in text
+    assert "A fictional review proposes" not in text and "[1]" not in text
+
+
+def test_a_graph_with_no_proposed_link_shows_zero_and_no_table(tmp_path):
+    proj = Site(tmp_path)
+    content = map_content(tmp_path, SYMPTOMS, QUESTIONS)
+    write_card(proj.cards, make_card("only", "Fictional only idea", 2))
+    assert proj.build(content_dir=content).errors == []
+    doc = page(proj.out, "gaps.html")
+    node = sec(doc, "gaps-untested-links")
+    assert node.find("table") is None
+    assert "Count: 0" in norm(node.text())
+
+
+# --- no card text ---
+
+
+def test_no_card_text_reaches_the_page_in_either_language(gaps_site):
+    forbidden = ["MARKER-CORE-CLAIM", "MARKER-LEVEL-REASON"]
+    for card in cards():
+        forbidden += [card["core_claim"]["text"], card["level_reason"]["text"]]
+        if card["contested"]:
+            forbidden.append(card["contested"]["reason"]["text"])
+        forbidden += [link["text"] for link in card.get("links") or []]
+        forbidden += [st["finding"] for st in card["studies"]]
+    for rel in ("gaps.html", "nb/gaps.html"):
+        text = norm(page(gaps_site.out, rel).find("main").text())
+        for sentence in forbidden:
+            assert norm(sentence) not in text, (rel, sentence)
 
 
 # --- the counts equal the report ---
 
 
-def test_the_counts_on_the_page_equal_the_map_report(gaps_site):
+def test_the_numbers_on_the_page_equal_the_map_report(gaps_site):
     loaded = [cardlib.load_card(p) for p in sorted(gaps_site.cards.glob("*.yaml"))]
     content, _ = maplib.load_content(gaps_site.content_dir)
     report = maplib.render_report(maplib.build_graph(loaded, content), loaded)
     doc = page(gaps_site.out, "gaps.html")
-    for heading, section_id in (
-        ("Symptoms with no link", "gaps-unlinked-symptoms"),
-        ("Symptoms linked only at step 1", "gaps-step1-symptoms"),
-        ("Links not yet tested in patients", "gaps-untested-links"),
-        ("Hypotheses with no links yet", "gaps-unlinked-cards"),
-    ):
-        reported = int(re.search(rf"^{heading} \((\d+)\)$", report, re.M).group(1))
-        assert f"Count: {reported}" in section_text(doc, section_id), heading
-    level_lines = re.findall(r"^  Level (\d): ", report, re.M)
-    assert level_lines == ["5", "4", "3", "2", "1", "0"]
-    assert len([n for n in section(doc, "gaps-next-rung") if n.tag == "h3"]) == len(level_lines)
+    pattern = re.compile(
+        r"^  Level (\d): (.+?) \((.+?)\): supporting studies (\d+), research groups (\d+)"
+        r"(?: \((\d+) with no group stated\))?"
+        r", contradicting studies (\d+), links (\d+)$",
+        re.M,
+    )
+    reported = pattern.findall(report)
+    assert len(reported) == len(loaded) == 7
+    rows = hypothesis_rows(doc)
+    for level, name, _slug, supporting, groups, no_group, contradicting, links in reported:
+        cells = cell_texts(rows[name])
+        assert cells[1].startswith(level)
+        assert cells[3] == supporting and cells[5] == contradicting and cells[6] == links
+        stated = f"{groups}, {no_group} stud" if no_group else groups
+        assert cells[4].startswith(stated) and (no_group or cells[4] == groups), name
+    assert [r[1] for r in reported] == list(rows)  # same order
+    # the untested links: the report's sorted list is the page's table
+    heading = re.search(r"^Untested links by target, then source \((\d+)\)$", report, re.M)
+    listed = re.findall(r"^  (.+) <- (.+) \[proposed\]$", report, re.M)
+    assert int(heading.group(1)) == len(listed) == len(link_rows(doc))
+    assert listed == [(norm(r[1].text()), norm(r[0].text())) for r in link_rows(doc)]
+    assert f"Count: {len(listed)}" in norm(sec(doc, "gaps-untested-links").text())
+
+
+def test_the_counting_helpers_count_a_missing_group_apart_from_the_groups(gaps_site):
+    loaded = [cardlib.load_card(p) for p in sorted(gaps_site.cards.glob("*.yaml"))]
+    content, _ = maplib.load_content(gaps_site.content_dir)
+    counts = {c.slug: c for c in maplib.card_counts(loaded, maplib.build_graph(loaded, content))}
+    assert (counts["lvl-2"].supporting, counts["lvl-2"].groups, counts["lvl-2"].no_group) == (2, 1, 1)
+    assert (counts["lvl-3"].supporting, counts["lvl-3"].groups, counts["lvl-3"].no_group) == (3, 2, 0)
+    assert counts["lvl-3"].contested_rungs == (3,) and counts["lvl-4"].contested_rungs == ()
+    assert counts["lvl-1"].links == 3 and counts["lvl-5"].links == 0
 
 
 # --- wording ---
@@ -295,7 +417,7 @@ def test_no_banned_word_in_the_gaps_strings_and_only_the_quoted_rung_meaning_on_
                 assert not _BANNED_RE.search(value) and not _BANNED_NB_RE.search(value), key
     text = page(gaps_site.out, "gaps.html").find("main").text()
     found = {m.group(0).lower() for m in pattern.finditer(text)}
-    # The existing string rung.5.meaning, quoted as the next rung of level 4, says "most of the Bradford Hill criteria".
+    # The existing string rung.5.meaning, quoted above the table, says "most of the Bradford Hill criteria".
     assert found <= {"most"}
 
 
@@ -304,18 +426,17 @@ def test_the_norwegian_page_shows_the_norwegian_strings(gaps_site):
     nb = i18n.load_strings(REPO_I18N / "nb.yaml")
     assert [norm(h.text()) for h in doc.find_all("h2")] == [
         nb["gaps.summary.h2"],
-        nb["gaps.unlinked_symptoms.h2"],
-        nb["gaps.step1_symptoms.h2"],
-        nb["gaps.untested.h2"],
         nb["gaps.next_rung.h2"],
-        nb["gaps.unlinked_cards.h2"],
+        nb["gaps.untested.h2"],
     ]
     text = norm(doc.find("main").text())
-    assert "Antall: 1" in text
-    assert nb["gaps.untested.rubric"] in text
-    assert "Neste trinn, Første tegn, krever:" in text
-    assert "omstridt på trinn 3" in text
-    assert "What is missing" not in text and "contested at rung" not in text
+    assert nb["gaps.level2.h3"] in text and nb["gaps.level2.intro"] in text
+    assert nb["gaps.nogroup.one"].format(n=1) in text and nb["gaps.nogroup.many"].format(n=2) in text
+    assert "Antall: 5" in text
+    assert "Nivå 1: Første tegn" in text
+    for key in ("gaps.col.supporting", "gaps.col.groups", "gaps.col.contradicting", "gaps.untested.show"):
+        assert nb[key] in text, key
+    assert "What is missing" not in text and "Supporting studies" not in text
     summary = norm(doc.find("section", id="gaps-summary").text())
     for key in (
         "gaps.summary.symptoms.caption",
@@ -351,13 +472,13 @@ def test_the_summary_comes_after_the_intro_and_before_the_first_list_with_three_
     for rel in ("gaps.html", "nb/gaps.html"):
         doc = page(gaps_site.out, rel)
         main = list(doc.find("main").walk())
-        sec = doc.find("section", id="gaps-summary")
-        ids = [d.get("id") for d in sec.find_all("div") if d.get("id")]
+        summary_node = doc.find("section", id="gaps-summary")
+        ids = [d.get("id") for d in summary_node.find_all("div") if d.get("id")]
         assert ids == ["gaps-summary-symptoms", "gaps-summary-links", "gaps-summary-levels"], rel
-        assert sec.find("h2") is not None
+        assert summary_node.find("h2") is not None
         intro = next(n for n in main if n.tag == "p")
-        first_list = next(n for n in main if n.tag == "h2" and n.get("id") == "gaps-unlinked-symptoms")
-        assert main.index(intro) < main.index(sec) < main.index(first_list), rel
+        next_section = doc.find("section", id="gaps-next-rung")
+        assert main.index(intro) < main.index(summary_node) < main.index(next_section), rel
 
 
 def test_symptom_table_has_a_caption_one_row_per_symptom_in_order_and_links_to_the_map(gaps_site):
@@ -446,28 +567,17 @@ def test_the_level_block_shows_all_six_levels_in_ladder_order_and_a_level_withou
     assert block.find("a").get("href") == "#gaps-next-rung"
 
 
-def test_the_summary_numbers_equal_the_lists(gaps_site):
+def test_the_summary_numbers_equal_the_tables(gaps_site):
     doc = page(gaps_site.out, "gaps.html")
-    sec = summary("gaps.html", gaps_site)
-    rows = list(table_rows(sec).values())
-    unlinked = [r for r in rows if "gaps-row-none" in r.classes]
-    assert len(unlinked) == len(items(doc, "gaps-unlinked-symptoms")) == 1
-    proposed_only = [r for r in rows if cell_counts(r)[0] != "0" and cell_counts(r)[1:] == ["0", "0"]]
-    assert len(proposed_only) == len(items(doc, "gaps-step1-symptoms")) == 1
-    links = sec.find("div", id="gaps-summary-links")
+    node = summary("gaps.html", gaps_site)
+    links = node.find("div", id="gaps-summary-links")
     proposed_total = int(norm(links.find_all("li")[0].text()).split(": ")[1])
-    listed = [li for n in section(doc, "gaps-untested-links") if n.tag == "ul" for li in n.find_all("li")]
-    assert proposed_total == len(listed) == 5
-    per_level: dict[int, int] = {}
-    level = -1
-    for n in section(doc, "gaps-next-rung"):
-        if n.tag == "h3":
-            level = int(norm(n.text()).split(":")[0].split(" ")[1])
-            per_level[level] = 0
-        elif n.tag == "li":
-            per_level[level] += 1
+    assert proposed_total == len(link_rows(doc)) == 5
+    per_level = {k: 0 for k in range(6)}
+    for cells in hypothesis_rows(doc).values():
+        per_level[int(cell_texts(cells)[1].split(" ")[0])] += 1
     shown = {k: int(norm(li.find("strong").text()).split(": ")[1]) for k, li in enumerate(level_items(gaps_site))}
-    assert shown == {k: per_level.get(k, 0) for k in range(6)}
+    assert shown == per_level
 
 
 def test_the_summary_has_no_judging_word(gaps_site):
