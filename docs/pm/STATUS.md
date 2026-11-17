@@ -31,7 +31,7 @@ For the founder to decide:
 To build or fix:
 
 - No path adds a link to a held-back draft (an auditor step and an operation are missing). A published card has the link round since 2026-11-16.
-- The local cache: `data/` is backed up to a private repository since 2026-11-17 (`docs/fetch.md`, "Backup of the local data"). Of the 16 full texts code could not fetch after the cache was lost on 2026-11-16 (Europe PMC HTTP 500; PMC answers automated requests with a bot check, which the project does not work around), the founder saved 14 by hand as PMC pages, among them pmid:21532961, so `citations check` passes again. Two are still missing, pmid:25277740 (PMC4233252) and pmid:41451845 (PMC13051489): the saved files were the bot-check page, not the article.
+- The local cache: `data/` is backed up to a private repository since 2026-11-17 (`docs/fetch.md`, "Backup of the local data"). Of the 16 full texts code could not fetch after the cache was lost on 2026-11-16 (Europe PMC HTTP 500; PMC answers automated requests with a bot check, which the project does not work around), the founder saved all 16 by hand as PMC pages, among them pmid:21532961, so `citations check` passes again.
 - A proper-noun check (institution and place names against the cached record) is not built; a first count gave too many false hits.
 - The whole-card review gate applies to correction rounds only, not to the first publication of a new draft.
 - Not exercised live: the `pmc_no_xml` and `pdf_only` full-text paths.
