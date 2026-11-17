@@ -1,0 +1,82 @@
+card: autoimmunity-autoantibodies-b-cells
+card_sha256: e94468e5c05bff71e659af763d9dbd66884d3ced45cf1b4409027bf4c3c41d5b
+origin: data/pipeline/2026-11-17/report.md (the reviewer's advisory notes on the pair autoimmunity-autoantibodies-b-cells
+  + pmid:40901516); a new run of the earlier correction of 2026-11-17, which was held back, by founder
+  ruling 2026-11-17, now with the cached full texts available
+request:
+- target: studies[pmid:40901516].finding
+  problem: The reviewer noted that the finding expands the erratum's "LC" to "long COVID" while the erratum
+    text writes only "LC", and that it says the erratum "does not change the study's patient numbers,
+    results or findings", which the erratum does not state in words.
+- target: studies[pmid:40703261]
+  problem: 'The reviewer noted that the YAML comment on this study still says the content of the correction
+    pmid:40901516 is not in the cache and "TODO: verify what it corrects", although the correction is
+    now cached and on the card.'
+review:
+  verdict: accept
+  findings:
+  - class: wording
+    target: studies[pmid:40901516].finding
+    severity: advisory
+    problem: Request item 1, partly an error. The cached erratum (PMC12401010) says only that the last
+      sentence of paragraph 7 of the Introduction said 'individuals with or without LC' and should say
+      'individuals with or without ME/CFS', and that 'The original version of this article has been updated.'
+      The erratum does not write out 'LC'. The corrected article (pmid:40703261, cached full text PMC12283730)
+      does define it ('a post COVID-19 condition, or Long COVID (LC)'), so 'long COVID' is supported by
+      a cached record on the card, though not by the erratum alone. The final sentence, 'It does not change
+      the study's patient numbers, results or findings', is not in the erratum. It is an inference from
+      the fact that only one Introduction sentence is corrected.
+    fix: Remove the sentence 'It does not change the study's patient numbers, results or findings.' Optionally
+      write 'individuals with or without LC (Long COVID, as the article defines it)' so that the expansion
+      is visibly the article's own. Add nothing else.
+    targets:
+    - studies[pmid:40901516].finding
+  - class: wording
+    target: studies[pmid:32247028].finding
+    severity: advisory
+    problem: The finding says the review is 'by authors of antibody studies on this card'. The review
+      has two authors (Wirth K, Scheibenbogen C). By the author facts, only Scheibenbogen C is an author
+      of other studies on the card. Wirth K is not.
+    fix: Write 'A review whose last author is also an author of antibody studies on this card' or 'A review
+      co-written by an author of antibody studies on this card'.
+    targets:
+    - studies[pmid:32247028].finding
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:40901516
+    set:
+      finding: A published erratum to the daratumumab pilot study (pmid:40703261). It corrects one sentence
+        in the Introduction of that article, which had referred to individuals with or without long COVID
+        where the correct wording is individuals with or without ME/CFS.
+  - op: update_study
+    id: pmid:32247028
+    set:
+      finding: A review co-written by an author of antibody studies on this card proposes that antibodies
+        against the β2 adrenergic and M3 muscarinic receptors could impair circulation and oxygen supply;
+        cited on the map as the source of a proposed link, not as evidence for the level.
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - operation: 0
+      severity: advisory
+      problem: 'Answers finding 0: the inferred sentence ''It does not change the study''s patient numbers,
+        results or findings.'' is removed and nothing is added. The remaining sentence still writes ''long
+        COVID'' where the erratum itself writes ''LC''; the expansion is supported by the corrected article''s
+        own definition (pmid:40703261, ''Long COVID (LC)''), so this is wording only.'
+      fix: Optionally write 'individuals with or without LC (Long COVID, as the article defines it)'.
+    - severity: advisory
+      problem: 'A stale comment in the pmid:40703261 block still says the correction''s ''content is not
+        in the cache. TODO: verify what it corrects.'' Comments are not content and that block is not
+        a target of this round.'
+      fix: Remove the comment in a later round where pmid:40703261 is a named target.
+tier:
+  tier: 1
+  why:
+  - the texts differ in free text only and every answered finding is wording
+audits_run: []
+outcome: published

@@ -505,7 +505,9 @@ studies:
     role: context
     direction: not_applicable
     finding: >-
-      A review by authors of antibody studies on this card proposes that antibodies against the β2 adrenergic and M3 muscarinic receptors could impair circulation and oxygen supply; cited on the map as the source of a proposed link, not as evidence for the level.
+      A review co-written by an author of antibody studies on this card proposes that antibodies
+      against the β2 adrenergic and M3 muscarinic receptors could impair circulation and oxygen
+      supply; cited on the map as the source of a proposed link, not as evidence for the level.
   # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
   - id: pmid:34254637
     title: Hypothalamic-Pituitary Autoimmunity and Related Impairment of Hormone Secretions in Chronic Fatigue Syndrome.
@@ -546,8 +548,7 @@ studies:
     finding: >-
       A published erratum to the daratumumab pilot study (pmid:40703261). It corrects one
       sentence in the Introduction of that article, which had referred to individuals with or
-      without long COVID where the correct wording is individuals with or without ME/CFS. It
-      does not change the study's patient numbers, results or findings.
+      without long COVID where the correct wording is individuals with or without ME/CFS.
     corrects: pmid:40703261
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.

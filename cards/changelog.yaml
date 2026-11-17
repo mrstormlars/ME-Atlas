@@ -524,3 +524,13 @@
   - pmid:29759891
   tier: 1
   decided_by: ai_pair
+- date: 2026-11-17
+  card: autoimmunity-autoantibodies-b-cells
+  change: 'Correction: the finding of pmid:32247028 reworded; the finding of pmid:40901516 reworded'
+  reason: 'The review agent found that 2 item(s) did not say what the cited source says: studies[pmid:40901516].finding,
+    studies[pmid:32247028].finding.'
+  sources:
+  - pmid:32247028
+  - pmid:40901516
+  tier: 1
+  decided_by: ai_pair
