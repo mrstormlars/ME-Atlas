@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests (bridge pilot 2). -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">92100001</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2023</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Bridge Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional meta-analysis of alpha activity and beta outcomes in invented adults.</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND">Invented background says alpha activity might affect beta outcomes.</AbstractText>
+          <AbstractText Label="METHODS">Invented databases were searched.</AbstractText>
+          <AbstractText Label="RESULTS" NlmCategory="RESULTS">Seven invented studies were pooled.
+   Alpha activity was linked with beta outcomes.</AbstractText>
+          <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">Beta outcomes should be studied further in invented adults.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType>Journal Article</PublicationType>
+          <PublicationType>Meta-Analysis</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Humans</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">92100001</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

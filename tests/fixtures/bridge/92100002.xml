@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests (bridge pilot 2). -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">92100002</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2023</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Bridge Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional review of gamma and delta.</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND">Invented background on gamma and delta.</AbstractText>
+          <AbstractText Label="AUTHORS' CONCLUSIONS">Invented evidence on gamma and delta is inconsistent across invented adults.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType>Journal Article</PublicationType>
+          <PublicationType>Systematic Review</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Humans</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">92100002</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
