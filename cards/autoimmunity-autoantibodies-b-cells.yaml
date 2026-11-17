@@ -529,6 +529,26 @@ studies:
       against the hypothalamus in 33% of patients and in none of the controls; ACTH, cortisol, growth
       hormone peak and IGF-1 were lower in the 13 patients with high antibody titres than in both the 7 with lower titres and the 10 antibody-negative patients.
       Cited on the map as the source of a link outside the receptor scope of this card, not as evidence for the level.
+  - id: pmid:40901516
+    title: 'Correction: Plasma cell targeting with the anti-CD38 antibody daratumumab in myalgic encephalomyelitis/chronic fatigue syndrome-A clinical pilot study.'
+    year: 2025
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A published erratum to the daratumumab pilot study (pmid:40703261). It corrects one
+      sentence in the Introduction of that article, which had referred to individuals with or
+      without long COVID where the correct wording is individuals with or without ME/CFS. It
+      does not change the study's patient numbers, results or findings.
+    corrects: pmid:40703261
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 # Other reading: The card could also sit in 'dysfunction' (what goes wrong in the body), since raised receptor antibodies are a measured abnormality in blood; 'mechanism' was chosen because the hypothesis answers why the illness does not resolve, and no source states a separate link that expresses the dysfunction reading.

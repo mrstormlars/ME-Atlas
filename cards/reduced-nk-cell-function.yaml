@@ -456,6 +456,27 @@ studies:
     group: Cater RE (sole author; the record gives no affiliation)
     finding: >-
       A hypothesis paper arguing that chronic intestinal candidiasis may depress immune function and be a causal factor in chronic fatigue syndrome; it adds that natural killer and T cell function is important in preventing herpesvirus reactivation. Cited on the map as the source of a proposed link, not as evidence for the level.
+  - id: pmid:30915066
+    title: 'Corrigendum: Unperturbed Cytotoxic Lymphocyte Phenotype and Function in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.'
+    year: 2019
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: abstract
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: >-
+      A published erratum to pmid:28694809. It replaces the term "lytic units" with "specific
+      lysis in percent" in the text and in the legend and axis label of Figure 2, and states
+      that the errors do not change the scientific conclusions of the article. It reports no new
+      data.
+    group: Theorell J, Bryceson YT, Karolinska Institutet, Stockholm, Sweden (same group as pmid:28694809)
+    corrects: pmid:28694809
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
 # checked by card-reviewer (map mode); run files in data/pipeline/2026-11-06-map/.
 layer: dysfunction

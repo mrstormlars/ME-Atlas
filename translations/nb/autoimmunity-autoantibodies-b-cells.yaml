@@ -258,3 +258,8 @@ items:
       13 pasientene med høye antistofftitre enn hos både de 7 med lavere titre og de 10 antistoffnegative pasientene. Sitert
       på kartet som kilde til en lenke utenfor reseptoromfanget til dette kortet, ikke som evidens for nivået.
     source_hash: d50603260c06a54a1fe5ab06e31f4a852b27144435607bbaa65e74e252336fad
+  studies[pmid:40901516].finding:
+    text: En publisert erratum til pilotstudien med daratumumab (pmid:40703261). Det retter én setning i innledningen til
+      den artikkelen, som hadde nevnt personer med eller uten langvarig covid der riktig ordlyd er personer med eller uten
+      ME/CFS. Det endrer ikke studiens pasienttall, resultater eller funn.
+    source_hash: 7ced06840afd1716df8f1ab87634b1fd19461ac0ce6448721a1176ee018b803a

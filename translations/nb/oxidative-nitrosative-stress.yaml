@@ -248,3 +248,10 @@ items:
       bipolar lidelse og multippel sklerose som eksempler. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens
       for nivået.
     source_hash: f095603072b3c37806edec5f104355439f5c06949a097e722f2b5c75960f6e7e
+  studies[pmid:43027675].finding:
+    text: En studie med n=125 pasienter med ME/CFS, 89 med langvarig covid og 80 friske kontroller målte undergrupper av T-celler
+      og serummarkører for oksidativt og nitrosativt stress (blant annet catalase, SOD1, GPX1, MDA, NOS1 og NOS3). Den rapporterte
+      at malondialdehyd var en uavhengig prediktor i sammenligningen av ME/CFS og friske kontroller, og at GPX1 skilte mellom
+      ME/CFS og langvarig covid. Sammendraget oppgir ikke diagnosekriteriene, så de er ikke kontrollert, og det oppgir ikke
+      retningen på forskjellene i markørene. Ikke gjentatt ennå.
+    source_hash: bcf4d8b436481c5a0e55b46a58e38788f6e81e86ee7e3b25823f88c6c84d11cc
