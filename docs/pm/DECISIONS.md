@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — The held-back correction of the autoimmunity card is run again with the full texts (founder ruling)
+
+- The first run of the published-card correction on `autoimmunity-autoantibodies-b-cells` was held back after its two audits disagreed. The second audit rejected on abstracts only: the worktree had no `.env`, and the loader then skipped full texts that were already cached. Told this, the founder said: "Flett 84 og 85, og kjør rettingen på nytt".
+- The loader was fixed first (pull request 86: a cached full text loads without the contact email; a fetch still needs it). The new run used fresh agents that were not shown the earlier audit records. It was agreed beforehand that a second disagreement would leave the card unchanged with no third attempt.
+- Outcome (pull request 87): the review found two wording points, the correction was classed wording-only and applied on the checks and the review, with no audit. The stale YAML comment on pmid:40703261 stays, because a comment-only removal always goes to two audits that cannot see the comment (listed in STATUS.md, "To build or fix").
+- Why: the reject rested on missing source access, not on a disagreement about the content.
+
 ## 2026-11-17 — A path for correcting the text of a published card is to be built (founder ruling)
 
 - The weekly run of 2026-11-17 left three wording points on published cards (`reduced-nk-cell-function`, `autoimmunity-autoantibodies-b-cells`, `oxidative-nitrosative-stress`), and the clean-up found that the pipeline has no way to make them: the correction round and its wording valve work only on a held-back draft, the weekly `apply` refuses `update_study`, and no step changes the text of a link already on a card. The functional spec (section 6, point 9) expects corrections to go "the same way".
