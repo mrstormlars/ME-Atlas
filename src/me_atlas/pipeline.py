@@ -1180,7 +1180,9 @@ PREPRINT_RULE = (
 )
 ERRATUM_RULE = (
     "**This paper is an erratum to `{corrected}`.** Add it to the card as a study with `corrects: {corrected}`, "
-    "`role: context` and `case_definition: none`. A level, badge or contested change may only come from changing "
+    "`role: context`, `case_definition: none`, `case_definition_source: abstract` and `case_definition_quote: null` "
+    "(the operation schema rejects `case_definition: none` without a source). "
+    "A level, badge or contested change may only come from changing "
     "the corrected study (its numbers, role or finding), never from the erratum itself: the erratum is never a "
     "source of a level reason, a contested reason or a badge reason (founder ruling 2026-11-17). Change a sentence "
     "of the card only where the erratum corrects what that sentence says about `{corrected}`."
@@ -3530,8 +3532,7 @@ def build_report(cfg: Config) -> str:
         "",
         "Changes applied by the pipeline: the mechanical checks passed, the review agent accepted, and every tier 2 "
         "change was accepted by the auditor (functional spec section 6). A dispute leaves the card unchanged. "
-        "The founder merges this pull request as an operational step (trial period: four weekly runs, the "
-        "decisions read after the fact).",
+        "The founder merges this pull request as an operational step, without reviewing the content.",
         "",
         "## Proposed changes",
         "",
@@ -5588,7 +5589,7 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
     for path in part_paths[1:] if len(parts) > 1 else []:
         if not step(["gh", "pr", "comment", branch, "--body-file", str(path)]):
             return 1
-    return 0
+    return 0 if step(["git", "switch", BASE_BRANCH]) else 1
 
 
 # ---------------------------------------------------------------------------
