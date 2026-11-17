@@ -25,6 +25,13 @@ weekly ``apply`` and a correction round refuse it:
 * ``set_link_text``     replace the ``text`` of the link whose target is ``to`` (the wording valve of a link round; it
                         changes nothing else of the link)
 
+One more exists only for the correction of a published card (``me_atlas.card_correction``, see ``docs/pipeline.md``);
+the weekly ``apply``, a correction round of a draft, ``valve-apply`` and a link round refuse it:
+
+* ``remove_comment``    remove the one whole-line comment of the card file whose text after ``#`` is ``text``. Comments
+                        are not content (the validator and the site never read them): one is only ever removed, never
+                        written, and the parsed card is equal before and after
+
 Sourced-text fields: ``level_reason``, ``contested.reason``, ``badges.diagnostic_marker.reason``,
 ``badges.explains_pem.reason`` (one sourced text or a list of paragraphs), and ``subgroups`` and
 ``early_signals`` (lists of sourced texts, one per item).
@@ -282,6 +289,22 @@ class SetLinkText(_Op):
     text: NonEmptyStr
 
 
+class RemoveComment(_Op):
+    """Correction of a published card only: remove the one whole-line comment whose text after ``#`` (stripped) is
+    ``text``. Refused when no line, or more than one line, matches, or when the match is not a whole-line comment."""
+
+    op: Literal["remove_comment"]
+    text: NonEmptyStr
+
+    @field_validator("text")
+    @classmethod
+    def _bare_text(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("the comment text is empty")
+        return value
+
+
 class Propose(_Op):
     """Set the level, the contested mark or a badge. Always tier 2.
 
@@ -332,11 +355,13 @@ Operation = Annotated[
     | RemoveLink
     | AddSentence
     | AddLink
-    | SetLinkText,
+    | SetLinkText
+    | RemoveComment,
     Field(discriminator="op"),
 ]
 CORRECTION_ONLY_OPS = ("update_study", "remove_paragraph", "remove_link", "add_sentence")
 LINK_ROUND_ONLY_OPS = ("add_link", "set_link_text")
+PUBLISHED_CORRECTION_ONLY_OPS = ("remove_comment",)
 
 
 class OpsFile(_Op):
@@ -388,8 +413,8 @@ def tier(op: Operation, preprints: Collection[str] = frozenset()) -> int:
         return 2 if op.study.preprint or op.study.id in preprints else 1
     if isinstance(op, UpdateStudy):
         return 2 if op.id in preprints else 1
-    if isinstance(op, RemoveParagraph):
-        return 1
+    if isinstance(op, (RemoveParagraph, RemoveComment)):
+        return 1  # a comment is not content
     if isinstance(op, AddSentence):
         return 2 if any(src in preprints for src in op.sources) else 1
     if isinstance(op, ReplaceParagraph) and op.field == "core_claim":
@@ -902,6 +927,64 @@ def _apply_set_link_text(lines: list[str], data: dict[str, Any], op: SetLinkText
     return [*lines[:k], f"{head}text: >-", *_folded(op.text, key_col + 2), *lines[end:]]
 
 
+def _comment_line(lines: list[str], text: str) -> int:
+    """The index of the one whole-line comment whose text after ``#`` (stripped) is ``text``."""
+    found = [i for i, ln in enumerate(lines) if ln.lstrip().startswith("#") and ln.lstrip()[1:].strip() == text]
+    if len(found) > 1:
+        raise OperationError(
+            f"{len(found)} comment lines read {text!r}; a comment is removed only when exactly one line matches"
+        )
+    if not found:
+        trailing = re.compile(rf"\S\s+#\s*{re.escape(text)}\s*$")
+        if any(trailing.search(ln) for ln in lines if not ln.lstrip().startswith("#")):
+            raise OperationError(f"the comment {text!r} is not a whole-line comment: only a whole line is removed")
+        raise OperationError(f"no whole-line comment reads {text!r}")
+    return found[0]
+
+
+def _apply_remove_comment(lines: list[str], data: dict[str, Any], op: RemoveComment) -> list[str]:
+    i = _comment_line(lines, op.text)
+    return [*lines[:i], *lines[i + 1 :]]
+
+
+def _owner(lines: list[str], key: str, i: int) -> int | None:
+    """The index of the item of the block list ``key`` that line ``i`` belongs to: an item's own lines and the comments
+    and blank lines before it (at the item's column) belong to it; None when the line is not in that list."""
+    try:
+        loc = _locate(lines, [key])
+        ci, starts = _list_item_starts(lines, loc, key)
+    except OperationError:
+        return None
+    if not starts or not loc.key_line < i < loc.end:
+        return None
+    if i < starts[0]:
+        return 0
+    for k, a in enumerate(starts):
+        _a, b = _item_range(lines, loc, starts, ci, k)
+        if a <= i < b:
+            return k
+        if k + 1 < len(starts) and b <= i < starts[k + 1]:
+            return k + 1
+    return None
+
+
+def comment_target(text: str, comment: str) -> str:
+    """The target a ``remove_comment`` of ``comment`` has for the guard of a published-card correction:
+    ``studies[<id>]`` when the one matching comment line lies in that study's block, ``links[n]`` in that link's block.
+    Raises OperationError when the line is not one whole-line comment, or lies anywhere else."""
+    if "\r" in text:
+        raise OperationError("the card file uses CRLF line endings; convert it to LF first")
+    lines = text.split("\n")
+    i = _comment_line(lines, comment.strip())
+    data = yaml.safe_load(text)
+    studies, links = data.get("studies"), data.get("links")
+    if (k := _owner(lines, "studies", i)) is not None and isinstance(studies, list) and k < len(studies):
+        return f"studies[{studies[k]['id']}]"
+    if (k := _owner(lines, "links", i)) is not None and isinstance(links, list) and k < len(links):
+        return f"links[{k}]"
+    raise OperationError(f"the comment {comment!r} lies in no study's block and no link's block")
+
+
 def _validation_problems(data: dict[str, Any]) -> list[str]:
     try:
         card = Card.model_validate(data)
@@ -986,6 +1069,8 @@ def apply_operations(text: str, operations: list[Operation] | OpsFile, *, valida
                 lines = _apply_add_link(lines, data, op)
             elif isinstance(op, SetLinkText):
                 lines = _apply_set_link_text(lines, data, op)
+            elif isinstance(op, RemoveComment):
+                lines = _apply_remove_comment(lines, data, op)
             else:
                 lines = _apply_propose(lines, data, op)
         except OperationError as exc:

@@ -57,6 +57,7 @@ from me_atlas.http import load_dotenv
 from me_atlas.operations import (
     CORRECTION_ONLY_OPS,
     LINK_ROUND_ONLY_OPS,
+    PUBLISHED_CORRECTION_ONLY_OPS,
     AddLink,
     AddParagraph,
     AddSentence,
@@ -64,6 +65,7 @@ from me_atlas.operations import (
     OperationError,
     OpsFile,
     Propose,
+    RemoveComment,
     RemoveLink,
     RemoveParagraph,
     ReplaceParagraph,
@@ -91,6 +93,16 @@ LINK_ROUND_COMMANDS = (
     "link-valve-check-plan",
     "record-link-valve-check",
     "link-publish",
+)
+# The correction of a published card (``me_atlas.card_correction``): its commands.
+PUBLISHED_CORRECTION_COMMANDS = (
+    "correct-review-plan",
+    "correct-record-review",
+    "correct-plan",
+    "correct-apply",
+    "correct-audit-plan",
+    "correct-record-audit",
+    "correct-publish",
 )
 # The correction of a held-back draft (rounds C1, C2, ...): at most this many rounds per card (contract A3).
 MAX_CORRECTION_ROUNDS = 1
@@ -1484,13 +1496,17 @@ def _finish_checks(cfg: Config, result: dict[str, Any], ops_errors: list[str], p
     )
 
 
-def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
+def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool = False) -> list[str]:
     """A2: what the operations file of a correction round may hold. Empty when it holds nothing else.
 
     No paper; at least one operation; only ``replace_paragraph``, ``remove_paragraph``, ``update_study``,
     ``remove_link``, ``propose`` and ``add_sentence`` (see `add_sentence_problems`); a ``propose`` on ``level`` only
     to a value lower than the draft's, on a badge only to false, on ``contested`` freely. Nothing that adds a study or
     a paragraph: a correction removes or weakens a claim and adds only the one sentence an audit part asks for.
+
+    With ``published`` (the correction of a published card, ``me_atlas.card_correction``) the list is
+    ``replace_paragraph``, ``remove_paragraph``, ``update_study``, ``remove_link``, ``propose``, ``set_link_text`` and
+    ``remove_comment``: no ``add_sentence`` either. Without it ``remove_comment`` is refused.
     """
     found: list[str] = []
     if ops.paper is not None:
@@ -1498,7 +1514,18 @@ def correction_ops_problems(ops: OpsFile, draft_level: int) -> list[str]:
     if not ops.operations:
         found.append("a correction needs at least one operation")
     for i, op in enumerate(ops.operations):
-        if isinstance(op, (AddStudy, AddParagraph, AddLink, SetLinkText)):
+        if published and isinstance(op, (AddStudy, AddParagraph, AddLink, AddSentence)):
+            found.append(
+                f"operations[{i}] is {op.op}: the correction of a published card may hold replace_paragraph, "
+                "remove_paragraph, update_study, remove_link, propose, set_link_text and remove_comment only (it "
+                "adds no study, no paragraph, no link and no sentence)"
+            )
+        elif isinstance(op, RemoveComment) and not published:
+            found.append(
+                f"operations[{i}] is remove_comment: only the correction of a published card (`correct-apply`) "
+                "may use it"
+            )
+        elif not published and isinstance(op, (AddStudy, AddParagraph, AddLink, SetLinkText)):
             found.append(
                 f"operations[{i}] is {op.op}: a correction may hold replace_paragraph, remove_paragraph, "
                 "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
@@ -2085,6 +2112,11 @@ def apply_ops_file(
             if op.op in LINK_ROUND_ONLY_OPS
         ]
         ops_errors += [
+            f"operations[{i}] is {op.op}: only the correction of a published card (`correct-apply`) may use it"
+            for i, op in enumerate(ops.operations)
+            if op.op in PUBLISHED_CORRECTION_ONLY_OPS
+        ]
+        ops_errors += [
             f"operations[{i}] is replace_paragraph of core_claim: only a correction round (--round C<k>) may use it"
             for i, op in enumerate(ops.operations)
             if isinstance(op, ReplaceParagraph) and op.field == "core_claim"
@@ -2444,6 +2476,7 @@ def build_audit_context(
     applied_file: Path | None = None,
     round_links: Sequence[str] | None = None,
     second: bool = False,
+    what: str | None = None,
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -2460,7 +2493,9 @@ def build_audit_context(
     ``applied/<slug>-r<n>/`` against the card, with the applied card shown in full in section 2.
     ``applied_file`` takes the applied card from that file instead (the link round's stage text); ``round_links``
     (the ``to`` of the links the audit decides) makes the context say that it is a link round and name those links
-    only, ``second`` that it is the second audit of the round.
+    only, ``second`` that it is the second audit of the round. ``what`` (with ``applied_round``) names the change in the
+    heading instead of "the links added to the published card" (the correction of a published card says "the correction
+    of the published card").
     """
     base = _base_card(cfg, slug)
     source = card_text_from if card_text_from is not None and key is None and not redraft else base
@@ -2494,7 +2529,7 @@ def build_audit_context(
         applied_card = _load_card(applied_path)
         study_ids += [s.id for s in applied_card.studies]
         carriers = carrier_ids(applied_card)  # E1: the carriers of the card once the change is in
-        what = (
+        what = what or (
             f"the change from paper `{paper_id}`"
             if paper_id
             else "the links added to the published card"
@@ -4376,32 +4411,64 @@ def _pre_audit_target_lines(cfg: Config, slug: str, tag: str) -> list[str]:
     return lines
 
 
-def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
+def build_card_review_context(
+    cfg: Config,
+    slug: str,
+    tag: str,
+    *,
+    card_file: Path | None = None,
+    review_file: Path | None = None,
+    request_lines: Sequence[str] = (),
+) -> str:
     """W1: what the card-reviewer reads for the whole-card review of correction attempt ``tag`` (``C1``,
     ``C1-revised`` or ``C1-revised2``): the corrected card (the applied text, comments stripped), for each cited study
     its id, the cached record file and whether a full text is cached, the rubric and the checklist. No full text is
     embedded: the reviewer reads the cached files it needs, so the file is bounded by the number of cited studies.
     For ``C<k>-pre`` the card is the unchanged draft in ``drafts/``: the same context and checklist, before any
-    correction."""
+    correction.
+
+    ``card_file`` (the correction of a published card, ``me_atlas.card_correction``) names the card to review, a
+    published one, instead of a draft or an applied text; ``review_file`` the file the reviewer writes;
+    ``request_lines`` are added after the author facts (the request items to check and the review file's format)."""
     pre = tag.endswith("-pre")
     first = tag == FIRST_PUBLICATION
-    applied = cfg.drafts_dir / f"{slug}.yaml" if pre or first else _attempt_text_path(cfg, slug, tag, "card-review")
+    published = card_file is not None
+    applied = card_file or (
+        cfg.drafts_dir / f"{slug}.yaml" if pre or first else _attempt_text_path(cfg, slug, tag, "card-review")
+    )
     card = _load_card(applied)
     reader = citations.CacheReader(cfg.cache_dir)
     studies: list[str] = []
     for study_id in dict.fromkeys(s.id for s in card.studies):
         studies += [f"### {study_id}", "", *_cached_study_files(cfg, study_id, reader), ""]
-    when = "before drafting" if pre else "first publication" if first else f"correction attempt {tag}"
-    what = "held-back draft, as it stands," if pre else "draft, as it stands," if first else "corrected card"
+    when = (
+        "published card"
+        if published
+        else "before drafting"
+        if pre
+        else "first publication"
+        if first
+        else f"correction attempt {tag}"
+    )
+    what = (
+        "published card, as it stands,"
+        if published
+        else "held-back draft, as it stands,"
+        if pre
+        else "draft, as it stands,"
+        if first
+        else "corrected card"
+    )
     parts = [
         f"# Whole-card review context ({when}): `{slug}`",
         "",
         f"You review the whole {what} against its cached "
         "sources. Read only this file and the cached files "
         "named in section 2; fetch nothing. Write your review file to "
-        f"`{cfg.card_review_path(slug, tag)}`.",
+        f"`{review_file or cfg.card_review_path(slug, tag)}`.",
         "",
-        f"## 1. The {'draft' if pre or first else 'corrected card'} (comments removed)",
+        f"## 1. The {'published card' if published else 'draft' if pre or first else 'corrected card'} "
+        "(comments removed)",
         "",
         "```yaml",
         strip_yaml_comments(applied.read_text(encoding="utf-8")),
@@ -4420,8 +4487,9 @@ def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
         "",
         citations.author_facts_section(card, reader).replace("## Author facts", "## 5. Author facts", 1),
     ]
-    if pre:
+    if pre and not published:
         parts += _pre_audit_target_lines(cfg, slug, tag)
+    parts += request_lines
     return "\n".join(parts)
 
 
@@ -6802,6 +6870,69 @@ def _build_parser() -> argparse.ArgumentParser:
     lp.add_argument("--date", type=_date, metavar="YYYY-MM-DD", help="default: today")
     lp.add_argument("--dry-run", action="store_true", help="write only DIR/link-report.md")
 
+    crp = sub.add_parser(
+        "correct-review-plan",
+        parents=[common],
+        help="correction of a published card, step 1: write the card-reviewer's context for the published card and the "
+        "request DIR/request.json (--run-dir DIR)",
+    )
+    crp.add_argument("slug")
+
+    crr = sub.add_parser(
+        "correct-record-review",
+        parents=[common],
+        help="correction of a published card: validate the card-reviewer's review, DIR/review/<slug>-pre.json "
+        "(--pre) or DIR/review/<slug>-r<N>.json (--round N) (--run-dir DIR)",
+    )
+    crr.add_argument("slug")
+    crr.add_argument("--pre", action="store_true", help="step 1: the review of the published card")
+    crr.add_argument("--round", type=int, choices=(1, 2), help="step 4: the review of the correction's round")
+
+    cpl = sub.add_parser(
+        "correct-plan",
+        parents=[common],
+        help="correction of a published card, step 2: write the drafter's context DIR/correction-context/<slug>.md "
+        "(--run-dir DIR)",
+    )
+    cpl.add_argument("slug")
+
+    cap = sub.add_parser(
+        "correct-apply",
+        parents=[common],
+        help="correction of a published card, step 3: apply DIR/ops/<slug>-r<N>.json to a copy of the card and run "
+        "the checks (--run-dir DIR)",
+    )
+    cap.add_argument("slug")
+    cap.add_argument("--round", type=int, choices=(1, 2), required=True, help="the round")
+
+    cau = sub.add_parser(
+        "correct-audit-plan",
+        parents=[common],
+        help="correction of a published card, step 6 (tier 2): write the change audit's context "
+        "DIR/audit-context/<slug>[-second].md (--run-dir DIR)",
+    )
+    cau.add_argument("slug")
+    cau.add_argument("--second", action="store_true", help="the second audit's context")
+
+    cra = sub.add_parser(
+        "correct-record-audit",
+        parents=[common],
+        help="correction of a published card, step 6 (tier 2): validate the audit record "
+        "DIR/audit/<slug>[-second].yaml (--run-dir DIR)",
+    )
+    cra.add_argument("slug")
+    cra.add_argument("--second", action="store_true", help="the second (sequential) audit")
+
+    cpb = sub.add_parser(
+        "correct-publish",
+        parents=[common],
+        help="correction of a published card, step 7: write the corrected text into cards/<slug>.yaml when the checks, "
+        "the review and (tier 2) both audits allow it, else hold the card back (--run-dir DIR)",
+    )
+    cpb.add_argument("slug")
+    cpb.add_argument("--date", type=_date, metavar="YYYY-MM-DD", help="default: today")
+    cpb.add_argument("--dry-run", action="store_true", help="write only DIR/correction-report.md")
+
     cp = sub.add_parser(
         "content-paths",
         help="fail when a commit without the pipeline marker changes cards/, drafts/, translations/ or audits/",
@@ -6894,6 +7025,11 @@ def main(
                 raise PipelineError(f"{args.command} needs --run-dir DIR (the folder of the link round)")
             date = (args.date or today or dt.date.today()) if args.command == "link-publish" else None
             run_dir = args.run_dir
+        elif args.command in PUBLISHED_CORRECTION_COMMANDS:
+            if not args.run_dir:
+                raise PipelineError(f"{args.command} needs --run-dir DIR (the folder of the correction)")
+            date = (args.date or today or dt.date.today()) if args.command == "correct-publish" else None
+            run_dir = args.run_dir
         elif args.command in ("valve-apply", "valve-check-plan", "record-valve-check", "record-audit-classification"):
             if not args.run_dir:
                 raise PipelineError(f"{args.command} needs --run-dir DIR (the folder of the correction round)")
@@ -6945,6 +7081,10 @@ def _dispatch(
         from me_atlas import link_round  # imported here: me_atlas.link_round imports this module
 
         return link_round.dispatch(args, cfg, fulltext, date, out)
+    if args.command in PUBLISHED_CORRECTION_COMMANDS:
+        from me_atlas import card_correction  # imported here: me_atlas.card_correction imports this module
+
+        return card_correction.dispatch(args, cfg, fulltext, date, out)
     if args.command == "prepare":
         assert date is not None
         summary = prepare(
