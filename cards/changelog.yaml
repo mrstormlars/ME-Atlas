@@ -466,3 +466,27 @@
   - pmid:31330791
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-17
+  card: autoimmunity-autoantibodies-b-cells
+  change: Added study pmid:40901516
+  reason: Mechanical checks passed and the review agent accepted round 1; no audit was needed.
+  sources:
+  - pmid:40901516
+  tier: 1
+  decided_by: ai_pair
+- date: 2026-11-17
+  card: oxidative-nitrosative-stress
+  change: Added study pmid:43027675
+  reason: Mechanical checks passed and the review agent accepted round 2; no audit was needed.
+  sources:
+  - pmid:43027675
+  tier: 1
+  decided_by: ai_pair
+- date: 2026-11-17
+  card: reduced-nk-cell-function
+  change: Added study pmid:30915066
+  reason: Mechanical checks passed and the review agent accepted round 1; no audit was needed.
+  sources:
+  - pmid:30915066
+  tier: 1
+  decided_by: ai_pair
