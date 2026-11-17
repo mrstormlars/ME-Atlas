@@ -55,9 +55,9 @@
 {% endfor %}
 </dl>
 {% if gaps.rows %}
-<table class="gaps-table gaps-stack">
+<table class="gaps-table gaps-stack gaps-counts">
 <caption>{{ txt("gaps.table.caption") }}</caption>
-<thead><tr><th scope="col">{{ txt("gaps.col.hypothesis") }}</th><th scope="col">{{ txt("gaps.col.level") }}</th><th scope="col">{{ txt("gaps.col.contested") }}</th><th scope="col">{{ txt("gaps.col.supporting") }}</th><th scope="col">{{ txt("gaps.col.groups") }}</th><th scope="col">{{ txt("gaps.col.contradicting") }}</th><th scope="col">{{ txt("gaps.col.links") }}</th></tr></thead>
+<thead><tr><th scope="col">{{ txt("gaps.col.hypothesis") }}</th><th scope="col"><span class="vh">{{ txt("gaps.col.level") }}</span></th><th scope="col"><span class="vh">{{ txt("gaps.col.contested") }}</span></th><th scope="col"><span class="vh">{{ txt("gaps.col.supporting") }}</span></th><th scope="col"><span class="vh">{{ txt("gaps.col.groups") }}</span></th><th scope="col"><span class="vh">{{ txt("gaps.col.contradicting") }}</span></th><th scope="col"><span class="vh">{{ txt("gaps.col.links") }}</span></th></tr></thead>
 {% for level in range(6) %}
 {% set members = gaps.rows|selectattr("level", "equalto", level)|list %}
 {% if members %}
