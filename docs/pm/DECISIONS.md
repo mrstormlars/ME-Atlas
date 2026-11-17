@@ -2,6 +2,11 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — The whole-card review gate also holds for first publication
+
+- A new draft reaches `cards/` only with an accepting whole-card review by the review agent of the draft as it stands; the review is tied to the draft by a sha256 written by code, so a draft changed after the review is refused (`docs/pipeline.md`, "First publication"; pull request 74, merged by the founder's instruction "Please flett alle 3 PR-ene"). This replaces the earlier statement in this file that the gate covers correction rounds only.
+- Why: the founder ruled on 2026-11-17 that the known gaps in the pipeline stay a priority, and this was the gap that bore most directly on credibility: a first publication could pass with only its parts reviewed.
+
 ## 2026-11-17 — Errata and corrections to a cited paper: three founder rulings
 
 - The plan `docs/plan-errata.md` (pull request 75) asked three questions; the founder answered: "Følger dine anbefalinger for alle tre spørsmålene." The recommendations were the plan's A(a), B(a) and C(a):

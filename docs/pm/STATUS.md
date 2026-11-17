@@ -17,8 +17,8 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 
 ## Active priorities (max 3)
 
-1. **Rebuild the "What is missing" page with the replication list (idea I-01, wave 1).** The plan is `docs/plan-gaps-page-rebuild.md`; built on `feat/gaps-page-rebuild`, awaiting merge. The page now has tables and no text copied from the cards, and the level 2 group links to each card's reason for its level. The seven guidelines for ideas are in DECISIONS 2026-11-17.
-2. **Close the known gaps in the pipeline** (see "Open items", "To build or fix").
+1. **Wave 1 of the idea bank is published (idea I-01).** The "What is missing" page is rebuilt as tables with the level 2 replication list (pull request 73, merged 2026-11-17); a layout fix for the hypotheses table (vertical count headers) is in pull request 77. Next in the idea bank: I-05 waits for the founder's licence choice; I-14 and I-03 each need a `/brainstorm` plan first. The seven guidelines for ideas are in DECISIONS 2026-11-17.
+2. **Close the known gaps in the pipeline** (see "Open items", "To build or fix"). The whole-card review gate at first publication is closed (pull request 74). The errata path is ruled on (DECISIONS 2026-11-17, plan `docs/plan-errata.md`) and being built on `feat/errata-path`.
 
 ## Running upkeep (not a priority; DECISIONS 2026-11-17)
 
