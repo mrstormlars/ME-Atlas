@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — A second bridge search pilot with a tighter reading; only systematic reviews count (founder ruling)
+
+- After pilot 1 (reviewer rejected 9 of 21 `yes` rows, above the limit of one in five), the founder agreed in a brainstorm to a second pilot on the same eight questions and records, with only the reading changed (`docs/plan-bridge-pilot-2.md`): "Ja, la oss kjøre en ny pilot (alt A) først." On starting it: "Ja, start piloten".
+- Only systematic reviews and meta-analyses count towards an outcome; narrative reviews (and records that are not reviews of studies) are listed as leads, with no outcome drawn from them.
+- The reject-rate test (at most one in five `yes` rows rejected) is the test the pilot exists for and is not redefined after the run. Protocol: `docs/pm/bridge-pilot.md`, section "Pilot 2: protocol".
+- Why: pilot 1's searches and controls worked but its reading did not; changing only the reading shows whether it can be made reliable before the method is run on more links.
+
 ## 2026-11-17 — The local data folder is backed up to a private repository (founder ruling)
 
 - The founder said: "Forsikre deg om at cachen ikke slettes ved et uhell igjen (hva med en backup, f.eks. til github?)". `data/cache/` and `data/pipeline/` are backed up as a separate git repository whose git directory lies beside the project folder, pushed to a private repository of the founder's; `/ukentlig` ends with a backup step (`docs/fetch.md`, "Backup of the local data").

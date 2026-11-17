@@ -1,0 +1,41 @@
+# End definitions for the bridge search pilot 2 (docs/pm/bridge-pilot.md, section "Pilot 2: protocol", point P2.5).
+# Taken from each card's core_claim. Given to the bridge-surveyor and the card-reviewer in the context file header.
+# Fixed when the pilot 2 protocol was committed; do not edit after the first agent run.
+ends:
+  oxidative-nitrosative-stress: >-
+    Reactive oxygen or nitrogen species outweighing the body's antioxidant defences, measured as markers of oxidative
+    or nitrosative stress or of the damage they do to fats, proteins, DNA or other molecules. The clinical effect of an
+    antioxidant given as treatment, with no measure of oxidative stress, does not count.
+  endothelial-dysfunction: >-
+    Impaired function of the endothelium, the lining of the blood vessels: for example vessels widening less well when
+    the tissues need more blood flow, or markers of endothelial damage or activation. Changes in blood clotting or in
+    the microcirculation count only when the record ties them to the endothelium.
+  autonomic-imbalance: >-
+    A shift in the balance of the autonomic nervous system towards less parasympathetic (vagal) and relatively more
+    sympathetic activity, measured for example as lower heart rate variability, a higher resting heart rate or a weaker
+    baroreflex. It is the balance itself, not the fall in blood flow to the brain or the drop in blood pressure on
+    standing.
+  orthostatic-intolerance-cerebral-blood-flow: >-
+    Blood flow to the brain falling more than normal on sitting up, standing or being tilted upright, or orthostatic
+    intolerance such as postural orthostatic tachycardia syndrome (POTS) or orthostatic hypotension.
+  reduced-nk-cell-function: >-
+    Natural killer (NK) cells less able to kill target cells (lower NK cell cytotoxicity or activity). NK cell numbers
+    alone, with no measure of their function, do not count.
+  herpesvirus-reactivation: >-
+    A herpesvirus that stays in the body after a first infection (such as Epstein-Barr virus, cytomegalovirus or human
+    herpesvirus 6 or 7) becoming active again, as the record shows it (for example viral DNA in blood or antibody
+    patterns of reactivation). A first infection does not count.
+  tryptophan-kynurenine-metabolism: >-
+    Altered breakdown of the amino acid tryptophan, mostly along the kynurenine pathway: the levels of tryptophan,
+    kynurenine or its products (such as kynurenic acid or quinolinic acid), or the activity of the pathway's enzymes
+    (such as indoleamine 2,3-dioxygenase).
+  neuroinflammation: >-
+    Inflammation in the brain or spinal cord, including activation of microglia or astrocytes, measured in the central
+    nervous system (brain imaging, brain tissue or cerebrospinal fluid). Cytokines or other inflammation markers
+    measured in blood do not count.
+  autoimmunity-autoantibodies-b-cells: >-
+    The immune system attacking the body's own tissues: autoantibodies (for example against adrenergic or muscarinic
+    receptors), the B cells that make them, or a disease the record names as autoimmune.
+  circadian-rhythm-disruption: >-
+    The body's 24-hour timing system disturbed: daily rhythms of rest and activity, body temperature, melatonin or light
+    exposure weaker, less regular or out of step. Sleep quality itself does not count, nor the daily rhythm of cortisol.

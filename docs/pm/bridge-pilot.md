@@ -217,3 +217,90 @@ The reviewer also flagged five accepted rows as weaker than the row suggests (no
 ### For the founder to judge
 
 Whether the results for Q1, Q2, Q4 and Q5 are useful enough to show (protocol point 7). Ideally one researcher or Science for ME reader is asked the same.
+
+## Pilot 2: protocol
+
+Plan: `docs/plan-bridge-pilot-2.md`, agreed with the founder on 2026-11-17 (DECISIONS). Written and committed before any agent reads a record for pilot 2. Nothing below is changed after the first agent run; a deviation is recorded under "Pilot 2: results" as a deviation. Choices the plan leaves open are marked **(orchestrator default)**.
+
+Pilot 2 asks one thing: does a tighter reading bring the reviewer's reject rate to one in five or lower, on the same eight questions and the same records as pilot 1? Only the reading changes. Pilot 1's files (`data/pipeline/2026-11-16-bridge-pilot/`) and its sections above are not changed.
+
+### P2.1 Same questions, same records
+
+- The eight questions of protocol point 1 and the queries in `config/bridge_pilot.yaml`, unchanged. No query tuning.
+- **The screened records are pilot 1's** **(orchestrator default)**: `bridge run` takes the screened PMIDs and the counts of every question and arm from pilot 1's `counts.json` instead of searching PubMed again, after checking that each arm's query there is the query in `config/bridge_pilot.yaml` character for character. Why: a new search a day later can return records that did not exist on 2026-11-16, and then more than the reading would change. `counts.json` holds the searches and the screened ids only, no rows or verdicts.
+- Records are read from `data/cache/bridge/pubmed/`; a record missing there is fetched again from PubMed and the report says which.
+- Run folder: `data/pipeline/2026-11-17-bridge-pilot-2/` (context files, survey files, review file; generated, not committed).
+
+### P2.2 Code fills what the record states
+
+- `meta_analysis` is not written by the agent. The context file states, per record, whether PubMed lists `Meta-Analysis` among its publication types, and the report takes the flag from there.
+- `studies_pooled` is dropped from the extraction.
+
+### P2.3 The quote must be a finding
+
+- A record's abstract is **structured** when at least one of its `AbstractText` sections has a non-empty `Label`; otherwise it is **unstructured**.
+- In a structured abstract, a section is a **finding section** when its `NlmCategory` is `RESULTS` or `CONCLUSIONS`, or when its `Label`, compared without regard to case and with whitespace collapsed, is one of: `RESULTS`, `MAIN RESULTS`, `METHODS AND RESULTS`, `CONCLUSION`, `CONCLUSIONS`, `AUTHORS' CONCLUSIONS`, `REVIEWER'S CONCLUSIONS`, `DISCUSSION AND CONCLUSION`, `INTERPRETATION`. Every other section (background, objective, methods, limitations, discussion alone, and unlabelled sections without one of those categories) is not. The list covers every label in the 123 cached records that is a result or a conclusion; it was drawn up by reading the labels only, not the texts.
+- For a structured abstract, code accepts the quote of a `yes` row only when it is found verbatim (whitespace collapsed, nothing else) inside the text of one finding section. A quote from the title, from another section, or across two sections is rejected.
+- For an unstructured abstract, the quote may come from the title or the abstract, as in pilot 1.
+- Every `yes` row carries `quote_role`: `finding` (the sentence reports what the review found or concludes), `background` (what was known or assumed before) or `aim` (what the review set out to do). Code rejects a `yes` row whose `quote_role` is not `finding`. For an unstructured abstract the reviewer checks that the sentence is a finding.
+- The context file shows each section of a structured abstract with its label and marks the finding sections.
+
+### P2.4 Is it a review of studies?
+
+Every `yes` row carries `review_kind`, read from what the title and abstract say about the record itself, not from PubMed's publication type alone:
+
+- `systematic`: the record describes a literature search (databases searched, search dates or a protocol) or states a number of included studies, or reports a meta-analysis;
+- `narrative`: a review of the literature that describes neither;
+- `not_a_review`: not a review of studies (for example a single cohort, a chart review, a case report, a guideline or a trial).
+
+Only accepted `yes` rows with `review_kind: systematic` count towards an outcome (founder ruling 2026-11-17). Accepted `yes` rows with `narrative` or `not_a_review` are listed apart as **leads**, with no outcome drawn from them.
+
+### P2.5 Each end has a written definition
+
+The surveyor and the reviewer both get these, in the context file header. They are taken from each card's core claim (`core_claim` in `cards/<slug>.yaml`) and kept in `config/bridge_ends.yaml`, committed with this protocol.
+
+| Card | What counts |
+|---|---|
+| oxidative-nitrosative-stress | Reactive oxygen or nitrogen species outweighing the body's antioxidant defences, measured as markers of oxidative or nitrosative stress or of the damage they do to fats, proteins, DNA or other molecules. The clinical effect of an antioxidant given as treatment, with no measure of oxidative stress, does not count. |
+| endothelial-dysfunction | Impaired function of the endothelium, the lining of the blood vessels: for example vessels widening less well when the tissues need more blood flow, or markers of endothelial damage or activation. Changes in blood clotting or in the microcirculation count only when the record ties them to the endothelium. |
+| autonomic-imbalance | A shift in the balance of the autonomic nervous system towards less parasympathetic (vagal) and relatively more sympathetic activity, measured for example as lower heart rate variability, a higher resting heart rate or a weaker baroreflex. It is the balance itself, not the fall in blood flow to the brain or the drop in blood pressure on standing. |
+| orthostatic-intolerance-cerebral-blood-flow | Blood flow to the brain falling more than normal on sitting up, standing or being tilted upright, or orthostatic intolerance such as postural orthostatic tachycardia syndrome (POTS) or orthostatic hypotension. |
+| reduced-nk-cell-function | Natural killer (NK) cells less able to kill target cells (lower NK cell cytotoxicity or activity). NK cell numbers alone, with no measure of their function, do not count. |
+| herpesvirus-reactivation | A herpesvirus that stays in the body after a first infection (such as Epstein-Barr virus, cytomegalovirus or human herpesvirus 6 or 7) becoming active again, as the record shows it (for example viral DNA in blood or antibody patterns of reactivation). A first infection does not count. |
+| tryptophan-kynurenine-metabolism | Altered breakdown of the amino acid tryptophan, mostly along the kynurenine pathway: the levels of tryptophan, kynurenine or its products (such as kynurenic acid or quinolinic acid), or the activity of the pathway's enzymes (such as indoleamine 2,3-dioxygenase). |
+| neuroinflammation | Inflammation in the brain or spinal cord, including activation of microglia or astrocytes, measured in the central nervous system (brain imaging, brain tissue or cerebrospinal fluid). Cytokines or other inflammation markers measured in blood do not count. |
+| autoimmunity-autoantibodies-b-cells | The immune system attacking the body's own tissues: autoantibodies (for example against adrenergic or muscarinic receptors), the B cells that make them, or a disease the record names as autoimmune. |
+| circadian-rhythm-disruption | The body's 24-hour timing system disturbed: daily rhythms of rest and activity, body temperature, melatonin or light exposure weaker, less regular or out of step. Sleep quality itself does not count, nor the daily rhythm of cortisol. |
+
+The autoimmunity definition includes diseases the record names as autoimmune, which is wider than the card's focus on receptor autoantibodies; it follows the card's own theme terms (`Autoimmune Diseases` in `config/card_themes.yaml`), which drew the records **(orchestrator default)**.
+
+### P2.6 The extraction and the reviewer's verdict
+
+The surveyor writes, per screened PMID, `statement` (`yes`, `no`, `animal_or_cell_only`) as in pilot 1, judged against the end definitions. A `yes` row carries `relation`, `population`, `direction` (value lists as in protocol point 5), `review_kind`, `quote_role` and `quote`; `meta_analysis` and `studies_pooled` are no longer written. Code (`survey bridge validate`) rejects the file on the pilot 1 rules (PMIDs, verbatim quote, value lists) and on points P2.2 to P2.4.
+
+A fresh `card-reviewer` checks every `yes` row, whatever its `review_kind`, against the cached record and the end definitions, and gives `accept` or `reject`. A rejection carries one reason code, the first that applies in this order:
+
+| Code | Meaning |
+|---|---|
+| `not_humans` | the statement rests on animal or cell studies |
+| `wrong_review_kind` | `review_kind` is wrong for what the record says about itself |
+| `not_this_relation` | the record is not about A and B as the end definitions mean them |
+| `not_a_finding` | the quote is background, aim or speculation, or the record reports no finding on the relation |
+| `wrong_direction` | `direction` or `relation` does not match the record |
+| `wrong_population` | `population` does not match the record |
+| `other` | anything else, explained in a note |
+
+**(orchestrator default: the order, and that `relation` errors go under `wrong_direction`.)** The reviewer writes `data/pipeline/2026-11-17-bridge-pilot-2/review.json`: `{"rows": [{"question", "arm", "pmid", "verdict", "reason", "note"}]}`, `reason` null for `accept`. Neither the surveyor nor the reviewer is given pilot 1's rows, verdicts or report: the reviewer is told not to read this file or pilot 1's run folder, and the context files hold no pilot 1 result.
+
+One agent at a time: a fresh `bridge-surveyor` per context file with records, then one fresh `card-reviewer` over all `yes` rows.
+
+### P2.7 Outcome per question and arm
+
+The rule of protocol point 6, applied to accepted `yes` rows with `review_kind: systematic` only: *reported in other conditions*, *mixed*, *only animal or cell evidence* (no accepted systematic `yes` row and at least one `animal_or_cell_only` row) or *no review found*. Leads are listed under the arm with no outcome. The fixed framing is unchanged: "Reported in other conditions (systematic review, population: …). Not studied in ME/CFS." No treatment in another condition is named as an option for ME/CFS.
+
+### P2.8 How pilot 2 is judged
+
+- **Reviewer agreement (the test this pilot exists for):** rejected `yes` rows divided by all `yes` rows, over all questions and arms, is at most 1 in 5 (20%). The number is reported with its reason codes whatever it is, and this test is not redefined after the run.
+- **Positive control:** C1 gives at least one accepted `systematic` `yes` row with `relation: present`, in either arm. If not, the other results are not interpreted.
+- **Base rate:** criterion (a) and (b) of protocol point 7, counted on accepted `systematic` `yes` rows.
+- **Nothing lost silently:** each of the 12 rows pilot 1's reviewer accepted is reported as kept (accepted, `systematic`), moved to leads (accepted, `narrative` or `not_a_review`) or dropped, with the reason (the surveyor's `statement`, or the reviewer's reason code). Accepted `systematic` rows that pilot 1 did not accept are listed as new. This comparison is made by the orchestrator after the review, from the two run folders.
