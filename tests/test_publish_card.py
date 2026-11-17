@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -47,7 +48,17 @@ class Pub:
     def publish(self, *extra: str) -> int:
         return self.main("publish-card", SLUG, "--run-dir", str(self.dir), "--date", PUB_DATE, *extra)
 
+    def first_review(self, verdict: str = "accept", findings: list[dict] | None = None) -> None:
+        """The whole-card review of the first publication, as the card-reviewer leaves it, then recorded."""
+        path = self.dir / "review" / f"{SLUG}-card-first.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        data = {"card": SLUG, "paper": None, "verdict": verdict, "findings": findings or []}
+        path.write_text(json.dumps(data), encoding="utf-8")
+        assert self.main("record-review", SLUG, "--card-review", "--run-dir", str(self.dir)) == 0
+
     def plan(self, redraft: bool = False) -> None:
+        if not redraft and not (self.dir / "review" / f"{SLUG}-card-first.json").is_file():
+            self.first_review()  # the gate before the audits: an accepting whole-card review of the draft
         rnd = ["--round", "L"] if redraft else []
         assert self.main("audit-plan", "--card", SLUG, "--out", str(self.dir), *rnd) == 0
 
@@ -128,6 +139,14 @@ class Pub:
         return yaml.safe_load(self.log.read_text(encoding="utf-8")) if self.log.is_file() else []
 
     def audit_names(self) -> list[str]:
+        """The audit records in ``audits/`` (the trail of the first-publication review is `all_audit_names`)."""
+        return [
+            n
+            for n in self.all_audit_names()
+            if not re.fullmatch(rf"\d{{4}}-\d{{2}}-\d{{2}}-{SLUG}-card-review\.yaml", n)
+        ]
+
+    def all_audit_names(self) -> list[str]:
         return sorted(p.name for p in self.audits.glob("*.yaml")) if self.audits.is_dir() else []
 
     def report(self) -> str:
@@ -451,7 +470,7 @@ def test_it_needs_a_run_dir(pub: Pub, capsys):
 
 
 def test_a_folder_with_no_audit_records_is_held_back_and_the_draft_is_untouched(pub: Pub):
-    pub.dir.mkdir()
+    pub.first_review()
     assert pub.publish("--dry-run") == 0
     pub.assert_held_back(f"no valid first audit: no audit record {SLUG}.yaml")
     assert RUBRIC and CITED_TITLE  # the shared fixtures are in use

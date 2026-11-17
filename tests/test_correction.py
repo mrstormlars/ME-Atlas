@@ -12,6 +12,7 @@ import datetime as dt
 import hashlib
 import io
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -207,7 +208,10 @@ class Corr:
         return (self.dir / "publication-report.md").read_text(encoding="utf-8")
 
     def names(self) -> list[str]:
-        return sorted(p.name for p in self.audits.glob("*.yaml")) if self.audits.is_dir() else []
+        names = sorted(p.name for p in self.audits.glob("*.yaml")) if self.audits.is_dir() else []
+        return [
+            n for n in names if not re.fullmatch(rf"\d{{4}}-\d{{2}}-\d{{2}}-{SLUG}-card-review\.yaml", n)
+        ]  # the first-publication review trail
 
     def trail(self, date: str = PUB_DATE) -> dict:
         return yaml.safe_load((self.audits / f"{date}-{SLUG}-C1-correction.yaml").read_text(encoding="utf-8"))
@@ -495,6 +499,12 @@ def test_the_audit_context_equals_the_first_publication_context_of_the_corrected
     other_drafts.mkdir()
     (other_drafts / f"{SLUG}.yaml").write_text(corrected, encoding="utf-8", newline="\n")
     out = tmp_path / "first"
+    (out / "review").mkdir(parents=True)  # the first-publication gate: an accepting whole-card review of the text
+    (out / "review" / f"{SLUG}-card-first.json").write_text(
+        json.dumps({"card": SLUG, "paper": None, "verdict": "accept", "findings": []}), encoding="utf-8"
+    )
+    sha = pipeline._sha256((other_drafts / f"{SLUG}.yaml").read_bytes())
+    (out / "review" / f"{SLUG}-card-first.sha256").write_text(sha + "\n", encoding="utf-8")
     args = ["audit-plan", "--card", SLUG, "--out", str(out), *corr.env.dir_args, "--drafts-dir", str(other_drafts)]
     assert (
         pipeline.main([*args, "--audits-dir", str(tmp_path / "no-audits")], fulltext=_loader(), out=lambda _l: None)
@@ -1068,7 +1078,7 @@ def test_a_broken_record_in_audits_is_a_refusal_naming_the_file_not_a_skip(pub: 
 
 
 def test_both_records_missing_or_invalid_are_both_named(pub: Pub):
-    pub.dir.mkdir()
+    pub.first_review()
     assert pub.publish("--dry-run") == 0
     line = next(x for x in pub.report().splitlines() if x.startswith("Held back: "))
     assert f"no audit record {SLUG}.yaml" in line and f"no audit record {SLUG}-second.yaml" in line
