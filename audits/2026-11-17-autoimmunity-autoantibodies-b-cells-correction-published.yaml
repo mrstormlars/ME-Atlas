@@ -1,0 +1,39 @@
+card: autoimmunity-autoantibodies-b-cells
+decision: accept
+parts:
+  - decision_part: "The daratumumab early signal (early_signals[1]) drops 'in physical function' from 'marked improvement'; the remaining numbers match the record and it stays an unreplicated early signal."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:40703261
+        quote: "Ten female patients were enrolled."
+      - source: pmid:40703261
+        quote: "Four patients had no significant clinical changes. Six patients experienced marked improvement."
+      - source: pmid:40703261
+        quote: "Relative reduction of serum IgG levels was 54% in six patients with clinical improvement, and 40% among four with no benefit."
+      - source: pmid:40703261
+        quote: "No definite conclusions should be drawn before a randomized study has been performed."
+    class: none
+  - decision_part: "The B-cell paragraph (level_reason[9]) and the group fields of pmid:23480187 and pmid:26646713 now state a shared author only as possible; the study sizes and findings in the paragraph are unchanged and match the records, and both studies keep role context, so the independence judgement behind the level is not affected."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:23480187
+        quote: "We undertook a detailed characterization of the proportions of the different B cell subsets in 33 patients with CFS fulfilling the Canadian and Fukada criteria for CFS and compared these with 24 age- and gender-matched healthy controls (HC)."
+      - source: pmid:26646713
+        quote: "A total of 38 patients fulfilling Canadian, Centre for Disease Control and Fukuda ME/CFS criteria and 32 age- and sex-matched HC were included."
+      - source: pmid:26646713
+        quote: "We found no difference in percentages of classical subsets between ME/CFS patients and HC."
+    class: none
+  - decision_part: "The erratum entry pmid:40901516 drops the sentence that it does not change the study's patient numbers, results or findings, which its record does not state; the erratum stays role context and is not a source of the level or a badge."
+    rubric: "Grading follows only this published ladder; editors do not add criteria."
+    evidence:
+      - source: pmid:40901516
+        quote: "This corrects the article DOI: 10.3389/fmed.2025.1607353."
+    class: none
+  - decision_part: "The level 2, the badges, the contested mark (none), the layer and the links are unchanged by this correction, and the controlled study in a defined group that carries level 2 is untouched."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "Significant increases in autoantibody levels in ME patients compared to controls were found for M3 and M4 -receptors in both cohorts and β1, β2, M3 and M4-receptors in one cohort."
+    class: none
+reasons_summary: "Accepted: the correction only narrows three wordings (daratumumab improvement, a possible shared author, an unsupported erratum sentence) to what the records state; no level, badge, mark, layer or link changes."
+would_change: "A record showing the daratumumab improvement was defined by physical function alone, or that the two B-cell papers do or do not share an author, would call for different wording. The erratum's remaining sentence (one Introduction sentence, long COVID to ME/CFS) is not in its abstract-only record and is unverifiable here; the carriers pmid:34589868, pmid:42082542, pmid:22039471, pmid:30934066 and pmid:40703261 have no cached full text, so card statements beyond their abstracts that this correction does not touch remain unverified. The author identity in the change rests on the records' author lists, which cannot be quoted as title, abstract or full text."
