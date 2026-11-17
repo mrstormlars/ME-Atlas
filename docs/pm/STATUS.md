@@ -35,6 +35,7 @@ For the founder to decide:
 
 To build or fix:
 
+- **No path corrects the text of a published card** (a study's finding or group, the text of a link already on the card). Being built (DECISIONS 2026-11-17); three wording points from the weekly run of 2026-11-17 wait for it: `reduced-nk-cell-function` (pmid:30915066), `autoimmunity-autoantibodies-b-cells` (pmid:40901516) and a link text on `oxidative-nitrosative-stress`.
 - No path adds a link to a held-back draft (an auditor step and an operation are missing). A published card has the link round since 2026-11-16.
 - The local cache: `data/` is backed up to a private repository since 2026-11-17 (`docs/fetch.md`, "Backup of the local data"). Of the 16 full texts code could not fetch after the cache was lost on 2026-11-16 (Europe PMC HTTP 500; PMC answers automated requests with a bot check, which the project does not work around), the founder saved all 16 by hand as PMC pages, among them pmid:21532961, so `citations check` passes again.
 - A proper-noun check (institution and place names against the cached record) is not built; a first count gave too many false hits.
