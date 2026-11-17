@@ -77,14 +77,15 @@ items:
       senket et mål på oksidativt stress og bedret sykdommen. En placebokontrollert studie av koenzym Q10 pluss NADH hos 73
       pasienter rapporterte mindre utmattelse enn med placebo og lavere lipidperoksider i blodceller i den behandlede gruppen
       (sammendraget sier ikke om det er mot placebo eller mot utgangsnivået), men diagnosekriteriene er ikke kontrollert ennå.
-      En større placebokontrollert studie av den samme kombinasjonen fra den samme enheten, hos 207 kvinner som oppfylte Fukuda-kriteriene,
-      målte ikke oksidativt stress og rapporterte at skårene for utmattelse endret seg parallelt i de to gruppene. En crossover-studie
-      av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene rapporterer ikke noe mål på oksidativt stress i sammendraget.'
+      En større placebokontrollert studie av den samme kombinasjonen fra det samme Vall d''Hebron-forskningsinstituttet, hos
+      207 kvinner som oppfylte Fukuda-kriteriene, målte ikke oksidativt stress og rapporterte at skårene for utmattelse endret
+      seg parallelt i de to gruppene. En crossover-studie av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene rapporterer
+      ikke noe mål på oksidativt stress i sammendraget.'
     sources:
     - pmid:25386668
     - pmid:34444817
     - pmid:10071523
-    source_hash: ee82d70838df277d8761e34c286a73facd845477949ec5e8f5dbf5780c67338c
+    source_hash: 611e4ef8f9f10429a3cb2e9e4ac0b4e82da41ef849f517d0b5a4dea1d1324ddf
   level_reason[6]:
     text: En placebokontrollert studie av ubikinol, den reduserte formen av koenzym Q10, hos 43 pasienter (31 fullførte) rapporterte
       bedring i flere symptomer; diagnosekriteriene er ikke kontrollert ennå.
@@ -93,13 +94,13 @@ items:
     source_hash: 89d49e08e5f0851303b43c7c78297d0e5ac48db92df47c6c8635ae8aecb7675c
   badge_reasons.diagnostic_marker[0]:
     text: Ingen studie på dette kortet tester en grenseverdi fra én pasientgruppe i en andre, uavhengig gruppe. I studien
-      fra Antwerpen skilte peroksider i plasma ikke pasientene godt fra kontrollene (areal under kurven 62,6%, ikke signifikant),
-      og Stanford-gruppens videre test var en liten kasusstudie av tre personer fra en familiekohort, undersøkt av den samme
-      gruppen.
+      fra Antwerpen skilte de residualiserte peroksidverdiene i plasma ikke pasientene godt fra kontrollene (areal under kurven
+      62,6%, ikke signifikant), og Stanford-gruppens videre test var en liten kasusstudie av tre personer fra en familiekohort,
+      undersøkt av den samme gruppen.
     sources:
     - pmid:21455120
     - pmid:40627396
-    source_hash: a78b0e2720618a2b96fe60a7e180ca7b330a7949906f67c3884b45bd7d375cd5
+    source_hash: 61208043e05d68b71a0a510cf11cfa67ac7c1f9c3cbdf968788bae7e3881bd8b
   badge_reasons.explains_pem[0]:
     text: Ingen studie på dette kortet følger symptomer etter en anstrengelsesprøve og kobler dem til oksidativt stress hos
       de samme pasientene. Studien fra Dundee satte nivåene av isoprostaner i sammenheng med en symptomskår for PEM, bare
@@ -157,10 +158,10 @@ items:
     text: En oversiktsartikkel fra 2018 foreslår at samspillende immunologiske, oksidative og nitrosative stressprosesser
       og mitokondrielle signalveier kan drive søvnforstyrrelser ved kronisk utmattelsessyndrom og andre nevroimmune tilstander.
       Den er en hypoteseartikkel og rapporterer ingen pasientdata som knytter de to sammen. Førsteforfatteren skrev også oversiktsartikkelen
-      fra 2017 som er sitert på dette kortets lenke til hpa-axis-cortisol, så de to oversiktskildene er ikke uavhengige.
+      som er sitert på dette kortets lenke til hpa-axis-cortisol, så de to oversiktskildene er ikke uavhengige.
     sources:
     - pmid:29759891
-    source_hash: 882443072c19538f01f4ed48fef9dbe6214d9c332589ecb6ba05f4307b8a261a
+    source_hash: 3e935991651cc6578364c814e30bbdf8a6cf482e230e9c9cfd32b863e5cd3b5d
   studies[pmid:16085177].finding:
     text: En studie med n=47 pasienter og 34 friske frivillige som var innrullert (antallet som ble målt er ikke oppgitt)
       fant høyere isoprostaner i plasma hos pasientene; hos pasienter uten risikofaktorer for hjerte- og karsykdom hang nivåene
