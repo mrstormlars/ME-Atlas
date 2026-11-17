@@ -2,6 +2,12 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — The local data folder is backed up to a private repository (founder ruling)
+
+- The founder said: "Forsikre deg om at cachen ikke slettes ved et uhell igjen (hva med en backup, f.eks. til github?)". `data/cache/` and `data/pipeline/` are backed up as a separate git repository whose git directory lies beside the project folder, pushed to a private repository of the founder's; `/ukentlig` ends with a backup step (`docs/fetch.md`, "Backup of the local data").
+- Private, not public (orchestrator's choice within the ruling): the cache holds full texts that are free to read on PubMed Central but not open access, and publishing copies of them would be redistribution.
+- Why: on 2026-11-16 the cache was deleted by accident during a clean-up of old worktrees. It is described as reproducible, but 16 full texts could not be fetched again by code and had to be saved by hand.
+
 ## 2026-11-16 — Link rounds: each link decided on its own, the wording valve applies; the nine links get one new attempt (founder ruling)
 
 - After the link round of 2026-11-16 restored two of the eleven removed links, nine were still out: `brain-and-brainstem-mri-changes` (1), `hpa-axis-cortisol` (3) and `gut-microbiome` (4 proposed; the link to `tryptophan-kynurenine-metabolism` was not proposed, no record states it). The auditors had found six of them supported but rejected each card's round as a whole over one link or one clause.

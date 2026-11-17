@@ -213,6 +213,36 @@ Both are under `data/cache/`, which is gitignored and reproducible.
 
 Manifest fields: `query`, `query_file`, `window` (mode, since, until; the date type is always the entry date), `retraction_query`, `refresh`, `counts` (window hits, retraction hits, requested, fetched, new, skipped as cached, missing, unparsable), `new_pmids`, `window_pmids` (every hit of the window search, cached or not; the weekly pipeline selects from these), `retracted_pmids` (every hit of the retraction query, on every run), `newly_flagged_retracted_pmids` (cached copies that turned out to be retracted), `missing_pmids` (asked for but not returned by PubMed), `unparsable_pmids` (cached, but could not be parsed; look at them) and `warnings`.
 
+## Backup of the local data
+
+`data/cache/` and `data/pipeline/` are not in git and exist only in the working checkout. On 2026-11-16 the cache was deleted by accident when old worktrees were removed; most of it could be re-fetched, but 16 full texts had to be saved by hand because PubMed Central now answers automated requests with a bot check. Since 2026-11-17 the `data/` folder is backed up (founder ruling in DECISIONS):
+
+- A separate git repository tracks `data/` as its work tree. Its git directory lives **beside** the project folder (`../ME-Atlas-data.git`), not inside it, so deleting `data/` or the checkout cannot delete the backup's history.
+- It is pushed to a **private** repository of the founder's. It must stay private: the cache holds full texts that are free to read but not free to redistribute.
+- Set-up in a clone, once, with `<private-url>` the address of that repository:
+
+  ```bash
+  git clone --bare <private-url> ../ME-Atlas-data.git
+  git --git-dir=../ME-Atlas-data.git config core.bare false
+  git --git-dir=../ME-Atlas-data.git config core.worktree "$(pwd)/data"
+  git --git-dir=../ME-Atlas-data.git config core.autocrlf false
+  git --git-dir=../ME-Atlas-data.git checkout -f main      # restores data/ from the backup
+  ```
+
+- Back up after any run that fetched or wrote under `data/` (add everything, commit if something changed, push):
+
+  ```bash
+  git --git-dir=../ME-Atlas-data.git add -A
+  git --git-dir=../ME-Atlas-data.git commit -m "Backup <date>"
+  git --git-dir=../ME-Atlas-data.git push origin main
+  ```
+
+  The founder's clone has this as the local alias `git data-backup`.
+- To restore a deleted file or folder: `git --git-dir=../ME-Atlas-data.git checkout -- <path under data/>`.
+- Before removing a worktree or any folder in this project, list links inside it (`find <dir> -type l`; on Windows also `dir /AL /S <dir>`) and unlink them first. A junction into `data/` is followed by a recursive delete.
+
+A file missing from the cache is a reason to check that the cache folder is there, not evidence that the record was never fetched.
+
 ## The parsed record
 
 `parse_xml()` / `RawCache.read_record()` return a `PubMedRecord`:
