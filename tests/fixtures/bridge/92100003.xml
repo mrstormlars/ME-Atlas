@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL fixture: every record, title and result here is invented for tests (bridge pilot 2). -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">92100003</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print">
+            <PubDate><Year>2023</Year></PubDate>
+          </JournalIssue>
+          <Title>Fictional Journal of Bridge Tests</Title>
+        </Journal>
+        <ArticleTitle>Fictional narrative review of epsilon and zeta in invented children.</ArticleTitle>
+        <Abstract>
+          <AbstractText>Invented narrative text. Epsilon was higher with zeta in invented children.</AbstractText>
+        </Abstract>
+        <PublicationTypeList>
+          <PublicationType>Journal Article</PublicationType>
+          <PublicationType>Review</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D900001" MajorTopicYN="N">Humans</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">92100003</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

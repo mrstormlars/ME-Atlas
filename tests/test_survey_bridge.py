@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+import copy
 import datetime as dt
 import json
+import re
+import shutil
 from pathlib import Path
 
 import httpx
 import pytest
+import yaml
 
 from me_atlas import survey
 from me_atlas.bridge import SCREEN_LIMIT, validate_agent_file
@@ -512,3 +516,425 @@ def test_banned_word_in_population_or_note_is_rejected(ran):
 
 def test_non_object_file_is_rejected(ran):
     assert problems(ran, []) == ["top level must be a JSON object"]
+
+
+# --- pilot 2: --screened-from and --ends ----------------------------------------------------------------------------
+
+
+AGENT = Path(__file__).parent.parent / ".claude" / "agents" / "bridge-surveyor.md"
+P2_GENERAL = ["92100001", "92100002", "92100003", "92100004"]  # screened in Q1 general
+ENDS_TEXT = """\
+ends:
+  card-a: >-
+    Invented definition of alpha, kept on
+    two source lines.
+  card-b: Invented definition of beta.
+  card-c: Invented definition of gamma.
+"""
+
+
+def counts_data() -> dict:
+    """A pilot 1 counts.json for the test config; only Q1 general lists records."""
+    questions = []
+    for q in yaml.safe_load(CONFIG)["questions"]:
+        arms = {}
+        for arm in ("general", "long_covid"):
+            cfg = q["arms"][arm]
+            arms[arm] = {
+                "query": cfg["query"],
+                "count": 3 if arm == "general" else 45,
+                "restricted_query": None if arm == "general" else cfg["restricted"],
+                "restricted_count": None if arm == "general" else 2,
+                "originals_query": cfg.get("originals_count"),
+                "originals_count": 7 if arm == "long_covid" else None,
+                "rule": "all" if arm == "general" else "restricted",
+                "screened_pmids": P2_GENERAL if (q["id"], arm) == ("Q1", "general") else [],
+                "warnings": [],
+                "not_listed_pmids": [],
+            }
+        questions.append({"id": q["id"], "kind": q["kind"], "from": q["from"], "to": q["to"], "arms": arms})
+    return {"date": "2026-11-16", "screen_limit": 40, "questions": questions}
+
+
+@pytest.fixture
+def p2(setup, tmp_path):
+    counts = tmp_path / "pilot1" / "counts.json"
+    counts.parent.mkdir()
+    counts.write_text(json.dumps(counts_data()), encoding="utf-8")
+    ends = tmp_path / "ends.yaml"
+    ends.write_text(ENDS_TEXT, encoding="utf-8")
+    cache_dir = setup["cache"] / "pubmed"
+    cache_dir.mkdir(parents=True)
+    for pmid in P2_GENERAL:
+        shutil.copy(FIXTURES / f"{pmid}.xml", cache_dir / f"{pmid}.xml")
+    setup["counts"] = counts
+    setup["ends"] = ends
+    setup["extra"] = ["--screened-from", str(counts), "--ends", str(ends)]
+    return setup
+
+
+def run_p2(p2, *, env=ENV, extra=None, handler=None) -> int:
+    handler = handler or p2["eutils"].handler
+    argv = [
+        "bridge",
+        "run",
+        "--config",
+        str(p2["config"]),
+        "--cards",
+        str(p2["cards"]),
+        "--cache-dir",
+        str(p2["cache"]),
+        "--out",
+        str(p2["out"]),
+        *(p2["extra"] if extra is None else extra),
+    ]
+    return survey.main(
+        argv,
+        env=env,
+        transport=httpx.MockTransport(handler),
+        clock=(clock := FakeClock()),
+        sleep=clock.sleep,
+        today=dt.date(2026, 11, 17),
+    )
+
+
+def p2_context(p2, name="Q1-general") -> str:
+    return (p2["out"] / "context" / f"{name}.md").read_text(encoding="utf-8")
+
+
+def test_screened_from_makes_no_request_and_needs_no_email_when_all_cached(p2):
+    seen: list[httpx.Request] = []
+
+    def fail(request: httpx.Request) -> httpx.Response:
+        seen.append(request)
+        return httpx.Response(500)
+
+    assert run_p2(p2, env={}, handler=fail) == 0
+    assert seen == []
+    assert survey.context_pmids(p2_context(p2)) == set(P2_GENERAL)
+    arm = arm_of(p2, "Q1", "long_covid")
+    assert (arm["count"], arm["rule"], arm["originals_count"], arm["restricted_count"]) == (45, "restricted", 7, 2)
+    counts = counts_of(p2)
+    assert counts["screened_from"] == str(p2["counts"])
+    assert counts["fetched_pmids"] == []
+    assert len(list((p2["out"] / "context").glob("*.md"))) == 4
+
+
+def test_screened_from_makes_no_esearch_and_fetches_only_missing_records(p2):
+    (p2["cache"] / "pubmed" / "92100003.xml").unlink()
+    assert run_p2(p2) == 0
+    assert p2["eutils"].terms() == []
+    assert p2["eutils"].fetched() == ["92100003"]
+    assert counts_of(p2)["fetched_pmids"] == ["92100003"]
+    assert "pmid:92100003" in survey.context_pmids(p2_context(p2)) or "92100003" in survey.context_pmids(p2_context(p2))
+
+
+def test_screened_from_with_a_missing_record_needs_the_contact_email(p2, capsys):
+    (p2["cache"] / "pubmed" / "92100003.xml").unlink()
+    assert run_p2(p2, env={}) == 2
+    assert "CONTACT_EMAIL" in capsys.readouterr().err
+    assert p2["eutils"].requests == []
+    assert not p2["out"].exists()
+
+
+@pytest.mark.parametrize(
+    ("question", "arm", "key", "where"),
+    [
+        ("Q1", "general", "query", "question Q1, arm general"),
+        ("Q2", "long_covid", "query", "question Q2, arm long_covid"),
+        ("Q1", "long_covid", "restricted_query", "question Q1, arm long_covid"),
+        ("Q2", "long_covid", "originals_query", "question Q2, arm long_covid"),
+    ],
+)
+def test_query_differing_by_one_character_exits_1_and_writes_nothing(p2, capsys, question, arm, key, where):
+    data = counts_data()
+    entry = next(q for q in data["questions"] if q["id"] == question)["arms"][arm]
+    entry[key] = entry[key] + "."
+    p2["counts"].write_text(json.dumps(data), encoding="utf-8")
+    assert run_p2(p2) == 1
+    err = capsys.readouterr().err
+    assert where in err
+    assert key in err
+    assert not p2["out"].exists()
+
+
+def test_question_missing_from_the_counts_file_exits_1(p2, capsys):
+    data = counts_data()
+    data["questions"] = [q for q in data["questions"] if q["id"] != "Q2"]
+    p2["counts"].write_text(json.dumps(data), encoding="utf-8")
+    assert run_p2(p2) == 1
+    assert "question Q2" in capsys.readouterr().err
+    assert not p2["out"].exists()
+
+
+def test_arm_missing_from_the_counts_file_exits_1(p2, capsys):
+    data = counts_data()
+    del data["questions"][0]["arms"]["long_covid"]
+    p2["counts"].write_text(json.dumps(data), encoding="utf-8")
+    assert run_p2(p2) == 1
+    err = capsys.readouterr().err
+    assert "question Q1, arm long_covid" in err
+    assert not p2["out"].exists()
+
+
+@pytest.mark.parametrize(
+    "text", ["ends:\n  card-a: A\n  card-b: B\n", "ends:\n  card-a: A\n  card-b: B\n  card-c: '  '\n"]
+)
+def test_end_without_a_definition_exits_1(p2, capsys, text):
+    p2["ends"].write_text(text, encoding="utf-8")  # card-c, the B end of Q2, is missing or blank
+    assert run_p2(p2) == 1
+    assert "card-c" in capsys.readouterr().err
+    assert not p2["out"].exists()
+
+
+def test_pilot_2_context_file(p2):
+    assert run_p2(p2) == 0
+    text = p2_context(p2)
+    assert "Pilot: 2\n" in text
+    assert "Definition of A: Invented definition of alpha, kept on two source lines.\n" in text
+    assert "Definition of B: Invented definition of beta.\n" in text
+    assert survey.context_pmids(text) == set(P2_GENERAL)
+    entries = dict(re.findall(r"^## pmid:(\d+)\n(.*?)(?=^## pmid:|\Z)", text, re.MULTILINE | re.DOTALL))
+    assert "- meta-analysis (PubMed publication type): yes\n" in entries["92100001"]
+    assert "- meta-analysis (PubMed publication type): no\n" in entries["92100002"]  # a Systematic Review only
+    assert "- abstract: structured\n" in entries["92100001"]
+    assert "- abstract: unstructured\n" in entries["92100003"]
+    one = entries["92100001"]
+    assert "### BACKGROUND\n" in one
+    assert "### RESULTS [FINDING SECTION]\n" in one
+    assert "### CONCLUSIONS [FINDING SECTION]\n" in one
+    assert "### METHODS\n" in one
+    assert "Seven invented studies were pooled. Alpha activity was linked" in one  # whitespace collapsed
+    assert "### AUTHORS' CONCLUSIONS [FINDING SECTION]" in entries["92100002"]
+    four = entries["92100004"]
+    assert "### OBJECTIVE\n" in four  # category OBJECTIVE is not a finding
+    assert "### Main  Results [FINDING SECTION]" in four  # label matched without regard to case and spacing
+    assert "### DISCUSSION\n" in four
+    assert "### FINDINGS [FINDING SECTION]" in four  # NlmCategory RESULTS
+    assert "###" not in entries["92100003"]
+    assert "Invented narrative text. Epsilon was higher" in entries["92100003"]
+    assert "Definition of A" in p2_context(p2, "Q2-general")
+
+
+def test_screened_from_without_ends_writes_the_pilot_1_context(p2):
+    assert run_p2(p2, extra=["--screened-from", str(p2["counts"])]) == 0
+    text = p2_context(p2)
+    assert "Pilot:" not in text
+    assert "Definition of A" not in text
+    assert "[FINDING SECTION]" not in text
+    assert survey.context_pmids(text) == set(P2_GENERAL)
+
+
+# --- pilot 2: validate ----------------------------------------------------------------------------------------------
+
+
+def yes2(pmid: str, quote: str, **changes) -> dict:
+    row = {
+        "pmid": pmid,
+        "statement": "yes",
+        "relation": "present",
+        "population": "invented adults",
+        "direction": "association",
+        "review_kind": "systematic",
+        "quote_role": "finding",
+        "quote": quote,
+    }
+    return {**row, **changes}
+
+
+RESULTS_QUOTE = "Alpha activity was linked with beta outcomes."
+CONCLUSION_QUOTE = "Invented evidence on gamma and delta is inconsistent across invented adults."
+TITLE_QUOTE = "Fictional narrative review of epsilon and zeta in invented children."
+
+
+def good2() -> dict:
+    return {
+        "question": "Q1",
+        "arm": "general",
+        "rows": [
+            yes2("92100001", RESULTS_QUOTE),
+            yes2("92100002", CONCLUSION_QUOTE, relation="inconsistent"),
+            yes2("92100003", TITLE_QUOTE, review_kind="narrative"),
+            {"pmid": "92100004", "statement": "no"},
+        ],
+    }
+
+
+@pytest.fixture
+def v2(p2):
+    assert run_p2(p2) == 0
+    return {"context": p2["out"] / "context" / "Q1-general.md", "cache": p2["cache"], "dir": p2["out"]}
+
+
+def with_row2(data: dict, **changes) -> dict:
+    data["rows"][0] = {**data["rows"][0], **changes}
+    return data
+
+
+def test_pilot_2_file_is_accepted(v2):
+    assert problems(v2, good2()) == []
+
+
+def test_pilot_2_file_is_accepted_through_the_command_line(v2, capsys):
+    path = v2["dir"] / "survey.json"
+    path.write_text(json.dumps(good2()), encoding="utf-8")
+    argv = ["bridge", "validate", str(path), "--context", str(v2["context"]), "--cache-dir", str(v2["cache"])]
+    assert survey.main(argv) == 0
+    assert "OK (4 rows)" in capsys.readouterr().out
+
+
+def test_quote_from_a_results_section_with_collapsed_whitespace_is_accepted(v2):
+    quote = "Seven invented studies were pooled. Alpha activity"  # a line break and spaces in the record
+    assert problems(v2, with_row2(good2(), quote=quote)) == []
+
+
+def test_quote_from_a_conclusions_section_is_accepted(v2):
+    assert problems(v2, with_row2(good2(), quote="Beta outcomes should be studied further")) == []
+
+
+def test_quote_from_an_authors_conclusions_section_without_nlm_category_is_accepted(v2):
+    assert problems(v2, good2()) == []  # row 1 quotes 92100002, whose section has a label but no NlmCategory
+
+
+def test_quote_from_the_title_of_an_unstructured_abstract_is_accepted(v2):
+    assert problems(v2, good2()) == []  # row 2
+
+
+def test_quote_from_an_unstructured_abstract_body_is_accepted(v2):
+    data = good2()
+    data["rows"][2]["quote"] = "Epsilon was higher with zeta in invented children."
+    assert problems(v2, data) == []
+
+
+def test_pilot_1_schema_is_used_without_the_pilot_line(ran):
+    # the pilot 1 context has no 'Pilot: 2' line: meta_analysis and studies_pooled are required, review_kind is unknown
+    assert "Pilot:" not in ran["context"].read_text(encoding="utf-8")
+    assert problems(ran, good_file()) == []
+    errors = problems(ran, with_row(good_file(), review_kind="systematic", quote_role="finding"))
+    assert "rows[0]: unknown key 'review_kind'" in errors
+
+
+@pytest.mark.parametrize("key", ["meta_analysis", "studies_pooled"])
+def test_pilot_2_rejects_meta_analysis_and_studies_pooled(v2, key):
+    errors = problems(v2, with_row2(good2(), **{key: True if key == "meta_analysis" else 12}))
+    assert f"rows[0]: unknown key '{key}'" in errors
+
+
+@pytest.mark.parametrize("key", ["review_kind", "quote_role"])
+def test_pilot_2_yes_row_missing_review_kind_or_quote_role_is_rejected(v2, key):
+    data = good2()
+    del data["rows"][0][key]
+    assert f"rows[0]: missing key '{key}'" in problems(v2, data)
+
+
+@pytest.mark.parametrize("value", ["meta_analysis", "Systematic", "", None, True])
+def test_review_kind_outside_the_list_is_rejected(v2, value):
+    errors = problems(v2, with_row2(good2(), review_kind=value))
+    assert any("review_kind: must be one of systematic, narrative, not_a_review" in e for e in errors)
+
+
+@pytest.mark.parametrize("value", ["conclusion", "", None, 1])
+def test_quote_role_outside_the_list_is_rejected(v2, value):
+    errors = problems(v2, with_row2(good2(), quote_role=value))
+    assert any("quote_role: must be one of finding, background, aim" in e for e in errors)
+
+
+@pytest.mark.parametrize("role", ["background", "aim"])
+def test_yes_row_with_a_quote_role_other_than_finding_is_rejected(v2, role):
+    errors = problems(v2, with_row2(good2(), quote_role=role))
+    assert any("a yes row must quote a finding" in e for e in errors)
+
+
+def test_quote_from_a_background_section_is_rejected(v2):
+    quote = "Invented background says alpha activity might affect beta outcomes."
+    errors = problems(v2, with_row2(good2(), quote=quote))
+    assert any("not found verbatim inside one finding section" in e for e in errors)
+
+
+def test_quote_from_a_methods_discussion_or_objective_section_is_rejected(v2):
+    for pmid, quote in (
+        ("92100001", "Invented databases were searched."),
+        ("92100004", "Invented discussion on eta and theta."),
+        ("92100004", "Invented aim to study eta and theta."),
+    ):
+        data = good2()
+        data["rows"][0] = yes2(pmid, quote)
+        data["rows"][3] = {"pmid": "92100004", "statement": "no"}
+        if pmid == "92100004":
+            data["rows"][3] = yes2("92100004", quote)
+            data["rows"][0] = yes2("92100001", RESULTS_QUOTE)
+        assert any("finding section" in e for e in problems(v2, data)), quote
+
+
+def test_quote_from_the_title_of_a_structured_abstract_is_rejected(v2):
+    quote = "Fictional meta-analysis of alpha activity and beta outcomes in invented adults."
+    errors = problems(v2, with_row2(good2(), quote=quote))
+    assert any("not found verbatim inside one finding section" in e for e in errors)
+
+
+def test_quote_spanning_two_finding_sections_is_rejected(v2):
+    quote = "linked with beta outcomes. Beta outcomes should be studied"  # end of RESULTS + start of CONCLUSIONS
+    errors = problems(v2, with_row2(good2(), quote=quote))
+    assert any("not found verbatim inside one finding section" in e for e in errors)
+
+
+def test_quote_from_a_label_is_rejected(v2):
+    errors = problems(v2, with_row2(good2(), quote="RESULTS: Seven invented studies were pooled."))
+    assert any("finding section" in e for e in errors)
+
+
+def test_quote_not_in_an_unstructured_record_is_rejected(v2):
+    data = good2()
+    data["rows"][2]["quote"] = "Epsilon was lower with zeta in invented children."
+    errors = problems(v2, data)
+    assert any("rows[2].quote: not found verbatim in the title or abstract" in e for e in errors)
+
+
+def test_pilot_1_rejections_still_apply_in_pilot_2(v2):
+    assert any("not in the context file" in e for e in problems(v2, with_row2(good2(), pmid="99999999")))
+    data = good2()
+    del data["rows"][3]
+    assert "pmid 92100004 is in the context file but has no row" in problems(v2, data)
+    assert any("banned word 'cure'" in e for e in problems(v2, with_row2(good2(), population="a cure")))
+    data = good2()
+    data["rows"][3]["relation"] = "present"
+    assert "rows[3]: unknown key 'relation'" in problems(v2, data)
+
+
+# --- pilot 2: the agent's example -----------------------------------------------------------------------------------
+
+
+def test_agent_example_validates_under_the_pilot_2_schema(tmp_path):
+    text = AGENT.read_text(encoding="utf-8")
+    example = json.loads(re.search(r"```json\n(.*?)\n```", text, re.DOTALL).group(1))
+    assert not any(k in text.split("## The file you write")[1] for k in ('meta_analysis": ', 'studies_pooled": '))
+    rows = example["rows"]
+    quote = rows[0]["quote"]
+    cache = RawCache(tmp_path / "cache")
+    cache.pubmed_dir.mkdir(parents=True)
+    for row in rows:
+        xml = (FIXTURES / "92100001.xml").read_text(encoding="utf-8")
+        xml = xml.replace("92100001", row["pmid"]).replace("Alpha activity was linked with beta outcomes.", quote)
+        (cache.pubmed_dir / f"{row['pmid']}.xml").write_text(xml, encoding="utf-8")
+    context = "Question: Q1\nArm: general\nPilot: 2\n" + "".join(f"\n## pmid:{r['pmid']}\n" for r in rows)
+    assert validate_agent_file(copy.deepcopy(example), context, cache) == []
+    # the same example breaks if the quote is not in a finding section
+    cache.path(rows[0]["pmid"]).write_text(xml.replace(quote, "Other text."), encoding="utf-8")
+    assert validate_agent_file(example, context, cache) != []
+
+
+def test_agent_prompt_describes_pilot_2():
+    text = AGENT.read_text(encoding="utf-8")
+    for needle in (
+        "Definition of A",
+        "Definition of B",
+        "review_kind",
+        "quote_role",
+        "[FINDING SECTION]",
+        "<run folder>",
+        "never from memory",
+        "promising, breakthrough, cure, hope, proven",
+        "reply with the path you wrote and nothing else",
+    ):
+        assert needle in text, needle
+    assert "data/pipeline/<date>-bridge-pilot" not in text

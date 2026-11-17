@@ -217,3 +217,175 @@ The reviewer also flagged five accepted rows as weaker than the row suggests (no
 ### For the founder to judge
 
 Whether the results for Q1, Q2, Q4 and Q5 are useful enough to show (protocol point 7). Ideally one researcher or Science for ME reader is asked the same.
+
+## Pilot 2: protocol
+
+Plan: `docs/plan-bridge-pilot-2.md`, agreed with the founder on 2026-11-17 (DECISIONS). Written and committed before any agent reads a record for pilot 2. Nothing below is changed after the first agent run; a deviation is recorded under "Pilot 2: results" as a deviation. Choices the plan leaves open are marked **(orchestrator default)**.
+
+Pilot 2 asks one thing: does a tighter reading bring the reviewer's reject rate to one in five or lower, on the same eight questions and the same records as pilot 1? Only the reading changes. Pilot 1's files (`data/pipeline/2026-11-16-bridge-pilot/`) and its sections above are not changed.
+
+### P2.1 Same questions, same records
+
+- The eight questions of protocol point 1 and the queries in `config/bridge_pilot.yaml`, unchanged. No query tuning.
+- **The screened records are pilot 1's** **(orchestrator default)**: `bridge run` takes the screened PMIDs and the counts of every question and arm from pilot 1's `counts.json` instead of searching PubMed again, after checking that each arm's query there is the query in `config/bridge_pilot.yaml` character for character. Why: a new search a day later can return records that did not exist on 2026-11-16, and then more than the reading would change. `counts.json` holds the searches and the screened ids only, no rows or verdicts.
+- Records are read from `data/cache/bridge/pubmed/`; a record missing there is fetched again from PubMed and the report says which.
+- Run folder: `data/pipeline/2026-11-17-bridge-pilot-2/` (context files, survey files, review file; generated, not committed).
+
+### P2.2 Code fills what the record states
+
+- `meta_analysis` is not written by the agent. The context file states, per record, whether PubMed lists `Meta-Analysis` among its publication types, and the report takes the flag from there.
+- `studies_pooled` is dropped from the extraction.
+
+### P2.3 The quote must be a finding
+
+- A record's abstract is **structured** when at least one of its `AbstractText` sections has a non-empty `Label`; otherwise it is **unstructured**.
+- In a structured abstract, a section is a **finding section** when its `NlmCategory` is `RESULTS` or `CONCLUSIONS`, or when its `Label`, compared without regard to case and with whitespace collapsed, is one of: `RESULTS`, `MAIN RESULTS`, `METHODS AND RESULTS`, `CONCLUSION`, `CONCLUSIONS`, `AUTHORS' CONCLUSIONS`, `REVIEWER'S CONCLUSIONS`, `DISCUSSION AND CONCLUSION`, `INTERPRETATION`. Every other section (background, objective, methods, limitations, discussion alone, and unlabelled sections without one of those categories) is not. The list covers every label in the 123 cached records that is a result or a conclusion; it was drawn up by reading the labels only, not the texts.
+- For a structured abstract, code accepts the quote of a `yes` row only when it is found verbatim (whitespace collapsed, nothing else) inside the text of one finding section. A quote from the title, from another section, or across two sections is rejected.
+- For an unstructured abstract, the quote may come from the title or the abstract, as in pilot 1.
+- Every `yes` row carries `quote_role`: `finding` (the sentence reports what the review found or concludes), `background` (what was known or assumed before) or `aim` (what the review set out to do). Code rejects a `yes` row whose `quote_role` is not `finding`. For an unstructured abstract the reviewer checks that the sentence is a finding.
+- The context file shows each section of a structured abstract with its label and marks the finding sections.
+
+### P2.4 Is it a review of studies?
+
+Every `yes` row carries `review_kind`, read from what the title and abstract say about the record itself, not from PubMed's publication type alone:
+
+- `systematic`: the record describes a literature search (databases searched, search dates or a protocol) or states a number of included studies, or reports a meta-analysis;
+- `narrative`: a review of the literature that describes neither;
+- `not_a_review`: not a review of studies (for example a single cohort, a chart review, a case report, a guideline or a trial).
+
+Only accepted `yes` rows with `review_kind: systematic` count towards an outcome (founder ruling 2026-11-17). Accepted `yes` rows with `narrative` or `not_a_review` are listed apart as **leads**, with no outcome drawn from them.
+
+### P2.5 Each end has a written definition
+
+The surveyor and the reviewer both get these, in the context file header. They are taken from each card's core claim (`core_claim` in `cards/<slug>.yaml`) and kept in `config/bridge_ends.yaml`, committed with this protocol.
+
+| Card | What counts |
+|---|---|
+| oxidative-nitrosative-stress | Reactive oxygen or nitrogen species outweighing the body's antioxidant defences, measured as markers of oxidative or nitrosative stress or of the damage they do to fats, proteins, DNA or other molecules. The clinical effect of an antioxidant given as treatment, with no measure of oxidative stress, does not count. |
+| endothelial-dysfunction | Impaired function of the endothelium, the lining of the blood vessels: for example vessels widening less well when the tissues need more blood flow, or markers of endothelial damage or activation. Changes in blood clotting or in the microcirculation count only when the record ties them to the endothelium. |
+| autonomic-imbalance | A shift in the balance of the autonomic nervous system towards less parasympathetic (vagal) and relatively more sympathetic activity, measured for example as lower heart rate variability, a higher resting heart rate or a weaker baroreflex. It is the balance itself, not the fall in blood flow to the brain or the drop in blood pressure on standing. |
+| orthostatic-intolerance-cerebral-blood-flow | Blood flow to the brain falling more than normal on sitting up, standing or being tilted upright, or orthostatic intolerance such as postural orthostatic tachycardia syndrome (POTS) or orthostatic hypotension. |
+| reduced-nk-cell-function | Natural killer (NK) cells less able to kill target cells (lower NK cell cytotoxicity or activity). NK cell numbers alone, with no measure of their function, do not count. |
+| herpesvirus-reactivation | A herpesvirus that stays in the body after a first infection (such as Epstein-Barr virus, cytomegalovirus or human herpesvirus 6 or 7) becoming active again, as the record shows it (for example viral DNA in blood or antibody patterns of reactivation). A first infection does not count. |
+| tryptophan-kynurenine-metabolism | Altered breakdown of the amino acid tryptophan, mostly along the kynurenine pathway: the levels of tryptophan, kynurenine or its products (such as kynurenic acid or quinolinic acid), or the activity of the pathway's enzymes (such as indoleamine 2,3-dioxygenase). |
+| neuroinflammation | Inflammation in the brain or spinal cord, including activation of microglia or astrocytes, measured in the central nervous system (brain imaging, brain tissue or cerebrospinal fluid). Cytokines or other inflammation markers measured in blood do not count. |
+| autoimmunity-autoantibodies-b-cells | The immune system attacking the body's own tissues: autoantibodies (for example against adrenergic or muscarinic receptors), the B cells that make them, or a disease the record names as autoimmune. |
+| circadian-rhythm-disruption | The body's 24-hour timing system disturbed: daily rhythms of rest and activity, body temperature, melatonin or light exposure weaker, less regular or out of step. Sleep quality itself does not count, nor the daily rhythm of cortisol. |
+
+The autoimmunity definition includes diseases the record names as autoimmune, which is wider than the card's focus on receptor autoantibodies; it follows the card's own theme terms (`Autoimmune Diseases` in `config/card_themes.yaml`), which drew the records **(orchestrator default)**.
+
+### P2.6 The extraction and the reviewer's verdict
+
+The surveyor writes, per screened PMID, `statement` (`yes`, `no`, `animal_or_cell_only`) as in pilot 1, judged against the end definitions. A `yes` row carries `relation`, `population`, `direction` (value lists as in protocol point 5), `review_kind`, `quote_role` and `quote`; `meta_analysis` and `studies_pooled` are no longer written. Code (`survey bridge validate`) rejects the file on the pilot 1 rules (PMIDs, verbatim quote, value lists) and on points P2.2 to P2.4.
+
+A fresh `card-reviewer` checks every `yes` row, whatever its `review_kind`, against the cached record and the end definitions, and gives `accept` or `reject`. A rejection carries one reason code, the first that applies in this order:
+
+| Code | Meaning |
+|---|---|
+| `not_humans` | the statement rests on animal or cell studies |
+| `wrong_review_kind` | `review_kind` is wrong for what the record says about itself |
+| `not_this_relation` | the record is not about A and B as the end definitions mean them |
+| `not_a_finding` | the quote is background, aim or speculation, or the record reports no finding on the relation |
+| `wrong_direction` | `direction` or `relation` does not match the record |
+| `wrong_population` | `population` does not match the record |
+| `other` | anything else, explained in a note |
+
+**(orchestrator default: the order, and that `relation` errors go under `wrong_direction`.)** The reviewer writes `data/pipeline/2026-11-17-bridge-pilot-2/review.json`: `{"rows": [{"question", "arm", "pmid", "verdict", "reason", "note"}]}`, `reason` null for `accept`. Neither the surveyor nor the reviewer is given pilot 1's rows, verdicts or report: the reviewer is told not to read this file or pilot 1's run folder, and the context files hold no pilot 1 result.
+
+One agent at a time: a fresh `bridge-surveyor` per context file with records, then one fresh `card-reviewer` over all `yes` rows.
+
+### P2.7 Outcome per question and arm
+
+The rule of protocol point 6, applied to accepted `yes` rows with `review_kind: systematic` only: *reported in other conditions*, *mixed*, *only animal or cell evidence* (no accepted systematic `yes` row and at least one `animal_or_cell_only` row) or *no review found*. Leads are listed under the arm with no outcome. The fixed framing is unchanged: "Reported in other conditions (systematic review, population: …). Not studied in ME/CFS." No treatment in another condition is named as an option for ME/CFS.
+
+### P2.8 How pilot 2 is judged
+
+- **Reviewer agreement (the test this pilot exists for):** rejected `yes` rows divided by all `yes` rows, over all questions and arms, is at most 1 in 5 (20%). The number is reported with its reason codes whatever it is, and this test is not redefined after the run.
+- **Positive control:** C1 gives at least one accepted `systematic` `yes` row with `relation: present`, in either arm. If not, the other results are not interpreted.
+- **Base rate:** criterion (a) and (b) of protocol point 7, counted on accepted `systematic` `yes` rows.
+- **Nothing lost silently:** each of the 12 rows pilot 1's reviewer accepted is reported as kept (accepted, `systematic`), moved to leads (accepted, `narrative` or `not_a_review`) or dropped, with the reason (the surveyor's `statement`, or the reviewer's reason code). Accepted `systematic` rows that pilot 1 did not accept are listed as new. This comparison is made by the orchestrator after the review, from the two run folders.
+
+## Pilot 2: results
+
+Run on 2026-11-17, after the pilot 2 protocol commit (`8d641a4`) and the code commit (`5905528`), with `uv run python -m me_atlas.survey bridge run --screened-from data/pipeline/2026-11-16-bridge-pilot/counts.json --ends config/bridge_ends.yaml --out data/pipeline/2026-11-17-bridge-pilot-2`. No search was made; every arm's query matched `config/bridge_pilot.yaml`; all 123 screened records were in the cache and none was fetched again. The counts are pilot 1's (table "Counts" above). A fresh `bridge-surveyor` read each of the 10 context files with records (127 rows); every file passed `survey bridge validate`. One fresh `card-reviewer` checked the 8 `yes` rows: 5 accepted, 3 rejected.
+
+**Deviation.** The reviewer was pointed at the cached XML records but judged from the context files, which hold the same titles and abstracts rendered from those records, section by section. It did not read pilot 1's files.
+
+Every source below is a record fetched from PubMed and cached under `data/cache/bridge/pubmed/`; titles are as PubMed gives them and every quote is copied from the record's abstract. **Review quality is not graded.** Nothing here is a finding about ME/CFS, and no intervention studied in another condition is an option for ME/CFS.
+
+### Reviewer agreement
+
+The reviewer rejected **3 of 8 `yes` rows (37.5%)**. The limit was one in five (20%). **The reject-rate test was not met.** All three rejections have the reason code `not_a_finding`; no row was rejected for a wrong field, wrong review kind, wrong population, wrong direction or for not being about humans.
+
+- pmid:42359947 (Q2, amyotrophic lateral sclerosis): the quote lists reduced heart rate variability and absent blood pressure regulation on orthostatic stress side by side as features of the disease; the record reports no relation between the two.
+- pmid:37531984 (Q2, astronauts): heart rate variability changes and orthostatic intolerance are reported as parallel effects of spaceflight, not as a relation between them, and "altered" gives no direction towards less vagal activity.
+- pmid:42014469 (Q4, affective and psychotic disorders): the quote reports kynurenine pathway changes in single cohorts; the record proposes the link to brain inflammation as a framework and reports no finding on it.
+
+The surveyor wrote far fewer `yes` rows than in pilot 1 (8 against 21 on the same 127 records), so the rate rests on a small number: one rejection more or less moves it by 12.5 points. The reviewer checks `yes` rows only, so a `yes` wrongly written as `no` is not measured by this test (see "Limitations").
+
+### Outcome per question and arm
+
+Outcomes are drawn from accepted `yes` rows with `review_kind: systematic` only (P2.7). Leads are accepted rows with another review kind, listed with no outcome. Every long COVID arm and every arm not named below had no `yes` row and the outcome *no review found* (Q1 and Q2 long COVID: 1 record each, `no`; the other long COVID arms: 0 hits).
+
+**Q1 oxidative-nitrosative-stress → endothelial-dysfunction.** General (10 screened; 9 no, 1 animal or cell only): *only animal or cell evidence.* The one such row, pmid:28215178, "Oxidative Stress and Cardiovascular Aging: Interaction Between NRF-2 and ADMA." (2017), was noted by the surveyor as resting mostly on animal studies; `animal_or_cell_only` rows are not reviewed.
+
+**Q2 autonomic-imbalance → orthostatic-intolerance-cerebral-blood-flow.** General (26 screened; 5 yes, 21 no; 2 accepted systematic, 1 lead): *reported in other conditions.* Reported in other conditions (systematic reviews, populations below). Not studied in ME/CFS.
+- pmid:31888497, "Heart rate and heart rate variability comparison between postural orthostatic tachycardia syndrome versus healthy participants; a systematic review and meta-analysis." (2019). Population: people with POTS compared with healthy participants; meta-analysis (PubMed publication type). "POTS patients have a higher HR than healthy patients after HUTT and lower HRV in terms of time domain measure but not in terms of frequency domain measure." Association. The reviewer notes that only the time-domain differences were significant, and that heart rate after tilt partly overlaps with how POTS is defined.
+- pmid:39538129, "Postural orthostatic tachycardia syndrome after COVID-19 vaccination: A systematic review." (2024). Population: people with POTS after COVID-19 vaccination; not a meta-analysis. "Diagnostic findings across studies included elevated norepinephrine levels and reduced heart rate variability." Association. The reviewer notes that the included studies are mostly case reports and case series, with no comparison group for heart rate variability.
+- Lead (`not_a_review`): pmid:33947784, "Natural History of Afferent Baroreflex Failure in Adults." (2021). A single-centre chart review of adults with afferent baroreflex failure that PubMed tags Systematic Review. "The most common findings were hypertension (87.5%), fluctuating blood pressure (78.8%), orthostatic hypotension (91.3%), syncope (58.6%), headache (22.1%), and tachycardia (20.2%)." No comparison group.
+
+**Q3 reduced-nk-cell-function → herpesvirus-reactivation.** General (13 screened; 13 no): *no review found.*
+
+**Q4 tryptophan-kynurenine-metabolism → neuroinflammation.** General (17 screened; 1 yes, 15 no, 1 animal or cell only; the `yes` row rejected): *only animal or cell evidence.* The animal or cell row, pmid:40289452, "Edible and Medicinal Fungi as Candidate Natural Antidepressants: Mechanisms and Nutritional Implications." (2025), was noted by the surveyor as resting on preclinical studies.
+
+**Q5 autoimmunity-autoantibodies-b-cells → orthostatic-intolerance-cerebral-blood-flow.** General (7 screened; 1 yes, 6 no; 0 accepted systematic, 1 lead): *no review found.*
+- Lead (`narrative`): pmid:28738696, "The role of autoantibodies in the syndromes of orthostatic intolerance: a systematic review." (2017). Population: patients with POTS and orthostatic hypotension. "Recent evidence has shown the presence of adrenergic and cholinergic receptor antibodies in patients with POTS and orthostatic hypotension." The title says systematic review, but the abstract describes no search and gives no number of included studies, so under P2.4 it is narrative; the reviewer notes the sentence could be read as background.
+
+### Positive control
+
+**C1 autoimmunity-autoantibodies-b-cells → autonomic-imbalance.** General (17 screened; 1 yes, 16 no; 1 accepted systematic): *reported in other conditions.* The control passes, so the other results are interpreted.
+- pmid:32281951, "Electrocardiogram and heart rate variability assessment in patients with common autoimmune diseases: a methodological review." (2020). Population: patients with rheumatoid arthritis, systemic lupus erythematosus, Behcet's disease and systemic sclerosis; not a meta-analysis. "Time-frequency domain analysis revealed that HRV parameters were lower in patients with the selected ADs in comparison with control groups." Association. The reviewer notes that the A end is met through diseases the record names as autoimmune, not through autoantibody levels.
+
+### Base-rate pairs
+
+B1 (6 screened) and B2 (29 screened): every row `no`. Outcome *no review found* in all four arms. Against the criterion (protocol point 7, on accepted systematic rows):
+- (a) General arm *reported in other conditions* or *mixed*: 0 of 2 base-rate pairs, against 1 of 5 founder questions (Q2).
+- (b) Accepted systematic `yes` rows per pair: 0 for the base-rate pairs, against a mean of 0.4 per founder question (0, 2, 0, 0, 0).
+
+The criterion is met, but with so few accepted rows on either side it says little.
+
+### Comparison with pilot 1
+
+Each of the 12 rows pilot 1's reviewer accepted:
+
+| Pilot 1 row | Pilot 2 | Reason |
+|---|---|---|
+| Q1 pmid:17713412 | dropped | surveyor `no`: a rationale for antioxidant treatment, not a reported finding on the relation |
+| Q2 pmid:31888497 | kept | accepted, systematic |
+| Q2 pmid:39538129 | kept | accepted, systematic |
+| Q2 pmid:37531984 | dropped | reviewer: `not_a_finding` |
+| Q2 pmid:35863181 | dropped | surveyor `no` (no note) |
+| Q2 pmid:33947784 | moved to leads | accepted, `not_a_review` |
+| Q4 pmid:42014469 | dropped | reviewer: `not_a_finding` |
+| Q4 pmid:28412922 | dropped | surveyor `no` (no note) |
+| Q5 pmid:28738696 | moved to leads | accepted, `narrative` |
+| C1 pmid:29697012 | dropped | surveyor `no`: lupus is not named as autoimmune in the abstract |
+| C1 pmid:29291895 | dropped | surveyor `no`: inflammatory joint disease is not named as autoimmune in the abstract |
+| C1 pmid:25151910 | dropped | surveyor `no`: rheumatoid arthritis is not named as autoimmune in the abstract |
+
+New: one accepted systematic row that pilot 1 did not accept, C1 pmid:32281951 (pilot 1 had it as `yes` but rejected it for a missing studies count). Of pilot 1's three other wrong-field rejections, pmid:42359947 (Q2) was written `yes` again and rejected as `not_a_finding`; pmid:40332237 (Q1, noted as stating the link only as background) and pmid:11296464 (Q2) were written `no`.
+
+As a result, outcomes changed: Q1 and Q4 went from *reported in other conditions* and *mixed* to *only animal or cell evidence*; Q2 from *mixed* to *reported in other conditions*; Q5 from *reported in other conditions* to *no review found* with one lead.
+
+### Limitations
+
+- **The reject rate measures precision only.** The reviewer sees `yes` rows, not `no` rows. The surveyor wrote 13 fewer `yes` rows than in pilot 1, and some `no` rows are doubtful: the three C1 rows above were dropped because the abstract does not use the word "autoimmune" for lupus, inflammatory joint disease or rheumatoid arthritis, a literal reading of the end definition ("a disease the record names as autoimmune"). How many relevant records are lost this way is not measured.
+- Small numbers: 8 `yes` rows, 5 accepted, over eight questions.
+- One surveyor and one reviewer, both AI, abstract only.
+- The quote rule follows PubMed's section labels. Some abstracts put results under a METHODS label (for example pmid:41927192 in Q5), so a finding there cannot be quoted.
+- Review quality is not graded; `review_kind` is read from the abstract, so a systematic review whose abstract does not describe its search counts as narrative.
+- The limitations of pilot 1 (end terms not tuned, publication bias, population-specific causes, almost no long COVID reviews, shared ends in the control and base-rate pairs) apply unchanged.
+
+### For the founder to judge
+
+The reject-rate test was not met in either pilot (43% and 37.5%). The remaining rejections are all of one kind: two things reported side by side in one condition, read as a relation between them. Whether to try a third reading, read full texts (direction B), or stop the bridge search at this scale is the founder's ruling; nothing here changes a card, a link or a link's step.
