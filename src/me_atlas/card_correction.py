@@ -219,6 +219,13 @@ def _review_problems(
             found.append(f"findings[{i}].operation {f.operation} is out of range ({count} operation(s), from 0)")
         if needs and not f.targets:
             found.append(f"findings[{i}] needs `targets`: name the parts of the card it is about (a non-empty list)")
+        if f.klass == "wording" and (m := GROUP_TARGET.match(f.target or "")) and card is not None:
+            role = next((s.role for s in card.studies if s.id == m.group("id")), None)
+            if role is not None and role != "context":
+                found.append(
+                    f"findings[{i}] is a wording finding on {f.target}, but that study's role is {role}: `group` "
+                    "bears on the level of a study that carries a rung, so a finding about it is `decisive`"
+                )
         if needs and f.klass is None:
             found.append(f"findings[{i}] needs `class`: say `decisive` or `wording` (and a `target` for wording)")
         if f.target is not None and f.targets and f.target not in f.targets:
@@ -229,11 +236,28 @@ def _review_problems(
     return found
 
 
-def _read_review(path: Path) -> ReviewFile:
+GROUP_TARGET = re.compile(r"^studies\[(?P<id>(?:pmid:\d+|doi:\S+))\]\.group$")
+
+
+def _read_review(path: Path, *, group_target: bool = False) -> ReviewFile:
+    """The review file as a ``ReviewFile``. With ``group_target`` (step 1 of this path) a ``wording`` finding may name
+    ``studies[<id>].group`` as its ``target``: the shared model does not accept it (it is not a free-text target of the
+    draft path), so it is checked here as the stand-in ``studies[<id>].finding`` and put back."""
+    raw = _read_json(path)
+    swapped: dict[int, str] = {}
+    if group_target and isinstance(raw, dict) and isinstance(raw.get("findings"), list):
+        for i, f in enumerate(raw["findings"]):
+            t = f.get("target") if isinstance(f, dict) else None
+            if isinstance(t, str) and f.get("class") == "wording" and (m := GROUP_TARGET.match(t)):
+                swapped[i] = t
+                f["target"] = f"studies[{m.group('id')}].finding"
     try:
-        return ReviewFile.model_validate(_read_json(path))
+        review = ReviewFile.model_validate(raw)
     except ValidationError as exc:
         raise PipelineError(f"{path} is malformed:\n" + "\n".join(_pydantic_lines(exc))) from exc
+    for i, target in swapped.items():
+        review.findings[i].target = target
+    return review
 
 
 def load_pre_review(cfg: Config, slug: str) -> tuple[ReviewFile | None, str | None]:
@@ -242,7 +266,7 @@ def load_pre_review(cfg: Config, slug: str) -> tuple[ReviewFile | None, str | No
     if not path.is_file():
         return None, f"no review of the published card {path.name}"
     try:
-        review = _read_review(path)
+        review = _read_review(path, group_target=True)
         card = _load_card(_card_paths(cfg, slug))
     except PipelineError as exc:
         return None, str(exc).replace("\n", "; ")
@@ -367,7 +391,7 @@ def record_pre_review(cfg: Config, slug: str) -> ReviewFile:
     card = _load_card(card_path)
     load_request(cfg, slug, card)
     path = pre_review_path(cfg, slug)
-    review = _read_review(path)
+    review = _read_review(path, group_target=True)
     if problems := _review_problems(review, slug, card, pre=True):
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
     return review
@@ -679,7 +703,8 @@ def _blank(data: dict[str, Any]) -> dict[str, Any]:
     d = _without_free_text(data)
     d["core_claim"]["text"] = data["core_claim"]["text"]
     for study in d["studies"]:
-        study["group"] = None
+        if study.get("role") == "context":  # on a rung-bearing study `group` can bear on the level (card-format.md)
+            study["group"] = None
     for link in d.get("links") or []:
         link["text"] = None
     return d
@@ -737,6 +762,8 @@ def structural_differences(old: dict[str, Any], new: dict[str, Any]) -> list[str
     if not found:  # the lists line up: compare the free text of studies and links
         for x, y in zip(old["studies"], new["studies"], strict=True):
             for name in ("finding", "group"):
+                if name == "group" and x.get("role") != "context":
+                    continue  # a changed group is already a structural difference
                 if not _same_words(x.get(name), y.get(name)) and (added := _new_numerals(x.get(name), y.get(name))):
                     found.append(f"studies[{x['id']}].{name}: the numeral(s) {', '.join(added)} are new")
         for i, (x, y) in enumerate(zip(old.get("links") or [], new.get("links") or [], strict=True)):

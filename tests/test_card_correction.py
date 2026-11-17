@@ -20,13 +20,32 @@ from me_atlas.operations import OperationError, apply_operations, comment_target
 DATE = "2026-11-17"
 STUDY = "pmid:90000100"
 OTHER_STUDY = "pmid:90000104"
+CTX = "pmid:90000105"  # a study whose role is context
 TARGET = "other-fictional-card"
 SECOND = "second-target"
-FINDING_NEW = "A study of n=20 patients and 20 controls found widget signalling to be lower in the patients."
+FINDING_NEW = "A fictional study found widget signalling to be lower in the patients."
 GROUP_NEW = "Reworded Fictional Group"
 LINK_NEW = "A fictional review proposes that A feeds B."
 STUDY_NOTE = "STALE-STUDY-NOTE the group was not checked"
 LINK_NOTE = "LINK-NOTE written before the review"
+
+CTX_BLOCK = """  - id: pmid:90000105
+    title: Fictional background study of widget signalling.
+    year: 2019
+    cohort: me_cfs
+    case_definition: unverified
+    case_definition_source: null
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    group: Context Group, Fictional University
+    finding: A fictional background study described widget signalling without a patient comparison.
+"""
 
 LINKS = f"""layer: mechanism
 links:
@@ -57,10 +76,12 @@ def finding(targets: list[str], klass: str = "wording", target: str | None = Non
     return data | over
 
 
-STUDY_FINDING = finding([f"studies[{STUDY}].finding", f"studies[{STUDY}].group"], target=f"studies[{STUDY}].finding")
+STUDY_FINDING = finding(
+    [f"studies[{CTX}].finding", f"studies[{CTX}].group", f"studies[{STUDY}].finding"], target=f"studies[{CTX}].finding"
+)
 LINK_FINDING = finding(["links[0]"])
 OPS_TIER1 = [
-    {"op": "update_study", "id": STUDY, "set": {"finding": FINDING_NEW, "group": GROUP_NEW}},
+    {"op": "update_study", "id": CTX, "set": {"finding": FINDING_NEW, "group": GROUP_NEW}},
     {"op": "set_link_text", "to": TARGET, "text": LINK_NEW},
 ]
 ACCEPT = {"card": SLUG, "paper": None, "verdict": "accept", "findings": []}
@@ -78,6 +99,7 @@ class Corr:
         self.log = env.cards / pipeline.CHANGELOG_NAME
         text = (env.drafts / f"{SLUG}.yaml").read_text(encoding="utf-8")
         text = text.replace("by: ai_pair", "by: ai_audit")
+        text = text.replace("last_checked:\n", CTX_BLOCK + "last_checked:\n", 1)
         text = text.replace("    role: supports\n", f"    role: supports\n    # {STUDY_NOTE}\n", 1)
         text = text.replace("last_checked:\n", LINKS + "last_checked:\n", 1)
         self.card.write_text(text, encoding="utf-8", newline="\n")
@@ -311,7 +333,7 @@ def test_record_pre_review_needs_targets_and_class_on_every_finding(corr: Corr, 
 
 def test_record_pre_review_accepts_an_advisory_finding_and_a_group_as_wording(corr: Corr):
     corr.request()
-    corr.pre([finding([f"studies[{STUDY}].group"], severity="advisory")])
+    corr.pre([finding([f"studies[{CTX}].group"], severity="advisory")])
     assert corr.run("correct-record-review", "--pre") == 0
     assert corr.run("correct-plan") == 0
 
@@ -345,7 +367,7 @@ def test_plan_holds_the_card_the_findings_the_limits_and_the_targets(corr: Corr)
     corr.planned()
     text = (corr.dir / "correction-context" / f"{SLUG}.md").read_text(encoding="utf-8")
     assert STUDY_NOTE in text  # the card is shown as it stands, comments included
-    assert "PROBLEM about" in text and "class wording" in text and f"`studies[{STUDY}].group`" in text
+    assert "PROBLEM about" in text and "class wording" in text and f"`studies[{CTX}].group`" in text
     assert "`set_link_text`" in text and "`remove_comment`" in text and "No `add_study`" in text
     assert "Functional Specification" in text or "Evidence ladder" in text  # sections 2 and 3
     assert "REQUEST-MARKER" not in text  # the request is data for the reviewer, not for the drafter
@@ -361,7 +383,7 @@ def test_apply_makes_applied_card_diff_and_checks_and_never_writes_cards(corr: C
     assert checks["passed"] is True
     applied = corr.dir / "applied" / f"{SLUG}-r1"
     data = yaml.safe_load((applied / f"{SLUG}.yaml").read_text(encoding="utf-8"))
-    assert data["studies"][0]["finding"] == FINDING_NEW and data["links"][0]["text"] == LINK_NEW
+    assert data["studies"][2]["finding"] == FINDING_NEW and data["links"][0]["text"] == LINK_NEW
     assert "+    group: Reworded Fictional Group" in (applied / "changes.diff").read_text(encoding="utf-8")
     assert corr.card.read_bytes() == corr.card_bytes and not corr.log.exists()
     assert "PASSED" in corr.output()
@@ -417,7 +439,7 @@ def test_apply_refuses_an_operation_that_adds_and_writes_nothing(corr: Corr, cap
 def test_apply_refuses_an_operation_whose_target_no_finding_names(corr: Corr, capsys):
     corr.planned([LINK_FINDING])  # only links[0]
     assert corr.apply([OPS_TIER1[0]]) == 1  # update_study of a study
-    assert f"changes studies[{STUDY}], which no finding" in capsys.readouterr().err
+    assert f"changes studies[{CTX}], which no finding" in capsys.readouterr().err
     assert corr.apply([{"op": "set_link_text", "to": SECOND, "text": "Reworded."}]) == 1  # links[1]
     assert "changes links[1], which no finding" in capsys.readouterr().err
     assert (
@@ -574,17 +596,17 @@ def test_wording_only_change_with_wording_classes_is_tier_1_and_publishes_on_the
     assert not any("last_checked" in x for x in changed)
     data = yaml.safe_load(corr.text())
     assert data["last_checked"]["by"] == "ai_audit" and str(data["last_checked"]["date"]) == "2026-10-01"  # unchanged
-    assert data["studies"][0]["finding"] == FINDING_NEW and data["studies"][0]["group"] == GROUP_NEW
+    assert data["studies"][2]["finding"] == FINDING_NEW and data["studies"][2]["group"] == GROUP_NEW
     assert data["links"][0]["text"] == LINK_NEW
     assert STUDY_NOTE in corr.text() and LINK_NOTE in corr.text()  # comments elsewhere are kept
     (entry,) = corr.changelog()
     assert (
         entry["change"]
-        == f"Correction: the finding and group of {STUDY} reworded; the text of the link to {TARGET} reworded"
+        == f"Correction: the finding and group of {CTX} reworded; the text of the link to {TARGET} reworded"
     )
-    assert entry["reason"] == "PROBLEM about studies[pmid:90000100].finding."
+    assert entry["reason"] == f"PROBLEM about studies[{CTX}].finding."
     assert entry["tier"] == 1 and entry["decided_by"] == "ai_pair" and str(entry["date"]) == DATE
-    assert entry["sources"] == [STUDY]
+    assert entry["sources"] == [CTX, STUDY]
     assert corr.audit_names() == [f"{DATE}-{SLUG}-correction-published-trail.yaml"]  # no audit record: none was run
     trail = corr.trail()
     assert trail["outcome"] == "published" and trail["tier"]["tier"] == 1 and trail["audits_run"] == []
@@ -599,7 +621,7 @@ def test_wording_only_change_with_wording_classes_is_tier_1_and_publishes_on_the
 
 
 def test_the_same_change_classed_decisive_is_tier_2(corr: Corr, capsys):
-    decisive = finding([f"studies[{STUDY}].finding", f"studies[{STUDY}].group"], "decisive")
+    decisive = finding([f"studies[{CTX}].finding", f"studies[{CTX}].group"], "decisive")
     corr.accepted([decisive, LINK_FINDING])
     assert corr.publish() == 1  # tier 2: no audit yet
     assert "tier 2 needs two audits" in capsys.readouterr().err
@@ -660,7 +682,8 @@ def test_structural_differences_name_what_is_more_than_wording(corr: Corr):
 
     assert changed(lambda d: None) == []
     assert changed(lambda d: d["studies"][0].update(finding="A reworded finding of the fictional study.")) == []
-    assert changed(lambda d: d["studies"][0].update(group="Another group")) == []
+    assert changed(lambda d: d["studies"][2].update(group="Another group")) == []
+    assert changed(lambda d: d["studies"][0].update(group="Another group")) == [f"studies[{STUDY}].group differs"]
     assert changed(lambda d: d["links"][0].update(text="A reworded link text.")) == []
     assert changed(lambda d: d["level_reason"].update(text="A reworded reason of the fictional study.")) == []
     assert changed(lambda d: d.update(level=1)) == ["level differs beyond free text"]
@@ -679,8 +702,8 @@ def test_structural_differences_name_what_is_more_than_wording(corr: Corr):
     assert changed(lambda d: d["links"][1].update(text="A second fictional link text of 5 words.")) == [
         "links[1].text: the numeral(s) 5 are new"
     ]
-    assert changed(lambda d: d["studies"][0].update(group="Group 12")) == [
-        f"studies[{STUDY}].group: the numeral(s) 12 are new"
+    assert changed(lambda d: d["studies"][2].update(group="Group 12")) == [
+        f"studies[{CTX}].group: the numeral(s) 12 are new"
     ]
 
 
@@ -737,7 +760,7 @@ def test_a_missing_review_holds_the_card_back(corr: Corr):
 
 
 def tier_2(corr: Corr) -> None:
-    corr.accepted([finding([f"studies[{STUDY}].finding", f"studies[{STUDY}].group"], "decisive"), LINK_FINDING])
+    corr.accepted([finding([f"studies[{CTX}].finding", f"studies[{CTX}].group"], "decisive"), LINK_FINDING])
 
 
 def test_tier_2_first_audit_reject_holds_the_card_back_with_no_second_audit(corr: Corr, capsys):
@@ -810,21 +833,21 @@ def test_tier_2_publishes_after_two_accepts_with_last_checked_and_the_audit_reco
     assert corr.publish() == 0
     assert "Outcome: published" in corr.report() and "Tier: 2" in corr.report()
     expected = yaml.safe_load(corr.card_bytes.decode())  # only the named items differ from the published card
-    expected["studies"][0].update(finding=FINDING_NEW, group=GROUP_NEW)
+    expected["studies"][2].update(finding=FINDING_NEW, group=GROUP_NEW)
     expected["links"][0]["text"] = LINK_NEW
     expected["last_checked"] = {"date": yaml.safe_load(f"d: {DATE}")["d"], "by": "ai_audit"}
     assert yaml.safe_load(corr.text()) == expected
     assert STUDY_NOTE in corr.text() and LINK_NOTE in corr.text()
     data = yaml.safe_load(corr.text())
     assert data["last_checked"]["by"] == "ai_audit" and str(data["last_checked"]["date"]) == DATE
-    assert data["studies"][0]["finding"] == FINDING_NEW and data["links"][0]["text"] == LINK_NEW
+    assert data["studies"][2]["finding"] == FINDING_NEW and data["links"][0]["text"] == LINK_NEW
     (entry,) = corr.changelog()
     assert entry["tier"] == 2 and entry["decided_by"] == "ai_audit"
     assert (
         entry["reason"] == "The cited controlled study supports the proposed level."
     )  # the first audit's reasons_summary
-    assert entry["change"].startswith("Correction: the finding and group of pmid:90000100 reworded")
-    assert entry["sources"] == [STUDY]
+    assert entry["change"].startswith(f"Correction: the finding and group of {CTX} reworded")
+    assert entry["sources"] == [CTX, STUDY]
     stem = f"{DATE}-{SLUG}-correction-published"
     assert corr.audit_names() == [f"{stem}-second.yaml", f"{stem}-trail.yaml", f"{stem}.yaml"]
     assert (corr.audits / f"{stem}.yaml").read_bytes() == (corr.dir / "audit" / f"{SLUG}.yaml").read_bytes()
@@ -1028,3 +1051,84 @@ def test_a_correction_round_of_a_draft_still_refuses_set_link_text_and_the_publi
     ops = parse_ops({"card": SLUG, "paper": None, "operations": [OPS_TIER1[1]]})
     assert any("set_link_text" in p for p in pipeline.correction_ops_problems(ops, 2))
     assert pipeline.correction_ops_problems(ops, 2, published=True) == []
+
+
+# --- the group rule: wording only on a study whose role is context --------------------------------------------------
+
+
+def test_a_group_change_on_a_context_study_with_wording_classes_is_tier_1(corr: Corr):
+    ops = [{"op": "update_study", "id": CTX, "set": {"group": GROUP_NEW}}]
+    corr.accepted([finding([f"studies[{CTX}].group"])], ops)
+    assert corr.run("correct-audit-plan") == 1  # tier 1: no audit
+    assert corr.publish() == 0
+    assert "Tier: 1" in corr.report() and yaml.safe_load(corr.text())["studies"][2]["group"] == GROUP_NEW
+    assert corr.trail()["review"]["findings"][0]["target"] == f"studies[{CTX}].group"
+
+
+def test_the_same_group_change_on_a_supports_study_is_tier_2_whatever_the_classes_say(corr: Corr, capsys):
+    ops = [{"op": "update_study", "id": STUDY, "set": {"group": GROUP_NEW}}]
+    # the review cannot class it wording (refused at record time), so a decisive class carries it ...
+    corr.planned([finding([f"studies[{STUDY}].group"], "decisive")])
+    assert corr.apply(ops) == 0
+    corr.review()
+    assert corr.run("correct-record-review", "--round", "1") == 0
+    assert corr.publish() == 1 and "tier 2 needs two audits" in capsys.readouterr().err
+    # ... and the code's own comparison says tier 2 even with a wording class on the finding
+    review, _ = card_correction.load_pre_review(
+        pipeline.Config(corr.dir, corr.env.cards, corr.env.drafts, corr.env.cache, pipeline.DEFAULT_SPEC), SLUG
+    )
+    review.findings[0].klass = "wording"
+    applied = (corr.dir / "applied" / f"{SLUG}-r1" / f"{SLUG}.yaml").read_text(encoding="utf-8")
+    decision = card_correction.decide_tier(
+        corr.text(),
+        applied,
+        parse_ops({"card": SLUG, "paper": None, "operations": ops}),
+        review,
+        pipeline._load_card(corr.card),
+    )
+    assert decision.tier == 2 and decision.reasons == [f"studies[{STUDY}].group differs"]
+
+
+def test_a_wording_finding_on_the_group_of_a_study_with_a_rung_role_is_refused_at_record_time(corr: Corr, capsys):
+    corr.request()
+    corr.pre([finding([f"studies[{STUDY}].group"])])
+    assert corr.run("correct-record-review", "--pre") == 1
+    err = capsys.readouterr().err
+    assert "that study's role is supports" in err and "is `decisive`" in err
+    corr.pre([finding([f"studies[{OTHER_STUDY}].group"])])  # a contradicts study too
+    assert corr.run("correct-record-review", "--pre") == 1
+    assert "role is contradicts" in capsys.readouterr().err
+    corr.pre([finding([f"studies[{STUDY}].group"], "decisive")])
+    assert corr.run("correct-record-review", "--pre") == 0
+
+
+def test_the_draft_path_still_refuses_a_wording_finding_on_a_group(tmp_path: Path):
+    """On the draft correction round and its valve the shared models accept what they did before: not `group`."""
+    from pydantic import ValidationError
+
+    wording = {"operation": None, "severity": "must_fix", "problem": "P.", "class": "wording"}
+    target = f"studies[{STUDY}].group"
+    with pytest.raises(ValidationError, match="wording finding needs a target naming a free-text item"):
+        pipeline.Finding.model_validate(wording | {"target": target, "targets": [target]})
+    assert pipeline.FREE_TEXT_TARGET.match(f"studies[{STUDY}].finding")
+    assert pipeline.FREE_TEXT_TARGET.match(target) is None
+    # a draft correction-round review is refused at record time (nothing in the pipeline path swaps the target)
+    env = Env(tmp_path)
+    review = {
+        "card": SLUG,
+        "paper": None,
+        "verdict": "reject",
+        "findings": [wording | {"target": target, "targets": [target]}],
+    }
+    path = env.run / "review" / f"{SLUG}-card-C1-pre.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(review), encoding="utf-8")
+    with pytest.raises(pipeline.PipelineError, match="malformed"):
+        pipeline.record_review(
+            pipeline.Config(env.run, env.cards, env.drafts, env.cache, pipeline.DEFAULT_SPEC),
+            SLUG,
+            None,
+            "C1-pre",
+            card_review=True,
+            pre=True,
+        )

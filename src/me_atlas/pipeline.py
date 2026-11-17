@@ -162,14 +162,13 @@ class PipelineError(Exception):
 
 
 # The free-text items a wording finding may name, in the translation-key style (``translations.english_items``): a
-# sourced text of the card, a study's finding or its group (the group is named by the correction of a published card).
-# Nothing else is free text: a level, a badge, a link's support, a case definition, a study's role or any number is
-# structured, and a finding about one is decisive.
+# sourced text of the card or a study's finding. Nothing else is free text: a level, a badge, a link's support, a case
+# definition, a study's role or any number is structured, and a finding about one is decisive.
 FREE_TEXT_TARGET = re.compile(
     r"^(?:core_claim"
     r"|(?:level_reason|contested_reason|subgroups|early_signals|badge_reasons\.(?:diagnostic_marker|explains_pem))\[\d+\]"
     r"|links\[\d+\](?:\.reason)?"
-    r"|studies\[(?:pmid:\d+|doi:\S+)\]\.(?:finding|group))$"
+    r"|studies\[(?:pmid:\d+|doi:\S+)\]\.finding)$"
 )
 
 
