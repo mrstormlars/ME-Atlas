@@ -42,6 +42,15 @@ FULLLINE_COMMENT_MARKER = "FULLLINE-COMMENT-MARKER-0a7d"
 TRAILING_COMMENT_MARKER = "TRAILING-COMMENT-MARKER-6e19"
 
 
+def accept_first_review(folder: Path, drafts: Path) -> None:
+    """The whole-card review gate before the first audit: an accepting review of the draft in ``folder``."""
+    path = folder / "review" / f"{SLUG}-card-first.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"card": SLUG, "paper": None, "verdict": "accept", "findings": []}), encoding="utf-8")
+    sha = pipeline._sha256((drafts / f"{SLUG}.yaml").read_bytes())
+    path.with_suffix(".sha256").write_text(sha + "\n", encoding="utf-8")  # what record-review writes
+
+
 @pytest.fixture
 def env(tmp_path: Path) -> Env:
     return Env(tmp_path)
@@ -267,6 +276,7 @@ def test_a_quote_from_a_full_text_the_auditor_was_not_shown_is_refused(ready: En
 def test_a_whole_card_context_holds_the_card_file_and_goes_to_out(env: Env, tmp_path: Path):
     shutil.copy(FIXTURES / "pubmed" / "90000100.xml", env.cache / "pubmed" / "90000100.xml")
     out = tmp_path / "card-audit"
+    accept_first_review(out, env.drafts)
     code = pipeline.main(
         ["audit-plan", "--card", SLUG, "--out", str(out), *env.dir_args], fulltext=fulltext_loader(), out=env.out.append
     )
@@ -388,6 +398,7 @@ def test_the_second_run_reads_its_own_file(ready: Env):
 def test_a_whole_card_record_is_checked_against_the_card_level(env: Env, tmp_path: Path):
     shutil.copy(FIXTURES / "pubmed" / "90000100.xml", env.cache / "pubmed" / "90000100.xml")
     out = tmp_path / "card-audit"
+    accept_first_review(out, env.drafts)
     pipeline.main(["audit-plan", "--card", SLUG, "--out", str(out), *env.dir_args], fulltext=fulltext_loader())
     good = {k: v for k, v in audit_data("accept_lower", accepted_level=1).items() if k != "paper"}
     bad = {**good, "accepted_level": 2}  # the card is at level 2: not lower
@@ -834,6 +845,7 @@ def test_a_pair_with_no_valid_audit_is_listed_as_not_applied(ready: Env):
 
 
 def test_a_valid_whole_card_record_is_copied_into_audits_on_pr(ready: Env):
+    accept_first_review(ready.run, ready.drafts)
     assert ready.cli("audit-plan", "--card", SLUG, fulltext=fulltext_loader()) == 0
     assert (ready.run / "audit-context" / f"{SLUG}.md").is_file()
     data = {k: v for k, v in audit_data().items() if k != "paper"}
@@ -1152,6 +1164,7 @@ def test_a_whole_card_redraft_has_a_context_checks_and_an_audit_of_its_own(env: 
     def main(*argv: str) -> int:
         return pipeline.main([*argv, *env.dir_args], fulltext=fulltext_loader(), out=env.out.append)
 
+    accept_first_review(out, env.drafts)
     assert main("audit-plan", "--card", SLUG, "--out", str(out)) == 0
     first = tmp_path / "first.yaml"
     first.write_text(
@@ -1258,6 +1271,7 @@ def test_a_study_cited_only_in_a_link_is_a_carrier_and_one_cited_only_in_a_signa
     assert LINK_ONLY in pipeline.carrier_ids(card) and SIGNAL_ONLY not in pipeline.carrier_ids(card)
     loader = loader_for({"90000100": jats("Carrier."), "90000101": jats(LAST_SENTENCE), "90000102": jats("Hidden.")})
     out = tmp_path / "card-audit"
+    accept_first_review(out, ready.drafts)
     argv = ["audit-plan", "--card", SLUG, "--out", str(out), *ready.dir_args]
     assert pipeline.main(argv, fulltext=loader, out=ready.out.append) == 0
     text = (out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8")
@@ -1271,6 +1285,7 @@ def test_a_study_cited_only_in_a_link_is_a_carrier_and_one_cited_only_in_a_signa
 def test_a_link_source_with_no_cached_full_text_gets_the_abstract_and_the_plain_statement(ready: Env, tmp_path: Path):
     link_card(ready)
     out = tmp_path / "card-audit"
+    accept_first_review(out, ready.drafts)
     argv = ["audit-plan", "--card", SLUG, "--out", str(out), *ready.dir_args]
     assert pipeline.main(argv, fulltext=loader_for({}), out=ready.out.append) == 0
     block = record_block((out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8"), LINK_ONLY)
@@ -1283,6 +1298,7 @@ def test_record_audit_accepts_a_quote_from_a_link_source_full_text_and_refuses_o
     link_card(ready)
     monkeypatch.setattr(pipeline.citations.CacheReader, "fulltext", lambda self, pmid: FULL_HIDDEN)
     out = tmp_path / "card-audit"
+    accept_first_review(out, ready.drafts)
     argv = ["audit-plan", "--card", SLUG, "--out", str(out), *ready.dir_args]
     assert pipeline.main(argv, fulltext=loader_for({"90000100": jats("C.")}), out=ready.out.append) == 0
     context = (out / "audit-context" / f"{SLUG}.md").read_text(encoding="utf-8")

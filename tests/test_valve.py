@@ -569,7 +569,8 @@ def test_an_unfinished_review_stage_valve_is_a_refusal(corr: Corr, capsys):
     assert valve(corr, "valve-apply", "correction-review") == 0
     assert corr.publish() == 1 and "valve check missing" in capsys.readouterr().err
     assert (
-        corr.names() == sorted(p.name for p in corr.audits.glob("*.yaml"))
+        corr.names()
+        == sorted(p.name for p in corr.audits.glob("*.yaml") if p.name != f"{PUB_DATE}-{SLUG}-card-review.yaml")
         and f"{PUB_DATE}-{SLUG}-C1-correction.yaml" not in corr.names()
     )
 

@@ -10,8 +10,8 @@ Command line::
     uv run python -m me_atlas.pipeline apply <slug> <ops file> [--round 1|2|L|C<k>]
     uv run python -m me_atlas.pipeline record-review <slug> <pmid> [--round 1|2|L|C<k>]
     uv run python -m me_atlas.pipeline correction-plan <slug> --out DIR
-    uv run python -m me_atlas.pipeline card-review-plan <slug> --round C<k> [--pre | --revised[2-4]] --out DIR
-    uv run python -m me_atlas.pipeline record-review <slug> --card-review --round C<k> [--pre | --revised[2-4]]
+    uv run python -m me_atlas.pipeline card-review-plan <slug> [--round C<k> [--pre | --revised[2-4]]] --out DIR
+    uv run python -m me_atlas.pipeline record-review <slug> --card-review [--round C<k> [--pre | --revised[2-4]]]
         --run-dir DIR
     uv run python -m me_atlas.pipeline audit-plan <slug> <pmid> | --card <slug> [--out DIR]
     uv run python -m me_atlas.pipeline record-audit <slug> <pmid> [--second] | --card <slug> --file PATH
@@ -134,6 +134,8 @@ ATTEMPT_SUFFIXES = tuple("" if i == 0 else "-revised" if i == 1 else f"-revised{
 # The regex group for the suffix of an attempt tag or file name (the first attempt has none).
 ATTEMPT_RE = "(?:" + "|".join(re.escape(x) for x in ATTEMPT_SUFFIXES[1:]) + ")?"
 Round_ = int | str
+# The tag of the whole-card review of a draft before its first publication (no round).
+FIRST_PUBLICATION = "first"
 # A rubric excerpt in an audit record must be at least this long after normalisation (contract decision D5).
 MIN_RUBRIC_CHARS = 20
 BASE_BRANCH = "main"
@@ -446,12 +448,19 @@ class Config:
         return self.f("correction-context", f"{slug}-C{k}.md")
 
     def card_review_context_path(self, slug: str, n: str) -> Path:
-        """What `card-review-plan` writes for the card-reviewer: ``card-review-context/<slug>-C<k>[-revised].md``."""
+        """What `card-review-plan` writes for the card-reviewer: ``card-review-context/<slug>-C<k>[-revised].md``
+        (``-first`` for the first publication)."""
         return self.f("card-review-context", f"{slug}-{n}.md")
 
     def card_review_path(self, slug: str, n: str) -> Path:
-        """The whole-card review of a correction attempt: ``review/<slug>-card-C<k>[-revised].json``."""
+        """The whole-card review of a correction attempt: ``review/<slug>-card-C<k>[-revised].json``; of the first
+        publication of a draft: ``review/<slug>-card-first.json``."""
         return self.f("review", f"{slug}-card-{n}.json")
+
+    def first_review_sha_path(self, slug: str) -> Path:
+        """Written by `record-review` (code, not the agent): the sha256 of the draft the first-publication
+        whole-card review was recorded for, ``review/<slug>-card-first.sha256``."""
+        return self.f("review", f"{slug}-card-first.sha256")
 
     def valve_path(self, slug: str, key: str, ending: str = ".json") -> Path:
         """The files of the valve of one stage: ``valve/<slug>-<key>.json`` (the fix operations) and ``-check.json``
@@ -1487,7 +1496,7 @@ def allowed_targets(cfg: Config, slug: str, tag: str, draft_card: cards.Card) ->
     for a revised attempt, the targets of every ``must_fix`` finding of the reviews of the earlier attempts of the
     round, mapped from that attempt's applied numbering back to the draft's."""
     base = _round_base(tag)
-    allowed = pre_targets(_load_card_review(cfg, slug, f"{base}-pre"))
+    allowed = pre_targets(_load_card_review(cfg, slug, f"{base}-pre")) | first_review_targets(cfg, slug)
     index = ATTEMPT_SUFFIXES.index(tag[len(base) :])
     for earlier in (base + suffix for suffix in ATTEMPT_SUFFIXES[:index]):
         r = _load_round(cfg, slug, "", earlier)
@@ -1642,7 +1651,9 @@ def _load_card_review(cfg: Config, slug: str, tag: str) -> ReviewFile | None:
         return None
     if review.card != slug or review.paper is not None:
         return None
-    if tag.endswith("-pre") and _correction_review_target_problems(cfg, slug, review, True, tag):
+    if (tag.endswith("-pre") or tag == FIRST_PUBLICATION) and _correction_review_target_problems(
+        cfg, slug, review, True, tag
+    ):
         return None  # the step 0 review counts only when `record-review` would accept it (targets, audit_targets)
     return review
 
@@ -2095,7 +2106,8 @@ def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFil
     the ``--pre`` review holds ``audit_targets`` for exactly the objecting parts of the audit records, no other.
     Every target names something that exists: in the draft for the ``--pre`` review, in the applied text of the
     attempt for a correction review or a whole-card review."""
-    k = correction_number(tag)
+    first = tag == FIRST_PUBLICATION
+    k = 0 if first else correction_number(tag)
     problems = [
         f"findings[{i}] is a must_fix without `targets`: name the parts of the card it is about (a non-empty list)"
         for i, f in enumerate(review.findings)
@@ -2117,7 +2129,7 @@ def _correction_review_target_problems(cfg: Config, slug: str, review: ReviewFil
             named += [t for e in review.audit_targets or [] for t in e.targets]
             where = "the draft" if pre else f"the applied text of {tag}"
             problems += _missing_target_problems(on_card, where, named)
-    if not pre:
+    if not pre or first:
         if review.audit_targets is not None:
             problems.append("`audit_targets` belongs to the --pre review only")
         return problems
@@ -2143,6 +2155,8 @@ def record_review(
     (``review/<slug>-card-C<k>[-revised|-revised2].json``, no paper). With ``pre`` (``n`` is ``C<k>-pre``) it is the
     whole-card review of the unchanged draft before the correction: there is no ops file, so no finding names an
     operation."""
+    first = card_review and n == FIRST_PUBLICATION  # the whole-card review of the first publication: like --pre
+    pre = pre or first
     path = cfg.card_review_path(slug, str(n)) if card_review else cfg.review_path(slug, pmid, n)
     raw = _read_json(path)
     try:
@@ -2182,8 +2196,12 @@ def record_review(
         problems += _correction_review_target_problems(cfg, slug, review, pre, str(n))
     if problems:
         raise PipelineError(f"{path} is not valid:\n" + "\n".join(problems))
+    if first:
+        cfg.first_review_sha_path(slug).write_text(
+            _sha256((cfg.drafts_dir / f"{slug}.yaml").read_bytes()) + "\n", encoding="utf-8"
+        )
     event = {"event": "record-review", "card": slug, "paper": review.paper, "round": n, "verdict": review.verdict}
-    _log(cfg, event | ({"card_review": True} if card_review else {}) | ({"pre": True} if pre else {}))
+    _log(cfg, event | ({"card_review": True} if card_review else {}) | ({"pre": True} if pre and not first else {}))
     return review
 
 
@@ -3770,16 +3788,101 @@ def correction_round_state(cfg: Config, slug: str) -> tuple[int, int | None]:
     return used, open_round
 
 
+def first_review_trails(cfg: Config, slug: str) -> list[Path]:
+    """The trail records of the whole-card review of the first publication of ``slug`` in ``audits/``
+    (``<date>-<slug>-card-review.yaml``). Not an audit record: `whole_card_audit_files` and `correction_trails` do
+    not count it."""
+    pattern = re.compile(rf"^\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-card-review\.yaml$")
+    return _records_of_card(cfg, slug, pattern, whole_card=False)
+
+
+def _rejected_first_review_trails(cfg: Config, slug: str) -> list[tuple[Path, dict[str, Any]]]:
+    """The trail records of a first-publication whole-card review that rejected the draft, with their content."""
+    found: list[tuple[Path, dict[str, Any]]] = []
+    for path in first_review_trails(cfg, slug):
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if isinstance(data, dict) and data.get("verdict") == "reject":
+            found.append((path, data))
+    return found
+
+
+def _is_held_back(cfg: Config, slug: str) -> bool:
+    """A draft is held back (the correction path applies) when it has a whole-card audit record or a trail of a
+    first-publication whole-card review that rejected it."""
+    return bool(whole_card_audit_files(cfg, slug) or _rejected_first_review_trails(cfg, slug))
+
+
+def first_review_targets(cfg: Config, slug: str) -> set[str]:
+    """The targets of the ``must_fix`` findings of the rejected first-publication reviews of ``slug``."""
+    return {
+        t
+        for _path, data in _rejected_first_review_trails(cfg, slug)
+        for f in data.get("findings") or []
+        if isinstance(f, dict) and f.get("severity") == "must_fix"
+        for t in f.get("targets") or []
+    }
+
+
 def _first_publication_refusal(cfg: Config, slug: str) -> str | None:
-    """A9: a draft that already has a whole-card audit record is not audited again unchanged."""
+    """A9: a draft that already has a whole-card audit record, or a trail of its first-publication whole-card review,
+    is not audited or published again unchanged."""
     existing = whole_card_audit_files(cfg, slug)
-    if not existing:
+    trails = first_review_trails(cfg, slug)
+    if not existing and not trails:
         return None
+    names = ", ".join(p.name for p in (*existing, *trails))
     return (
-        f"{slug} already has whole-card audit record(s) in {cfg.audits_dir} "
-        f"({', '.join(p.name for p in existing)}). The same draft is not audited again: correct it "
+        f"{slug} already has whole-card audit record(s) or a first-publication review trail in {cfg.audits_dir} "
+        f"({names}). The same draft is not audited again: correct it "
         f'(`correction-plan {slug} --out DIR`, docs/pipeline.md, "Correcting a held-back draft")'
     )
+
+
+def _first_review_draft_problem(cfg: Config, slug: str) -> str | None:
+    """Why the draft is not the one the first-publication review was recorded for (sidecar missing or its sha256
+    differs from the draft's), or None."""
+    sidecar = cfg.first_review_sha_path(slug)
+    recorded = sidecar.read_text(encoding="utf-8").strip() if sidecar.is_file() else None
+    if recorded is None:
+        return f"{sidecar} is missing: record the whole-card review again (`record-review {slug} --card-review`)"
+    if recorded != _sha256((cfg.drafts_dir / f"{slug}.yaml").read_bytes()):
+        return (
+            f"the draft {slug} changed after its whole-card review was recorded: review it again "
+            f"(`card-review-plan {slug} --out DIR`, the card-reviewer, `record-review {slug} --card-review`)"
+        )
+    return None
+
+
+def _first_review_problem(cfg: Config, slug: str) -> str | None:
+    """Why the first publication of ``slug`` may not go to audit, or None: the run folder holds no valid
+    whole-card review of the draft, or that review did not accept it."""
+    review = _load_card_review(cfg, slug, FIRST_PUBLICATION)
+    if review is None:
+        return (
+            f"{cfg.run_dir} holds no valid whole-card review of the draft {slug} (`card-review-plan {slug} --out "
+            f"DIR`, the card-reviewer, then `record-review {slug} --card-review --run-dir DIR`)"
+        )
+    if problem := _first_review_draft_problem(cfg, slug):
+        return problem
+    if review.verdict != "accept":
+        return f"the whole-card review rejected the draft {slug}"
+    return None
+
+
+def first_review_trail(cfg: Config, slug: str, draft_bytes: bytes) -> dict[str, Any] | None:
+    """The trail record of the first-publication whole-card review: the card, the verdict, the number of
+    ``must_fix`` and of decisive findings, the findings and the sha256 of the draft reviewed. None without a review."""
+    review = _load_card_review(cfg, slug, FIRST_PUBLICATION)
+    if review is None:
+        return None
+    return {
+        "card": slug,
+        "verdict": review.verdict,
+        "must_fix_count": sum(f.severity == "must_fix" for f in review.findings),
+        "decisive_count": _decisive_count(review.findings),
+        "findings": _finding_dicts(review.findings),
+        "draft_sha256": _sha256(draft_bytes),
+    }
 
 
 CORRECTION_LIMITS = (
@@ -3891,6 +3994,23 @@ def build_correction_context(
             audit_parts += [f"(this record cannot be read: {str(exc).splitlines()[0]})", ""]
             continue
         audit_parts += [*_audit_lines(audit), ""]
+    for path, data in _rejected_first_review_trails(cfg, slug):
+        audit_parts += [
+            f"### {path.name}",
+            "",
+            "(the whole-card review before the first publication rejected this draft; its findings are to be "
+            "answered like audit findings)",
+            "",
+        ]
+        for i, f in enumerate(data.get("findings") or [], 1):
+            if not isinstance(f, dict):
+                continue
+            audit_parts.append(f"- finding {i} ({f.get('severity')}): {f.get('problem')}")
+            if f.get("targets"):
+                audit_parts.append(f"  - targets: {', '.join(f['targets'])}")
+            if f.get("fix"):
+                audit_parts.append(f"  - fix: {f['fix']}")
+        audit_parts.append("")
     parts = [
         f"# Correction context (round C{k}): the held-back draft `{slug}`",
         "",
@@ -3959,7 +4079,7 @@ def correction_plan(cfg: Config, slug: str, loader: FullTextLoader) -> Path:
         raise PipelineError(f"{cfg.cards_dir / f'{slug}.yaml'} exists: only a held-back draft is corrected")
     if not (cfg.drafts_dir / f"{slug}.yaml").is_file():
         raise PipelineError(f"no draft {cfg.drafts_dir / f'{slug}.yaml'} to correct")
-    if not whole_card_audit_files(cfg, slug):
+    if not _is_held_back(cfg, slug):
         raise PipelineError(f"{cfg.audits_dir} holds no whole-card audit record of {slug}: nothing to correct")
     used, open_round = correction_round_state(cfg, slug)
     if open_round is not None:
@@ -4132,21 +4252,24 @@ def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
     For ``C<k>-pre`` the card is the unchanged draft in ``drafts/``: the same context and checklist, before any
     correction."""
     pre = tag.endswith("-pre")
-    applied = cfg.drafts_dir / f"{slug}.yaml" if pre else _attempt_text_path(cfg, slug, tag, "card-review")
+    first = tag == FIRST_PUBLICATION
+    applied = cfg.drafts_dir / f"{slug}.yaml" if pre or first else _attempt_text_path(cfg, slug, tag, "card-review")
     card = _load_card(applied)
     reader = citations.CacheReader(cfg.cache_dir)
     studies: list[str] = []
     for study_id in dict.fromkeys(s.id for s in card.studies):
         studies += [f"### {study_id}", "", *_cached_study_files(cfg, study_id, reader), ""]
+    when = "before drafting" if pre else "first publication" if first else f"correction attempt {tag}"
+    what = "held-back draft, as it stands," if pre else "draft, as it stands," if first else "corrected card"
     parts = [
-        f"# Whole-card review context ({'before drafting' if pre else 'correction attempt ' + tag}): `{slug}`",
+        f"# Whole-card review context ({when}): `{slug}`",
         "",
-        f"You review the whole {'held-back draft, as it stands,' if pre else 'corrected card'} against its cached "
+        f"You review the whole {what} against its cached "
         "sources. Read only this file and the cached files "
         "named in section 2; fetch nothing. Write your review file to "
         f"`{cfg.card_review_path(slug, tag)}`.",
         "",
-        f"## 1. The {'draft' if pre else 'corrected card'} (comments removed)",
+        f"## 1. The {'draft' if pre or first else 'corrected card'} (comments removed)",
         "",
         "```yaml",
         strip_yaml_comments(applied.read_text(encoding="utf-8")),
@@ -4170,14 +4293,31 @@ def build_card_review_context(cfg: Config, slug: str, tag: str) -> str:
     return "\n".join(parts)
 
 
-def card_review_plan(cfg: Config, slug: str, n: str, *, revision: int = 0, pre: bool = False) -> Path:
+def card_review_plan(cfg: Config, slug: str, n: str | None, *, revision: int = 0, pre: bool = False) -> Path:
     """`card-review-plan <slug> --round C<k> [--revised[2-4] | --pre]`: write the whole-card review context of
     a correction attempt (W1). Refused unless that attempt's checks passed and its correction review says accept; for
     a revised attempt also unless the attempts before it were rejected, each for a kind whose revision was unused.
 
     With ``pre`` it is the review of the unchanged draft before the correction (``...-C<k>-pre.md``):
     refused unless the card is a held-back draft (no card, a draft, a whole-card audit record) and ``k`` is the next
-    round the card may have."""
+    round the card may have.
+
+    Without a round (``n`` None) it is the review of a new draft before its first publication
+    (``...-first.md``): refused when the card exists, the draft is missing or the draft is held back (it has a
+    whole-card audit record or a first-publication review trail: the correction path applies)."""
+    if n is None:
+        if pre or revision:
+            raise PipelineError("--pre and --revised... go with --round C<k>")
+        if (cfg.cards_dir / f"{slug}.yaml").exists():
+            raise PipelineError(f"{cfg.cards_dir / f'{slug}.yaml'} exists: a card is published once")
+        if not (cfg.drafts_dir / f"{slug}.yaml").is_file():
+            raise PipelineError(f"no draft {cfg.drafts_dir / f'{slug}.yaml'} to review")
+        if refusal := _first_publication_refusal(cfg, slug):
+            raise PipelineError(refusal)
+        text = build_card_review_context(cfg, slug, FIRST_PUBLICATION)
+        path = cfg.card_review_context_path(slug, FIRST_PUBLICATION)
+        _write_text(path, text)
+        return path
     if pre:
         if revision:
             raise PipelineError("--pre is the review before drafting: it takes no revised attempt")
@@ -4185,7 +4325,7 @@ def card_review_plan(cfg: Config, slug: str, n: str, *, revision: int = 0, pre: 
             raise PipelineError(f"{cfg.cards_dir / f'{slug}.yaml'} exists: only a held-back draft is reviewed")
         if not (cfg.drafts_dir / f"{slug}.yaml").is_file():
             raise PipelineError(f"no draft {cfg.drafts_dir / f'{slug}.yaml'} to review")
-        if not whole_card_audit_files(cfg, slug):
+        if not _is_held_back(cfg, slug):
             raise PipelineError(f"{cfg.audits_dir} holds no whole-card audit record of {slug}: it is not held back")
         used, open_round = correction_round_state(cfg, slug)
         k = correction_number(n)
@@ -6016,9 +6156,33 @@ def run_publish_card(
         invalid = [(pub.invalid_copy, cfg.audits_dir / f"{date}-{slug}{first_suffix}-invalid.yaml")]
         return copies, invalid if pub.invalid_copy is not None else []
 
+    first_review_rejected = False
     if round_ is None:
-        pub = whole_card_outcome(cfg, slug, date)
-        copies, invalid_copies = audit_copies(pub)
+        first_review = _load_card_review(cfg, slug, FIRST_PUBLICATION)
+        if first_review is None:
+            if (refusal := _first_publication_refusal(cfg, slug)) is not None:
+                raise PipelineError(refusal)  # a draft that was reviewed or audited already: the correction path
+            raise PipelineError(
+                f"no valid whole-card review of the draft {slug} in {cfg.run_dir}: run "
+                f"`card-review-plan {slug} --out DIR`, the card-reviewer, then "
+                f"`record-review {slug} --card-review --run-dir DIR` before the audits; nothing is written"
+            )
+        if problem := _first_review_draft_problem(cfg, slug):
+            raise PipelineError(problem + "; nothing is written")
+        draft_bytes = draft_path.read_bytes()  # equals the reviewed draft (sha256 recorded by record-review)
+        trail = first_review_trail(cfg, slug, draft_bytes)
+        assert trail is not None
+        trails.append((cfg.audits_dir / f"{date}-{slug}-card-review.yaml", trail))
+        if first_review.verdict == "accept":
+            pub = whole_card_outcome(cfg, slug, date)
+            copies, invalid_copies = audit_copies(pub)
+        else:  # the safety valve is not applied at the first publication: a reject holds the card back
+            first_review_rejected = True
+            pub = CardPublication(
+                slug, date, False, None, ["whole-card review rejected"], {}, None, None, None,
+                draft_path.read_text(encoding="utf-8"),
+            )  # fmt: skip
+            copies, invalid_copies = [], []
     else:
         if not is_correction_round(round_):
             raise PipelineError(f"publish-card --round takes a correction round (C1, C2, ...), not {round_!r}")
@@ -6041,7 +6205,7 @@ def run_publish_card(
             raise PipelineError(problem)
         answered = [
             p for p in whole_card_audit_files(cfg, slug) if not re.search(rf"-C{k}(-second|-invalid)?\.yaml$", p.name)
-        ]
+        ] + [path for path, _data in _rejected_first_review_trails(cfg, slug)]
         if (note := _valve_unfinished(cfg, slug, last_attempt_tag(cfg, slug, round_))) is not None:
             raise PipelineError(note)
         pub = correction_outcome(cfg, slug, date, round_, exception=exception)
@@ -6092,8 +6256,10 @@ def run_publish_card(
                 f"`card-review-plan {slug} --round {round_}{_attempt_flag(attempt)} --out DIR`, "
                 f"the card-reviewer, then `record-review --card-review{_attempt_flag(attempt)}`; the round stays open"
             )
-    if first_suffix not in pub.records and (
-        pending := _pending_retry(cfg.audit_path(slug, None, False, round_ or False))
+    if (
+        not first_review_rejected
+        and first_suffix not in pub.records
+        and (pending := _pending_retry(cfg.audit_path(slug, None, False, round_ or False)))
     ):
         raise PipelineError(pending)
     changelog = publication_changelog(cfg, pub) if pub.published else None
@@ -6319,7 +6485,8 @@ def _build_parser() -> argparse.ArgumentParser:
     rev.add_argument(
         "--card-review",
         action="store_true",
-        help="with --round C<k>: the whole-card review (review/<slug>-card-C<k>[-pre|-revised[2-4]].json)",
+        help="the whole-card review: with --round C<k> (review/<slug>-card-C<k>[-pre|-revised[2-4]].json), without "
+        "--round the first publication (review/<slug>-card-first.json)",
     )
 
     aplan = sub.add_parser(
@@ -6375,10 +6542,15 @@ def _build_parser() -> argparse.ArgumentParser:
     crplan = sub.add_parser(
         "card-review-plan",
         parents=[common],
-        help="write the card-reviewer's context for the whole-card review of a correction attempt (--out DIR)",
+        help="write the card-reviewer's context for the whole-card review of a correction attempt or of a first "
+        "publication (--out DIR)",
     )
     crplan.add_argument("slug")
-    crplan.add_argument("--round", type=_audit_round_arg, required=True, help="C<k>: the correction round")
+    crplan.add_argument(
+        "--round",
+        type=_audit_round_arg,
+        help="C<k>: the correction round; left out: the review of a new draft before its first publication",
+    )
     _add_revision_flags(crplan, "the review of")
     crplan.add_argument(
         "--pre", action="store_true", help="the unchanged held-back draft, before drafting the correction"
@@ -6386,7 +6558,7 @@ def _build_parser() -> argparse.ArgumentParser:
     crplan.add_argument(
         "--out",
         type=Path,
-        help="write <OUT>/card-review-context/<slug>-C<k>[-pre|-revised[2-4]].md (default: --run-dir)",
+        help="write <OUT>/card-review-context/<slug>-C<k>[-pre|-revised[2-4]].md, or -first.md (default: --run-dir)",
     )
 
     for name, text in (
@@ -6710,9 +6882,20 @@ def _dispatch(
         out("FAILED")
         return 1
     if args.command == "record-review":
+        if args.card_review and args.round == 1 and args.pmid is None and not args.pre and not args.revision:
+            # no --round: the whole-card review of the first publication of a draft
+            review = record_review(cfg, args.slug, None, FIRST_PUBLICATION, card_review=True)
+            out(
+                f"whole-card review of the first publication recorded: {review.verdict}, "
+                f"{len(review.findings)} finding(s)"
+            )
+            return 0
         if args.card_review:
             if args.pmid is not None or not is_correction_round(args.round):
-                raise PipelineError("--card-review is for a whole card in a correction round: --round C<k>, no paper")
+                raise PipelineError(
+                    "--card-review is for a whole card: --round C<k> in a correction, no --round at first "
+                    "publication; no paper"
+                )
             if args.pre and args.revision:
                 raise PipelineError("--pre is the review before drafting: it takes no revised attempt")
             tag = f"{args.round}-pre" if args.pre else attempt_tag(args.round, args.revision)
@@ -6743,8 +6926,11 @@ def _dispatch(
             if is_correction_round(args.round):
                 out(str(audit_plan_correction(cfg, args.card, args.round, loader, args.out)))
                 return 0
-            if not args.round and (refusal := _first_publication_refusal(cfg, args.card)) is not None:
-                raise PipelineError(refusal)
+            if not args.round:
+                if (refusal := _first_publication_refusal(cfg, args.card)) is not None:
+                    raise PipelineError(refusal)
+                if problem := _first_review_problem(cfg, args.card):
+                    raise PipelineError(problem + "; the draft is not audited")
             text = build_audit_context(cfg, args.card, None, loader, redraft=bool(args.round))
             path = (args.out or cfg.run_dir) / "audit-context" / f"{args.card}{'-L' if args.round else ''}.md"
         else:
@@ -6802,7 +6988,7 @@ def _dispatch(
         out(str(correction_plan(cfg, args.slug, loader)))
         return 0
     if args.command == "card-review-plan":
-        if not is_correction_round(args.round):
+        if args.round is not None and not is_correction_round(args.round):
             raise PipelineError("card-review-plan --round takes a correction round (C1, C2, ...)")
         out(str(card_review_plan(cfg, args.slug, args.round, revision=args.revision, pre=args.pre)))
         return 0
