@@ -1180,8 +1180,15 @@ def correct_publish(cfg: Config, slug: str, date: str, *, dry_run: bool, out: Ca
             assert first is not None
             why_line = first.reasons_summary
         else:
-            answered = [k for ks in state.tier.answered for k in ks]
-            why_line = " ".join(state.pre.findings[min(answered)].problem.split())
+            answered = sorted({k for ks in state.tier.answered for k in ks})
+            named = dict.fromkeys(
+                " ".join((f.target or (f.targets or ["?"])[0]).split())
+                for f in (state.pre.findings[k] for k in answered)
+            )
+            why_line = (
+                f"The review agent found that {len(named)} item(s) did not say what the cited source says: "
+                f"{', '.join(named)}."
+            )
         entry = {
             "date": dt.date.fromisoformat(date),
             "card": slug,

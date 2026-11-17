@@ -895,3 +895,65 @@ def test_cli_pmcpage_marks_exclusion_candidates(tmp_path, capsys):
     card = make_card(tmp_path, ids=(FREE_PMID, CLOSED_PMID, WRONG_PMID, NOBODY_PMID))
     code = run_cli(["pmcpage", "--card", str(card), FREE_PMID], server, tmp_path)
     assert code == 0 and f"[Methods] [exclusion] {EXCLUSION_SENTENCE}" in capsys.readouterr().out
+
+
+# --- the pipeline's full-text loader without a contact email ----------------------------------------------------
+
+
+@pytest.fixture
+def no_email(monkeypatch):
+    """No CONTACT_EMAIL anywhere, and any client construction or HTTP call fails the test."""
+    from me_atlas import pipeline
+
+    monkeypatch.setattr(pipeline, "load_dotenv", lambda *a, **k: {})
+    monkeypatch.delenv("CONTACT_EMAIL", raising=False)
+
+    def no_client(*a, **k):
+        raise AssertionError("an EuropePmcClient was built, but no request may be made")
+
+    monkeypatch.setattr(europepmc, "EuropePmcClient", no_client)
+    return pipeline
+
+
+def _cache_lookup(tmp_path, pmid, body):
+    cache = EuropePmcCache(tmp_path)
+    cache.write(cache.lookup_path(pmid), body.encode("utf-8"))
+    return cache
+
+
+def test_loader_reads_a_cached_full_text_without_a_contact_email(tmp_path, no_email):
+    cache = _cache_lookup(tmp_path, OA_PMID, search_json(OA_PMID, OA_PMCID, "Y"))
+    cache.write(cache.fulltext_path(OA_PMCID), fulltext_xml().encode("utf-8"))
+    result = no_email.live_fulltext_loader(tmp_path)(OA_PMID)
+    assert result.xml == fulltext_xml().encode("utf-8")
+    assert result.note == f"Europe PMC open access, {OA_PMCID}"
+
+
+def test_loader_gives_the_ordinary_note_for_a_cached_lookup_without_open_full_text(tmp_path, no_email):
+    _cache_lookup(tmp_path, NOID_PMID, search_json(NOID_PMID, None, "N"))
+    result = no_email.live_fulltext_loader(tmp_path)(NOID_PMID)
+    assert result.xml is None
+    assert result.note.startswith("no open full text (Europe PMC:")
+    assert "CONTACT_EMAIL" not in result.note
+
+
+def test_loader_without_a_cached_lookup_or_email_says_nothing_was_requested(tmp_path, no_email):
+    result = no_email.live_fulltext_loader(tmp_path)(OA_PMID)
+    assert result.xml is None
+    assert "not cached" in result.note and "CONTACT_EMAIL is not set" in result.note
+    assert not (tmp_path / "europepmc").exists()
+
+
+def test_loader_with_a_cached_lookup_but_no_cached_xml_and_no_email_makes_no_request(tmp_path, no_email):
+    _cache_lookup(tmp_path, OA_PMID, search_json(OA_PMID, OA_PMCID, "Y"))
+    result = no_email.live_fulltext_loader(tmp_path)(OA_PMID)
+    assert result.xml is None
+    assert "not cached" in result.note and "CONTACT_EMAIL is not set" in result.note
+
+
+def test_a_fetch_still_refuses_without_the_contact_email(tmp_path, no_email):
+    import datetime as dt
+
+    search = no_email.live_preprint_search(tmp_path)
+    with pytest.raises(EuropePmcError, match="CONTACT_EMAIL is not set"):
+        search(dt.date(2026, 1, 1), dt.date(2026, 1, 2))

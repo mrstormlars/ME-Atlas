@@ -604,7 +604,11 @@ def test_wording_only_change_with_wording_classes_is_tier_1_and_publishes_on_the
         entry["change"]
         == f"Correction: the finding and group of {CTX} reworded; the text of the link to {TARGET} reworded"
     )
-    assert entry["reason"] == f"PROBLEM about studies[{CTX}].finding."
+    assert entry["reason"] == (
+        "The review agent found that 2 item(s) did not say what the cited source says: "
+        f"studies[{CTX}].finding, links[0]."
+    )
+    assert "\n" not in entry["reason"] and "PROBLEM" not in entry["reason"]
     assert entry["tier"] == 1 and entry["decided_by"] == "ai_pair" and str(entry["date"]) == DATE
     assert entry["sources"] == [CTX, STUDY]
     assert corr.audit_names() == [f"{DATE}-{SLUG}-correction-published-trail.yaml"]  # no audit record: none was run
