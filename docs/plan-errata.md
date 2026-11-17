@@ -1,6 +1,6 @@
 # Plan: errata and corrections to a cited paper
 
-Status: proposal, waiting for a founder ruling (section 5). Nothing here is built.
+Status: ruled A(a), B(a), C(a) and built on `feat/errata-path` (section 3 as written; the check is C12, the validator rule V17).
 
 ## 1. The gap
 
@@ -19,7 +19,7 @@ The four `ErratumIn` links, against the published cards:
 
 | Corrected study | Erratum | On the cards today |
 |---|---|---|
-| pmid:41834684 (white-matter NII study) | pmid:42227214 | Erratum is a study entry on `neuroinflammation` (role `context`, `case_definition: none`), cited next to the study in a sentence, with a comment saying what it corrects. Not on `brain-and-brainstem-mri-changes`, which also cites the study. |
+| pmid:41834684 (white-matter NII study) | pmid:42227214 | Erratum is a study entry on `neuroinflammation` (role `context`, `case_definition: none`), cited next to the study in a sentence, with a comment saying what it corrects. (`brain-and-brainstem-mri-changes` names the study in YAML comments only, not as a study.) |
 | pmid:40703261 (daratumumab pilot) | pmid:40901516 | Named in a YAML comment on `autoimmunity-autoantibodies-b-cells` only ("TODO: verify what it corrects"); not a study entry. |
 | pmid:28694809 (cytotoxic lymphocyte phenotype) | pmid:30915066 | Not on `reduced-nk-cell-function`, which cites the study. Erratum not cached. |
 | pmid:21777306 (ICC criteria paper) | pmid:28929634 | Not cited by any card. |
@@ -33,7 +33,7 @@ A cached record is fetched once. An `ErratumIn` link added to PubMed after the r
 1. **Parse.** `PubmedRecord` gains `errata` (the PMIDs of `ErratumIn` links) and `erratum_for` (of `ErratumFor`). Offline tests with two new recorded fixtures.
 2. **Re-fetch cited records.** Each weekly `prepare` re-fetches the PubMed records of the studies the published cards cite (276 distinct PMIDs on 2026-11-17: a few batched efetch requests within the NCBI rate limit) and fetches any erratum notice not yet cached. Written to the cache as a normal fetch, recorded in the manifest.
 3. **Card format.** An optional study field `corrects: <study id>` on the erratum's own study entry. Validator: the target is a study on the same card; an entry with `corrects` has role `context`, `design: other`, `case_definition: none`, and is not a source of `level_reason`, `contested.reason` or a badge reason (as V15 does for preprints). Optional, so no card has to change in the same pull request; `neuroinflammation` is brought in line through the pipeline.
-4. **Check.** New citation check C12 (warning): a cited study whose record lists an erratum that is not a study entry on the card. With today's cache it fires on `brain-and-brainstem-mri-changes`, `autoimmunity-autoantibodies-b-cells` and `reduced-nk-cell-function`.
+4. **Check.** New citation check C12 (warning): a cited study whose record lists an erratum that is not a study entry on the card. With today's cache it fires on `autoimmunity-autoantibodies-b-cells` and `reduced-nk-cell-function`.
 5. **Surface in the weekly run.** `prepare` lists each erratum of a cited study that is not on the card (`errata_on_cards`), and puts the pair (erratum, card) into the run as a fixed pair, without the classifier: the drafter gets the erratum record, its full text when free (an erratum abstract is usually empty) and the corrected study's card entry, and may propose `add_study` for the erratum with `corrects` plus the operations it implies on the text. Then the normal review, and audit for whatever tier the operations have. The report lists the pairs.
 6. **Docs.** `docs/card-format.md` (field, validator rule), `docs/citation-check.md` (C12), `docs/pipeline.md` ("What `prepare` selects", the report), `docs/fetch.md` (the re-fetch).
 

@@ -43,6 +43,7 @@ def add_record(
     pmcid: str | None = None,
     authors: tuple[tuple[str, str], ...] = (),
     collective: tuple[str, ...] = (),
+    errata: tuple[str, ...] = (),
 ) -> None:
     """Write a fictional PubMed record to <root>/pubmed/<pmid>.xml (with the article's PMC id if ``pmcid``)."""
     pub_date = f"<PubDate><Year>{year}</Year></PubDate>" if year is not None else "<PubDate></PubDate>"
@@ -58,7 +59,18 @@ def add_record(
         f"<ArticleTitle>{escape(title or '')}</ArticleTitle>"
         f"<Abstract>{paragraphs}</Abstract>"
         f"<PublicationTypeList><PublicationType>Journal Article</PublicationType>{types}</PublicationTypeList>"
-        "</Article></MedlineCitation>"
+        "</Article>"
+        + (
+            "<CommentsCorrectionsList>"
+            + "".join(
+                f'<CommentsCorrections RefType="ErratumIn"><PMID Version="1">{e}</PMID></CommentsCorrections>'
+                for e in errata
+            )
+            + "</CommentsCorrectionsList>"
+            if errata
+            else ""
+        )
+        + "</MedlineCitation>"
         + (
             f'<PubmedData><ArticleIdList><ArticleId IdType="pmc">{pmcid}</ArticleId></ArticleIdList></PubmedData>'
             if pmcid
@@ -302,6 +314,40 @@ def test_c4_retracted_record_is_an_error(tmp_path, cache, capsys):
     code, lines = run(tmp_path, cache, [make_study()], capsys)
     c4 = issue_lines(lines, "C4")
     assert code == 1 and len(c4) == 1 and "ERROR" in c4[0] and f"pmid:{PMID}" in c4[0]
+
+
+# --- C12 ---------------------------------------------------------------------
+
+ERRATUM = "90000021"
+
+
+def c12(tmp_path, cache, studies, capsys):
+    code, lines = run(tmp_path, cache, studies, capsys)
+    return code, issue_lines(lines, "C12")
+
+
+def test_c12_an_erratum_that_is_not_a_study_on_the_card_is_a_warning(tmp_path, cache, capsys):
+    add_record(cache, errata=(ERRATUM,))
+    code, found = c12(tmp_path, cache, [make_study()], capsys)
+    assert len(found) == 1 and "WARNING" in found[0] and f"pmid:{PMID}" in found[0] and f"pmid:{ERRATUM}" in found[0]
+    assert code == 0  # a warning never fails the check
+
+
+@pytest.mark.parametrize("corrects", [True, False])
+def test_c12_an_erratum_that_is_a_study_on_the_card_gives_no_warning(tmp_path, cache, capsys, corrects):
+    add_record(cache, errata=(ERRATUM,))
+    add_record(cache, ERRATUM, title="Fictional erratum.")
+    over: dict = {"id": f"pmid:{ERRATUM}", "title": "Fictional erratum.", "case_definition": "none"}
+    over["case_definition_quote"] = None
+    if corrects:
+        over["corrects"] = f"pmid:{PMID}"
+    _, found = c12(tmp_path, cache, [make_study(), make_study(ERRATUM, **over)], capsys)
+    assert found == []
+
+
+def test_c12_a_study_whose_record_lists_no_erratum_gives_no_warning(tmp_path, cache, capsys):
+    _, found = c12(tmp_path, cache, [make_study()], capsys)
+    assert found == []
 
 
 # --- C5 ----------------------------------------------------------------------

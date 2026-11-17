@@ -1397,3 +1397,88 @@ def test_v15_a_preprint_in_a_subgroup_fails_at_that_subgroup(tmp_path):
     data = with_preprint(base())
     data["subgroups"].append({"text": "A fictional preprint reported a subgroup.", "sources": [PREPRINT_ID]})
     assert v15(check(tmp_path, data)) == ["subgroups[1].sources[0]"]
+
+
+# --- errata (V17) ------------------------------------------------------------
+
+ERRATUM_ID = "pmid:90000021"
+
+
+def with_erratum(data: dict, **changes) -> dict:
+    """The fixture card plus an erratum study that corrects its first study."""
+    data["studies"].append(
+        {
+            "id": ERRATUM_ID,
+            "title": "Fictional erratum to a made-up study",
+            "year": 2026,
+            "cohort": "me_cfs",
+            "case_definition": "none",
+            "case_definition_source": "fulltext",
+            "case_definition_quote": None,
+            "design": "other",
+            "n_patients": None,
+            "n_controls": None,
+            "measures_pem": False,
+            "preregistered": None,
+            "role": "context",
+            "direction": "not_applicable",
+            "finding": "An erratum corrects a table value in the study.",
+            "corrects": data["studies"][0]["id"],
+            **changes,
+        }
+    )
+    return data
+
+
+def v17(issues: list[Issue]) -> list[str]:
+    return [i.path for i in issues if i.rule == "V17"]
+
+
+def test_a_study_corrects_nothing_unless_it_says_so():
+    assert {s.corrects for s in cards.load_card(VALID_CARD).studies} == {None}
+
+
+def test_v17_a_valid_erratum_study_passes(tmp_path):
+    assert check(tmp_path, with_erratum(base())) == []
+
+
+def test_v17_an_erratum_may_be_cited_in_text_that_is_not_a_level_contested_or_badge_reason(tmp_path):
+    data = with_erratum(base())
+    data["subgroups"].append({"text": "A fictional erratum corrected a value.", "sources": [ERRATUM_ID]})
+    assert check(tmp_path, data) == []
+
+
+def test_v17_an_unknown_target_fails(tmp_path):
+    data = with_erratum(base(), corrects="pmid:90000099")
+    assert v17(check(tmp_path, data)) == ["studies[5].corrects"]
+
+
+def test_v17_a_study_correcting_itself_fails(tmp_path):
+    data = with_erratum(base(), corrects=ERRATUM_ID)
+    assert v17(check(tmp_path, data)) == ["studies[5].corrects"]
+
+
+@pytest.mark.parametrize("change", [{"role": "supports"}, {"case_definition": "other"}])
+def test_v17_wrong_role_or_case_definition_fails(tmp_path, change):
+    data = with_erratum(base(), **change)
+    assert "studies[5]" in v17(check(tmp_path, data))
+
+
+@pytest.mark.parametrize(
+    ("path", "expected"),
+    [
+        ("level_reason", "level_reason.sources[2]"),
+        ("contested", "contested.reason.sources[1]"),
+        ("diagnostic_marker", "badges.diagnostic_marker.reason.sources[1]"),
+        ("explains_pem", "badges.explains_pem.reason.sources[1]"),
+    ],
+)
+def test_v17_an_erratum_as_a_level_contested_or_badge_reason_source_fails(tmp_path, path, expected):
+    data = with_erratum(base())
+    if path == "level_reason":
+        data["level_reason"]["sources"].append(ERRATUM_ID)
+    elif path == "contested":
+        data["contested"]["reason"]["sources"].append(ERRATUM_ID)
+    else:
+        data["badges"][path]["reason"]["sources"].append(ERRATUM_ID)
+    assert v17(check(tmp_path, data)) == [expected]

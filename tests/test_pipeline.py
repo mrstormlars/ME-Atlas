@@ -42,7 +42,9 @@ class Env:
         shutil.copy(FIXTURES / "drafts" / f"{SLUG}.yaml", self.drafts / f"{SLUG}.yaml")
         (self.cache / "pubmed").mkdir(parents=True)
         shutil.copy(FIXTURES / "pubmed" / "90000100.xml", self.cache / "pubmed" / "90000100.xml")
-        self.fetch_calls: list[list[str]] = []
+        self.fetch_calls: list[list[str]] = []  # the window fetch, or the ids fetch of --ids mode
+        self.cited_calls: list[list[str]] = []  # what a window run fetches for the cited records and their errata
+        self._window_seen = False
         self.preprints: list[EuropePmcRecord] = []  # what the injected preprint search returns
         self.preprint_calls: list[tuple[dt.date, dt.date]] = []
         self.window = ["90000101", "90000102", "90000103"]
@@ -55,6 +57,10 @@ class Env:
 
     def fetch(self, argv):
         """Stands in for pubmed.main: caches three new records and writes a run manifest."""
+        if argv[1] == "--ids" and self._window_seen:  # the re-fetch of cited records, or the fetch of an erratum
+            self.cited_calls.append(list(argv))
+            return 0
+        self._window_seen = argv[1] != "--ids"
         self.fetch_calls.append(list(argv))
         for pmid in ("90000101", "90000102", "90000103", *self.extra_pubmed):
             shutil.copy(FIXTURES / "pubmed" / f"{pmid}.xml", self.cache / "pubmed" / f"{pmid}.xml")
@@ -2397,3 +2403,161 @@ def test_the_header_says_the_papers_were_given_by_id_and_no_preprint_search_was_
     assert "fetch window" not in report.replace("not a fetch window", "")
     line = next(x for x in report.splitlines() if x.startswith("Preprints"))
     assert "no preprint search was made" in line
+
+
+# --- errata of cited studies ---------------------------------------------------
+
+ERRATUM_PMID = "90000021"
+CORRECTED = "pmid:90000100"
+ERRATUM_FIXTURE = Path(__file__).parent / "fixtures" / "pubmed" / f"{ERRATUM_PMID}.xml"
+
+
+def list_erratum_on_cited_record(env: Env, *, cache_erratum: bool = True) -> None:
+    """The cached record of the cited study 90000100 now lists an ErratumIn link to the erratum."""
+    path = env.cache / "pubmed" / "90000100.xml"
+    link = f'<CommentsCorrections RefType="ErratumIn"><PMID Version="1">{ERRATUM_PMID}</PMID></CommentsCorrections>'
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            "</MedlineCitation>", f"<CommentsCorrectionsList>{link}</CommentsCorrectionsList></MedlineCitation>"
+        ),
+        encoding="utf-8",
+    )
+    if cache_erratum:
+        shutil.copy(ERRATUM_FIXTURE, env.cache / "pubmed" / f"{ERRATUM_PMID}.xml")
+
+
+def put_erratum_on_card(env: Env) -> None:
+    path = env.drafts / f"{SLUG}.yaml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    study = dict(next(s for s in data["studies"] if s["id"] == CORRECTED))
+    study.update({"id": f"pmid:{ERRATUM_PMID}", "case_definition": "none", "case_definition_quote": None})
+    study.update({"role": "context", "design": "other", "corrects": CORRECTED, "preprint": False})
+    data["studies"].append(study)
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+
+def test_a_window_run_refetches_exactly_the_cited_records_with_refresh(env: Env):
+    env.prepare()
+    assert env.cited_calls == [["fetch", "--ids", "90000100", "90000104", "--refresh", "--cache-dir", str(env.cache)]]
+    summary = load(env.run / "prepare.json")
+    assert summary["cited_refetched"] == 2 and summary["errata_fetched"] == []
+    assert summary["unknown_ref_types"] == [] and summary["errata_on_cards"] == []
+
+
+def test_ids_mode_does_not_refetch_the_cited_records(env: Env):
+    assert env.cli("prepare", "--ids", "90000100") == 0
+    assert env.cited_calls == [] and load(env.run / "prepare.json")["cited_refetched"] == 0
+
+
+def test_an_erratum_that_is_not_cached_is_fetched_without_refresh_and_listed_as_not_cached(env: Env):
+    list_erratum_on_cited_record(env, cache_erratum=False)
+    env.prepare()
+    assert env.cited_calls[1] == ["fetch", "--ids", ERRATUM_PMID, "--cache-dir", str(env.cache)]
+    summary = load(env.run / "prepare.json")
+    assert summary["errata_fetched"] == [ERRATUM_PMID]
+    assert summary["errata_on_cards"] == [
+        {"erratum": ERRATUM_PMID, "card": SLUG, "corrects": CORRECTED, "title": None, "cached": False}
+    ]
+    assert env.classify() == 0
+    assert all(m["pmid"] != ERRATUM_PMID for m in load(env.run / "matches.json")["matches"])  # no pair without a record
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    assert "not cached" in report and ERRATUM_PMID in report
+
+
+def test_a_cached_erratum_is_not_fetched_again(env: Env):
+    list_erratum_on_cited_record(env)
+    env.prepare()
+    assert len(env.cited_calls) == 1
+
+
+@pytest.mark.parametrize("failing", ["refresh", "erratum"])
+def test_a_failed_fetch_of_cited_records_or_errata_fails_prepare_and_writes_no_run_file(env: Env, capsys, failing):
+    list_erratum_on_cited_record(env, cache_erratum=False)
+
+    def fetch(argv):
+        if argv[1] == "--ids" and (("--refresh" in argv) == (failing == "refresh")):
+            return 3
+        return env.fetch(argv)
+
+    assert env.cli("prepare", fetch=fetch) == 1
+    assert "nothing was prepared" in capsys.readouterr().err
+    assert not any((env.run / name).exists() for name in ("papers.json", "cards.json", "prepare.json"))
+
+
+def test_an_unknown_ref_type_on_a_cited_record_is_recorded_with_its_pmid(env: Env):
+    path = env.cache / "pubmed" / "90000100.xml"
+    link = (
+        '<CommentsCorrections RefType="ExpressionOfConcernIn"><PMID Version="1">90000023</PMID></CommentsCorrections>'
+    )
+    path.write_text(
+        path.read_text(encoding="utf-8").replace(
+            "</MedlineCitation>", f"<CommentsCorrectionsList>{link}</CommentsCorrectionsList></MedlineCitation>"
+        ),
+        encoding="utf-8",
+    )
+    env.prepare()
+    assert load(env.run / "prepare.json")["unknown_ref_types"] == [
+        {"pmid": "90000100", "ref_types": ["ExpressionOfConcernIn"]}
+    ]
+
+
+def test_errata_on_cards_lists_an_erratum_of_a_cited_study_the_card_lacks(env: Env):
+    list_erratum_on_cited_record(env)
+    env.prepare()
+    assert load(env.run / "prepare.json")["errata_on_cards"] == [
+        {
+            "erratum": ERRATUM_PMID,
+            "card": SLUG,
+            "corrects": CORRECTED,
+            "title": "Fictional erratum: a made-up table value in a made-up study.",
+            "cached": True,
+        }
+    ]
+    assert any("ERRATUM" in line and ERRATUM_PMID in line for line in env.out)
+
+
+def test_an_erratum_already_on_the_card_is_not_listed(env: Env):
+    list_erratum_on_cited_record(env)
+    put_erratum_on_card(env)
+    env.prepare()
+    assert load(env.run / "prepare.json")["errata_on_cards"] == []
+
+
+def test_record_classification_adds_the_erratum_as_a_fixed_pair_the_classifier_never_saw(env: Env):
+    list_erratum_on_cited_record(env)
+    env.window = [*env.window, ERRATUM_PMID]  # the erratum is also in the fetch window
+    env.prepare()
+    assert ERRATUM_PMID not in ids_papers(env)  # not in the classifier's input
+    assert env.classify() == 0  # classify_good.json knows only 90000101 and 90000102
+    matches = load(env.run / "matches.json")["matches"]
+    assert {"slug": SLUG, "pmid": ERRATUM_PMID, "erratum_for": CORRECTED} in matches
+    assert {"slug": SLUG, "pmid": NEW_PMID} in matches
+
+
+def test_the_context_of_an_erratum_pair_names_the_corrected_study_and_states_the_rule(env: Env):
+    list_erratum_on_cited_record(env)
+    env.prepare()
+    assert env.classify() == 0
+    assert env.cli("context", SLUG, ERRATUM_PMID, fulltext=fulltext_loader()) == 0
+    text = (env.run / "context" / f"{SLUG}-{ERRATUM_PMID}.md").read_text(encoding="utf-8")
+    assert f"an erratum to `{CORRECTED}`" in text
+    assert f"`corrects: {CORRECTED}`" in text and "`role: context`" in text and "`case_definition: none`" in text
+    assert "never a source of a level reason" in text
+    assert "Published Erratum" in text  # the erratum record
+    assert "an erratum to" not in context_without_erratum(env)  # an ordinary pair has no such paragraph
+
+
+def context_without_erratum(env: Env) -> str:
+    assert env.cli("context", SLUG, NEW_PMID, fulltext=fulltext_loader()) == 0
+    return (env.run / "context" / f"{SLUG}-{NEW_PMID}.md").read_text(encoding="utf-8")
+
+
+def test_the_report_lists_an_erratum_pair(env: Env):
+    list_erratum_on_cited_record(env)
+    env.prepare()
+    assert env.classify() == 0
+    assert env.cli("report") == 0
+    report = (env.run / "report.md").read_text(encoding="utf-8")
+    section = report.split("## Errata to papers cited on cards")[1].split("## ")[0]
+    assert ERRATUM_PMID in section and CORRECTED in section and "fixed pair" in section

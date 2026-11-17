@@ -27,6 +27,8 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
   shared authors" / "independent groups" for studies that share authors, a ``group`` naming the first or last
   author wrongly, or "<name> also on <pmid>" where the name is not on that record (a warning, an error at the
   level of C10)
+* C12 (warning) a cited ``pmid:`` study whose cached record lists an erratum (PubMed "ErratumIn") that is not a study
+  on the same card
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -67,7 +69,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C11, or LOAD when the file could not be read as a card
+    code: str  # C1..C12, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -1022,6 +1024,33 @@ def check_authors(file: str, card, cache: CacheReader, level: str = WARNING) -> 
     return issues
 
 
+def check_errata(file: str, card, cache: CacheReader) -> list[CitationIssue]:
+    """C12 (warning): a cited study whose cached record lists an erratum that is not a study on the card.
+
+    A study that is not cached, or a record without erratum links, gives nothing (C1 reports the missing record)."""
+    on_card = {s.id for s in card.studies}
+    issues: list[CitationIssue] = []
+    for study in card.studies:
+        if not study.id.startswith("pmid:"):
+            continue
+        record = cache.record(study.id.removeprefix("pmid:"))
+        if isinstance(record, str):
+            continue
+        for erratum in record.errata:
+            if f"pmid:{erratum}" not in on_card:
+                issues.append(
+                    CitationIssue(
+                        file,
+                        study.id,
+                        "C12",
+                        WARNING,
+                        f"the PubMed record lists an erratum, pmid:{erratum}, that is not a study on this card; "
+                        "add it as a study with `corrects`",
+                    )
+                )
+    return issues
+
+
 def _context(text: str, numeral: str) -> str:
     """A few words around the first place ``numeral`` appears in ``text``, for the message."""
     flat = " ".join(text.split())
@@ -1052,6 +1081,7 @@ def check_file(path: Path, cache: CacheReader, numbers_level: str = WARNING) -> 
         issues += check_study(file, study, cache)
     issues += check_numbers(file, card, cache, numbers_level)
     issues += check_authors(file, card, cache, numbers_level)
+    issues += check_errata(file, card, cache)
     return issues
 
 

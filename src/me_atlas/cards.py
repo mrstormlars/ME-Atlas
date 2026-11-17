@@ -2,7 +2,7 @@
 
 Cards live in ``cards/<slug>.yaml``, drafts in ``drafts/<slug>.yaml`` (same schema) and the public
 change log in ``cards/changelog.yaml``. See ``docs/card-format.md`` for the field reference and the
-plain-English rules V1-V16.
+plain-English rules V1-V17.
 
 Command line::
 
@@ -173,6 +173,7 @@ class Study(_Model):
     finding: NonEmptyStr
     group: NonEmptyStr | None = None
     preprint: bool = False  # a preprint (id "doi:..."): not peer reviewed; early signal only (rule V15)
+    corrects: StudyId | None = None  # an erratum or correction: the id of the study on this card it corrects (V17)
 
 
 class Card(_Model):
@@ -302,6 +303,17 @@ def _v15_cited_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
         yield f"subgroups[{i}]", t
     for i, link in enumerate(card.links):
         yield f"links[{i}]", link
+
+
+def _v17_reason_texts(card: Card) -> Iterator[tuple[str, SourcedText]]:
+    """The texts that carry a level, a contested mark or a badge: an erratum is not a source of these."""
+    yield from _paragraphs_at("level_reason", card.level_reason)
+    if card.contested:
+        yield from _paragraphs_at("contested.reason", card.contested.reason)
+    for name in ("diagnostic_marker", "explains_pem"):
+        reason = getattr(card.badges, name).reason
+        if reason is not None:
+            yield from _paragraphs_at(f"badges.{name}.reason", reason)
 
 
 def case_definition_rank(case_definition: str) -> int:
@@ -459,6 +471,35 @@ def check_card(card: Card, file_stem: str, *, published: bool = False) -> list[t
                         "V15",
                         f"{path}.sources[{i}]",
                         f"preprint study '{src}' cannot be cited here, only in early_signals",
+                    )
+                )
+
+    # V17: an erratum entry (`corrects`) points at another study on the card, is context only and sets no level,
+    # contested mark or badge
+    corrects_ids = {s.id for s in card.studies if s.corrects is not None}
+    for i, s in enumerate(card.studies):
+        if s.corrects is None:
+            continue
+        if s.corrects == s.id:
+            found.append(("V17", f"studies[{i}].corrects", "a study cannot correct itself"))
+        elif s.corrects not in by_id:
+            found.append(("V17", f"studies[{i}].corrects", f"'{s.corrects}' is not a study on this card"))
+        if s.role != "context" or s.case_definition != "none":
+            found.append(
+                (
+                    "V17",
+                    f"studies[{i}]",
+                    "a study with 'corrects' must have role 'context' and case_definition 'none'",
+                )
+            )
+    for path, text in _v17_reason_texts(card):
+        for i, src in enumerate(text.sources):
+            if src in corrects_ids:
+                found.append(
+                    (
+                        "V17",
+                        f"{path}.sources[{i}]",
+                        f"erratum study '{src}' cannot be a source of a level, contested or badge reason",
                     )
                 )
 
