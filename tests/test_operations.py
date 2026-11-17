@@ -311,6 +311,35 @@ def test_add_study_provenance_rules():
     reject([op], "case_definition_source")
 
 
+def erratum_add_study(**changes) -> dict:
+    """An erratum built from exactly the fields the erratum rule in the context file names."""
+    op = add_study()
+    op["study"].update(
+        {
+            "corrects": "pmid:90000100",
+            "role": "context",
+            "case_definition": "none",
+            "case_definition_source": "abstract",
+            "case_definition_quote": None,
+            "direction": "not_applicable",
+        }
+    )
+    op["study"].update(changes)
+    return op
+
+
+def test_add_study_of_an_erratum_with_the_fields_the_rule_names_is_accepted():
+    [parsed] = ops(erratum_add_study()).operations
+    assert parsed.study.corrects == "pmid:90000100" and parsed.study.case_definition == "none"
+
+
+def test_add_study_of_an_erratum_without_case_definition_source_is_rejected():
+    reject(
+        [erratum_add_study(case_definition_source=None)],
+        r"case_definition 'none' needs case_definition_source \(abstract or fulltext\)",
+    )
+
+
 def test_malformed_propose_is_rejected():
     reject([{"op": "propose", "target": "level", "value": 6, "reason": [PARA]}], "value")
     reject([{"op": "propose", "target": "level", "value": 3}], "reason")

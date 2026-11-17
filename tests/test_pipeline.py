@@ -589,6 +589,13 @@ def test_report_puts_tier_2_first_then_parking_lot_new_hypotheses_and_retraction
     assert "| pmid:90000101" in report  # classification table
 
 
+def test_the_report_says_the_founder_merges_without_reviewing_and_names_no_trial_period(ready: Env):
+    assert ready.cli("report") == 0
+    report = (ready.run / "report.md").read_text(encoding="utf-8")
+    assert "The founder merges this pull request as an operational step, without reviewing the content." in report
+    assert "trial period" not in report and "four weekly runs" not in report
+
+
 def test_report_with_nothing_proposed_says_none(ready: Env):
     assert ready.cli("report") == 0
     report = (ready.run / "report.md").read_text(encoding="utf-8")
@@ -646,7 +653,9 @@ def test_pr_copies_accepted_results_into_drafts_and_runs_the_commands_in_order(a
         ["git", "commit"],
         ["git", "push"],
         ["gh", "pr"],
+        ["git", "switch"],
     ]
+    assert runner.calls[-1] == ["git", "switch", "main"]
     data = yaml.safe_load(accepted.draft_text())
     assert data["studies"][-1]["id"] == "pmid:90000101"
 
@@ -666,6 +675,21 @@ def test_pr_no_pr_commits_locally_without_pushing(accepted: Env):
     assert accepted.cli("pr", "--no-pr", runner=runner) == 0
     assert [c[:2] for c in runner.calls] == [["git", "switch"], ["git", "add"], ["git", "commit"]]
     assert "yaml" in " ".join(runner.calls[1])
+    assert ["git", "switch", "main"] not in runner.calls  # stays on pipeline/<date>
+
+
+def test_pr_does_not_switch_back_to_main_when_gh_pr_create_fails(accepted: Env):
+    runner = FakeRunner(fail_on="gh")
+    assert accepted.cli("pr", runner=runner) == 1
+    assert ["git", "switch", "main"] not in runner.calls
+    assert runner.calls[-1][:3] == ["gh", "pr", "create"]
+
+
+def test_pr_dry_run_prints_git_switch_main_last(accepted: Env):
+    runner = FakeRunner()
+    assert accepted.cli("pr", "--dry-run", runner=runner) == 0
+    assert [line for line in accepted.out if line.startswith("$ ")][-1] == "$ git switch main"
+    assert runner.calls == []
 
 
 def test_pr_refuses_to_cut_a_pull_request_from_another_branch(accepted: Env):
@@ -2543,6 +2567,7 @@ def test_the_context_of_an_erratum_pair_names_the_corrected_study_and_states_the
     text = (env.run / "context" / f"{SLUG}-{ERRATUM_PMID}.md").read_text(encoding="utf-8")
     assert f"an erratum to `{CORRECTED}`" in text
     assert f"`corrects: {CORRECTED}`" in text and "`role: context`" in text and "`case_definition: none`" in text
+    assert "`case_definition_source: abstract`" in text and "`case_definition_quote: null`" in text
     assert "never a source of a level reason" in text
     assert "Published Erratum" in text  # the erratum record
     assert "an erratum to" not in context_without_erratum(env)  # an ordinary pair has no such paragraph
