@@ -352,6 +352,57 @@ def cards_by_level(cards: Sequence[Card]) -> list[tuple[int, list[Card]]]:
     ]
 
 
+@dataclass(frozen=True)
+class CardCounts:
+    """Counts from one card's structured fields and its links on the graph. Counted, never judged."""
+
+    slug: str
+    name: str
+    level: int
+    contested_rungs: tuple[int, ...]
+    supporting: int  # studies with role "supports"
+    groups: int  # distinct non-empty `group` labels among the supporting studies
+    no_group: int  # supporting studies with no `group`; never counted as a group
+    contradicting: int  # studies with role "contradicts"
+    links: int  # links out of the card on the graph
+
+
+def card_counts(cards: Sequence[Card], g: Graph) -> list[CardCounts]:
+    """One row per card, level 0 up to 5 and by name (casefold, then slug) within a level (the gaps page's order)."""
+    rows: list[CardCounts] = []
+    for c in cards:
+        supporting = [s for s in c.studies if s.role == "supports"]
+        rows.append(
+            CardCounts(
+                c.slug,
+                c.name,
+                c.level,
+                tuple(sorted(c.contested.rungs)) if c.contested else (),
+                len(supporting),
+                len({s.group for s in supporting if s.group}),
+                sum(not s.group for s in supporting),
+                sum(s.role == "contradicts" for s in c.studies),
+                len(g.out.get(c.slug, [])),
+            )
+        )
+    return sorted(rows, key=lambda r: (r.level, r.name.casefold(), r.slug))
+
+
+def untested_links(g: Graph) -> list[Edge]:
+    """Every link at step ``proposed``, sorted by target name, then source name (casefold; ties by key and position)."""
+    edges = [e for _, group in proposed_links(g) for e in group]
+    return sorted(
+        edges,
+        key=lambda e: (
+            g.nodes[e.target].name.casefold(),
+            e.target,
+            g.nodes[e.source].name.casefold(),
+            e.source,
+            e.index,
+        ),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Report
 # ---------------------------------------------------------------------------
@@ -445,6 +496,22 @@ def _gap_lines(g: Graph, cards: Sequence[Card]) -> list[str]:
         if level < 5:
             lines.append(f"    next: {RUNG_NAMES[level + 1]}")
     if not levels:
+        lines.append("  none")
+    lines.append("")
+    counted = card_counts(cards, g)
+    lines.append(f"Counts per hypothesis ({len(counted)})")
+    for r in counted:
+        line = f"  Level {r.level}: {r.name} ({r.slug}): supporting studies {r.supporting}, research groups {r.groups}"
+        if r.no_group:
+            line += f" ({r.no_group} with no group stated)"
+        lines.append(line + f", contradicting studies {r.contradicting}, links {r.links}")
+    if not counted:
+        lines.append("  none")
+    lines.append("")
+    sorted_links = untested_links(g)
+    lines.append(f"Untested links by target, then source ({len(sorted_links)})")
+    lines += [f"  {g.nodes[e.target].name} <- {g.nodes[e.source].name} [{e.support}]" for e in sorted_links]
+    if not sorted_links:
         lines.append("  none")
     lines.append("")
     loose = unlinked_cards(g)

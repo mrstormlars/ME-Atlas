@@ -626,38 +626,31 @@ def _map_views(
 
 
 @dataclass(frozen=True)
-class GapLink:
+class GapRow:
+    """One hypothesis in the gaps page's table: its name and page, and the counts of ``maplib.card_counts``."""
+
+    slug: str
+    name: MapText
+    href: str
+    level: int
+    contested_rungs: tuple[int, ...]
+    supporting: int
+    groups: int
+    no_group: int
+    contradicting: int
+    links: int
+
+
+@dataclass(frozen=True)
+class GapLinkRow:
+    """One link at step ``proposed``: no link text; the source's article on the map page shows it."""
+
     source: MapText
     source_href: str
-    view: LinkView  # the link as the map page shows it
-
-
-@dataclass(frozen=True)
-class GapTarget:
-    name: MapText
-    href: str
-    links: tuple[GapLink, ...]
-
-
-@dataclass(frozen=True)
-class GapSymptom:
-    id: str
-    name: MapText
-    sources: tuple[str, ...]  # the case-definition documents that list it
-    cards: tuple[tuple[MapText, str], ...]  # (name, href) of the hypotheses that link to it (list 2 only)
-
-
-@dataclass(frozen=True)
-class GapCard:
-    name: MapText
-    href: str
-    contested_rungs: tuple[int, ...]
-
-
-@dataclass(frozen=True)
-class GapLevel:
-    level: int
-    cards: tuple[GapCard, ...]
+    source_slug: str
+    target: MapText
+    target_href: str
+    support: str
 
 
 @dataclass(frozen=True)
@@ -692,12 +685,8 @@ class GapsSummary:
 
 @dataclass(frozen=True)
 class GapsView:
-    unlinked_symptoms: tuple[GapSymptom, ...]
-    step1_symptoms: tuple[GapSymptom, ...]
-    untested: tuple[GapTarget, ...]
-    untested_count: int
-    levels: tuple[GapLevel, ...]
-    unlinked_cards: tuple[GapCard, ...]
+    rows: tuple[GapRow, ...]  # level 0 up to 5, by name within a level
+    untested: tuple[GapLinkRow, ...]  # by target, then source
     summary: GapsSummary
 
 
@@ -709,49 +698,39 @@ def _gaps_view(
     local_names: dict[str, str],
     local_texts: dict[str, str],
 ) -> GapsView:
-    """The gaps page as one language shows it: the lists of ``me_atlas.map`` with the map page's names, links and
-    reference numbers."""
+    """The gaps page as one language shows it: the counts of ``me_atlas.map`` with the map page's names. Order and
+    numbers come from the English cards, so both languages show the same rows."""
     graph = maplib.build_graph(english_cards, content)
     by_slug = {lc.card.slug: lc for lc in local_cards}
     namer = _Namer(code == DEFAULT_LANGUAGE, graph, by_slug, local_names, local_texts)
     prefix = maplib.SYMPTOM_PREFIX
-    symptom_sources = {prefix + s.id: tuple(s.sources) for s in content.symptoms}
 
-    def card_ref(slug: str) -> tuple[MapText, str]:
-        return namer.name_of(slug), namer.href_of(slug)
-
-    unlinked = tuple(
-        GapSymptom(n.key.removeprefix(prefix), namer.name_of(n.key), symptom_sources[n.key], ())
-        for n in maplib.unlinked_symptoms(graph)
-    )
-    step1 = tuple(
-        GapSymptom(
-            n.key.removeprefix(prefix),
-            namer.name_of(n.key),
-            symptom_sources[n.key],
-            tuple(card_ref(s) for s in sources),
+    rows = tuple(
+        GapRow(
+            r.slug,
+            namer.name_of(r.slug),
+            namer.href_of(r.slug),
+            r.level,
+            r.contested_rungs,
+            r.supporting,
+            r.groups,
+            r.no_group,
+            r.contradicting,
+            r.links,
         )
-        for n, sources in maplib.proposed_only_symptoms(graph)
+        for r in maplib.card_counts(english_cards, graph)
     )
-    refs_cache: dict[str, dict[int, tuple[tuple[int, str], ...]]] = {}
-    targets: list[GapTarget] = []
-    for node, edges in maplib.proposed_links(graph):
-        links: list[GapLink] = []
-        for e in edges:
-            refs = refs_cache.setdefault(e.source, namer.link_refs(e.source))[e.index]
-            link = by_slug[e.source].card.links[e.index]
-            view = LinkView(link, link.support, namer.name_of(e.target), namer.href_of(e.target), refs)
-            links.append(GapLink(namer.name_of(e.source), namer.href_of(e.source), view))
-        targets.append(GapTarget(namer.name_of(node.key), namer.href_of(node.key), tuple(links)))
-
-    def gap_card(c: Card) -> GapCard:
-        name, href = card_ref(c.slug)
-        return GapCard(name, href, tuple(sorted(c.contested.rungs)) if c.contested else ())
-
-    levels = tuple(
-        GapLevel(level, tuple(gap_card(c) for c in members)) for level, members in maplib.cards_by_level(english_cards)
+    untested = tuple(
+        GapLinkRow(
+            namer.name_of(e.source),
+            namer.href_of(e.source),
+            e.source,
+            namer.name_of(e.target),
+            namer.href_of(e.target),
+            e.support,
+        )
+        for e in maplib.untested_links(graph)
     )
-    loose = tuple(GapCard(*card_ref(n.key), ()) for n in maplib.unlinked_cards(graph))
     per_symptom, totals = maplib.step_counts(graph)
     steps = cardlib.SUPPORT_LEVELS
     summary_symptoms = tuple(
@@ -765,19 +744,19 @@ def _gaps_view(
     )
     all_links = sum(totals.values())
     summary_steps = tuple(SummaryStep(s, totals[s]) for s in steps)
-    in_level = {g.level: g.cards for g in levels}
+    in_level = {k: [r for r in rows if r.level == k] for k in range(6)}
     biggest = max((len(v) for v in in_level.values()), default=0)
     summary_levels = tuple(
         SummaryLevel(
             k,
-            len(in_level.get(k, ())),
-            sum(bool(c.contested_rungs) for c in in_level.get(k, ())),
-            biggest - len(in_level.get(k, ())),
+            len(in_level[k]),
+            sum(bool(r.contested_rungs) for r in in_level[k]),
+            biggest - len(in_level[k]),
         )
         for k in range(6)
     )
     summary = GapsSummary(summary_symptoms, summary_steps, all_links, summary_levels)
-    return GapsView(unlinked, step1, tuple(targets), sum(len(t.links) for t in targets), levels, loose, summary)
+    return GapsView(rows, untested, summary)
 
 
 def _translation_warnings(code: str, slug: str, check: translations.CardCheck) -> list[str]:

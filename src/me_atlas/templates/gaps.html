@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 {% macro mt(item) %}{% if item.english %}<span lang="en">{{ item.text }}</span> <span class="untranslated">{{ txt("untranslated.part") }}</span>{% else %}{{ item.text }}{% endif %}{% endmacro %}
-{% macro source_links(ids) %}{% for s in ids %}<a href="{{ study_url(s) }}" rel="noopener noreferrer">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %}{% endmacro %}
 {% macro card_link(name, href) %}<a href="{{ lroot }}{{ href }}">{{ mt(name) }}</a>{% endmacro %}
 <h1>{{ txt("gaps.h1") }}</h1>
 <p>{{ t("gaps.intro") }}</p>
@@ -46,75 +45,63 @@
 </div>
 </section>
 
-<h2 id="gaps-unlinked-symptoms">{{ txt("gaps.unlinked_symptoms.h2") }}</h2>
-<p class="small">{{ txt("gaps.unlinked_symptoms.intro") }}</p>
-<p class="small">{{ t("gaps.count", n=gaps.unlinked_symptoms|length) }}</p>
-{% if gaps.unlinked_symptoms %}
-<ul class="map-symptoms">
-{% for s in gaps.unlinked_symptoms %}
-  <li><strong><a href="{{ lroot }}map.html#symptom-{{ s.id }}">{{ mt(s.name) }}</a></strong> · {{ txt("map.listed_in") }} {{ source_links(s.sources) }}</li>
-{% endfor %}
-</ul>
-{% else %}
-<p class="empty">{{ txt("gaps.none") }}</p>
-{% endif %}
-
-<h2 id="gaps-step1-symptoms">{{ txt("gaps.step1_symptoms.h2") }}</h2>
-<p class="small">{{ txt("gaps.step1_symptoms.intro") }}</p>
-<p class="small">{{ t("gaps.count", n=gaps.step1_symptoms|length) }}</p>
-{% if gaps.step1_symptoms %}
-<ul class="map-symptoms">
-{% for s in gaps.step1_symptoms %}
-  <li><strong><a href="{{ lroot }}map.html#symptom-{{ s.id }}">{{ mt(s.name) }}</a></strong> · {{ txt("map.listed_in") }} {{ source_links(s.sources) }}<br>{{ txt("gaps.step1_symptoms.from") }} {% for name, href in s.cards %}{{ card_link(name, href) }}{% if not loop.last %}, {% endif %}{% endfor %}</li>
-{% endfor %}
-</ul>
-{% else %}
-<p class="empty">{{ txt("gaps.none") }}</p>
-{% endif %}
-
-<h2 id="gaps-untested-links">{{ txt("gaps.untested.h2") }}</h2>
-<p class="small">{{ txt("gaps.untested.intro") }} {{ txt("gaps.untested.rubric") }}</p>
-<p class="small">{{ t("gaps.count", n=gaps.untested_count) }}</p>
-{% if gaps.untested %}
-{% for target in gaps.untested %}
-<h3><a href="{{ lroot }}{% if target.href.startswith('#') %}map.html{% endif %}{{ target.href }}">{{ mt(target.name) }}</a></h3>
-<ul class="map-links">
-{% for gl in target.links %}
-{% set lv = gl.view %}
-  <li>{{ txt("gaps.untested.from") }} {{ card_link(gl.source, gl.source_href) }}: {{ page.plain(lv.link, lv.link.text) }} — {{ txt("support." ~ lv.support) }}{% for n, href in lv.refs %} {{ page.ref_to(lroot ~ href, n) }}{% endfor %}{{ page.note(lv.link) }}</li>
-{% endfor %}
-</ul>
-{% endfor %}
-{% else %}
-<p class="empty">{{ txt("gaps.none") }}</p>
-{% endif %}
-
-<h2 id="gaps-next-rung">{{ txt("gaps.next_rung.h2") }}</h2>
+<section id="gaps-next-rung">
+<h2>{{ txt("gaps.next_rung.h2") }}</h2>
 <p class="small">{{ txt("gaps.next_rung.intro") }}</p>
-{% for group in gaps.levels %}
-<h3>{{ t("gaps.level", level=group.level, name=txt("rung." ~ group.level ~ ".name")) }}</h3>
-<ul>
-{% for c in group.cards %}
-  <li>{{ card_link(c.name, c.href) }}{% if c.contested_rungs %} {{ t("gaps.contested", rungs=c.contested_rungs|join(", ")) }}{% endif %}</li>
+<dl class="gaps-rungs">
+{% for k in range(1, 6) %}
+<dt>{{ t("gaps.level", level=k, name=txt("rung." ~ k ~ ".name")) }}</dt>
+<dd>{{ txt("rung." ~ k ~ ".meaning") }}</dd>
 {% endfor %}
-</ul>
-{% if group.level < 5 %}
-<p class="small">{{ t("gaps.next_rung.requires", name=txt("rung." ~ (group.level + 1) ~ ".name"), meaning=txt("rung." ~ (group.level + 1) ~ ".meaning")) }}</p>
+</dl>
+{% if gaps.rows %}
+<table class="gaps-table gaps-stack">
+<caption>{{ txt("gaps.table.caption") }}</caption>
+<thead><tr><th scope="col">{{ txt("gaps.col.hypothesis") }}</th><th scope="col">{{ txt("gaps.col.level") }}</th><th scope="col">{{ txt("gaps.col.contested") }}</th><th scope="col">{{ txt("gaps.col.supporting") }}</th><th scope="col">{{ txt("gaps.col.groups") }}</th><th scope="col">{{ txt("gaps.col.contradicting") }}</th><th scope="col">{{ txt("gaps.col.links") }}</th></tr></thead>
+{% for level in range(6) %}
+{% set members = gaps.rows|selectattr("level", "equalto", level)|list %}
+{% if members %}
+<tbody>
+<tr class="gaps-level-row"><th scope="rowgroup" colspan="7">{% if level == 2 %}<h3 id="gaps-level-2">{{ txt("gaps.level2.h3") }}</h3><p class="small">{{ txt("gaps.level2.intro") }}</p>{% else %}{{ t("gaps.level", level=level, name=txt("rung." ~ level ~ ".name")) }}{% endif %}</th></tr>
+{% for r in members %}
+<tr>
+<th scope="row">{{ card_link(r.name, r.href) }}</th>
+<td data-label="{{ txt("gaps.col.level") }}">{% if level == 2 %}<a href="{{ lroot }}{{ r.href }}#level-reason">{{ level }}</a>{% else %}{{ level }}{% endif %}</td>
+<td data-label="{{ txt("gaps.col.contested") }}">{{ r.contested_rungs|join(", ") }}</td>
+<td data-label="{{ txt("gaps.col.supporting") }}">{{ r.supporting }}</td>
+<td data-label="{{ txt("gaps.col.groups") }}">{{ r.groups }}{% if r.no_group %}, {{ t("gaps.nogroup.one" if r.no_group == 1 else "gaps.nogroup.many", n=r.no_group) }}{% endif %}</td>
+<td data-label="{{ txt("gaps.col.contradicting") }}">{{ r.contradicting }}</td>
+<td data-label="{{ txt("gaps.col.links") }}">{{ r.links }}</td>
+</tr>
+{% endfor %}
+</tbody>
 {% endif %}
+{% endfor %}
+</table>
 {% else %}
 <p class="empty">{{ txt("gaps.none") }}</p>
-{% endfor %}
+{% endif %}
+</section>
 
-<h2 id="gaps-unlinked-cards">{{ txt("gaps.unlinked_cards.h2") }}</h2>
-<p class="small">{{ txt("gaps.unlinked_cards.intro") }}</p>
-<p class="small">{{ t("gaps.count", n=gaps.unlinked_cards|length) }}</p>
-{% if gaps.unlinked_cards %}
-<ul>
-{% for c in gaps.unlinked_cards %}
-  <li>{{ card_link(c.name, c.href) }}</li>
+<section id="gaps-untested-links">
+<h2>{{ txt("gaps.untested.h2") }}</h2>
+<p class="small">{{ txt("gaps.untested.intro") }}</p>
+<p class="small">{{ t("gaps.count", n=gaps.untested|length) }}</p>
+{% if gaps.untested %}
+<table class="gaps-table gaps-stack">
+<thead><tr><th scope="col">{{ txt("gaps.untested.from") }}</th><th scope="col">{{ txt("gaps.col.to") }}</th><th scope="col">{{ txt("gaps.col.step") }}</th></tr></thead>
+<tbody>
+{% for l in gaps.untested %}
+<tr>
+<th scope="row">{{ card_link(l.source, l.source_href) }}</th>
+<td data-label="{{ txt("gaps.col.to") }}"><a href="{{ lroot }}{% if l.target_href.startswith('#') %}map.html{% endif %}{{ l.target_href }}">{{ mt(l.target) }}</a></td>
+<td data-label="{{ txt("gaps.col.step") }}"><a href="{{ lroot }}map.html#card-{{ l.source_slug }}">{{ txt("support." ~ l.support) }}</a></td>
+</tr>
 {% endfor %}
-</ul>
+</tbody>
+</table>
 {% else %}
 <p class="empty">{{ txt("gaps.none") }}</p>
 {% endif %}
+</section>
 {% endblock %}

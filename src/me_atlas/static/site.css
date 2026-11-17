@@ -277,6 +277,11 @@ footer p { margin: .25rem 0; }
 .gaps-table th[scope="col"] .legend-sample { width: 32px; vertical-align: middle; }
 .gaps-table td { white-space: normal; }
 .gaps-table td.zero { color: var(--muted); }
+.gaps-level-row th { background: var(--empty); font-weight: 700; }
+.gaps-level-row h3, .gaps-level-row p { margin: .2rem 0; font-weight: 400; }
+.gaps-level-row h3 { font-weight: 700; font-size: 1rem; }
+.gaps-rungs dt { font-weight: 700; margin-top: .4rem; }
+.gaps-rungs dd { margin: 0 0 0 1rem; }
 .gaps-row-none th { color: var(--muted); }
 .gaps-row-none th .small { font-style: italic; }
 .marks { display: inline-flex; flex-wrap: wrap; gap: 3px; margin-left: .3rem; vertical-align: middle; }
@@ -310,6 +315,13 @@ footer p { margin: .25rem 0; }
   .gaps-table th[scope="col"] .legend-sample { display: block; width: 24px; }
   .gaps-table td[data-label]::before { content: none; }
   .gaps-table td .marks { display: flex; margin-left: 0; margin-top: .15rem; }
+  /* the two wide tables of the gaps page do stack, as everywhere else on the site */
+  .gaps-table.gaps-stack, .gaps-table.gaps-stack tbody, .gaps-table.gaps-stack tr, .gaps-table.gaps-stack caption { display: block; width: 100%; }
+  .gaps-table.gaps-stack thead { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .gaps-table.gaps-stack tr { border: 1px solid var(--line); margin: 0 0 .75rem; }
+  .gaps-table.gaps-stack th, .gaps-table.gaps-stack td { display: block; width: 100%; border: 0; border-bottom: 1px solid var(--line); }
+  .gaps-table.gaps-stack th[scope="col"]:first-child { width: 1px; }
+  .gaps-table.gaps-stack td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
   .gaps-levels { grid-template-columns: 1fr; gap: .5rem; }
   .gaps-levels li { flex-direction: row; align-items: center; gap: .75rem; }
   .gl-bar { order: 2; flex: 1 1 auto; flex-direction: row-reverse; height: 1rem; border-bottom: 0; border-left: 1px solid var(--line); }
