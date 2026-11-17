@@ -2,6 +2,20 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — Idea bank: seven guidelines, maintenance leaves the priority list, wave 1 is the "What is missing" page (founder rulings)
+
+- **Seven guidelines for every idea from `docs/pm/IDEAS.md`.** Proposed by the project manager; the founder answered: "De 7 føringene er OK."
+  1. No new claims: a page built on the cards is derived from the cards by code and carries no text of its own that is not on a card.
+  2. A new kind of source needs a source rule first: every fact comes from a fetched, cached and dated copy, otherwise `TODO: verify`.
+  3. A new AI reading step needs a reliability test before it is scaled, with the limit of the bridge pilot (at most one in five rejected).
+  4. Lists, never advice: no ranking as "most promising", no call to take part in a study.
+  5. Norwegian follows: a new page goes through the translation path before it counts as done.
+  6. One branch and one pull request per idea; the founder merges; orchestrators run on Opus.
+  7. At most two ideas in work at the same time.
+- **Maintenance is not a priority.** The founder said: "Ukentlig oppdatering og svare på henvendelser er jo ikke noe som hører hjemme i en slik prioriteringslister, da det er vedlikehold og ikke utvikling av ME Atlas." The weekly run and answering issues, Discussions and replies move to a "Running upkeep" section in STATUS.md. Closing the known gaps in the pipeline stays a priority: "Hvis det fortsatt er huller, burde vi beholde som prioritet å tette dem."
+- **Wave 1 is I-01 together with a rebuild of the "What is missing" page.** The founder said that the page is already too crowded with text, that the replication list belongs on it, and that the rest must shrink: "Jeg foreslår at all tekst fra kortene fjernes, og at vi kun bruker lenker til kortene. Hvis dette blir for knapt, brukes 1 setning som oppsummerer innholdet. Grafer og tabeller er bedre enn 'wall of text'." I-05 (open data and citation export) waits; its licence is not decided.
+- Why: the idea bank adds pages and data sources faster than they can be checked unless the same rules hold for all of them; a priority list that holds upkeep hides what is being developed.
+
 ## 2026-11-17 — Site text and spec brought in line with the current state; three founder rulings
 
 - **Who decided: not shown.** The founder said: "Det er lite relevant foreløpig hvem som har lagt til hva, siden det er KI-agenter som uansett sjekker før noe publiseres. Utelat dette foreløpig." The change log page does not print `decided_by`; the methods text no longer promises "who decided it" and says nothing about the one founder-requested change. The field stays in `cards/changelog.yaml`.
