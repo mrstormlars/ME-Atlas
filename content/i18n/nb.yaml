@@ -237,7 +237,7 @@ gaps.level2.intro: 'Tallene teller studier på kortet og vurderer ikke hvilket f
 gaps.col.to: 'Til'
 gaps.col.step: 'Støttetrinn'
 gaps.untested.h2: 'Lenker som ennå ikke er testet hos pasienter'
-gaps.untested.intro: 'Alle lenker på trinn 1 (foreslått), sortert etter hva de peker mot. Støttetrinnet lenker til kartsiden, som viser lenketeksten og kildene.'
+gaps.untested.intro: 'Alle lenker på trinn 1 (foreslått), sortert etter hva de peker mot. Støttetrinnet lenker til årsakskartet, som viser lenketeksten og kildene.'
 gaps.untested.from: 'Fra'
 gaps.next_rung.h2: 'Hver hypotese, etter nivå'
 gaps.next_rung.intro: 'Hva hvert trinn krever, deretter hver hypotese etter nivå. Nivåene settes på kortene.'
