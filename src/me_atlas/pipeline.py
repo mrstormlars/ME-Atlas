@@ -1142,17 +1142,21 @@ def live_fulltext_loader(cache_dir: Path) -> FullTextLoader:
     ) -> FullTextResult:
         env = {**load_dotenv(), **os.environ}
         email = (env.get("CONTACT_EMAIL") or "").strip()
-        if not email:
-            return FullTextResult(None, "CONTACT_EMAIL is not set, so no full text was requested")
-        client = europepmc.EuropePmcClient(email)
+        # Without an email the cache is still read; a request that would be needed is refused.
+        client = europepmc.EuropePmcClient(email) if email else europepmc.CacheOnlyClient()
         try:
             result = europepmc.get_fulltext(
                 client, europepmc.EuropePmcCache(cache_dir), pmid, pmcid=pmcid, preprint=preprint
             )
+        except europepmc.RequestNeededError:
+            return FullTextResult(
+                None, "full text not cached, and no request was made because CONTACT_EMAIL is not set"
+            )
         except europepmc.EuropePmcError as exc:
             return FullTextResult(None, f"Europe PMC request failed: {exc}")
         finally:
-            client.close()
+            if email:
+                client.close()
         note = fulltext_note(result.status, result.pmcid)
         if result.path is None:
             return FullTextResult(None, note)

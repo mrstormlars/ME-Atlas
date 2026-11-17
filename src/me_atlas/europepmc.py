@@ -108,6 +108,20 @@ class FullTextNotFoundError(EuropePmcError):
     """The full-text request answered HTTP 404 (not retried): Europe PMC has no full-text XML for that PMC id."""
 
 
+class RequestNeededError(EuropePmcError):
+    """A request would be needed, but the caller has no client (no contact email): only the cache may be read."""
+
+
+class CacheOnlyClient:
+    """Stands in for ``EuropePmcClient`` where nothing may be requested: every request raises RequestNeededError."""
+
+    def search_pmid(self, pmid: str) -> bytes:
+        raise RequestNeededError(f"the lookup of PMID {pmid} is not cached")
+
+    def fetch_fulltext(self, pmcid: str) -> bytes:
+        raise RequestNeededError(f"the full text of {pmcid} is not cached")
+
+
 # ---------------------------------------------------------------------------
 # Client
 # ---------------------------------------------------------------------------
