@@ -66,7 +66,7 @@
 {% for r in members %}
 <tr>
 <th scope="row">{{ card_link(r.name, r.href) }}</th>
-<td data-label="{{ txt("gaps.col.level") }}">{% if level == 2 %}<a href="{{ lroot }}{{ r.href }}#level-reason">{{ level }} {{ txt("rung." ~ level ~ ".name") }}</a>{% else %}{{ level }} {{ txt("rung." ~ level ~ ".name") }}{% endif %}</td>
+<td data-label="{{ txt("gaps.col.level") }}">{% if level == 2 %}<a href="{{ lroot }}{{ r.href }}#level-reason">{{ level }}</a>{% else %}{{ level }}{% endif %}</td>
 <td data-label="{{ txt("gaps.col.contested") }}">{{ r.contested_rungs|join(", ") }}</td>
 <td data-label="{{ txt("gaps.col.supporting") }}">{{ r.supporting }}</td>
 <td data-label="{{ txt("gaps.col.groups") }}">{{ r.groups }}{% if r.no_group %}, {{ t("gaps.nogroup.one" if r.no_group == 1 else "gaps.nogroup.many", n=r.no_group) }}{% endif %}</td>
@@ -89,14 +89,13 @@
 <p class="small">{{ t("gaps.count", n=gaps.untested|length) }}</p>
 {% if gaps.untested %}
 <table class="gaps-table gaps-stack">
-<thead><tr><th scope="col">{{ txt("gaps.untested.from") }}</th><th scope="col">{{ txt("gaps.col.to") }}</th><th scope="col">{{ txt("gaps.col.step") }}</th><th scope="col">{{ txt("gaps.col.onmap") }}</th></tr></thead>
+<thead><tr><th scope="col">{{ txt("gaps.untested.from") }}</th><th scope="col">{{ txt("gaps.col.to") }}</th><th scope="col">{{ txt("gaps.col.step") }}</th></tr></thead>
 <tbody>
 {% for l in gaps.untested %}
 <tr>
 <th scope="row">{{ card_link(l.source, l.source_href) }}</th>
 <td data-label="{{ txt("gaps.col.to") }}"><a href="{{ lroot }}{% if l.target_href.startswith('#') %}map.html{% endif %}{{ l.target_href }}">{{ mt(l.target) }}</a></td>
-<td data-label="{{ txt("gaps.col.step") }}">{{ txt("support." ~ l.support) }}</td>
-<td data-label="{{ txt("gaps.col.onmap") }}"><a href="{{ lroot }}map.html#card-{{ l.source_slug }}">{{ txt("gaps.untested.show") }}</a></td>
+<td data-label="{{ txt("gaps.col.step") }}"><a href="{{ lroot }}map.html#card-{{ l.source_slug }}">{{ txt("support." ~ l.support) }}</a></td>
 </tr>
 {% endfor %}
 </tbody>

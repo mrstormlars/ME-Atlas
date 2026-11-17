@@ -210,7 +210,7 @@ def test_the_counts_in_each_row_and_the_cells_carry_labels_for_the_narrow_layout
     # name, level, contested, supporting, groups, contradicting, links
     assert cell_texts(rows["Fictional level 0 idea"]) == [
         "Fictional level 0 idea",
-        "0 Proposed",
+        "0",
         "",
         "2",
         "0, 2 studies with no group stated",
@@ -220,7 +220,7 @@ def test_the_counts_in_each_row_and_the_cells_carry_labels_for_the_narrow_layout
     assert cell_texts(rows["Fictional level 1 idea"])[3:] == ["2", "0, 2 studies with no group stated", "1", "3"]
     assert cell_texts(rows["Fictional level 3 idea"]) == [
         "Fictional level 3 idea",
-        "3 Repeated by others",
+        "3",
         "3",
         "3",
         "2",
@@ -321,7 +321,7 @@ def test_one_row_per_proposed_link_sorted_by_target_then_source_with_no_link_tex
         ("Fictional level 0 idea", "What keeps the fictional signal low?", "proposed"),
     ]
     assert f"Count: {len(rows)}" in norm(sec(doc, "gaps-untested-links").text())
-    hrefs = [(r[0].find("a").get("href"), r[1].find("a").get("href"), r[3].find("a").get("href")) for r in rows]
+    hrefs = [(r[0].find("a").get("href"), r[1].find("a").get("href"), r[2].find("a").get("href")) for r in rows]
     assert hrefs[0] == ("hypotheses/lvl-1.html", "hypotheses/lvl-0.html", "map.html#card-lvl-1")
     assert hrefs[1][1] == "map.html#symptom-s-mixed"
     assert hrefs[4] == ("hypotheses/lvl-0.html", "map.html#question-own", "map.html#card-lvl-0")
@@ -434,7 +434,11 @@ def test_the_norwegian_page_shows_the_norwegian_strings(gaps_site):
     assert nb["gaps.nogroup.one"].format(n=1) in text and nb["gaps.nogroup.many"].format(n=2) in text
     assert "Antall: 5" in text
     assert "Nivå 1: Første tegn" in text
-    for key in ("gaps.col.supporting", "gaps.col.groups", "gaps.col.contradicting", "gaps.untested.show"):
+    for key in (
+        "gaps.col.supporting",
+        "gaps.col.groups",
+        "gaps.col.contradicting",
+    ):
         assert nb[key] in text, key
     assert "What is missing" not in text and "Supporting studies" not in text
     summary = norm(doc.find("section", id="gaps-summary").text())
