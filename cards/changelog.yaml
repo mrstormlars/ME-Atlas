@@ -505,3 +505,22 @@
   - pmid:30915066
   tier: 1
   decided_by: ai_pair
+- date: 2026-11-17
+  card: oxidative-nitrosative-stress
+  change: 'Correction: level_reason[5] reworded; badge_reasons.diagnostic_marker[0] reworded; the text
+    of the link to symptom:sleep-disturbance reworded'
+  reason: 'Request item 1 (citation check C10). The sentence ''Its first author also wrote the 2017 review
+    cited on this card''s link to hpa-axis-cortisol'' gives the year 2017, which is not in the link''s
+    only cited source, pmid:29759891. The fact itself is not wrong: the cached record of pmid:27766535
+    (the source of links[2]) is dated 2017 and has Morris G as first author, and the cached author facts
+    give Morris G as first author of both pmid:27766535 and pmid:29759891. So the year comes from another
+    study on the card, not from this link''s source, and the sentence still says what the records say.'
+  sources:
+  - pmid:25386668
+  - pmid:34444817
+  - pmid:10071523
+  - pmid:21455120
+  - pmid:40627396
+  - pmid:29759891
+  tier: 1
+  decided_by: ai_pair

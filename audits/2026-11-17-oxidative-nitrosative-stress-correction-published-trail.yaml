@@ -1,0 +1,110 @@
+card: oxidative-nitrosative-stress
+card_sha256: 52e36be7d3a5e37c6241939f947102bcc3494c75641c165f41225e97d8907546
+origin: 'data/pipeline/2026-11-17/report.md, section ''Pre-existing problems on cards'': citations-check
+  error C10 on the links of oxidative-nitrosative-stress'
+request:
+- target: links[4]
+  problem: 'Citation check C10: the number 2017 in the link text ("...first author also wrote the 2017
+    review cited on this card''s link to hpa-axis-cortisol...") does not occur in the link''s cited source
+    pmid:29759891.'
+review:
+  verdict: accept
+  findings:
+  - class: wording
+    target: links[4]
+    severity: advisory
+    problem: 'Request item 1 (citation check C10). The sentence ''Its first author also wrote the 2017
+      review cited on this card''s link to hpa-axis-cortisol'' gives the year 2017, which is not in the
+      link''s only cited source, pmid:29759891. The fact itself is not wrong: the cached record of pmid:27766535
+      (the source of links[2]) is dated 2017 and has Morris G as first author, and the cached author facts
+      give Morris G as first author of both pmid:27766535 and pmid:29759891. So the year comes from another
+      study on the card, not from this link''s source, and the sentence still says what the records say.'
+    fix: 'Drop the year: ''Its first author also wrote the review cited on this card''s link to hpa-axis-cortisol,
+      so the two review sources are not independent.'' The link''s target, step and sources stay as they
+      are.'
+    targets:
+    - links[4]
+  - class: wording
+    target: level_reason[5]
+    severity: advisory
+    problem: '''A larger placebo-controlled trial of the same combination from the same unit'' says ''same
+      unit'', but the cached affiliations differ. pmid:25386668 gives ''CFS Clinical Unit, Vall d''Hebron
+      Research Institute, Vall d''Hebron University Hospital'', and pmid:34444817 gives ''ME/CFS Research
+      Unit, Division of Rheumatology, Vall d''Hebron Hospital Research Institute''. The records show that
+      the two trials share two authors (Castro-Marrero J, Segundo MJ) and the Vall d''Hebron institute.
+      They do not say the unit is the same.'
+    fix: Write 'from the same Vall d'Hebron research group (two shared authors)' or 'from the same hospital
+      research institute', or leave out 'from the same unit'.
+    targets:
+    - level_reason[5]
+  - class: wording
+    target: badge_reasons.diagnostic_marker[0]
+    severity: advisory
+    problem: '''In the Antwerp study plasma peroxides did not separate patients from controls well (area
+      under the curve 62.6%, not significant)''. The full text (PMC3539515) gives this figure for the
+      residualized plasma peroxide values (''The residualized plasma peroxide values showed no significant
+      diagnostic performance for ME/CFS, where the area under the ROC curve was only 62.6%''). The abstract
+      also says ''Both biomarkers contributed significantly in discriminating between patients with ME/CFS
+      and normal controls''. The badge value of false still holds, because no marker was tested in a second,
+      independent cohort.'
+    fix: Write 'residualized plasma peroxide values', and if wanted add that the abstract reports both
+      markers together contributing to discrimination, in the same single cohort.
+    targets:
+    - badge_reasons.diagnostic_marker[0]
+rounds:
+- round: 1
+  operations:
+  - op: set_link_text
+    to: symptom:sleep-disturbance
+    text: A 2018 review proposes that interacting immune, oxidative and nitrosative stress, and mitochondrial
+      pathways may drive sleep abnormalities in chronic fatigue syndrome and other neuro-immune disorders.
+      It is a hypothesis paper and reports no patient data linking the two. Its first author also wrote
+      the review cited on this card's link to hpa-axis-cortisol, so the two review sources are not independent.
+  - op: replace_paragraph
+    field: level_reason
+    index: 5
+    text: 'The card does not reach level 4: no controlled trial in patients with a confirmed recognised
+      case definition has lowered an oxidative-stress measure and improved the illness. A placebo-controlled
+      trial of coenzyme Q10 plus NADH in 73 patients reported less fatigue than with placebo and lower
+      lipid peroxides in blood cells of the treated group (the abstract does not say whether against placebo
+      or against baseline), but its case definition is not yet verified. A larger placebo-controlled trial
+      of the same combination from the same Vall d''Hebron research institute, in 207 women meeting the
+      Fukuda definition, did not measure oxidative stress and reported that fatigue scores changed in
+      parallel in the two groups. A crossover trial of NADH alone in 26 patients meeting the CDC criteria
+      reports no oxidative-stress measure in its abstract.'
+    sources:
+    - pmid:25386668
+    - pmid:34444817
+    - pmid:10071523
+  - op: replace_paragraph
+    field: badges.diagnostic_marker.reason
+    index: 0
+    text: No study on this card tests a cut-off from one patient group in a second, independent group.
+      In the Antwerp study the residualized plasma peroxide values did not separate patients from controls
+      well (area under the curve 62.6%, not significant), and the Stanford group's further test was a
+      small case study of three people from a family cohort, studied by the same group.
+    sources:
+    - pmid:21455120
+    - pmid:40627396
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - operation: 1
+      severity: advisory
+      problem: 'Operation 1 answers finding 1 by replacing ''from the same unit'' with ''from the same
+        Vall d''Hebron research institute'', which the cached affiliations support (25386668: ''Vall d''Hebron
+        Research Institute''; 34444817: ''Vall d''Hebron Hospital Research Institute''). The study group
+        fields for pmid:25386668 (''same unit as 34444817'') and pmid:34444817 (''same unit as 25386668'')
+        still say ''same unit''. Those fields are not among the targets the findings name, so this correction
+        cannot change them; no level, badge or contested mark rests on them.'
+      fix: In a later round whose findings name studies[pmid:25386668].group and studies[pmid:34444817].group,
+        reword 'same unit as' to 'same Vall d'Hebron research institute as'.
+tier:
+  tier: 1
+  why:
+  - the texts differ in free text only and every answered finding is wording
+audits_run: []
+outcome: published
