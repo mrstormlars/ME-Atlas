@@ -76,6 +76,16 @@ Check retry of a correction: if `apply` failed, you are also given `checks/<slug
 
 The revised attempt: if the reviewer rejects your correction, in the correction review or in the whole-card review of the corrected card, you get a revised attempt as long as the number of decisive `must_fix` findings falls from one reject of that review to the next, up to four revised attempts. You are given the same `correction-context` file, your previous attempt's ops file (`ops/<slug>-rC<k>.json`, or `-revised.json`, `-revised2.json` ... for a later attempt) and every review file so far (`review/<slug>-rC<k>.json` and, when the whole-card review rejected, `review/<slug>-card-C<k>.json`; the same with `-revised` for the second attempt; findings with their severity). Answer every `must_fix` finding of those files, the same way as above: from the records shown, or by removing or weakening the claim, never by adding a fact. The revised file is applied to the draft, not to your first result, so it must hold every operation you still want, not only the changes. Write it to the path you were given (`.../ops/<slug>-rC<k>-revised.json`, `-revised2.json` ... `-revised4.json`) and reply with the path only. After the fourth revision there is no further one.
 
+## The correction of a published card
+
+When the context file is `correction-context/<slug>.md` (no round number), the card is already published and a review found errors in it (section 2 of the context). You write one correction as a JSON operations file at the path you were given (`<dir>/ops/<slug>-r1.json`, or `-r2.json` after a reject) and reply with the path only. `card` is the slug and `paper` is `null`. Everything under "The correction (round C1)" holds, with these differences, enforced by code:
+
+- Allowed operations: `replace_paragraph`, `remove_paragraph`, `update_study` (a study's `finding` and `group` among its fields), `remove_link`, `propose`, `set_link_text` (`to`, `text`: the text of any link on the card, nothing else of it changes) and `remove_comment` (`text`: the comment line without its `#`). No `add_study`, no `add_paragraph`, no `add_link`, no `add_sentence`: a correction here removes or rewords and adds nothing.
+- Every operation changes a target a finding names (section 3 of the context lists them). A `remove_comment` names one whole-line comment that matches exactly one line and lies in a study's or a link's block; comments are not content, so you only ever remove one, never write one. If a stale comment holds a fact that is still needed, put it in a sourced field with a correction instead.
+- Add no number that the text did not already state, and do not change what no finding names. A finding the shown records do not settle is resolved by removing or weakening the claim.
+- The second attempt (round 2) is applied to the published card, not to round 1: it holds every operation you still want, and you answer the `must_fix` findings of `review/<slug>-r1.json`.
+- A wording-only correction (free text only, no number, every answered finding classed `wording`) is decided on the checks and the review; anything else goes to two audits. You do not decide which: write the smallest correct change.
+
 ## The file you write
 
 One JSON object. The code rejects any key not listed here.
