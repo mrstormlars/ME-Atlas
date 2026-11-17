@@ -1,11 +1,12 @@
 # Status
 
-Last updated: 2026-11-16
+Last updated: 2026-11-17
 
 The history of how the project got here is in `docs/pm/DECISIONS.md` and the git log; this file says only where it stands and what is open.
 
 ## Where we stand
 
+- **Site text and spec brought in line (2026-11-17).** The methods text, the Norwegian text, the site strings, the README and the functional spec now describe the current state: every card was audited as a whole by two auditor runs, first publication, correction rounds, the wording-only fix and link rounds are described, no external reviewer has been recruited, and the change log page no longer promises who decided a change. The trial period of four weekly runs is ended (DECISIONS 2026-11-17).
 - **Links.** 52 links on the published cards. All eleven links removed in the correction rounds of 2026-11-14/15 were tried again through the link round (DECISIONS 2026-11-16) except `gut-microbiome` → tryptophan-kynurenine metabolism, which no cached record states; ten are back, each with two agreeing audits (trails `audits/2026-11-16-<slug>-links*.yaml`): small fibre neuropathy and endothelial dysfunction → orthostatic intolerance (step 1); brain MRI → cognitive impairment (step 2); HPA axis → sleep disturbance, cognitive impairment and the open question "what keeps it going" (step 1); gut microbiome → gastrointestinal symptoms and cognitive impairment (step 2), neuroinflammation and oxidative-nitrosative stress (step 1). Their Norwegian is in `translations/nb/`.
 - **Published.** All 20 evidence cards are in `cards/`; `drafts/` is empty. Each card went through two whole-card audits, most after one or more correction rounds; the trails are in `audits/` and the change log is `cards/changelog.yaml`.
 - **Public.** The repository was made public on 2026-11-16. The site is at <https://mrstormlars.github.io/ME-Atlas/> (Norwegian: `nb/`), rebuilt and deployed by `.github/workflows/pages.yml` on every push to `main`. The Azure draft preview is deleted.

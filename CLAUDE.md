@@ -33,8 +33,6 @@ docs/         Plan, rubric and methods; docs/pm/ for status and decisions
 build/        Generated static site (gitignored)
 ```
 
-The card data model (YAML vs JSON, field names) is not decided yet — it is the first item in the plan's next steps. Record the ruling in DECISIONS.md.
-
 ## Commands
 
 ```bash
@@ -63,7 +61,7 @@ uv run ruff format .         # format
 - **Write the contract first:** "done" as a short list of checkable clauses before any code.
 - **Keep state on disk, not in context:** decisions in DECISIONS.md, status in STATUS.md, plans in `docs/`.
 - **Restart rather than patch:** after three failed attempts at the same thing, stop and report.
-- **Git:** `main` is the published state. Never push to `main` — work on `feat/…`, `fix/…`, `docs/…` or `chore/…` branches and merge via PR on GitHub (`mrstormlars/ME-Atlas`, private). The `.githooks/pre-push` hook enforces this locally (enable per clone: `git config core.hooksPath .githooks`); never bypass it with `--no-verify`.
+- **Git:** `main` is the published state. Never push to `main` — work on `feat/…`, `fix/…`, `docs/…` or `chore/…` branches and merge via PR on GitHub (`mrstormlars/ME-Atlas`, public). The `.githooks/pre-push` hook enforces this locally (enable per clone: `git config core.hooksPath .githooks`); never bypass it with `--no-verify`.
 
 ## Language
 

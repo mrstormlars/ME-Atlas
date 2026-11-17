@@ -4,7 +4,7 @@
 # Every value is a single-quoted string (an unquoted yes or no would be read as a boolean). A string is trusted HTML.
 # {name} is a value the template supplies. [[Term]] or [[Term|shown text]] marks a glossary term (the English term).
 # Rung names and meanings must match the evidence ladder in docs/ME-Atlas-functional-spec.md section 3 (a test checks
-# this). None of the banned words (see CLAUDE.md) may appear in any string. See docs/translation.md.
+# this). None of the banned words (listed in BANNED_WORDS in src/me_atlas/cards.py) may appear in any string. See docs/translation.md.
 
 lang.name: 'English'
 lang.aria: 'Language'
@@ -147,7 +147,7 @@ flag.broad: 'broad'
 
 # --- what changed ---
 changes.h1: 'What changed'
-changes.intro: 'Every published change to a hypothesis, newest first. Each entry says which tier decided it; see <a href="{lroot}methods.html#tiers">Methods</a>.'
+changes.intro: 'Every published change to a hypothesis, newest first. Each entry shows its tier; see <a href="{lroot}methods.html#tiers">Methods</a>.'
 changes.reason: 'Reason:'
 changes.sources: 'Sources:'
 changes.tier: 'Tier {tier}'
@@ -164,8 +164,8 @@ glossary.used_on: 'Used on:'
 map.h1: 'Causal map'
 map.intro: 'This page is a second view of the same hypotheses. The front page shows how far the evidence for each hypothesis has come; this page shows where each one sits in a possible chain from vulnerability to symptoms, and which links between hypotheses have been suggested. A link is itself a hypothesis. It is graded on its own scale (proposed, associated, direction supported), not on the evidence ladder, and it never changes a hypothesis''s level. ME/CFS may be several conditions with different triggers that meet further downstream, so the map does not assume one chain. Nothing here is a finding that one thing causes another. The lists below hold the same content as the drawing, with sources.'
 map.layer_empty: 'Nothing is placed in this layer yet.'
-map.unplaced_note: 'These hypotheses have no layer yet. Placing a hypothesis in a layer is an editorial decision that has not been made.'
-map.symptoms_intro: 'Symptoms are not hypotheses. Each one is taken from the case definitions that list it.'
+map.unplaced_note: 'These hypotheses have no layer yet. The auditor has not yet decided a layer for them.'
+map.symptoms_intro: 'Symptoms are not hypotheses. Each one is a symptom category listed in the International Consensus Criteria (2011), a case definition.'
 map.to: 'To'
 map.no_links: 'No links from this hypothesis yet.'
 map.unpublished: 'not yet published'
@@ -225,7 +225,7 @@ gaps.summary.levels.see: 'See what each next rung requires below.'
 gaps.none: 'None yet.'
 gaps.count: 'Count: {n}'
 gaps.unlinked_symptoms.h2: 'Symptoms with no link to any hypothesis'
-gaps.unlinked_symptoms.intro: 'Symptoms from the case definitions that no hypothesis card links to yet.'
+gaps.unlinked_symptoms.intro: 'Symptom categories from the International Consensus Criteria that no hypothesis card links to yet.'
 gaps.step1_symptoms.h2: 'Symptoms linked only at step 1'
 gaps.step1_symptoms.intro: 'Symptoms whose links are all at step 1 (proposed): suggested in the literature, not measured together with the hypothesis in the same patients.'
 gaps.step1_symptoms.from: 'Linked from:'

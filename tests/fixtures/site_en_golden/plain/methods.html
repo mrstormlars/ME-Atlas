@@ -26,7 +26,7 @@
 <main id="main">
 <h1>Methods</h1>
 
-<p class="note"><strong>No medical or research expert has reviewed this content.</strong> The content, including every evidence level, is drafted, checked and decided by AI tools. An external medical or research reviewer is to be recruited once the site can be shown. Until then the grading rules below are applied as written, and they are a draft. The founder sets the rules and the direction and may overrule a decision as a logged correction.</p>
+<p class="note"><strong>No medical or research expert has reviewed this content.</strong> The content, including every evidence level, is drafted, checked and decided by AI tools. No external medical or research reviewer has been recruited yet. Until one has, the grading rules below are applied as written, and they are a draft. The founder sets the rules and the direction and may overrule a decision as a logged correction.</p>
 
 <h2>What this site is</h2>
 <p>ME Atlas gives an overview of the serious <span class="term-wrap"><button type="button" class="term" id="use-hypotheses" aria-describedby="tip-hypotheses">hypotheses</button></span> about what causes ME/CFS, and shows how much evidence stands behind each one. It describes the state of the evidence. It does not give treatment advice, and it does not say that an idea is right or wrong. Long COVID is marked on a hypothesis where the evidence overlaps. It is not a separate section.</p>
@@ -111,19 +111,19 @@
 </ul>
 
 <h2 id="editorial-flow">How content gets onto the site</h2>
-<p class="note"><strong>No person decides the content of a card.</strong> AI agents draft it, a second agent reviews it, code checks every citation, and an independent AI auditor decides every level, badge, contested mark, layer, link and preprint signal. The weekly pipeline and the auditor are built and tested. The levels on the cards shown here come from supervised drafting sessions and have not yet been decided by the auditor.</p>
-<h3>The flow</h3>
-<p>The pipeline runs on AI, with mechanical checks in code. The founder sets the direction and the rubric.</p>
+<p class="note"><strong>No person decides the content of a card.</strong> AI agents draft it, a second agent reviews it, code checks every citation, and an independent AI auditor decides every level, badge, contested mark, layer, link and preprint signal. Every card shown here was audited as a whole card by two independent auditor runs before it was published, most of them after one or more correction rounds. The audit records are in the <a href="https://github.com/mrstormlars/ME-Atlas/tree/main/audits" rel="noopener noreferrer">public repository</a>.</p>
+<h3>The weekly flow</h3>
+<p>The pipeline runs on AI, with mechanical checks in code. The founder sets the direction and the rubric. This is the path of a weekly update to a card that is already published. How a card is first published, corrected or given new links is described below the table.</p>
 <ol>
   <li><strong>Weekly fetch.</strong> New papers are fetched from PubMed and Europe PMC and the raw responses stored.</li>
   <li><strong>Drafting agent.</strong> One AI agent sorts papers by hypothesis, extracts study data (sample size, case definition) and writes a draft card update. Each AI output keeps the source id it came from. The output is a draft only.</li>
   <li><strong>Mechanical checks (code, not AI).</strong> Every cited id must exist in a fetched record; title, year and the case-definition quote are matched against that record; sample sizes are checked as a warning; every block of text must cite a source. A draft that fails is sent back to the drafting agent. No AI verdict overrides a failed check.</li>
   <li><strong>Review agent.</strong> A second AI agent checks the draft against the sources, the inclusion rule and the ladder. It sees the draft and the source records, not the drafting agent's reasoning.</li>
-  <li><strong>Second round.</strong> If the review agent rejects the draft, the drafting agent gets one revised attempt, which is checked again. If it is rejected again, the change leaves the card unchanged and is listed as a dispute. It is never sent to the auditor: no AI step overrules a rejection by the review agent. The founder may overrule it, as a logged correction.</li>
+  <li><strong>Second round.</strong> In a weekly update, if the review agent rejects the draft, the drafting agent gets one revised attempt, which is checked again. If it is rejected again, the change leaves the card unchanged and is listed as a dispute. It is never sent to the auditor: no AI step overrules a rejection by the review agent. The founder may overrule it, as a logged correction.</li>
   <li><strong>Audit.</strong> For a change of tier 2 (below), an independent AI auditor accepts it, rejects it, or accepts only a lower level. It is shown only the proposed change, the card as it stands, the cached source records the change cites (the full text of every source that carries a level, a badge or the contested mark, the abstract of the others), and the rubric on this page. It is not shown the drafting agent's reasoning, the review agent's findings or any earlier audit. It writes no card text. Every part of its decision names the rubric clause it rests on, and every factual statement in its reasons carries a source id and a quote that code checks against the cached record. When the auditor does not accept a change, the card stays as it is. When it accepts only a lower level, the drafting agent writes one redraft at that level, which goes through the checks, the review and a fresh audit (with a second auditor) again; it is applied only if every step accepts, and there is no further round.</li>
-  <li><strong>Consistency check.</strong> For every level change, and one in five of the other audited changes, a second auditor with a fresh context decides the same change. If its verdict differs, the card stays as it is, the difference is treated as a dispute and it is counted. The count is published with each weekly update.</li>
+  <li><strong>Consistency check.</strong> In a weekly update, for every level change, and one in five of the other audited changes, a second auditor with a fresh context decides the same change. If its verdict differs, the card stays as it is, the difference is treated as a dispute and it is counted. The count is reported in the description of each weekly update, which is a pull request in the <a href="https://github.com/mrstormlars/ME-Atlas/pulls?q=is%3Apr" rel="noopener noreferrer">public repository</a>. It is not shown on this site.</li>
   <li><strong>Publication.</strong> A change is applied only when the checks passed, the review agent accepted it and, for tier 2, the auditor accepted it. The card shows when it was last audited and by whom.</li>
-  <li><strong>Logging.</strong> Every published change gets an entry on <a href="changes.html">What changed</a>, with its date, card, reason, source, the tier, and who decided it. The log is public and kept permanently.</li>
+  <li><strong>Logging.</strong> Every published change gets an entry on <a href="changes.html">What changed</a>, with its date, card, reason, source and the tier. The log is public and kept permanently.</li>
   <li><strong>Corrections.</strong> An error found later is corrected the same way and logged as a correction. If the founder overrules an auditor decision, that is a logged correction too.</li>
 </ol>
 <table class="plain" id="tiers">
@@ -135,11 +135,20 @@
     <tr><td data-label="Tier">3</td><td data-label="Change">A change the review agent rejected in two rounds</td><td data-label="Who decides">No AI step. The card is unchanged and the change is listed in the weekly report; it is never sent to the auditor. The founder may overrule it, as a logged correction</td></tr>
   </tbody>
 </table>
-<p>For the first four weekly updates the founder reads the list of auditor decisions afterwards. The founder merges each update as a routine step, without reviewing the content.</p>
+<p>The founder merges each weekly update as a routine step, without reviewing the content.</p>
+
+<h3>First publication, corrections and added links</h3>
+<p>These rules are separate from the weekly path above.</p>
+<ul>
+  <li><strong>First publication.</strong> Two independent auditor runs audit the whole card, one after the other. Both must accept it. If the first one rejects it, there is no second audit and the card is held back.</li>
+  <li><strong>Correction round.</strong> A held-back card is not audited again as it is. A correction may only remove, weaken or correct what the review and the audits named. The one thing it may add is a single sentence that an audit asked for as a missing statement. That sentence may cite only the sources the audit quoted, and say no more than the quotes. The corrected card is reviewed again and then audited by two new auditor runs, which are not told that it was corrected.</li>
+  <li><strong>Wording-only fixes.</strong> The review agent and the auditor mark each objection as decisive or as wording only. An objection is wording only when fixing it touches no level, badge, contested mark, layer, link, case definition, study role or number. In a correction round or a link round, the named sentence is then reworded or removed, and the review agent checks the fix once. If the fix does not resolve the objection, or adds a claim, the card is held back (in a link round, that link is dropped and the others go on). Any decisive objection takes the normal path.</li>
+  <li><strong>Links added to a published card.</strong> Each link is decided on its own and needs two agreeing audits. A link round adds no study and does not change the card's layer.</li>
+</ul>
 
 <h2>The role of AI, and who decides</h2>
 <p>AI drafts, checks and audits. Every evidence level, badge, contested mark and link on this site is decided by AI tools, and no medical or research expert has reviewed the content. The founder sets the rubric, the scope and the direction, and may overrule an auditor decision as a logged correction.</p>
-<p>The auditor is an AI agent of the same kind as the agents it audits and may share their blind spots. What makes it independent is what it is shown, not the model it runs on. The second audit of a sample of decisions measures how often two runs disagree.</p>
+<p>The auditor is an AI agent of the same kind as the agents it audits and may share their blind spots. What makes it independent is what it is shown, not the model it runs on. The second audit of a sample of weekly decisions measures how often two runs disagree.</p>
 
 <h2>Known limits</h2>
 <ul>

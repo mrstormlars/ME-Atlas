@@ -14,7 +14,7 @@ In a Claude Code session in the repository, type:
 /ukentlig --no-pr                  # everything except pushing and opening the pull request
 ```
 
-The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is done by subagents on the subscription (table under "Agents and models"): no API key and no `anthropic` calls. A change is applied only when the mechanical checks passed, the review agent accepted it and, for a tier 2 change, the auditor accepted it (spec section 6). The result is a pull request; the founder merges it as an operational step, without reviewing the content. During the trial period (the first four weekly runs) the founder reads the auditor decisions in the report after the fact; a ruling in `docs/pm/DECISIONS.md` ends it. The first publication of a card (the plan's step 6) is a separate command, `publish-card` (section "First publication" below); until a card is published, a pair is applied to the card file the pipeline works on, which is a draft in `drafts/`.
+The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is done by subagents on the subscription (table under "Agents and models"): no API key and no `anthropic` calls. A change is applied only when the mechanical checks passed, the review agent accepted it and, for a tier 2 change, the auditor accepted it (spec section 6). The result is a pull request; the founder merges it as an operational step, without reviewing the content. The first publication of a card (the plan's step 6) is a separate command, `publish-card` (section "First publication" below); until a card is published, a pair is applied to the card file the pipeline works on, which is a draft in `drafts/`.
 
 ## Stages
 

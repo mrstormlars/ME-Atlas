@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-17 — Site text and spec brought in line with the current state; three founder rulings
+
+- **Who decided: not shown.** The founder said: "Det er lite relevant foreløpig hvem som har lagt til hva, siden det er KI-agenter som uansett sjekker før noe publiseres. Utelat dette foreløpig." The change log page does not print `decided_by`; the methods text no longer promises "who decided it" and says nothing about the one founder-requested change. The field stays in `cards/changelog.yaml`.
+- **The trial period ends.** The founder said: "Fjern også setningen om de fire første ukene, jeg leser ikke listene og det gir ingen mening fordi jeg ikke er fagperson. Når fagperson(er) blir involvert får vi lage nye prosedyrer for kvalitetssikring, om nødvendig." The trial period of four weekly runs (2026-11-13) is over; no document states it as in force. The founder still merges the weekly pull request as an operational step, without reviewing the content.
+- **The disagreement count is mentioned.** The founder said: "Antall uenigheter kan gjerne nevnes i oppdateringen, så leserne får litt innblikk i prosessen som førte til publikasjon (evt. ikke publikasjon)." The methods text says that the count is in the description of each weekly pull request in the public repository (the report has the line "Consistency check: N of M sampled decisions decided a second time; K differed"). A count on the site itself would need new data and is not built.
+- **Not a new ruling: the spec is aligned with rulings that already stand.** The functional spec's roles table gave the auditor tier 3. Tier 3 (a change the review agent rejected in two rounds) has no AI step: a parked change never goes to the auditor (2026-11-13, D2, and "A parked change never goes to the auditor (D2 stands)"). The table now says so.
+- Also in this change: the methods text, the README and the spec say that no external reviewer has been recruited (they said one "is to be recruited"), describe first publication, correction rounds, the wording-only valve and link rounds, and the methods text says that every card shown was audited as a whole card by two auditor runs; the Norwegian text and the site strings follow.
+
 ## 2026-11-17 — A second bridge search pilot with a tighter reading; only systematic reviews count (founder ruling)
 
 - After pilot 1 (reviewer rejected 9 of 21 `yes` rows, above the limit of one in five), the founder agreed in a brainstorm to a second pilot on the same eight questions and records, with only the reading changed (`docs/plan-bridge-pilot-2.md`): "Ja, la oss kjøre en ny pilot (alt A) først." On starting it: "Ja, start piloten".
