@@ -159,10 +159,10 @@ level_reason:
       fatigue than with placebo and lower lipid peroxides in blood cells of the treated group
       (the abstract does not say whether against placebo or against baseline), but its case
       definition is not yet verified. A larger placebo-controlled trial of the same combination
-      from the same unit, in 207 women meeting the Fukuda definition, did not measure oxidative
-      stress and reported that fatigue scores changed in parallel in the two groups. A crossover
-      trial of NADH alone in 26 patients meeting the CDC criteria reports no oxidative-stress
-      measure in its abstract.
+      from the same Vall d'Hebron research institute, in 207 women meeting the Fukuda
+      definition, did not measure oxidative stress and reported that fatigue scores changed in
+      parallel in the two groups. A crossover trial of NADH alone in 26 patients meeting the CDC
+      criteria reports no oxidative-stress measure in its abstract.
     sources: ['pmid:25386668', 'pmid:34444817', 'pmid:10071523']
   - text: >-
       A placebo-controlled trial of ubiquinol, the reduced form of coenzyme Q10, in 43 patients (31
@@ -174,11 +174,12 @@ badges:
     value: false
     reason:
       text: >-
-        No study on this card tests a cut-off from one patient group in a second, independent group. In the
-        Antwerp study plasma peroxides did not separate patients from controls well (area under the curve
-        62.6%, not significant), and the Stanford group's further test was a small case study of three
-        people from a family cohort, studied by the same group.
-      sources: [pmid:21455120, pmid:40627396]
+        No study on this card tests a cut-off from one patient group in a second, independent
+        group. In the Antwerp study the residualized plasma peroxide values did not separate
+        patients from controls well (area under the curve 62.6%, not significant), and the
+        Stanford group's further test was a small case study of three people from a family
+        cohort, studied by the same group.
+      sources: ['pmid:21455120', 'pmid:40627396']
   explains_pem:
     value: false
     reason:
@@ -656,10 +657,11 @@ links:
   - to: symptom:sleep-disturbance
     support: proposed
     text: >-
-      A 2018 review proposes that interacting immune, oxidative and nitrosative stress, and mitochondrial pathways
-      may drive sleep abnormalities in chronic fatigue syndrome and other neuro-immune disorders. It is a
-      hypothesis paper and reports no patient data linking the two. Its first author also wrote the 2017 review
-      cited on this card's link to hpa-axis-cortisol, so the two review sources are not independent.
+      A 2018 review proposes that interacting immune, oxidative and nitrosative stress, and
+      mitochondrial pathways may drive sleep abnormalities in chronic fatigue syndrome and other
+      neuro-immune disorders. It is a hypothesis paper and reports no patient data linking the
+      two. Its first author also wrote the review cited on this card's link to
+      hpa-axis-cortisol, so the two review sources are not independent.
     sources: [pmid:29759891]
 last_checked:
   date: 2026-11-15

@@ -1,0 +1,124 @@
+card: autoimmunity-autoantibodies-b-cells
+card_sha256: e94468e5c05bff71e659af763d9dbd66884d3ced45cf1b4409027bf4c3c41d5b
+origin: 'data/pipeline/2026-11-17/report.md: the reviewer''s advisory notes on the accepted pair autoimmunity-autoantibodies-b-cells
+  + pmid:40901516 (review/autoimmunity-autoantibodies-b-cells-40901516-r1.json)'
+request:
+- target: studies[pmid:40901516].finding
+  problem: The reviewer noted that the finding expands the erratum's "LC" to "long COVID" while the erratum
+    text writes only "LC", and that it says the erratum "does not change the study's patient numbers,
+    results or findings", which the erratum does not state in words.
+- target: studies[pmid:40703261]
+  problem: 'The reviewer noted that the YAML comment on this study still says the content of the correction
+    pmid:40901516 is not in the cache and "TODO: verify what it corrects", although the correction is
+    now cached and on the card.'
+review:
+  verdict: accept
+  findings:
+  - class: wording
+    target: studies[pmid:40901516].finding
+    severity: advisory
+    problem: 'Request item 1, part two. The finding ends ''It does not change the study''s patient numbers,
+      results or findings.'' The cached erratum (PMC12401010.xml) states only that paragraph 7 of the
+      Introduction ''incorrectly stated'' ''... individuals with or without LC (17) ...'', that the correct
+      sentence reads ''... with or without ME/CFS (17) ...'', and that ''The original version of this
+      article has been updated.'' It says nothing about the article''s patient numbers, results or findings,
+      so the closing sentence is the card''s own inference. Request item 1, part one, is not an error:
+      the cached full text of the corrected article (PMC12283730.xml) defines the abbreviation itself
+      (''denoted a post COVID-19 condition, or Long COVID (LC)''), so ''long COVID'' correctly expands
+      the erratum''s ''LC''.'
+    fix: Replace the last sentence with what the erratum states, for example 'The erratum corrects only
+      this sentence.', or remove it.
+    targets:
+    - studies[pmid:40901516].finding
+  - class: decisive
+    severity: advisory
+    problem: 'Request item 2. The context gives the card with comments removed, so the YAML comment on
+      pmid:40703261 could not be read here. If it still says the content of the correction pmid:40901516
+      is not in the cache and ''TODO: verify what it corrects'', it is out of date: the erratum is cached
+      (data/cache/europepmc/PMC12401010.xml, record data/cache/pubmed/40901516.xml), it is on the card
+      as a context study with ''corrects: pmid:40703261'', and its finding gives what it corrects. The
+      comment is not reader-facing and changes no level, badge, mark, case definition, role or number
+      of the study.'
+    fix: Remove the stale comment, or replace it with a note that the correction is cached and recorded
+      as pmid:40901516.
+    targets:
+    - studies[pmid:40703261]
+  - class: wording
+    target: early_signals[1]
+    severity: advisory
+    problem: The early signal says '6 had marked improvement in physical function'. The cached abstract
+      and full text of pmid:40703261 say 'Six patients experienced marked improvement' without restricting
+      it to physical function; SF-36 Physical Function is one of the measures reported for them (mean
+      32.2 to 78.3 in the six responders), alongside DSQ-SF symptom scores and step counts.
+    fix: Write '6 had marked improvement' (as the study's finding field already does), or name SF-36 Physical
+      Function as one of the measures.
+    targets:
+    - early_signals[1]
+  - class: wording
+    target: level_reason[9]
+    severity: advisory
+    problem: 'level_reason[9] says the second B-cell study is ''sharing an author'' with the first, and
+      both group fields say ''Bansal A also on ...''. The computed author facts give only a loose match
+      for this pair (''0 exact, 1 loose: Bansal AS (as Bansal A)''), so the records do not confirm that
+      the two names are the same person.'
+    fix: Write 'possibly sharing an author (Bansal AS on one, Bansal A on the other)', or drop the shared-author
+      clause.
+    targets:
+    - level_reason[9]
+    - studies[pmid:23480187].group
+    - studies[pmid:26646713].group
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:40901516
+    set:
+      finding: A published erratum to the daratumumab pilot study (pmid:40703261). It corrects one sentence
+        in the Introduction of that article, which had referred to individuals with or without long COVID
+        where the correct wording is individuals with or without ME/CFS.
+  - op: remove_comment
+    text: ' A published correction exists (pmid:40901516); its content is not in the cache. TODO: verify
+      what it corrects.'
+  - op: replace_paragraph
+    field: early_signals
+    index: 1
+    text: A study of n=10 women, without a control group, found that after the plasma-cell-targeting drug
+      daratumumab 6 had marked improvement and 4 had no significant change; IgG fell by 54% in those who
+      improved and by 40% in those who did not. Not yet repeated.
+    sources:
+    - pmid:40703261
+  - op: replace_paragraph
+    field: level_reason
+    index: 9
+    text: Studies of B cells themselves are mixed. One study of 33 patients and 24 healthy controls found
+      more naive and transitional B cells and fewer plasmablasts in patients; a second, possibly sharing
+      an author (Bansal AS on one, Bansal A on the other), found no difference in the classical B-cell
+      groups in 38 patients and 32 controls, but differences in a B-cell surface marker (CD24) and in
+      one memory B-cell group.
+    sources:
+    - pmid:23480187
+    - pmid:26646713
+  - op: update_study
+    id: pmid:23480187
+    set:
+      group: Bansal AS, St Helier University Hospital, Carshalton, UK (a Bansal A is on 26646713, possibly
+        the same person)
+  - op: update_study
+    id: pmid:26646713
+    set:
+      group: Cambridge G, University College London, UK (a Bansal A is on 23480187, possibly the same
+        person)
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings: []
+tier:
+  tier: 2
+  why:
+  - operations[1] answers finding 1, which is classed decisive, not wording
+audits_run:
+- 2026-11-17-autoimmunity-autoantibodies-b-cells-correction-published.yaml
+- 2026-11-17-autoimmunity-autoantibodies-b-cells-correction-published-second.yaml
+outcome: the second audit decided reject

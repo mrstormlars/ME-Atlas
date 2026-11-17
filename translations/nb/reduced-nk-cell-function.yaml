@@ -241,7 +241,8 @@ items:
       for nivået.
     source_hash: f25bef9423d7fcb91dde26c1d5cd806c73ba2394730cbf70a48678208dab81d5
   studies[pmid:30915066].finding:
-    text: En publisert erratum til pmid:28694809. Det erstatter uttrykket "lytic units" med "specific lysis in percent" i
-      teksten og i forklaringen og aksetittelen til Figure 2, og sier at feilene ikke endrer de vitenskapelige konklusjonene
-      i artikkelen. Det rapporterer ingen nye data.
-    source_hash: 3512dbbd096cdf50e4133a04f72f041984e6d1c29e4ea72df71297e4b9508493
+    text: Et publisert erratum til pmid:28694809. Det erstatter uttrykket "lytic units" med "specific lysis in percent" alle
+      steder det forekom, blant annet i et avsnitt under Results og i forklaringen til Figures 2D og 2F, og retter Figure
+      2 til å lese "Specific lysis, %". Det sier at feilene ikke endrer de vitenskapelige konklusjonene i artikkelen. Det
+      rapporterer ingen nye data.
+    source_hash: 171be391a7da3b4d6b4290c0cb2f83867f91f974d2c718a3ffb499dd98c9b398

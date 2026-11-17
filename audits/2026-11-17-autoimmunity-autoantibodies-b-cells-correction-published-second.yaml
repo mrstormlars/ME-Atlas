@@ -1,0 +1,29 @@
+card: autoimmunity-autoantibodies-b-cells
+decision: reject
+parts:
+  - decision_part: "The level 2 (level_reason[0]): the sentence that the Swedish study's two cohorts all met the Canadian Consensus Criteria, the International Consensus Criteria and the 2015 IOM criteria, which the card names as the basis for level 2, cannot be checked. The case definition of pmid:34589868 is recorded from the full text, which is not cached; its abstract names no case definition. No other study whose case definition can be read from the records here is a controlled study that supports the receptor-antibody claim, so the level needs this unverifiable statement."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "This study was designed to investigate potential differences in adrenergic and muscarinic receptor autoantibody levels in plasma and cerebrospinal fluid (CSF) samples between ME patients and gender and age-matched healthy controls, and to correlate the autoantibody levels to disease severity."
+      - source: pmid:34589868
+        quote: "Significant increases in autoantibody levels in ME patients compared to controls were found for M3 and M4 -receptors in both cohorts and β1, β2, M3 and M4-receptors in one cohort."
+    class: decisive
+  - decision_part: "The link to autonomic-imbalance (support associated): it needs a study in an ME/CFS cohort with a recognised case definition, and the Fukuda definition of pmid:42082542 is recorded from the full text, which is not cached; the abstract does not name a case definition. The link's statements that the ME/CFS group did not differ from controls on heart rate variability balance, that antibodies also correlated with autonomic measures in controls, and that beta-blockers were not accounted for are also not in the abstract and cannot be checked."
+    rubric: "A study in an ME/CFS cohort with a recognised case definition that measured both ends in the same patients and reports a relation between them."
+    evidence:
+      - source: pmid:42082542
+        quote: "We included 96 PCC patients, 59 ME/CFS patients, and 36 healthy controls (HCs)."
+      - source: pmid:42082542
+        quote: "β2 AAb levels correlated with increased autonomic symptoms in PCC (r = 0.27, p = 0.048) and sympathovagal imbalance in ME/CFS (r = 0.45, p = 0.001)."
+    class: decisive
+  - decision_part: "The corrected early signal on daratumumab (early_signals[1]): removing 'in physical function' matches the abstract, which reports marked improvement in six and no significant change in four, and the IgG figures match."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:40703261
+        quote: "Four patients had no significant clinical changes. Six patients experienced marked improvement."
+      - source: pmid:40703261
+        quote: "Relative reduction of serum IgG levels was 54% in six patients with clinical improvement, and 40% among four with no benefit."
+    class: none
+reasons_summary: "The wording corrections match the abstracts, but the card's level 2 and its autonomic-imbalance link rest on case definitions read from full texts that are not cached, so they cannot be verified here and the card stays as it is."
+would_change: "Caching the full texts (the context says none was requested because CONTACT_EMAIL is not set) so that the case definition sentences of pmid:34589868 (CCC, ICC, IOM 2015, the basis of level 2) and pmid:42082542 (Fukuda, carrier of the autonomic-imbalance link) can be checked. Other full-text-only statements could not be checked either: the Gottfries cohort and separate sample analysis in pmid:34589868, the 79%, 91% and 25% figures in the diagnostic badge, the Spanish study's matching, table values, exploratory label and cut-off percentages in pmid:42082542, and the Fukuda definition of pmid:22039471. The erratum's finding (pmid:40901516) that it corrects a sentence in the Introduction is not in its abstract-only record. The Bansal AS and Bansal A author names in the B-cell sentence and the group fields match the author metadata, which is not quotable text. I was not handed any drafting, review or earlier audit reasoning."
