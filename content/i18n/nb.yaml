@@ -2,7 +2,7 @@
 # Samme {plassholdere} og samme [[ordlistebegreper]] som i den engelske strengen (kontrolleres ved hver bygging).
 # Begrepet i [[ ]] er alltid det engelske; forklaringen kommer fra den norske ordlisten.
 # Trinnnavn og -forklaringer er oversettelser av stigen i docs/ME-Atlas-functional-spec.md avsnitt 3.
-# Ingen av de forbudte ordene (se CLAUDE.md, også de norske formene) kan stå i en streng. Se docs/translation.md.
+# Ingen av de forbudte ordene (listet i BANNED_WORDS og BANNED_WORDS_NB i src/me_atlas/cards.py) kan stå i en streng. Se docs/translation.md.
 
 lang.name: 'Norsk'
 lang.aria: 'Språk'
@@ -145,7 +145,7 @@ flag.broad: 'bred'
 
 # --- hva som er endret ---
 changes.h1: 'Hva som er endret'
-changes.intro: 'Alle publiserte endringer i hypotesene, nyeste først. Hver oppføring viser hvilket beslutningsnivå som avgjorde den; se <a href="{lroot}methods.html#tiers">Metode</a>.'
+changes.intro: 'Alle publiserte endringer i hypotesene, nyeste først. Hver oppføring viser beslutningsnivået sitt; se <a href="{lroot}methods.html#tiers">Metode</a>.'
 changes.reason: 'Begrunnelse:'
 changes.sources: 'Kilder:'
 changes.tier: 'Beslutningsnivå {tier}'
@@ -160,10 +160,10 @@ glossary.used_on: 'Brukt på:'
 
 # --- causal map page ---
 map.h1: 'Årsakskart'
-map.intro: 'Denne siden er en annen visning av de samme hypotesene. Forsiden viser hvor langt dokumentasjonen for hver hypotese har kommet; denne siden viser hvor hver enkelt hører hjemme i en mulig kjede fra sårbarhet til symptomer, og hvilke forbindelser mellom hypotesene som er foreslått. En lenke er selv en hypotese. Den vurderes på sin egen skala (foreslått, samvariasjon, retning støttet), ikke på evidensstigen, og den endrer aldri nivået til en hypotese. ME/CFS kan være flere tilstander med ulike utløsere som møtes lenger ned, så kartet forutsetter ikke én kjede. Ingenting her er et funn om at én ting forårsaker en annen. Listene under har det samme innholdet som tegningen, med kilder.'
+map.intro: 'Denne siden er en annen visning av de samme hypotesene. Forsiden viser hvor langt evidensen for hver hypotese har kommet; denne siden viser hvor hver enkelt hører hjemme i en mulig kjede fra sårbarhet til symptomer, og hvilke lenker mellom hypotesene som er foreslått. En lenke er selv en hypotese. Den vurderes på sin egen skala (foreslått, samvariasjon, retning støttet), ikke på evidensstigen, og den endrer aldri nivået til en hypotese. ME/CFS kan være flere tilstander med ulike utløsere som møtes lenger ned, så kartet forutsetter ikke én kjede. Ingenting her er et funn om at én ting forårsaker en annen. Listene under har det samme innholdet som tegningen, med kilder.'
 map.layer_empty: 'Ingenting er plassert i dette laget ennå.'
-map.unplaced_note: 'Disse hypotesene har ikke noe lag ennå. Å plassere en hypotese i et lag er en redaksjonell avgjørelse som ikke er tatt.'
-map.symptoms_intro: 'Symptomer er ikke hypoteser. Hvert symptom er hentet fra diagnosekriteriene som lister det.'
+map.unplaced_note: 'Disse hypotesene har ikke noe lag ennå. Revisoren har ikke avgjort noe lag for dem ennå.'
+map.symptoms_intro: 'Symptomer er ikke hypoteser. Hvert symptom er en symptomkategori som står i International Consensus Criteria (2011), et sett med diagnosekriterier.'
 map.to: 'Til'
 map.no_links: 'Ingen lenker fra denne hypotesen ennå.'
 map.unpublished: 'ikke publisert ennå'
@@ -213,7 +213,7 @@ gaps.summary.symptoms.caption: 'Antall lenker inn til hvert symptom, etter støt
 gaps.summary.symptom: 'Symptom'
 gaps.summary.none: 'ingen lenke ennå'
 gaps.summary.links.h3: 'Alle lenker etter støttetrinn'
-gaps.summary.links.total: 'Alle lenker i det kausale kartet: {n}.'
+gaps.summary.links.total: 'Alle lenker i årsakskartet: {n}.'
 gaps.summary.links.see: 'Se lenkene på trinn 1 (foreslått) under.'
 gaps.summary.levels.h3: 'Hypoteser etter nivå'
 gaps.summary.levels.level: 'Nivå'
@@ -223,7 +223,7 @@ gaps.summary.levels.see: 'Se hva hvert neste trinn krever under.'
 gaps.none: 'Ingen ennå.'
 gaps.count: 'Antall: {n}'
 gaps.unlinked_symptoms.h2: 'Symptomer uten lenke til noen hypotese'
-gaps.unlinked_symptoms.intro: 'Symptomer fra diagnosekriteriene som ingen hypotesekort lenker til ennå.'
+gaps.unlinked_symptoms.intro: 'Symptomkategorier fra International Consensus Criteria som ingen hypotesekort lenker til ennå.'
 gaps.step1_symptoms.h2: 'Symptomer som bare er lenket på trinn 1'
 gaps.step1_symptoms.intro: 'Symptomer der alle lenkene står på trinn 1 (foreslått): foreslått i litteraturen, men ikke målt sammen med hypotesen hos de samme pasientene.'
 gaps.step1_symptoms.from: 'Lenket fra:'
@@ -237,4 +237,4 @@ gaps.level: 'Nivå {level}: {name}'
 gaps.next_rung.requires: 'Neste trinn, {name}, krever: {meaning}'
 gaps.contested: 'Denne hypotesen er omstridt på trinn {rungs}; begrunnelsen står på kortet.'
 gaps.unlinked_cards.h2: 'Hypoteser uten lenker ennå'
-gaps.unlinked_cards.intro: 'Hypotesekort uten lenke inn eller ut i det kausale kartet.'
+gaps.unlinked_cards.intro: 'Hypotesekort uten lenke inn eller ut i årsakskartet.'

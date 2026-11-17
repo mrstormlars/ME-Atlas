@@ -1,8 +1,8 @@
 # ME Atlas – Functional Specification (v1)
 
-October 31, 2026 · Working document · Status: draft
+Written October 31, 2026; last updated November 17, 2026 · Status: draft. The site is built and published. The rules below are applied as written, and no medical or research expert has reviewed them.
 
-This document says what the site shows, for whom, how a hypothesis gets on it, how it is graded, and how content moves from AI draft to published card. It builds on `docs/ME-Atlas-v1-plan.md` and supersedes its draft status scale (see "Evidence ladder"). The card data model is designed after this spec, from what the pages need to show.
+This document says what the site shows, for whom, how a hypothesis gets on it, how it is graded, and how content moves from AI draft to published card. It builds on `docs/ME-Atlas-v1-plan.md` and supersedes its draft status scale (see "Evidence ladder"). The card data model is in `docs/card-format.md`.
 
 Examples in this document are fictional ("Hypothesis A") and carry no real citations.
 
@@ -24,7 +24,7 @@ Scope is ME/CFS first. Long COVID appears as a marker on a card where the eviden
 
 - **Scenario 1.** A researcher checks whether a hypothesis has been replicated. They open the card and go straight to the linked studies, with sample size and case definition beside each.
 - **Scenario 2.** A reviewer disagrees with a grade. They open the methods page, read the rule that was applied, and see on the card why the level was set.
-- **Scenario 3.** A researcher returns after a month and opens "What changed this week" to see which cards moved, and why.
+- **Scenario 3.** A researcher returns after a month and opens "What changed" to see which cards moved, and why.
 
 ## 2. Inclusion rule for hypotheses
 
@@ -45,7 +45,7 @@ Hypotheses are **not mutually exclusive**. They may be links in one causal chain
 
 ## 3. Evidence ladder
 
-**Draft — pending expert review.** No external medical or research reviewer is attached yet; one will be recruited once the site can be shown. Until then the ladder is applied as written and the site says it has not been expert-reviewed. Grading follows only this published ladder; editors do not add criteria.
+**Draft — pending expert review.** No external medical or research reviewer has been recruited yet. Until one has, the ladder is applied as written, it is a draft, and the site says it has not been expert-reviewed. Grading follows only this published ladder; editors do not add criteria.
 
 The bar for a hypothesis shows **causal evidence**, rung 0 to 5.
 
@@ -68,7 +68,7 @@ Down or held back: failed replications; a finding that rests only on a broad cas
 
 Volume is not evidence. The number of papers, citations or news items never moves a hypothesis.
 
-**Preprints.** A preprint (not peer reviewed) is an early signal and nothing more. It never moves a level, sets or changes a badge, creates or changes a contested mark, or supports a link, whatever it found, and it is shown with the fixed label "Preprint: not peer reviewed." When its published version appears in PubMed, the weekly report flags it so that the founder can replace the preprint with the published paper.
+**Preprints.** A preprint (not peer reviewed) is an early signal and nothing more. It never moves a level, sets or changes a badge, creates or changes a contested mark, or supports a link, whatever it found, and it is shown with the fixed label "Preprint: not peer reviewed." When its published version appears in PubMed, the weekly report flags it. Replacing the preprint with the published paper is a card change that goes through the pipeline (checks, review and, for a preprint, the auditor).
 
 ### Mapping to the Bradford Hill criteria
 
@@ -116,7 +116,7 @@ A level is **contested** when at least one study of comparable or higher quality
 
 - **Who decides:** the auditor, as a tier 2 decision (see section 6), with the contradicting study linked on the card and the reason written in plain sentences, split into short paragraphs with their own sources when it needs more than two. AI may propose a conflict; it never sets one.
 - **How it is shown:** the bar is filled up to the highest uncontested rung; the rung or rungs under dispute are drawn as a **hatched segment**. The card lists both sides.
-- **How it ends:** a contested mark is removed when the conflict is resolved (for example a larger study settles it), recorded on "What changed this week".
+- **How it ends:** a contested mark is removed when the conflict is resolved (for example a larger study settles it), recorded on "What changed".
 
 ### Causal map and links
 
@@ -169,9 +169,9 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 - **Also shows:** above the lists, "At a glance": a table of links into each symptom by support step, one bar of all links by step, and the hypotheses by level 0 to 5 (with the contested count), all counted from the same data as the lists and written out as numbers.
 - **Does not show:** a score, weight or ranking of hypotheses or gaps; which gap matters most or what should be studied; the absence of a link as a finding (it only means nobody has mapped it here yet); any sentence without the same sources as elsewhere on the site.
 
-### What changed this week
+### What changed
 
-- **Shows:** the dated log of published changes: new hypotheses, level changes, new or removed contested marks, new studies added; each entry with a one-line reason and a link to the card and source.
+- **Shows:** the dated log of published changes: new hypotheses, level changes, new or removed contested marks, new studies added; each entry with a one-line reason, the tier and a link to the card and source.
 - **Does not show:** unreviewed AI drafts; rejected suggestions; commentary on individual researchers.
 
 ### Methods page
@@ -205,7 +205,7 @@ The pipeline runs on AI, with mechanical checks in code. The founder sets the di
 | --- | --- | --- |
 | Drafting agent | `card-drafter`, `link-drafter`, `hypothesis-surveyor` | Nothing; proposes |
 | Review agent | `card-reviewer` | Whether a draft goes forward (two rounds) |
-| Auditor | `auditor`, an independent AI agent | Tier 2 and tier 3: levels, badges, contested marks, layer and links, preprint early signals, and a new hypothesis against the inclusion rule. Never a change the review agent rejected in two rounds |
+| Auditor | `auditor`, an independent AI agent | Tier 2: levels, badges, contested marks, layer and links, preprint early signals, and a new hypothesis against the inclusion rule. Never a change the review agent rejected in two rounds (tier 3 has no AI step) |
 | Founder | the founder | Direction: the rubric and its rules, the inclusion rule, the scope, removing a hypothesis, which sources are searched, the agents' prompts. May overrule any auditor decision, as a logged correction (`decided_by: founder`) |
 | Expert reviewer | vacant | Replaces the auditor when recruited |
 
@@ -242,18 +242,17 @@ The pipeline runs on AI, with mechanical checks in code. The founder sets the di
 
    **Independence, stated honestly.** The auditor shares a model family with the agents it audits and may share their blind spots. The independence that exists lies in what the auditor is shown, not in the model. The model of each agent is listed in `docs/pipeline.md`.
 
-   **Trial period:** for the first four weekly runs the founder reads the list of auditor decisions after the fact. The trial ends by a ruling in `docs/pm/DECISIONS.md`. The founder merges the weekly pull request as an operational step, without reviewing the content.
+   **Adding links to a published card (link round).** A link on a published card is added through a link round on that card, not through a draft (`docs/pipeline.md`, "Adding links to a published card"; DECISIONS 2026-11-16). Each link is decided on its own: a link that fails at a stage is dropped and the others go on. Each published link needs two agreeing audits, run in sequence. The wording valve applies to link texts, with the limits above. A link round adds no study and does not change the card's layer.
+
+   **Merging.** The founder merges the weekly pull request as an operational step, without reviewing the content. There is no trial period of after-the-fact reading (founder ruling 2026-11-17).
 7. **Publication.** Applied changes are published in the weekly site update. The card shows when it was last audited and by whom: the AI auditor, or the founder after an overrule.
-8. **Logging.** Every published change gets an entry on "What changed this week" (date, card, change, one-line reason, source link, the tier, and who decided it: the AI review pair, the AI auditor, the founder or, later, an expert). The change log is public and kept permanently.
+8. **Logging.** Every published change gets an entry on "What changed" (date, card, change, one-line reason, source link and the tier). The change log file also records who decided it (`decided_by`); the page does not print that. The change log is public and kept permanently.
 9. **Corrections.** An error found later is corrected the same way and logged as a correction. A founder overrule of an auditor decision is a correction with `decided_by: founder`.
 
 AI drafts, checks and audits; the founder sets the direction and the rubric. The site states openly that every level is decided by AI tools and that no medical or research expert has reviewed the content.
 
 ## 7. Out of scope for v1
 
-- The card data model (YAML vs JSON, field names): next task, built from this spec.
-- Real evidence cards or real hypotheses with citations (this spec and the mockup use none).
-- Site generator, pipeline code, PubMed fetching.
 - Subgroup filtering, search, user accounts, comments, donations.
 - Long COVID as a separate section.
 - A white paper for researchers and organisations.
@@ -262,9 +261,8 @@ AI drafts, checks and audits; the founder sets the direction and the rubric. The
 
 ## 8. Open questions
 
-- Recruit a medical or research reviewer once the site can be shown (planned: share on X and in ME forums and Facebook groups for feedback and volunteers).
-- Are the six rungs and their names clear to patients? Test with readers at that point.
-- When to end the calibration period and turn on tier 1 auto-publishing.
+- Recruiting a medical or research reviewer. None has been recruited. Until one has, the rules are applied as written and are a draft. No plan for how or when is recorded.
+- Are the six rungs and their names clear to patients? Test with readers.
 - Whether the review agent can run on a different model family, and at what cost.
 - Collaboration with MEpedia or Science for ME. v1 stands alone and links out; contact can come later.
 
@@ -277,3 +275,7 @@ AI drafts, checks and audits; the founder sets the direction and the rubric. The
 - Long COVID marker: a label at the top of the card, shown with at least one qualifying long COVID study on the same mechanism.
 - MEpedia: v1 stands alone.
 - External reviewer: not required before launch; replaced for now by the tiered review model in section 6.
+
+### Resolved 2026-11-17
+
+- Tier 1 changes already apply on the mechanical checks and the review agent, without the auditor. The calibration period of 2026-10-31 was replaced on 2026-11-13, and the trial period that replaced it ended on 2026-11-17 (DECISIONS 2026-11-17).

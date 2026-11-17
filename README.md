@@ -18,7 +18,7 @@ Every hypothesis is graded on a published evidence ladder, level 0 (proposed) to
 - The same in plain language, as shown on the site: [content/methods/en.html](content/methods/en.html).
 - How the weekly pipeline works: [docs/pipeline.md](docs/pipeline.md).
 
-A weekly pipeline fetches new papers from PubMed and Europe PMC. Code checks every citation mechanically (the identifier exists, and title, year, sample size and case definition match the fetched record). A change that moves a level, badge, contested mark, layer, link or preprint signal reaches a card only when the checks pass, the review agent accepts it and the independent auditor accepts it. A dispute leaves the card unchanged. The auditor shares a model family with the agents it audits and may share their blind spots; the methods text says so.
+A weekly pipeline fetches new papers from PubMed and Europe PMC. Code checks every citation mechanically (the identifier exists, and title, year and case definition match the fetched record; a sample size that does not match is a warning, not a failure). A change that moves a level, badge, contested mark, layer, link or preprint signal reaches a card only when the checks pass, the review agent accepts it and the independent auditor accepts it. A dispute leaves the card unchanged. The one exception is a finding that the reviewer or auditor classes as wording only, in a correction round or a link round: the named sentence is reworded or removed and the review agent checks it once (see [the methods text](content/methods/en.html)). The auditor shares a model family with the agents it audits and may share their blind spots; the methods text says so.
 
 ## Report an error or suggest a paper
 
