@@ -89,12 +89,23 @@ class PubMedRecord(BaseModel):
     mesh_major: list[str] = []  # descriptors marked major topic, or with a major-topic qualifier
     retracted: bool
     entry_date: str | None  # ISO date (the PubMed "entrez" history date)
+    # PMIDs of the erratum notices that correct this record (CommentsCorrections RefType "ErratumIn"), in record order.
+    errata: list[str] = []
+    # PMIDs of the articles this record is an erratum for (RefType "ErratumFor").
+    erratum_for: list[str] = []
+    # CommentsCorrections RefType values outside KNOWN_REF_TYPES, so a new kind of notice is seen, not ignored.
+    other_ref_types: list[str] = []
 
     @property
     def preprint(self) -> bool:
         """True if PubMed marks the record as a preprint (publication type "Preprint"). The journal is not used."""
         return "Preprint" in self.publication_types
 
+
+# RefType values of PubMed's CommentsCorrections the code knows about. Others are exposed as ``other_ref_types``.
+KNOWN_REF_TYPES = frozenset(
+    {"CommentIn", "CommentOn", "ErratumIn", "ErratumFor", "UpdateOf", "UpdateIn", "RetractionIn", "RetractionOf"}
+)
 
 _YEAR_RE = re.compile(r"\b(1[89]\d\d|20\d\d)\b")
 
@@ -183,6 +194,28 @@ def _entry_date(pubmed_data: ET.Element | None) -> str | None:
     return None
 
 
+def _linked_pmids(citation: ET.Element, ref_type: str) -> list[str]:
+    """PMID digits of the CommentsCorrections links of one RefType, in record order, de-duplicated."""
+    found: list[str] = []
+    for node in citation.findall("CommentsCorrectionsList/CommentsCorrections"):
+        if node.get("RefType") != ref_type:
+            continue
+        pmid = _text(node.find("PMID"))
+        if pmid.isdigit() and pmid not in found:
+            found.append(pmid)
+    return found
+
+
+def _other_ref_types(citation: ET.Element) -> list[str]:
+    """RefType values not in KNOWN_REF_TYPES, in record order, de-duplicated."""
+    found: list[str] = []
+    for node in citation.findall("CommentsCorrectionsList/CommentsCorrections"):
+        ref_type = (node.get("RefType") or "").strip()
+        if ref_type not in KNOWN_REF_TYPES and ref_type not in found:
+            found.append(ref_type)
+    return found
+
+
 def parse_article(article: ET.Element) -> PubMedRecord:
     """Parse one ``<PubmedArticle>`` element. Raises ParseError if it is not a usable record."""
     citation = article.find("MedlineCitation")
@@ -231,6 +264,9 @@ def parse_article(article: ET.Element) -> PubMedRecord:
         mesh_major=mesh_major,
         retracted=retracted,
         entry_date=_entry_date(pubmed_data),
+        errata=_linked_pmids(citation, "ErratumIn"),
+        erratum_for=_linked_pmids(citation, "ErratumFor"),
+        other_ref_types=_other_ref_types(citation),
     )
 
 

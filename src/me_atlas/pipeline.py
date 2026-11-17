@@ -775,6 +775,71 @@ def _preprints_with_published_version(cfg: Config, found: Sequence[europepmc.Pre
     return rows
 
 
+def _refetch_cited(cfg: Config, cache: pubmed.RawCache, fetch: Fetch) -> dict[str, Any]:
+    """Re-fetch the PubMed record of every PMID a card or draft cites (so a newly linked erratum is seen), then
+    fetch, without refresh, any erratum those records list that is not cached. A failed fetch raises.
+
+    Returns the counts for prepare.json: ``cited_refetched``, ``errata_fetched`` (PMIDs asked for) and
+    ``unknown_ref_types`` (the PubMed link types the code does not know, on cited records, with their PMIDs)."""
+    cited = sorted(_cited_pmids(cfg), key=int)
+    if cited:
+        code = fetch(["fetch", "--ids", *cited, "--refresh", "--cache-dir", str(cfg.cache_dir)])
+        if code != 0:
+            raise PipelineError(
+                f"the PubMed re-fetch of the cited records failed (exit code {code}); nothing was prepared"
+            )
+    errata: list[str] = []
+    unknown: list[dict[str, Any]] = []
+    for pmid in cited:
+        try:
+            record = cache.read_record(pmid)
+        except (FileNotFoundError, pubmed.ParseError):
+            continue
+        if record.other_ref_types:
+            unknown.append({"pmid": pmid, "ref_types": record.other_ref_types})
+        errata += [e for e in record.errata if e not in errata and not cache.has(e)]
+    if errata:
+        code = fetch(["fetch", "--ids", *errata, "--cache-dir", str(cfg.cache_dir)])
+        if code != 0:
+            raise PipelineError(f"the PubMed fetch of the errata failed (exit code {code}); nothing was prepared")
+    return {"cited_refetched": len(cited), "errata_fetched": errata, "unknown_ref_types": unknown}
+
+
+def _errata_on_cards(cfg: Config, cache: pubmed.RawCache) -> list[dict[str, Any]]:
+    """One entry per (erratum PMID, card slug): a card cites a study whose cached record lists the erratum and the
+    card has no study with the erratum's id. ``corrects`` is the corrected study's id."""
+    rows: list[dict[str, Any]] = []
+    for slug, path in card_files(cfg).items():
+        studies = _load_card(path).studies
+        on_card = {st.id for st in studies}
+        listed: set[str] = set()
+        for study in studies:
+            if not study.id.startswith("pmid:"):
+                continue
+            try:
+                record = cache.read_record(study.id.removeprefix("pmid:"))
+            except (FileNotFoundError, pubmed.ParseError):
+                continue
+            for erratum in record.errata:
+                if f"pmid:{erratum}" in on_card or erratum in listed:
+                    continue
+                listed.add(erratum)
+                try:
+                    title: str | None = cache.read_record(erratum).title
+                except (FileNotFoundError, pubmed.ParseError):
+                    title = None
+                rows.append(
+                    {
+                        "erratum": erratum,
+                        "card": slug,
+                        "corrects": study.id,
+                        "title": title,
+                        "cached": title is not None,
+                    }
+                )
+    return sorted(rows, key=lambda r: (int(r["erratum"]), r["card"]))
+
+
 def read_ids_file(path: Path) -> list[str]:
     """PMIDs from a file, one per line; a ``pmid:`` prefix is allowed, blank lines and ``#`` comments are ignored."""
     try:
@@ -852,6 +917,11 @@ def prepare(
             found_preprints = list(preprint_search(window_since, date))
         except europepmc.EuropePmcError as exc:
             raise PipelineError(f"the preprint search failed ({exc}); nothing was prepared") from exc
+        refetch = _refetch_cited(cfg, cache, fetch)
+    if given is not None:
+        refetch = {"cited_refetched": 0, "errata_fetched": [], "unknown_ref_types": []}
+    errata_on_cards = _errata_on_cards(cfg, cache)
+    erratum_pairs = {row["erratum"] for row in errata_on_cards if row["cached"]}
 
     papers: list[dict[str, Any]] = []
     excluded_retracted: list[str] = []
@@ -861,7 +931,9 @@ def prepare(
     )
     ledger = {} if reprocess else read_ledger(cfg)
     skipped_processed = [p for p in in_window if p in ledger]
-    for pmid in (p for p in in_window if p not in ledger):
+    for pmid in (
+        p for p in in_window if p not in ledger and p not in erratum_pairs
+    ):  # erratum pairs skip the classifier
         try:
             record = cache.read_record(pmid)
         except (FileNotFoundError, pubmed.ParseError):
@@ -936,6 +1008,8 @@ def prepare(
         "excluded_retracted": excluded_retracted,
         "unreadable_records": unreadable,
         "retractions_on_cards": retractions,
+        **refetch,
+        "errata_on_cards": errata_on_cards,
         "counts": manifest.get("counts", {}),
         "preprints": preprint_summary,
         "preprints_published": _preprints_with_published_version(cfg, found_preprints),
@@ -994,6 +1068,11 @@ def record_classification(cfg: Config, path: Path | None = None) -> dict[str, An
             stopped.append({**ref, "why": "matches no card"})
         else:  # a pair is named by the paper's pmid, or by the doi: id of a preprint with no PMID
             matches += [{"slug": slug, **ref} for slug in item.cards]
+    # An erratum of a cited study that the card does not have is a fixed pair: no classifier, named by its PMID.
+    prepared = _read_json(cfg.f("prepare.json")) if cfg.f("prepare.json").exists() else {}
+    for row in prepared.get("errata_on_cards", []):
+        if row["cached"] and row["card"] in slugs:
+            matches.append({"slug": row["card"], "pmid": row["erratum"], "erratum_for": row["corrects"]})
     result = {"matches": matches, "stopped": stopped, "new_hypotheses": new_hypotheses}
     _write_json(cfg.f("matches.json"), result)
     _log(
@@ -1090,7 +1169,26 @@ PREPRINT_RULE = (
     "`role: early_signal`, and it may never be cited in a level reason, a contested reason, a badge "
     "reason or a link."
 )
+ERRATUM_RULE = (
+    "**This paper is an erratum to `{corrected}`.** Add it to the card as a study with `corrects: {corrected}`, "
+    "`role: context` and `case_definition: none`. A level, badge or contested change may only come from changing "
+    "the corrected study (its numbers, role or finding), never from the erratum itself: the erratum is never a "
+    "source of a level reason, a contested reason or a badge reason (founder ruling 2026-11-17). Change a sentence "
+    "of the card only where the erratum corrects what that sentence says about `{corrected}`."
+)
 _TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _erratum_of(cfg: Config, slug: str, key: str) -> str | None:
+    """The id of the study this paper is an erratum to on card ``slug``, when matches.json holds it as a fixed
+    erratum pair; otherwise None."""
+    path = cfg.f("matches.json")
+    if not path.exists():
+        return None
+    for match in _read_json(path).get("matches", []):
+        if match.get("slug") == slug and match.get("pmid") == key and match.get("erratum_for"):
+            return match["erratum_for"]
+    return None
 
 
 def _preprint_record(cfg: Config, key: str) -> europepmc.PreprintRecord:
@@ -1121,6 +1219,7 @@ def build_context(
     if key.isdigit():
         record = _record(cfg, key)
         paper_id = f"pmid:{key}"
+        erratum_for = _erratum_of(cfg, slug, key)
         full = loader(key, record.pmcid)
         record_lines = [
             "## 4. The paper's PubMed record",
@@ -1133,6 +1232,15 @@ def build_context(
             f"- doi: {record.doi or 'not stated'}",
             f"- publication types: {', '.join(record.publication_types) or 'not stated'}",
             f"- retracted: {'yes' if record.retracted else 'no'}",
+            *(
+                [
+                    f"- erratum for: {', '.join('pmid:' + p for p in record.erratum_for)}",
+                    "",
+                    ERRATUM_RULE.format(corrected=erratum_for),
+                ]
+                if erratum_for
+                else []
+            ),
             *(
                 [
                     "- preprint: yes (PubMed marks this record as a preprint). It is not peer reviewed.",
@@ -3489,6 +3597,29 @@ def build_report(cfg: Config) -> str:
         ]
     else:
         lines.append("None.")
+    lines += ["", "## Errata to papers cited on cards", ""]
+    errata = prep.get("errata_on_cards", [])
+    if errata:
+        lines += [
+            "A cited study has a published erratum that the card does not have as a study. A cached erratum goes "
+            "through the pipeline as a fixed pair (no classifier); one that is not cached is only listed.",
+            "",
+        ]
+        for row in errata:
+            link = f"[pmid:{row['erratum']}](https://pubmed.ncbi.nlm.nih.gov/{row['erratum']}/)"
+            if row["cached"]:
+                lines.append(f"- **{row['card']}**: {link} {row['title']} corrects {row['corrects']}: fixed pair")
+            else:
+                lines.append(
+                    f"- **{row['card']}**: {link} corrects {row['corrects']}: the erratum record is not cached, "
+                    f"no pair was made; fetch it with `uv run python -m me_atlas.pubmed fetch --ids {row['erratum']}`"
+                )
+    else:
+        lines.append("None.")
+    unknown = prep.get("unknown_ref_types", [])
+    if unknown:
+        lines += ["", "PubMed link types on cited records that the code does not handle (not acted on):", ""]
+        lines += [f"- pmid:{u['pmid']}: {', '.join(u['ref_types'])}" for u in unknown]
     lines += ["", "## Skipped", ""]
     skipped = [f"- **{o.slug}**, {_outcome_line(cfg, o)}: {o.note}" for o in by_status["skipped"]]
     skipped += [
@@ -6670,6 +6801,9 @@ def _dispatch(
             out(f"preprint on {row['card']} now published: {row['study']} -> pmid:{row['pmid']}")
         for r in summary["retractions_on_cards"]:
             out(f"RETRACTED and cited on {', '.join(r['cards'])}: pmid:{r['pmid']}")
+        for row in summary["errata_on_cards"]:
+            state = "fixed pair" if row["cached"] else "not cached, no pair"
+            out(f"ERRATUM to {row['corrects']} not on {row['card']}: pmid:{row['erratum']} ({state})")
         return 0
     if args.command == "record-classification":
         result = record_classification(cfg)

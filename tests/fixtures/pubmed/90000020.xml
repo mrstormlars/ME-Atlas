@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">90000020</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue CitedMedium="Print"><PubDate><Year>2025</Year></PubDate></JournalIssue>
+          <Title>Fictional Journal of Fatigue Research</Title>
+        </Journal>
+        <ArticleTitle>Fictional study of a made-up marker, later corrected.</ArticleTitle>
+        <Abstract>
+          <AbstractText>This fictional abstract describes an invented comparison of 12 invented patients with 12 invented controls.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y"><LastName>Testperson</LastName><ForeName>Alice Beta</ForeName><Initials>AB</Initials></Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="ErratumIn"><RefSource>Fict J Fatigue Res. 2025;2:9</RefSource><PMID Version="1">90000021</PMID></CommentsCorrections>
+        <CommentsCorrections RefType="CommentIn"><RefSource>Fict J Fatigue Res. 2025;2:10</RefSource><PMID Version="1">90000022</PMID></CommentsCorrections>
+      </CommentsCorrectionsList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez"><Year>2025</Year><Month>5</Month><Day>2</Day></PubMedPubDate>
+      </History>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">90000020</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

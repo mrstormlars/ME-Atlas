@@ -100,8 +100,9 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | `finding` | One neutral sentence: "A study of n=... found ...". |
 | `group` | Optional. A short label for the research group, taken from the fetched record (for example the last author and institution as PubMed gives them), or `null`/omitted. Not validated beyond being non-empty when present. Meant for the "independent group" test at level 3. |
 | `preprint` | Optional, default `false`. `true` marks a preprint (not peer reviewed): a `doi:` study taken from Europe PMC, or a `pmid:` study whose PubMed record has the publication type "Preprint" (checked by C8). A preprint can only be an early signal: see V15. |
+| `corrects` | Optional, default absent. On an erratum or correction notice to another study on the same card: the `id` of the study it corrects. See V17. |
 
-All of these are required except `group` and `preprint`; use `null` where the value is allowed to be unknown.
+All of these are required except `group`, `preprint` and `corrects`; use `null` where the value is allowed to be unknown.
 
 ### Case definition provenance (format v2)
 
@@ -165,6 +166,7 @@ Links live on the upstream card only. Translations of link texts are card text (
 | V14 | No "TODO" (whole word, any case) in text a reader sees: the `name`, any sourced text (core claim, level reason, contested reason, badge reasons, subgroups, early signals, link texts) or a study's `title`, `finding`, `group` or `case_definition_quote`. The message names the field. A TODO in a YAML comment is fine. |
 | V15 | A study with `preprint: true` must have `role: early_signal` (error at `studies[i].role`), and its id may not be a source of `level_reason` (any paragraph), `contested.reason`, `badges.diagnostic_marker.reason`, `badges.explains_pem.reason` a link, `core_claim` or a `subgroups` item (error at that path, e.g. `links[0].sources[0]`). A preprint can be cited only in `early_signals`, so it cannot set or contest a level, set a badge, carry a link or be the core claim or a subgroup (see "Where a preprint may be cited"). |
 | V16 | A card file in `cards/` has `last_checked.by` `ai_audit` or `founder`; `ai_pair` is allowed on a draft in `drafts/` only. It is checked when the file is validated as part of `cards/` (`cards validate`, the site build); a draft is not affected. |
+| V17 | A study with `corrects` names the id of another study on the same card (error at `studies[i].corrects`: unknown target, or a study that corrects itself), has `role: context` and `case_definition: none` (error at `studies[i]`), and is not a source of `level_reason` (any paragraph), `contested.reason` or a badge reason (error at that path, e.g. `level_reason.sources[1]`). An erratum may be cited elsewhere, for instance next to the study it corrects. A change to a level, badge or contested mark after an erratum can only come from changing the corrected study. |
 | M1 | `layer`, when present, is one of `predisposition`, `trigger`, `mechanism`, `dysfunction` (reported as a schema error on `layer`). |
 | M2 | Every link's `to` resolves: a card slug in the validated set (see `docs/map.md`), `symptom:<id>` in `content/symptoms.yaml`, `question:<id>` in `content/open-questions.yaml`. A malformed value such as `foo:bar`, or an entry marked `todo: verify`, is an error. |
 | M3 | A card does not link to itself. |
@@ -172,7 +174,32 @@ Links live on the upstream card only. Translations of link texts are card text (
 | M5 | A link with `support` `associated` or `directional` cites at least one study that is not a review (`design` not `other`) and whose case definition is not `none`, `other`, `unverified` or `Oxford`: "needs a study in an ME/CFS cohort with a recognised case definition". `proposed` has no such condition. |
 | M6 | The content files: `content/symptoms.yaml` (`id`, `name`, non-empty `sources`, or `todo: verify` instead) and `content/open-questions.yaml` (`id`, `layer`, `text`, and exactly one of non-empty `asked_by` or `editorial: true`, or `todo: verify`). Unique ids, no unknown keys, none of the banned words. A `todo: verify` entry is valid, left out of the build and the report, and printed as a warning. |
 
-The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10 and V12-V16 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
+The validator reports all errors it finds in a file. If the file fails V1 (schema), the cross-field rules V2-V10 and V12-V17 are not checked until the schema errors are fixed. It also reports `YAML` (file does not parse) and `IO` (path missing or unreadable).
+
+### An erratum or correction (`corrects`)
+
+An erratum notice to a study on the card is a study entry of its own, with `corrects` naming the study. Invented example:
+
+```yaml
+  - id: pmid:00000009
+    title: Correction to "A fictional controlled study of widget signalling".
+    year: 2026
+    cohort: me_cfs
+    case_definition: none
+    case_definition_source: fulltext
+    case_definition_quote: null
+    design: other
+    n_patients: null
+    n_controls: null
+    measures_pem: false
+    preregistered: null
+    role: context
+    direction: not_applicable
+    finding: A published erratum to pmid:00000001 that corrects a value in its second table; not a new patient study.
+    corrects: pmid:00000001
+```
+
+The erratum is not evidence for the ladder: it may be cited in a sentence next to the study it corrects, but never as a source of the level reason, the contested reason or a badge reason (V17). A change of level, badge or contested mark after an erratum comes from changing the corrected study. The weekly pipeline finds a missing erratum (`docs/pipeline.md`, "Errata of cited studies") and the citation check warns about it (C12).
 
 What it does not check: that titles, years, sample sizes and case definitions match the PubMed record (a later task, needs the fetch script), that the level is right for the evidence, or that the auditor accepted a change (the pipeline's audit gate and `record-audit` do that, see `docs/pipeline.md`).
 

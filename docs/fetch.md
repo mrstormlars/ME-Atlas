@@ -41,6 +41,8 @@ Optional: `--query-file` (default `config/pubmed_query.txt`) and `--cache-dir` (
 3. Downloads (EFetch XML, 200 ids per request) every PMID from the two searches that is not cached yet. A cached copy of a paper that the retraction query says is retracted, but whose copy is not marked retracted, is downloaded again.
 4. Writes the manifest.
 
+The weekly pipeline's `prepare` also re-fetches the records of every study the cards and drafts cite (`fetch --ids ... --refresh`), because an `ErratumIn` link added to PubMed after a record was cached is seen only in a new copy, and then fetches any erratum those records list that is not cached (`docs/pipeline.md`, "What `prepare` selects").
+
 Nothing is filtered at fetch time. Reviews, editorials and letters are fetched and their publication types recorded; deciding what counts as evidence belongs to classification.
 
 The client retries HTTP 429, 5xx and network errors up to 4 times with exponential backoff (1, 2, 4, 8 seconds; a `Retry-After` header is honoured), then fails with an error that says how many attempts were made. Other 4xx errors fail at once.
@@ -257,6 +259,9 @@ A file missing from the cache is a reason to check that the cache folder is ther
 | `publication_types`, `mesh_terms` | MeSH descriptors only, no qualifiers |
 | `retracted` | true if the record has the "Retracted Publication" type, or a `RetractionIn` link to its retraction notice. The notice itself ("Retraction of Publication") is not marked retracted |
 | `entry_date` | the PubMed entry (Entrez) date, ISO format |
+| `errata` | PMIDs of the erratum notices that correct this record (`CommentsCorrections` `RefType="ErratumIn"`), in record order, once each; empty when none |
+| `erratum_for` | PMIDs of the articles this record is an erratum for (`ErratumFor`); empty when none |
+| `other_ref_types` | `CommentsCorrections` `RefType` values the code does not know (known: `CommentIn`, `CommentOn`, `ErratumIn`, `ErratumFor`, `UpdateOf`, `UpdateIn`, `RetractionIn`, `RetractionOf`), so a new kind of notice is seen; empty when none |
 
 ## Tests
 

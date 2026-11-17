@@ -40,7 +40,6 @@ To build or fix:
 - A proper-noun check (institution and place names against the cached record) is not built; a first count gave too many false hits.
 - The whole-card review gate applies to correction rounds only, not to the first publication of a new draft.
 - Not exercised live: the `pmc_no_xml` and `pdf_only` full-text paths.
-- A path for errata and corrections to a published paper.
 
 Content that could change a card when a source becomes available:
 
@@ -53,7 +52,6 @@ Content that could change a card when a source becomes available:
 ## Format backlog (fix when a card needs it)
 
 - Sample size per measurement, not only per study.
-- A field for corrections and errata, so a sentence can cite them.
 - Cohort overlap between papers (matters for the independence test).
 - Which study or finding a `contradicts` study contradicts.
 - Validator check that early-signal sources have a confirmed recognised case definition.

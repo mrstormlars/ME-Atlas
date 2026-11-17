@@ -20,7 +20,7 @@ The command (`.claude/commands/ukentlig.md`) drives the stages below. AI work is
 
 | # | Command | Who | Output in `data/pipeline/<date>/` |
 | --- | --- | --- | --- |
-| 1 | `prepare [--since] [--reprocess]` | code | `papers.json` (papers in the fetch window that no earlier run processed, and preprints that survive de-duplication), `cards.json` (slug, name, core claim), `prepare.json` (counts, newly retracted PMIDs cited on a card, the preprint counts and every dropped preprint with its reason, cards that cite a preprint with a published version) |
+| 1 | `prepare [--since] [--reprocess]` | code | `papers.json` (papers in the fetch window that no earlier run processed, and preprints that survive de-duplication), `cards.json` (slug, name, core claim), `prepare.json` (counts, newly retracted PMIDs cited on a card, `cited_refetched`, `errata_fetched`, `unknown_ref_types` and `errata_on_cards`, the preprint counts and every dropped preprint with its reason, cards that cite a preprint with a published version) |
 | 2 | `paper-classifier` agent, then `record-classification` | haiku, code | `classify.json`, then `matches.json` (card/paper pairs to draft, papers stopped, possible new hypotheses) |
 | 3 | `context <slug> <key>`, then `card-drafter` agent | code, sonnet | `context/<slug>-<key>.md`, `ops/<slug>-<key>-r<N>.json` |
 | 4 | `apply <slug> <ops> [--round N]` | code | `checks/...-r<N>.json`, `applied/<slug>-<key>-r<N>/<slug>.yaml` and `changes.diff` |
@@ -39,6 +39,12 @@ By default each command after `prepare` works on the newest run in `data/pipelin
 ## What `prepare` selects
 
 The papers in the fetch window (`window_pmids` of the run manifest, cached or not) that no earlier run has processed, minus any that are marked retracted. "Processed" is kept in a ledger, `data/pipeline/processed.json` (gitignored, shared by all runs: PMID to the date of the run). Only `report` writes to it, so a run that is aborted before `report` can be repeated and selects the same papers again. `prepare --reprocess` ignores the ledger. `prepare` prints how many papers it selected and how many it skipped as already processed. Retracted papers are never selected, and a newly retracted paper that a card cites is still flagged whatever the ledger says. A newly retracted paper that a card cites is listed in the report; it is the founder's decision how the card changes (spec section 3: a retracted study is removed from the evidence and the level re-assessed).
+
+### Errata of cited studies
+
+A window run also re-fetches the PubMed record of every PMID a card or draft cites (`fetch --ids ... --refresh`, through the same injected fetch), then fetches without refresh any erratum PMID those records list (`ErratumIn`) that is not cached. A failed fetch fails `prepare` before anything is written. `prepare.json` records `cited_refetched` (how many records), `errata_fetched` (the erratum PMIDs asked for) and `unknown_ref_types` (cited records with a PubMed link type the code does not know, with their PMIDs, so a first expression of concern or republication notice is seen; nothing acts on it). `--ids` mode does not re-fetch.
+
+`errata_on_cards` has one entry per (erratum PMID, card): a card cites a study whose cached record lists the erratum and the card has no study with the erratum's id. Each entry holds `erratum`, `card`, `corrects` (the id of the corrected study), `title` (null when not cached) and `cached`. A cached erratum becomes a **fixed pair**: it is left out of `papers.json` (the classifier does not see it) and `record-classification` adds `{"slug", "pmid", "erratum_for"}` to `matches.json`. From there `context`, `apply`, `record-review`, `audit-plan` and the rest treat it as any pair. The context file says the paper is an erratum to the corrected study and states the rule: the erratum is added as a study with `corrects`, `role: context` and `case_definition: none`; a level, badge or contested change may only come from changing the corrected study, and the erratum is never a source of a level, contested or badge reason (founder ruling 2026-11-17). An erratum that is not cached gets no pair; the report says so and names the fetch command. Until a card has the erratum as a study the pair comes back each week (check C12 says the same).
 
 ### Classifying an explicit list of PMIDs
 
@@ -265,6 +271,7 @@ Stage 7, after the audit and before the report, keeps the Norwegian text in step
 5. **Possible new hypotheses**: papers that fit no card. No card is drafted.
 6. **Preprints on cards with a published version** (see "Preprints"). A preprint pair that was drafted is in the tier lists above, always tier 2.
 7. **Retracted papers cited on cards.**
+   **Errata to papers cited on cards**: each erratum of a cited study that a card lacks (fixed pair, or not cached with no pair) and the link types of cited records the code does not know.
 8. **Skipped**: failed checks, no operations file, no review, papers stopped as reviews or off-topic.
 9. **Pre-existing problems on cards**: citation-check errors the card already had (they do not block a new paper).
 10. A table of every new paper and how it was classified.

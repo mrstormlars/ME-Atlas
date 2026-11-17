@@ -249,6 +249,42 @@ def test_retraction_notice_itself_is_not_a_retracted_study():
     assert rec.retracted is False
 
 
+def test_parse_errata_links_both_ways():
+    study = record("90000020")
+    assert study.errata == ["90000021"]
+    assert study.erratum_for == []
+    assert study.other_ref_types == []  # CommentIn is a known type
+    notice = record("90000021")
+    assert notice.erratum_for == ["90000020"]
+    assert notice.errata == []
+    assert "Published Erratum" in notice.publication_types
+
+
+def test_parse_record_without_links_has_empty_erratum_lists():
+    rec = record("90000001")
+    assert rec.errata == []
+    assert rec.erratum_for == []
+    assert rec.other_ref_types == []
+
+
+def test_parse_errata_are_deduplicated_in_record_order():
+    link = '<CommentsCorrections RefType="ErratumIn"><PMID Version="1">%s</PMID></CommentsCorrections>'
+    xml = fixture_text("90000020").replace(
+        "</CommentsCorrectionsList>",
+        link % "90000099" + link % "90000021" + link % "90000099" + "</CommentsCorrectionsList>",
+    )
+    assert parse_xml(xml).errata == ["90000021", "90000099"]
+
+
+def test_parse_unknown_ref_type_is_exposed():
+    xml = fixture_text("90000020").replace(
+        "</CommentsCorrectionsList>",
+        '<CommentsCorrections RefType="ExpressionOfConcernIn"><PMID Version="1">90000023</PMID></CommentsCorrections>'
+        "</CommentsCorrectionsList>",
+    )
+    assert parse_xml(xml).other_ref_types == ["ExpressionOfConcernIn"]
+
+
 def test_parse_accepts_bare_article_element():
     bare = ET.fromstring(fixture_text("90000001")).find("PubmedArticle")
     assert bare is not None
