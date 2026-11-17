@@ -248,10 +248,10 @@ items:
       økte med i gjennomsnitt 17,75 poeng, der 14 av 20 ble bedre med minst ti poeng.
     source_hash: 5937da0fb730aeb21e2f289db96d40e480636b1e9fa10b622571299b4ad8d074
   studies[pmid:32247028].finding:
-    text: En oversiktsartikkel av forfattere av antistoffstudier på dette kortet foreslår at antistoffer mot β2 adrenerge
-      og M3 muskarine reseptorer kan svekke sirkulasjonen og oksygentilførselen. Den er sitert på kartet som kilde til en
-      foreslått lenke, ikke som evidens for nivået.
-    source_hash: 5a411b854ab10b02ba1eb37fc764f1aca31bc68c539a2009b32e1759adba0e6b
+    text: En oversiktsartikkel skrevet i samarbeid med en forfatter av antistoffstudier på dette kortet foreslår at antistoffer
+      mot β2 adrenerge og M3 muskarine reseptorer kan svekke sirkulasjonen og oksygentilførselen. Den er sitert på kartet
+      som kilde til en foreslått lenke, ikke som evidens for nivået.
+    source_hash: 6c0e824ed29cef340fae7ef655b5e251663e1a908f9f419886dfd4800e2047ee
   studies[pmid:34254637].finding:
     text: En studie med n=30 kvinner og 25 friske kontroller fant antistoffer mot hypofysen hos 56 % og mot hypotalamus hos
       33 % av pasientene, og hos ingen av kontrollene. ACTH, kortisol, toppverdi for veksthormon og IGF-1 var lavere hos de
@@ -259,7 +259,7 @@ items:
       på kartet som kilde til en lenke utenfor reseptoromfanget til dette kortet, ikke som evidens for nivået.
     source_hash: d50603260c06a54a1fe5ab06e31f4a852b27144435607bbaa65e74e252336fad
   studies[pmid:40901516].finding:
-    text: En publisert erratum til pilotstudien med daratumumab (pmid:40703261). Det retter én setning i innledningen til
+    text: Et publisert erratum til pilotstudien med daratumumab (pmid:40703261). Det retter én setning i innledningen til
       den artikkelen, som hadde nevnt personer med eller uten langvarig covid der riktig ordlyd er personer med eller uten
-      ME/CFS. Det endrer ikke studiens pasienttall, resultater eller funn.
-    source_hash: 7ced06840afd1716df8f1ab87634b1fd19461ac0ce6448721a1176ee018b803a
+      ME/CFS.
+    source_hash: 5dca1d53569802fda7efdd883ea0de414a55212e1c49faccfc079a664ce5fc83
