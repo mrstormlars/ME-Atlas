@@ -207,30 +207,34 @@ When you are given a context file `context-<id>.json`, a draft `draft-<id>.json`
 
 **What you check:**
 
-1. For an entry (`include: true`): for every value other than `not_stated`, read its `quote` in the named page. The quote must support that value by itself: it states the name, the operator, the country, the kind of content (`holds`), how access works (`access`: `open_download` means download without registration or application, `registration` an account with no review, `application` a request that is assessed) or what the resource covers (`covers`). A quote that merely shares a word with the value does not support it. Code has already found each quote in the stored text; you judge whether it supports the value.
+1. For an entry (`include: true`) you judge each value on its own. For every value other than `not_stated`, read its `quote` in the named page. The quote must support that value by itself: it states the name, the kind of content (`holds`), how access works (`access`: `open_download` means download without registration or application, `registration` an account with no review, `application` a request that is assessed) or what the resource covers (`covers`). A quote that merely shares a word with the value does not support it. Code has already found each quote in the stored text; you judge whether it supports the value.
 2. A value the page does not state must be `not_stated`. If the pages state a value that the draft gave as `not_stated`, that is not a reject (leaving a value out is safe); a value given that the pages do not state is a reject.
-3. The inclusion decision: the entry must meet the rule above, its `category` must fit what the page describes, and `covers` must fit the wording.
+3. `category` (`data` or `register`) must fit what the page describes, and `covers` must fit the wording. Judge the `category` value as the kind of resource, not the whole entry.
 4. For an exclusion (`include: false`): the `reason` must be the right one for what the pages say (`no_me_cfs_data`, `long_covid_only`, `no_outside_access`, `no_access_statement`, `not_a_resource`) and the quote must show it. Reject an exclusion when the pages plainly show a resource that meets the rule.
-5. Language: if you cannot read the language of a quote well enough to judge whether it supports its value, give `reject` and say so in the finding. Do not guess.
+5. Language: if you cannot read the language of a quote well enough to judge whether it supports its value, give `reject` for that value and say so in the finding. Do not guess.
 
-Give `reject` when any value is wrong in one of these ways, when the inclusion or exclusion decision is wrong, or when a quote cannot be read; otherwise `accept`. Do not reject for a wording preference, for an incomplete `holds` list or because the resource looks small.
+Reject a value only when it is wrong in one of these ways or its quote cannot be read. Do not reject for a wording preference, for an incomplete `holds` list or because the resource looks small. You write no value and change none: code applies your verdicts (a rejected `holds` value is dropped; a rejected `access` of a register is shown as not stated; the whole entry is left out when `name`, `category` or `covers` is rejected, or, for a `data` entry, when `access` is rejected or no `holds` value is accepted).
 
-**What you write:** only the review file at the path you were given, exactly this shape (code rejects other keys):
+**What you write:** only the review file at the path you were given, in one of two shapes (code rejects any other).
+
+For an entry draft (`include: true`), one verdict for each reviewable value and no other key. The reviewable values are `category`, `name`, `covers`, `access` (only when its value is not `not_stated`) and `holds.<value>` for each item of `holds`:
+
+```json
+{"id": "<id>", "values": {"category": {"verdict": "accept"}, "name": {"verdict": "accept"}, "covers": {"verdict": "accept"}, "access": {"verdict": "reject", "finding": "The quote for access states that a form is available, not that a committee assesses requests."}, "holds.biospecimens": {"verdict": "accept"}}}
+```
+
+For an exclusion draft (`include: false`), one verdict for the whole exclusion:
 
 ```json
 {"id": "<id>", "verdict": "accept"}
 ```
 
-or
+or `{"id": "<id>", "verdict": "reject", "finding": "..."}`.
 
-```json
-{"id": "<id>", "verdict": "reject", "finding": "The quote for access states that a form is available, not that a committee assesses requests."}
-```
+- `id` is the id in the context file. Every `verdict` is `accept` or `reject`.
+- A `reject` has a `finding`: one sentence naming the value (or the decision) and what in the page shows the fault. An `accept` has no `finding` key. Code (`resources record-review`) refuses a missing, extra or unknown value key, an unknown verdict, a reject without a finding, a wrong `id`, and the wrong shape for the kind of draft.
 
-- `id` is the id in the context file. `verdict` is `accept` or `reject`.
-- A `reject` has a `finding`: one sentence naming the field (or the decision) and what in the page shows the fault. An `accept` has no `finding` key. Code (`resources record-review`) refuses a reject without a finding, a wrong `id` and any other key.
-
-When you are done, reply with the verdict and nothing else.
+When you are done, reply with the number of rejects and nothing else.
 
 ## Translation mode (`/ukentlig` and the first translation run)
 
