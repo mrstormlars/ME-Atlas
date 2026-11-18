@@ -41,6 +41,41 @@ entries:
       clinical:
         quote: access high-quality clinical data and biospecimens
         page: access
+- id: decodeme
+  name: 'DecodeME : The world''s largest ME/CFS study'
+  url: https://institute-genetics-cancer.ed.ac.uk/decodeme-the-worlds-largest-mecfs-study/researcher-access
+  access_url: null
+  checked: '2026-11-18'
+  category: data
+  holds:
+  - biospecimens
+  - genotypes
+  access: application
+  covers: me_cfs
+  language: en
+  source:
+  - https://institute-genetics-cancer.ed.ac.uk/decodeme-the-worlds-largest-mecfs-study/researcher-access
+  text_hash:
+    main: 05de521fb992d37fb653b72def82dae94893a49cbfc748e96e7fd9ae0b5148f8
+  quotes:
+    name:
+      quote: 'DecodeME : The world''s largest ME/CFS study'
+      page: main
+    access:
+      quote: All applications for data access will be reviewed by our Data Access Committee
+      page: main
+    covers:
+      quote: DecodeME has built the world’s largest data set on ME/CFS, as a managed access resource for future research projects.
+      page: main
+    holds:
+      genotypes:
+        quote: Researchers may request access to genotyped data already collected, phenotype data, DNA and saliva samples.
+        page: main
+      biospecimens:
+        quote: Researchers may request access to genotyped data already collected, phenotype data, DNA and saliva samples.
+        page: main
+  hand_saved:
+  - main
 - id: mapmecfs
   name: mapMECFS
   url: https://mapmecfs.org/about
