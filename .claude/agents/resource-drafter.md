@@ -17,7 +17,7 @@ A resource is not evidence. You do not judge whether a resource is good, large, 
 
 ## Input
 
-`context-<id>.json`: `id`, `url`, `access_url` (null when the lead has no separate access page), `fetched` (the date the pages were stored) and `pages`: the extracted text of each stored page under its key, `main` (the resource's own page) and, when there is one, `access` (the page that says how outsiders get access). Both are copied by code.
+`context-<id>.json`: `id`, `url`, `access_url` (null when the lead has no separate access page), `fetched` (the date the pages were stored) and `pages`: the extracted text of each stored page under its key, `main` (the resource's own page) and, when there is one, `access` (the page that says how outsiders get access). Both are copied by code. The key `hand_saved` lists the pages that were saved by hand from a browser instead of fetched by code (an empty list when none); it is information only and changes nothing in how you draft.
 
 ## The inclusion rule
 
