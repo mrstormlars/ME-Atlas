@@ -1052,7 +1052,7 @@ def test_a_used_term_is_not_reported_as_unused(tmp_path):
     proj = glossed(tmp_path)
     write_card(proj.cards, make_card("fine", "Fictional fine", 2))
     result = proj.build()
-    assert "widget signalling" not in [w.split("'")[1] for w in result.warnings]
+    assert "widget signalling" not in [w.split("'")[1] for w in result.warnings if w.startswith("glossary term")]
 
 
 def test_a_card_with_every_case_definition_builds_with_the_real_glossary(tmp_path):
@@ -1667,3 +1667,64 @@ def test_no_built_page_says_the_founder_checks_approves_or_decides_content_and_n
         for phrase in FORBIDDEN_PHRASES:
             assert phrase not in text, f"{path.relative_to(proj.out)}: {phrase}"
         assert "@" not in text.replace("@media", ""), path.name  # no contact address
+
+
+# --- the last-run line: footer of every page, front page once more -----
+
+LAST_RUN_TEXT = {"": "Last searched for new research: 2026-10-30", "nb/": "Sist søkt etter ny forskning: 2026-10-30"}
+
+
+def write_last_run(proj: Site, text: str | None = None) -> None:
+    body = "date: '2026-10-30'\nmode: weekly\npapers_in_window: 16\npapers_selected: 5\ncards_changed: 3\n"
+    (proj.content / "last-run.yaml").write_text(text or body, encoding="utf-8")
+
+
+def last_run_paragraphs(doc: Node) -> list[str]:
+    return [norm(a.text()) for a in doc.find_all("a") if "Last searched" in a.text() or "Sist søkt" in a.text()]
+
+
+def test_a_valid_last_run_file_gives_every_page_one_footer_line_and_the_front_page_a_second(proj):
+    write_last_run(proj)
+    out = built(proj, make_card("lr", "Fictional last run", 2))
+    pages = sorted(out.rglob("*.html"))
+    assert pages
+    for path in pages:
+        rel = path.relative_to(out).as_posix()
+        prefix = "nb/" if rel.startswith("nb/") else ""
+        doc = page(out, rel)
+        in_footer = last_run_paragraphs(doc.find("footer"))
+        assert in_footer == [LAST_RUN_TEXT[prefix]], rel
+        home = rel in ("index.html", "nb/index.html")
+        assert len(last_run_paragraphs(doc)) == (2 if home else 1), rel
+        link = next(a for a in doc.find("footer").find_all("a") if "Last searched" in a.text() or "Sist" in a.text())
+        up = "../" * (len(Path(rel).parts) - 1 - (1 if prefix else 0))
+        assert link.get("href") == f"{up}changes.html", rel
+    for word in ("updated", "oppdatert"):
+        assert word not in (out / "index.html").read_text(encoding="utf-8").split("Last searched")[1][:80]
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        None,
+        "date: [unclosed\n",
+        "- a\n",
+        "date: '2099-01-01'\nmode: weekly\npapers_in_window: 1\npapers_selected: 1\ncards_changed: 1\n",
+    ],
+    ids=["missing", "not-yaml", "not-a-mapping", "future-date"],
+)
+def test_a_missing_or_invalid_last_run_file_builds_with_a_warning_and_no_line(proj, text):
+    if text is not None:
+        write_last_run(proj, text)
+    write_card(proj.cards, make_card("lr", "Fictional last run", 2))
+    result = proj.build()
+    assert result.errors == []
+    assert any(w.startswith("last run:") for w in result.warnings)
+    for path in sorted(proj.out.rglob("*.html")):
+        body = path.read_text(encoding="utf-8")
+        assert "Last searched" not in body and "Sist søkt" not in body and "2026-11-01</a>" not in body, path
+
+
+def test_the_build_date_is_never_shown_as_the_last_run_date(proj):
+    out = built(proj, make_card("lr", "Fictional last run", 2))
+    assert "Last searched" not in (out / "index.html").read_text(encoding="utf-8")

@@ -51,7 +51,7 @@ from typing import Annotated, Any, Literal
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, model_validator
 
-from me_atlas import cards, citations, europepmc, pubmed, translations
+from me_atlas import cards, citations, europepmc, last_run, pubmed, translations
 from me_atlas.cards import CHANGELOG_NAME, NonEmptyStr, Slug, StudyId
 from me_atlas.http import load_dotenv
 from me_atlas.operations import (
@@ -436,6 +436,7 @@ class Config:
     pipeline_dir: Path = DEFAULT_PIPELINE_DIR
     translations_dir: Path = translations.DEFAULT_DIR
     audits_dir: Path = Path("audits")
+    last_run_path: Path = last_run.DEFAULT_PATH
 
     @property
     def card_format_path(self) -> Path:
@@ -5577,11 +5578,15 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
     texts = final_card_texts(cfg, outcomes)
     copies = audit_copies(cfg, outcomes, str(prep["date"]))
     changelog = changelog_update(cfg, outcomes, str(prep["date"]))
-    if not texts and not copies:
-        out(f"No accepted changes this run; nothing to commit. The report is {report_path}.")
-        return 0
+    record = last_run.make_record(prep, len(texts))
+    _record, record_problems = last_run.validate(record, dt.date.today())
+    if record_problems:
+        raise PipelineError("the last-run record is invalid: " + "; ".join(record_problems))
     branch = f"pipeline/{prep['date']}"
-    title = f"Weekly pipeline {prep['date']}: {len(texts)} draft card update(s)"
+    if texts or copies:
+        title = f"Weekly pipeline {prep['date']}: {len(texts)} draft card update(s)"
+    else:
+        title = f"Weekly pipeline {prep['date']}: no card changes"
     if copies:
         title += f", {len(copies)} audit record(s)"
     targets = {slug: _base_card(cfg, slug) for slug in sorted(texts)}
@@ -5624,8 +5629,16 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
         out(f"write {dest}")
         if not dry_run:
             _write_text(dest, source.read_text(encoding="utf-8"))
-    staged = [*targets.values(), *([changelog[0]] if changelog else []), *(dest for _src, dest in copies)]
-    if staged and not step(["git", "add", "--", *map(str, staged)]):
+    out(f"write {cfg.last_run_path}")
+    if not dry_run:
+        _write_text(cfg.last_run_path, last_run.dump(record))
+    staged = [
+        *targets.values(),
+        *([changelog[0]] if changelog else []),
+        *(dest for _src, dest in copies),
+        cfg.last_run_path,
+    ]
+    if not step(["git", "add", "--", *map(str, staged)]):
         return 1
     if cfg.translations_dir.is_dir() and not step(["git", "add", "--", str(cfg.translations_dir)]):
         return 1
@@ -6629,6 +6642,7 @@ def _build_parser() -> argparse.ArgumentParser:
     common.add_argument("--spec", type=Path, default=DEFAULT_SPEC, help="default: %(default)s")
     common.add_argument("--translations-dir", type=Path, default=translations.DEFAULT_DIR, help="default: %(default)s")
     common.add_argument("--audits-dir", type=Path, default=Path("audits"), help="default: %(default)s")
+    common.add_argument("--last-run-file", type=Path, default=last_run.DEFAULT_PATH, help="default: %(default)s")
 
     parser = argparse.ArgumentParser(prog="python -m me_atlas.pipeline", description="The weekly pipeline.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -7065,6 +7079,7 @@ def main(
             args.pipeline_dir,
             args.translations_dir,
             args.audits_dir,
+            args.last_run_file,
         )
         return _dispatch(args, cfg, fetch, preprint_search, fulltext, runner, date, out)
     except PipelineError as exc:

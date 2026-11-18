@@ -3,6 +3,9 @@
 {% block content %}
 <h1>{{ txt("index.h1") }}</h1>
 <p class="lead">{{ t("index.lead") }}</p>
+{% if last_run %}
+<p class="last-run-front">{{ t("lastrun.text", date=last_run.date) }}</p>
+{% endif %}
 
 {% if not cards %}
 <p class="empty">{{ txt("index.empty") }}</p>

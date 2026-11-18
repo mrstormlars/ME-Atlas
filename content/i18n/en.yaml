@@ -26,6 +26,7 @@ footer.review: 'The content, including every evidence level, is drafted, checked
 footer.advice: 'This site describes the state of the evidence. It gives no treatment advice. Built {built}.'
 footer.report: 'Found an error on a card or on the site? Report it as an issue on <a href="{repo_issues}" rel="noopener noreferrer">GitHub</a>. The code and the cards are in the <a href="{repo}" rel="noopener noreferrer">repository</a>.'
 footer.licence: 'The code is under the MIT licence; the content is under CC BY 4.0. Article titles and sentences quoted from papers stay with their rights holders.'
+lastrun.text: '<a href="{lroot}changes.html">Last searched for new research: {date}</a>'
 footer.data: 'Download the data: <a href="{lroot}data.html">the cards, studies and links as JSON and CSV, and citation files</a>.'
 
 # --- shown on a translated page only (the English text is the reference for the translator) ---
