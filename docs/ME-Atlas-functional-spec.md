@@ -265,7 +265,7 @@ AI drafts, checks and audits; the founder sets the direction and the rubric. The
 ClinicalTrials.gov records are a second kind of source, used only for the page of registered ongoing studies (`trials.html`, `docs/site.md`). The source rule (founder-agreed in the plan `docs/plan-trial-registry.md`):
 
 - The only registry is ClinicalTrials.gov, read through its public API. Raw responses are cached in `data/cache/`; rate limits are respected.
-- Every shown field (registry number, title, study type, status, countries, planned enrolment, start date, date the record was last updated) is copied by code from the fetched record. Nothing about a study is written by a model or from memory.
+- Every field about a study, on the page or in the downloadable data (registry number, title, study type, status, countries, planned enrolment, start date, date the record was last updated), is copied by code from the fetched record. Nothing about a study is written by a model or from memory.
 - A registered study is not evidence. It is never a study on a card, never a source of a level, badge, contested mark, layer or link, and it changes no file in `cards/`.
 - The only AI judgement is which card or cards a study bears on. It is made by the `trial-mapper` agent and checked by the `card-reviewer` (registry mode) before it is published; no auditor decides it, because a mapping moves nothing on a card. A reliability test before first publication (at most one mapping in five rejected) gates the page.
 - The list states facts. It does not recommend taking part, names no contact person, and says nothing about whether an intervention works.
