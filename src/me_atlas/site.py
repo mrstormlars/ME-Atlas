@@ -27,7 +27,7 @@ from jinja2 import ChoiceLoader, Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup, escape
 
 from me_atlas import cards as cardlib
-from me_atlas import export, i18n, map_draw, translations, trials
+from me_atlas import export, i18n, last_run, map_draw, translations, trials
 from me_atlas import map as maplib
 from me_atlas.cards import Card, ChangeLogEntry, SourcedText, Study
 from me_atlas.glossary import (
@@ -434,6 +434,7 @@ class _Shared:
     map_local: dict[str, tuple[dict[str, str], dict[str, str]]] = field(default_factory=dict)
     registry: dict | None = None  # registry/trials.yaml, validated; None when the project has no registry file
     trials_on: bool = False  # registry/reliability.yaml says passed: true (contract S1)
+    last_run: dict | None = None  # content/last-run.yaml, validated; None when missing or invalid (no line is shown)
 
 
 @dataclass
@@ -891,6 +892,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             txt=txt,
             t=t,
             trials_on=shared.trials_on,
+            last_run=shared.last_run,
             rung_names=rung_names,
             rung_meanings=rung_meanings,
             solid_to=solid_to,
@@ -1108,6 +1110,9 @@ def build(
         result.errors = [str(exc)]
         return result
 
+    last_run_record, last_run_problems = last_run.load(content_dir / last_run.FILE_NAME, today)
+    last_run_warnings = [f"last run: {p}; the page shows no last-run line" for p in last_run_problems]
+
     changelog_path = cards_dir / cardlib.CHANGELOG_NAME
     entries: list[ChangeLogEntry] = cardlib.load_changelog(changelog_path, today) if changelog_path.is_file() else []
     entries = [e for _, e in sorted(enumerate(entries), key=lambda ie: (ie[1].date, ie[0]), reverse=True)]
@@ -1129,6 +1134,7 @@ def build(
         map_local=map_local,
         registry=registry,
         trials_on=trials_on,
+        last_run=last_run_record,
     )
     pages: dict[str, str] = {}
     try:
@@ -1146,7 +1152,7 @@ def build(
         result.warnings = []
         result.translation_warnings = []
         return result
-    result.warnings += map_warnings
+    result.warnings += map_warnings + last_run_warnings
 
     try:
         _prepare_output(out_dir)

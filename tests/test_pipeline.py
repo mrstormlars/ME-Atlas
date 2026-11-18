@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from me_atlas import cards, pipeline, translations
+from me_atlas import cards, last_run, pipeline, translations
 from me_atlas.europepmc import PreprintRecord as EuropePmcRecord
 from me_atlas.pipeline import FullTextResult
 
@@ -50,6 +50,7 @@ class Env:
         self.window = ["90000101", "90000102", "90000103"]
         self.extra_pubmed: list[str] = []  # further fixture records the fetch caches (they join the window if listed)
         self.out: list[str] = []
+        self.last_run = tmp / "content" / "last-run.yaml"
 
     @property
     def run(self) -> Path:
@@ -100,6 +101,8 @@ class Env:
             str(self.translations),
             "--audits-dir",
             str(self.root / "audits"),
+            "--last-run-file",
+            str(self.last_run),
         ]
 
     def cli(self, *argv: str, fulltext=None, runner=None, fetch=None, preprint_search=None) -> int:
@@ -708,18 +711,109 @@ def test_pr_stops_when_a_command_fails(accepted: Env):
     assert any("exit code 1" in line for line in accepted.out)
 
 
-def test_pr_with_nothing_accepted_does_nothing(ready: Env):
+def test_pr_with_nothing_accepted_still_opens_a_pull_request_with_only_the_last_run_file(ready: Env):
+    runner = FakeRunner()
+    assert ready.cli("pr", runner=runner) == 0
+    assert [c[:2] for c in runner.calls] == [
+        ["git", "rev-parse"],
+        ["git", "switch"],
+        ["git", "add"],
+        ["git", "commit"],
+        ["git", "push"],
+        ["gh", "pr"],
+        ["git", "switch"],
+    ]
+    add = next(c for c in runner.calls if c[:2] == ["git", "add"])
+    assert add == ["git", "add", "--", str(ready.last_run)]
+    gh = next(c for c in runner.calls if c[:2] == ["gh", "pr"])
+    assert gh[gh.index("--title") + 1] == "Weekly pipeline 2026-11-01: no card changes"
+    commit = next(c for c in runner.calls if c[:2] == ["git", "commit"])
+    assert pipeline.commit_is_marked(commit[commit.index("-m") + 1])
+    prep = load(ready.run / "prepare.json")
+    assert yaml.safe_load(ready.last_run.read_text(encoding="utf-8")) == {
+        "date": "2026-11-01",
+        "mode": "weekly",
+        "papers_in_window": prep["in_window"],
+        "papers_selected": prep["selected"],
+        "cards_changed": 0,
+    }
+
+
+def test_pr_with_nothing_accepted_still_refuses_another_branch(ready: Env):
+    runner = FakeRunner(branch="feat/other")
+    assert ready.cli("pr", runner=runner) == 1
+    assert runner.calls == [["git", "rev-parse", "--abbrev-ref", "HEAD"]]
+    assert not ready.last_run.exists()
+
+
+def test_pr_writes_the_last_run_file_from_prepare_json_and_the_card_texts_and_stages_it(accepted: Env):
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    prep = load(accepted.run / "prepare.json")
+    record = yaml.safe_load(accepted.last_run.read_text(encoding="utf-8"))
+    assert record == {
+        "date": prep["date"],
+        "mode": prep["mode"],
+        "papers_in_window": prep["in_window"],
+        "papers_selected": prep["selected"],
+        "cards_changed": 1,
+    }
+    add = next(c for c in runner.calls if c[:2] == ["git", "add"])
+    assert str(accepted.last_run) in add
+    assert last_run.load(accepted.last_run, DATE) == ({**record, "date": "2026-11-01"}, [])
+
+
+def set_mode(env: Env, mode: str) -> None:
+    path = env.run / "prepare.json"
+    path.write_text(json.dumps({**load(path), "mode": mode}), encoding="utf-8")
+
+
+def test_pr_of_an_ids_run_with_changes_opens_its_pull_request_without_the_last_run_file(accepted: Env):
+    set_mode(accepted, "ids")
+    accepted.last_run.parent.mkdir(parents=True)
+    accepted.last_run.write_text("old\n", encoding="utf-8")
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    assert accepted.last_run.read_text(encoding="utf-8") == "old\n"
+    add = next(c for c in runner.calls if c[:2] == ["git", "add"])
+    assert str(accepted.last_run) not in add and any(f"{SLUG}.yaml" in a for a in add)
+    assert ["git", "push", "-u", "origin", "pipeline/2026-11-01"] in runner.calls
+    assert any(c[:3] == ["gh", "pr", "create"] for c in runner.calls)
+
+
+def test_pr_of_an_ids_run_with_no_changes_runs_no_git_command_and_leaves_the_file_alone(ready: Env):
+    set_mode(ready, "ids")
+    ready.last_run.parent.mkdir(parents=True)
+    ready.last_run.write_text("old\n", encoding="utf-8")
     runner = FakeRunner()
     assert ready.cli("pr", runner=runner) == 0
     assert runner.calls == [] and "nothing to commit" in ready.out[-1]
+    assert ready.last_run.read_text(encoding="utf-8") == "old\n"
+
+
+def test_pr_of_a_since_run_writes_the_last_run_file_with_mode_since(ready: Env):
+    set_mode(ready, "since")
+    runner = FakeRunner()
+    assert ready.cli("pr", runner=runner) == 0
+    assert yaml.safe_load(ready.last_run.read_text(encoding="utf-8"))["mode"] == "since"
+    assert any(c[:2] == ["git", "add"] and str(ready.last_run) in c for c in runner.calls)
+
+
+def test_pr_dry_run_writes_no_last_run_file(accepted: Env):
+    assert accepted.cli("pr", "--dry-run", runner=FakeRunner()) == 0
+    assert not accepted.last_run.exists()
+    assert any(str(accepted.last_run) in line for line in accepted.out)
 
 
 def test_pr_leaves_out_a_pair_the_reviewer_rejected(ready: Env):
     ready.apply("ops_add_study.json")
     ready.put("review", "review_reject.json")
     runner = FakeRunner()
+    before = ready.draft_text()
     assert ready.cli("pr", runner=runner) == 0
-    assert runner.calls == []
+    add = next(c for c in runner.calls if c[:2] == ["git", "add"])
+    assert add == ["git", "add", "--", str(ready.last_run)]  # the rejected pair writes no card text
+    assert ready.draft_text() == before
     assert "Parking lot" in (ready.run / "report.md").read_text(encoding="utf-8")
 
 
@@ -1291,8 +1385,9 @@ def test_a6_a_withdrawn_pair_writes_nothing_in_pr_and_translation_plan(ready: En
     withdrawn_pair(ready)
     runner = FakeRunner()
     assert ready.cli("pr", runner=runner) == 0
-    assert runner.calls == [["git", "rev-parse", "--abbrev-ref", "HEAD"]] or runner.calls == []
-    assert "No accepted changes" in ready.out[-1]
+    add = next(c for c in runner.calls if c[:2] == ["git", "add"])
+    assert add == ["git", "add", "--", str(ready.last_run)]
+    assert yaml.safe_load(ready.last_run.read_text(encoding="utf-8"))["cards_changed"] == 0
     assert ready.cli("translation-plan") == 0
     assert load(ready.run / "translation-plan.json")["cards"] == []
 
