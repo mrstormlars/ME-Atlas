@@ -17,7 +17,7 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 
 ## Active priorities (max 3)
 
-1. **Wave 1 of the idea bank is published (idea I-01).** The "What is missing" page is rebuilt as tables with the level 2 replication list (pull request 73, merged 2026-11-17); the hypotheses table has vertical count headers so that the rows stay short (pull request 77). Next in the idea bank: I-05 (open data and citation export) is being built on `feat/open-data-export` (plan `docs/plan-open-data-export.md`); the licences were already settled, and a DOI waits for the founder's Zenodo account; I-14 and I-03 each need a `/brainstorm` plan first. The seven guidelines for ideas are in DECISIONS 2026-11-17.
+1. **Wave 1 of the idea bank is published (idea I-01).** The "What is missing" page is rebuilt as tables with the level 2 replication list (pull request 73, merged 2026-11-17); the hypotheses table has vertical count headers so that the rows stay short (pull request 77). Next in the idea bank: I-05 (open data and citation export) is published (pull request 89): the data page, the dataset and the citation files, with the Zenodo concept DOI 10.5281/zenodo.24333249 (release `v2026.11.18`); I-14 and I-03 each need a `/brainstorm` plan first. The seven guidelines for ideas are in DECISIONS 2026-11-17.
 2. **Close the known gaps in the pipeline** (see "Open items", "To build or fix"). The whole-card review gate at first publication is closed (pull request 74). The errata path is built (pull request 79, DECISIONS 2026-11-17, plan `docs/plan-errata.md`). The gaps that remain in "To build or fix" are not pressing now.
 
 ## Running upkeep (not a priority; DECISIONS 2026-11-17)

@@ -87,7 +87,7 @@ uv run --with bibtexparser python -c "<parse one built .bib>"
 5. Tests: export functions against fixture cards (including the escaping case), the built tree (files exist, links resolve, counts equal the gaps page), the no-DOI check, `CITATION.cff` keys. Update the golden tree.
 6. Docs: `docs/site.md`, IDEAS, STATUS.
 
-## Founder's steps for a DOI (later, not part of this change)
+## Founder's steps for a DOI (done 2026-11-18: release `v2026.11.18`, concept DOI 10.5281/zenodo.24333249, version DOI 10.5281/zenodo.24333250)
 
 1. Create an account at <https://zenodo.org> by logging in with GitHub (the `mrstormlars` account).
 2. In Zenodo, under "GitHub", switch on the repository `mrstormlars/ME-Atlas`.
