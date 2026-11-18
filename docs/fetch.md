@@ -206,6 +206,17 @@ The survivors go into `papers.json` as `doi:<doi>` papers with no PMID (see `doc
 
 **Cache layout.** Under `data/cache/europepmc/preprints/`: `search-<since>_<until>-<n>.json` (each raw page of a search), `PPR<digits>.json` (one raw record, whichever search or DOI lookup found it). `uv run python -m me_atlas.europepmc preprint <doi>...` fetches and caches the record of a DOI (`DOI:"<doi>" AND SRC:PPR`), which is how a preprint is cited on a card as a `doi:` study with `preprint: true`; `--fulltext` also looks for its open-access full text.
 
+## Registry fetch (ClinicalTrials.gov)
+
+`uv run python -m me_atlas.trials fetch [--offline] [--date YYYY-MM-DD]` fetches two condition searches from the public API v2 (`https://clinicaltrials.gov/api/v2/studies`, `query.cond`, `pageSize=1000`, `countTotal=true`, `pageToken` paging, all statuses) and writes `registry/trials.yaml`. One request a second at most, the generic User-Agent `me-atlas-research-client`, no key, no name or address sent; retries as for PubMed (`me_atlas.http`).
+
+- `me_cfs`: `"chronic fatigue syndrome" OR "myalgic encephalomyelitis"`.
+- `long_covid`: `"long COVID" OR "post COVID-19 condition" OR "post-COVID syndrome" OR "post-COVID-19 syndrome" OR "post-COVID condition" OR (PASC AND COVID)`. The registry expands synonyms in `query.cond` (so "long COVID" also finds "post-acute COVID-19 syndrome"); a bare `PASC` matched unrelated studies and is therefore restricted to studies that also say COVID.
+
+Both searches are fetched in full each week (about three requests). A study returned by both is one entry with both search names. The raw responses are cached before parsing, one file per page: `data/cache/clinicaltrials/<fetch date>/<search>-<page>.json`; a second run with `--offline` reads that cache and makes no request. A failed request (an HTTP error after the retries, a page without `studies`, a `totalCount` that does not match the records received) exits non-zero and leaves `registry/trials.yaml` unchanged. A refresh replaces the copied fields of a known study and keeps its `hypotheses` and `mapping`; a study the fetch no longer returns stays with its last values and an empty `searches` list, and is not listed. `trials check` validates the file; `trials check --cache` compares every copied field with the newest cached record (the cache is local only, so this runs locally before publishing).
+
+First fetch, 2026-11-18: 222 studies for `me_cfs` (53 ongoing), 734 for `long_covid` (211 ongoing), 917 in the union (247 ongoing).
+
 ## Where the output goes
 
 Both are under `data/cache/`, which is gitignored and reproducible.

@@ -179,6 +179,11 @@ The first four layers hold hypothesis cards. The symptom layer is not hypotheses
 - **Shows:** the evidence ladder and its draft status; the inclusion rule; the Bradford Hill mapping; the badge definitions; how contested evidence is decided; the editorial flow and its review tiers; the role of AI and how its work is checked; who decides (the AI auditor; the founder sets direction and may overrule); a plain statement that no medical or research expert has reviewed the content yet (until one has); known limits.
 - **Does not show:** private reviewer discussions; claims about accuracy that are not measured.
 
+### Registered ongoing studies page
+
+- **Shows:** only when the reliability test has passed (`registry/reliability.yaml`, `passed: true`): the studies of ClinicalTrials.gov that are ongoing, matched to a card and accepted by the review agent, one table per hypothesis (hypotheses by name, rows by registry number) with registry number (linked), title as registered, study type, status, countries and planned enrolment; the number of distinct studies; the number of other ongoing studies not listed; the date of the last fetch. A card page shows one line with the number of studies for that card and a link to its table.
+- **Does not show:** contact details, a ranking, a "recruiting now" list of its own, any sentence about a study that is not the registry's own title, or any wording that invites taking part or judges an intervention.
+
 ### Glossary page
 
 - **Shows:** every term from the shared glossary file, in alphabetical order, with a plain-language explanation, and links back to the pages that use it.
@@ -254,6 +259,16 @@ The pipeline runs on AI, with mechanical checks in code. The founder sets the di
 9. **Corrections.** An error found later is corrected the same way and logged as a correction. A founder overrule of an auditor decision is a correction with `decided_by: founder`.
 
 AI drafts, checks and audits; the founder sets the direction and the rubric. The site states openly that every level is decided by AI tools and that no medical or research expert has reviewed the content.
+
+### Registry records (registered ongoing studies)
+
+ClinicalTrials.gov records are a second kind of source, used only for the page of registered ongoing studies (`trials.html`, `docs/site.md`). The source rule (founder-agreed in the plan `docs/plan-trial-registry.md`):
+
+- The only registry is ClinicalTrials.gov, read through its public API. Raw responses are cached in `data/cache/`; rate limits are respected.
+- Every shown field (registry number, title, study type, status, countries, planned enrolment, start date, date the record was last updated) is copied by code from the fetched record. Nothing about a study is written by a model or from memory.
+- A registered study is not evidence. It is never a study on a card, never a source of a level, badge, contested mark, layer or link, and it changes no file in `cards/`.
+- The only AI judgement is which card or cards a study bears on. It is made by the `trial-mapper` agent and checked by the `card-reviewer` (registry mode) before it is published; no auditor decides it, because a mapping moves nothing on a card. A reliability test before first publication (at most one mapping in five rejected) gates the page.
+- The list states facts. It does not recommend taking part, names no contact person, and says nothing about whether an intervention works.
 
 ## 7. Out of scope for v1
 
