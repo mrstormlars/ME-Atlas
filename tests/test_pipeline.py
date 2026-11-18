@@ -763,6 +763,42 @@ def test_pr_writes_the_last_run_file_from_prepare_json_and_the_card_texts_and_st
     assert last_run.load(accepted.last_run, DATE) == ({**record, "date": "2026-11-01"}, [])
 
 
+def set_mode(env: Env, mode: str) -> None:
+    path = env.run / "prepare.json"
+    path.write_text(json.dumps({**load(path), "mode": mode}), encoding="utf-8")
+
+
+def test_pr_of_an_ids_run_with_changes_opens_its_pull_request_without_the_last_run_file(accepted: Env):
+    set_mode(accepted, "ids")
+    accepted.last_run.parent.mkdir(parents=True)
+    accepted.last_run.write_text("old\n", encoding="utf-8")
+    runner = FakeRunner()
+    assert accepted.cli("pr", runner=runner) == 0
+    assert accepted.last_run.read_text(encoding="utf-8") == "old\n"
+    add = next(c for c in runner.calls if c[:2] == ["git", "add"])
+    assert str(accepted.last_run) not in add and any(f"{SLUG}.yaml" in a for a in add)
+    assert ["git", "push", "-u", "origin", "pipeline/2026-11-01"] in runner.calls
+    assert any(c[:3] == ["gh", "pr", "create"] for c in runner.calls)
+
+
+def test_pr_of_an_ids_run_with_no_changes_runs_no_git_command_and_leaves_the_file_alone(ready: Env):
+    set_mode(ready, "ids")
+    ready.last_run.parent.mkdir(parents=True)
+    ready.last_run.write_text("old\n", encoding="utf-8")
+    runner = FakeRunner()
+    assert ready.cli("pr", runner=runner) == 0
+    assert runner.calls == [] and "nothing to commit" in ready.out[-1]
+    assert ready.last_run.read_text(encoding="utf-8") == "old\n"
+
+
+def test_pr_of_a_since_run_writes_the_last_run_file_with_mode_since(ready: Env):
+    set_mode(ready, "since")
+    runner = FakeRunner()
+    assert ready.cli("pr", runner=runner) == 0
+    assert yaml.safe_load(ready.last_run.read_text(encoding="utf-8"))["mode"] == "since"
+    assert any(c[:2] == ["git", "add"] and str(ready.last_run) in c for c in runner.calls)
+
+
 def test_pr_dry_run_writes_no_last_run_file(accepted: Env):
     assert accepted.cli("pr", "--dry-run", runner=FakeRunner()) == 0
     assert not accepted.last_run.exists()

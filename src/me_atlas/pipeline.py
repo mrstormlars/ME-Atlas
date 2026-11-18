@@ -5578,10 +5578,17 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
     texts = final_card_texts(cfg, outcomes)
     copies = audit_copies(cfg, outcomes, str(prep["date"]))
     changelog = changelog_update(cfg, outcomes, str(prep["date"]))
-    record = last_run.make_record(prep, len(texts))
-    _record, record_problems = last_run.validate(record, dt.date.today())
-    if record_problems:
-        raise PipelineError("the last-run record is invalid: " + "; ".join(record_problems))
+    moves_date = (
+        prep.get("mode") in last_run.SEARCH_MODES
+    )  # an ids run searched no literature: it leaves the file alone
+    if not moves_date and not texts and not copies:
+        out(f"No accepted changes this run; nothing to commit. The report is {report_path}.")
+        return 0
+    record = last_run.make_record(prep, len(texts)) if moves_date else None
+    if record is not None:
+        _record, record_problems = last_run.validate(record, dt.date.today())
+        if record_problems:
+            raise PipelineError("the last-run record is invalid: " + "; ".join(record_problems))
     branch = f"pipeline/{prep['date']}"
     if texts or copies:
         title = f"Weekly pipeline {prep['date']}: {len(texts)} draft card update(s)"
@@ -5629,16 +5636,17 @@ def run_pr(cfg: Config, *, dry_run: bool, no_pr: bool, runner: Runner, out: Call
         out(f"write {dest}")
         if not dry_run:
             _write_text(dest, source.read_text(encoding="utf-8"))
-    out(f"write {cfg.last_run_path}")
-    if not dry_run:
-        _write_text(cfg.last_run_path, last_run.dump(record))
+    if record is not None:
+        out(f"write {cfg.last_run_path}")
+        if not dry_run:
+            _write_text(cfg.last_run_path, last_run.dump(record))
     staged = [
         *targets.values(),
         *([changelog[0]] if changelog else []),
         *(dest for _src, dest in copies),
-        cfg.last_run_path,
+        *([cfg.last_run_path] if record is not None else []),
     ]
-    if not step(["git", "add", "--", *map(str, staged)]):
+    if staged and not step(["git", "add", "--", *map(str, staged)]):
         return 1
     if cfg.translations_dir.is_dir() and not step(["git", "add", "--", str(cfg.translations_dir)]):
         return 1

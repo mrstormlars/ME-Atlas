@@ -15,7 +15,7 @@ import yaml
 
 DEFAULT_PATH = Path(__file__).resolve().parents[2] / "content" / "last-run.yaml"
 FILE_NAME = "last-run.yaml"
-MODES = ("weekly", "since", "ids")
+SEARCH_MODES = ("weekly", "since")  # a record can only say that the literature was searched; an ids run does not
 COUNT_KEYS = ("papers_in_window", "papers_selected", "cards_changed")
 KEYS = ("date", "mode", *COUNT_KEYS)
 
@@ -45,8 +45,8 @@ def validate(raw: Any, today: dt.date) -> tuple[dict[str, Any] | None, list[str]
             problems.append(f"date {raw['date']!r} is not an ISO date (YYYY-MM-DD)")
         elif day > today:
             problems.append(f"date {day.isoformat()} is later than today ({today.isoformat()})")
-    if "mode" in raw and raw["mode"] not in MODES:
-        problems.append(f"mode {raw['mode']!r} is not one of {', '.join(MODES)}")
+    if "mode" in raw and raw["mode"] not in SEARCH_MODES:
+        problems.append(f"mode {raw['mode']!r} is not one of {', '.join(SEARCH_MODES)}")
     for key in COUNT_KEYS:
         if key in raw:
             value = raw[key]

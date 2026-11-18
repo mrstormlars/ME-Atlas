@@ -92,6 +92,7 @@ def test_a_count_that_is_negative_or_not_an_integer_is_a_problem(tmp_path, key, 
     assert record is None and key in problems[0]
 
 
-def test_a_mode_other_than_weekly_since_or_ids_is_a_problem(tmp_path):
-    record, problems = last_run.load(write(tmp_path, GOOD.replace("weekly", "daily")), TODAY)
+@pytest.mark.parametrize("mode", ["daily", "ids"])
+def test_a_mode_other_than_weekly_or_since_is_a_problem_and_ids_is_one_too(tmp_path, mode):
+    record, problems = last_run.load(write(tmp_path, GOOD.replace("weekly", mode)), TODAY)
     assert record is None and "mode" in problems[0]
