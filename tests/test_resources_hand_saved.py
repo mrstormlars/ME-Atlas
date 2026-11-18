@@ -376,8 +376,6 @@ def _draft_from(ctx: dict) -> dict:
     draft["id"] = ctx["id"]
     quotes = {
         "name": ("Fictional Saved Cohort", "main"),
-        "operator": ("operated by the Imaginary Institute of Medicine", "main"),
-        "countries": ("Freedonia", "main"),
         "access": ("Access is granted by application", "access"),
         "covers": ("people with ME/CFS", "main"),
     }

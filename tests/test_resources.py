@@ -449,8 +449,6 @@ def good_draft() -> dict:
         "language": "en",
         "category": "data",
         "name": q("Fictional ME/CFS Biobank", "The Fictional ME/CFS Biobank is operated by"),
-        "operator": q("Imaginary Institute of Medicine", "operated by the Imaginary Institute of Medicine"),
-        "countries": q(["Freedonia"], "Institute of Medicine in Freedonia"),
         "holds": [
             q("biospecimens", "It holds blood samples"),
             q("questionnaires", "questionnaire data from people with ME/CFS"),
@@ -458,6 +456,12 @@ def good_draft() -> dict:
         "access": q("application", "granted by application to the Fictional Biobank steering committee", "access"),
         "covers": q("me_cfs", "people with ME/CFS diagnosed under the Canadian Consensus Criteria"),
     }
+
+
+def register_draft() -> dict:
+    draft = good_draft()
+    draft["category"], draft["holds"], draft["access"] = "register", [], q("not_stated", "")
+    return draft
 
 
 def good_exclusion() -> dict:
@@ -480,10 +484,7 @@ def test_a_good_entry_draft_and_a_good_exclusion_have_no_problems():
 
 
 def test_a_value_the_page_does_not_state_is_not_stated_with_an_empty_quote():
-    draft = good_draft()
-    draft["operator"] = q("not_stated", "")
-    draft["countries"] = q("not_stated", "")
-    assert problems_of(draft) == []
+    assert problems_of(register_draft()) == []  # a register whose page does not state how to get access
 
 
 def mutate(draft, path: list, value):
@@ -505,10 +506,18 @@ NEGATIVE = {
     "bad language": (mutate(good_draft(), ["language"], "eng"), "language: must be a two-letter"),
     "page not in context": (mutate(good_draft(), ["name", "page"], "elsewhere"), "name.page"),
     "exclusion page not in context": (mutate(good_exclusion(), ["page"], "elsewhere"), "exclusion.page"),
-    "empty quote for a stated value": (mutate(good_draft(), ["operator", "quote"], ""), "operator.quote"),
+    "empty quote for a stated value": (mutate(good_draft(), ["covers", "quote"], ""), "covers.quote"),
     "quote for a not_stated value": (
-        mutate(good_draft(), ["operator"], q("not_stated", "operated by")),
-        "operator.quote: a 'not_stated' value has an empty quote",
+        mutate(register_draft(), ["access"], q("not_stated", "granted by")),
+        "access.quote: a 'not_stated' value has an empty quote",
+    ),
+    "operator is no longer a key": (
+        mutate(good_draft(), ["operator"], q("Imaginary Institute", "operated by")),
+        "extra key(s) operator",
+    ),
+    "countries is no longer a key": (
+        mutate(good_draft(), ["countries"], q(["Freedonia"], "in Freedonia")),
+        "extra key(s) countries",
     ),
     "exclusion without quote": (mutate(good_exclusion(), ["quote"], ""), "exclusion.quote"),
     "quote absent by one word": (
@@ -527,8 +536,6 @@ NEGATIVE = {
         mutate(good_draft(), ["holds", 1], q("biospecimens", "It holds blood samples")),
         "listed twice",
     ),
-    "empty countries list": (mutate(good_draft(), ["countries", "value"], []), "countries.value"),
-    "countries not a list": (mutate(good_draft(), ["countries", "value"], "Freedonia"), "countries.value"),
     "wrong id": (mutate(good_draft(), ["id"], "other"), "id is 'other'"),
     "include missing": ({k: v for k, v in good_draft().items() if k != "include"}, "include must be true or false"),
 }
@@ -580,6 +587,19 @@ def reject(lid: str) -> dict:
     return {"id": lid, "verdict": "reject", "finding": "The quote does not support the value."}
 
 
+def all_accept(lid: str, draft: dict | None = None) -> dict:
+    """A per-value review of an entry draft: every value accepted."""
+    keys = resources.reviewable_keys(draft or good_draft())
+    return {"id": lid, "values": {k: {"verdict": "accept"} for k in keys}}
+
+
+def rejecting(lid: str, *keys: str, draft: dict | None = None) -> dict:
+    review = all_accept(lid, draft)
+    for k in keys:
+        review["values"][k] = {"verdict": "reject", "finding": "The quote does not support the value."}
+    return review
+
+
 def named(draft: dict, lid: str) -> dict:
     return {**copy.deepcopy(draft), "id": lid}
 
@@ -619,10 +639,15 @@ def test_record_review_writes_only_accepted_inclusions_sorted_with_the_code_adde
         "a-res": named(good_draft(), "a-res"),
         "r-res": named(good_draft(), "r-res"),
     }
-    reviews = {"z-res": accept("z-res"), "m-res": accept("m-res"), "a-res": accept("a-res"), "r-res": reject("r-res")}
+    reviews = {
+        "z-res": all_accept("z-res"),
+        "m-res": accept("m-res"),
+        "a-res": all_accept("a-res"),
+        "r-res": rejecting("r-res", "name"),
+    }
     new, problems = resources.record_review(None, write_run(tmp_path, drafts, reviews), DAY)
     assert problems == []
-    assert [e["id"] for e in new["entries"]] == ["a-res", "z-res"]  # the exclusion and the reject are not written
+    assert [e["id"] for e in new["entries"]] == ["a-res", "z-res"]  # the exclusion and the left-out entry
     assert new["checked"] == DAY
     entry = new["entries"][0]
     assert entry["url"] == MAIN and entry["access_url"] == ACCESS and entry["checked"] == DAY
@@ -638,15 +663,63 @@ def test_record_review_writes_only_accepted_inclusions_sorted_with_the_code_adde
 
 
 def test_record_review_refuses_a_reject_without_a_finding_and_writes_nothing(tmp_path):
+    bad_review = all_accept("b-res")
+    bad_review["values"]["access"] = {"verdict": "reject"}
     run = write_run(
         tmp_path,
         {"a-res": named(good_draft(), "a-res"), "b-res": named(good_draft(), "b-res")},
-        {"a-res": accept("a-res"), "b-res": {"id": "b-res", "verdict": "reject"}},
+        {"a-res": all_accept("a-res"), "b-res": bad_review},
     )
     old = {"checked": "2026-01-01", "entries": []}
     new, problems = resources.record_review(old, run, DAY)
-    assert any("b-res: a reject needs a finding" in p for p in problems)
+    assert any("b-res: values.access: a reject needs a finding" in p for p in problems)
     assert new == old
+
+
+def values_review(**change) -> dict:
+    review = all_accept("a-res")
+    for key, item in change.items():
+        key = key.replace("__", ".")
+        if item is None:
+            del review["values"][key]
+        else:
+            review["values"][key] = item
+    return review
+
+
+@pytest.mark.parametrize(
+    ("review", "problem"),
+    [
+        (values_review(name={"verdict": "accept", "finding": "x"}), "values.name: an accept has no finding"),
+        (values_review(name={"verdict": "maybe"}), "values.name: verdict must be"),
+        (values_review(name={"verdict": "reject"}), "values.name: a reject needs a finding"),
+        (values_review(name={"verdict": "reject", "finding": " "}), "values.name: a reject needs a finding"),
+        (values_review(name={"verdict": "accept", "note": "x"}), "values.name: extra key(s) note"),
+        (values_review(name="accept"), "values.name: must be an object"),
+        (values_review(covers=None), "values: missing key(s) covers"),
+        (values_review(holds__biospecimens=None), "values: missing key(s) holds.biospecimens"),
+        (values_review(operator={"verdict": "accept"}), "values: unknown key(s) operator"),
+        (values_review(holds__imaging={"verdict": "accept"}), "values: unknown key(s) holds.imaging"),
+        ({**values_review(), "verdict": "accept"}, "extra key(s) verdict"),
+        ({**values_review(), "note": "x"}, "extra key(s) note"),
+        ({"id": "a-res", "verdict": "accept"}, "an entry review needs 'values'"),
+        ({**values_review(), "id": "other"}, "id is 'other'"),
+    ],
+)
+def test_a_malformed_entry_review_is_refused(tmp_path, review, problem):
+    run = write_run(tmp_path, {"a-res": named(good_draft(), "a-res")}, {"a-res": review})
+    assert any(problem in p for p in resources.record_review(None, run, DAY)[1])
+
+
+def test_access_is_not_reviewed_when_not_stated_and_is_then_an_unknown_key(tmp_path):
+    draft = named(register_draft(), "a-res")
+    assert resources.reviewable_keys(draft) == ["category", "name", "covers"]
+    run = write_run(tmp_path / "ok", {"a-res": draft}, {"a-res": all_accept("a-res", draft)})
+    assert resources.record_review(None, run, DAY)[1] == []
+    review = all_accept("a-res", draft)
+    review["values"]["access"] = {"verdict": "accept"}
+    run = write_run(tmp_path / "bad", {"a-res": draft}, {"a-res": review})
+    assert any("values: unknown key(s) access" in p for p in resources.record_review(None, run, DAY)[1])
 
 
 @pytest.mark.parametrize(
@@ -654,12 +727,14 @@ def test_record_review_refuses_a_reject_without_a_finding_and_writes_nothing(tmp
     [
         ({"id": "a-res", "verdict": "accept", "finding": "x"}, "an accept has no finding"),
         ({"id": "a-res", "verdict": "maybe"}, "verdict must be"),
+        ({"id": "a-res", "verdict": "reject"}, "a reject needs a finding"),
         ({"id": "a-res", "verdict": "accept", "note": "x"}, "extra key(s) note"),
         ({"id": "other", "verdict": "accept"}, "id is 'other'"),
+        ({"id": "a-res", "values": {}}, "extra key(s) values"),
     ],
 )
-def test_a_malformed_review_is_refused(tmp_path, review, problem):
-    run = write_run(tmp_path, {"a-res": named(good_draft(), "a-res")}, {"a-res": review})
+def test_a_malformed_exclusion_review_is_refused(tmp_path, review, problem):
+    run = write_run(tmp_path, {"a-res": named(good_exclusion(), "a-res")}, {"a-res": review})
     assert any(problem in p for p in resources.record_review(None, run, DAY)[1])
 
 
@@ -671,7 +746,7 @@ def test_record_review_needs_a_review_for_every_draft(tmp_path):
 def test_record_review_revalidates_the_quotes_even_for_an_accepted_draft(tmp_path):
     bad = named(good_draft(), "a-res")
     bad["name"]["quote"] = "The Fictional ME/CFS Biobank is run by"
-    run = write_run(tmp_path, {"a-res": bad}, {"a-res": accept("a-res")})
+    run = write_run(tmp_path, {"a-res": bad}, {"a-res": all_accept("a-res")})
     assert any("a-res: name.quote: not found" in p for p in resources.record_review(None, run, DAY)[1])
 
 
@@ -680,7 +755,7 @@ def test_a_rejected_redraft_keeps_the_old_entry_and_an_accepted_exclusion_remove
     old_entry["name"] = "Old name"
     other = resources.build_entry(context() | {"id": "b-res"}, named(good_draft(), "b-res"))
     old = {"checked": "2026-08-18", "entries": [old_entry, other]}
-    run = write_run(tmp_path / "one", {"a-res": named(good_draft(), "a-res")}, {"a-res": reject("a-res")})
+    run = write_run(tmp_path / "one", {"a-res": named(good_draft(), "a-res")}, {"a-res": rejecting("a-res", "name")})
     new, problems = resources.record_review(old, run, DAY)
     assert problems == [] and new["entries"][0]["name"] == "Old name" and len(new["entries"]) == 2
     run2 = write_run(tmp_path / "two", {"a-res": named(good_exclusion(), "a-res")}, {"a-res": accept("a-res")})
@@ -689,45 +764,145 @@ def test_a_rejected_redraft_keeps_the_old_entry_and_an_accepted_exclusion_remove
 
 
 def test_record_review_command_writes_the_data_file_atomically(tmp_path):
-    run = write_run(tmp_path, {"a-res": named(good_draft(), "a-res")}, {"a-res": accept("a-res")})
+    run = write_run(tmp_path, {"a-res": named(good_draft(), "a-res")}, {"a-res": all_accept("a-res")})
     path = tmp_path / "resources.yaml"
     assert resources.main(["--data-file", str(path), "record-review", "--run", str(run)]) == 0
     assert [e["id"] for e in resources.load_data(path)["entries"]] == ["a-res"]
     assert not list(tmp_path.glob("*.tmp"))
 
 
-# --- reliability (A6) --------------------------------------------------------------------------------------------
+# --- per-value verdicts applied by code (B3) --------------------------------------------------------------------
 
 
-def reliability_run(tmp_path, total: int, rejects: int, excluded: int = 0) -> Path:
-    drafts, reviews = {}, {}
-    for i in range(total):
-        lid = f"res-{i:02d}"
-        drafts[lid] = named(good_exclusion() if i < excluded else good_draft(), lid)
-        reviews[lid] = reject(lid) if i >= total - rejects else accept(lid)
-    return write_run(tmp_path, drafts, reviews)
+def review_one(tmp_path, draft: dict, review: dict, old: dict | None = None):
+    run = write_run(tmp_path, {"a-res": named(draft, "a-res")}, {"a-res": review})
+    new, problems = resources.record_review(old, run, DAY)
+    assert problems == [], problems
+    return new
+
+
+def test_an_all_accept_entry_is_written_in_full_and_carries_hand_saved(tmp_path):
+    draft = named(good_draft(), "a-res")
+    run = write_run(tmp_path, {"a-res": draft}, {"a-res": all_accept("a-res")})
+    ctx = json.loads((run / "context-a-res.json").read_text(encoding="utf-8")) | {"hand_saved": ["main"]}
+    (run / "context-a-res.json").write_text(json.dumps(ctx), encoding="utf-8")
+    new, problems = resources.record_review(None, run, DAY)
+    assert problems == []
+    (entry,) = new["entries"]
+    assert entry == resources.build_entry(ctx, draft) and entry["hand_saved"] == ["main"]
+    assert entry["holds"] == ["biospecimens", "questionnaires"] and resources.check_data(new) == []
+
+
+def test_a_rejected_holds_value_is_dropped_with_its_quote(tmp_path):
+    new = review_one(tmp_path, good_draft(), rejecting("a-res", "holds.biospecimens"))
+    (entry,) = new["entries"]
+    assert entry["holds"] == ["questionnaires"] and list(entry["quotes"]["holds"]) == ["questionnaires"]
+    assert resources.check_data(new) == []
+
+
+def test_a_rejected_access_of_a_register_becomes_not_stated_with_an_empty_quote(tmp_path):
+    draft = good_draft()
+    draft["category"], draft["holds"] = "register", []
+    new = review_one(tmp_path, draft, rejecting("a-res", "access", draft=draft))
+    (entry,) = new["entries"]
+    assert entry["access"] == "not_stated" and entry["quotes"]["access"] == {"quote": "", "page": "main"}
+    assert entry["source"] == [MAIN]  # the access page is no longer a source
+    assert resources.check_data(new) == []
+
+
+def test_a_register_with_access_accepted_keeps_it(tmp_path):
+    draft = good_draft()
+    draft["category"], draft["holds"] = "register", []
+    (entry,) = review_one(tmp_path, draft, all_accept("a-res", draft))["entries"]
+    assert entry["access"] == "application"
+
+
+LEFT_OUT = {
+    "name rejected": (good_draft(), ["name"]),
+    "category rejected": (good_draft(), ["category"]),
+    "covers rejected": (good_draft(), ["covers"]),
+    "access of a data entry rejected": (good_draft(), ["access"]),
+    "no holds value accepted": (good_draft(), ["holds.biospecimens", "holds.questionnaires"]),
+}
+
+
+@pytest.mark.parametrize("case", sorted(LEFT_OUT))
+def test_an_entry_is_left_out_for_this_rejection_and_an_old_entry_stays(tmp_path, case):
+    draft, keys = LEFT_OUT[case]
+    old_entry = resources.build_entry(context() | {"id": "a-res"}, named(good_draft(), "a-res"))
+    old_entry["name"] = "Old name"
+    old = {"checked": "2026-08-18", "entries": [old_entry]}
+    new = review_one(tmp_path / "with-old", draft, rejecting("a-res", *keys, draft=draft), old)
+    assert new["entries"] == [old_entry]
+    assert review_one(tmp_path / "without", draft, rejecting("a-res", *keys, draft=draft))["entries"] == []
+
+
+def test_a_data_entry_whose_access_is_not_stated_is_left_out_by_the_code_too():
+    draft = good_draft()
+    draft["access"] = q("not_stated", "")
+    assert resources.apply_review(context(), draft, all_accept("fictional-biobank", draft)) is None
+
+
+def test_a_rejected_register_name_or_covers_leaves_the_register_out(tmp_path):
+    draft = register_draft()
+    for key in ("name", "covers", "category"):
+        assert review_one(tmp_path / key, draft, rejecting("a-res", key, draft=draft))["entries"] == []
+
+
+def test_a_rejected_exclusion_changes_nothing_and_an_accepted_one_removes_the_entry(tmp_path):
+    old_entry = resources.build_entry(context() | {"id": "a-res"}, named(good_draft(), "a-res"))
+    old = {"checked": "2026-08-18", "entries": [old_entry]}
+    assert review_one(tmp_path / "r", good_exclusion(), reject("a-res"), old)["entries"] == [old_entry]
+    assert review_one(tmp_path / "a", good_exclusion(), accept("a-res"), old)["entries"] == []
+
+
+# --- reliability (B4), counted per value ------------------------------------------------------------------------
+
+
+def reliability_of(tmp_path, items: list[tuple[dict, dict]]):
+    drafts = {f"res-{i:02d}": named(d, f"res-{i:02d}") for i, (d, _) in enumerate(items)}
+    reviews = {f"res-{i:02d}": {**rv, "id": f"res-{i:02d}"} for i, (_, rv) in enumerate(items)}
+    return resources.reliability(write_run(tmp_path, drafts, reviews), DAY)
+
+
+def entry_item(draft: dict, *rejected: str) -> tuple[dict, dict]:
+    return draft, rejecting("x", *rejected, draft=draft)
+
+
+def test_two_rejected_values_of_nine_do_not_pass(tmp_path):
+    items = [entry_item(good_draft(), "name", "access"), entry_item(register_draft())]  # 6 + 3 values
+    result, problems = reliability_of(tmp_path, items)
+    assert problems == []
+    assert result["values"] == {"total": 9, "rejects": 2, "reject_rate": round(2 / 9, 4)}
+    assert result["passed"] is False
+
+
+def test_one_rejected_value_of_five_passes(tmp_path):
+    items = [entry_item(register_draft(), "covers"), (good_exclusion(), accept("x")), (good_exclusion(), accept("x"))]
+    result, _ = reliability_of(tmp_path, items)
+    assert result["values"] == {"total": 5, "rejects": 1, "reject_rate": 0.2} and result["passed"] is True
+
+
+def test_a_rejected_exclusion_counts_as_one_rejected_value_and_the_record_has_the_split(tmp_path):
+    items = [
+        entry_item(good_draft(), "name"),  # left out
+        entry_item(good_draft()),
+        (good_exclusion(), reject("x")),
+        (good_exclusion(), accept("x")),
+    ]
+    result, _ = reliability_of(tmp_path, items)
+    assert result["values"]["total"] == 14 and result["values"]["rejects"] == 2
+    assert result["entries"] == {"drafts": 2, "written": 1, "left_out": 1}
+    assert result["exclusions"] == {"total": 2, "rejects": 1}
+    assert result["date"] == DAY and result["run"].endswith("run") and result["passed"] is True
+    assert set(result) == {"date", "run", "values", "entries", "exclusions", "passed"}
 
 
 @pytest.mark.parametrize(
-    ("total", "rejects", "passed"),
-    [(14, 3, False), (15, 3, True), (10, 2, True), (5, 2, False), (5, 1, True)],
+    ("total", "rejects", "passed"), [(0, 0, False), (14, 3, False), (15, 3, True), (9, 2, False), (5, 1, True)]
 )
-def test_reliability_passes_only_when_rejects_times_five_are_at_most_the_total(tmp_path, total, rejects, passed):
-    result, problems = resources.reliability(reliability_run(tmp_path, total, rejects), DAY)
-    assert problems == [] and result["total"] == total and result["rejects"] == rejects
-    assert result["passed"] is passed
-    assert result["reject_rate"] == round(rejects / total, 4)
-
-
-def test_reliability_counts_proposed_exclusions_too_and_reports_the_split(tmp_path):
-    result, _ = resources.reliability(reliability_run(tmp_path, 10, 1, excluded=4), DAY)
-    assert result["total"] == 10 and result["included"] == {"total": 6, "rejects": 1}
-    assert result["excluded"] == {"total": 4, "rejects": 0}
-    assert result["date"] == DAY and result["run"].endswith("run")
-
-
-def test_reliability_of_nothing_is_not_a_pass():
-    assert resources.reliability_passed(0, 0) is False
+def test_reliability_passes_only_when_rejects_times_five_are_at_most_the_total(total, rejects, passed):
+    assert resources.reliability_passed(total, rejects) is passed
 
 
 def test_reliability_with_a_missing_review_gives_problems_and_no_numbers(tmp_path):
@@ -736,12 +911,16 @@ def test_reliability_with_a_missing_review_gives_problems_and_no_numbers(tmp_pat
     assert result == {} and problems
 
 
-def test_reliability_command_writes_the_file(tmp_path):
-    run = reliability_run(tmp_path, 15, 3)
+def test_reliability_command_writes_the_file_and_names_a_failed_run(tmp_path, capsys):
+    items = [entry_item(good_draft(), "name", "access"), entry_item(register_draft())]
+    drafts = {f"res-{i}": named(d, f"res-{i}") for i, (d, _) in enumerate(items)}
+    reviews = {f"res-{i}": {**rv, "id": f"res-{i}"} for i, (_, rv) in enumerate(items)}
+    run = write_run(tmp_path, drafts, reviews)
     path = tmp_path / "rel.yaml"
     assert resources.main(["--reliability-file", str(path), "reliability", "--run", str(run)]) == 0
     written = yaml.safe_load(path.read_text(encoding="utf-8"))
-    assert written["passed"] is True and written["total"] == 15 and written["rejects"] == 3
+    assert written["passed"] is False and written["values"]["total"] == 9 and written["values"]["rejects"] == 2
+    assert "NOT PASSED: 2 reject(s) of 9 value(s)" in capsys.readouterr().out
 
 
 # --- the data file (D1, D2) --------------------------------------------------------------------------------------
@@ -797,19 +976,12 @@ DATA_NEGATIVE = {
     "bad url": (entry_with(["url"], "biobank"), "url: must be an http"),
     "bad access_url": (entry_with(["access_url"], "biobank"), "access_url: must be null or an http"),
     "bad checked date": (entry_with(["checked"], "yesterday"), "checked: must be a date"),
-    "bad countries": (entry_with(["countries"], []), "countries: must be a non-empty list"),
-    "empty source": (entry_with(["source"], []), "source: must be a non-empty list"),
-    "bad hash": (entry_with(["text_hash", "main"], "abc"), "text_hash: every hash"),
-    "quote page not stored": (entry_with(["quotes", "name", "page"], "elsewhere"), "quotes.name: page 'elsewhere'"),
-    "stated name without quote": (entry_with(["quotes", "name", "quote"], ""), "quotes.name: a value other than"),
-    "stated operator without quote": (
-        entry_with(["quotes", "operator", "quote"], ""),
-        "quotes.operator: a value other",
+    "quote for not_stated": (
+        good_file(register_entry(access="not_stated")),
+        "quotes.access: a 'not_stated' value has an empty quote",
     ),
-    "stated countries without quote": (
-        entry_with(["quotes", "countries", "quote"], ""),
-        "quotes.countries: a value other",
-    ),
+    "operator is no longer a field": (entry_with(["operator"], "Institute"), "unknown field(s) operator"),
+    "countries is no longer a field": (entry_with(["countries"], ["Freedonia"]), "unknown field(s) countries"),
     "stated access without quote": (entry_with(["quotes", "access", "quote"], ""), "quotes.access: a value other"),
     "stated covers without quote": (entry_with(["quotes", "covers", "quote"], ""), "quotes.covers: a value other"),
     "hold without quote": (
@@ -817,10 +989,6 @@ DATA_NEGATIVE = {
         "quotes.holds.biospecimens: a value other",
     ),
     "hold without a quote entry": (good_file(NO_HOLD_QUOTE), "quotes.holds.biospecimens"),
-    "quote for not_stated": (
-        with_fields(operator="not_stated"),
-        "quotes.operator: a 'not_stated' value has an empty quote",
-    ),
     "missing field": (
         good_file({k: v for k, v in good_entry().items() if k != "covers"}),
         "missing field(s) covers",
@@ -880,9 +1048,11 @@ def test_check_cache_passes_when_every_quote_is_in_its_stored_page(tmp_path):
 
 def test_check_cache_names_the_id_and_field_of_a_quote_changed_by_one_character(tmp_path):
     root = stored_cache(tmp_path)
-    data = entry_with(["quotes", "operator", "quote"], "operated by the Imaginary Institute of Medicinx")
+    data = entry_with(
+        ["quotes", "access", "quote"], "granted by application to the Fictional Biobank steering committeX"
+    )
     found = resources.check_against_cache(data, root)
-    assert found == ["fictional-biobank: quotes.operator: quote not found in the stored text of page 'main'"]
+    assert found == ["fictional-biobank: quotes.access: quote not found in the stored text of page 'access'"]
     data = entry_with(["quotes", "holds", "biospecimens", "quote"], "It holds blood samplez")
     assert "fictional-biobank: quotes.holds.biospecimens" in resources.check_against_cache(data, root)[0]
 
