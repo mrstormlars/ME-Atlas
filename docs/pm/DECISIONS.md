@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-18 — Catalogue of ME/CFS data resources: four founder rulings and a source rule (idea I-14)
+
+- In the brainstorm for I-14 the founder ruled: (1) a resource is included when it holds data or samples from people with ME/CFS, researchers outside the owning group can get access, and a public page says how; registers of research, such as the ME/CFS Research Register in Hamburg, are included as a separate category ("ta også med Research Register i Hamburg og lignende som en egen kategori"); (2) ME/CFS resources first, plus resources that expressly cover both ME/CFS and long COVID; (3) no link from a resource to a hypothesis in this round; (4) a resource with no verifiable source page is not shown. The founder accepted the plan (`docs/plan-data-catalogue.md`) with "Ja, commit og start".
+- The source rule for data resources (functional spec and methods text): the source is the resource's own public page, stored with its URL and fetch date; an entry has only fixed-value fields, each with a quote that code finds in the stored page; a field the page does not state is "not stated"; an AI agent proposes, the review agent checks, no auditor; a resource is not evidence and changes nothing on a card; the page recommends nothing and invites nobody to take part.
+- Settled by the orchestrator in the contract: a resource described only in a journal article does not meet the inclusion rule; a quote stays in the page's own language; the page is not in the main navigation.
+- The reliability test passed on the third and last allowed reading: 1 of 4 rejected in readings 1 and 2 (both mapMECFS), 0 of 4 in reading 3, after two prompt adjustments (`registry/resources.yaml`, pull request 95, merged on the founder's "Ja, flett 95"). Four resources are published: AusME Registry and Biobank, mapMECFS, searchMECFS, and the ME/CFS Research Register. Six leads are not: four hosts answer HTTP 403 to an automated request, which is not worked around (DecodeME, UK ME/CFS Biobank, OMF ME/CFS Data Center, Solve Together), and two have no page of their own (the German and the Norwegian register and biobank).
+- Open after the merge: the four refused pages could be saved by hand by the founder, as the PMC full texts were; the weekly link check sees only that a URL answers, not that the page is still the resource (the old DecodeME domain now serves an unrelated site).
+- Why: a researcher who wants to test a gap needs to know which data can be had and how, and the site can say that without holding any patient data and without any new claim about a hypothesis.
+
 ## 2026-11-18 — The site shows when the literature was last searched, from one file the weekly run writes (founder ruling)
 
 - The founder asked for a date of the last weekly run, updated in one place, and suggested a "last updated" date on every page. Asked whether to build the project manager's variant, the founder answered: "Ja, start".
