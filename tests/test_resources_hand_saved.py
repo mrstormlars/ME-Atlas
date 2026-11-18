@@ -392,3 +392,77 @@ def _draft_from(ctx: dict) -> dict:
 def test_the_inbox_default_is_the_gitignored_folder():
     assert Path("data/hand-saved/resources") == resources.DEFAULT_SAVED_DIR
     assert "data/hand-saved/" in Path(".gitignore").read_text(encoding="utf-8").splitlines()
+
+
+# --- amendments: .htm and a kept failed fetch --------------------------------------------------------------------
+
+
+def test_an_htm_file_in_the_inbox_is_accepted(env):
+    inbox = env / "inbox" / LEAD
+    (inbox / "main.html").rename(inbox / "main.htm")
+    assert run(env, *good_args()) == 0
+    assert (stored(env) / "main.html").read_bytes() == fixture("saved-main.html")
+
+
+def test_both_html_and_htm_for_one_page_is_refused_and_nothing_is_written(env, capsys):
+    inbox = env / "inbox" / LEAD
+    (inbox / "main.htm").write_bytes(fixture("saved-main.html"))
+    assert run(env, *good_args()) == 1
+    assert "both exist" in capsys.readouterr().err
+    assert cache_files(env) == []
+
+
+def store_fetched(env: Path, status: str, with_body: bool = False) -> Path:
+    d = stored(env)
+    d.mkdir(parents=True)
+    (d / "main.meta.json").write_text(
+        json.dumps({"requested_url": MAIN, "http_status": 403, "fetched": SAVED_DAY, "status": status}),
+        encoding="utf-8",
+    )
+    if with_body:
+        (d / "main.html").write_bytes(b"x")
+        (d / "main.txt").write_text("x", encoding="utf-8")
+    return d
+
+
+def test_a_stored_failed_fetch_is_kept_under_a_new_name_and_the_saved_page_is_stored(env):
+    d = store_fetched(env, "blocked")
+    assert run(env, *good_args()) == 0
+    assert json.loads((d / "main.fetch-refused.meta.json").read_text(encoding="utf-8"))["status"] == "blocked"
+    assert resources.read_meta(d, "main")["obtained"] == "hand_saved"
+    assert (d / "main.html").read_bytes() == fixture("saved-main.html")
+    assert not (d / "main.fetch-refused.html").exists()
+
+
+def test_a_failed_fetch_with_a_body_keeps_all_its_files_and_they_are_not_read_as_a_page(env):
+    d = store_fetched(env, "no_text", with_body=True)
+    assert run(env, *good_args("main", MAIN, SAVED_DAY)) == 0
+    assert (d / "main.fetch-refused.html").read_bytes() == b"x"
+    assert (d / "main.fetch-refused.txt").read_text(encoding="utf-8") == "x"
+    assert resources.stored_text(env / "cache", SAVED_DAY, LEAD, "main") == resources.extract_text(
+        fixture("saved-main.html").decode()
+    )
+    report = resources.run_fetch(LEADS[:1], env / "cache", env / "p", day=SAVED_DAY, offline=True)
+    assert report["leads"][LEAD]["main"] == "ok"
+
+
+def test_a_failed_fetch_already_kept_blocks_a_second_replacement(env, capsys):
+    d = store_fetched(env, "blocked")
+    (d / "main.fetch-refused.meta.json").write_text("{}", encoding="utf-8")
+    assert run(env, *good_args()) == 1
+    assert "already kept" in capsys.readouterr().err
+    assert json.loads((d / "main.meta.json").read_text(encoding="utf-8"))["status"] == "blocked"
+
+
+def test_a_stored_ok_page_or_a_hand_saved_page_still_refuses_without_renaming(env, capsys):
+    d = store_fetched(env, "ok")
+    assert run(env, *good_args()) == 1
+    assert "not overwritten" in capsys.readouterr().err
+    assert not list(d.glob("*.fetch-refused.*"))
+    shutil_d = stored(env, day="2026-11-11")
+    shutil_d.mkdir(parents=True)
+    (shutil_d / "main.meta.json").write_text(
+        json.dumps({"status": "blocked", "obtained": "hand_saved"}), encoding="utf-8"
+    )
+    assert run(env, *good_args(saved="2026-11-11")) == 1
+    assert not list(shutil_d.glob("*.fetch-refused.*"))

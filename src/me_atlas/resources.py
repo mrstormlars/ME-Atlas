@@ -583,19 +583,43 @@ def import_saved(
         raise ResourcesError(f"--saved {saved!r} is not a date (YYYY-MM-DD)")
     if saved > today:
         raise ResourcesError(f"--saved {saved} is later than today ({today})")
-    source = saved_root / lead_id / f"{PAGE_FILES[page_key]}.html"
-    if not source.is_file():
-        raise ResourcesError(f"{source.as_posix()}: the saved page is missing")
+    found = [
+        saved_root / lead_id / f"{PAGE_FILES[page_key]}{ext}"
+        for ext in (".html", ".htm")
+        if (saved_root / lead_id / f"{PAGE_FILES[page_key]}{ext}").is_file()
+    ]
+    if not found:
+        missing = saved_root / lead_id / f"{PAGE_FILES[page_key]}.html"
+        raise ResourcesError(f"{missing.as_posix()} (or .htm): the saved page is missing")
+    if len(found) > 1:
+        raise ResourcesError(f"{', '.join(f.as_posix() for f in found)}: both exist; keep only one")
+    source = found[0]
     directory = cache_dir_of(cache_root, saved, lead_id)
+    stored_meta = read_meta(directory, page_key)
+    refused = [f for f in sorted(directory.glob(f"{page_key}.fetch-refused.*"))] if directory.is_dir() else []
+    keep = False
     if (directory / f"{page_key}.meta.json").exists():
-        raise ResourcesError(
-            f"{directory.as_posix()}: a page '{page_key}' is already stored for {saved}; not overwritten"
-        )
+        if stored_meta is not None and obtained_of(stored_meta) == "fetched" and stored_meta["status"] != "ok":
+            if refused:
+                raise ResourcesError(
+                    f"{directory.as_posix()}: a failed fetch of '{page_key}' is already kept "
+                    f"({refused[0].name}); not overwritten"
+                )
+            keep = True
+        else:
+            raise ResourcesError(
+                f"{directory.as_posix()}: a page '{page_key}' is already stored for {saved}; not overwritten"
+            )
     body = source.read_bytes()
     decoded = decode_saved(body)
     text = extract_text(decoded)
     status = classify(200, "text/html", body, decoded, text)
     page = Page(status=status, http_status=None, final_url=url, content_type="text/html", body=body, text=text)
+    if keep:  # a failed fetch of the same page is kept under another name, never read as a page
+        for suffix in (".meta.json", ".html", ".txt"):
+            old = directory / f"{page_key}{suffix}"
+            if old.exists():
+                os.replace(old, directory / f"{page_key}.fetch-refused{suffix}")
     store_page(directory, page_key, url, page, saved, obtained="hand_saved")
     return status
 
