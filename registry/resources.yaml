@@ -1,4 +1,163 @@
-# The published catalogue of ME/CFS data resources. Written only by `resources record-review`; checked by
-# `resources check` (docs/fetch.md, docs/site.md). No entry yet.
-checked: null
-entries: []
+checked: '2026-11-18'
+entries:
+- id: ausme
+  name: Australian ME/CFS and long COVID (AusME) Registry and Biobank
+  operator: Emerge Australia
+  countries: not_stated
+  url: https://emerge.org.au/ausme/
+  access_url: https://emerge.org.au/for-researchers/
+  checked: '2026-11-18'
+  category: data
+  holds:
+  - biospecimens
+  - clinical
+  - questionnaires
+  access: application
+  covers: me_cfs_and_long_covid
+  language: en
+  source:
+  - https://emerge.org.au/ausme/
+  - https://emerge.org.au/for-researchers/
+  text_hash:
+    main: 4c5fa598a4815fcdf6a79bd228ff887b6d9c440d4651c8ef66222f2f04cae9d3
+    access: 61387e89b28c9dca261215913e0b555e0f514f2d6c0e1e72bfa966cbe46aad0d
+  quotes:
+    name:
+      quote: Australian ME/CFS and long COVID (AusME) Registry and Biobank
+      page: main
+    operator:
+      quote: Emerge Australia are the Custodians of the Mason Foundation-funded Australian ME/CFS Registry
+      page: main
+    countries:
+      quote: ''
+      page: main
+    access:
+      quote: Researchers seeking access are invited to submit an AusME Registry & Biobank Access Application describing the
+        proposed research and the data and/or biospecimens requested.
+      page: access
+    covers:
+      quote: the AusME Registry and Biobank is a nationally coordinated research resource supporting high-quality research
+        into ME/CFS and long COVID
+      page: access
+    holds:
+      questionnaires:
+        quote: Once you have registered you will be prompted to complete the “Onboarding” questionnaires.
+        page: main
+      biospecimens:
+        quote: Biospecimens, including whole blood, serum, plasma and peripheral blood mononuclear cells (PBMCs)
+        page: access
+      clinical:
+        quote: access high-quality clinical data and biospecimens
+        page: access
+- id: mapmecfs
+  name: mapMECFS
+  operator: RTI International
+  countries: not_stated
+  url: https://mapmecfs.org/about
+  access_url: null
+  checked: '2026-11-18'
+  category: data
+  holds:
+  - clinical
+  access: application
+  covers: me_cfs
+  language: en
+  source:
+  - https://mapmecfs.org/about
+  text_hash:
+    main: 034f748ad4e108d3e41d95c9a9b7a6c316db6d0a9d21ed373ca442a0b618a674
+  quotes:
+    name:
+      quote: The mapMECFS website serves as the largest data sharing portal for Myalgic Encephalomyelitis/Chronic Fatigue
+        Syndrome (ME/CFS) research
+      page: main
+    operator:
+      quote: mapMECFS is hosted by RTI International
+      page: main
+    countries:
+      quote: ''
+      page: main
+    access:
+      quote: Requires additional application and approval process by the mapMECFS DAC
+      page: main
+    covers:
+      quote: The mapMECFS website serves as the largest data sharing portal for Myalgic Encephalomyelitis/Chronic Fatigue
+        Syndrome (ME/CFS) research
+      page: main
+    holds:
+      clinical:
+        quote: Currently includes >90 datasets from a wide range of biological and clinical studies
+        page: main
+- id: me-cfs-research-register
+  name: ME/CFS Research Register
+  operator: ME/CFS Research Foundation
+  countries: not_stated
+  url: https://mrr.mecfs-research.org/en
+  access_url: null
+  checked: '2026-11-18'
+  category: register
+  holds: []
+  access: not_stated
+  covers: me_cfs
+  language: en
+  source:
+  - https://mrr.mecfs-research.org/en
+  text_hash:
+    main: a54782beeed18e95787d7188c4385610d39fbe79d54223313023170ee080d084
+  quotes:
+    name:
+      quote: The ME/CFS Research Register provides an overview of medical research on ME/CFS
+      page: main
+    operator:
+      quote: Copyright © 2026 ME/CFS Research Foundation
+      page: main
+    countries:
+      quote: ''
+      page: main
+    access:
+      quote: ''
+      page: main
+    covers:
+      quote: The ME/CFS Research Register provides an overview of medical research on ME/CFS
+      page: main
+    holds: {}
+- id: searchmecfs
+  name: searchMECFS
+  operator: not_stated
+  countries: not_stated
+  url: https://searchmecfs.org/
+  access_url: null
+  checked: '2026-11-18'
+  category: data
+  holds:
+  - biospecimens
+  access: application
+  covers: me_cfs
+  language: en
+  source:
+  - https://searchmecfs.org/
+  text_hash:
+    main: 3c62c22c4c0954fc8f8c8e3bc4710d2733cc7af36a10b6a46b26c48dfd5ffd0d
+  quotes:
+    name:
+      quote: searchMECFS is an interactive query tool that allows researchers to locate and request biospecimens from ME/CFS
+        studies
+      page: main
+    operator:
+      quote: ''
+      page: main
+    countries:
+      quote: ''
+      page: main
+    access:
+      quote: Follow the link to the Biospecimen Resource Access Committee Application webpage to complete your request.
+      page: main
+    covers:
+      quote: searchMECFS is an interactive query tool that allows researchers to locate and request biospecimens from ME/CFS
+        studies
+      page: main
+    holds:
+      biospecimens:
+        quote: searchMECFS is an interactive query tool that allows researchers to locate and request biospecimens from ME/CFS
+          studies
+        page: main

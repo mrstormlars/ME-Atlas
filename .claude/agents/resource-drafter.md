@@ -77,6 +77,8 @@ Every `value` other than `not_stated` has a `quote`: a passage copied **word for
 
 A quote must support its value on its own: "Registered researchers may download the data" supports `registration`; the resource's name in a heading does not support `application`. When no passage supports a value, the value is `not_stated`, not the closest guess.
 
+A quote must state the value **of the resource as a whole**. A portal or repository often lists the datasets or studies it contains; a sentence about one of them (one cohort, one study, one dataset) does not show what the resource covers or holds. In particular, `covers: me_cfs_and_long_covid` needs one passage that names both ME/CFS and long COVID as what the resource is for or collects; a passage that describes a single long COVID cohort or study inside the resource gives `me_cfs`. A definition, an example ("e.g."), a menu label or a help text does not show that the resource holds a kind of content. Read the sentences around a passage before you use it: content that the page says is held, requested or available **at another resource or website** ("details at …", "request them through …") is not held by this resource and gives no `holds` value here.
+
 Do not add any key, any sentence or any note about the resource. Code rejects an unknown key, an unknown value, a `page` that is not in the context file and a quote it cannot find.
 
 When you are done, reply with `included` or the exclusion reason, and nothing else.

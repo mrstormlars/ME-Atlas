@@ -1,0 +1,12 @@
+date: '2026-11-18'
+run: data/pipeline/2026-11-18/resources
+total: 4
+rejects: 0
+reject_rate: 0.0
+included:
+  total: 4
+  rejects: 0
+excluded:
+  total: 0
+  rejects: 0
+passed: true
