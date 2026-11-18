@@ -6,6 +6,7 @@
 <p>{{ txt("resources.intro.what") }}</p>
 <p>{{ txt("resources.intro.nodata") }}</p>
 <p>{{ txt("resources.intro.source") }}</p>
+<p>{{ txt("resources.intro.hand_saved") }}</p>
 <p>{{ txt("resources.intro.not_evidence") }}</p>
 <p>{{ txt("resources.intro.no_invitation") }}</p>
 <p>{{ t("resources.updated", date=checked) }}</p>
@@ -25,7 +26,7 @@
 <td data-label="{{ txt("resources.col.holds") }}">{% for h in r.holds %}{{ txt("resources.holds." ~ h) }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
 <td data-label="{{ txt("resources.col.access") }}">{{ txt("resources.access." ~ r.access) }}</td>
 <td data-label="{{ txt("resources.col.covers") }}">{{ txt("resources.covers." ~ r.covers) }}</td>
-<td data-label="{{ txt("resources.col.checked") }}">{{ r.checked }}</td>
+<td data-label="{{ txt("resources.col.checked") }}">{{ r.checked }}{% if r.get("hand_saved") %} <span class="hand-saved">{{ txt("resources.hand_saved") }}</span>{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>
@@ -45,7 +46,7 @@
 <th scope="row"{{ lang_attr(r) }}><a href="{{ r.url }}" rel="noopener noreferrer">{{ r.name }}</a></th>
 <td data-label="{{ txt("resources.col.operator") }}"{% if r.operator != "not_stated" %}{{ lang_attr(r) }}{% endif %}>{{ shown(r, r.operator) }}</td>
 <td data-label="{{ txt("resources.col.countries") }}"{% if r.countries != "not_stated" %}{{ lang_attr(r) }}{% endif %}>{% if r.countries == "not_stated" %}{{ txt("resources.not_stated") }}{% else %}{{ r.countries|join(", ") }}{% endif %}</td>
-<td data-label="{{ txt("resources.col.checked") }}">{{ r.checked }}</td>
+<td data-label="{{ txt("resources.col.checked") }}">{{ r.checked }}{% if r.get("hand_saved") %} <span class="hand-saved">{{ txt("resources.hand_saved") }}</span>{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>

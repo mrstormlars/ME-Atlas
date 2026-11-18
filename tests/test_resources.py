@@ -347,6 +347,7 @@ def test_fetch_stores_raw_body_meta_and_text_before_anything_reads_them(tmp_path
         "content_type": HTML,
         "fetched": DAY,
         "status": "ok",
+        "obtained": "fetched",
     }
     assert (d / "main.txt").read_text(encoding="utf-8") == main_text()
     assert not (tmp_path / "cache" / DAY / "fictional-register" / "access.html").exists()
@@ -396,6 +397,7 @@ def test_plan_writes_a_context_file_per_fetchable_lead_with_the_stored_text(tmp_
             "main": main_text(),
             "access": resources.extract_text(fixture("good-access.html").decode()),
         },
+        "hand_saved": [],
     }
     assert json.loads(written[1].read_text(encoding="utf-8"))["access_url"] is None
 
