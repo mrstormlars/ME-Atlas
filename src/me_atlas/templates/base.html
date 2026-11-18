@@ -24,7 +24,11 @@
     <p class="brand"><a href="{{ lroot }}index.html">ME Atlas</a></p>
     <nav aria-label="{{ txt("nav.aria") }}">
       <ul>
-{% for href, label in [("index.html", txt("page.front")), ("changes.html", txt("page.changes")), ("map.html", txt("page.map")), ("gaps.html", txt("page.gaps")), ("methods.html", txt("page.methods")), ("glossary.html", txt("page.glossary"))] %}
+{% set nav_pages = [("index.html", txt("page.front")), ("changes.html", txt("page.changes")), ("map.html", txt("page.map")), ("gaps.html", txt("page.gaps")), ("methods.html", txt("page.methods")), ("glossary.html", txt("page.glossary"))] %}
+{% if trials_on %}
+{% set nav_pages = nav_pages[:4] + [("trials.html", txt("page.trials"))] + nav_pages[4:] %}
+{% endif %}
+{% for href, label in nav_pages %}
         <li><a href="{{ lroot }}{{ href }}"{% if href == current %} aria-current="page"{% endif %}>{{ label }}</a></li>
 {% endfor %}
       </ul>

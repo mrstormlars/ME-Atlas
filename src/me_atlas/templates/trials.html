@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ txt("trials.h1") }}</h1>
+<p>{{ txt("trials.intro.what") }}</p>
+<p>{{ txt("trials.intro.copied") }}</p>
+<p>{{ txt("trials.intro.not_evidence") }}</p>
+<p>{{ txt("trials.intro.no_invitation") }}</p>
+<p>{{ t("trials.fetched", date=fetched) }}</p>
+<p>{{ t("trials.counts", n=distinct) }}</p>
+<p>{{ t("trials.not_listed", n=not_listed, data=lroot ~ "data.html") }}</p>
+
+{% if groups %}
+<ul class="trials-toc">
+{% for slug, name, rows in groups %}
+  <li><a href="#trials-{{ slug }}">{{ name }}</a> ({{ rows|length }})</li>
+{% endfor %}
+</ul>
+{% for slug, name, rows in groups %}
+<section id="trials-{{ slug }}">
+<h2><a href="{{ lroot }}hypotheses/{{ slug }}.html">{{ name }}</a></h2>
+<table class="gaps-table gaps-stack trials-table">
+<caption>{{ t("trials.caption", name=name) }}</caption>
+<thead><tr><th scope="col">{{ txt("trials.col.id") }}</th><th scope="col">{{ txt("trials.col.title") }}</th><th scope="col">{{ txt("trials.col.type") }}</th><th scope="col">{{ txt("trials.col.status") }}</th><th scope="col">{{ txt("trials.col.countries") }}</th><th scope="col">{{ txt("trials.col.enrolment") }}</th></tr></thead>
+<tbody>
+{% for r in rows %}
+<tr>
+<th scope="row"><a href="{{ study_link.format(nct_id=r.nct_id) }}" rel="noopener noreferrer">{{ r.nct_id }}</a></th>
+<td data-label="{{ txt("trials.col.title") }}"{% if lang != default_lang %} lang="en"{% endif %}>{{ r.title }}</td>
+<td data-label="{{ txt("trials.col.type") }}">{{ txt("trials.type." ~ r.study_type) }}</td>
+<td data-label="{{ txt("trials.col.status") }}">{{ txt("trials.status." ~ r.status) }}</td>
+<td data-label="{{ txt("trials.col.countries") }}"{% if lang != default_lang %} lang="en"{% endif %}>{{ r.countries|join(", ") if r.countries else txt("trials.none") }}</td>
+<td data-label="{{ txt("trials.col.enrolment") }}">{% if r.enrollment %}{{ r.enrollment.count }}{% if r.enrollment.type %} ({{ txt("trials.enrolment." ~ r.enrollment.type) }}){% endif %}{% else %}{{ txt("trials.none") }}{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</section>
+{% endfor %}
+{% else %}
+<p class="empty">{{ txt("trials.empty") }}</p>
+{% endif %}
+{% endblock %}

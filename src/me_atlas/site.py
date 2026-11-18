@@ -27,7 +27,7 @@ from jinja2 import ChoiceLoader, Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup, escape
 
 from me_atlas import cards as cardlib
-from me_atlas import export, i18n, map_draw, translations
+from me_atlas import export, i18n, map_draw, translations, trials
 from me_atlas import map as maplib
 from me_atlas.cards import Card, ChangeLogEntry, SourcedText, Study
 from me_atlas.glossary import (
@@ -432,6 +432,8 @@ class _Shared:
     unpublished: dict[str, str] = field(default_factory=dict)  # slug -> name of the draft-only cards
     map_content: maplib.MapContent = field(default_factory=maplib.MapContent)
     map_local: dict[str, tuple[dict[str, str], dict[str, str]]] = field(default_factory=dict)
+    registry: dict | None = None  # registry/trials.yaml, validated; None when the project has no registry file
+    trials_on: bool = False  # registry/reliability.yaml says passed: true (contract S1)
 
 
 @dataclass
@@ -888,6 +890,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             persistence_js=Markup(persistence_script(code, href, codes)),
             txt=txt,
             t=t,
+            trials_on=shared.trials_on,
             rung_names=rung_names,
             rung_meanings=rung_meanings,
             solid_to=solid_to,
@@ -903,6 +906,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             uses.setdefault(entry.key, []).append((title, href))
 
     txt0 = strings
+    listed = trials.listed_by_card(shared.registry) if shared.trials_on and shared.registry else {}
     render("index.html", "index.html", txt0["page.front"], cards=[lc.card for lc in local_cards])
     for lc in local_cards:
         card = lc.card
@@ -926,6 +930,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             name_in_english=lc.name_fallback and not default,
             groups=split_studies(card),
             preprint_ids=frozenset(s.id for s in card.studies if s.preprint),
+            trials_count=len(listed.get(card.slug, [])) if shared.trials_on else 0,
         )
     render("changes.html", "changes.html", txt0["page.changes"], entries=shared.entries, names=names)
     local_names, local_texts = shared.map_local.get(code, ({}, {}))
@@ -966,6 +971,23 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         gaps=gaps,
         legend=legend,
     )
+    if shared.trials_on and shared.registry is not None:
+        card_names = {lc.card.slug: lc.card.name for lc in local_cards}
+        groups = sorted(
+            ((slug, card_names[slug], rows) for slug, rows in listed.items() if slug in card_names),
+            key=lambda g: (i18n.sort_key(code, g[1]), g[0]),
+        )
+        render(
+            "trials.html",
+            "trials.html",
+            txt0["page.trials"],
+            fetched=shared.registry["fetched"],
+            groups=groups,
+            distinct=len({r["nct_id"] for _, _, rows in groups for r in rows}),
+            not_listed=trials.unlisted_ongoing(shared.registry),
+            study_link=trials.STUDY_URL,
+            name_fallback=frozenset(),
+        )
     render(
         "methods.html",
         "methods.html",
@@ -1012,6 +1034,7 @@ def build(
     i18n_dir: Path | None = None,
     translations_dir: Path | None = None,
     card_format: Path | None = None,
+    registry_dir: Path | None = None,
 ) -> BuildResult:
     """Build the site in every language that has a file in ``i18n_dir``. If any input fails validation nothing is
     written and ``errors`` says why.
@@ -1028,6 +1051,7 @@ def build(
     i18n_dir = Path(i18n_dir) if i18n_dir is not None else content_dir / "i18n"
     translations_dir = Path(translations_dir) if translations_dir is not None else cards_dir.parent / "translations"
     card_format = Path(card_format) if card_format is not None else DEFAULT_CARD_FORMAT
+    registry_dir = Path(registry_dir) if registry_dir is not None else cards_dir.parent / "registry"
     result = BuildResult()
 
     unpublished = _unpublished_cards(cards_dir, drafts_dir)
@@ -1070,6 +1094,20 @@ def build(
     if drafts_dir is not None:
         by_slug.update({c.slug: c for c in cardlib.load_cards(drafts_dir)})  # a draft replaces its card
 
+    registry: dict | None = None
+    trials_on = False
+    try:
+        if (registry_dir / "trials.yaml").is_file():
+            registry = trials.load_data(registry_dir / "trials.yaml")
+            registry_problems = trials.check_data(registry, set(by_slug))
+            if registry_problems:
+                result.errors = [f"registry/trials.yaml: {p}" for p in registry_problems]
+                return result
+            trials_on = trials.load_reliability(registry_dir / "reliability.yaml")
+    except trials.TrialsError as exc:
+        result.errors = [str(exc)]
+        return result
+
     changelog_path = cards_dir / cardlib.CHANGELOG_NAME
     entries: list[ChangeLogEntry] = cardlib.load_changelog(changelog_path, today) if changelog_path.is_file() else []
     entries = [e for _, e in sorted(enumerate(entries), key=lambda ie: (ie[1].date, ie[0]), reverse=True)]
@@ -1089,6 +1127,8 @@ def build(
         unpublished=unpublished,
         map_content=map_content,
         map_local=map_local,
+        registry=registry,
+        trials_on=trials_on,
     )
     pages: dict[str, str] = {}
     try:
@@ -1130,14 +1170,22 @@ def build(
 
 def _write_data(data_dir: Path, shared: _Shared, card_format: Path) -> list[Path]:
     """The open data and the citation files, written next to ``static/``; shared by every language."""
+    entries = shared.registry["studies"] if shared.registry else []
+    fetched = shared.registry["fetched"] if shared.registry else None
     json_text, _ = export.dataset_json(
-        shared.cards, shared.map_content, built=shared.built, draft_preview=shared.drafts
+        shared.cards,
+        shared.map_content,
+        built=shared.built,
+        draft_preview=shared.drafts,
+        trials=entries,
+        trials_fetched=fetched,
     )
     texts = {
         "me-atlas.json": json_text,
         "hypotheses.csv": export.hypotheses_csv(shared.cards, shared.map_content),
         "studies.csv": export.studies_csv(shared.cards),
         "links.csv": export.links_csv(shared.cards, shared.map_content),
+        "trials.csv": export.trials_csv(entries),
         "README.txt": export.readme(built=shared.built, draft_preview=shared.drafts),
     }
     for card in shared.cards:
@@ -1173,6 +1221,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     b.add_argument("--i18n-dir", type=Path, default=None, help=argparse.SUPPRESS)
     b.add_argument("--translations-dir", type=Path, default=None, help=argparse.SUPPRESS)
     b.add_argument("--card-format", type=Path, default=None, help=argparse.SUPPRESS)
+    b.add_argument("--registry-dir", type=Path, default=None, help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
 
     result = build(
@@ -1184,6 +1233,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         i18n_dir=args.i18n_dir,
         translations_dir=args.translations_dir,
         card_format=args.card_format,
+        registry_dir=args.registry_dir,
     )
     for error in result.errors:
         print(error, file=sys.stderr)
