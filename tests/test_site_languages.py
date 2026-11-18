@@ -112,7 +112,7 @@ def test_both_trees_share_one_stylesheet_and_one_script(proj_tmp):
 def test_every_norwegian_page_says_nb_carries_the_notice_and_links_to_its_english_page(proj_tmp):
     out = built(proj_tmp, make_card("one", "Fictional one", 2))
     pages = nb_files(out)
-    assert len(pages) == 7
+    assert len(pages) == 8  # seven pages, the card page and the data page
     for path in pages:
         doc = parse(path.read_text(encoding="utf-8"))
         assert doc.find("html").get("lang") == "nb", path

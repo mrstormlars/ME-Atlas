@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+{% set data = root ~ "data/" %}
+<h1>{{ txt("data.h1") }}</h1>
+<p>{{ txt("data.intro") }}</p>
+{% if drafts %}
+<p class="note">{{ txt("data.draft") }}</p>
+{% endif %}
+
+<h2>{{ txt("data.is.h2") }}</h2>
+<ul>
+  <li>{{ txt("data.is.derived") }}</li>
+  <li>{{ txt("data.is.english") }}</li>
+  <li>{{ txt("data.is.review") }}</li>
+  <li>{{ txt("data.is.advice") }}</li>
+</ul>
+
+<h2>{{ txt("data.files.h2") }}</h2>
+<ul class="data-files">
+{% for name in data_files %}
+  <li><a href="{{ data }}{{ name }}">{{ name }}</a>: {{ txt("data.file." ~ name) }}</li>
+{% endfor %}
+</ul>
+<p>{{ t("data.fields", format=data ~ "card-format.md") }}</p>
+
+<h2>{{ txt("data.cite.h2") }}</h2>
+<p>{{ txt("data.cite.intro") }}</p>
+<ul class="data-citations">
+{% for c in cards %}
+  <li>{{ c.name }}: <a href="{{ data }}citations/{{ c.slug }}.bib">BibTeX</a>, <a href="{{ data }}citations/{{ c.slug }}.ris">RIS</a></li>
+{% endfor %}
+</ul>
+
+<h2>{{ txt("data.licence.h2") }}</h2>
+<p>{{ t("data.licence.text", url=licence_url) }}</p>
+<p>{{ txt("data.licence.rights") }}</p>
+<p>{{ txt("data.howto.intro") }}</p>
+<p lang="en" class="citation-text">{{ citation }}</p>
+{% endblock %}
