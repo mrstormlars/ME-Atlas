@@ -16,6 +16,9 @@ build/
 data/cache/
 data/pipeline/
 
+# Pages the founder saved by hand: not ours to redistribute (the data/ backup covers them)
+data/hand-saved/
+
 # Claude Code
 .claude/settings.local.json
 .claude/worktrees/

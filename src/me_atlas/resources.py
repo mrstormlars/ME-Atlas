@@ -3,6 +3,7 @@
 Command line::
 
     uv run python -m me_atlas.resources fetch [--offline] [--date YYYY-MM-DD]
+    uv run python -m me_atlas.resources import-saved --lead ID --page main|access --url URL --saved YYYY-MM-DD
     uv run python -m me_atlas.resources plan [--changed] [--date YYYY-MM-DD]
     uv run python -m me_atlas.resources record-draft --run DIR
     uv run python -m me_atlas.resources record-review --run DIR
@@ -13,7 +14,10 @@ Command line::
 A resource is not evidence. The source of an entry in ``registry/resources.yaml`` is the resource's own public page,
 stored in ``data/cache/resources/``. Every value other than ``not_stated`` carries a quote that code has found in the
 stored text of the page it names. An AI agent proposes values and quotes; a review agent checks them; only
-``record-review`` writes the data file. See ``docs/fetch.md``, ``docs/pipeline.md``, ``docs/site.md`` and
+``record-review`` writes the data file. When a host refuses an automated request, ``import-saved`` stores a copy the
+founder saved by hand from a browser (``data/hand-saved/resources/<lead id>/main.html``, ``access.html``) in the same
+cache folder as a fetched page, marked ``obtained: hand_saved``; nothing is done by code to get past a bot check or a
+login. See ``docs/fetch.md``, ``docs/pipeline.md``, ``docs/site.md`` and
 ``docs/plan-data-catalogue.md``.
 """
 
@@ -51,10 +55,12 @@ DEFAULT_LEADS_FILE = Path("registry/resource-leads.yaml")
 DEFAULT_DATA_FILE = Path("registry/resources.yaml")
 DEFAULT_RELIABILITY_FILE = Path("registry/resources-reliability.yaml")
 DEFAULT_CACHE_DIR = Path("data/cache/resources")
+DEFAULT_SAVED_DIR = Path("data/hand-saved/resources")
 DEFAULT_PIPELINE_DIR = Path("data/pipeline")
 
 PAGES = ("main", "access")
 PAGE_FILES = {"main": "main", "access": "access"}
+OBTAINED = ("fetched", "hand_saved")
 
 # Enumerations (functional spec, source rule for data resources).
 CATEGORIES = ("data", "register")
@@ -122,6 +128,7 @@ ENTRY_FIELDS = (
     "text_hash",
     "quotes",
 )
+OPTIONAL_ENTRY_FIELDS = ("hand_saved",)
 SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 HASH = re.compile(r"^[0-9a-f]{64}$")
 LANGUAGE = re.compile(r"^[a-z]{2}$")
@@ -485,7 +492,7 @@ class _RobotsRefusalError(Exception):
         self.status = status
 
 
-def _meta(url: str, page: Page, day: str) -> dict[str, Any]:
+def _meta(url: str, page: Page, day: str, obtained: str = "fetched") -> dict[str, Any]:
     return {
         "requested_url": url,
         "final_url": page.final_url,
@@ -493,17 +500,18 @@ def _meta(url: str, page: Page, day: str) -> dict[str, Any]:
         "content_type": page.content_type,
         "fetched": day,
         "status": page.status,
+        "obtained": obtained,
     }
 
 
-def store_page(directory: Path, key: str, url: str, page: Page, day: str) -> None:
+def store_page(directory: Path, key: str, url: str, page: Page, day: str, obtained: str = "fetched") -> None:
     """Write the raw body, the metadata and the text of a page. The metadata is always written."""
     directory.mkdir(parents=True, exist_ok=True)
     if page.body is not None:
         (directory / f"{key}.html").write_bytes(page.body)
     if page.text is not None:
         (directory / f"{key}.txt").write_text(page.text, encoding="utf-8", newline="\n")
-    _write_json(directory / f"{key}.meta.json", _meta(url, page, day))
+    _write_json(directory / f"{key}.meta.json", _meta(url, page, day, obtained))
 
 
 def read_meta(directory: Path, key: str) -> dict[str, Any] | None:
@@ -514,6 +522,82 @@ def read_meta(directory: Path, key: str) -> dict[str, Any] | None:
     if not isinstance(data, dict) or not isinstance(data.get("status"), str):
         raise ResourcesError(f"{path}: not a page metadata file")
     return data
+
+
+def obtained_of(meta: Mapping[str, Any] | None) -> str:
+    """How a stored page was obtained; a meta file without the key reads as ``fetched``."""
+    return "hand_saved" if meta and meta.get("obtained") == "hand_saved" else "fetched"
+
+
+def hand_saved_pages(directory: Path, keys: Sequence[str]) -> list[str]:
+    """The sorted page keys of a lead whose stored meta says ``hand_saved``."""
+    return sorted(k for k in keys if obtained_of(read_meta(directory, k)) == "hand_saved")
+
+
+# ---------------------------------------------------------------------------
+# Pages saved by hand
+# ---------------------------------------------------------------------------
+
+_CHARSET = re.compile(rb"""<meta[^>]+?charset\s*=\s*["']?\s*([A-Za-z0-9_.:-]+)""", re.IGNORECASE)
+
+
+def decode_saved(body: bytes) -> str:
+    """Decode a saved page: the charset its own ``<meta charset>`` or ``http-equiv`` declares, else UTF-8; a body that
+    does not decode falls back to UTF-8 with replacement."""
+    match = _CHARSET.search(body[:4096])
+    if match:
+        try:
+            return body.decode(match.group(1).decode("ascii"))
+        except (LookupError, UnicodeDecodeError):
+            pass
+    try:
+        return body.decode("utf-8")
+    except UnicodeDecodeError:
+        return body.decode("utf-8", errors="replace")
+
+
+def import_saved(
+    leads: Sequence[Mapping[str, Any]],
+    cache_root: Path,
+    saved_root: Path,
+    *,
+    lead_id: str,
+    page_key: str,
+    url: str,
+    saved: str,
+    today: str,
+) -> str:
+    """Store a page the founder saved by hand exactly as a fetched page is stored, marked ``hand_saved``. Returns the
+    status. Raises ``ResourcesError`` before anything is written when the request does not hold."""
+    lead = next((entry for entry in leads if entry["id"] == lead_id), None)
+    if lead is None:
+        raise ResourcesError(f"lead {lead_id!r} is not in the leads file")
+    if page_key not in PAGES:
+        raise ResourcesError(f"page must be one of {', '.join(PAGES)}")
+    urls = page_urls(lead)
+    if page_key not in urls:
+        raise ResourcesError(f"lead {lead_id!r} has no access_url, so it has no 'access' page")
+    if url != urls[page_key]:
+        raise ResourcesError(f"--url must be exactly the lead's address for '{page_key}': {urls[page_key]}")
+    if not _is_date(saved):
+        raise ResourcesError(f"--saved {saved!r} is not a date (YYYY-MM-DD)")
+    if saved > today:
+        raise ResourcesError(f"--saved {saved} is later than today ({today})")
+    source = saved_root / lead_id / f"{PAGE_FILES[page_key]}.html"
+    if not source.is_file():
+        raise ResourcesError(f"{source.as_posix()}: the saved page is missing")
+    directory = cache_dir_of(cache_root, saved, lead_id)
+    if (directory / f"{page_key}.meta.json").exists():
+        raise ResourcesError(
+            f"{directory.as_posix()}: a page '{page_key}' is already stored for {saved}; not overwritten"
+        )
+    body = source.read_bytes()
+    decoded = decode_saved(body)
+    text = extract_text(decoded)
+    status = classify(200, "text/html", body, decoded, text)
+    page = Page(status=status, http_status=None, final_url=url, content_type="text/html", body=body, text=text)
+    store_page(directory, page_key, url, page, saved, obtained="hand_saved")
+    return status
 
 
 def run_fetch(
@@ -540,6 +624,10 @@ def run_fetch(
                     meta = read_meta(directory, key)
                     statuses[key] = meta["status"] if meta else "not_cached"
                 else:
+                    kept = read_meta(directory, key)
+                    if kept is not None and obtained_of(kept) == "hand_saved":
+                        statuses[key] = kept["status"]  # a page saved by hand is never fetched over
+                        continue
                     assert fetcher is not None
                     page = fetcher.fetch(url)
                     store_page(directory, key, url, page, day)
@@ -604,6 +692,7 @@ def run_plan(
                 "access_url": lead.get("access_url"),
                 "fetched": day,
                 "pages": pages,
+                "hand_saved": hand_saved_pages(cache_dir_of(cache_root, day, lid), list(urls)),
             },
         )
         written.append(path)
@@ -817,7 +906,7 @@ def build_entry(context: Mapping[str, Any], draft: Mapping[str, Any]) -> dict[st
     urls = {"main": context["url"], "access": context.get("access_url")}
     quotes: dict[str, Any] = {f: {"quote": draft[f]["quote"], "page": draft[f]["page"]} for f in QUOTED_FIELDS}
     quotes["holds"] = {h["value"]: {"quote": h["quote"], "page": h["page"]} for h in draft["holds"]}
-    return {
+    entry = {
         "id": draft["id"],
         "name": draft["name"]["value"],
         "operator": draft["operator"]["value"],
@@ -834,6 +923,10 @@ def build_entry(context: Mapping[str, Any], draft: Mapping[str, Any]) -> dict[st
         "text_hash": {k: text_hash(t) for k, t in pages.items()},
         "quotes": quotes,
     }
+    hand_saved = [k for k in PAGES if k in (context.get("hand_saved") or []) and k in pages]
+    if hand_saved:
+        entry["hand_saved"] = hand_saved
+    return entry
 
 
 def record_review(data: Mapping[str, Any] | None, run: Path, today: str) -> tuple[dict[str, Any], list[str]]:
@@ -947,7 +1040,7 @@ def check_data(data: Any) -> list[str]:
         if missing:
             problems.append(f"{where}: missing field(s) {', '.join(missing)}")
             continue
-        extra = [f for f in entry if f not in ENTRY_FIELDS]
+        extra = [f for f in entry if f not in ENTRY_FIELDS and f not in OPTIONAL_ENTRY_FIELDS]
         if extra:
             problems.append(f"{where}: unknown field(s) {', '.join(extra)}")
         if not isinstance(lid, str) or not SLUG.match(lid):
@@ -1009,6 +1102,17 @@ def _check_entry(where: str, entry: Mapping[str, Any]) -> list[str]:
         hashes = {}
     elif not all(isinstance(h, str) and HASH.match(h) for h in hashes.values()):
         problems.append(f"{where}: text_hash: every hash must be 64 hexadecimal characters")
+    if "hand_saved" in entry:
+        saved = entry["hand_saved"]
+        if not (
+            isinstance(saved, list)
+            and saved
+            and len(set(map(str, saved))) == len(saved)
+            and all(isinstance(k, str) and k in PAGES for k in saved)
+        ):
+            problems.append(f"{where}: hand_saved: must be a non-empty list of distinct page keys ({', '.join(PAGES)})")
+        elif hashes and any(k not in hashes for k in saved):
+            problems.append(f"{where}: hand_saved: every page key must be a page in text_hash")
     quotes = entry["quotes"]
     if not isinstance(quotes, Mapping):
         return [*problems, f"{where}: quotes: must be a mapping"]
@@ -1067,6 +1171,20 @@ def check_against_cache(data: Mapping[str, Any], cache_root: Path) -> list[str]:
                 problems.append(f"{lid}: page '{page}': no stored text in {directory.as_posix()}")
             elif text_hash(body) != expected:
                 problems.append(f"{lid}: page '{page}': the stored text has changed since the entry was written")
+        claimed = set(entry.get("hand_saved") or [])
+        for page in entry["text_hash"]:
+            meta = read_meta(directory, page)
+            if meta is None:
+                if page in claimed:
+                    problems.append(
+                        f"{lid}: page '{page}': hand_saved, but no stored metadata in {directory.as_posix()}"
+                    )
+                continue
+            if (obtained_of(meta) == "hand_saved") != (page in claimed):
+                problems.append(
+                    f"{lid}: page '{page}': hand_saved in the entry disagrees with the stored metadata "
+                    f"(obtained: {obtained_of(meta)})"
+                )
         items = [(f"quotes.{f}", entry["quotes"][f]) for f in QUOTED_FIELDS]
         items += [(f"quotes.holds.{h}", q) for h, q in entry["quotes"]["holds"].items()]
         for field, item in items:
@@ -1144,6 +1262,13 @@ def _build_parser() -> argparse.ArgumentParser:
     fetch.add_argument("--offline", action="store_true", help="read the stored pages of --date, make no request")
     fetch.add_argument("--date", default=None, help="fetch date, YYYY-MM-DD (default: today)")
 
+    saved = sub.add_parser("import-saved", help="store a page saved by hand from a browser, marked hand_saved")
+    saved.add_argument("--saved-dir", type=Path, default=DEFAULT_SAVED_DIR, help=argparse.SUPPRESS)
+    saved.add_argument("--lead", required=True, help="the lead id")
+    saved.add_argument("--page", required=True, choices=PAGES, help="which page of the lead")
+    saved.add_argument("--url", required=True, help="the address that was saved; exactly the lead's url or access_url")
+    saved.add_argument("--saved", required=True, help="the date the page was saved, YYYY-MM-DD")
+
     plan = sub.add_parser("plan", help="write one context file per fetchable lead")
     plan.add_argument("--changed", action="store_true", help="only leads whose stored text changed since drafting")
     plan.add_argument("--date", default=None, help="run date, YYYY-MM-DD (default: today)")
@@ -1193,6 +1318,21 @@ def _run(args: argparse.Namespace, today: str) -> int:
             print(f"{lid}: " + ", ".join(f"{k} {v}" for k, v in statuses.items()))
         print(f"OK: {len(report['fetchable'])} of {len(leads)} lead(s) fetchable; report in {out.as_posix()}")
         return 0
+    if cmd == "import-saved":
+        leads = load_leads(args.leads_file)
+        status = import_saved(
+            leads,
+            args.cache_dir,
+            args.saved_dir,
+            lead_id=args.lead,
+            page_key=args.page,
+            url=args.url,
+            saved=args.saved,
+            today=today,
+        )
+        where = cache_dir_of(args.cache_dir, args.saved, args.lead).as_posix()
+        print(f"{args.lead}: {args.page} {status}; stored in {where}")
+        return 0 if status == "ok" else 1
     if cmd == "plan":
         day = args.date or today
         leads = load_leads(args.leads_file)
