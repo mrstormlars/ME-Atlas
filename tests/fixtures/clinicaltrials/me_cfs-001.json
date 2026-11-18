@@ -1,0 +1,212 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000001",
+          "briefTitle": "Fictional exercise study in ME/CFS",
+          "officialTitle": "A fictional official title for the exercise study"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2025-03"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Chronic Fatigue Syndrome"
+          ],
+          "keywords": [
+            "exercise"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "enrollmentInfo": {
+            "count": 120,
+            "type": "ESTIMATED"
+          }
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {
+              "type": "BEHAVIORAL",
+              "name": "Fictional pacing programme"
+            }
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "Norway"
+            },
+            {
+              "facility": "Fictional site",
+              "country": "Germany"
+            },
+            {
+              "facility": "Fictional site",
+              "country": "Norway"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000002",
+          "briefTitle": "Fictional blood marker cohort in ME/CFS"
+        },
+        "statusModule": {
+          "overallStatus": "NOT_YET_RECRUITING",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2026-12"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Fictional condition"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "enrollmentInfo": {
+            "count": 60,
+            "type": "ESTIMATED"
+          },
+          "designInfo": {
+            "observationalModel": "Cohort"
+          }
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "United Kingdom"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000003",
+          "briefTitle": "Fictional completed ME/CFS trial"
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "lastUpdatePostDateStruct": {
+            "date": "2023-05-04",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2020-01"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Fictional condition"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "enrollmentInfo": {
+            "count": 40,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Fictional compound"
+            }
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "Norway"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000004",
+          "briefTitle": "Fictional long COVID and ME/CFS registry"
+        },
+        "statusModule": {
+          "overallStatus": "ACTIVE_NOT_RECRUITING",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2025-03"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Long COVID",
+            "ME/CFS"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "enrollmentInfo": {
+            "count": 500,
+            "type": "ACTUAL"
+          },
+          "designInfo": {
+            "observationalModel": "Case-Control"
+          }
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "Norway"
+            },
+            {
+              "facility": "Fictional site",
+              "country": "Sweden"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    }
+  ],
+  "totalCount": 4
+}

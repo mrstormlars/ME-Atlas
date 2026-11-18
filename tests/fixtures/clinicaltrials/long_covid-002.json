@@ -1,0 +1,99 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000007",
+          "briefTitle": "Fictional withdrawn long COVID trial"
+        },
+        "statusModule": {
+          "overallStatus": "WITHDRAWN",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2025-03"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Fictional condition"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "enrollmentInfo": {
+            "count": 0,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Fictional drug"
+            }
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "Spain"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000008",
+          "briefTitle": "Fictional long COVID registered study"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2025-03"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Fictional condition"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "enrollmentInfo": {
+            "count": 80,
+            "type": "ESTIMATED"
+          },
+          "designInfo": {
+            "observationalModel": "Cohort"
+          }
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "Norway"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    }
+  ]
+}
