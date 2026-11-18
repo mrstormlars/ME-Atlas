@@ -201,6 +201,9 @@ studies:
   - id: pmid:22670061
     title: Impaired blood pressure variability in chronic fatigue syndrome--a potential biomarker.
     year: 2012
+    authors: [Frith J, Zalewski P, Klawe JJ, Pairman J, Bitner A, Tafil-Klawe M, Newton JL]
+    journal: 'QJM : monthly journal of the Association of Physicians'
+    doi: 10.1093/qjmed/hcs085
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -220,6 +223,9 @@ studies:
   - id: pmid:31906988
     title: Reduced heart rate variability predicts fatigue severity in individuals with chronic fatigue syndrome/myalgic encephalomyelitis.
     year: 2020
+    authors: [Escorihuela RM, Capdevila L, Castro JR, Zaragozà MC, Maurel S, Alegre J, Castro-Marrero J]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-019-02184-z
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -239,6 +245,9 @@ studies:
   - id: pmid:38251045
     title: Similar Patterns of Dysautonomia in Myalgic Encephalomyelitis/Chronic Fatigue and Post-COVID-19 Syndromes.
     year: 2024
+    authors: [Ryabkova VA, Rubinskiy AV, Marchenko VN, Trofimov VI, Churilov LP]
+    journal: 'Pathophysiology : the official journal of the International Society for Pathophysiology'
+    doi: 10.3390/pathophysiology31010001
     cohort: me_cfs
     # Every ME/CFS patient met all three: Fukuda, CCC 2003 and IOM 2015 (full text). Recorded as CCC, the strictest
     # named definition they all met. The post-COVID group (n=29) is not used: 14/29 met CCC and 16/29 IOM.
@@ -260,6 +269,9 @@ studies:
   - id: pmid:34640544
     title: Reduced Parasympathetic Reactivation during Recovery from Exercise in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Van Oosterwijck J, Marusic U, De Wandele I, Meeus M, Paul L, Lambrecht L, Moorkens G, Danneels L, Nijs J]
+    journal: Journal of clinical medicine
+    doi: 10.3390/jcm10194527
     cohort: me_cfs
     # "CDCP criteria" cites ref 19, Fukuda et al. 1994 (full text reference list), so recorded as Fukuda. The full text
     # also says all patients met the "Canadian criteria", but that sentence cites ref 1, the 2011 ICC; not used.
@@ -282,6 +294,9 @@ studies:
   - id: pmid:23166694
     title: Reduced cardiac vagal modulation impacts on cognitive performance in chronic fatigue syndrome.
     year: 2012
+    authors: [Beaumont A, Burton AR, Lemon J, Bennett BK, Lloyd A, Vollmer-Conna U]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0049518
     cohort: me_cfs
     # "international diagnostic criteria for CFS [1]": ref 1 is Fukuda et al. 1994 (full text reference list).
     case_definition: Fukuda
@@ -304,6 +319,9 @@ studies:
   - id: pmid:9505867
     title: Long- and short-term blood pressure and RR-interval variability and psychosomatic distress in chronic fatigue syndrome.
     year: 1998
+    authors: [Duprez DA, De Buyzere ML, Drieghe B, Vanhaverbeke F, Taes Y, Michielsen W, Clement DL]
+    journal: 'Clinical science (London, England : 1979)'
+    doi: 10.1042/cs0940057
     cohort: me_cfs
     case_definition: Holmes1988
     case_definition_source: abstract
@@ -326,6 +344,9 @@ studies:
   - id: pmid:9430800
     title: Comparison of heart rate variability in patients with chronic fatigue syndrome and controls.
     year: 1997
+    authors: [Yataco A, Talo H, Rowe P, Kass DA, Berger RD, Calkins H]
+    journal: 'Clinical autonomic research : official journal of the Clinical Autonomic Research Society'
+    doi: 10.1007/BF02267720
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -345,6 +366,9 @@ studies:
   - id: pmid:34970156
     title: Markers of Cardiac Autonomic Function During Consecutive Day Peak Exercise Tests in People With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Nelson MJ, Buckley JD, Thomson RL, Bellenger CR, Davison K]
+    journal: Frontiers in physiology
+    doi: 10.3389/fphys.2021.771899
     cohort: me_cfs
     # Patients were diagnosed by one of Fukuda, CCC or ICC; recorded as Fukuda, the lowest-ranked of the three (as
     # for 30871578, the same cohort, on impaired-energy-production-after-exertion).
@@ -370,6 +394,9 @@ studies:
   - id: pmid:41437251
     title: Diagnosis of chronic fatigue syndrome using beat-to-beat autonomic measurements.
     year: 2025
+    authors: [Kujawski S, Tabisz H, Morten KJ, Modlińska A, Słomko J, Zalewski P]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-025-07433-y
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: fulltext
@@ -389,6 +416,9 @@ studies:
   - id: pmid:29246267
     title: Autonomic Nervous System Functioning Related to Nocturnal Sleep in Patients With Chronic Fatigue Syndrome Compared to Tired Controls.
     year: 2018
+    authors: [Orjatsalo M, Alakuijala A, Partinen M]
+    journal: 'Journal of clinical sleep medicine : JCSM : official publication of the American Academy of Sleep Medicine'
+    doi: 10.5664/jcsm.6924
     cohort: me_cfs
     case_definition: IOM2015
     case_definition_source: abstract
@@ -408,6 +438,9 @@ studies:
   - id: pmid:31957647
     title: Parasympathetic activity is reduced during slow-wave sleep, but not resting wakefulness, in patients with chronic fatigue syndrome.
     year: 2020
+    authors: [Fatt SJ, Beilharz JE, Joubert M, Wilson C, Lloyd AR, Vollmer-Conna U, Cvejic E]
+    journal: 'Journal of clinical sleep medicine : JCSM : official publication of the American Academy of Sleep Medicine'
+    doi: 10.5664/jcsm.8114
     cohort: me_cfs
     # "medically diagnosed CFS" (abstract); PMC7053003 exists but Europe PMC returned no open full text. TODO: verify.
     case_definition: unverified
@@ -428,6 +461,9 @@ studies:
   - id: pmid:29855991
     title: Cerebral blood flow and heart rate variability predict fatigue severity in patients with chronic fatigue syndrome.
     year: 2019
+    authors: [Boissoneault J, Letzen J, Robinson M, Staud R]
+    journal: Brain imaging and behavior
+    doi: 10.1007/s11682-018-9897-x
     cohort: me_cfs
     # The abstract names no case definition; PMC6274602 exists but Europe PMC returned no open full text. TODO: verify.
     case_definition: unverified
@@ -448,6 +484,9 @@ studies:
   - id: pmid:34073494
     title: Post-Exertional Malaise May Be Related to Central Blood Pressure, Sympathetic Activity and Mental Fatigue in Chronic Fatigue Syndrome Patients.
     year: 2021
+    authors: [Kujawski S, Słomko J, Hodges L, Pheby DFH, Murovska M, Newton JL, Zalewski P]
+    journal: Journal of clinical medicine
+    doi: 10.3390/jcm10112327
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -467,6 +506,9 @@ studies:
   - id: pmid:24493300
     title: "Disease mechanisms and clonidine treatment in adolescent chronic fatigue syndrome: a combined cross-sectional and randomized clinical trial."
     year: 2014
+    authors: [Sulheim D, Fagermoen E, Winger A, Andersen AM, Godang K, Müller F, Rowe PC, Saul JP, Skovlund E, Øie MG, Wyller VB]
+    journal: JAMA pediatrics
+    doi: 10.1001/jamapediatrics.2013.4647
     cohort: me_cfs
     # The abstract names no case definition; no open full text. The companion paper on the same trial (pmid
     # 26357864, full text PMC4566847) says the study "applied a 'broad' case definition of CFS, requiring three months

@@ -205,6 +205,9 @@ studies:
   - id: pmid:38965566
     title: "Cardiopulmonary and metabolic responses during a 2-day CPET in myalgic encephalomyelitis/chronic fatigue syndrome: translating reduced oxygen consumption to impairment status to treatment considerations."
     year: 2024
+    authors: [Keller B, Receno CN, Franconi CJ, Harenberg S, Stevens J, Mao X, Stevens SR, Moore G, Levine S, Chia J, Shungu D, Hanson MR]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-024-05410-5
     cohort: me_cfs
     # Full text (PMC11229500) also: "compliance with Canadian Consensus Criteria [32]"; multi-site (Ithaca College,
     # Weill Cornell Medicine, ID Med Torrance), Cornell U54 Collaborative Research Center, data 2018-2022.
@@ -234,6 +237,9 @@ studies:
   - id: pmid:31161646
     title: Abnormal blood lactate accumulation during repeated exercise testing in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2019
+    authors: [Lien K, Johansen B, Veierød MB, Haslestad AS, Bøhn SK, Melsom MN, Kardel KR, Iversen PO]
+    journal: Physiological reports
+    doi: 10.14814/phy2.14138
     cohort: me_cfs
     # Abstract also: "18 female patients (18-50 years) fulfilling the Canadian Consensus Criteria for ME/CFS".
     case_definition: CCC
@@ -260,6 +266,9 @@ studies:
   - id: pmid:20937116
     title: Patients with chronic fatigue syndrome performed worse than controls in a controlled repeated exercise study despite a normal oxidative phosphorylation capacity.
     year: 2010
+    authors: [Vermeulen RC, Kurk RM, Visser FC, Sluiter W, Scholte HR]
+    journal: Journal of translational medicine
+    doi: 10.1186/1479-5876-8-93
     cohort: me_cfs
     # Fukuda: flag "does not require PEM" (the full text adds that patients reported onset after an infection).
     case_definition: Fukuda
@@ -290,6 +299,9 @@ studies:
   - id: pmid:34198913
     title: "Female Patients with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome or Idiopathic Chronic Fatigue: Comparison of Responses to a Two-Day Cardiopulmonary Exercise Testing Protocol."
     year: 2021
+    authors: [van Campen CLMC, Visser FC]
+    journal: Healthcare (Basel, Switzerland)
+    doi: 10.3390/healthcare9060682
     cohort: me_cfs
     # "ME criteria [1]" = ref 1, Carruthers et al. 2011, "Myalgic encephalomyelitis: International Consensus
     # Criteria" (full text PMC8229058 reference list); ref 3 = Fukuda 1994. Recorded as ICC, read as patients meeting
@@ -320,6 +332,9 @@ studies:
   - id: pmid:34198946
     title: "Comparing Idiopathic Chronic Fatigue and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) in Males: Response to Two-Day Cardiopulmonary Exercise Testing Protocol."
     year: 2021
+    authors: [van Campen CLMC, Visser FC]
+    journal: Healthcare (Basel, Switzerland)
+    doi: 10.3390/healthcare9060683
     cohort: me_cfs
     # "[1,3]": ref 1 = Carruthers et al. 2011, International Consensus Criteria; ref 3 = Fukuda et al. 1994 (full text
     # PMC8230194 reference list). Recorded as ICC. TODO: verify — same reading question as 34198913.
@@ -345,6 +360,9 @@ studies:
   - id: pmid:42212259
     title: Cardiopulmonary exercise test results do not change over two sequential days in patients with chronic fatigue syndrome.
     year: 2026
+    authors: [Mancini DM, Cook DB, Brunjes DL, Soto T, Blate M, Quan P, Yamazaki T, Norweg A, Natelson BH]
+    journal: Frontiers in physiology
+    doi: 10.3389/fphys.2026.1816082
     cohort: me_cfs
     # "the 1994 case definition" = Fukuda (the paper's introduction cites Fukuda et al., 1994), modified to require
     # PEM, so the card's "does not require PEM" flag overstates this cohort: patients had to report PEM (VAS >= 3).
@@ -378,6 +396,9 @@ studies:
   - id: pmid:21749371
     title: "Loss of capacity to recover from acidosis on repeat exercise in chronic fatigue syndrome: a case-control study."
     year: 2012
+    authors: [Jones DE, Hollingsworth KG, Jakovljevic DG, Fattakhova G, Pairman J, Blamire AM, Trenell MI, Newton JL]
+    journal: European journal of clinical investigation
+    doi: 10.1111/j.1365-2362.2011.02567.x
     cohort: me_cfs
     case_definition: Fukuda  # "CDC 1994" = Fukuda; no open full text
     case_definition_source: abstract
@@ -398,6 +419,9 @@ studies:
   - id: pmid:30871578
     title: Diagnostic sensitivity of 2-day cardiopulmonary exercise testing in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2019
+    authors: [Nelson MJ, Buckley JD, Thomson RL, Clark D, Kwiatek R, Davison K]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-019-1836-0
     cohort: me_cfs
     # Patients were diagnosed by one of Fukuda, CCC or ICC; the paper does not say how many by each, so recorded as
     # Fukuda, the lowest-ranked of the three. Fukuda: flag "does not require PEM" for part of the cohort.
@@ -421,6 +445,9 @@ studies:
   - id: pmid:23813081
     title: Discriminative validity of metabolic and workload measurements for identifying people with chronic fatigue syndrome.
     year: 2013
+    authors: [Snell CR, Stevens SR, Davenport TE, Van Ness JM]
+    journal: Physical therapy
+    doi: 10.2522/ptj.20110368
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
     case_definition_source: null
@@ -442,6 +469,9 @@ studies:
   - id: pmid:28782878
     title: "Physiological measures in participants with chronic fatigue syndrome, multiple sclerosis and healthy controls following repeated exercise: a pilot study."
     year: 2018
+    authors: [Hodges LD, Nielsen T, Baken D]
+    journal: Clinical physiology and functional imaging
+    doi: 10.1111/cpf.12460
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
     case_definition_source: null
@@ -461,6 +491,9 @@ studies:
   - id: pmid:8618560
     title: Reduced oxidative muscle metabolism in chronic fatigue syndrome.
     year: 1996
+    authors: [McCully KK, Natelson BH, Iotti S, Sisto S, Leigh JS]
+    journal: Muscle & nerve
+    doi: 10.1002/(SICI)1097-4598(199605)19:5<621::AID-MUS10>3.0.CO;2-Q
     cohort: me_cfs
     # "CDC criteria", version not named -> CDC_unspecified (founder ruling 2026-11-01). No open full text. Published
     # 1996, after both the 1988 and 1994 CDC definitions.
@@ -484,6 +517,9 @@ studies:
   - id: pmid:24755065
     title: Inability of myalgic encephalomyelitis/chronic fatigue syndrome patients to reproduce VO₂peak indicates functional impairment.
     year: 2014
+    authors: [Keller BA, Pryor JL, Giloteaux L]
+    journal: Journal of translational medicine
+    doi: 10.1186/1479-5876-12-104
     cohort: me_cfs
     case_definition: Fukuda  # Fukuda: flag "does not require PEM"
     case_definition_source: fulltext
@@ -503,6 +539,9 @@ studies:
   - id: pmid:36984572
     title: Recovery from Exercise in Persons with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2023
+    authors: [Moore GE, Keller BA, Stevens J, Mao X, Stevens SR, Chia JK, Levine SM, Franconi CJ, Hanson MR]
+    journal: Medicina (Kaunas, Lithuania)
+    doi: 10.3390/medicina59030571
     cohort: me_cfs
     case_definition: CCC  # "Canadian Clinical Criteria"; full text (PMC10059925) cites ref [1] for CCC
     case_definition_source: abstract
@@ -527,6 +566,9 @@ studies:
   - id: pmid:35358096
     title: Plasma metabolomics reveals disrupted response and recovery following maximal exercise in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2022
+    authors: [Germain A, Giloteaux L, Moore GE, Levine SM, Chia JK, Keller BA, Stevens J, Franconi CJ, Mao X, Shungu DC, Grimson A, Hanson MR]
+    journal: JCI insight
+    doi: 10.1172/jci.insight.157621
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -547,6 +589,9 @@ studies:
   - id: pmid:41293716
     title: Abnormal breathing patterns and hyperventilation are common in patients with chronic fatigue syndrome during exercise.
     year: 2025
+    authors: [Mancini DM, Brunjes DL, Cook D, Soto T, Blate M, Quan P, Yamazaki T, Norweg A, Natelson BH]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2025.1669036
     cohort: me_cfs
     # On the card for its case-definition sentence (founder ruling 2026-11-01): same authors and apparently the same
     # cohort as 42212259 (57 vs 25 here, 58 vs 25 there, mean age 38.6 ± 9.6 in both), but this paper names IOM 2015.
@@ -568,6 +613,9 @@ studies:
   - id: pmid:37054777
     title: "Exercise Pathophysiology in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Postacute Sequelae of SARS-CoV-2: More in Common Than Not?"
     year: 2023
+    authors: [Joseph P, Singh I, Oliveira R, Capone CA, Mullen MP, Cook DB, Stovall MC, Squires J, Madsen K, Waxman AB, Systrom DM]
+    journal: Chest
+    doi: 10.1016/j.chest.2023.03.049
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext
@@ -586,6 +634,9 @@ studies:
   - id: pmid:42051540
     title: "Pathophysiological mechanisms of post-exertional malaise: an integrative analysis based on the metabolism-immune-neuro interaction model."
     year: 2026
+    authors: [Jin H, An Y, Huang J, Luo T, Wu X]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2026.1774310
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract

@@ -143,6 +143,9 @@ studies:
   - id: pmid:41576003
     title: Shared autonomic phenotype of long COVID and myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2026
+    authors: [Novak P, Systrom DM, Witte A, Marciano SP, Felsenstein D, Milunsky JM, Milunsky A, Krier J, Fishman MC]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0341278
     cohort: me_cfs
     # ICC or the National Academy of Medicine (IOM 2015) criteria; both rank at the top. Recorded as ICC, named first.
     # 143 Long COVID patients ("the exact diagnostic criteria were still evolving") not ME/CFS-defined, not used.
@@ -173,6 +176,9 @@ studies:
   - id: pmid:39888240
     title: "Small fiber neuropathy in the post-COVID condition and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Clinical significance and diagnostic challenges."
     year: 2025
+    authors: [Azcue N, Teijeira-Portas S, Tijero-Merino B, Acera M, Fernández-Valle T, Ayala U, Barrenechea M, Murueta-Goyena A, Lafuente JV, de Munain AL, Ruiz-Irastorza G, Martín-Iglesias D, Gabilondo I, Gómez-Esteban JC, Del Pino R]
+    journal: European journal of neurology
+    doi: 10.1111/ene.70016
     cohort: me_cfs
     # Unverified by founder ruling 2026-11-02 (prior-diagnosis route names no definition). Full-text sentence:
     # "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the
@@ -202,6 +208,9 @@ studies:
   - id: pmid:37968647
     title: Dysautonomia and small fiber neuropathy in post-COVID condition and Chronic Fatigue Syndrome.
     year: 2023
+    authors: [Azcue N, Del Pino R, Acera M, Fernández-Valle T, Ayo-Mentxakatorre N, Pérez-Concha T, Murueta-Goyena A, Lafuente JV, Prada A, López de Munain A, Ruiz Irastorza G, Martín-Iglesias D, Ribacoba L, Gabilondo I, Gómez-Esteban JC, Tijero-Merino B]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-023-04678-3
     cohort: me_cfs
     # Unverified by founder ruling 2026-11-02. Full-text sentence: "Patients diagnosed of ME/CFS should be
     # previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time." 87 post-COVID patients
@@ -230,6 +239,9 @@ studies:
   - id: pmid:42082542
     title: Involvement of autoantibodies against G protein-coupled receptors in post-COVID condition and Chronic Fatigue Syndrome.
     year: 2026
+    authors: [Azcue N, Prada A, Del Pino R, Acera M, Fernández-Valle T, Ayo-Mentxakatorre N, Pérez-Concha T, Murueta-Goyena A, Lafuente JV, López de Munain A, Ruiz Irastorza G, Ribacoba L, Gabilondo I, Tijero-Merino B, Gómez-Esteban JC]
+    journal: Scientific reports
+    doi: 10.1038/s41598-026-49131-9
     cohort: me_cfs
     # Fukuda: flag "does not require PEM". Unlike 37968647 and 39888240, the sentence has no prior-diagnosis route.
     case_definition: Fukuda
@@ -251,6 +263,9 @@ studies:
   - id: pmid:42286686
     title: "Two-timepoint multidomain follow-up of post-COVID condition and ME/CFS: overlapping autonomic, small-fiber, and cognitive changes."
     year: 2026
+    authors: [Azcue N, Barranco C, Tijero-Merino B, Acera M, Fernández-Valle T, Lafuente JV, Gabilondo I, Ruiz-Lopez M, Del Pino R, Gómez-Esteban JC]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-026-08321-9
     cohort: me_cfs
     # The sentence names Fukuda for the participants (checked 2026-11-02); flag "does not require PEM".
     case_definition: Fukuda
@@ -272,6 +287,9 @@ studies:
   - id: pmid:33577778
     title: Insights From Invasive Cardiopulmonary Exercise Testing of Patients With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Joseph P, Arevalo C, Oliveira RKF, Faria-Urbina M, Felsenstein D, Oaklander AL, Systrom DM]
+    journal: Chest
+    doi: 10.1016/j.chest.2021.01.082
     cohort: me_cfs
     # Abstract: "160 patients meeting ME/CFS criteria"; the definition is not named. No open full text. TODO: verify.
     case_definition: unverified
@@ -293,6 +311,9 @@ studies:
   - id: pmid:37054777
     title: "Exercise Pathophysiology in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Postacute Sequelae of SARS-CoV-2: More in Common Than Not?"
     year: 2023
+    authors: [Joseph P, Singh I, Oliveira R, Capone CA, Mullen MP, Cook DB, Stovall MC, Squires J, Madsen K, Waxman AB, Systrom DM]
+    journal: Chest
+    doi: 10.1016/j.chest.2023.03.049
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext

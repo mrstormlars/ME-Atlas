@@ -235,6 +235,9 @@ studies:
   - id: pmid:39435656
     title: Immune exhaustion in ME/CFS and long COVID.
     year: 2024
+    authors: [Eaton-Fitch N, Rudd P, Er T, Hool L, Herrero L, Marshall-Gradisnik S]
+    journal: JCI insight
+    doi: 10.1172/jci.insight.183810
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: abstract
@@ -255,6 +258,9 @@ studies:
   - id: pmid:39621903
     title: Transcriptional reprogramming primes CD8+ T cells toward exhaustion in Myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2024
+    authors: [Iu DS, Maya J, Vu LT, Fogarty EA, McNairn AJ, Ahmed F, Franconi CJ, Munn PR, Grenier JK, Hanson MR, Grimson A]
+    journal: Proceedings of the National Academy of Sciences of the United States of America
+    doi: 10.1073/pnas.2415119121
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -278,6 +284,9 @@ studies:
   - id: pmid:30791746
     title: Changes in the transcriptome of circulating immune cells of a New Zealand cohort with myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2019
+    authors: [Sweetman E, Ryan M, Edgar C, MacKay A, Vallings R, Tate W]
+    journal: International journal of immunopathology and pharmacology
+    doi: 10.1177/2058738418820402
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -298,6 +307,9 @@ studies:
   - id: pmid:18462164
     title: Gene expression subtypes in patients with chronic fatigue syndrome/myalgic encephalomyelitis.
     year: 2008
+    authors: [Kerr JR, Petty R, Burke B, Gough J, Fear D, Sinclair LI, Mattey DL, Richards SC, Montgomery J, Baldwin DA, Kellam P, Harrison TJ, Griffin GE, Main J, Enlander D, Nutt DJ, Holgate ST]
+    journal: The Journal of infectious diseases
+    doi: 10.1086/533453
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -320,6 +332,9 @@ studies:
   - id: pmid:16049284
     title: Gene expression in peripheral blood mononuclear cells from patients with chronic fatigue syndrome.
     year: 2005
+    authors: [Kaushik N, Fear D, Richards SC, McDermott CR, Nuwaysir EF, Kellam P, Harrison TJ, Wilkinson RJ, Tyrrell DA, Holgate ST, Kerr JR]
+    journal: Journal of clinical pathology
+    doi: 10.1136/jcp.2005.025718
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -343,6 +358,9 @@ studies:
   - id: pmid:28172519
     title: RNA-Seq Analysis of Gene Expression, Viral Pathogen, and B-Cell/T-Cell Receptor Signatures in Complex Chronic Disease.
     year: 2017
+    authors: [Bouquet J, Gardy JL, Brown S, Pfeil J, Miller RR, Morshed M, Avina-Zubieta A, Shojania K, McCabe M, Parker S, Uyaguari M, Federman S, Tang P, Steiner T, Otterstater M, Holt R, Moore R, Chiu CY, Patrick DM, Complex Chronic Disease Study Group]
+    journal: 'Clinical infectious diseases : an official publication of the Infectious Diseases Society of America'
+    doi: 10.1093/cid/ciw767
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -365,6 +383,9 @@ studies:
   - id: pmid:19503787
     title: "Gene expression in peripheral blood leukocytes in monozygotic twins discordant for chronic fatigue: no evidence of a biomarker."
     year: 2009
+    authors: [Byrnes A, Jacks A, Dahlman-Wright K, Evengard B, Wright FA, Pedersen NL, Sullivan PF]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0005805
     cohort: me_cfs
     case_definition: other
     case_definition_source: fulltext
@@ -384,6 +405,9 @@ studies:
   - id: pmid:21479222
     title: Assessment of a 44 gene classifier for the evaluation of chronic fatigue syndrome from peripheral blood mononuclear cell gene expression.
     year: 2011
+    authors: [Frampton D, Kerr J, Harrison TJ, Kellam P]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0016872
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: fulltext
@@ -403,6 +427,9 @@ studies:
   - id: pmid:38232699
     title: Single-cell transcriptomics of the immune system in ME/CFS at baseline and following symptom provocation.
     year: 2024
+    authors: [Vu LT, Ahmed F, Zhu H, Iu DSH, Fogarty EA, Kwak Y, Chen W, Franconi CJ, Munn PR, Tate AE, Levine SM, Stevens J, Mao X, Shungu DC, Moore GE, Keller BA, Hanson MR, Grenier JK, Grimson A]
+    journal: Cell reports. Medicine
+    doi: 10.1016/j.xcrm.2023.101373
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext
@@ -422,6 +449,9 @@ studies:
   - id: pmid:41822518
     title: Single-cell analysis reveals immune remodeling of monocytes, NK cells, T cell exhaustion, and Galectin-9-associated depletion of gamma delta and mucosal-associated invariant T cells in Long COVID with ME/CFS.
     year: 2026
+    authors: [Shahbaz S, Bozorgmehr N, Rahmati A, Abouda A, Syed H, Osman M, Elahi S]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2026.1745933
     cohort: long_covid
     case_definition: CCC
     case_definition_source: fulltext
@@ -444,6 +474,9 @@ studies:
   - id: pmid:39394558
     title: Immunometabolic changes and potential biomarkers in CFS peripheral immune cells revealed by single-cell RNA sequencing.
     year: 2024
+    authors: [Sun Y, Zhang Z, Qiao Q, Zou Y, Wang L, Wang T, Lou B, Li G, Xu M, Wang Y, Zhang Z, Hou X, Chen L, Zhao R]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-024-05710-w
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -465,6 +498,9 @@ studies:
   - id: pmid:28494812
     title: "Whole blood gene expression in adolescent chronic fatigue syndrome: an exploratory cross-sectional study suggesting altered B cell differentiation and survival."
     year: 2017
+    authors: [Nguyen CB, Alsøe L, Lindvall JM, Sulheim D, Fagermoen E, Winger A, Kaarbø M, Nilsen H, Wyller VB]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-017-1201-0
     cohort: me_cfs
     case_definition: other
     case_definition_source: abstract

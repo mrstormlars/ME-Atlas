@@ -207,6 +207,9 @@ studies:
   - id: pmid:16085177
     title: Oxidative stress levels are raised in chronic fatigue syndrome and are associated with clinical symptoms.
     year: 2005
+    authors: [Kennedy G, Spence VA, McLaren M, Hill A, Underwood C, Belch JJ]
+    journal: Free radical biology & medicine
+    doi: 10.1016/j.freeradbiomed.2005.04.020
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -228,6 +231,9 @@ studies:
   - id: pmid:21455120
     title: Increased plasma peroxides as a marker of oxidative stress in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS).
     year: 2011
+    authors: [Maes M, Kubera M, Uytterhoeven M, Vrydags N, Bosmans E]
+    journal: 'Medical science monitor : international medical journal of experimental and clinical research'
+    doi: 10.12659/msm.881699
     cohort: me_cfs
     # "CDC criteria [29]": reference 29 in the full text is Fukuda et al. 1994, Ann Intern Med (resolved by the
     # reference list, per the 2026-11-02 ruling).
@@ -248,6 +254,9 @@ studies:
   - id: pmid:23185200
     title: Lipid and protein oxidation in female patients with chronic fatigue syndrome.
     year: 2012
+    authors: [Tomic S, Brkic S, Maric D, Mikic AN]
+    journal: 'Archives of medical science : AMS'
+    doi: 10.5114/aoms.2012.31620
     cohort: me_cfs
     # "1994 CDC definition" counts as Fukuda (2026-11-02 ruling).
     case_definition: Fukuda
@@ -267,6 +276,9 @@ studies:
   - id: pmid:27224647
     title: "A potential biomarker for fatigue: Oxidative stress and anti-oxidative activity."
     year: 2016
+    authors: [Fukuda S, Nojima J, Motoki Y, Yamaguti K, Nakatomi Y, Okawa N, Fujiwara K, Watanabe Y, Kuratsune H]
+    journal: Biological psychology
+    doi: 10.1016/j.biopsycho.2016.05.005
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -286,6 +298,9 @@ studies:
   - id: pmid:40627396
     title: Oxidative stress is a shared characteristic of ME/CFS and Long COVID.
     year: 2025
+    authors: [Shankar V, Wilhelmy J, Curtis EJ, Michael B, Cervantes L, Mallajosyula V, Davis RW, Snyder M, Younis S, Robinson WH, Shankar S, Mischel PS, Bonilla H, Davis MM]
+    journal: Proceedings of the National Academy of Sciences of the United States of America
+    doi: 10.1073/pnas.2426564122
     cohort: me_cfs  # the long COVID donors (CDC post-COVID criteria, not an ME/CFS definition) are not used
     # The sentence also names the National Academy of Medicine (IOM 2015) and Canadian criteria; which each patient
     # met is not stated, so the least strict named definition is recorded. FOUNDER QUESTION.
@@ -310,6 +325,9 @@ studies:
   - id: pmid:21119582
     title: Lipid peroxidation is elevated in female patients with chronic fatigue syndrome.
     year: 2010
+    authors: [Brkic S, Tomic S, Maric D, Novakov Mikic A, Turkulov V]
+    journal: 'Medical science monitor : international medical journal of experimental and clinical research'
+    doi: null
     cohort: me_cfs
     # "1994 Centers for Disease Control's diagnostic criteria" counts as Fukuda (2026-11-02 ruling).
     case_definition: Fukuda
@@ -334,6 +352,9 @@ studies:
   - id: pmid:19422646
     title: Plasma IL-6, its soluble receptors and F2-isoprostanes at rest and during exercise in chronic fatigue syndrome.
     year: 2010
+    authors: [Robinson M, Gray SR, Watson MS, Kennedy G, Hill A, Belch JJ, Nimmo MA]
+    journal: Scandinavian journal of medicine & science in sports
+    doi: 10.1111/j.1600-0838.2009.00895.x
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text
     case_definition_source: null
@@ -354,6 +375,9 @@ studies:
   - id: pmid:20010505
     title: Coenzyme Q10 deficiency in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) is related to fatigue, autonomic and neurocognitive symptoms and is another risk factor explaining the early mortality in ME/CFS due to cardiovascular disorder.
     year: 2009
+    authors: [Maes M, Mihaylova I, Kubera M, Uytterhoeven M, Vrydags N, Bosmans E]
+    journal: Neuro endocrinology letters
+    doi: null
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text
     case_definition_source: null
@@ -372,6 +396,9 @@ studies:
   - id: pmid:21552194
     title: "Lower whole blood glutathione peroxidase (GPX) activity in depression, but not in myalgic encephalomyelitis / chronic fatigue syndrome: another pathway that may be associated with coronary artery disease and neuroprogression in depression."
     year: 2011
+    authors: [Maes M, Mihaylova I, Kubera M, Uytterhoeven M, Vrydags N, Bosmans E]
+    journal: Neuro endocrinology letters
+    doi: null
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text
     case_definition_source: null
@@ -390,6 +417,9 @@ studies:
   - id: pmid:22281935
     title: Increased ventricular lactate in chronic fatigue syndrome. III. Relationships to cortical glutathione and clinical symptoms implicate oxidative stress in disorder pathophysiology.
     year: 2012
+    authors: [Shungu DC, Weiduschat N, Murrough JW, Mao X, Pillemer S, Dyke JP, Medow MS, Natelson BH, Stewart JM, Mathew SJ]
+    journal: NMR in biomedicine
+    doi: 10.1002/nbm.2772
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; PMC3896084 not open access
     case_definition_source: null
@@ -409,6 +439,9 @@ studies:
   - id: pmid:19906518
     title: An in vivo proton neurospectroscopy study of cerebral oxidative stress in myalgic encephalomyelitis (chronic fatigue syndrome).
     year: 2009
+    authors: [Puri BK, Agour M, Gunatilake KD, Fernando KA, Gurusinghe AI, Treasaden IH]
+    journal: Prostaglandins, leukotrienes, and essential fatty acids
+    doi: 10.1016/j.plefa.2009.10.002
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text
     case_definition_source: null
@@ -428,6 +461,9 @@ studies:
   - id: pmid:25386668
     title: Does oral coenzyme Q10 plus NADH supplementation improve fatigue and biochemical parameters in chronic fatigue syndrome?
     year: 2015
+    authors: [Castro-Marrero J, Cordero MD, Segundo MJ, Sáez-Francàs N, Calvo N, Román-Malo L, Aliste L, Fernández de Sevilla T, Alegre J]
+    journal: Antioxidants & redox signaling
+    doi: 10.1089/ars.2014.6181
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; PMC4346380 not open access
     case_definition_source: null
@@ -449,6 +485,9 @@ studies:
   - id: pmid:34444817
     title: "Effect of Dietary Coenzyme Q10 Plus NADH Supplementation on Fatigue Perception and Health-Related Quality of Life in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Prospective, Randomized, Double-Blind, Placebo-Controlled Trial."
     year: 2021
+    authors: [Castro-Marrero J, Segundo MJ, Lacasa M, Martinez-Martinez A, Sentañes RS, Alegre-Martin J]
+    journal: Nutrients
+    doi: 10.3390/nu13082658
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: fulltext
@@ -474,6 +513,9 @@ studies:
   - id: pmid:10071523
     title: Therapeutic effects of oral NADH on the symptoms of patients with chronic fatigue syndrome.
     year: 1999
+    authors: [Forsyth LM, Preuss HG, MacDowell AL, Chiazze L, Birkmayer GD, Bellanti JA]
+    journal: 'Annals of allergy, asthma & immunology : official publication of the American College of Allergy, Asthma, & Immunology'
+    doi: 10.1016/S1081-1206(10)62595-1
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -494,6 +536,9 @@ studies:
   - id: pmid:27125909
     title: Ubiquinol-10 supplementation improves autonomic nervous function and cognitive function in chronic fatigue syndrome.
     year: 2016
+    authors: [Fukuda S, Nojima J, Kajimoto O, Yamaguti K, Nakatomi Y, Kuratsune H, Watanabe Y]
+    journal: BioFactors (Oxford, England)
+    doi: 10.1002/biof.1293
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text
     case_definition_source: null
@@ -515,6 +560,9 @@ studies:
   - id: pmid:41516145
     title: "Insights into the Complex Biological Network Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
     year: 2025
+    authors: [Dudova D, Bozhkova M, Petrov S, Nikolova R, Kalfova T, Ivanovska M, Vaseva K, Nikolova M, Ivanov IN]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27010268
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -533,6 +581,9 @@ studies:
   - id: pmid:27766535
     title: "Hypothalamic-Pituitary-Adrenal Hypofunction in Myalgic Encephalomyelitis (ME)/Chronic Fatigue Syndrome (CFS) as a Consequence of Activated Immune-Inflammatory and Oxidative and Nitrosative Pathways."
     year: 2017
+    authors: [Morris G, Anderson G, Maes M]
+    journal: Molecular neurobiology
+    doi: 10.1007/s12035-016-0170-2
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -550,6 +601,9 @@ studies:
   - id: pmid:16610951
     title: "Identifying illness parameters in fatiguing syndromes using classical projection methods."
     year: 2006
+    authors: [Broderick G, Craddock RC, Whistler T, Taylor R, Klimas N, Unger ER]
+    journal: Pharmacogenomics
+    doi: 10.2217/14622416.7.3.407
     cohort: me_cfs
     # The abstract names no ME/CFS case definition (participants had unexplained fatigue), gives no split between fatigued and nonfatigued participants and no n for either. TODO: verify from the full text.
     # Oxidative stress was not measured directly; the abstract infers it from the activity of one gene (SESN1).
@@ -572,6 +626,9 @@ studies:
   - id: pmid:29759891
     title: "The putative role of oxidative stress and inflammation in the pathophysiology of sleep dysfunction across neuropsychiatric disorders: Focus on chronic fatigue syndrome, bipolar disorder and multiple sclerosis."
     year: 2018
+    authors: [Morris G, Stubbs B, Köhler CA, Walder K, Slyepchenko A, Berk M, Carvalho AF]
+    journal: Sleep medicine reviews
+    doi: 10.1016/j.smrv.2018.03.007
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -592,6 +649,9 @@ studies:
   - id: pmid:43027675
     title: Treg and Oxidative Stress Biomarker Profiles in Long COVID and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2026
+    authors: [Todorova Y, Dimitrova R, Kalfova T, Petrov S, Bozhkova M, Ivanovska M, Dudova D, Murdjeva M, Taskov H, Maes M, Nikolova M]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27219422
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null

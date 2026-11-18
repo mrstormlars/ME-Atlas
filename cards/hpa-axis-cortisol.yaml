@@ -261,6 +261,9 @@ studies:
   - id: pmid:9669518
     title: Blunted adrenocorticotropin and cortisol responses to corticotropin-releasing hormone stimulation in chronic fatigue syndrome.
     year: 1998
+    authors: [Scott LV, Medbak S, Dinan TG]
+    journal: Acta psychiatrica Scandinavica
+    doi: 10.1111/j.1600-0447.1998.tb10030.x
     cohort: me_cfs
     # CDC version not stated: flag "does not require PEM", ranked equal to Fukuda. No open full text.
     case_definition: CDC_unspecified
@@ -281,6 +284,9 @@ studies:
   - id: pmid:9713562
     title: The low dose ACTH test in chronic fatigue syndrome and in health.
     year: 1998
+    authors: [Scott LV, Medbak S, Dinan TG]
+    journal: Clinical endocrinology
+    doi: 10.1046/j.1365-2265.1998.00418.x
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -302,6 +308,9 @@ studies:
   - id: pmid:11502777
     title: Hypothalamo-pituitary-adrenal axis dysfunction in chronic fatigue syndrome, and the effects of low-dose hydrocortisone therapy.
     year: 2001
+    authors: [Cleare AJ, Miell J, Heap E, Sookdeo S, Young L, Malhi GS, O'Keane V]
+    journal: The Journal of clinical endocrinology and metabolism
+    doi: 10.1210/jcem.86.8.7735
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -325,6 +334,9 @@ studies:
   - id: pmid:34254637
     title: Hypothalamic-Pituitary Autoimmunity and Related Impairment of Hormone Secretions in Chronic Fatigue Syndrome.
     year: 2021
+    authors: [De Bellis A, Bellastella G, Pernice V, Cirillo P, Longo M, Maio A, Scappaticcio L, Maiorino MI, Bellastella A, Esposito K, Montoya JG]
+    journal: The Journal of clinical endocrinology and metabolism
+    doi: 10.1210/clinem/dgab429
     cohort: me_cfs
     # Patients met Fukuda, "Canadian" and IOM criteria; recorded as CCC (ranks equal to IOM 2015), as for 34589868 on
     # the autoimmunity card. No open full text.
@@ -348,6 +360,9 @@ studies:
   - id: pmid:9757853
     title: "Low-dose hydrocortisone for treatment of chronic fatigue syndrome: a randomized controlled trial."
     year: 1998
+    authors: [McKenzie R, O'Fallon A, Dale J, Demitrack M, Sharma G, Deloria M, Garcia-Borreguero D, Blackwelder W, Straus SE]
+    journal: JAMA
+    doi: 10.1001/jama.280.12.1061
     cohort: me_cfs
     # Holmes 1988: flag "does not require PEM".
     case_definition: Holmes1988
@@ -375,6 +390,9 @@ studies:
   - id: pmid:12829200
     title: "Combination therapy with hydrocortisone and fludrocortisone does not improve symptoms in chronic fatigue syndrome: a randomized, placebo-controlled, double-blind, crossover study."
     year: 2003
+    authors: [Blockmans D, Persoons P, Van Houdenhove B, Lejeune M, Bobbaers H]
+    journal: The American journal of medicine
+    doi: 10.1016/s0002-9343(03)00182-7
     cohort: me_cfs
     # 1994 CDC criteria = Fukuda: flag "does not require PEM".
     case_definition: Fukuda
@@ -397,6 +415,9 @@ studies:
   - id: pmid:10594524
     title: The 1microg short Synacthen test in chronic fatigue syndrome.
     year: 1999
+    authors: [Hudson M, Cleare AJ]
+    journal: Clinical endocrinology
+    doi: 10.1046/j.1365-2265.1999.00856.x
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -415,6 +436,9 @@ studies:
   - id: pmid:40713801
     title: "Steroid dynamics in myalgic encephalomyelitis / chronic fatigue syndrome: a case-control study using ultra performance supercritical fluid chromatography tandem mass spectrometry."
     year: 2025
+    authors: [Thomas N, Ubhayasekera SJKA, Armstrong CW, Huang K, Bergquist J]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-025-06841-4
     cohort: me_cfs
     # Patients met CCC, ICC and IOM 2015; recorded as CCC. Full text: "All blood samples were collected from fasted
     # participants in the AM." Table 2, cortisol: controls mean 138.064, ME/CFS 135.157, p 0.718. Patients from the
@@ -440,6 +464,9 @@ studies:
   - id: pmid:38724880
     title: Sex and disease severity-based analysis of steroid hormones in ME/CFS.
     year: 2024
+    authors: [Pipper C, Bliem L, León LE, Mennickent D, Bodner C, Guzmán-Gutiérrez E, Stingl M, Untersmayr E, Wagner B, Bertinat R, Sepúlveda N, Westermeier F]
+    journal: Journal of endocrinological investigation
+    doi: 10.1007/s40618-024-02334-1
     cohort: me_cfs
     # "and/or": some patients may meet Fukuda only, so recorded as Fukuda (flag "does not require PEM").
     case_definition: Fukuda
@@ -466,6 +493,9 @@ studies:
   - id: pmid:9989716
     title: "Low-dose hydrocortisone in chronic fatigue syndrome: a randomised crossover trial."
     year: 1999
+    authors: [Cleare AJ, Heap E, Malhi GS, Wessely S, O'Keane V, Miell J]
+    journal: Lancet (London, England)
+    doi: 10.1016/S0140-6736(98)04074-4
     cohort: me_cfs
     # Abstract: "32 patients met our strict criteria for chronic fatigue syndrome without co-morbid psychiatric
     # disorder" (criteria not named). No open full text. TODO: verify.
@@ -487,6 +517,9 @@ studies:
   - id: pmid:11150109
     title: "Fludrocortisone acetate to treat neurally mediated hypotension in chronic fatigue syndrome: a randomized controlled trial."
     year: 2001
+    authors: [Rowe PC, Calkins H, DeBusk K, McKenzie R, Anand R, Sharma G, Cuccherini BA, Soto N, Hohman P, Snader S, Lucas KE, Wolff M, Straus SE]
+    journal: JAMA
+    doi: 10.1001/jama.285.1.52
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -506,6 +539,9 @@ studies:
   - id: pmid:1659582
     title: Evidence for impaired activation of the hypothalamic-pituitary-adrenal axis in patients with chronic fatigue syndrome.
     year: 1991
+    authors: [Demitrack MA, Dale JK, Straus SE, Laue L, Listwak SJ, Kruesi MJ, Chrousos GP, Gold PW]
+    journal: The Journal of clinical endocrinology and metabolism
+    doi: 10.1210/jcem-73-6-1224
     cohort: me_cfs
     # Abstract: "patients meeting research case criteria for chronic fatigue syndrome" (criteria not named). No open
     # full text. TODO: verify.
@@ -527,6 +563,9 @@ studies:
   - id: pmid:11282703
     title: Urinary free cortisol in chronic fatigue syndrome.
     year: 2001
+    authors: [Cleare AJ, Blair D, Chambers S, Wessely S]
+    journal: The American journal of psychiatry
+    doi: 10.1176/appi.ajp.158.4.641
     cohort: me_cfs
     # Abstract: "well-characterized patients"; no named criteria, no open full text. TODO: verify.
     case_definition: unverified
@@ -546,6 +585,9 @@ studies:
   - id: pmid:18160468
     title: Attenuated morning salivary cortisol concentrations in a population-based study of persons with chronic fatigue syndrome and well controls.
     year: 2008
+    authors: [Nater UM, Maloney E, Boneva RS, Gurbaxani BM, Lin JM, Jones JF, Reeves WC, Heim C]
+    journal: The Journal of clinical endocrinology and metabolism
+    doi: 10.1210/jc.2007-1747
     cohort: me_cfs
     # Population-based (Georgia, USA); criteria not named in the abstract; no open full text. TODO: verify.
     case_definition: unverified
@@ -565,6 +607,9 @@ studies:
   - id: pmid:9494707
     title: Basal activity of the hypothalamic-pituitary-adrenal axis in patients with the chronic fatigue syndrome (neurasthenia).
     year: 1998
+    authors: [Young AH, Sharpe M, Clements A, Dowling B, Hawton KE, Cowen PJ]
+    journal: Biological psychiatry
+    doi: 10.1016/S0006-3223(97)00404-6
     cohort: me_cfs
     # Abstract: "patients meeting criteria for CFS" (criteria not named). Oxford group; the Oxford definition is
     # plausible but not verified, so not recorded. No open full text. TODO: verify.
@@ -585,6 +630,9 @@ studies:
   - id: pmid:11150897
     title: Hormonal responses to exercise in chronic fatigue syndrome.
     year: 2001
+    authors: [Ottenweller JE, Sisto SA, McCarty RC, Natelson BH]
+    journal: Neuropsychobiology
+    doi: 10.1159/000054863
     cohort: me_cfs
     # Criteria not named in the abstract; no open full text. TODO: verify.
     case_definition: unverified
@@ -606,6 +654,9 @@ studies:
   - id: pmid:41516296
     title: "Gut Microbiome and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS): Insights into Disease Mechanisms."
     year: 2025
+    authors: [Nikolova R, Donchev D, Vaseva K, Ivanov IN]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27010425
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext
@@ -622,6 +673,9 @@ studies:
   - id: pmid:31330791
     title: "Pathological Mechanisms Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
     year: 2019
+    authors: [Missailidis D, Annesley SJ, Fisher PR]
+    journal: Diagnostics (Basel, Switzerland)
+    doi: 10.3390/diagnostics9030080
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext

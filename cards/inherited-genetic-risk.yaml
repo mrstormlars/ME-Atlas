@@ -220,6 +220,9 @@ studies:
   - id: pmid:32210306
     title: Human Leukocyte Antigen alleles associated with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2020
+    authors: [Lande A, Fluge Ø, Strand EB, Flåm ST, Sosa DD, Mella O, Egeland T, Saugstad OD, Lie BA, Viken MK]
+    journal: Scientific reports
+    doi: 10.1038/s41598-020-62157-x
     cohort: me_cfs
     # Full text: four of the 426 met the 2010 International Consensus Criteria instead (equal rank).
     case_definition: CCC
@@ -240,6 +243,9 @@ studies:
   - id: pmid:34403736
     title: Fine mapping of the major histocompatibility complex (MHC) in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) suggests involvement of both HLA class I and class II loci.
     year: 2021
+    authors: [Hajdarevic R, Lande A, Rekeland I, Rydland A, Strand EB, Sosa DD, Creary LE, Mella O, Egeland T, Saugstad OD, Fluge Ø, Lie BA, Viken MK]
+    journal: Brain, behavior, and immunity
+    doi: 10.1016/j.bbi.2021.08.219
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: abstract
@@ -260,6 +266,9 @@ studies:
   - id: pmid:32328064
     title: Autoimmunity-Related Risk Variants in PTPN22 and CTLA4 Are Associated With ME/CFS With Infectious Onset.
     year: 2020
+    authors: [Steiner S, Becker SC, Hartwig J, Sotzny F, Lorenz S, Bauer S, Löbel M, Stittrich AB, Grabowski P, Scheibenbogen C]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2020.00578
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -282,6 +291,9 @@ studies:
   - id: pmid:42015188
     title: Identification of novel reproducible combinatorial genetic risk factors for myalgic encephalomyelitis in the DecodeME patient cohort and commonalities with long COVID.
     year: 2026
+    authors: [Sardell JM, Das S, Pearson M, Kolobkov D, Malinowski AR, Fullwood LM, Sanna M, Baxter H, McLellan K, Natt M, Lamirel D, Chowdhury S, Strivens MA, Gardner S]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-026-08167-1
     cohort: me_cfs
     # "and/or": each case met CCC or IOM 2015 (equal rank) by survey answers; recorded as CCC.
     case_definition: CCC
@@ -307,6 +319,9 @@ studies:
   - id: pmid:11702053
     title: A family history study of chronic fatigue syndrome.
     year: 2001
+    authors: [Walsh CM, Zainal NZ, Middleton SJ, Paykel ES]
+    journal: Psychiatric genetics
+    doi: 10.1097/00041444-200109000-00003
     cohort: me_cfs
     # CDC version not stated: flag "does not require PEM". The sentence says cases and controls were assessed with the
     # CDC criteria; FOUNDER CHECK: whether this counts as the cases' case definition. No open full text.
@@ -329,6 +344,9 @@ studies:
   - id: pmid:26859813
     title: Genome-wide association analysis identifies genetic variations in subjects with myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2016
+    authors: [Schlauch KA, Khaiboullina SF, De Meirleir KL, Rawat S, Petereit J, Rizvanov AA, Blatt N, Mijatovic T, Kulick D, Palotás A, Lombardi VC]
+    journal: Translational psychiatry
+    doi: 10.1038/tp.2015.208
     cohort: me_cfs
     # "Carruthers et al. criteria" cites refs 28 (CCC 2003) and 29 (ICC 2011), resolved in the reference list; all
     # patients also met Fukuda. Recorded as CCC (CCC and ICC rank equal).
@@ -353,6 +371,9 @@ studies:
   - id: pmid:35821115
     title: No replication of previously reported association with genetic variants in the T cell receptor alpha (TRA) locus for myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS).
     year: 2022
+    authors: [Ueland M, Hajdarevic R, Mella O, Strand EB, Sosa DD, Saugstad OD, Fluge Ø, Lie BA, Viken MK]
+    journal: Translational psychiatry
+    doi: 10.1038/s41398-022-02046-1
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -374,6 +395,9 @@ studies:
   - id: pmid:40897283
     title: Killer cell immunoglobulin-like receptor (KIR) alleles suggested to be associated with myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS).
     year: 2025
+    authors: [Ramadan DJ, Kichula KM, Tao S, Porfilio T, Lande A, Fluge Ø, Mella O, Strand EB, Saugstad OD, Norman PJ, Lie BA, Viken MK]
+    journal: Brain, behavior, and immunity
+    doi: 10.1016/j.bbi.2025.106098
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -395,6 +419,9 @@ studies:
   - id: pmid:35318112
     title: Genetic association study in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) identifies several potential risk loci.
     year: 2022
+    authors: [Hajdarevic R, Lande A, Mehlsen J, Rydland A, Sosa DD, Strand EB, Mella O, Pociot F, Fluge Ø, Lie BA, Viken MK]
+    journal: Brain, behavior, and immunity
+    doi: 10.1016/j.bbi.2022.03.010
     cohort: me_cfs
     # Case definition not in the abstract; no open full text. TODO: verify.
     case_definition: unverified
@@ -417,6 +444,9 @@ studies:
   - id: pmid:36517845
     title: Genetic risk factors for ME/CFS identified using combinatorial analysis.
     year: 2022
+    authors: [Das S, Taylor K, Kozubek J, Sardell J, Gardner S]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-022-03815-8
     cohort: me_cfs
     # Full text: cases had a "(self-reported) clinical diagnosis in UK Biobank's Pain Questionnaire"; no case
     # definition named.
@@ -438,6 +468,9 @@ studies:
   - id: pmid:21619629
     title: Evidence for a heritable predisposition to Chronic Fatigue Syndrome.
     year: 2011
+    authors: [Albright F, Light K, Light A, Bateman L, Cannon-Albright LA]
+    journal: BMC neurology
+    doi: 10.1186/1471-2377-11-62
     cohort: me_cfs
     # Full text: "CFS patients were identified by the presence in the medical record of a CFS-specific ICD-9
     # diagnostic code (780.71)". A diagnosis code is not a case definition, so `none`.
@@ -459,6 +492,9 @@ studies:
   - id: pmid:11719632
     title: A twin study of chronic fatigue.
     year: 2001
+    authors: [Buchwald D, Herrell R, Ashton S, Belcourt M, Schmaling K, Sullivan P, Neale M, Goldberg J]
+    journal: Psychosomatic medicine
+    doi: 10.1097/00006842-200111000-00012
     cohort: me_cfs
     # Fatigue definitions built for the study; the strictest uses only the exclusion criteria of the CFS case
     # definition. No open full text.
@@ -479,6 +515,9 @@ studies:
   - id: pmid:16049290
     title: Association of chronic fatigue syndrome with human leucocyte antigen class II alleles.
     year: 2005
+    authors: [Smith J, Fritz EL, Kerr JR, Cleare AJ, Wessely S, Mattey DL]
+    journal: Journal of clinical pathology
+    doi: 10.1136/jcp.2004.022681
     cohort: me_cfs
     # Criteria not named in the abstract; no open full text. TODO: verify.
     case_definition: unverified
@@ -498,6 +537,9 @@ studies:
   - id: pmid:11422420
     title: Lack of association between HLA genotype and chronic fatigue syndrome.
     year: 2001
+    authors: [Underhill JA, Mahalingam M, Peakman M, Wessely S]
+    journal: 'European journal of immunogenetics : official journal of the British Society for Histocompatibility and Immunogenetics'
+    doi: 10.1046/j.1365-2370.2001.00235.x
     cohort: me_cfs
     # "well-characterized patient group", criteria not named; no open full text. TODO: verify.
     case_definition: unverified
@@ -516,6 +558,9 @@ studies:
   - id: pmid:15554358
     title: Association between chronic fatigue syndrome and the corticosteroid-binding globulin gene ALA SER224 polymorphism.
     year: 2004
+    authors: [Torpy DJ, Bachmann AW, Gartside M, Grice JE, Harris JM, Clifton P, Easteal S, Jackson RV, Whitworth JA]
+    journal: Endocrine research
+    doi: 10.1081/erc-200035599
     cohort: me_cfs
     # CDC version not stated: flag "does not require PEM". No open full text.
     case_definition: CDC_unspecified
@@ -536,6 +581,9 @@ studies:
   - id: pmid:27835969
     title: A targeted genome association study examining transient receptor potential ion channels, acetylcholine receptors, and adrenergic receptors in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
     year: 2016
+    authors: [Johnston S, Staines D, Klein A, Marshall-Gradisnik S]
+    journal: BMC medical genetics
+    doi: 10.1186/s12881-016-0342-y
     cohort: me_cfs
     # Fukuda: flag "does not require PEM".
     case_definition: Fukuda
@@ -557,6 +605,9 @@ studies:
   - id: pmid:42196410
     title: "Toward a Molecular Reclassification of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Integrating Multi-Omics, Machine Learning, and Precision Medicine."
     year: 2026
+    authors: [Frank J, Nesterovitch N, Movva C, Klimas NG, Nathanson L]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27104436
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract

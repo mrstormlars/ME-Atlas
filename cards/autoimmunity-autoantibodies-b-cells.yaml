@@ -203,6 +203,9 @@ studies:
   - id: pmid:34589868
     title: Autoantibodies to beta-adrenergic and muscarinic cholinergic receptors in Myalgic Encephalomyelitis (ME) patients - A validation study in plasma and cerebrospinal fluid from two Swedish cohorts.
     year: 2020
+    authors: [Bynke A, Julin P, Gottfries CG, Heidecke H, Scheibenbogen C, Bergquist J]
+    journal: Brain, behavior, & immunity - health
+    doi: 10.1016/j.bbih.2020.100107
     cohort: me_cfs
     # Full text (PMC8474431): patients met CCC, ICC and IOM 2015; recorded as CCC (ranks equal to ICC and IOM 2015).
     case_definition: CCC
@@ -228,6 +231,9 @@ studies:
   - id: pmid:42082542
     title: Involvement of autoantibodies against G protein-coupled receptors in post-COVID condition and Chronic Fatigue Syndrome.
     year: 2026
+    authors: [Azcue N, Prada A, Del Pino R, Acera M, Fernández-Valle T, Ayo-Mentxakatorre N, Pérez-Concha T, Murueta-Goyena A, Lafuente JV, López de Munain A, Ruiz Irastorza G, Ribacoba L, Gabilondo I, Tijero-Merino B, Gómez-Esteban JC]
+    journal: Scientific reports
+    doi: 10.1038/s41598-026-49131-9
     cohort: me_cfs
     # Fukuda: flag "does not require PEM".
     case_definition: Fukuda
@@ -261,6 +267,9 @@ studies:
   - id: pmid:22039471
     title: Benefit from B-lymphocyte depletion using the anti-CD20 antibody rituximab in chronic fatigue syndrome. A double-blind and placebo-controlled study.
     year: 2011
+    authors: [Fluge Ø, Bruland O, Risa K, Storstein A, Kristoffersen EK, Sapkota D, Næss H, Dahl O, Nyland H, Mella O]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0026358
     cohort: me_cfs
     # Fukuda: flag "does not require PEM". Full text (PMC3198463) adds: retrospectively, 2 placebo patients did not
     # meet the Canadian criteria.
@@ -286,6 +295,9 @@ studies:
   - id: pmid:30934066
     title: "B-Lymphocyte Depletion in Patients With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Randomized, Double-Blind, Placebo-Controlled Trial."
     year: 2019
+    authors: [Fluge Ø, Rekeland IG, Lien K, Thürmer H, Borchgrevink PC, Schäfer C, Sørland K, Aßmus J, Ktoridou-Valen I, Herder I, Gotaas ME, Kvammen Ø, Baranowska KA, Bohnen LMLJ, Martinsen SS, Lonar AE, Solvang AH, Gya AES, Bruland O, Risa K, Alme K, Dahl O, Mella O]
+    journal: Annals of internal medicine
+    doi: 10.7326/M18-1451
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: abstract
@@ -307,6 +319,9 @@ studies:
   - id: pmid:34589837
     title: IgG stimulated β2 adrenergic receptor activation is attenuated in patients with ME/CFS.
     year: 2020
+    authors: [Hartwig J, Sotzny F, Bauer S, Heidecke H, Riemekasten G, Dragun D, Meisel C, Dames C, Grabowski P, Scheibenbogen C]
+    journal: Brain, behavior, & immunity - health
+    doi: 10.1016/j.bbih.2020.100047
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -327,6 +342,9 @@ studies:
   - id: pmid:40703261
     title: Plasma cell targeting with the anti-CD38 antibody daratumumab in myalgic encephalomyelitis/chronic fatigue syndrome-a clinical pilot study.
     year: 2025
+    authors: [Fluge Ø, Rekeland IG, Sørland K, Alme K, Risa K, Bruland O, Tronstad KJ, Mella O]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2025.1607353
     cohort: me_cfs
     # A published correction exists (pmid:40901516); its content is not in the cache. TODO: verify what it corrects.
     case_definition: CCC
@@ -348,6 +366,9 @@ studies:
   - id: pmid:26399744
     title: Antibodies to β adrenergic and muscarinic cholinergic receptors in patients with Chronic Fatigue Syndrome.
     year: 2016
+    authors: [Loebel M, Grabowski P, Heidecke H, Bauer S, Hanitsch LG, Wittke K, Meisel C, Reinke P, Volk HD, Fluge Ø, Mella O, Scheibenbogen C]
+    journal: Brain, behavior, and immunity
+    doi: 10.1016/j.bbi.2015.09.013
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
     case_definition_source: null
@@ -372,6 +393,9 @@ studies:
   - id: pmid:12851722
     title: Autoantibodies against muscarinic cholinergic receptor in chronic fatigue syndrome.
     year: 2003
+    authors: [Tanaka S, Kuratsune H, Hidaka Y, Hakariya Y, Tatsumi KI, Takano T, Kanakura Y, Amino N]
+    journal: International journal of molecular medicine
+    doi: null
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
     case_definition_source: null
@@ -391,6 +415,9 @@ studies:
   - id: pmid:40141440
     title: An In-Depth Exploration of the Autoantibody Immune Profile in ME/CFS Using Novel Antigen Profiling Techniques.
     year: 2025
+    authors: [Germain A, Jaycox JR, Emig CJ, Ring AM, Hanson MR]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms26062799
     cohort: me_cfs
     # TODO: verify — abstract names no case definition; open full text PMC11943395 exists but Europe PMC returned
     # HTTP 500. Patient/control split of the 172 participants not in the abstract, so n is null. Card-reviewer found a
@@ -414,6 +441,9 @@ studies:
   - id: pmid:23480187
     title: Altered functional B cell subset populations in patients with chronic fatigue syndrome compared to healthy controls.
     year: 2013
+    authors: [Bradley AS, Ford B, Bansal AS]
+    journal: Clinical and experimental immunology
+    doi: 10.1111/cei.12043
     cohort: me_cfs
     case_definition: CCC  # "Canadian and Fukada criteria"
     case_definition_source: abstract
@@ -432,6 +462,9 @@ studies:
   - id: pmid:26646713
     title: "Extended B cell phenotype in patients with myalgic encephalomyelitis/chronic fatigue syndrome: a cross-sectional study."
     year: 2016
+    authors: [Mensah F, Bansal A, Berkovitz S, Sharma A, Reddy V, Leandro MJ, Cambridge G]
+    journal: Clinical and experimental immunology
+    doi: 10.1111/cei.12749
     cohort: me_cfs
     case_definition: CCC  # "Canadian, Centre for Disease Control and Fukuda"
     case_definition_source: abstract
@@ -451,6 +484,9 @@ studies:
   - id: pmid:29543914
     title: Immunoadsorption to remove ß2 adrenergic receptor antibodies in Chronic Fatigue Syndrome CFS/ME.
     year: 2018
+    authors: [Scheibenbogen C, Loebel M, Freitag H, Krueger A, Bauer S, Antelmann M, Doehner W, Scherbakov N, Heidecke H, Reinke P, Volk HD, Grabowski P]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0193672
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -470,6 +506,9 @@ studies:
   - id: pmid:39759581
     title: "Efficacy of repeated immunoadsorption in patients with post-COVID myalgic encephalomyelitis/chronic fatigue syndrome and elevated β2-adrenergic receptor autoantibodies: a prospective cohort study."
     year: 2025
+    authors: [Stein E, Heindrich C, Wittke K, Kedor C, Rust R, Freitag H, Sotzny F, Krüger A, Tölle M, Grabowski P, Scheibenbogen C, Kim L]
+    journal: The Lancet regional health. Europe
+    doi: 10.1016/j.lanepe.2024.101161
     # long_covid: ME/CFS that began with SARS-CoV-2 infection; turns on the long COVID label (kept by founder ruling
     # 2026-11-01). "Modified CCC" is counted as CCC by founder ruling (2026-11-01).
     cohort: long_covid
@@ -493,6 +532,9 @@ studies:
   - id: pmid:32247028
     title: "A Unifying Hypothesis of the Pathophysiology of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS): Recognitions from the finding of autoantibodies against ß2-adrenergic receptors."
     year: 2020
+    authors: [Wirth K, Scheibenbogen C]
+    journal: Autoimmunity reviews
+    doi: 10.1016/j.autrev.2020.102527
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -512,6 +554,9 @@ studies:
   - id: pmid:34254637
     title: Hypothalamic-Pituitary Autoimmunity and Related Impairment of Hormone Secretions in Chronic Fatigue Syndrome.
     year: 2021
+    authors: [De Bellis A, Bellastella G, Pernice V, Cirillo P, Longo M, Maio A, Scappaticcio L, Maiorino MI, Bellastella A, Esposito K, Montoya JG]
+    journal: The Journal of clinical endocrinology and metabolism
+    doi: 10.1210/clinem/dgab429
     cohort: me_cfs
     # Patients met Fukuda, "Canadian" and IOM criteria; recorded as CCC (ranks equal to IOM 2015), as on the HPA card.
     # The antibodies are against pituitary and hypothalamus tissue (immunofluorescence), not receptors.
@@ -534,6 +579,9 @@ studies:
   - id: pmid:40901516
     title: 'Correction: Plasma cell targeting with the anti-CD38 antibody daratumumab in myalgic encephalomyelitis/chronic fatigue syndrome-A clinical pilot study.'
     year: 2025
+    authors: [Frontiers Production Office]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2025.1677216
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract

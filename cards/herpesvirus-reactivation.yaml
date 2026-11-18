@@ -189,6 +189,9 @@ studies:
   - id: pmid:36653846
     title: The persistent viral infections in the development and severity of myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2023
+    authors: [Rasa-Dzelzkaleja S, Krumina A, Capenko S, Nora-Krukle Z, Gravelsina S, Vilmane A, Ievina L, Shoenfeld Y, Murovska M, VirA project]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-023-03887-0
     cohort: me_cfs
     # Fukuda: flag "does not require PEM".
     case_definition: Fukuda
@@ -212,6 +215,9 @@ studies:
   - id: pmid:22927850
     title: Association of active human herpesvirus-6, -7 and parvovirus b19 infection with clinical outcomes in patients with myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2012
+    authors: [Chapenko S, Krumina A, Logina I, Rasa S, Chistjakovs M, Sultanova A, Viksna L, Murovska M]
+    journal: Advances in virology
+    doi: 10.1155/2012/205085
     cohort: me_cfs
     # "1994 CDC definition" = Fukuda 1994. Flag "does not require PEM".
     case_definition: Fukuda
@@ -236,6 +242,9 @@ studies:
   - id: pmid:34422848
     title: Salivary DNA Loads for Human Herpesviruses 6 and 7 Are Correlated With Disease Phenotype in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Lee JS, Lacerda EM, Nacul L, Kingdon CC, Norris J, O'Boyle S, Roberts CH, Palla L, Riley EM, Cliff JM]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2021.656692
     cohort: me_cfs
     # "Canadian Consensus and/or CDC-1994 (Fukuda)": not every patient is stated to meet CCC, so recorded as Fukuda.
     case_definition: Fukuda
@@ -263,6 +272,9 @@ studies:
   - id: pmid:32129496
     title: Cytomegalovirus, Epstein-Barr virus, and human herpesvirus-6 infections in patients with myalgic еncephalomyelitis/chronic fatigue syndrome.
     year: 2020
+    authors: [Shikova E, Reshkova V, Kumanova А, Raleva S, Alexandrova D, Capo N, Murovska M, On Behalf Of The European Network On Me/Cfs Euromene]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.25744
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: fulltext
@@ -284,6 +296,9 @@ studies:
   - id: pmid:28604802
     title: Serological profiling of the EBV immune response in Chronic Fatigue Syndrome using a peptide microarray.
     year: 2017
+    authors: [Loebel M, Eckey M, Sotzny F, Hahn E, Bauer S, Grabowski P, Zerweck J, Holenya P, Hanitsch LG, Wittke K, Borchmann P, Rüffer JU, Hiepe F, Ruprecht K, Behrends U, Meindl C, Volk HD, Reimer U, Scheibenbogen C]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0179124
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -307,6 +322,9 @@ studies:
   - id: pmid:40143349
     title: Prevalence of EBV, HHV6, HCMV, HAdV, SARS-CoV-2, and Autoantibodies to Type I Interferon in Sputum from Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.
     year: 2025
+    authors: [Hannestad U, Allard A, Nilsson K, Rosén A]
+    journal: Viruses
+    doi: 10.3390/v17030422
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -328,6 +346,9 @@ studies:
   - id: pmid:2849717
     title: Acyclovir treatment of the chronic fatigue syndrome. Lack of efficacy in a placebo-controlled trial.
     year: 1988
+    authors: [Straus SE, Dale JK, Tobi M, Lawley T, Preble O, Blaese RM, Hallahan C, Henle W]
+    journal: The New England journal of medicine
+    doi: 10.1056/NEJM198812293192602
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -347,6 +368,9 @@ studies:
   - id: pmid:23959519
     title: Randomized clinical trial to evaluate the efficacy and safety of valganciclovir in a subset of patients with chronic fatigue syndrome.
     year: 2013
+    authors: [Montoya JG, Kogelnik AM, Bhangoo M, Lunn MR, Flamand L, Merrihew LE, Watt T, Kubo JT, Paik J, Desai M]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.23713
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -368,6 +392,9 @@ studies:
   - id: pmid:18019402
     title: "Valacyclovir treatment in Epstein-Barr virus subset chronic fatigue syndrome: thirty-six months follow-up."
     year: 2007
+    authors: [Lerner AM, Beqaj SH, Deeter RG, Fitzgerald JT]
+    journal: In vivo (Athens, Greece)
+    doi: null
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -387,6 +414,9 @@ studies:
   - id: pmid:35102619
     title: A comparative study of valaciclovir, valganciclovir, and artesunate efficacy in reactivated HHV-6 and HHV-7 infections associated with chronic fatigue syndrome/myalgic encephalomyelitis.
     year: 2022
+    authors: [Maltsev D]
+    journal: Microbiology and immunology
+    doi: 10.1111/1348-0421.12966
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -409,6 +439,9 @@ studies:
   - id: pmid:10913395
     title: "Human herpesviruses 6 and 7 in chronic fatigue syndrome: a case-control study."
     year: 2000
+    authors: [Reeves WC, Stamey FR, Black JB, Mawle AC, Stewart JA, Pellett PE]
+    journal: 'Clinical infectious diseases : an official publication of the Infectious Diseases Society of America'
+    doi: 10.1086/313908
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -429,6 +462,9 @@ studies:
   - id: pmid:37526404
     title: A multicenter virome analysis of blood, feces, and saliva in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2023
+    authors: [Briese T, Tokarz R, Bateman L, Che X, Guo C, Jain K, Kapoor V, Levine S, Hornig M, Oleynik A, Quan PL, Wong WH, Williams BL, Vernon SD, Klimas NG, Peterson DL, Montoya JG, Ian Lipkin W]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.28993
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; full text not open in Europe PMC
     case_definition_source: null
@@ -448,6 +484,9 @@ studies:
   - id: pmid:28303641
     title: "Myalgic encephalomyelitis/chronic fatigue syndrome and gulf war illness patients exhibit increased humoral responses to the herpesviruses-encoded dUTPase: Implications in disease pathophysiology."
     year: 2017
+    authors: [Halpin P, Williams MV, Klimas NG, Fletcher MA, Barnes Z, Ariza ME]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.24810
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; full text not open in Europe PMC
     case_definition_source: null
@@ -469,6 +508,9 @@ studies:
   - id: pmid:41451845
     title: Chronic Reactivation of Persistent Human Herpesviruses EBV, HHV-6 and VZV and Heightened Anti-dUTPase IgG Antibodies Are a Recurrent Hallmark in Post-Infectious ME/CFS and is Associated With Fatigue.
     year: 2026
+    authors: [Palomo IM, Cox B, Williams MV, Ariza ME]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.70769
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; full text not open in Europe PMC
     case_definition_source: null
@@ -490,6 +532,9 @@ studies:
   - id: pmid:38675914
     title: "Herpesvirus Infection of Endothelial Cells as a Systemic Pathological Axis in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
     year: 2024
+    authors: [Nunes JM, Kell DB, Pretorius E]
+    journal: Viruses
+    doi: 10.3390/v16040572
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract

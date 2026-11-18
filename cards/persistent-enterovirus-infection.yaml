@@ -157,6 +157,9 @@ studies:
   - id: pmid:42941838
     title: CATCH-EVseq, an Ultra-Sensitive Capture Assay to Monitor Human Enterovirus RNA.
     year: 2026
+    authors: [Germain A, Hanson MR]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27209065
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -179,6 +182,9 @@ studies:
   - id: pmid:8863367
     title: No findings of enteroviruses in Swedish patients with chronic fatigue syndrome.
     year: 1996
+    authors: [Lindh G, Samuelson A, Hedlund KO, Evengård B, Lindquist L, Ehrnst A]
+    journal: Scandinavian journal of infectious diseases
+    doi: 10.3109/00365549609027178
     cohort: me_cfs
     # CDC criteria, version not stated: flag "does not require PEM".
     case_definition: CDC_unspecified
@@ -201,6 +207,9 @@ studies:
   - id: pmid:3404526
     title: "Postviral fatigue syndrome: persistence of enterovirus RNA in muscle and elevated creatine kinase."
     year: 1988
+    authors: [Archard LC, Bowles NE, Behan PO, Bell EJ, Doyle D]
+    journal: Journal of the Royal Society of Medicine
+    doi: 10.1177/014107688808100608
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -221,6 +230,9 @@ studies:
   - id: pmid:1850635
     title: Enteroviral RNA sequences detected by polymerase chain reaction in muscle of patients with postviral fatigue syndrome.
     year: 1991
+    authors: [Gow JW, Behan WM, Clements GB, Woodall C, Riding M, Behan PO]
+    journal: BMJ (Clinical research ed.)
+    doi: 10.1136/bmj.302.6778.692
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -239,6 +251,9 @@ studies:
   - id: pmid:8409778
     title: Persistence of enterovirus RNA in muscle biopsy samples suggests that some cases of chronic fatigue syndrome result from a previous, inflammatory viral myopathy.
     year: 1993
+    authors: [Bowles NE, Bayston TA, Zhang HY, Doyle D, Lane RJ, Cunningham L, Archard LC]
+    journal: Journal of medicine
+    doi: null
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -257,6 +272,9 @@ studies:
   - id: pmid:14570830
     title: "Enterovirus related metabolic myopathy: a postviral fatigue syndrome."
     year: 2003
+    authors: [Lane RJ, Soteriou BA, Zhang H, Archard LC]
+    journal: Journal of neurology, neurosurgery, and psychiatry
+    doi: 10.1136/jnnp.74.10.1382
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -278,6 +296,9 @@ studies:
   - id: pmid:14556267
     title: Detection of enterovirus in human skeletal muscle from patients with chronic inflammatory muscle disease or fibromyalgia and healthy subjects.
     year: 2003
+    authors: [Douche-Aourik F, Berlier W, Féasson L, Bourlet T, Harrath R, Omar S, Grattard F, Denis C, Pozzetto B]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.10531
     cohort: me_cfs
     # The patient group is "fibromyalgia/chronic fatigue syndrome" together; how many had CFS is not stated.
     case_definition: unverified
@@ -298,6 +319,9 @@ studies:
   - id: pmid:7775934
     title: "Detection of enterovirus-specific RNA in serum: the relationship to chronic fatigue."
     year: 1995
+    authors: [Clements GB, McGarry F, Nairn C, Galbraith DN]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.1890450208
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -318,6 +342,9 @@ studies:
   - id: pmid:7595406
     title: Comparison of coxsackie B neutralisation and enteroviral PCR in chronic fatigue patients.
     year: 1995
+    authors: [Nairn C, Galbraith DN, Clements GB]
+    journal: Journal of medical virology
+    doi: 10.1002/jmv.1890460404
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -337,6 +364,9 @@ studies:
   - id: pmid:17872383
     title: Chronic fatigue syndrome is associated with chronic enterovirus infection of the stomach.
     year: 2008
+    authors: [Chia JK, Chia AY]
+    journal: Journal of clinical pathology
+    doi: 10.1136/jcp.2007.050054
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -358,6 +388,9 @@ studies:
   - id: pmid:8148439
     title: Studies on enterovirus in patients with chronic fatigue syndrome.
     year: 1994
+    authors: [Gow JW, Behan WM, Simpson K, McGarry F, Keir S, Behan PO]
+    journal: 'Clinical infectious diseases : an official publication of the Infectious Diseases Society of America'
+    doi: 10.1093/clinids/18.supplement_1.s126
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -377,6 +410,9 @@ studies:
   - id: pmid:8777836
     title: Investigation by polymerase chain reaction of enteroviral infection in patients with chronic fatigue syndrome.
     year: 1996
+    authors: [McArdle A, McArdle F, Jackson MJ, Page SF, Fahal I, Edwards RH]
+    journal: 'Clinical science (London, England : 1979)'
+    doi: 10.1042/cs0900295
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -394,6 +430,9 @@ studies:
   - id: pmid:7893870
     title: Enteroviruses and the chronic fatigue syndrome.
     year: 1994
+    authors: [Swanink CM, Melchers WJ, van der Meer JW, Vercoulen JH, Bleijenberg G, Fennis JF, Galama JM]
+    journal: 'Clinical infectious diseases : an official publication of the Infectious Diseases Society of America'
+    doi: 10.1093/clinids/19.5.860
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -415,6 +454,9 @@ studies:
   - id: pmid:1433120
     title: Monospot and VP1 tests in chronic fatigue syndrome and major depression.
     year: 1992
+    authors: [Lynch SP, Seth RV, Main J]
+    journal: Journal of the Royal Society of Medicine
+    doi: 10.1177/014107689208500909
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
