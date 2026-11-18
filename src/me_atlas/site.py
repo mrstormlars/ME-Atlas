@@ -982,6 +982,8 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
         data_files=export.DATA_FILES,
         citation=export.citation_text(shared.built),
         licence_url=export.LICENCE_URL,
+        doi=export.DATASET_DOI,
+        doi_url=export.DATASET_DOI_URL,
     )
 
     used_terms = [e for e in localised.glossary.entries if e.key in uses]

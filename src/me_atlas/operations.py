@@ -49,8 +49,9 @@ from __future__ import annotations
 
 import re
 import textwrap
-from collections.abc import Collection, Mapping, Sequence
+from collections.abc import Callable, Collection, Mapping, Sequence
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Annotated, Any, Literal
 
 import yaml
@@ -73,6 +74,10 @@ from me_atlas.cards import (
     _schema_issues,
     check_card,
 )
+from me_atlas.pubmed import ParseError, PubMedRecord, RawCache
+
+# A function from a PMID to its cached PubMed record (None when it is not cached).
+RecordLookup = Callable[[str], PubMedRecord | None]
 
 PARAGRAPH_FIELDS = (
     "level_reason",
@@ -438,12 +443,49 @@ def _format_errors(exc: ValidationError) -> str:
     return "\n".join(lines)
 
 
-def parse_ops(data: object) -> OpsFile:
-    """Validate parsed JSON as an operations file. Raises OperationError listing every problem."""
+def with_bibliography(study: Study, record: PubMedRecord) -> Study:
+    """The study with ``authors``, ``journal`` and ``doi`` copied from its PubMed record. Nothing else changes.
+    A record without a journal (or an empty one) leaves ``journal`` unset: the field is never invented."""
+    update: dict[str, Any] = {"authors": list(record.authors), "doi": record.doi or None}
+    if record.journal and record.journal.strip():
+        update["journal"] = record.journal
+    return study.model_copy(update=update)
+
+
+def cached_records(cache_root: Path) -> RecordLookup:
+    """A record lookup over ``<cache_root>/pubmed/``: the parsed record, or None when it is absent or unreadable
+    (the citation check C1 reports that). Offline."""
+    raw = RawCache(cache_root)
+
+    def lookup(pmid: str) -> PubMedRecord | None:
+        try:
+            return raw.read_record(pmid)
+        except (FileNotFoundError, ParseError, OSError):
+            return None
+
+    return lookup
+
+
+def parse_ops(data: object, records: RecordLookup | None = None) -> OpsFile:
+    """Validate parsed JSON as an operations file. Raises OperationError listing every problem.
+
+    With ``records`` (a function from a PMID to its cached PubMed record, or None), every ``add_study`` of a
+    ``pmid:`` study gets its bibliographic fields from that record, so a study the pipeline adds arrives filled.
+    """
     try:
-        return OpsFile.model_validate(data)
+        ops = OpsFile.model_validate(data)
     except ValidationError as exc:
         raise OperationError(_format_errors(exc)) from exc
+    if records is None:
+        return ops
+    filled = []
+    for op in ops.operations:
+        if isinstance(op, AddStudy) and op.study.id.startswith("pmid:"):
+            record = records(op.study.id.removeprefix("pmid:"))
+            if record is not None:
+                op = op.model_copy(update={"study": with_bibliography(op.study, record)})
+        filled.append(op)
+    return ops.model_copy(update={"operations": filled})
 
 
 # ---------------------------------------------------------------------------
@@ -454,6 +496,9 @@ def parse_ops(data: object) -> OpsFile:
 def _scalar(value: object) -> str:
     out = yaml.safe_dump(value, width=10**9, allow_unicode=True, default_flow_style=True).rstrip()
     return out.removesuffix("\n...").rstrip()
+
+
+scalar = _scalar  # public name for the card writers outside this module
 
 
 def _flow_list(values: list[Any]) -> str:
@@ -495,13 +540,26 @@ def _study_field_lines(name: str, value: Any, head: str, ci: int) -> list[str]:
     return [f"{head}{name}: {_scalar(value)}"]
 
 
-def render_study(study: Study, ci: int) -> list[str]:
-    """A study as the lines of a list item whose ``-`` is at column ``ci``."""
+BIBLIOGRAPHIC_FIELDS = ("authors", "journal", "doi")
+
+
+def _study_entry(study: Study) -> dict[str, Any]:
+    """The study as the mapping written to the card: ``group`` and ``preprint`` only when set, the bibliographic
+    fields only when filled (``doi: null`` is a filled field: the record has no DOI)."""
     data = study.model_dump(mode="python")
     if data["group"] is None:
         del data["group"]
     if not data["preprint"]:
         del data["preprint"]
+    for name in BIBLIOGRAPHIC_FIELDS:
+        if name not in study.model_fields_set:
+            del data[name]
+    return data
+
+
+def render_study(study: Study, ci: int) -> list[str]:
+    """A study as the lines of a list item whose ``-`` is at column ``ci``."""
+    data = _study_entry(study)
     lines: list[str] = []
     for n, (name, value) in enumerate(data.items()):
         head = " " * ci + "- " if n == 0 else " " * (ci + 2)
@@ -689,12 +747,7 @@ def _apply_study(lines: list[str], data: dict[str, Any], op: AddStudy) -> list[s
         raise OperationError("the card has no studies list")
     if any(isinstance(s, dict) and s.get("id") == op.study.id for s in studies):
         raise OperationError(f"study id '{op.study.id}' is already on this card")
-    entry = op.study.model_dump(mode="python")
-    if entry["group"] is None:
-        del entry["group"]
-    if not entry["preprint"]:
-        del entry["preprint"]
-    studies.append(entry)
+    studies.append(_study_entry(op.study))
     loc = _locate(lines, ["studies"])
     inline = _inline_value(lines, loc)
     if inline == "[]":

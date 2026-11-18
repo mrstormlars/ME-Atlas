@@ -87,6 +87,7 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | --- | --- |
 | `id` | `pmid:<digits>` or `doi:10.<rest>` |
 | `title`, `year` | As in the fetched record. |
+| `authors`, `journal`, `doi` | Optional bibliographic fields, copied by code from the fetched PubMed record and never written by hand or by an AI agent: `authors` is the list of author names in record order (as `PubMedRecord.authors` gives them, for example `Smith J`), `journal` is the journal name, `doi` is the record's DOI (starts `10.`) or `null` when the record has none. Absent means not yet filled. They are not evidence and move no level, badge, contested mark, layer or link. `uv run python -m me_atlas.citations bibliography --write` fills them from `data/cache/pubmed/`; a study the weekly pipeline adds is filled from its record when the operations file is read; check C13 compares them with the cached record. |
 | `cohort` | `me_cfs` or `long_covid` |
 | `case_definition` | `CCC`, `ICC`, `IOM2015`, `Fukuda`, `Holmes1988`, `CDC_unspecified`, `Oxford`, `other`, `none`, `unverified` (see below) |
 | `case_definition_source` | `abstract`, `fulltext`, or `null` (only while `unverified`) |
@@ -102,7 +103,7 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | `preprint` | Optional, default `false`. `true` marks a preprint (not peer reviewed): a `doi:` study taken from Europe PMC, or a `pmid:` study whose PubMed record has the publication type "Preprint" (checked by C8). A preprint can only be an early signal: see V15. |
 | `corrects` | Optional, default absent. On an erratum or correction notice to another study on the same card: the `id` of the study it corrects. See V17. |
 
-All of these are required except `group`, `preprint` and `corrects`; use `null` where the value is allowed to be unknown.
+All of these are required except `authors`, `journal`, `doi`, `group`, `preprint` and `corrects`; use `null` where the value is allowed to be unknown.
 
 ### Case definition provenance (format v2)
 

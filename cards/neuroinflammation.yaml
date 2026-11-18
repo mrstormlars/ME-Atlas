@@ -79,6 +79,9 @@ studies:
   - id: pmid:24665088
     title: "Neuroinflammation in Patients with Chronic Fatigue Syndrome/Myalgic Encephalomyelitis: An ¹¹C-(R)-PK11195 PET Study."
     year: 2014
+    authors: [Nakatomi Y, Mizuno K, Ishii A, Wada Y, Tanaka M, Tazawa S, Onoe K, Fukuda S, Kawabe J, Takahashi K, Kataoka Y, Shiomi S, Yamaguti K, Inaba M, Kuratsune H, Watanabe Y]
+    journal: 'Journal of nuclear medicine : official publication, Society of Nuclear Medicine'
+    doi: 10.2967/jnumed.113.131045
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
     case_definition_source: null
@@ -99,6 +102,9 @@ studies:
   - id: pmid:34815320
     title: "No Signs of Neuroinflammation in Women With Chronic Fatigue Syndrome or Q Fever Fatigue Syndrome Using the TSPO Ligand [11C]-PK11195."
     year: 2022
+    authors: [Raijmakers R, Roerink M, Keijmel S, Joosten L, Netea M, van der Meer J, Knoop H, Klein H, Bleeker-Rovers C, Doorduin J]
+    journal: Neurology(R) neuroimmunology & neuroinflammation
+    doi: 10.1212/NXI.0000000000001113
     cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"; a separate Q fever fatigue syndrome group (n=10) is not counted here
     case_definition: Fukuda  # full text (PMC8611501, Methods) names "the Fukuda 1994 criteria for CFS"
     case_definition_source: fulltext
@@ -118,6 +124,9 @@ studies:
   - id: pmid:30617782
     title: "Evidence of widespread metabolite abnormalities in Myalgic encephalomyelitis/chronic fatigue syndrome: assessment with whole-brain magnetic resonance spectroscopy."
     year: 2020
+    authors: [Mueller C, Lin JC, Sheriff S, Maudsley AA, Younger JW]
+    journal: Brain imaging and behavior
+    doi: 10.1007/s11682-018-0029-4
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; Europe PMC lists PMC6612467 but not as open access
     case_definition_source: null
@@ -143,6 +152,9 @@ studies:
     # Full text: participants were "drawn from the same cohort" as Yu et al. (2025), a paper not on this card.
     title: "Evidence of White Matter Neuroinflammation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Diffusion-Based Neuroinflammation Imaging Study."
     year: 2026
+    authors: [Yu Q, Kothe K, Kwiatek RA, Del Fante P, Bonner A, Calhoun VD, Shan ZY]
+    journal: Human brain mapping
+    doi: 10.1002/hbm.70505
     cohort: me_cfs
     case_definition: CCC  # full text (PMC13093695) confirms a CCC-consistent (Carruthers et al. 2003) diagnosis by two clinicians
     case_definition_source: fulltext
@@ -163,6 +175,9 @@ studies:
   - id: pmid:34609538
     title: "Neurochemical abnormalities in chronic fatigue syndrome: a pilot magnetic resonance spectroscopy study at 7 Tesla."
     year: 2022
+    authors: [Godlewska BR, Williams S, Emir UE, Chen C, Sharpley AL, Goncalves AJ, Andersson MI, Clarke W, Angus B, Cowen PJ]
+    journal: Psychopharmacology
+    doi: 10.1007/s00213-021-05986-6
     cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"
     case_definition: Fukuda  # full text (PMC8770374, Methods): "CDC criteria for CFS (Fukuda et al. 1994)"; the "Oxford" hits are place names
     case_definition_source: fulltext
@@ -183,6 +198,9 @@ studies:
   - id: pmid:12598734
     title: "Proton magnetic resonance spectroscopy of basal ganglia in chronic fatigue syndrome."
     year: 2003
+    authors: [Chaudhuri A, Condon BR, Gow JW, Brennan D, Hadley DM]
+    journal: Neuroreport
+    doi: 10.1097/00001756-200302100-00013
     cohort: me_cfs  # abstract says "chronic fatigue syndrome (CFS)"
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text in Europe PMC
     case_definition_source: null
@@ -203,6 +221,9 @@ studies:
   - id: pmid:29759891
     title: "The putative role of oxidative stress and inflammation in the pathophysiology of sleep dysfunction across neuropsychiatric disorders: Focus on chronic fatigue syndrome, bipolar disorder and multiple sclerosis."
     year: 2018
+    authors: [Morris G, Stubbs B, Köhler CA, Walder K, Slyepchenko A, Berk M, Carvalho AF]
+    journal: Sleep medicine reviews
+    doi: 10.1016/j.smrv.2018.03.007
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -223,6 +244,9 @@ studies:
   - id: pmid:42227214
     title: 'Correction to "Evidence of White Matter Neuroinflammation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Diffusion-Based Neuroinflammation Imaging Study".'
     year: 2026
+    authors: []
+    journal: Human brain mapping
+    doi: 10.1002/hbm.70544
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext

@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use this dataset or the site, please cite it as below."
 title: "ME Atlas: evidence cards on the causes of ME/CFS and long COVID"
 type: dataset
+doi: 10.5281/zenodo.24333249
 authors:
   - name: "ME Atlas contributors"
 repository-code: "https://github.com/mrstormlars/ME-Atlas"

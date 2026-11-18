@@ -72,6 +72,7 @@ from me_atlas.operations import (
     SetLinkText,
     UpdateStudy,
     apply_operations,
+    cached_records,
     parse_ops,
     tiers,
 )
@@ -1960,7 +1961,7 @@ def apply_correction_ops(cfg: Config, slug: str, ops_path: Path, n: str, *, revi
     ops_errors: list[str] = []
     draft_text = draft.read_text(encoding="utf-8")
     try:
-        ops = parse_ops(_read_json(ops_path))
+        ops = parse_ops(_read_json(ops_path), cached_records(cfg.cache_dir))
         if ops.card != slug:
             ops_errors.append(f"the ops file is for card '{ops.card}', not '{slug}'")
         draft_card = _load_card(draft)
@@ -2090,7 +2091,7 @@ def apply_ops_file(
     whole_card = False
     try:
         raw = _read_json(ops_path)
-        ops = parse_ops(raw)
+        ops = parse_ops(raw, cached_records(cfg.cache_dir))
         if ops.paper is None:
             whole_card = redraft
             pmid = None
@@ -3144,7 +3145,7 @@ def _load_round(cfg: Config, slug: str, pmid: str, n: Round_) -> Round | None:
     ops: OpsFile | None = None
     problem: str | None = None
     try:
-        ops = parse_ops(_read_json(ops_path))
+        ops = parse_ops(_read_json(ops_path), cached_records(cfg.cache_dir))
     except (PipelineError, OperationError) as exc:
         problem = str(exc)
     checks = _read_json(cfg.checks_path(slug, pmid, n)) if cfg.checks_path(slug, pmid, n).exists() else None

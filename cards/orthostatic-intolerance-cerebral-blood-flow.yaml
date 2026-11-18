@@ -201,6 +201,9 @@ studies:
   - id: pmid:32140630
     title: "Cerebral blood flow is reduced in ME/CFS during head-up tilt testing even in the absence of hypotension or tachycardia: A quantitative, controlled study using Doppler echography."
     year: 2020
+    authors: [van Campen CLMC, Verheugt FWA, Rowe PC, Visser FC]
+    journal: Clinical neurophysiology practice
+    doi: 10.1016/j.cnp.2020.01.003
     cohort: me_cfs
     # Fukuda: flag "does not require PEM". 70% also met ICC (same sentence; ICC per Methods: "as defined by Carruthers et al. (2011)"). Full text PMC7044650.
     case_definition: Fukuda
@@ -225,6 +228,9 @@ studies:
   - id: pmid:7674527
     title: The relationship between neurally mediated hypotension and the chronic fatigue syndrome.
     year: 1995
+    authors: [Bou-Holaigah I, Rowe PC, Kan J, Calkins H]
+    journal: JAMA
+    doi: null
     cohort: me_cfs
     # CDC version not named; flag "does not require PEM".
     case_definition: CDC_unspecified
@@ -248,6 +254,9 @@ studies:
   - id: pmid:17263876
     title: Hypocapnia is a biological marker for orthostatic intolerance in some patients with chronic fatigue syndrome.
     year: 2007
+    authors: [Natelson BH, Intriligator R, Cherniack NS, Chandler HK, Stewart JM]
+    journal: 'Dynamic medicine : DM'
+    doi: 10.1186/1476-5918-6-2
     cohort: me_cfs
     # "1994 case definition for CFS" = Fukuda 1994 (named by year, not by author); flag "does not require PEM".
     # Full text PMC1796865.
@@ -272,6 +281,9 @@ studies:
   - id: pmid:16378795
     title: Orthostatic instability in a population-based study of chronic fatigue syndrome.
     year: 2005
+    authors: [Jones JF, Nicholson A, Nisenbaum R, Papanicolaou DA, Solomon L, Boneva R, Heim C, Reeves WC]
+    journal: The American journal of medicine
+    doi: 10.1016/j.amjmed.2005.06.013
     cohort: me_cfs
     # "1994 chronic fatigue syndrome research case definition" = Fukuda 1994; flag "does not require PEM".
     case_definition: Fukuda
@@ -294,6 +306,9 @@ studies:
   - id: pmid:11150109
     title: "Fludrocortisone acetate to treat neurally mediated hypotension in chronic fatigue syndrome: a randomized controlled trial."
     year: 2001
+    authors: [Rowe PC, Calkins H, DeBusk K, McKenzie R, Anand R, Sharma G, Cuccherini BA, Soto N, Hohman P, Snader S, Lucas KE, Wolff M, Straus SE]
+    journal: JAMA
+    doi: 10.1001/jama.285.1.52
     cohort: me_cfs
     # CDC version not named; flag "does not require PEM".
     case_definition: CDC_unspecified
@@ -316,6 +331,9 @@ studies:
   - id: pmid:19912315
     title: Home orthostatic training in chronic fatigue syndrome--a randomized, placebo-controlled feasibility study.
     year: 2010
+    authors: [Sutcliffe K, Gray J, Tan MP, Pairman J, Wilton K, Parry SW, Newton JL]
+    journal: European journal of clinical investigation
+    doi: 10.1111/j.1365-2362.2009.02225.x
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -336,6 +354,9 @@ studies:
   - id: pmid:33050553
     title: Reductions in Cerebral Blood Flow Can Be Provoked by Sitting in Severe Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.
     year: 2020
+    authors: [Campen CLMV, Rowe PC, Visser FC]
+    journal: Healthcare (Basel, Switzerland)
+    doi: 10.3390/healthcare8040394
     cohort: me_cfs
     # Full text PMC7712289: "During the first visit, it was determined whether patients satisfied the criteria for CFS
     # and ME, taking the exclusion criteria into account [4,5]." Names no definition; the ICC sentence is about
@@ -359,6 +380,9 @@ studies:
   - id: pmid:22180650
     title: Postural neurocognitive and neuronal activated cerebral blood flow deficits in young chronic fatigue syndrome patients with postural tachycardia syndrome.
     year: 2012
+    authors: [Stewart JM, Medow MS, Messer ZR, Baugham IL, Terilli C, Ocon AJ]
+    journal: American journal of physiology. Heart and circulatory physiology
+    doi: 10.1152/ajpheart.00994.2011
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text (PMC3311460)
     case_definition_source: null
@@ -378,6 +402,9 @@ studies:
   - id: pmid:25277740
     title: "Phenylephrine alteration of cerebral blood flow during orthostasis: effect on n-back performance in chronic fatigue syndrome."
     year: 2014
+    authors: [Medow MS, Sood S, Messer Z, Dzogbeta S, Terilli C, Stewart JM]
+    journal: 'Journal of applied physiology (Bethesda, Md. : 1985)'
+    doi: 10.1152/japplphysiol.00527.2014
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text (PMC4233252)
     case_definition_source: null
@@ -397,6 +424,9 @@ studies:
   - id: pmid:12006954
     title: Impaired postural cerebral hemodynamics in young patients with chronic fatigue with and without orthostatic intolerance.
     year: 2002
+    authors: [Tanaka H, Matsushima R, Tamai H, Kajimoto Y]
+    journal: The Journal of pediatrics
+    doi: 10.1067/mpd.2002.122725
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract says "chronic fatigue", names no case definition; no open full text
     case_definition_source: null
@@ -416,6 +446,9 @@ studies:
   - id: pmid:12593133
     title: Cerebral and systemic hemodynamics changes during upright tilt in chronic fatigue syndrome.
     year: 2003
+    authors: [Razumovsky AY, DeBusk K, Calkins H, Snader S, Lucas KE, Vyas P, Hanley DF, Rowe PC]
+    journal: 'Journal of neuroimaging : official journal of the American Society of Neuroimaging'
+    doi: null
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -436,6 +469,9 @@ studies:
   - id: pmid:35056360
     title: "Compression Stockings Improve Cardiac Output and Cerebral Blood Flow during Tilt Testing in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) Patients: A Randomized Crossover Trial."
     year: 2021
+    authors: [van Campen CLMC, Rowe PC, Visser FC]
+    journal: Medicina (Kaunas, Lithuania)
+    doi: 10.3390/medicina58010051
     cohort: me_cfs
     # Full text PMC8781100: "All patients underwent an extensive history and physical examination to confirm that they
     # satisfied the criteria for the diagnosis of CFS or ME ..." Names no definition.
@@ -457,6 +493,9 @@ studies:
   - id: pmid:42746015
     title: Postural orthostatic tachycardia syndrome in adolescents with ME/CFS - a case control study.
     year: 2026
+    authors: [Leone A, Gerrer K, Viereck A, Grabbe A, Kircher A, Behrends U, Maier A]
+    journal: Frontiers in pediatrics
+    doi: 10.3389/fped.2026.1836407
     cohort: me_cfs
     # Full text PMC13574936. Next sentence: "At least one of these definitions had to be met for the diagnosis of
     # ME/CFS." Two of the four are paediatric definitions not in the accepted table, so recorded as `other`.
@@ -477,6 +516,9 @@ studies:
   - id: pmid:22850676
     title: Orthostatic tolerance testing in a prospective cohort of adolescents with chronic fatigue syndrome and recovered controls following infectious mononucleosis.
     year: 2012
+    authors: [Katz BZ, Stewart JM, Shiraishi Y, Mears CJ, Taylor R]
+    journal: Clinical pediatrics
+    doi: 10.1177/0009922812455094
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -496,6 +538,9 @@ studies:
   - id: pmid:33585505
     title: Numeric Rating Scales Show Prolonged Post-exertional Symptoms After Orthostatic Testing of Adults With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2020
+    authors: [van Campen CLMC, Rowe PC, Verheugt FWA, Visser FC]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2020.602894
     cohort: me_cfs
     # Full text PMC7874746, reference list: ref 1 = Fukuda et al. 1994 (CFS); ref 3 = Carruthers et al. 2011, ME
     # international consensus criteria (ICC). Both were required, so recorded as ICC (resolved through reference

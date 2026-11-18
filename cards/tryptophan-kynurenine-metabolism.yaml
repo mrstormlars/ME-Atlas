@@ -240,6 +240,9 @@ studies:
   - id: pmid:34829952
     title: Tryptophan Metabolites, Cytokines, and Fatty Acid Binding Protein 2 in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Simonato M, Dall'Acqua S, Zilli C, Sut S, Tenconi R, Gallo N, Sfriso P, Sartori L, Cavallin F, Fiocco U, Cogo P, Agostinis P, Aldovini A, Bruttomesso D, Marcolongo R, Comai S, Baritussio A]
+    journal: Biomedicines
+    doi: 10.3390/biomedicines9111724
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -263,6 +266,9 @@ studies:
   - id: pmid:40903540
     title: Heightened innate immunity may trigger chronic inflammation, fatigue and post-exertional malaise in ME/CFS.
     year: 2025
+    authors: [Che X, Ranjan A, Guo C, Zhang K, Goldsmith R, Levine S, Moneghetti KJ, Zhai Y, Ge L, Mishra N, Hornig M, Bateman L, Klimas NG, Montoya JG, Peterson DL, Klein SL, Fiehn O, Komaroff AL, Lipkin WI]
+    journal: npj metabolic health and disease
+    doi: 10.1038/s44324-025-00079-w
     cohort: me_cfs
     # "CDC/Fukuda and Canadian consensus criteria": recorded as CCC (as 34254637 on the HPA card).
     case_definition: CCC
@@ -287,6 +293,9 @@ studies:
   - id: pmid:34423789
     title: A map of metabolic phenotypes in patients with myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2021
+    authors: [Hoel F, Hoel A, Pettersen IK, Rekeland IG, Risa K, Alme K, Sørland K, Fosså A, Lien K, Herder I, Thürmer HL, Gotaas ME, Schäfer C, Berge RK, Sommerfelt K, Marti HP, Dahl O, Mella O, Fluge Ø, Tronstad KJ]
+    journal: JCI insight
+    doi: 10.1172/jci.insight.149217
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -306,6 +315,9 @@ studies:
   - id: pmid:39302151
     title: "Untargeted Metabolomics and Quantitative Analysis of Tryptophan Metabolites in Myalgic Encephalomyelitis Patients and Healthy Volunteers: A Comparative Study Using High-Resolution Mass Spectrometry."
     year: 2024
+    authors: [Abujrais S, Vallianatou T, Bergquist J]
+    journal: ACS chemical neuroscience
+    doi: 10.1021/acschemneuro.4c00444
     cohort: me_cfs
     # CCC, ICC and IOM 2015; recorded as CCC. "Both groups" = the two patient clinics (full text).
     case_definition: CCC
@@ -330,6 +342,9 @@ studies:
   - id: pmid:42325052
     title: Tryptophan Metabolism and Aryl-Hydrocarbon Receptor Agonists in the Gut Microbiome of People With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2026
+    authors: [Esteban DJ, Conrad B, Cullinan A, Luong S, Albaum J, Wilk V]
+    journal: MicrobiologyOpen
+    doi: 10.1002/mbo3.70333
     cohort: me_cfs
     # Survey-based: all cases met CCC and/or IOM except one who met CDC criteria; recorded as the weakest.
     case_definition: CDC_unspecified
@@ -352,6 +367,9 @@ studies:
   - id: pmid:25227994
     title: Tryptophan depletion in chronic fatigue syndrome, a pilot cross-over study.
     year: 2014
+    authors: [The GK, Verkes RJ, Fekkes D, Bleijenberg G, van der Meer JW, Buitelaar JK]
+    journal: BMC research notes
+    doi: 10.1186/1756-0500-7-650
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -375,6 +393,9 @@ studies:
   - id: pmid:38015302
     title: Dysregulation of the Kynurenine Pathway, Cytokine Expression Pattern, and Proteomics Profile Link to Symptomology in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2024
+    authors: [Kavyani B, Ahn SB, Missailidis D, Annesley SJ, Fisher PR, Schloeffel R, Guillemin GJ, Lovejoy DB, Heng B]
+    journal: Molecular neurobiology
+    doi: 10.1007/s12035-023-03784-z
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -394,6 +415,9 @@ studies:
   - id: pmid:34090138
     title: Kynurenine metabolites and ratios differ between Chronic Fatigue Syndrome, Fibromyalgia, and healthy controls.
     year: 2021
+    authors: [Groven N, Reitan SK, Fors EA, Guzey IC]
+    journal: Psychoneuroendocrinology
+    doi: 10.1016/j.psyneuen.2021.105287
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -412,6 +436,9 @@ studies:
   - id: pmid:15982993
     title: Heterogeneity of serum tryptophan concentration and availability to the brain in patients with the chronic fatigue syndrome.
     year: 2005
+    authors: [Badawy AA, Morgan CJ, Llewelyn MB, Albuquerque SR, Farmer A]
+    journal: Journal of psychopharmacology (Oxford, England)
+    doi: 10.1177/0269881105053293
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -430,6 +457,9 @@ studies:
   - id: pmid:11352361
     title: Decreased tryptophan availability but normal post-synaptic 5-HT2c receptor sensitivity in chronic fatigue syndrome.
     year: 2001
+    authors: [Vassallo CM, Feldman E, Peto T, Castell L, Sharpley AL, Cowen PJ]
+    journal: Psychological medicine
+    doi: 10.1017/s0033291701003580
     cohort: me_cfs
     # Warneford Hospital, Oxford: may be Oxford criteria; not verified.
     case_definition: unverified
@@ -449,6 +479,9 @@ studies:
   - id: pmid:20384451
     title: Sex differences in plasma prolactin response to tryptophan in chronic fatigue syndrome patients with and without comorbid fibromyalgia.
     year: 2010
+    authors: [Weaver SA, Janal MN, Aktan N, Ottenweller JE, Natelson BH]
+    journal: Journal of women's health (2002)
+    doi: 10.1089/jwh.2009.1697
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -469,6 +502,9 @@ studies:
   - id: pmid:35821534
     title: "Could the kynurenine pathway be the key missing piece of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) complex puzzle?"
     year: 2022
+    authors: [Kavyani B, Lidbury BA, Schloeffel R, Fisher PR, Missailidis D, Annesley SJ, Dehhaghi M, Heng B, Guillemin GJ]
+    journal: 'Cellular and molecular life sciences : CMLS'
+    doi: 10.1007/s00018-022-04380-5
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -487,6 +523,9 @@ studies:
   - id: pmid:26667000
     title: "The Many Neuroprogressive Actions of Tryptophan Catabolites (TRYCATs) that may be Associated with the Pathophysiology of Neuro-Immune Disorders."
     year: 2016
+    authors: [Morris G, Carvalho AF, Anderson G, Galecki P, Maes M]
+    journal: Current pharmaceutical design
+    doi: 10.2174/1381612822666151215102420
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract

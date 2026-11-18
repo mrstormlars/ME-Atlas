@@ -29,6 +29,8 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
   level of C10)
 * C12 (warning) a cited ``pmid:`` study whose cached record lists an erratum (PubMed "ErratumIn") that is not a study
   on the same card
+* C13 ``authors``, ``journal`` and ``doi`` of a study that has them equal the cached PubMed record; the error names
+  the field
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -39,11 +41,14 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 import unicodedata
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
+
+import yaml
 
 from me_atlas.cards import CHANGELOG_NAME, CardValidationError, Study, load_card
 from me_atlas.europepmc import (
@@ -56,6 +61,7 @@ from me_atlas.europepmc import (
     read_cached_lookup,
     read_cached_preprints,
 )
+from me_atlas.operations import scalar
 from me_atlas.pubmed import DEFAULT_CACHE_ROOT, ParseError, PubMedRecord, RawCache
 from me_atlas.translations import english_items
 
@@ -317,10 +323,21 @@ def check_study(file: str, study: Study, cache: CacheReader) -> list[CitationIss
     def full() -> str | tuple[str]:
         return cache.fulltext(record.pmid)
 
+    issues += _check_bibliography(study, record, issue)
     issues += _check_quote(study, record.abstract, full, "PubMed", issue)
     issues += _check_sample_sizes(study, record.abstract, full, issue)
     issues += _check_group(study, record.authors, "PubMed", issue)
     return issues
+
+
+def _check_bibliography(study: Study, record: PubMedRecord, issue) -> list[CitationIssue]:
+    """C13: the bibliographic fields a study has equal the cached record. A field the study lacks is not checked."""
+    found = {"authors": record.authors, "journal": record.journal, "doi": record.doi or None}
+    return [
+        issue("C13", ERROR, f"{name} differs from the PubMed record. Card: {getattr(study, name)!r}. Record: {want!r}")
+        for name, want in found.items()
+        if name in study.model_fields_set and getattr(study, name) != want
+    ]
 
 
 _TAG_RE = re.compile(r"<[^>]+>")
@@ -1108,8 +1125,124 @@ def check_paths(
 
 
 # ---------------------------------------------------------------------------
+# Bibliography: copy authors, journal and doi from the cached records onto the studies
+# ---------------------------------------------------------------------------
+
+_STUDY_START = re.compile(r"^(\s*)- id: (\S+)\s*$")
+_BIB_LINE = re.compile(r"^\s+(authors|journal|doi): ")
+
+
+@dataclass(frozen=True)
+class BibliographyResult:
+    """What ``fill_bibliography`` found in one card file."""
+
+    text: str
+    filled: list[str]  # study ids whose fields were added or changed
+    unchanged: list[str]  # study ids that already have the right fields
+    skipped: list[tuple[str, str]]  # (study id, why it was left as it is)
+
+
+def _indent_of(line: str) -> int:
+    return len(line) - len(line.lstrip(" "))
+
+
+def _bib_lines(record: PubMedRecord, indent: str) -> list[str]:
+    return [
+        f"{indent}authors: {scalar(list(record.authors))}",
+        f"{indent}journal: {scalar(record.journal)}",
+        f"{indent}doi: {scalar(record.doi or None)}",
+    ]
+
+
+def fill_bibliography(text: str, cache: CacheReader) -> BibliographyResult:
+    """Set ``authors``, ``journal`` and ``doi`` on every ``pmid:`` study of the card text whose record is cached.
+
+    Line based: the three lines are inserted after the study's ``year:`` line (or replace the lines it already has),
+    so no other line, comment or ordering changes. A study whose record is not cached, has no journal in the record
+    or is a ``doi:`` study is left as it is and listed in ``skipped``. Offline.
+    """
+    if "\r" in text:
+        raise ValueError("the card file uses CRLF line endings; convert it to LF first")
+    lines = text.split("\n")
+    top = next((i for i, line in enumerate(lines) if line.rstrip() == "studies:"), None)
+    if top is None:
+        return BibliographyResult(text, [], [], [])
+    starts = [(i, m) for i in range(top + 1, len(lines)) if (m := _STUDY_START.match(lines[i]))]
+    # A study block ends at the next study start or at the next top-level key.
+    end_of_list = next((i for i in range(top + 1, len(lines)) if lines[i] and lines[i][0] not in " #-"), len(lines))
+    filled: list[str] = []
+    unchanged: list[str] = []
+    skipped: list[tuple[str, str]] = []
+    for n in reversed(range(len(starts))):
+        first, match = starts[n]
+        study_id = match.group(2)
+        last = starts[n + 1][0] if n + 1 < len(starts) else end_of_list
+        if not study_id.startswith("pmid:"):
+            skipped.append((study_id, "a doi: study, left unchanged"))
+            continue
+        record = cache.record(study_id.removeprefix("pmid:"))
+        if isinstance(record, str):
+            skipped.append((study_id, f"record {record}"))
+            continue
+        if not record.journal or not record.journal.strip():
+            skipped.append((study_id, "the record has no journal"))
+            continue
+        field_indent = " " * (len(match.group(1)) + 2)
+        block = lines[first:last]
+        year_at = next((k for k, line in enumerate(block) if re.match(rf"^{field_indent}year: ", line)), None)
+        if year_at is None:
+            skipped.append((study_id, "no year: line found in the block"))
+            continue
+        wanted = _bib_lines(record, field_indent)
+        have = [k for k, line in enumerate(block) if _BIB_LINE.match(line) and _indent_of(line) == len(field_indent)]
+        if [block[k] for k in have] == wanted:
+            unchanged.append(study_id)
+            continue
+        new_block = [line for k, line in enumerate(block) if k not in have]
+        at = next(k for k, line in enumerate(new_block) if re.match(rf"^{field_indent}year: ", line)) + 1
+        new_block[at:at] = wanted
+        lines[first:last] = new_block
+        filled.append(study_id)
+    return BibliographyResult("\n".join(lines), filled[::-1], unchanged[::-1], skipped[::-1])
+
+
+# ---------------------------------------------------------------------------
 # Command line
 # ---------------------------------------------------------------------------
+
+
+def _bibliography_command(args: argparse.Namespace) -> int:
+    paths = args.paths or [Path("cards")]
+    files: list[Path] = []
+    for p in paths:
+        files += sorted(f for f in p.glob("*.yaml") if f.name != CHANGELOG_NAME) if p.is_dir() else [p]
+    cache = CacheReader(args.cache_dir)
+    total_filled = total_unchanged = total_skipped = 0
+    for f in files:
+        text = f.read_bytes().decode("utf-8")
+        result = fill_bibliography(text, cache)
+        if result.text != text:
+            reparsed = yaml.safe_load(result.text)
+            original = yaml.safe_load(text)
+            for s in reparsed["studies"]:
+                s.pop("authors", None), s.pop("journal", None), s.pop("doi", None)
+            for s in original["studies"]:
+                s.pop("authors", None), s.pop("journal", None), s.pop("doi", None)
+            if reparsed != original:
+                print(f"{f}: refused, the edit would change something other than the three fields", file=sys.stderr)
+                return 1
+            if args.write:
+                f.write_bytes(result.text.encode("utf-8"))
+        total_filled += len(result.filled)
+        total_unchanged += len(result.unchanged)
+        total_skipped += len(result.skipped)
+        for sid in result.filled:
+            print(f"{f}: {'filled' if args.write else 'would fill'} {sid}")
+        for sid, why in result.skipped:
+            print(f"{f}: LEFT UNCHANGED {sid}: {why}")
+    verb = "filled" if args.write else "would fill"
+    print(f"{verb} {total_filled} stud(ies), {total_unchanged} already right, {total_skipped} left unchanged")
+    return 0
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -1118,8 +1251,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     chk = sub.add_parser("check", help="check studies on cards and drafts against the cached records (offline)")
     chk.add_argument("paths", nargs="*", type=Path, help="files or directories (default: cards/ and drafts/)")
     chk.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
+    bib = sub.add_parser(
+        "bibliography",
+        help="copy authors, journal and doi from the cached PubMed records onto the studies of cards (offline)",
+    )
+    bib.add_argument("paths", nargs="*", type=Path, help="files or directories (default: cards/)")
+    bib.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
+    bib.add_argument("--write", action="store_true", help="write the files (default: only report)")
     args = parser.parse_args(argv)
 
+    if args.command == "bibliography":
+        return _bibliography_command(args)
     paths = args.paths or [p for p in (Path("cards"), Path("drafts")) if p.is_dir()]
     count, issues = check_paths(paths, args.cache_dir)
     for item in issues:

@@ -182,6 +182,9 @@ studies:
   - id: pmid:39804551
     title: "Incidence and Prevalence of Post-COVID-19 Myalgic Encephalomyelitis: A Report from the Observational RECOVER-Adult Study."
     year: 2025
+    authors: [Vernon SD, Zheng T, Do H, Marconi VC, Jason LA, Singer NG, Natelson BH, Sherif ZA, Bonilla HF, Taylor E, Mullington JM, Ashktorab H, Laiyemo AO, Brim H, Patterson TF, Akintonwa TT, Sekar A, Peluso MJ, Maniar N, Bateman L, Horwitz LI, Hess R, NIH Researching COVID to Enhance Recovery (RECOVER) Consortium]
+    journal: Journal of general internal medicine
+    doi: 10.1007/s11606-024-09290-9
     cohort: long_covid
     # IOM 2015, applied to self-reported symptoms (full text: PEM and OI each from one survey question).
     case_definition: IOM2015
@@ -209,6 +212,9 @@ studies:
   - id: pmid:41901562
     title: Assessment and Incidence Determination of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Following a SARS-CoV-2 Infection in a Prospective Cohort of Hospital Employees.
     year: 2026
+    authors: [Tack M, Gruber R, Betting L, Herbrandt S, Wu S, Schlößer B, Häussermann P, Maegele M, Schlang G, Mattner F]
+    journal: Medicina (Kaunas, Lithuania)
+    doi: 10.3390/medicina62030480
     cohort: long_covid
     case_definition: CCC
     case_definition_source: abstract
@@ -230,6 +236,9 @@ studies:
   - id: pmid:39046739
     title: Myalgic Encephalomyelitis/Chronic Fatigue Syndrome After SARS-CoV-2 Infection.
     year: 2024
+    authors: [Unger ER, Lin JS, Wisk LE, Yu H, L'Hommedieu M, Lavretsky H, Montoy JCC, Gottlieb MA, Rising KL, Gentile NL, Santangelo M, Venkatesh AK, Rodriguez RM, Hill MJ, Geyer RE, Kean ER, Saydah S, McDonald SA, Huebinger R, Idris AH, Dorney J, Hota B, Spatz ES, Stephens KA, Weinstein RA, Elmore JG, Innovative Support for Patients with SARS-CoV-2 Infections Registry (INSPIRE) Group]
+    journal: JAMA network open
+    doi: 10.1001/jamanetworkopen.2024.23555
     cohort: long_covid
     case_definition: IOM2015
     case_definition_source: fulltext
@@ -257,6 +266,9 @@ studies:
   - id: pmid:9926075
     title: Incidence, risk and prognosis of acute and chronic fatigue syndromes and psychiatric disorders after glandular fever.
     year: 1998
+    authors: [White PD, Thomas JM, Amess J, Crawford DH, Grover SA, Kangro HO, Clare AW]
+    journal: 'The British journal of psychiatry : the journal of mental science'
+    doi: 10.1192/bjp.173.6.475
     cohort: me_cfs
     # No open full text; the abstract names no case definition. TODO: verify.
     case_definition: unverified
@@ -277,6 +289,9 @@ studies:
   - id: pmid:12145392
     title: "Chronic fatigue following infection by Coxiella burnetii (Q fever): ten-year follow-up of the 1989 UK outbreak cohort."
     year: 2002
+    authors: [Wildman MJ, Smith EG, Groves J, Beattie JM, Caul EO, Ayres JG]
+    journal: 'QJM : monthly journal of the Association of Physicians'
+    doi: 10.1093/qjmed/95.8.527
     cohort: me_cfs
     # No open full text; the abstract names no CFS definition. TODO: verify.
     case_definition: unverified
@@ -298,6 +313,9 @@ studies:
   - id: pmid:16950834
     title: "Post-infective and chronic fatigue syndromes precipitated by viral and non-viral pathogens: prospective cohort study."
     year: 2006
+    authors: [Hickie I, Davenport T, Wakefield D, Vollmer-Conna U, Cameron B, Vernon SD, Reeves WC, Lloyd A, Dubbo Infection Outcomes Study Group]
+    journal: BMJ (Clinical research ed.)
+    doi: 10.1136/bmj.38933.585764.AE
     cohort: me_cfs
     # PMC1569956 exists but Europe PMC returned no open full text; the abstract says "diagnostic criteria for chronic
     # fatigue syndrome" without naming them. TODO: verify.
@@ -320,6 +338,9 @@ studies:
   - id: pmid:33367564
     title: "Risks for Developing Myalgic Encephalomyelitis/Chronic Fatigue Syndrome in College Students Following Infectious Mononucleosis: A Prospective Cohort Study."
     year: 2021
+    authors: [Jason LA, Cotler J, Islam MF, Sunnquist M, Katz BZ]
+    journal: 'Clinical infectious diseases : an official publication of the Infectious Diseases Society of America'
+    doi: 10.1093/cid/ciaa1886
     cohort: me_cfs
     # PMC8664491 exists but Europe PMC returned no open full text; the abstract says "met criteria for ME/CFS" and
     # "meeting >1 set of criteria" without naming them. TODO: verify.
@@ -343,6 +364,9 @@ studies:
   - id: pmid:7752755
     title: "Postinfectious fatigue: prospective cohort study in primary care."
     year: 1995
+    authors: [Wessely S, Chalder T, Hirsch S, Pawlikowska T, Wallace P, Wright DJ]
+    journal: Lancet (London, England)
+    doi: 10.1016/s0140-6736(95)92537-6
     cohort: me_cfs
     # No open full text; the abstract says "various criteria for chronic fatigue syndrome". TODO: verify.
     case_definition: unverified
@@ -365,6 +389,9 @@ studies:
   - id: pmid:34240822
     title: "Incidence of chronic Q fever and chronic fatigue syndrome: A 6 year follow-up of a large Q fever outbreak."
     year: 2022
+    authors: [Ankert J, Frosinski J, Weis S, Boden K, Pletz MW]
+    journal: Transboundary and emerging diseases
+    doi: 10.1111/tbed.14224
     cohort: me_cfs
     # The abstract names the CDC Short Form Symptom Inventory (an instrument), not a case definition; no open full
     # text. TODO: verify which criteria the inventory was scored against.
@@ -386,6 +413,9 @@ studies:
   - id: pmid:42516718
     title: "Risks of autoimmune and inflammatory post-acute COVID-19 conditions: a network cohort study in six European countries, the USA and Korea."
     year: 2026
+    authors: [Burkard TM, López-Güell K, Català M, Burn E, Delmestri A, Khalid S, Jödicke AM, Dedman D, Oyinlola J, Abellan A, Pérez-Crespo L, Mercadé-Besora N, Duarte-Salles T, Prieto-Alhambra D, Arinze J, Mosseveld M, Kolde R, Meléndez J, López-Blasco R, Martínez Á, Valdivieso B, Delseny D, Mercier G, Kim C, Kim JW, Kostka K, Ramírez-Anguita JM, Mayer MA, Trinh NTH, Nordeng H, Paredes R, Uusküla A, Nishimura A, Loste C, Mateu L, Xie J]
+    journal: BMJ public health
+    doi: 10.1136/bmjph-2024-001686
     # Outcome is ME/CFS diagnosis or symptom codes, not a recognised definition, so `me_cfs` and not `long_covid`
     # (must not carry the label). Full text: ME/CFS diagnoses IRR 0.98 (0.86 to 1.11); symptoms 1.48 (0.91 to 2.40);
     # high heterogeneity between databases (CPRD GOLD 2.03, CPRD Aurum 0.89).
@@ -408,6 +438,9 @@ studies:
   - id: pmid:26475444
     title: Chronic fatigue syndrome/myalgic encephalomyelitis (CFS/ME) is associated with pandemic influenza infection, but not with an adjuvanted pandemic influenza vaccine.
     year: 2015
+    authors: [Magnus P, Gunnes N, Tveito K, Bakken IJ, Ghaderi S, Stoltenberg C, Hornig M, Lipkin WI, Trogstad L, Håberg SE]
+    journal: Vaccine
+    doi: 10.1016/j.vaccine.2015.10.018
     cohort: me_cfs
     # Outcome: "CFS/ME, as diagnosed in the specialist health care services (diagnostic code G93.3 in the International
     # Classification of Diseases, Version 10)" (abstract). A diagnosis code is not a case definition: `none`.
@@ -428,6 +461,9 @@ studies:
   - id: pmid:37881452
     title: "Typing myalgic encephalomyelitis by infection at onset: A DecodeME study."
     year: 2023
+    authors: [Bretherick AD, McGrath SJ, Devereux-Cooke A, Leary S, Northwood E, Redshaw A, Stacey P, Tripp C, Wilson J, Chowdhury S, Lewis I, Almelid Ø, Baby SV, Baker T, Becher H, Boutin T, Clyde M, Garcia D, Ireland J, Kerr SM, McDowall E, Perry D, Samms GL, Vitart V, Wolfe JC, Ponting CP]
+    journal: NIHR open research
+    doi: 10.3310/nihropenres.13421.4
     cohort: me_cfs
     # Analysed: everyone who self-reported a diagnosis by a health professional; the full text says 14,789 (86.6%)
     # met CCC and/or IOM/NAM criteria, but the onset analysis is not limited to them.
@@ -451,6 +487,9 @@ studies:
   - id: pmid:33889154
     title: "Delineating the Association Between Soluble CD26 and Autoantibodies Against G-Protein Coupled Receptors, Immunological and Cardiovascular Parameters Identifies Distinct Patterns in Post-Infectious vs. Non-Infection-Triggered Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
     year: 2021
+    authors: [Szklarski M, Freitag H, Lorenz S, Becker SC, Sotzny F, Bauer S, Hartwig J, Heidecke H, Wittke K, Kedor C, Hanitsch LG, Grabowski P, Sepúlveda N, Scheibenbogen C]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2021.644548
     cohort: me_cfs
     # The abstract names no case definition and no sample size, and names no control group, though it reports a
     # difference only in the female cohort. TODO: verify from the full text.
@@ -473,6 +512,9 @@ studies:
   - id: pmid:39896874
     title: "Post infectious fatigue and circadian rhythm disruption in long-COVID and other infections: a need for further research."
     year: 2025
+    authors: [Livieratos A, Lockley SW, Tsiodras S]
+    journal: EClinicalMedicine
+    doi: 10.1016/j.eclinm.2025.103073
     cohort: long_covid
     case_definition: none
     case_definition_source: abstract
@@ -493,6 +535,9 @@ studies:
   - id: pmid:41598987
     title: "Autonomic Dysfunction in Patients with Acute Infection with Coxiella burnetii."
     year: 2025
+    authors: [Milovanović B, Marković N, Ristanović E, Atanasievska Kujović S, Đorđevski N, Petrovic M, Milošević M, Bulatovic S, Bojić M]
+    journal: Pathogens (Basel, Switzerland)
+    doi: 10.3390/pathogens15010003
     cohort: me_cfs
     # The abstract names no ME/CFS case definition, and the infected group is mixed (polymorphic symptoms, dysautonomia or ME/CFS). TODO: verify from the full text.
     # Head-up tilt testing was done only in the infected group. How many of the 100 had ME/CFS is not stated in the abstract.

@@ -57,6 +57,9 @@ STUDIES_COLUMNS = (
     "id",
     "title",
     "year",
+    "authors",
+    "journal",
+    "doi",
     "cohort",
     "case_definition",
     "case_definition_source",
@@ -76,9 +79,13 @@ STUDIES_COLUMNS = (
 LINKS_COLUMNS = ("source", "target", "target_kind", "target_name", "support", "text", "sources")
 
 
+DATASET_DOI = "10.5281/zenodo.24333249"  # the Zenodo concept DOI: it points to every archived version
+DATASET_DOI_URL = f"https://doi.org/{DATASET_DOI}"
+
+
 def citation_text(built: str) -> str:
-    """How to cite the dataset. No DOI: the dataset has none (P4)."""
-    return f"ME Atlas contributors ({built[:4]}). {TITLE}. Version {built}. {SITE_URL}"
+    """How to cite the dataset: ends with the concept DOI as a link."""
+    return f"ME Atlas contributors ({built[:4]}). {TITLE}. Version {built}. {SITE_URL} {DATASET_DOI_URL}"
 
 
 # ---------------------------------------------------------------------------
@@ -123,6 +130,8 @@ def dataset_json(
             "version": built,
             "site_url": SITE_URL,
             "repository_url": REPO_URL,
+            "doi": DATASET_DOI,
+            "doi_url": DATASET_DOI_URL,
             "licence": LICENCE_ID,
             "licence_url": LICENCE_URL,
             "rights_note": RIGHTS_NOTE,
@@ -237,32 +246,55 @@ def bib_key(study_id: str) -> str:
     return re.sub(r"[^A-Za-z0-9._/+-]", "_", study_id.replace(":", "", 1))
 
 
+def bib_person(name: str) -> str:
+    """One author name for the ``author`` field, in braces so a multi-part surname stays one name."""
+    return "{" + bib_escape(name) + "}"
+
+
 def bibtex(cards_studies: Sequence[Study], url_of: Callable[[str], str]) -> str:
-    """One ``@misc`` entry per study, in the given order. No author or journal is written: the cards hold neither."""
+    """One entry per study, in the given order. A study with ``authors`` and ``journal`` is an ``@article`` with the
+    author names joined by `` and ``, the journal and the DOI (when it has one); any other study is a ``@misc`` with
+    title, year and link only, as the card holds nothing more."""
     entries = []
     for s in cards_studies:
         kind, _, value = s.id.partition(":")
-        lines = [
-            f"@misc{{{bib_key(s.id)},",
-            f"  title = {{{bib_escape(s.title)}}},",
-            f"  year = {{{s.year}}},",
-            f"  url = {{{url_of(s.id)}}},",
-        ]
-        lines.append(f"  note = {{PMID: {value}}}" if kind == "pmid" else f"  doi = {{{value}}}")
+        article = bool(s.authors) and bool(s.journal)
+        lines = [f"@{'article' if article else 'misc'}{{{bib_key(s.id)},"]
+        if article:
+            assert s.authors and s.journal
+            lines.append(f"  author = {{{' and '.join(bib_person(a) for a in s.authors)}}},")
+        lines.append(f"  title = {{{bib_escape(s.title)}}},")
+        if article:
+            assert s.journal
+            lines.append(f"  journal = {{{bib_escape(s.journal)}}},")
+        lines += [f"  year = {{{s.year}}},"]
+        if article and s.doi and kind != "doi":
+            lines.append(f"  doi = {{{s.doi}}},")
+        lines.append(f"  url = {{{url_of(s.id)}}},")
+        if kind == "pmid":
+            lines.append(f"  note = {{PMID: {value}}}")
+        else:
+            lines.append(f"  doi = {{{value}}}")
         lines.append("}")
         entries.append("\n".join(lines) + "\n")
     return "\n".join(entries)
 
 
 def ris(cards_studies: Sequence[Study], url_of: Callable[[str], str]) -> str:
-    """One RIS record per study, in the given order, with CRLF line ends as the RIS specification requires."""
+    """One RIS record per study, in the given order, with CRLF line ends as the RIS specification requires.
+    A study with bibliographic fields also gets one ``AU`` line per author, ``JO`` and ``DO``."""
     lines: list[str] = []
     for s in cards_studies:
         kind, _, value = s.id.partition(":")
+        lines.append(f"TY  - {'UNPB' if s.preprint else 'JOUR'}")
+        lines += [f"AU  - {' '.join(a.split())}" for a in s.authors or []]
+        lines.append(f"TI  - {' '.join(s.title.split())}")
+        if s.journal:
+            lines.append(f"JO  - {' '.join(s.journal.split())}")
+        lines.append(f"PY  - {s.year}")
+        if s.doi:
+            lines.append(f"DO  - {s.doi}")
         lines += [
-            f"TY  - {'UNPB' if s.preprint else 'JOUR'}",
-            f"TI  - {' '.join(s.title.split())}",
-            f"PY  - {s.year}",
             f"UR  - {url_of(s.id)}",
             f"AN  - PMID:{value}" if kind == "pmid" else f"DO  - {value}",
             "ER  - ",
@@ -286,6 +318,7 @@ def readme(*, built: str, draft_preview: bool) -> str:
         f"Version (build date): {built}",
         f"Site: {SITE_URL}",
         f"Repository: {REPO_URL}",
+        f"DOI: {DATASET_DOI_URL}",
         f"Licence: {LICENCE_ID} ({LICENCE_URL})",
         RIGHTS_NOTE,
         "",
@@ -310,7 +343,7 @@ def readme(*, built: str, draft_preview: bool) -> str:
         "card-format.md   The meaning of every field. This is the only field definition.",
         "README.txt       This file.",
         "citations/       One BibTeX file (.bib) and one RIS file (.ris) per card, one entry per study.",
-        "                 They hold the title, year and link of each study; the cards hold no authors or journal.",
+        "                 They hold the authors, title, journal, year, DOI and link of each study.",
         "",
         "Lists inside a CSV cell are joined with '; '. CSV is UTF-8 with a header row.",
         "The meaning of every field is in card-format.md.",

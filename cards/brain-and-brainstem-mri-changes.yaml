@@ -228,6 +228,9 @@ studies:
   - id: pmid:34355438
     title: Diffusion tensor imaging reveals neuronal microstructural changes in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2021
+    authors: [Thapaliya K, Marshall-Gradisnik S, Staines D, Barnden L]
+    journal: The European journal of neuroscience
+    doi: 10.1111/ejn.15413
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -248,6 +251,9 @@ studies:
   - id: pmid:31671321
     title: Intra brainstem connectivity is impaired in chronic fatigue syndrome.
     year: 2019
+    authors: [Barnden LR, Shan ZY, Staines DR, Marshall-Gradisnik S, Finegan K, Ireland T, Bhuta S]
+    journal: NeuroImage. Clinical
+    doi: 10.1016/j.nicl.2019.102045
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -267,6 +273,9 @@ studies:
   - id: pmid:30497131
     title: Hyperintense sensorimotor T1 spin echo MRI is associated with brainstem abnormality in chronic fatigue syndrome.
     year: 2018
+    authors: [Barnden LR, Shan ZY, Staines DR, Marshall-Gradisnik S, Finegan K, Ireland T, Bhuta S]
+    journal: NeuroImage. Clinical
+    doi: 10.1016/j.nicl.2018.07.011
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: abstract
@@ -286,6 +295,9 @@ studies:
   - id: pmid:38347875
     title: Subcortical and default mode network connectivity is impaired in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2023
+    authors: [Inderyas M, Thapaliya K, Marshall-Gradisnik S, Barth M, Barnden L]
+    journal: Frontiers in neuroscience
+    doi: 10.3389/fnins.2023.1318094
     cohort: me_cfs
     case_definition: CCC  # "CCC and/or ICC"
     case_definition_source: fulltext
@@ -305,6 +317,9 @@ studies:
   - id: pmid:36937672
     title: Brainstem volume changes in myalgic encephalomyelitis/chronic fatigue syndrome and long COVID patients.
     year: 2023
+    authors: [Thapaliya K, Marshall-Gradisnik S, Barth M, Eaton-Fitch N, Barnden L]
+    journal: Frontiers in neuroscience
+    doi: 10.3389/fnins.2023.1125208
     cohort: me_cfs  # the 8 long COVID patients met the WHO definition, not an ME/CFS definition; not used
     # Patients met both CCC and ICC. The abstract says "CCC or ICC criteria"; the full text sentence below says
     # "CCC and ICC".
@@ -325,6 +340,9 @@ studies:
   - id: pmid:29021956
     title: Grey and white matter differences in Chronic Fatigue Syndrome - A voxel-based morphometry study.
     year: 2018
+    authors: [Finkelmeyer A, He J, Maclachlan L, Watson S, Gallagher P, Newton JL, Blamire AM]
+    journal: NeuroImage. Clinical
+    doi: 10.1016/j.nicl.2017.09.024
     cohort: me_cfs
     case_definition: Fukuda
     case_definition_source: fulltext
@@ -344,6 +362,9 @@ studies:
   - id: pmid:35355311
     title: Volumetric differences in hippocampal subfields and associations with clinical measures in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2022
+    authors: [Thapaliya K, Staines D, Marshall-Gradisnik S, Su J, Barnden L]
+    journal: Journal of neuroscience research
+    doi: 10.1002/jnr.25048
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -367,6 +388,9 @@ studies:
   - id: pmid:39804864
     title: "Hippocampal subfield volume alterations and associations with severity measures in long COVID and ME/CFS: A 7T MRI study."
     year: 2025
+    authors: [Thapaliya K, Marshall-Gradisnik S, Eaton-Fitch N, Barth M, Inderyas M, Barnden L]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0316625
     cohort: me_cfs  # the long COVID patients met the WHO definition, not an ME/CFS definition; not used
     case_definition: CCC  # "CCC and/or ICC"; Table 1: 17 CCC and ICC, 12 CCC only
     case_definition_source: fulltext
@@ -385,6 +409,9 @@ studies:
   - id: pmid:34975370
     title: Submaximal Exercise Provokes Increased Activation of the Anterior Default Mode Network During the Resting State as a Biomarker of Postexertional Malaise in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Rayhan RU, Baraniuk JN]
+    journal: Frontiers in neuroscience
+    doi: 10.3389/fnins.2021.748426
     cohort: me_cfs
     case_definition: CCC  # patients met both Fukuda and CCC
     case_definition_source: fulltext
@@ -408,6 +435,9 @@ studies:
   - id: pmid:42539798
     title: Microstructural alterations in brain tissue of ME/CFS and long COVID using diffusion tensor imaging and diffusion kurtosis imaging.
     year: 2026
+    authors: [Singh TB, Marshall-Gradisnik S, Barnden L, Eaton-Fitch N, Huynh TH, Inderyas M, Thapaliya K]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2026.1824498
     cohort: me_cfs  # the 19 long COVID patients met the WHO definition, not an ME/CFS definition; not used
     case_definition: CCC  # "CCC or ICC"
     case_definition_source: fulltext
@@ -429,6 +459,9 @@ studies:
   - id: pmid:40624094
     title: Distinct white matter alteration patterns in post-infectious and gradual onset chronic fatigue syndrome revealed by diffusion MRI.
     year: 2025
+    authors: [Yu Q, Kwiatek RA, Del Fante P, Bonner A, Calhoun VD, Bateman GA, Yamamura T, Shan ZY]
+    journal: Scientific reports
+    doi: 10.1038/s41598-025-09379-z
     cohort: me_cfs
     # "CCC-consistent diagnosis by two clinicians" counts as CCC (ruling 2026-11-01, as for 41834684).
     case_definition: CCC
@@ -455,6 +488,9 @@ studies:
   - id: pmid:21560176
     title: "A brain MRI study of chronic fatigue syndrome: evidence of brainstem dysfunction and altered homeostasis."
     year: 2011
+    authors: [Barnden LR, Crouch B, Kwiatek R, Burnet R, Mernone A, Chryssidis S, Scroop G, Del Fante P]
+    journal: NMR in biomedicine
+    doi: 10.1002/nbm.1692
     cohort: me_cfs
     # "Canadian (36)": reference 36 in the full text is Carruthers et al., the 2003 Canadian clinical working case
     # definition, so CCC. Patients met Fukuda as well.
@@ -477,6 +513,9 @@ studies:
   - id: pmid:28216087
     title: Neural consequences of post-exertion malaise in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2017
+    authors: [Cook DB, Light AR, Light KC, Broderick G, Shields MR, Dougherty RJ, Meyer JD, VanRiper S, Stegner AJ, Ellingson LD, Vernon SD]
+    journal: Brain, behavior, and immunity
+    doi: 10.1016/j.bbi.2017.02.009
     cohort: me_cfs
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -497,6 +536,9 @@ studies:
   - id: pmid:25353054
     title: Right arcuate fasciculus abnormality in chronic fatigue syndrome.
     year: 2015
+    authors: [Zeineh MM, Kang J, Atlas SW, Raman MM, Reiss AL, Norris JL, Valencia I, Montoya JG]
+    journal: Radiology
+    doi: 10.1148/radiol.14141079
     cohort: me_cfs
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -516,6 +558,9 @@ studies:
   - id: pmid:15955487
     title: Gray matter volume reduction in the chronic fatigue syndrome.
     year: 2005
+    authors: [de Lange FP, Kalkman JS, Bleijenberg G, Hagoort P, van der Meer JW, Toni I]
+    journal: NeuroImage
+    doi: 10.1016/j.neuroimage.2005.02.037
     cohort: me_cfs
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -534,6 +579,9 @@ studies:
   - id: pmid:37331007
     title: "What lies beneath: White matter microstructure in pediatric myalgic encephalomyelitis/chronic fatigue syndrome using diffusion MRI."
     year: 2023
+    authors: [Josev EK, Chen J, Seal M, Scheinberg A, Cole RC, Rowe K, Lubitz L, Knight SJ]
+    journal: Journal of neuroscience research
+    doi: 10.1002/jnr.25223
     cohort: me_cfs
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -553,6 +601,9 @@ studies:
   - id: pmid:42819213
     title: 'FreeSurfer-based amygdala subfield volumetry in long COVID and ME/CFS: clinical and immunological correlations.'
     year: 2026
+    authors: [Kimura Y, Sato W, Shigemoto Y, Kagaya R, Hayakawa A, Kumazawa Y, Shin I, Amano K, Yamamura T, Sato N]
+    journal: Frontiers in neurology
+    doi: 10.3389/fneur.2026.1913553
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext

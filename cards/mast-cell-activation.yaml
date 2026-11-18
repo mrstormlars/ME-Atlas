@@ -181,6 +181,9 @@ studies:
   - id: pmid:27362406
     title: Novel characterisation of mast cell phenotypes from peripheral blood mononuclear cells in chronic fatigue syndrome/myalgic encephalomyelitis patients.
     year: 2017
+    authors: [Nguyen T, Johnston S, Chacko A, Gibson D, Cepon J, Smith P, Staines D, Marshall-Gradisnik S]
+    journal: Asian Pacific journal of allergy and immunology
+    doi: 10.12932/ap0771
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: abstract
@@ -202,6 +205,9 @@ studies:
   - id: pmid:29223146
     title: Investigation of mast cell toll-like receptor 3 in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis and Systemic Mastocytosis using the novel application of autoMACS magnetic separation and flow cytometry.
     year: 2018
+    authors: [Balinas C, Nguyen T, Johnston S, Smith P, Staines D, Marshall-Gradisnik S]
+    journal: Asian Pacific journal of allergy and immunology
+    doi: 10.12932/AP-200517-0086
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: abstract
@@ -225,6 +231,9 @@ studies:
   - id: pmid:10884641
     title: 'Salivary gland changes in chronic fatigue syndrome: a case-controlled preliminary histologic study.'
     year: 2000
+    authors: [Woo SB, Schacterle RS, Komaroff AL, Gallagher GT]
+    journal: Oral surgery, oral medicine, oral pathology, oral radiology, and endodontics
+    doi: 10.1067/moe.2000.107363
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -246,6 +255,9 @@ studies:
   - id: pmid:11570618
     title: IgE levels are the same in chronic fatigue syndrome (CFS) and control subjects when stratified by allergy skin test results and rhinitis types.
     year: 2001
+    authors: [Repka-Ramirez MS, Naranch K, Park YJ, Velarde A, Clauw D, Baraniuk JN]
+    journal: 'Annals of allergy, asthma & immunology : official publication of the American College of Allergy, Asthma, & Immunology'
+    doi: 10.1016/S1081-1206(10)62229-6
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -265,6 +277,9 @@ studies:
   - id: pmid:8568124
     title: Double-blind placebo-controlled study of the efficacy of oral terfenadine in the treatment of chronic fatigue syndrome.
     year: 1996
+    authors: [Steinberg P, McNutt BE, Marshall P, Schenck C, Lurie N, Pheley A, Peterson PK]
+    journal: The Journal of allergy and clinical immunology
+    doi: 10.1016/s0091-6749(96)70290-7
     cohort: me_cfs
     case_definition: unverified
     case_definition_source: null
@@ -285,6 +300,9 @@ studies:
   - id: pmid:41300853
     title: The Clinical Relevance of Mast Cell Activation in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2025
+    authors: [Rohrhofer J, Ebner L, Schweighardt J, Stingl M, Untersmayr E]
+    journal: Diagnostics (Basel, Switzerland)
+    doi: 10.3390/diagnostics15222828
     cohort: me_cfs
     # Quote is for the 383-patient Vienna cohort. The 687-patient online survey (CCCFS) is self-reported; its case
     # definition was not checked.
@@ -311,6 +329,9 @@ studies:
   - id: pmid:42327760
     title: Elevated serum levels of interleukin-11 and matrix metalloproteinase-9 in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2026
+    authors: [Chinnappan B, Kempuraj D, Aenlle KK, Middleton A, Day KS, Kothuru SP, Joshi RS, Klimas NG, Theoharides TC]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2026.1827700
     cohort: me_cfs
     # Patients met both Fukuda and CCC; recorded as CCC (the stricter of the two).
     case_definition: CCC
@@ -335,6 +356,9 @@ studies:
   - id: pmid:33996867
     title: Adolescent and Young Adult ME/CFS After Confirmed or Probable COVID-19.
     year: 2021
+    authors: [Petracek LS, Suskauer SJ, Vickers RF, Patel NR, Violand RL, Swope RL, Rowe PC]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2021.668944
     cohort: long_covid
     # Text names the IOM criteria for patient 1 only. For all three: "As shown in Table 2, all three participants
     # met criteria for ME/CFS"; Table 2's columns are the IOM 2015 items, and the IOM 2015 report is reference 3

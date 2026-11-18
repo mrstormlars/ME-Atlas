@@ -201,6 +201,9 @@ studies:
     # PubMed lists publication type "Comment" because the paper is commented on; it is an original study.
     title: Deficient butyrate-producing capacity in the gut microbiome is associated with bacterial network disturbances and fatigue symptoms in ME/CFS.
     year: 2023
+    authors: [Guo C, Che X, Briese T, Ranjan A, Allicock O, Yates RA, Cheng A, March D, Hornig M, Komaroff AL, Levine S, Bateman L, Vernon SD, Klimas NG, Montoya JG, Peterson DL, Lipkin WI, Williams BL]
+    journal: Cell host & microbe
+    doi: 10.1016/j.chom.2023.01.004
     cohort: me_cfs
     # Full text (PMC10183837) also: "ME/CFS cases met the requirements of both the 1994 CDC1 and the 2003 Canadian
     # consensus criteria8 for ME/CFS." Recorded CCC (met both).
@@ -231,6 +234,9 @@ studies:
   - id: pmid:41387992
     title: Alterations in gut microbiota and associated metabolites in patients with chronic fatigue syndrome.
     year: 2025
+    authors: [Cheng X, Wang W, Xu T, Wang Y, Zhen X, Man W, Gao S, Yin Y]
+    journal: Scientific reports
+    doi: 10.1038/s41598-025-27564-y
     cohort: me_cfs
     # IOM 2015 (SEID) together with a 2023 consensus guideline; recorded IOM2015. Full text PMC12700865.
     case_definition: IOM2015
@@ -257,6 +263,9 @@ studies:
   - id: pmid:27338587
     title: Reduced diversity and altered composition of the gut microbiome in individuals with myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2016
+    authors: [Giloteaux L, Goodrich JK, Walters WA, Levine SM, Ley RE, Hanson MR]
+    journal: Microbiome
+    doi: 10.1186/s40168-016-0171-4
     cohort: me_cfs
     # Fukuda: flag "does not require PEM". Full text adds that most, perhaps all, also fit SEID; not used.
     case_definition: Fukuda
@@ -281,6 +290,9 @@ studies:
   - id: pmid:28441964
     title: Fecal metagenomic profiles in subgroups of patients with myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2017
+    authors: [Nagy-Szakal D, Williams BL, Mishra N, Che X, Lee B, Bateman L, Klimas NG, Komaroff AL, Levine S, Montoya JG, Peterson DL, Ramanan D, Jain K, Eddy ML, Hornig M, Lipkin WI]
+    journal: Microbiome
+    doi: 10.1186/s40168-017-0261-y
     cohort: me_cfs
     # Two sentences in the full text (PMC5405467) differ: "who met the 1994 CDC Fukuda [17] and the 2003 Canadian
     # consensus criteria" (Study population) and "and/or" (Methods). Recorded Fukuda, the lower rank, from the "and/or"
@@ -305,6 +317,9 @@ studies:
   - id: pmid:37744357
     title: "Increased gut permeability and bacterial translocation are associated with fibromyalgia and myalgic encephalomyelitis/chronic fatigue syndrome: implications for disease-related biomarker discovery."
     year: 2023
+    authors: [Martín F, Blanco-Suárez M, Zambrano P, Cáceres O, Almirall M, Alegre-Martín J, Lobo B, González-Castro AM, Santos J, Domingo JC, Jurek J, Castro-Marrero J]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2023.1253121
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -324,6 +339,9 @@ studies:
   - id: pmid:41006438
     title: The gut microbial composition is different in chronic fatigue syndrome than in healthy controls.
     year: 2025
+    authors: [Prylińska-Jaśkowiak M, Tabisz H, Kujawski S, Godlewska BR, Słomko J, Januszko-Giergielewicz B, Murovska M, Morten KJ, Sokołowski Ł, Zalewski P]
+    journal: Scientific reports
+    doi: 10.1038/s41598-025-16438-y
     cohort: me_cfs
     # Fukuda: flag "does not require PEM". 32 patients met the criteria; 7 patients and 7 controls gave no stool, so
     # 25 vs 16 were analysed (full text PMC12475486: "Seven patients with CFS and 7 HCs did not provide stool samples";
@@ -347,6 +365,9 @@ studies:
   - id: pmid:37396339
     title: Suppressed immune and metabolic responses to intestinal damage-associated microbial translocation in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2023
+    authors: [Uhde M, Indart AC, Green PHR, Yolken RH, Cook DB, Shukla SK, Vernon SD, Alaedini A]
+    journal: Brain, behavior, & immunity - health
+    doi: 10.1016/j.bbih.2023.100627
     cohort: me_cfs
     # Primary cohorts (Solve ME/CFS Initiative and GSK collection, per Irlbeck 2014): "met both the Fukuda and the
     # Canadian diagnostic criteria (Fukuda et al., 1994; Carruthers, 2007)". Recorded CCC (met both); the Canadian
@@ -380,6 +401,9 @@ studies:
   - id: pmid:26683192
     title: Changes in Gut and Plasma Microbiome following Exercise Challenge in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2015
+    authors: [Shukla SK, Cook D, Meyer J, Vernon SD, Le T, Clevidence D, Robertson CE, Schrodi SJ, Yale S, Frank DN]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0145453
     cohort: me_cfs
     case_definition: Fukuda  # flag "does not require PEM"
     case_definition_source: fulltext
@@ -403,6 +427,9 @@ studies:
   - id: pmid:36758521
     title: Multi-'omics of gut microbiome-host interactions in short- and long-term myalgic encephalomyelitis/chronic fatigue syndrome patients.
     year: 2023
+    authors: [Xiong R, Gunter C, Fleming E, Vernon SD, Bateman L, Unutmaz D, Oh J]
+    journal: Cell host & microbe
+    doi: 10.1016/j.chom.2023.01.001
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; PMC copy is not open access
     case_definition_source: null
@@ -422,6 +449,9 @@ studies:
   - id: pmid:23791918
     title: High-throughput 16S rRNA gene sequencing reveals alterations of intestinal microbiota in myalgic encephalomyelitis/chronic fatigue syndrome patients.
     year: 2013
+    authors: [Frémont M, Coomans D, Massart S, De Meirleir K]
+    journal: Anaerobe
+    doi: 10.1016/j.anaerobe.2013.06.002
     cohort: me_cfs
     case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text
     case_definition_source: null
@@ -441,6 +471,9 @@ studies:
   - id: pmid:42351611
     title: Comparative Gut Microbiome Alterations in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome and Long COVID-19 Syndrome.
     year: 2026
+    authors: [Donchev D, Nikolova R, Vaseva K, Taskov H, Murdjeva M, Maes M, Ivanov IN]
+    journal: Biomedicines
+    doi: 10.3390/biomedicines14061183
     cohort: me_cfs  # also has a long COVID group; the card cites it for the ME/CFS comparison
     case_definition: IOM2015
     case_definition_source: fulltext
@@ -463,6 +496,9 @@ studies:
   - id: pmid:37516837
     title: "Randomized, double-blinded, placebo-controlled pilot study: efficacy of faecal microbiota transplantation on chronic fatigue syndrome."
     year: 2023
+    authors: [Salonen T, Jokinen E, Satokari R, Lahtinen P]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-023-04227-y
     cohort: me_cfs
     # "[17]" = "Beyond Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: Redefining an Illness", IOM 2015 (full text
     # PMC10386223 reference list).
@@ -484,6 +520,9 @@ studies:
   - id: pmid:19338686
     title: A randomized, double-blind, placebo-controlled pilot study of a probiotic in emotional symptoms of chronic fatigue syndrome.
     year: 2009
+    authors: [Rao AV, Bested AC, Beaulne TM, Katzman MA, Iorio C, Berardi JM, Logan AC]
+    journal: Gut pathogens
+    doi: 10.1186/1757-4749-1-6
     cohort: me_cfs
     # "[13]" = Carruthers BM et al., "Myalgic encephalomyelitis/chronic fatigue syndrome: Clinical working case
     # definition, diagnostic and treatment protocols" (CCC 2003), full text PMC2664325 reference list. Recorded CCC
@@ -509,6 +548,9 @@ studies:
   - id: pmid:41516296
     title: "Gut Microbiome and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS): Insights into Disease Mechanisms."
     year: 2025
+    authors: [Nikolova R, Donchev D, Vaseva K, Ivanov IN]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27010425
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext
@@ -529,6 +571,9 @@ studies:
   - id: pmid:31330791
     title: "Pathological Mechanisms Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
     year: 2019
+    authors: [Missailidis D, Annesley SJ, Fisher PR]
+    journal: Diagnostics (Basel, Switzerland)
+    doi: 10.3390/diagnostics9030080
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext

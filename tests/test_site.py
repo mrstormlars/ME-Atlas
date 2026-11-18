@@ -1198,7 +1198,7 @@ def test_no_page_loads_anything_from_another_host(proj):
     allowed = {site.study_url(s.id) for s in card.studies} | {w.url for w in card.working_on_it}
     allowed |= {site.study_url(s) for e in changelog_entries() for s in e["sources"]}
     allowed |= {site.REPO_URL, site.REPO_ISSUES_URL}  # the footer's error-report line
-    allowed |= {export.LICENCE_URL}  # the data page's licence
+    allowed |= {export.LICENCE_URL, export.DATASET_DOI_URL}  # the data page: the licence and the dataset DOI
     allowed |= {site.REPO_URL + "/tree/main/audits", site.REPO_URL + "/pulls?q=is%3Apr"}  # the methods page
     seen: set[str] = set()
     for path in html_files(proj.out):

@@ -250,6 +250,9 @@ studies:
   - id: pmid:42399727
     title: "Association between light exposure patterns and multidimensional health outcomes in individuals with myalgic encephalomyelitis/chronic fatigue syndrome: findings from an observational cross-sectional cohort study."
     year: 2026
+    authors: [Cambras T, Domingo JC, Sanmartín-Sentañes R, Alegre-Martín J, Castro-Marrero J]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-026-08556-6
     cohort: me_cfs
     # Text says "2011 Canadian Consensus Criteria (also commonly referred to as ICC)" and cites reference 29,
     # Carruthers 2011, "Myalgic encephalomyelitis: International Consensus Criteria": recorded as ICC.
@@ -278,6 +281,9 @@ studies:
   - id: pmid:29874259
     title: Circadian rhythm abnormalities and autonomic dysfunction in patients with Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
     year: 2018
+    authors: [Cambras T, Castro-Marrero J, Zaragoza MC, Díez-Noguera A, Alegre J]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0198106
     cohort: me_cfs
     # Every patient met both Fukuda and CCC (full text: "fulfilled both the 1994 CDC/Fukuda definition [29] and 2003
     # Canadian criteria for CFS/ME [30]"); recorded as the stricter CCC. Survey entry wrote Fukuda.
@@ -301,6 +307,9 @@ studies:
   - id: pmid:36902264
     title: "Skin Temperature Circadian Rhythms and Dysautonomia in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: The Role of Endothelin-1 in the Vascular Tone Dysregulation."
     year: 2023
+    authors: [Cambras T, Zerón-Rugerio MF, Díez-Noguera A, Zaragozá MC, Domingo JC, Sanmartin-Sentañes R, Alegre-Martin J, Castro-Marrero J]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms24054835
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -327,6 +336,9 @@ studies:
   - id: pmid:9513740
     title: Core body temperature is normal in chronic fatigue syndrome.
     year: 1998
+    authors: [Hamilos DL, Nutter D, Gershtenson J, Redmond DP, Clementi JD, Schmaling KB, Make BJ, Jones JF]
+    journal: Biological psychiatry
+    doi: 10.1016/s0006-3223(97)83214-3
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -346,6 +358,9 @@ studies:
   - id: pmid:11318826
     title: Circadian rhythm of core body temperature in subjects with chronic fatigue syndrome.
     year: 2001
+    authors: [Hamilos DL, Nutter D, Gershtenson J, Ikle D, Hamilos SS, Redmond DP, Di Clementi JD, Schmaling KB, Jones JF]
+    journal: Clinical physiology (Oxford, England)
+    doi: 10.1046/j.1365-2281.2001.00321.x
     cohort: me_cfs
     case_definition: CDC_unspecified
     case_definition_source: abstract
@@ -365,6 +380,9 @@ studies:
   - id: pmid:21532961
     title: Sleep-wake behavior in chronic fatigue syndrome.
     year: 2011
+    authors: [Rahman K, Burton A, Galbraith S, Lloyd A, Vollmer-Conna U]
+    journal: Sleep
+    doi: 10.1093/sleep/34.5.671
     cohort: me_cfs
     # Free-to-read PMC page (not open access), cached as PMC3079947.html via `europepmc pmcpage`. The quote's "CFS1"
     # is the footnote to reference 1, Fukuda K et al. 1994, "The chronic fatigue syndrome: a comprehensive approach to
@@ -389,6 +407,9 @@ studies:
   - id: pmid:15451649
     title: Chronic fatigue syndrome impairs circadian rhythm of activity level.
     year: 2004
+    authors: [Tryon WW, Jason L, Frankenberry E, Torres-Harding S]
+    journal: Physiology & behavior
+    doi: 10.1016/j.physbeh.2004.07.005
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text. TODO: verify.
     case_definition_source: null
@@ -407,6 +428,9 @@ studies:
   - id: pmid:28470767
     title: Sleep-wake rhythm disturbances and perceived sleep in adolescent chronic fatigue syndrome.
     year: 2017
+    authors: [Pedersen M, Ekstedt M, Småstuen MC, Wyller VB, Sulheim D, Fagermoen E, Winger A, Pedersen E, Hrubos-Strøm H]
+    journal: Journal of sleep research
+    doi: 10.1111/jsr.12547
     cohort: me_cfs
     case_definition: unverified  # NorCAPITAL baseline; not in the abstract; no open full text. TODO: verify.
     case_definition_source: null
@@ -426,6 +450,9 @@ studies:
   - id: pmid:8842569
     title: Dissociation of body-temperature and melatonin secretion circadian rhythms in patients with chronic fatigue syndrome.
     year: 1996
+    authors: [Williams G, Pirmohamed J, Minors D, Waterhouse J, Buchan I, Arendt J, Edwards RH]
+    journal: Clinical physiology (Oxford, England)
+    doi: 10.1111/j.1475-097x.1996.tb00722.x
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text. TODO: verify (UK, could be Oxford).
     case_definition_source: null
@@ -445,6 +472,9 @@ studies:
   - id: pmid:10606381
     title: Melatonin levels in women with fibromyalgia and chronic fatigue syndrome.
     year: 1999
+    authors: [Korszun A, Sackett-Lundeen L, Papadopoulos E, Brucksch C, Masterson L, Engelberg NC, Haus E, Demitrack MA, Crofford L]
+    journal: The Journal of rheumatology
+    doi: null
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text. TODO: verify.
     case_definition_source: null
@@ -464,6 +494,9 @@ studies:
   - id: pmid:39037125
     title: "Sleep and circadian rhythm alterations in myalgic encephalomyelitis/chronic fatigue syndrome and post-COVID fatigue syndrome and its association with cardiovascular risk factors: A prospective cohort study."
     year: 2024
+    authors: [Zerón-Rugerio MF, Zaragozá MC, Domingo JC, Sanmartín-Sentañes R, Alegre-Martin J, Castro-Marrero J, Cambras T]
+    journal: Chronobiology international
+    doi: 10.1080/07420528.2024.2380020
     # 23 of 54 patients had post-COVID ME/CFS; case definition unverified, so recorded as me_cfs (no long COVID label).
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text. TODO: verify.
@@ -485,6 +518,9 @@ studies:
   - id: pmid:12423324
     title: "Therapy of circadian rhythm disorders in chronic fatigue syndrome: no symptomatic improvement with melatonin or phototherapy."
     year: 2002
+    authors: [Williams G, Waterhouse J, Mugarza J, Minors D, Hayden K]
+    journal: European journal of clinical investigation
+    doi: 10.1046/j.1365-2362.2002.01058.x
     cohort: me_cfs
     # Abstract: "Thirty patients with unexplained fatigue for > 6 months"; no criteria named, no open full text.
     # TODO: verify (UK, could be Oxford). C6 warns because 30 is written as a word.
@@ -507,6 +543,9 @@ studies:
   - id: pmid:12213500
     title: Activity rhythm degrades after strenuous exercise in chronic fatigue syndrome.
     year: 2002
+    authors: [Ohashi K, Yamamoto Y, Natelson BH]
+    journal: Physiology & behavior
+    doi: 10.1016/s0031-9384(02)00808-9
     cohort: me_cfs
     case_definition: unverified  # not in the abstract; no open full text. TODO: verify.
     case_definition_source: null

@@ -202,6 +202,9 @@ studies:
   - id: pmid:32154656
     title: Peripheral endothelial dysfunction in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2020
+    authors: [Scherbakov N, Szklarski M, Hartwig J, Sotzny F, Lorenz S, Meyer A, Grabowski P, Doehner W, Scheibenbogen C]
+    journal: ESC heart failure
+    doi: 10.1002/ehf2.12633
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -224,6 +227,9 @@ studies:
   - id: pmid:33829023
     title: Reduced Endothelial Function in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome-Results From Open-Label Cyclophosphamide Intervention Study.
     year: 2021
+    authors: [Sørland K, Sandvik MK, Rekeland IG, Ribu L, Småstuen MC, Mella O, Fluge Ø]
+    journal: Frontiers in medicine
+    doi: 10.3389/fmed.2021.642710
     cohort: me_cfs
     case_definition: CCC
     case_definition_source: fulltext
@@ -247,6 +253,9 @@ studies:
   - id: pmid:36730360
     title: Endothelial dysfunction in ME/CFS patients.
     year: 2023
+    authors: [Sandvik MK, Sørland K, Leirgul E, Rekeland IG, Stavland CS, Mella O, Fluge Ø]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0280942
     cohort: me_cfs
     # CCC is inherited from the parent RituxME trial (pmid:30934066): the paper refers to the main article for
     # inclusion; this is its sentence naming the trial's criteria.
@@ -270,6 +279,9 @@ studies:
   - id: pmid:35317812
     title: Endothelial dysfunction and altered endothelial biomarkers in patients with post-COVID-19 syndrome and chronic fatigue syndrome (ME/CFS).
     year: 2022
+    authors: [Haffke M, Freitag H, Rudolf G, Seifert M, Doehner W, Scherbakov N, Hanitsch L, Wittke K, Bauer S, Konietschke F, Paul F, Bellmann-Strobl J, Kedor C, Scheibenbogen C, Sotzny F]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-022-03346-2
     # long_covid: ME/CFS after COVID-19, CCC verified; turns on the long COVID label. PCS patients without ME/CFS
     # (16) are not used as ME/CFS findings.
     cohort: long_covid
@@ -295,6 +307,9 @@ studies:
   - id: pmid:42625188
     title: "Microvascular remodeling and endothelial dysfunction across the post-COVID-19 spectrum: a prospective observational case-control study."
     year: 2026
+    authors: [Wallraven T, Günthner R, Lethen I, Ribeiro A, Lech M, Oertel FC, Reeß LG, Haller B, Streese L, Hanssen H, Basta-Wunderle M, Schmaderer C]
+    journal: BMC medicine
+    doi: 10.1186/s12916-026-05144-9
     # long_covid: PCS patients assessed for ME/CFS with CCC; only the 62 meeting CCC are used.
     cohort: long_covid
     case_definition: CCC
@@ -318,6 +333,9 @@ studies:
   - id: pmid:36902264
     title: "Skin Temperature Circadian Rhythms and Dysautonomia in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: The Role of Endothelin-1 in the Vascular Tone Dysregulation."
     year: 2023
+    authors: [Cambras T, Zerón-Rugerio MF, Díez-Noguera A, Zaragozá MC, Domingo JC, Sanmartin-Sentañes R, Alegre-Martin J, Castro-Marrero J]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms24054835
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -340,6 +358,9 @@ studies:
   - id: pmid:38600563
     title: "Association of circulating biomarkers with illness severity measures differentiates myalgic encephalomyelitis/chronic fatigue syndrome and post-COVID-19 condition: a prospective pilot cohort study."
     year: 2024
+    authors: [Domingo JC, Battistini F, Cordobilla B, Zaragozá MC, Sanmartin-Sentañes R, Alegre-Martin J, Cambras T, Castro-Marrero J]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-024-05148-0
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -362,6 +383,9 @@ studies:
   - id: pmid:29426834
     title: Value of Circulating Cytokine Profiling During Submaximal Exercise Testing in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2018
+    authors: [Moneghetti KJ, Skhiri M, Contrepois K, Kobayashi Y, Maecker H, Davis M, Snyder M, Haddad F, Montoya JG]
+    journal: Scientific reports
+    doi: 10.1038/s41598-018-20941-w
     cohort: me_cfs
     # The paper continues: "Therefore, in labeling our patients this refers to the revised international consensus
     # criteria from 2011". Recorded as Fukuda (the criteria applied, plus required PEM).
@@ -388,6 +412,9 @@ studies:
   - id: pmid:33671082
     title: Effects of Post-Exertional Malaise on Markers of Arterial Stiffness in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome.
     year: 2021
+    authors: [Bond J, Nielsen T, Hodges L]
+    journal: International journal of environmental research and public health
+    doi: 10.3390/ijerph18052366
     cohort: me_cfs
     case_definition: ICC
     case_definition_source: fulltext
@@ -411,6 +438,9 @@ studies:
   - id: pmid:25455721
     title: Effect of intermittent vitamin D3 on vascular function and symptoms in chronic fatigue syndrome--a randomised controlled trial.
     year: 2015
+    authors: [Witham MD, Adams F, McSwiggan S, Kennedy G, Kabir G, Belch JJ, Khan F]
+    journal: 'Nutrition, metabolism, and cardiovascular diseases : NMCD'
+    doi: 10.1016/j.numecd.2014.10.007
     cohort: me_cfs
     # Fukuda and Canadian named together; recorded as CCC (patients met both, per the sentence).
     case_definition: CCC
@@ -433,6 +463,9 @@ studies:
   - id: pmid:36015078
     title: The Occurrence of Hyperactivated Platelets and Fibrinaloid Microclots in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2022
+    authors: [Nunes JM, Kruger A, Proal A, Kell DB, Pretorius E]
+    journal: Pharmaceuticals (Basel, Switzerland)
+    doi: 10.3390/ph15080931
     cohort: me_cfs
     # Full text (PMC9413879) checked: "Participants had to have been diagnosed for longer than 6 months and were asked to
     # complete an International Consensus Criteria (ICC) [48] based questionnaire to gain an understanding of their
@@ -458,6 +491,9 @@ studies:
   - id: pmid:39014464
     title: Data-independent LC-MS/MS analysis of ME/CFS plasma reveals a dysregulated coagulation system, endothelial dysfunction, downregulation of complement machinery.
     year: 2024
+    authors: [Nunes M, Vlok M, Proal A, Kell DB, Pretorius E]
+    journal: Cardiovascular diabetology
+    doi: 10.1186/s12933-024-02315-x
     cohort: me_cfs
     # Full text (PMC11253362): "we randomly selected a subset of ME/CFS and healthy control PPP samples from our previous
     # study cohort"; patients recruited via the ME/CFS Foundation of South Africa and completed the ICC Symptom
@@ -480,6 +516,9 @@ studies:
   - id: pmid:16479189
     title: Is chronic fatigue syndrome associated with platelet activation?
     year: 2006
+    authors: [Kennedy G, Norris G, Spence V, McLaren M, Belch JJ]
+    journal: 'Blood coagulation & fibrinolysis : an international journal in haemostasis and thrombosis'
+    doi: 10.1097/01.mbc.0000214705.80997.73
     cohort: me_cfs
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -499,6 +538,9 @@ studies:
   - id: pmid:18031285
     title: Low-grade inflammation and arterial wave reflection in patients with chronic fatigue syndrome.
     year: 2008
+    authors: [Spence VA, Kennedy G, Belch JJ, Hill A, Khan F]
+    journal: 'Clinical science (London, England : 1979)'
+    doi: 10.1042/CS20070274
     cohort: me_cfs
     case_definition: unverified  # abstract says "well-characterized patients"; no open full text
     case_definition_source: null
@@ -517,6 +559,9 @@ studies:
   - id: pmid:12950326
     title: Prolonged acetylcholine-induced vasodilatation in the peripheral microcirculation of patients with chronic fatigue syndrome.
     year: 2003
+    authors: [Khan F, Spence V, Kennedy G, Belch JJ]
+    journal: Clinical physiology and functional imaging
+    doi: 10.1046/j.1475-097x.2003.00511.x
     cohort: me_cfs
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -535,6 +580,9 @@ studies:
   - id: pmid:37832757
     title: People with Long COVID and Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Exhibit Similarly Impaired Vascular Function.
     year: 2025
+    authors: [Mclaughlin M, Sanal-Hayes NEM, Hayes LD, Berry EC, Sculthorpe NF]
+    journal: The American journal of medicine
+    doi: 10.1016/j.amjmed.2023.09.013
     cohort: me_cfs  # the 17 long COVID patients are not used
     case_definition: unverified  # not stated in the abstract; no open full text
     case_definition_source: null
@@ -554,6 +602,9 @@ studies:
   - id: pmid:41516145
     title: "Insights into the Complex Biological Network Underlying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome."
     year: 2025
+    authors: [Dudova D, Bozhkova M, Petrov S, Nikolova R, Kalfova T, Ivanovska M, Vaseva K, Nikolova M, Ivanov IN]
+    journal: International journal of molecular sciences
+    doi: 10.3390/ijms27010268
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract

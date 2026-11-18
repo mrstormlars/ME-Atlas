@@ -127,6 +127,9 @@ studies:
   - id: pmid:27099524
     title: Natural killer cells and single nucleotide polymorphisms of specific ion channels and receptor genes in myalgic encephalomyelitis/chronic fatigue syndrome.
     year: 2016
+    authors: [Marshall-Gradisnik S, Huth T, Chacko A, Johnston S, Smith P, Staines D]
+    journal: The application of clinical genetics
+    doi: 10.2147/TACG.S99405
     cohort: me_cfs
     # "1994 CDC criteria" = Fukuda. Full text (PMC4821384) confirms: the sentence cites ref 45, Fukuda et al. 1994.
     case_definition: Fukuda
@@ -146,6 +149,9 @@ studies:
   - id: pmid:20520837
     title: "Biomarkers in chronic fatigue syndrome: evaluation of natural killer cell function and dipeptidyl peptidase IV/CD26."
     year: 2010
+    authors: [Fletcher MA, Zeng XR, Maher K, Levis S, Hurwitz B, Antoni M, Broderick G, Klimas NG]
+    journal: PloS one
+    doi: 10.1371/journal.pone.0010817
     cohort: me_cfs
     # Full text (PMC2876037): "CDC clinical diagnostic criteria [1], [2]"; ref 1 is Fukuda et al. 1994 and ref 2 is
     # Reeves et al. 2003 on ambiguities in the 1994 definition, so this reads as Fukuda.
@@ -166,6 +172,9 @@ studies:
   - id: pmid:21619669
     title: Immunological abnormalities as potential biomarkers in Chronic Fatigue Syndrome/Myalgic Encephalomyelitis.
     year: 2011
+    authors: [Brenu EW, van Driel ML, Staines DR, Ashton KJ, Ramos SB, Keane J, Klimas NG, Marshall-Gradisnik SM]
+    journal: Journal of translational medicine
+    doi: 10.1186/1479-5876-9-81
     cohort: me_cfs
     # Full text (PMC3120691): grouping "based on the CDC 1994 case definition symptom criteria"; the preceding
     # sentence cites ref 4, Fukuda et al. 1994. Note: the same paragraph says participants completed a questionnaire
@@ -187,6 +196,9 @@ studies:
   - id: pmid:22571715
     title: Longitudinal investigation of natural killer cells and cytokines in chronic fatigue syndrome/myalgic encephalomyelitis.
     year: 2012
+    authors: [Brenu EW, van Driel ML, Staines DR, Ashton KJ, Hardcastle SL, Keane J, Tajouri L, Peterson D, Ramos SB, Marshall-Gradisnik SM]
+    journal: Journal of translational medicine
+    doi: 10.1186/1479-5876-10-88
     cohort: me_cfs
     # Full text (PMC3464733): "1994 CDC criteria" = Fukuda. Participants were recruited "from an existing cohort",
     # citing ref 25 = pmid:21619669, so the two cohorts overlap.
@@ -207,6 +219,9 @@ studies:
   - id: pmid:8148445
     title: Decreased natural killer cell activity is associated with severity of chronic fatigue immune dysfunction syndrome.
     year: 1994
+    authors: [Ojo-Amaize EA, Conley EJ, Peter JB]
+    journal: 'Clinical infectious diseases : an official publication of the Infectious Diseases Society of America'
+    doi: 10.1093/clinids/18.supplement_1.s157
     cohort: me_cfs
     # Abstract says "criteria established by the Centers for Disease Control and Prevention (Atlanta)"; the source
     # does not name the version, so CDC_unspecified (founder ruling 2026-11-01). No open full text.
@@ -230,6 +245,9 @@ studies:
   - id: pmid:9683556
     title: Dysfunction of natural killer activity in a family with chronic fatigue syndrome.
     year: 1998
+    authors: [Levine PH, Whiteside TL, Friberg D, Bryant J, Colclough G, Herberman RB]
+    journal: Clinical immunology and immunopathology
+    doi: 10.1006/clin.1998.4554
     cohort: me_cfs
     # Abstract says "CFS case definition as recommended by the Centers for Disease Control and Prevention"; the source
     # does not name the version, so CDC_unspecified (founder ruling 2026-11-01). No open full text. Published Jul 1998,
@@ -253,6 +271,9 @@ studies:
   - id: pmid:28694809
     title: Unperturbed Cytotoxic Lymphocyte Phenotype and Function in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.
     year: 2017
+    authors: [Theorell J, Bileviciute-Ljungar I, Tesi B, Schlums H, Johnsgaard MS, Asadi-Azarbaijani B, Bolle Strand E, Bryceson YT]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2017.00723
     cohort: me_cfs
     # "Canada 2003 criteria" = CCC. Full text (PMC5483846) confirms: "All 48 patients fulfilled Canada 2003 (2)
     # criteria for ME/CFS", ref 2 = Carruthers et al. 2003.
@@ -277,6 +298,9 @@ studies:
   - id: pmid:7983659
     title: Chronic fatigue syndrome--a controlled cross sectional study.
     year: 1994
+    authors: [Rasmussen AK, Nielsen H, Andersen V, Barington T, Bendtzen K, Hansen MB, Nielsen L, Pedersen BK, Wiik A]
+    journal: The Journal of rheumatology
+    doi: null
     cohort: me_cfs
     # Abstract says "the Centers for Disease Control criteria for CFS"; the source does not name the version, so
     # CDC_unspecified (founder ruling 2026-11-01). No open full text.
@@ -304,6 +328,9 @@ studies:
   - id: pmid:37013608
     title: "Natural killer cytotoxicity in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS): a multi-site clinical assessment of ME/CFS (MCAM) sub-study."
     year: 2023
+    authors: [Querec TD, Lin JS, Chen Y, Helton B, Kogelnik AM, Klimas NG, Peterson DL, Bateman L, Lapp C, Podell RN, Natelson BH, Unger ER, MCAM Study Group]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-023-03958-2
     cohort: me_cfs
     # Full text (PMC10069115) checked: patients enrolled on expert clinician diagnosis; case definitions are cited
     # only as background in the introduction. Mentions of CDC refer to the IRB and the CDC Symptom Inventory
@@ -327,6 +354,9 @@ studies:
   - id: pmid:8985207
     title: "Immune responses associated with chronic fatigue syndrome: a case-control study."
     year: 1997
+    authors: [Mawle AC, Nisenbaum R, Dobbins JG, Gary HE, Stewart JA, Reyes M, Steele L, Schmid DS, Reeves WC]
+    journal: The Journal of infectious diseases
+    doi: 10.1093/infdis/175.1.136
     cohort: me_cfs
     case_definition: unverified  # abstract names no case definition ("rigorously defined cases"); no open full text
     case_definition_source: null
@@ -345,6 +375,9 @@ studies:
   - id: pmid:33777500
     title: Antibody-Dependent Cell-mediated Cytotoxicity (ADCC) in Familial Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS).
     year: 2020
+    authors: [Sung AP, Tang JJ, Guglielmo MJ, Smith-Gagen J, Bateman L, Navarrete-Galvan L, Redelman DD, Hudig D]
+    journal: 'Fatigue : biomedicine, health & behavior'
+    doi: 10.1080/21641846.2021.1876613
     cohort: me_cfs
     case_definition: Fukuda  # abstract: "The patients met the Fukuda diagnostic criteria"; full text (PMC7993113) not open access
     case_definition_source: abstract
@@ -364,6 +397,9 @@ studies:
   - id: pmid:16731230
     title: "Impaired natural immunity, cognitive dysfunction, and physical symptoms in patients with chronic fatigue syndrome: preliminary evidence for a subgroup?"
     year: 2006
+    authors: [Siegel SD, Antoni MH, Fletcher MA, Maher K, Segota MC, Klimas N]
+    journal: Journal of psychosomatic research
+    doi: 10.1016/j.jpsychores.2006.03.001
     cohort: me_cfs
     case_definition: unverified  # abstract names no case definition; no open full text
     case_definition_source: null
@@ -383,6 +419,9 @@ studies:
   - id: pmid:42927120
     title: Transient clinical improvement and immune modulation following recombinant Zoster vaccination in a patient with ME/CFS.
     year: 2026
+    authors: [Bigleri A, Alimo ET, Abouda A, Osman M, Cohen Tervaert JW, Elahi S]
+    journal: Brain, behavior, & immunity - health
+    doi: 10.1016/j.bbih.2026.101388
     cohort: me_cfs
     case_definition: none
     case_definition_source: fulltext
@@ -406,6 +445,9 @@ studies:
   - id: pmid:24068616
     title: "The emerging role of autoimmunity in myalgic encephalomyelitis/chronic fatigue syndrome (ME/cfs)."
     year: 2014
+    authors: [Morris G, Berk M, Galecki P, Maes M]
+    journal: Molecular neurobiology
+    doi: 10.1007/s12035-013-8553-0
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -424,6 +466,9 @@ studies:
   - id: pmid:38970055
     title: "Potential pathophysiological role of the ion channel TRPM3 in myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) and the therapeutic effect of low-dose naltrexone."
     year: 2024
+    authors: [Löhn M, Wirth KJ]
+    journal: Journal of translational medicine
+    doi: 10.1186/s12967-024-05412-3
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -442,6 +487,9 @@ studies:
   - id: pmid:7476598
     title: "Chronic intestinal candidiasis as a possible etiological factor in the chronic fatigue syndrome."
     year: 1995
+    authors: [Cater RE]
+    journal: Medical hypotheses
+    doi: 10.1016/0306-9877(95)90515-4
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
@@ -459,6 +507,9 @@ studies:
   - id: pmid:30915066
     title: 'Corrigendum: Unperturbed Cytotoxic Lymphocyte Phenotype and Function in Myalgic Encephalomyelitis/Chronic Fatigue Syndrome Patients.'
     year: 2019
+    authors: [Theorell J, Bileviciute-Ljungar I, Tesi B, Schlums H, Johnsgaard MS, Asadi-Azarbaijani B, Strand EB, Bryceson YT]
+    journal: Frontiers in immunology
+    doi: 10.3389/fimmu.2019.00350
     cohort: me_cfs
     case_definition: none
     case_definition_source: abstract
