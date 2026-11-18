@@ -1728,3 +1728,10 @@ def test_a_missing_or_invalid_last_run_file_builds_with_a_warning_and_no_line(pr
 def test_the_build_date_is_never_shown_as_the_last_run_date(proj):
     out = built(proj, make_card("lr", "Fictional last run", 2))
     assert "Last searched" not in (out / "index.html").read_text(encoding="utf-8")
+
+
+def test_the_footer_last_run_link_takes_the_muted_footer_colour_and_stays_underlined():
+    css = (site.STATIC_DIR / "site.css").read_text(encoding="utf-8")
+    rule = re.search(r"footer \.last-run a \{([^}]*)\}", css)
+    assert rule is not None
+    assert "color: inherit" in rule.group(1) and "underline" in rule.group(1)
