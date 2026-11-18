@@ -173,6 +173,31 @@ def test_status_blocked_for_a_bot_check_or_a_login_page_even_with_http_200(name)
     assert got.status == "blocked" and got.http_status == 200
 
 
+def test_css_and_form_settings_in_the_source_do_not_make_a_real_page_blocked():
+    # the raw body holds input[type="password"]:focus, a recaptcha class and a captcha setting; the text is real
+    html = fixture("css-and-recaptcha.html").decode()
+    assert "recaptchaSiteKey" in html and 'input[type="password"]' in html
+    got = fetch_status({MAIN: page("css-and-recaptcha.html")})
+    assert got.status == "ok"
+
+
+def test_a_long_page_that_says_just_a_moment_in_its_text_is_not_blocked_but_a_short_one_is():
+    body = (
+        "<html><body><p>"
+        + "Real text about a fictional register. " * 40
+        + "Wait just a moment, please.</p></body></html>"
+    ).encode()
+    assert fetch_status({MAIN: (200, HTML, body, {})}).status == "ok"
+
+
+def test_a_real_password_input_on_a_short_page_is_blocked_but_not_on_a_long_page():
+    form = "<form><input type='PASSWORD' name='pw'></form>"
+    short = f"<html><body><p>{'Members only. ' * 20}</p>{form}</body></html>".encode()
+    assert fetch_status({MAIN: (200, HTML, short, {})}).status == "blocked"
+    long = f"<html><body><p>{'Plenty of real text on this page. ' * 40}</p>{form}</body></html>".encode()
+    assert fetch_status({MAIN: (200, HTML, long, {})}).status == "ok"
+
+
 def test_status_network_error():
     got = fetch_status({MAIN: httpx.ConnectError("refused")})
     assert got.status == "network_error"
@@ -217,6 +242,31 @@ def test_robots_unavailable_on_a_5xx_or_a_network_error_means_not_fetched():
     assert got.status == "robots_unavailable" and MAIN not in [u for _, u in log]
     routes = {f"{HOST}/robots.txt": httpx.ConnectError("refused"), MAIN: page("good-main.html")}
     assert fetch_status(routes).status == "robots_unavailable"
+
+
+def test_a_robots_redirect_is_followed_and_the_final_file_is_parsed():
+    routes = {
+        f"{HOST}/robots.txt": (301, "text/plain", b"", {"location": "https://other.test/robots.txt"}),
+        "https://other.test/robots.txt": (200, "text/plain", fixture("robots-allow.txt"), {}),
+        MAIN: page("good-main.html"),
+        f"{HOST}/private/x": page("good-main.html"),
+    }
+    fetcher = make_fetcher(routes)
+    assert fetcher.fetch(MAIN).status == "ok"
+    assert fetcher.fetch(f"{HOST}/private/x").status == "robots_disallowed"  # the redirected file's rules apply
+
+
+def test_a_robots_redirect_loop_or_too_many_hops_is_robots_unavailable():
+    loop = {
+        f"{HOST}/robots.txt": (301, "text/plain", b"", {"location": f"{HOST}/robots.txt"}),
+        MAIN: page("good-main.html"),
+    }
+    assert fetch_status(loop).status == "robots_unavailable"
+    chain = {f"{HOST}/robots.txt": (301, "text/plain", b"", {"location": f"{HOST}/r1"}), MAIN: page("good-main.html")}
+    for i in range(1, 8):
+        chain[f"{HOST}/r{i}"] = (301, "text/plain", b"", {"location": f"{HOST}/r{i + 1}"})
+    chain[f"{HOST}/r8"] = (200, "text/plain", b"", {})
+    assert fetch_status(chain).status == "robots_unavailable"
 
 
 def test_a_redirect_is_followed_and_the_target_host_robots_file_is_respected():

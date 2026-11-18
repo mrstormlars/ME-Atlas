@@ -80,17 +80,15 @@ FETCH_STATUSES = (
     "not_cached",
 )  # plus http_<code>
 
-# A page whose body holds one of these is a bot check or a login, not the resource's page. Matched on the lower-cased
-# raw body. The fetch never tries to get past one.
-BLOCK_MARKERS = (
-    "captcha",
-    "cf-challenge",
+# A bot check is told from its visible (extracted) text, a login wall from a real password input element on a page
+# with little text; CSS, scripts, attribute values and JSON never count. The fetch never tries to get past either.
+BLOCK_PHRASES = (
     "just a moment",
     "verify you are human",
-    'type="password"',
-    "type='password'",
-    "type=password",
+    "checking your browser",
+    "enable javascript and cookies to continue",
 )
+SHORT_PAGE_CHARS = 1000
 BLOCKED_HTTP = (401, 403, 429)
 
 DRAFT_ENTRY_KEYS = (
@@ -312,14 +310,37 @@ def _error_status(exc: Exception) -> int | None:
     return int(match.group(1)) if match else None
 
 
+class _PasswordFinder(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.found = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "input" and any(k == "type" and (v or "").strip().lower() == "password" for k, v in attrs):
+            self.found = True
+
+    handle_startendtag = handle_starttag
+
+
+def has_password_input(html: str) -> bool:
+    finder = _PasswordFinder()
+    finder.feed(html)
+    finder.close()
+    return finder.found
+
+
 def classify(http_status: int, content_type: str, body: bytes, decoded: str, text: str) -> str:
     """The status of a received page (F5). ``ok`` only for HTTP 200, HTML and at least 200 characters of text."""
-    lowered = decoded.lower()
-    if http_status in BLOCKED_HTTP or any(m in lowered for m in BLOCK_MARKERS):
+    if http_status in BLOCKED_HTTP:
         return "blocked"
+    is_html = "html" in content_type.lower()
+    if is_html and len(text) < SHORT_PAGE_CHARS:
+        lowered = text.lower()
+        if any(phrase in lowered for phrase in BLOCK_PHRASES) or has_password_input(decoded):
+            return "blocked"
     if http_status != 200:
         return f"http_{http_status}"
-    if "html" not in content_type.lower():
+    if not is_html:
         return "not_html"
     if len(text) < MIN_TEXT_CHARS:
         return "no_text"
@@ -397,29 +418,38 @@ class Fetcher:
 
     def _read_robots(self, origin: str) -> urllib.robotparser.RobotFileParser | str:
         parser = urllib.robotparser.RobotFileParser()
-        try:
-            response = get_with_retries(
-                self.http,
-                f"{origin}/robots.txt",
-                params=None,
-                limiter=self._limiter(urlsplit(origin).netloc),
-                sleep=self._sleep,
-                max_retries=self._max_retries,
-                backoff=self._backoff,
-                label=f"robots.txt of {origin}",
-                error=ResourcesError,
-            )
-        except ResourcesError as exc:
-            code = getattr(exc, "status_code", None)
-            if isinstance(code, int) and 400 <= code < 500:
-                parser.allow_all = True
-                return parser
-            return "robots_unavailable"
-        if response.status_code >= 300:
-            return "robots_unavailable"
-        parser.parse(response.text.splitlines())
-        parser.modified()
-        return parser
+        url = f"{origin}/robots.txt"
+        for _ in range(MAX_REDIRECTS + 1):
+            try:
+                response = get_with_retries(
+                    self.http,
+                    url,
+                    params=None,
+                    limiter=self._limiter(urlsplit(url).netloc),
+                    sleep=self._sleep,
+                    max_retries=self._max_retries,
+                    backoff=self._backoff,
+                    label=f"robots.txt of {origin}",
+                    error=ResourcesError,
+                )
+            except ResourcesError as exc:
+                code = getattr(exc, "status_code", None)
+                if isinstance(code, int) and 400 <= code < 500:
+                    parser.allow_all = True
+                    return parser
+                return "robots_unavailable"
+            location = response.headers.get("location")
+            if response.status_code in (301, 302, 303, 307, 308) and location:
+                url = urljoin(url, location)
+                if not _is_url(url):
+                    return "robots_unavailable"
+                continue
+            if response.status_code >= 300:
+                return "robots_unavailable"
+            parser.parse(response.text.splitlines())
+            parser.modified()
+            return parser
+        return "robots_unavailable"  # a loop, or more than MAX_REDIRECTS hops (RFC 9309)
 
     def fetch(self, url: str) -> Page:
         gate = self.robots_status(url)
