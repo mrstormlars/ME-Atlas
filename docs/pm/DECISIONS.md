@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-18 — The site shows when the literature was last searched, from one file the weekly run writes (founder ruling)
+
+- The founder asked for a date of the last weekly run, updated in one place, and suggested a "last updated" date on every page. Asked whether to build the project manager's variant, the founder answered: "Ja, start".
+- `pipeline pr` writes `content/last-run.yaml` by code; the site shows "Last searched for new research: <date>" in the footer of every page and on the front page (pull request 94). A weekly run with no card change still opens a pull request, so the date moves. Only a run that searches the literature (weekly or `--since`) moves the date; a run on hand-picked ids leaves the file alone.
+- The wording is "searched", not "updated", and the cards and the registered-studies page keep their own dates.
+- Why: a page-wide "last updated" would be untrue for a card that has not changed, while "we searched and found nothing new" is what a reader needs to judge how current the atlas is.
+
 ## 2026-11-18 — Registered ongoing studies: four founder rulings and a source rule (idea I-03, with I-15)
 
 - In the brainstorm for I-03 the founder ruled: (1) long COVID studies are included if they are not far too many ("Tell long COVID studiene først, hvis det ikke er altfor mange tar vi dem med"); (2) intervention trials are shown ("Vis behandlingsforsøk også"); (3) country and recruitment status are shown, as neutral facts a patient can find anyway; (4) the step runs with the weekly run, since zero hits does no harm.
