@@ -1,0 +1,5 @@
+# Leads for the catalogue of ME/CFS data resources (docs/plan-data-catalogue.md).
+# A lead is a place to look, not a statement about the resource. Per lead: `id` (kebab-case slug), `url` (the
+# resource's own page) and, when the way to get access is on another page, `access_url`. Nothing else: no name, no
+# description, no value. Every value the site shows comes from the stored page (`resources fetch`, `resources plan`).
+leads: []
