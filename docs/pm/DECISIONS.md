@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-18 — Data catalogue: a rejected value becomes "not stated", operator and countries go, reliability is counted per value (founder ruling)
+
+- The founder saved by hand the pages of the four resources whose hosts refuse an automated request (pull request 97 builds the way in). The run published nothing: the drafter proposed DecodeME and the UK ME/CFS Biobank, and the reviewer rejected both entries on one field each, the operator, taken from a footer; OMF ME/CFS Data Center and Solve Together were excluded because the saved pages do not say how a researcher gets access. Two of four entries rejected is above one in five.
+- The founder said the path had become too complicated and asked for a practical way to finish. The project manager named the cause as two rules of its own plan (one weak field rejects the whole entry; the reject share is counted per entry, where four entries make one reject 25%) and proposed three changes, which the founder accepted: "Ja, forenkle og kjør".
+- (1) A value the reviewer rejects becomes "not stated" and the entry stands; an entry is left out only when the name, the ME/CFS content or the access statement does not hold. (2) The fields `operator` and `countries` are removed from the catalogue. (3) The reliability limit of one in five is counted per value over the run, not per entry.
+- This changes the rule after a failed run, and is recorded as that. What does not change: every value shown carries a quote that code finds in the stored page, nothing is filled from model knowledge, and the inclusion rule is the founder's of the entry below. This replaces, for the data catalogue only, the per-entry reading of guideline 3 (2026-11-17); the registry of studies keeps its own count.
+- Why: with a handful of entries a per-entry count cannot separate an unreliable reading from one weak field, and the operator field caused every reject since pull request 95 while adding little that the link to the resource does not show.
+
 ## 2026-11-18 — Catalogue of ME/CFS data resources: four founder rulings and a source rule (idea I-14)
 
 - In the brainstorm for I-14 the founder ruled: (1) a resource is included when it holds data or samples from people with ME/CFS, researchers outside the owning group can get access, and a public page says how; registers of research, such as the ME/CFS Research Register in Hamburg, are included as a separate category ("ta også med Research Register i Hamburg og lignende som en egen kategori"); (2) ME/CFS resources first, plus resources that expressly cover both ME/CFS and long COVID; (3) no link from a resource to a hypothesis in this round; (4) a resource with no verifiable source page is not shown. The founder accepted the plan (`docs/plan-data-catalogue.md`) with "Ja, commit og start".
