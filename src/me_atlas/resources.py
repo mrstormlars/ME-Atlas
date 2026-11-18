@@ -7,7 +7,7 @@ Command line::
     uv run python -m me_atlas.resources plan [--changed] [--date YYYY-MM-DD]
     uv run python -m me_atlas.resources record-draft --run DIR
     uv run python -m me_atlas.resources record-review --run DIR
-    uv run python -m me_atlas.resources reliability --run DIR
+    uv run python -m me_atlas.resources reliability --run DIR [--correction-of OLD]
     uv run python -m me_atlas.resources check [--cache]
     uv run python -m me_atlas.resources links
 
@@ -1044,7 +1044,8 @@ def reliability_passed(total: int, rejects: int) -> bool:
 
 def reliability(run: Path, today: str) -> tuple[dict[str, Any], list[str]]:
     """The numbers of a run, counted per value: every reviewable value of every entry draft plus one value per
-    exclusion draft."""
+    exclusion draft. The record of a new run replaces the file, so the ``corrections`` of the earlier run (which belong
+    to that run) are dropped; ``correction`` appends one without touching the run's numbers."""
     rows, problems = _decisions(run)
     if problems:
         return {}, problems
@@ -1067,6 +1068,69 @@ def reliability(run: Path, today: str) -> tuple[dict[str, Any], list[str]]:
         "entries": {"drafts": drafts, "written": written, "left_out": drafts - written},
         "exclusions": {"total": ex_total, "rejects": ex_rejects},
         "passed": reliability_passed(total, rejects),
+    }, []
+
+
+def _old_findings(old: Path, lid: str) -> tuple[dict[str, str] | None, str | None]:
+    """The rejected values of a lead in the old run's review, as ``{value key: finding}``, or a refusal."""
+    path = old / f"review-{lid}.json"
+    if not path.is_file():
+        return None, f"{lid}: no review in the earlier run {old.as_posix()}"
+    review = _load_json(path)
+    values = review.get("values") if isinstance(review, dict) else None
+    if not isinstance(values, dict):
+        return None, f"{lid}: the earlier review is not a per-value entry review (an exclusion has nothing to correct)"
+    found = {k: v["finding"] for k, v in values.items() if isinstance(v, dict) and v.get("verdict") == "reject"}
+    if not found:
+        return None, f"{lid}: the earlier review rejected no value (nothing to correct)"
+    return found, None
+
+
+def correction(run: Path, old: Path, record: Any, today: str) -> tuple[dict[str, Any], list[str]]:
+    """One correction round of a rejected value, as the item to append to ``corrections`` in the reliability file.
+
+    ``record`` is the existing reliability file. Refused (no item) when it has no top-level record, when ``old`` is not
+    its ``run``, when a lead of ``run`` has no review in ``old`` or no rejected value there, when the lead was already
+    corrected from ``old``, or when ``run`` holds an exclusion draft. The counting is that of ``reliability``; the
+    item has no ``passed``, and the top-level record is not touched."""
+    if not isinstance(record, dict) or not isinstance(record.get("run"), str) or "values" not in record:
+        return {}, ["the reliability file has no top-level record of a run to correct"]
+    if record["run"] != old.as_posix():
+        return {}, [f"{old.as_posix()} is not the run of the reliability record ({record['run']})"]
+    result, problems = reliability(run, today)
+    if problems:
+        return {}, problems
+    rows, _ = _decisions(run)
+    leads = [lid for lid, _, _, _ in rows]
+    refusals = [
+        f"{lid}: an exclusion draft; a correction redrafts an entry" for lid, _, d, _ in rows if not d["include"]
+    ]
+    done = {
+        lid
+        for item in record.get("corrections") or []
+        if isinstance(item, dict) and item.get("correction_of") == old.as_posix()
+        for lid in item.get("leads") or []
+    }
+    findings: dict[str, Any] = {}
+    for lid in leads:
+        if lid in done:
+            refusals.append(f"{lid}: already corrected once from {old.as_posix()}")
+            continue
+        found, refusal = _old_findings(old, lid)
+        if refusal:
+            refusals.append(refusal)
+        else:
+            findings[lid] = found
+    if refusals:
+        return {}, refusals
+    return {
+        "date": today,
+        "run": run.as_posix(),
+        "correction_of": old.as_posix(),
+        "leads": leads,
+        "findings": findings,
+        "values": result["values"],
+        "entries": result["entries"],
     }, []
 
 
@@ -1365,6 +1429,15 @@ def _build_parser() -> argparse.ArgumentParser:
     ):
         p = sub.add_parser(name, help=text)
         p.add_argument("--run", type=Path, required=True, help="the run directory (data/pipeline/<date>/resources)")
+        if name == "reliability":
+            p.add_argument(
+                "--correction-of",
+                type=Path,
+                default=None,
+                metavar="OLD",
+                help="record --run as the one correction round of the rejected values of run OLD (the run of the "
+                "existing record), appended under 'corrections'; the record's own numbers and pass stay unchanged",
+            )
 
     check = sub.add_parser("check", help="validate registry/resources.yaml")
     check.add_argument("--cache", action="store_true", help="also find every quote in the stored text of its page")
@@ -1440,6 +1513,25 @@ def _run(args: argparse.Namespace, today: str) -> int:
             return 1
         _atomic_write(args.data_file, dump_data(new))
         print(f"OK: {len(new['entries'])} entries in {args.data_file.as_posix()}")
+        return 0
+    if cmd == "reliability" and args.correction_of is not None:
+        if not args.reliability_file.is_file():
+            raise ResourcesError(f"{args.reliability_file}: no reliability file to correct")
+        try:
+            record = yaml.safe_load(args.reliability_file.read_text(encoding="utf-8"))
+        except (OSError, yaml.YAMLError) as exc:
+            raise ResourcesError(f"{args.reliability_file}: cannot read the reliability file: {exc}") from exc
+        item, problems = correction(args.run, args.correction_of, record, today)
+        if _report(problems, "the reliability file is unchanged"):
+            return 1
+        record["corrections"] = [*(record.get("corrections") or []), item]
+        _atomic_write(args.reliability_file, yaml.safe_dump(record, sort_keys=False))
+        v = item["values"]
+        print(
+            f"CORRECTION: {v['rejects']} reject(s) of {v['total']} value(s) ({v['reject_rate']}); "
+            f"{item['entries']['written']} of {item['entries']['drafts']} entry(ies) written; "
+            f"appended to {args.reliability_file.as_posix()}"
+        )
         return 0
     if cmd == "reliability":
         result, problems = reliability(args.run, today)
