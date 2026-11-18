@@ -41,6 +41,7 @@ DATA_FILES = (
     "studies.csv",
     "links.csv",
     "trials.csv",
+    "resources.csv",
     "card-format.md",
     "README.txt",
 )
@@ -100,6 +101,32 @@ TRIALS_COLUMNS = (
     "mapping",
     "mapping_source",
 )
+RESOURCES_COLUMNS = (
+    "id",
+    "name",
+    "operator",
+    "countries",
+    "url",
+    "access_url",
+    "checked",
+    "category",
+    "holds",
+    "access",
+    "covers",
+    "language",
+    "source",
+    "name_quote",
+    "name_page",
+    "operator_quote",
+    "operator_page",
+    "countries_quote",
+    "countries_page",
+    "access_quote",
+    "access_page",
+    "covers_quote",
+    "covers_page",
+    "holds_quotes",
+)
 
 
 DATASET_DOI = "10.5281/zenodo.24333249"  # the Zenodo concept DOI: it points to every archived version
@@ -148,9 +175,13 @@ def dataset_json(
     draft_preview: bool,
     trials: Sequence[Mapping[str, Any]] = (),
     trials_fetched: str | None = None,
+    resources: Sequence[Mapping[str, Any]] = (),
+    resources_checked: str | None = None,
 ) -> tuple[str, dict[str, int]]:
     """The text of ``me-atlas.json`` and its counts. ``trials`` are the entries of ``registry/trials.yaml``, all of
-    them (matched or not, ongoing or not), as the registry file holds them; ``trials_fetched`` is the fetch date."""
+    them (matched or not, ongoing or not), as the registry file holds them; ``trials_fetched`` is the fetch date.
+    ``resources`` are the published entries of ``registry/resources.yaml`` (none unless its reliability test passed)
+    and ``resources_checked`` the run date of that file."""
     ordered = sorted(cards, key=lambda c: c.slug)
     graph = maplib.build_graph(ordered, content)
     numbers = counts(ordered, graph)
@@ -171,11 +202,13 @@ def dataset_json(
             "draft_preview": draft_preview,
             "counts": numbers,
             "trials_fetched": trials_fetched,
+            "resources_checked": resources_checked,
         },
         "cards": [c.model_dump(mode="json") for c in ordered],
         "symptoms": [{"id": s.id, "name": s.name} for s in content.symptoms],
         "questions": [{"id": q.id, "text": q.text} for q in content.questions],
         "trials": [dict(t) for t in trials],
+        "resources": [dict(r) for r in resources],
     }
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n", numbers
 
@@ -272,6 +305,44 @@ def trials_csv(entries: Sequence[Mapping[str, Any]]) -> str:
             )
         )
     return _csv(TRIALS_COLUMNS, rows)
+
+
+def resources_csv(entries: Sequence[Mapping[str, Any]]) -> str:
+    """One row per published entry of ``registry/resources.yaml``; list fields joined with ``; ``; the quotes and the
+    page each came from are columns."""
+    rows = []
+    for e in entries:
+        q = e["quotes"]
+        held = [f"{hold} ({item['page']}): {item['quote']}" for hold, item in q["holds"].items()]
+        rows.append(
+            (
+                e["id"],
+                e["name"],
+                e["operator"],
+                e["countries"],
+                e["url"],
+                e["access_url"],
+                e["checked"],
+                e["category"],
+                e["holds"],
+                e["access"],
+                e["covers"],
+                e["language"],
+                e["source"],
+                q["name"]["quote"],
+                q["name"]["page"],
+                q["operator"]["quote"],
+                q["operator"]["page"],
+                q["countries"]["quote"],
+                q["countries"]["page"],
+                q["access"]["quote"],
+                q["access"]["page"],
+                q["covers"]["quote"],
+                q["covers"]["page"],
+                held,
+            )
+        )
+    return _csv(RESOURCES_COLUMNS, rows)
 
 
 # ---------------------------------------------------------------------------
@@ -399,6 +470,9 @@ def readme(*, built: str, draft_preview: bool) -> str:
         "links.csv        One row per link between cards, symptoms and open questions.",
         "trials.csv       One row per registered study (ClinicalTrials.gov): status and the cards it bears on.",
         "                 A registered study is not evidence and is on no card; fields are copied from the registry.",
+        "resources.csv    One row per listed data resource (ME/CFS datasets, registries, biobanks): what it holds,",
+        "                 how it is accessed, and the quote from its own page that supports each value.",
+        "                 A resource is not evidence; every value is copied from the resource's page.",
         "card-format.md   The meaning of every field. This is the only field definition.",
         "README.txt       This file.",
         "citations/       One BibTeX file (.bib) and one RIS file (.ris) per card, one entry per study.",

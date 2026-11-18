@@ -27,7 +27,7 @@ from jinja2 import ChoiceLoader, Environment, FileSystemLoader, StrictUndefined
 from markupsafe import Markup, escape
 
 from me_atlas import cards as cardlib
-from me_atlas import export, i18n, last_run, map_draw, translations, trials
+from me_atlas import export, i18n, last_run, map_draw, resources, translations, trials
 from me_atlas import map as maplib
 from me_atlas.cards import Card, ChangeLogEntry, SourcedText, Study
 from me_atlas.glossary import (
@@ -434,6 +434,8 @@ class _Shared:
     map_local: dict[str, tuple[dict[str, str], dict[str, str]]] = field(default_factory=dict)
     registry: dict | None = None  # registry/trials.yaml, validated; None when the project has no registry file
     trials_on: bool = False  # registry/reliability.yaml says passed: true (contract S1)
+    resources: dict | None = None  # registry/resources.yaml, validated; None when the project has no such file
+    resources_on: bool = False  # reliability file says passed: true and the data file has an entry (contract S1)
     last_run: dict | None = None  # content/last-run.yaml, validated; None when missing or invalid (no line is shown)
 
 
@@ -892,6 +894,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             txt=txt,
             t=t,
             trials_on=shared.trials_on,
+            resources_on=shared.resources_on,
             last_run=shared.last_run,
             rung_names=rung_names,
             rung_meanings=rung_meanings,
@@ -989,6 +992,16 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             not_listed=trials.unlisted_ongoing(shared.registry),
             study_link=trials.STUDY_URL,
             name_fallback=frozenset(),
+        )
+    if shared.resources_on and shared.resources is not None:
+        rows = sorted(shared.resources["entries"], key=lambda e: (i18n.sort_key(code, e["name"]), e["id"]))
+        render(
+            "resources.html",
+            "resources.html",
+            txt0["page.resources"],
+            checked=shared.resources["checked"],
+            data_rows=[e for e in rows if e["category"] == "data"],
+            register_rows=[e for e in rows if e["category"] == "register"],
         )
     render(
         "methods.html",
@@ -1110,6 +1123,21 @@ def build(
         result.errors = [str(exc)]
         return result
 
+    resources_data: dict | None = None
+    resources_on = False
+    try:
+        if (registry_dir / "resources.yaml").is_file():
+            resources_data = resources.load_data(registry_dir / "resources.yaml")
+            resources_problems = resources.check_data(resources_data)
+            if resources_problems:
+                result.errors = [f"registry/resources.yaml: {p}" for p in resources_problems]
+                return result
+            passed = resources.load_reliability(registry_dir / "resources-reliability.yaml")
+            resources_on = bool(resources.published_entries(resources_data, passed))
+    except resources.ResourcesError as exc:
+        result.errors = [str(exc)]
+        return result
+
     last_run_record, last_run_problems = last_run.load(content_dir / last_run.FILE_NAME, today)
     last_run_warnings = [f"last run: {p}; the page shows no last-run line" for p in last_run_problems]
 
@@ -1134,6 +1162,8 @@ def build(
         map_local=map_local,
         registry=registry,
         trials_on=trials_on,
+        resources=resources_data,
+        resources_on=resources_on,
         last_run=last_run_record,
     )
     pages: dict[str, str] = {}
@@ -1178,6 +1208,8 @@ def _write_data(data_dir: Path, shared: _Shared, card_format: Path) -> list[Path
     """The open data and the citation files, written next to ``static/``; shared by every language."""
     entries = shared.registry["studies"] if shared.registry else []
     fetched = shared.registry["fetched"] if shared.registry else None
+    listed = shared.resources["entries"] if shared.resources and shared.resources_on else []
+    resources_checked = shared.resources["checked"] if shared.resources and shared.resources_on else None
     json_text, _ = export.dataset_json(
         shared.cards,
         shared.map_content,
@@ -1185,6 +1217,8 @@ def _write_data(data_dir: Path, shared: _Shared, card_format: Path) -> list[Path
         draft_preview=shared.drafts,
         trials=entries,
         trials_fetched=fetched,
+        resources=listed,
+        resources_checked=resources_checked,
     )
     texts = {
         "me-atlas.json": json_text,
@@ -1192,6 +1226,7 @@ def _write_data(data_dir: Path, shared: _Shared, card_format: Path) -> list[Path
         "studies.csv": export.studies_csv(shared.cards),
         "links.csv": export.links_csv(shared.cards, shared.map_content),
         "trials.csv": export.trials_csv(entries),
+        "resources.csv": export.resources_csv(listed),
         "README.txt": export.readme(built=shared.built, draft_preview=shared.drafts),
     }
     for card in shared.cards:
