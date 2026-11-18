@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-18 — Authors, journal and DOI go on the cards, copied by code from the fetched record (founder ruling)
+
+- Idea I-05 (pull request 89) first exported citation files with only PMID, title and year, because a study on a card held nothing more. The founder ruled in chat in the I-05 session on 2026-11-18 that the bibliographic fields go on the cards (recorded in the description of pull request 90, which the founder merged).
+- A study has the optional fields `authors`, `journal` and `doi`. Code fills them from the cached PubMed record (`uv run python -m me_atlas.citations bibliography`), the weekly pipeline fills them for a new study, and citation check C13 compares them with the record. No agent writes them. A record with no DOI gives `doi: null`; a record with no authors gives `authors: []`.
+- The fields are bibliographic, not evidence: they bear on no level, badge, contested mark, layer or link, so the change to the 20 cards went in on the mechanical check and a `card-reviewer` comparison of all 288 studies with the cache (0 mismatches), without an audit and without an entry in `cards/changelog.yaml`.
+- The dataset has the Zenodo concept DOI 10.5281/zenodo.24333249 (the founder's release `v2026.11.18`). The founder set the resource type of that first version to Dataset by hand; `.zenodo.json` sets it for later releases.
+- Why: a citation file without authors and journal is of little use to a researcher, and the fields can be copied from a fetched record without any model knowledge (credibility rule 1).
+
 ## 2026-11-17 — The held-back correction of the autoimmunity card is run again with the full texts (founder ruling)
 
 - The first run of the published-card correction on `autoimmunity-autoantibodies-b-cells` was held back after its two audits disagreed. The second audit rejected on abstracts only: the worktree had no `.env`, and the loader then skipped full texts that were already cached. Told this, the founder said: "Flett 84 og 85, og kjør rettingen på nytt".
