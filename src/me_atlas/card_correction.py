@@ -45,6 +45,7 @@ from me_atlas.operations import (
     RemoveComment,
     SetLinkText,
     apply_operations,
+    cached_records,
     comment_target,
     parse_ops,
     tiers,
@@ -307,7 +308,7 @@ def load_round_review(cfg: Config, slug: str, n: int) -> tuple[ReviewFile | None
         return None, f"no review {path.name}"
     try:
         review = _read_review(path)
-        ops = parse_ops(_read_json(cfg.ops_path(slug, None, n)))
+        ops = parse_ops(_read_json(cfg.ops_path(slug, None, n)), cached_records(cfg.cache_dir))
     except (PipelineError, OperationError) as exc:
         return None, str(exc).replace("\n", "; ")
     checks = _round_checks(cfg, slug, n)
@@ -623,7 +624,7 @@ def correct_apply(cfg: Config, slug: str, n: int) -> dict[str, Any]:
             raise PipelineError(f"round 2 needs a valid reject of the review of round 1; found: {found}")
     ops_path = cfg.ops_path(slug, None, n)
     try:
-        ops = parse_ops(_read_json(ops_path))
+        ops = parse_ops(_read_json(ops_path), cached_records(cfg.cache_dir))
     except OperationError as exc:
         raise PipelineError(f"{ops_path} is not a valid operations file: {exc}") from exc
     if problems := ops_problems(card, base_text, ops, review, slug):
@@ -926,7 +927,7 @@ class _State:
         if not self.passed:
             self.hold = f"the checks of round {n} failed"
             return
-        self.ops = parse_ops(_read_json(cfg.ops_path(slug, None, n)))
+        self.ops = parse_ops(_read_json(cfg.ops_path(slug, None, n)), cached_records(cfg.cache_dir))
         self.applied_text = _applied_path(cfg, slug, n).read_text(encoding="utf-8")
         try:
             same = apply_operations(self.base_text, self.ops, validate=False) == self.applied_text

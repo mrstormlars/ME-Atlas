@@ -38,6 +38,7 @@ Each study on the card is checked. Errors unless marked.
 | **C10** Numbers in free text (**warning** on `cards/` and `drafts/` as they stand, **error** on newly applied text) | Every numeral in a free-text item occurs in a source that item cites, or equals the `year`, `n_patients` or `n_controls` of one. See "Numbers in free text" below. | Use the number the cited record gives, cite the record that has it, or remove the claim. A sum or difference needs its derivation: `78 (= 40 + 38)`. |
 | **C11** Author statements (**warning** on `cards/` and `drafts/` as they stand, **error** on newly applied text) | A statement about authors does not contradict the cached author lists. Four cases: (a) a free-text item that states a count of shared authors, citing two or more studies with a cached author list, where the count is outside [exact, loose] for every pair of them; (b) a free-text item that says studies share no authors or are independent groups, where every pair of the studies it cites shares an author by exact name; (c) a `group` that says `first author <Name>` or `last author <Name>` where the record's first (last) author is not that name; (d) a `group` that says `<Name> also on <pmid>` where that record has a cached author list that lacks the name. See "Author statements (C11)" below. | Use the author facts in the context (computed from the records), or remove the statement. |
 | **C12** Erratum on the card (**warning**) | A `pmid:` study whose cached PubMed record lists an erratum (`ErratumIn` link) must have a study on the same card with the erratum's id, with or without `corrects`. A study that is not cached, or a record with no erratum link, gives no issue. | Add the erratum as a study with `corrects: <study id>`, `role: context`, `case_definition: none` (rule V17), through the pipeline; the weekly `prepare` lists it under `errata_on_cards`. |
+| **C13** Bibliographic fields | A study that has `authors`, `journal` or `doi` must have the same value as the cached PubMed record (authors: the same names in the same order; `doi`: `null` when the record has none). Each field present is compared on its own, and the error names the field. A study without the fields is not checked. | Fill them from the record: `uv run python -m me_atlas.citations bibliography --write`. Never edit them by hand. |
 
 When there is no usable record (C1), the other checks for that study are skipped. A DOI-only study without `preprint: true` gets only C7.
 
@@ -124,6 +125,10 @@ The PMC id used to find `<pmcid>.xml` and `<pmcid>.html` is the one in the cache
 ## The TODO rule is not a citation check
 
 "TODO" in text a reader sees (the card name, any sourced text, a study's `finding`) is the card validator's rule V14 (`docs/card-format.md`), not a citation check. Run `uv run python -m me_atlas.cards validate`. This check does not look for it.
+
+## Filling the bibliographic fields
+
+`uv run python -m me_atlas.citations bibliography [--cache-dir DIR] [--write] [paths...]` copies `authors`, `journal` and `doi` from the cached PubMed record onto every `pmid:` study of the cards (default `cards/`). Without `--write` it only reports what it would change. It inserts three lines after the study's `year:` line (or replaces them if they are there) and changes nothing else: no other line, comment or ordering; it refuses a file where the edit would change anything but the three fields. A study with no cached record, a record with no journal, or a `doi:` study is listed as left unchanged. It never touches the network.
 
 ## Tests
 

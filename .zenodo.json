@@ -1,0 +1,16 @@
+{
+  "title": "ME Atlas: evidence cards on the causes of ME/CFS and long COVID",
+  "upload_type": "dataset",
+  "creators": [
+    {
+      "name": "ME Atlas contributors"
+    }
+  ],
+  "description": "Each bar shows how far the evidence for one proposed cause of ME/CFS has come, from an idea to a causal case. The site gives no treatment advice.",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "ME/CFS",
+    "long COVID",
+    "evidence"
+  ]
+}

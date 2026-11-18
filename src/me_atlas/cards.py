@@ -71,6 +71,7 @@ StudyId = Annotated[str, StringConstraints(pattern=r"^(pmid:\d+|doi:10\.\S+)$")]
 NonEmptyStr = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 Slug = Annotated[str, StringConstraints(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")]
 Url = Annotated[str, StringConstraints(pattern=r"^https?://\S+$")]
+Doi = Annotated[str, StringConstraints(pattern=r"^10\.\S+$")]
 
 
 class _Model(BaseModel):
@@ -157,6 +158,11 @@ class Study(_Model):
     id: StudyId
     title: NonEmptyStr
     year: int
+    # Bibliographic fields, copied by code from the fetched PubMed record (``citations bibliography``, or when the
+    # pipeline adds a study). Absent means not yet filled; ``doi: null`` means the record has no DOI. Not evidence.
+    authors: list[NonEmptyStr] | None = None
+    journal: NonEmptyStr | None = None
+    doi: Doi | None = None
     cohort: Literal["me_cfs", "long_covid"]
     case_definition: Literal[
         "CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "CDC_unspecified", "Oxford", "other", "none", "unverified"

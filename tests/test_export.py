@@ -460,7 +460,7 @@ def test_citation_cff_is_valid_yaml_with_the_required_keys_and_the_concept_doi()
     en = yaml.safe_load((REPO_ROOT / "content" / "i18n" / "en.yaml").read_text(encoding="utf-8"))
     lead = re.sub(r"\[\[(?:[^|\]]*\|)?([^\]]*)\]\]", lambda m: m.group(1) or "", en["index.lead"])
     assert cff["abstract"] == lead
-    assert not (REPO_ROOT / ".zenodo.json").exists()
+    assert (REPO_ROOT / ".zenodo.json").is_file()  # Zenodo reads it instead of CITATION.cff
 
 
 # --- the export functions on their own -----
