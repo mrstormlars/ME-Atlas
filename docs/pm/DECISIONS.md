@@ -2,6 +2,22 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-18 — The site shows when the literature was last searched, from one file the weekly run writes (founder ruling)
+
+- The founder asked for a date of the last weekly run, updated in one place, and suggested a "last updated" date on every page. Asked whether to build the project manager's variant, the founder answered: "Ja, start".
+- `pipeline pr` writes `content/last-run.yaml` by code; the site shows "Last searched for new research: <date>" in the footer of every page and on the front page (pull request 94). A weekly run with no card change still opens a pull request, so the date moves. Only a run that searches the literature (weekly or `--since`) moves the date; a run on hand-picked ids leaves the file alone.
+- The wording is "searched", not "updated", and the cards and the registered-studies page keep their own dates.
+- Why: a page-wide "last updated" would be untrue for a card that has not changed, while "we searched and found nothing new" is what a reader needs to judge how current the atlas is.
+
+## 2026-11-18 — Registered ongoing studies: four founder rulings and a source rule (idea I-03, with I-15)
+
+- In the brainstorm for I-03 the founder ruled: (1) long COVID studies are included if they are not far too many ("Tell long COVID studiene først, hvis det ikke er altfor mange tar vi dem med"); (2) intervention trials are shown ("Vis behandlingsforsøk også"); (3) country and recruitment status are shown, as neutral facts a patient can find anyway; (4) the step runs with the weekly run, since zero hits does no harm.
+- The count was 246 ongoing studies with long COVID against 53 without. The project manager read that as workable on one condition, which the founder accepted with the plan ("Ja, commit og start"): the page lists only studies matched to a card; the others get a number and are in the downloadable data.
+- The source rule for registry records (functional spec and methods text): ClinicalTrials.gov only; every shown field is copied by code from the fetched record; a registered study is not evidence and changes nothing on a card; the only AI judgement is which card a study bears on, checked by the review agent and not by the auditor; the list recommends nothing and names no contact.
+- The reliability test passed before anything was published: the reviewer rejected 2 of 103 mappings (1.9%), against the limit of one in five (`registry/reliability.yaml`). Pull request 92, merged on the founder's "Ja, flett 92": 917 studies fetched, 247 ongoing, 40 listed under 12 hypotheses, 8 mappings rejected and not shown.
+- Out of scope by the plan (`docs/plan-trial-registry.md`): finished studies with no published result, other registries, a list of recruiting studies of its own.
+- Why: a researcher or funder looking at a gap needs to see whether someone is already working on it, and the registry gives that without any new claim about a hypothesis.
+
 ## 2026-11-18 — Authors, journal and DOI go on the cards, copied by code from the fetched record (founder ruling)
 
 - Idea I-05 (pull request 89) first exported citation files with only PMID, title and year, because a study on a card held nothing more. The founder ruled in chat in the I-05 session on 2026-11-18 that the bibliographic fields go on the cards (recorded in the description of pull request 90, which the founder merged).
