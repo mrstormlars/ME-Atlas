@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 {% macro lang_attr(entry) %}{% if entry.language != lang %} lang="{{ entry.language }}"{% endif %}{% endmacro %}
-{% macro shown(entry, value) %}{% if value == "not_stated" %}{{ txt("resources.not_stated") }}{% else %}{{ value }}{% endif %}{% endmacro %}
 <h1>{{ txt("resources.h1") }}</h1>
 <p>{{ txt("resources.intro.what") }}</p>
 <p>{{ txt("resources.intro.nodata") }}</p>
@@ -16,13 +15,11 @@
 <h2>{{ txt("resources.data.h2") }}</h2>
 <table class="gaps-table gaps-stack resources-table" id="resources-data-table">
 <caption>{{ txt("resources.data.caption") }}</caption>
-<thead><tr><th scope="col">{{ txt("resources.col.name") }}</th><th scope="col">{{ txt("resources.col.operator") }}</th><th scope="col">{{ txt("resources.col.countries") }}</th><th scope="col">{{ txt("resources.col.holds") }}</th><th scope="col">{{ txt("resources.col.access") }}</th><th scope="col">{{ txt("resources.col.covers") }}</th><th scope="col">{{ txt("resources.col.checked") }}</th></tr></thead>
+<thead><tr><th scope="col">{{ txt("resources.col.name") }}</th><th scope="col">{{ txt("resources.col.holds") }}</th><th scope="col">{{ txt("resources.col.access") }}</th><th scope="col">{{ txt("resources.col.covers") }}</th><th scope="col">{{ txt("resources.col.checked") }}</th></tr></thead>
 <tbody>
 {% for r in data_rows %}
 <tr>
 <th scope="row"{{ lang_attr(r) }}><a href="{{ r.url }}" rel="noopener noreferrer">{{ r.name }}</a></th>
-<td data-label="{{ txt("resources.col.operator") }}"{% if r.operator != "not_stated" %}{{ lang_attr(r) }}{% endif %}>{{ shown(r, r.operator) }}</td>
-<td data-label="{{ txt("resources.col.countries") }}"{% if r.countries != "not_stated" %}{{ lang_attr(r) }}{% endif %}>{% if r.countries == "not_stated" %}{{ txt("resources.not_stated") }}{% else %}{{ r.countries|join(", ") }}{% endif %}</td>
 <td data-label="{{ txt("resources.col.holds") }}">{% for h in r.holds %}{{ txt("resources.holds." ~ h) }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
 <td data-label="{{ txt("resources.col.access") }}">{{ txt("resources.access." ~ r.access) }}</td>
 <td data-label="{{ txt("resources.col.covers") }}">{{ txt("resources.covers." ~ r.covers) }}</td>
@@ -39,13 +36,11 @@
 <h2>{{ txt("resources.register.h2") }}</h2>
 <table class="gaps-table gaps-stack resources-table" id="resources-register-table">
 <caption>{{ txt("resources.register.caption") }}</caption>
-<thead><tr><th scope="col">{{ txt("resources.col.name") }}</th><th scope="col">{{ txt("resources.col.operator") }}</th><th scope="col">{{ txt("resources.col.countries") }}</th><th scope="col">{{ txt("resources.col.checked") }}</th></tr></thead>
+<thead><tr><th scope="col">{{ txt("resources.col.name") }}</th><th scope="col">{{ txt("resources.col.checked") }}</th></tr></thead>
 <tbody>
 {% for r in register_rows %}
 <tr>
 <th scope="row"{{ lang_attr(r) }}><a href="{{ r.url }}" rel="noopener noreferrer">{{ r.name }}</a></th>
-<td data-label="{{ txt("resources.col.operator") }}"{% if r.operator != "not_stated" %}{{ lang_attr(r) }}{% endif %}>{{ shown(r, r.operator) }}</td>
-<td data-label="{{ txt("resources.col.countries") }}"{% if r.countries != "not_stated" %}{{ lang_attr(r) }}{% endif %}>{% if r.countries == "not_stated" %}{{ txt("resources.not_stated") }}{% else %}{{ r.countries|join(", ") }}{% endif %}</td>
 <td data-label="{{ txt("resources.col.checked") }}">{{ r.checked }}{% if r.get("hand_saved") %} <span class="hand-saved">{{ txt("resources.hand_saved") }}</span>{% endif %}</td>
 </tr>
 {% endfor %}

@@ -2,8 +2,6 @@ checked: '2026-11-18'
 entries:
 - id: ausme
   name: Australian ME/CFS and long COVID (AusME) Registry and Biobank
-  operator: Emerge Australia
-  countries: not_stated
   url: https://emerge.org.au/ausme/
   access_url: https://emerge.org.au/for-researchers/
   checked: '2026-11-18'
@@ -25,12 +23,6 @@ entries:
     name:
       quote: Australian ME/CFS and long COVID (AusME) Registry and Biobank
       page: main
-    operator:
-      quote: Emerge Australia are the Custodians of the Mason Foundation-funded Australian ME/CFS Registry
-      page: main
-    countries:
-      quote: ''
-      page: main
     access:
       quote: Researchers seeking access are invited to submit an AusME Registry & Biobank Access Application describing the
         proposed research and the data and/or biospecimens requested.
@@ -51,8 +43,6 @@ entries:
         page: access
 - id: mapmecfs
   name: mapMECFS
-  operator: RTI International
-  countries: not_stated
   url: https://mapmecfs.org/about
   access_url: null
   checked: '2026-11-18'
@@ -71,12 +61,6 @@ entries:
       quote: The mapMECFS website serves as the largest data sharing portal for Myalgic Encephalomyelitis/Chronic Fatigue
         Syndrome (ME/CFS) research
       page: main
-    operator:
-      quote: mapMECFS is hosted by RTI International
-      page: main
-    countries:
-      quote: ''
-      page: main
     access:
       quote: Requires additional application and approval process by the mapMECFS DAC
       page: main
@@ -90,8 +74,6 @@ entries:
         page: main
 - id: me-cfs-research-register
   name: ME/CFS Research Register
-  operator: ME/CFS Research Foundation
-  countries: not_stated
   url: https://mrr.mecfs-research.org/en
   access_url: null
   checked: '2026-11-18'
@@ -108,12 +90,6 @@ entries:
     name:
       quote: The ME/CFS Research Register provides an overview of medical research on ME/CFS
       page: main
-    operator:
-      quote: Copyright © 2026 ME/CFS Research Foundation
-      page: main
-    countries:
-      quote: ''
-      page: main
     access:
       quote: ''
       page: main
@@ -123,8 +99,6 @@ entries:
     holds: {}
 - id: searchmecfs
   name: searchMECFS
-  operator: not_stated
-  countries: not_stated
   url: https://searchmecfs.org/
   access_url: null
   checked: '2026-11-18'
@@ -142,12 +116,6 @@ entries:
     name:
       quote: searchMECFS is an interactive query tool that allows researchers to locate and request biospecimens from ME/CFS
         studies
-      page: main
-    operator:
-      quote: ''
-      page: main
-    countries:
-      quote: ''
       page: main
     access:
       quote: Follow the link to the Biospecimen Resource Access Committee Application webpage to complete your request.
