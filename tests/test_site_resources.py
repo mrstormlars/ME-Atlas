@@ -354,3 +354,46 @@ def test_no_word_of_the_banned_list_is_on_the_built_page_either_language(tmp_pat
 def test_the_banned_word_scan_would_catch_an_invitation():
     text = "You can join the register and sign up here".casefold()
     assert any(re.search(rf"\b{re.escape(w)}", text) for w in BANNED_EN)
+
+
+# --- pages saved by hand (H8, H9) --------------------------------------------------------------------------------
+
+
+def hand_saved_site(tmp_path):
+    saved = make_entry("saved-bank", "Saved fictional cohort", holds=["biospecimens"])
+    saved["hand_saved"] = ["main"]
+    plain = make_entry("plain-bank", "Plain fictional cohort", holds=["biospecimens"])
+    return resources_site(tmp_path, passed=True, entries=[saved, plain])
+
+
+@pytest.mark.parametrize(("prefix", "marker"), [("", "page saved by hand"), ("nb/", "side lagret for hånd")])
+def test_the_marker_is_in_the_row_of_a_hand_saved_entry_and_not_in_another_row(tmp_path, prefix, marker):
+    out = build(hand_saved_site(tmp_path))
+    main = page(out, f"{prefix}resources.html").find("main")
+    rows = {r.find("th").text().strip(): r for r in main.find_all("tr")[1:]}
+    assert marker in rows["Saved fictional cohort"].text()
+    assert DAY in rows["Saved fictional cohort"].text()
+    assert marker not in rows["Plain fictional cohort"].text()
+
+
+@pytest.mark.parametrize("prefix", ["", "nb/"])
+def test_the_intro_sentence_is_shown_always_and_the_marker_never_without_a_hand_saved_entry(tmp_path, prefix):
+    out = build(resources_site(tmp_path, passed=True))
+    strings = i18n.load_strings(I18N_DIR / ("nb.yaml" if prefix else "en.yaml"))
+    text = page(out, f"{prefix}resources.html").find("main").text()
+    assert strings["resources.intro.hand_saved"] in text
+    assert strings["resources.hand_saved"] + "<" not in text and "hand-saved" not in str(
+        page(out, f"{prefix}resources.html")
+    )
+
+
+def test_the_csv_column_and_the_json_key_carry_hand_saved_only_where_it_is_set(tmp_path):
+    out = build(hand_saved_site(tmp_path))
+    rows = {r["id"]: r for r in read_csv(out)}
+    assert rows["saved-bank"]["hand_saved"] == "main" and rows["plain-bank"]["hand_saved"] == ""
+    both = make_entry("both-bank", "Both", holds=["biospecimens"])
+    both["hand_saved"] = ["main", "access"]
+    assert export.resources_csv([both]).splitlines()[1].endswith("main; access")
+    data = json.loads((out / "data" / "me-atlas.json").read_text(encoding="utf-8"))
+    by_id = {r["id"]: r for r in data["resources"]}
+    assert by_id["saved-bank"]["hand_saved"] == ["main"] and "hand_saved" not in by_id["plain-bank"]

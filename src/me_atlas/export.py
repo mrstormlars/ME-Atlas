@@ -126,6 +126,7 @@ RESOURCES_COLUMNS = (
     "covers_quote",
     "covers_page",
     "holds_quotes",
+    "hand_saved",
 )
 
 
@@ -340,6 +341,7 @@ def resources_csv(entries: Sequence[Mapping[str, Any]]) -> str:
                 q["covers"]["quote"],
                 q["covers"]["page"],
                 held,
+                e.get("hand_saved", []),
             )
         )
     return _csv(RESOURCES_COLUMNS, rows)
