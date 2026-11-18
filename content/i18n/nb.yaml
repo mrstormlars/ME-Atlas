@@ -24,6 +24,7 @@ footer.review: 'Innholdet, også hvert evidensnivå, utarbeides, kontrolleres og
 footer.advice: 'Dette nettstedet beskriver status for evidensen. Det gir ingen behandlingsråd. Bygget {built}.'
 footer.report: 'Funnet en feil på et kort eller på nettstedet? Meld den som en sak (issue) på <a href="{repo_issues}" rel="noopener noreferrer">GitHub</a>. Koden og kortene ligger i <a href="{repo}" rel="noopener noreferrer">kodelageret</a>.'
 footer.licence: 'Koden har MIT-lisens; innholdet har lisensen CC BY 4.0. Artikkeltitler og setninger sitert fra artikler tilhører rettighetshaverne.'
+lastrun.text: '<a href="{lroot}changes.html">Sist søkt etter ny forskning: {date}</a>'
 footer.data: 'Last ned dataene: <a href="{lroot}data.html">kortene, studiene og koblingene som JSON og CSV, og siteringsfiler</a>.'
 
 # --- bare på oversatte sider ---

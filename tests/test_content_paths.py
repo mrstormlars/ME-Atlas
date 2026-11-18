@@ -164,3 +164,15 @@ def test_commit_is_marked_reads_the_exact_trailer_only():
 def test_an_unknown_base_is_an_error_not_a_pass(repo, capsys):
     assert pipeline.main(["content-paths", "--repo", str(repo), "--base", "no-such-branch"]) == 1
     assert "error:" in capsys.readouterr().err
+
+
+def test_the_last_run_file_is_not_a_protected_path_and_passes_without_the_marker(repo, capsys):
+    commit(repo, {"content/last-run.yaml": "date: '2026-11-17'\n"}, "last run only")
+    code, out = run(repo, capsys)
+    assert code == 0 and "PASS: no protected content path is changed." in out
+
+
+def test_the_pipeline_marker_is_not_needed_for_content_but_still_needed_for_cards(repo, capsys):
+    commit(repo, {"content/last-run.yaml": "x: 1\n", "cards/b.yaml": "b: 1\n"}, "mixed")
+    code, out = run(repo, capsys)
+    assert code == 1 and "cards/b.yaml" in out and "content/last-run.yaml" not in out.split("FAIL")[1]

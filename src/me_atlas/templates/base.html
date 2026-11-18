@@ -55,6 +55,9 @@
 
 <footer>
   <div class="inner">
+{% if last_run %}
+    <p class="last-run">{{ t("lastrun.text", date=last_run.date) }}</p>
+{% endif %}
     <p>{{ t("footer.review") }}</p>
     <p>{{ t("footer.advice", built=built) }}</p>
     <p>{{ t("footer.report") }}</p>

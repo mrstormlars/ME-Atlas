@@ -252,6 +252,7 @@ footer { margin-top: 3rem; padding-bottom: 2rem; color: var(--muted); font-size:
 footer .inner { padding-top: 1rem; }
 footer .inner::before { content: ""; display: block; border-top: 1px solid var(--line); margin-bottom: 1rem; }
 footer p { margin: .25rem 0; }
+footer .last-run a { color: inherit; text-decoration: underline; }
 
 /* narrow screens: tables become stacked lists so nothing scrolls sideways; the chart stacks name above bar */
 @media (max-width: 40em) {
