@@ -2,6 +2,8 @@
 
 Agreed with the founder in a brainstorm on 2026-11-18. Follows the seven guidelines for ideas (DECISIONS 2026-11-17, "Idea bank"). To be handed to `/orchestrator`.
 
+> Later change (founder ruling 2026-11-18): `operator` and `countries` are no longer part of an entry, the reviewer judges each value on its own and reliability is counted per value. This plan keeps its original text as history; the rules now in force are in `docs/ME-Atlas-functional-spec.md` ("Data resources") and `docs/pipeline.md`.
+
 ## Why
 
 ME/CFS datasets, registries and biobanks exist but are scattered. A researcher who wants to test a gap needs to know which data can be had and how. The site describes and links; it holds no patient data.

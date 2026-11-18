@@ -1,12 +1,14 @@
 date: '2026-11-18'
-run: data/pipeline/2026-11-18/resources
-total: 4
-rejects: 0
-reject_rate: 0.0
-included:
-  total: 4
-  rejects: 0
-excluded:
-  total: 0
+run: data/pipeline/hand-saved-3/2026-11-18/resources
+values:
+  total: 13
+  rejects: 1
+  reject_rate: 0.0769
+entries:
+  drafts: 2
+  written: 1
+  left_out: 1
+exclusions:
+  total: 2
   rejects: 0
 passed: true

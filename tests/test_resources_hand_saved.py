@@ -354,10 +354,14 @@ def test_check_cache_refuses_a_hand_saved_claim_with_no_stored_meta(tmp_path):
     assert any("hand_saved, but no stored metadata" in p for p in found)
 
 
-def test_the_real_data_file_has_no_hand_saved_key_and_passes_check():
+def test_the_real_data_file_passes_check_and_every_hand_saved_value_is_valid():
     data = resources.load_data(Path("registry/resources.yaml"))
-    assert all("hand_saved" not in e for e in data["entries"])
     assert resources.check_data(data) == []
+    for entry in data["entries"]:
+        if "hand_saved" in entry:
+            saved = entry["hand_saved"]
+            assert isinstance(saved, list) and saved, entry["id"]
+            assert all(k in entry["text_hash"] for k in saved), entry["id"]
 
 
 def test_the_whole_path_from_a_saved_page_to_the_entry(env):
@@ -376,8 +380,6 @@ def _draft_from(ctx: dict) -> dict:
     draft["id"] = ctx["id"]
     quotes = {
         "name": ("Fictional Saved Cohort", "main"),
-        "operator": ("operated by the Imaginary Institute of Medicine", "main"),
-        "countries": ("Freedonia", "main"),
         "access": ("Access is granted by application", "access"),
         "covers": ("people with ME/CFS", "main"),
     }

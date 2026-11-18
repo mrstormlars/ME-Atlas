@@ -24,6 +24,7 @@ login. See ``docs/fetch.md``, ``docs/pipeline.md``, ``docs/site.md`` and
 from __future__ import annotations
 
 import argparse
+import copy
 import datetime as dt
 import hashlib
 import json
@@ -103,19 +104,15 @@ DRAFT_ENTRY_KEYS = (
     "language",
     "category",
     "name",
-    "operator",
-    "countries",
     "holds",
     "access",
     "covers",
 )
 DRAFT_EXCLUSION_KEYS = ("id", "include", "reason", "quote", "page")
-QUOTED_FIELDS = ("name", "operator", "countries", "access", "covers")
+QUOTED_FIELDS = ("name", "access", "covers")
 ENTRY_FIELDS = (
     "id",
     "name",
-    "operator",
-    "countries",
     "url",
     "access_url",
     "checked",
@@ -815,10 +812,8 @@ def validate_draft(draft: Any, context: Mapping[str, Any]) -> list[str]:
     if draft["category"] not in CATEGORIES:
         problems.append(f"{lid}: category: unknown value {draft['category']!r}")
     problems += _check_quoted(f"{lid}: name", draft["name"], pages, None, "text")
-    problems += _check_quoted(f"{lid}: operator", draft["operator"], pages, None, "text")
     if isinstance(draft["name"], dict) and draft["name"].get("value") == NOT_STATED:
         problems.append(f"{lid}: name: an entry needs a stated name")
-    problems += _check_quoted(f"{lid}: countries", draft["countries"], pages, None, "list")
     problems += _check_quoted(f"{lid}: access", draft["access"], pages, ACCESS, "enum")
     problems += _check_quoted(f"{lid}: covers", draft["covers"], pages, COVERS, "enum")
     holds = draft["holds"]
@@ -875,22 +870,67 @@ def record_draft(run: Path) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
-def validate_review(review: Any, lid: str) -> list[str]:
+def reviewable_keys(draft: Mapping[str, Any]) -> list[str]:
+    """The values of an entry draft a reviewer judges, one key each: ``category``, ``name``, ``covers``, ``access``
+    when its value is not ``not_stated``, and ``holds.<value>`` for each holds item."""
+    keys = ["category", "name", "covers"]
+    access = draft.get("access")
+    if isinstance(access, Mapping) and access.get("value") != NOT_STATED:
+        keys.append("access")
+    holds = draft.get("holds")
+    if isinstance(holds, list):
+        keys += [f"holds.{h['value']}" for h in holds if isinstance(h, Mapping) and isinstance(h.get("value"), str)]
+    return keys
+
+
+def _check_verdict(where: str, item: Any) -> list[str]:
+    if not isinstance(item, dict):
+        return [f"{where}: must be an object with a verdict"]
+    problems: list[str] = []
+    extra = sorted(set(item) - {"verdict", "finding"})
+    if extra:
+        problems.append(f"{where}: extra key(s) {', '.join(extra)}")
+    verdict = item.get("verdict")
+    if verdict not in ("accept", "reject"):
+        problems.append(f"{where}: verdict must be 'accept' or 'reject'")
+    elif verdict == "reject" and not _is_nonempty_str(item.get("finding")):
+        problems.append(f"{where}: a reject needs a finding")
+    elif verdict == "accept" and "finding" in item:
+        problems.append(f"{where}: an accept has no finding")
+    return problems
+
+
+def validate_review(review: Any, lid: str, draft: Mapping[str, Any] | None = None) -> list[str]:
+    """An entry draft (``include: true``) is reviewed value by value: ``{"id", "values": {<key>: {"verdict",
+    "finding"?}}}`` with exactly the keys of ``reviewable_keys``. An exclusion draft has ``{"id", "verdict",
+    "finding"?}``."""
     if not isinstance(review, dict):
         return [f"{lid}: the review must be a JSON object"]
     problems: list[str] = []
+    if review.get("id") != lid:
+        problems.append(f"{lid}: id is {review.get('id')!r}")
+    if isinstance(draft, Mapping) and draft.get("include") is True:
+        extra = sorted(set(review) - {"id", "values"})
+        if extra:
+            problems.append(f"{lid}: extra key(s) {', '.join(extra)} (an entry is reviewed value by value)")
+        values = review.get("values")
+        if not isinstance(values, dict):
+            return [*problems, f"{lid}: an entry review needs 'values', an object with one verdict per value"]
+        expected = reviewable_keys(draft)
+        missing = [k for k in expected if k not in values]
+        unknown = sorted(set(values) - set(expected))
+        if missing:
+            problems.append(f"{lid}: values: missing key(s) {', '.join(missing)}")
+        if unknown:
+            problems.append(f"{lid}: values: unknown key(s) {', '.join(unknown)}")
+        for key in expected:
+            if key in values:
+                problems += _check_verdict(f"{lid}: values.{key}", values[key])
+        return problems
     extra = sorted(set(review) - {"id", "verdict", "finding"})
     if extra:
         problems.append(f"{lid}: extra key(s) {', '.join(extra)}")
-    if review.get("id") != lid:
-        problems.append(f"{lid}: id is {review.get('id')!r}")
-    verdict = review.get("verdict")
-    if verdict not in ("accept", "reject"):
-        problems.append(f"{lid}: verdict must be 'accept' or 'reject'")
-    elif verdict == "reject" and not _is_nonempty_str(review.get("finding")):
-        problems.append(f"{lid}: a reject needs a finding")
-    elif verdict == "accept" and "finding" in review:
-        problems.append(f"{lid}: an accept has no finding")
+    problems += [p for p in _check_verdict(lid, {k: v for k, v in review.items() if k != "id"}) if "extra key" not in p]
     return problems
 
 
@@ -906,10 +946,12 @@ def _decisions(run: Path) -> tuple[list[tuple[str, dict[str, Any], dict[str, Any
             problems.append(f"{lid}: the review file {path} is missing")
             continue
         review = _load_json(path)
-        found = validate_review(review, lid)
+        draft_path = run / f"draft-{lid}.json"
+        draft = _load_json(draft_path) if draft_path.is_file() else None
+        found = validate_review(review, lid, draft)
         problems += found
-        if not found and (run / f"draft-{lid}.json").is_file():
-            rows.append((lid, _load_context(run, lid), _load_json(run / f"draft-{lid}.json"), review))
+        if not found and draft is not None:
+            rows.append((lid, _load_context(run, lid), draft, review))
     return rows, problems
 
 
@@ -933,8 +975,6 @@ def build_entry(context: Mapping[str, Any], draft: Mapping[str, Any]) -> dict[st
     entry = {
         "id": draft["id"],
         "name": draft["name"]["value"],
-        "operator": draft["operator"]["value"],
-        "countries": draft["countries"]["value"],
         "url": context["url"],
         "access_url": context.get("access_url"),
         "checked": context["fetched"],
@@ -953,6 +993,31 @@ def build_entry(context: Mapping[str, Any], draft: Mapping[str, Any]) -> dict[st
     return entry
 
 
+def apply_review(
+    context: Mapping[str, Any], draft: Mapping[str, Any], review: Mapping[str, Any]
+) -> dict[str, Any] | None:
+    """The entry of an entry draft after the per-value verdicts, or ``None`` when it is left out. No value is
+    rewritten: a rejected ``holds`` value is dropped, a rejected ``access`` of a register becomes ``not_stated`` with
+    an empty quote. Left out: ``name``, ``category`` or ``covers`` rejected; for a ``data`` entry ``access`` rejected
+    or ``not_stated``, or no ``holds`` value accepted."""
+    verdicts = review["values"]
+
+    def rejected(key: str) -> bool:
+        return verdicts.get(key, {}).get("verdict") == "reject"
+
+    if any(rejected(k) for k in ("name", "category", "covers")):
+        return None
+    kept = copy.deepcopy(dict(draft))
+    kept["holds"] = [h for h in draft["holds"] if not rejected(f"holds.{h['value']}")]
+    if rejected("access"):
+        if draft["category"] == "data":
+            return None
+        kept["access"] = {"value": NOT_STATED, "quote": "", "page": "main"}
+    if draft["category"] == "data" and (kept["access"]["value"] == NOT_STATED or not kept["holds"]):
+        return None
+    return build_entry(context, kept)
+
+
 def record_review(data: Mapping[str, Any] | None, run: Path, today: str) -> tuple[dict[str, Any], list[str]]:
     """The data file with the accepted entries written in, or the problems. Needs a valid draft and a valid review
     for every context of the run; nothing is applied unless all are valid. An entry of the file whose lead has an
@@ -962,11 +1027,11 @@ def record_review(data: Mapping[str, Any] | None, run: Path, today: str) -> tupl
         return dict(data or {}), problems
     entries = {e["id"]: e for e in (data or {}).get("entries", [])}
     for lid, context, draft, review in rows:
-        if review["verdict"] != "accept":
-            continue
         if draft["include"]:
-            entries[lid] = build_entry(context, draft)
-        else:
+            entry = apply_review(context, draft, review)
+            if entry is not None:  # an entry that is left out leaves an existing entry unchanged
+                entries[lid] = entry
+        elif review["verdict"] == "accept":
             entries.pop(lid, None)
     ordered = [entries[i] for i in sorted(entries)]
     return {"checked": today, "entries": ordered}, []
@@ -978,25 +1043,29 @@ def reliability_passed(total: int, rejects: int) -> bool:
 
 
 def reliability(run: Path, today: str) -> tuple[dict[str, Any], list[str]]:
-    """The numbers of a run: every reviewed drafter output, proposed inclusions and proposed exclusions."""
+    """The numbers of a run, counted per value: every reviewable value of every entry draft plus one value per
+    exclusion draft."""
     rows, problems = _decisions(run)
     if problems:
         return {}, problems
-    split = {"included": [0, 0], "excluded": [0, 0]}
-    for _, _, draft, review in rows:
-        key = "included" if draft["include"] else "excluded"
-        split[key][0] += 1
-        split[key][1] += review["verdict"] == "reject"
-    total = len(rows)
-    rejects = split["included"][1] + split["excluded"][1]
+    total = rejects = drafts = written = ex_total = ex_rejects = 0
+    for _, context, draft, review in rows:
+        if draft["include"]:
+            drafts += 1
+            written += apply_review(context, draft, review) is not None
+            total += len(review["values"])
+            rejects += sum(v["verdict"] == "reject" for v in review["values"].values())
+        else:
+            ex_total += 1
+            ex_rejects += review["verdict"] == "reject"
+    total += ex_total
+    rejects += ex_rejects
     return {
         "date": today,
         "run": run.as_posix(),
-        "total": total,
-        "rejects": rejects,
-        "reject_rate": round(rejects / total, 4) if total else None,
-        "included": {"total": split["included"][0], "rejects": split["included"][1]},
-        "excluded": {"total": split["excluded"][0], "rejects": split["excluded"][1]},
+        "values": {"total": total, "rejects": rejects, "reject_rate": round(rejects / total, 4) if total else None},
+        "entries": {"drafts": drafts, "written": written, "left_out": drafts - written},
+        "exclusions": {"total": ex_total, "rejects": ex_rejects},
         "passed": reliability_passed(total, rejects),
     }, []
 
@@ -1082,16 +1151,10 @@ def check_data(data: Any) -> list[str]:
 
 def _check_entry(where: str, entry: Mapping[str, Any]) -> list[str]:
     problems: list[str] = []
-    for field in ("name", "operator"):
-        if not _is_nonempty_str(entry[field]):
-            problems.append(f"{where}: {field}: must be a non-empty string")
+    if not _is_nonempty_str(entry["name"]):
+        problems.append(f"{where}: name: must be a non-empty string")
     if entry["name"] == NOT_STATED:
         problems.append(f"{where}: name: an entry needs a stated name")
-    countries = entry["countries"]
-    if countries != NOT_STATED and not (
-        isinstance(countries, list) and countries and all(_is_nonempty_str(c) for c in countries)
-    ):
-        problems.append(f"{where}: countries: must be a non-empty list of names, or 'not_stated'")
     if not _is_url(entry["url"]):
         problems.append(f"{where}: url: must be an http or https address")
     if entry["access_url"] is not None and not _is_url(entry["access_url"]):
@@ -1142,8 +1205,6 @@ def _check_entry(where: str, entry: Mapping[str, Any]) -> list[str]:
         return [*problems, f"{where}: quotes: must be a mapping"]
     stated = {
         "name": True,
-        "operator": entry["operator"] != NOT_STATED,
-        "countries": countries != NOT_STATED,
         "access": entry["access"] != NOT_STATED,
         "covers": True,
     }
@@ -1386,8 +1447,9 @@ def _run(args: argparse.Namespace, today: str) -> int:
             return 1
         _atomic_write(args.reliability_file, yaml.safe_dump(result, sort_keys=False))
         print(
-            f"{'PASSED' if result['passed'] else 'NOT PASSED'}: {result['rejects']} reject(s) of {result['total']} "
-            f"({result['reject_rate']}); written to {args.reliability_file.as_posix()}"
+            f"{'PASSED' if result['passed'] else 'NOT PASSED'}: {result['values']['rejects']} reject(s) of "
+            f"{result['values']['total']} value(s) ({result['values']['reject_rate']}); "
+            f"written to {args.reliability_file.as_posix()}"
         )
         return 0
     if cmd == "check":

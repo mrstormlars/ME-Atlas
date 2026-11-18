@@ -30,9 +30,8 @@ def make_entry(lid: str, name: str, category: str = "data", **over) -> dict:
     if category == "register":
         entry["category"], entry["holds"] = "register", []
     entry["quotes"]["holds"] = {h: dict(HELD) for h in entry["holds"]}
-    for field in ("operator", "countries", "access"):
-        if entry[field] == "not_stated":
-            entry["quotes"][field]["quote"] = ""
+    if entry["access"] == "not_stated":
+        entry["quotes"]["access"] = {"quote": "", "page": "main"}
     return entry
 
 
@@ -42,12 +41,9 @@ ENTRIES = [
         "alpha-bank",
         "Alpha fictional cohort",
         covers="me_cfs_and_long_covid",
-        countries=["Freedonia", "Elbonia"],
         holds=["biospecimens", "genotypes"],
     ),
-    make_entry(
-        "beta-bank", "Beta fictional cohort", language="de", operator="Institut Beispiel", countries="not_stated"
-    ),
+    make_entry("beta-bank", "Beta fictional cohort", language="de"),
     make_entry("omega-register", "Omega fictional register", "register", access="not_stated"),
     make_entry("delta-register", "Delta fictional register", "register", access="not_stated", language="nb"),
 ]
@@ -119,7 +115,7 @@ def test_a_project_without_a_resources_file_builds_without_the_page_and_with_an_
     out = build(proj)
     assert not (out / "resources.html").exists()
     assert read_csv(out) == []
-    assert (out / "data" / "resources.csv").read_text(encoding="utf-8").startswith("id,name,operator,")
+    assert (out / "data" / "resources.csv").read_text(encoding="utf-8").startswith("id,name,url,")
 
 
 def test_a_passed_file_builds_the_page_in_both_languages_linked_from_gaps_and_data_but_not_the_navigation(tmp_path):
@@ -170,11 +166,11 @@ def test_two_tables_sorted_by_name_with_only_the_fields_of_each_category(tmp_pat
         "Omega fictional register",
     ]
     heads = [th.text().strip() for th in doc.find("table", id="resources-data-table").find("thead").find_all("th")]
-    assert heads == [
-        EN[f"resources.col.{k}"] for k in ("name", "operator", "countries", "holds", "access", "covers", "checked")
-    ]
+    assert heads == [EN[f"resources.col.{k}"] for k in ("name", "holds", "access", "covers", "checked")]
     heads = [th.text().strip() for th in doc.find("table", id="resources-register-table").find("thead").find_all("th")]
-    assert heads == [EN[f"resources.col.{k}"] for k in ("name", "operator", "countries", "checked")]
+    assert heads == [EN[f"resources.col.{k}"] for k in ("name", "checked")]
+    for table in (doc.find("table", id="resources-data-table"), doc.find("table", id="resources-register-table")):
+        assert "Operator" not in table.text() and "Countries" not in table.text()
 
 
 def test_cells_are_data_file_values_with_enums_through_the_label_table_and_not_stated_labelled(tmp_path):
@@ -182,31 +178,26 @@ def test_cells_are_data_file_values_with_enums_through_the_label_table_and_not_s
     rows = {r[0]: r for r in rows_of(doc, "resources-data-table")}
     assert rows["Alpha fictional cohort"] == [
         "Alpha fictional cohort",
-        "Imaginary Institute of Medicine",
-        "Freedonia, Elbonia",
         "Biospecimens, Genotypes",
         "Application",
         "ME/CFS and long COVID",
         DAY,
     ]
-    assert rows["Zeta fictional biobank"][3:6] == ["Biospecimens", "Open download", "ME/CFS"]
-    assert rows["Beta fictional cohort"][2] == "not stated"
+    assert rows["Zeta fictional biobank"][1:4] == ["Biospecimens", "Open download", "ME/CFS"]
     link = doc.find("table", id="resources-data-table").find("tbody").find_all("tr")[0].find("th").find("a")
     assert link.get("href") == MAIN_URL
 
 
-def test_the_page_names_register_countries_and_dates_and_shows_not_stated_for_a_missing_access(tmp_path):
+def test_a_register_row_has_only_a_name_and_a_date(tmp_path):
     doc = page(build(resources_site(tmp_path, passed=True)), "resources.html")
-    register = rows_of(doc, "resources-register-table")
-    assert register[0][1:] == ["Imaginary Institute of Medicine", "Freedonia", DAY]
+    assert rows_of(doc, "resources-register-table")[0][1:] == [DAY]
 
 
-def test_name_operator_and_countries_carry_lang_where_the_entry_language_differs_from_the_page(tmp_path):
+def test_the_name_carries_lang_where_the_entry_language_differs_from_the_page(tmp_path):
     out = build(resources_site(tmp_path, passed=True))
     en = page(out, "resources.html").find("table", id="resources-data-table")
     beta = [tr for tr in en.find("tbody").find_all("tr") if "Beta" in tr.text()][0]
-    assert beta.find("th").get("lang") == "de" and beta.find_all("td")[0].get("lang") == "de"
-    assert beta.find_all("td")[1].get("lang") is None  # "not stated" is the page's own word
+    assert beta.find("th").get("lang") == "de" and beta.find_all("td")[0].get("lang") is None
     alpha = [tr for tr in en.find("tbody").find_all("tr") if "Alpha" in tr.text()][0]
     assert alpha.find("th").get("lang") is None
     nb = page(out, "nb/resources.html")
@@ -226,8 +217,7 @@ def test_the_page_is_translated_and_labels_come_from_the_norwegian_table(tmp_pat
     nb = page(build(resources_site(tmp_path, passed=True)), "nb/resources.html")
     assert nb.find("h1").text() == "Dataressurser for ME/CFS-forskning"
     rows = {r[0]: r for r in rows_of(nb, "resources-data-table")}
-    assert rows["Zeta fictional biobank"][3:6] == ["Biologiske prøver", "Åpen nedlasting", "ME/CFS"]
-    assert rows["Beta fictional cohort"][2] == "ikke oppgitt"
+    assert rows["Zeta fictional biobank"][1:4] == ["Biologiske prøver", "Åpen nedlasting", "ME/CFS"]
 
 
 def test_the_intro_states_the_source_rule_and_the_page_has_no_quote_script_or_contact_details(tmp_path):
@@ -241,8 +231,8 @@ def test_the_intro_states_the_source_rule_and_the_page_has_no_quote_script_or_co
     assert "no treatment advice" in text
     assert main.find("script") is None and "mailto:" not in html and "@" not in html
     for entry in ENTRIES:  # no quote text on the page
-        for item in (entry["quotes"]["name"], entry["quotes"]["operator"], entry["quotes"]["covers"]):
-            assert item["quote"] not in text
+        for item in (entry["quotes"]["name"], entry["quotes"]["access"], entry["quotes"]["covers"]):
+            assert not item["quote"] or item["quote"] not in text
 
 
 def test_an_empty_category_shows_no_table(tmp_path):
@@ -282,11 +272,11 @@ def test_the_csv_has_one_row_per_entry_with_joined_lists_and_the_quotes_as_colum
     assert sorted(rows) == sorted(e["id"] for e in ENTRIES)
     assert tuple(next(iter(rows.values()))) == export.RESOURCES_COLUMNS
     alpha = rows["alpha-bank"]
-    assert alpha["countries"] == "Freedonia; Elbonia" and alpha["holds"] == "biospecimens; genotypes"
+    assert alpha["holds"] == "biospecimens; genotypes"
+    assert "operator" not in alpha and "countries" not in alpha and "operator_quote" not in alpha
     assert alpha["access_quote"].startswith("granted by application") and alpha["access_page"] == "access"
     assert alpha["name_quote"] == "The Fictional ME/CFS Biobank is operated by" and alpha["name_page"] == "main"
     assert "biospecimens (main): It holds blood samples" in alpha["holds_quotes"]
-    assert rows["beta-bank"]["countries"] == "not_stated"
     assert rows["omega-register"]["holds"] == ""
 
 
