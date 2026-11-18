@@ -275,6 +275,23 @@ A step of `/ukentlig` that never touches `cards/`, `drafts/` or `translations/`.
 
 **Reliability test (before first publication, repeat when the mapping prompt changes).** `trials sample --seed S --n 50 --out FILE` writes the registry numbers of all ongoing `me_cfs` studies plus 50 ongoing `long_covid`-only studies; `trials map-plan --ids-file FILE` plans them; after the mapper and the reviewer, `trials record-review` and `trials reliability --run <dir> --seed S` write `registry/reliability.yaml` (total mappings, rejects, reject rate, split per search, date, seed, `passed`). `passed` is true only when rejects × 5 ≤ total. The site builds `trials.html` only when that file says `passed: true`. If it fails, the page is not published and the reject reasons go to the founder; the prompt is not patched more than twice.
 
+## Data resources (catalogue step)
+
+Not part of the weekly pull request of the cards, and it never touches `cards/`, `drafts/` or `translations/`. Code: `me_atlas.resources`; the agents are `resource-drafter` (sonnet; Read, Write) and `card-reviewer` in resource mode. The plan is `docs/plan-data-catalogue.md`; the fetch is described in `docs/fetch.md`; the page in `docs/site.md`. `RES` below means `data/pipeline/<date>/resources/`.
+
+1. `uv run python -m me_atlas.resources fetch` stores each lead's pages and writes `RES/fetch-report.json`. A lead with a page that is not `ok` goes no further; the report says why.
+2. `uv run python -m me_atlas.resources plan` writes `RES/context-<id>.json` per fetchable lead: id, URLs, fetch date and the extracted text of each stored page, copied by code.
+3. The `resource-drafter` reads one context file and writes `RES/draft-<id>.json`: an exclusion (`reason`, `quote`, `page`) or an entry (`language`, `category`, `name`, `operator`, `countries`, `holds`, `access`, `covers`, each value with a quote and the page it is from). `resources record-draft --run RES` validates every draft (unknown value, missing or extra key, page not in the context, missing quote, a register with holds, a data entry with no holds or with access `not_stated`, and every quote found in the stored text after NFKC normalisation, whitespace collapsing and quote folding) and writes nothing.
+4. The `card-reviewer` in resource mode reads only the context file and the draft and writes `RES/review-<id>.json` (`accept`, or `reject` with a finding). Every drafter output is reviewed, inclusions and exclusions alike.
+5. `resources record-review --run RES` validates drafts and reviews again and only then writes `registry/resources.yaml` from the drafts with `accept` and `include: true`. Code adds `url`, `access_url`, `checked`, `source` and `text_hash`. A rejected redraft leaves the old entry; an accepted exclusion removes it. Any invalid file changes nothing. Nothing else writes the file.
+6. `resources check --cache` validates the file and finds every quote in the stored text of its page (local only, like the trials check).
+
+**Reliability test (before first publication).** `resources reliability --run RES` writes `registry/resources-reliability.yaml`: date, run, total reviewed, rejects, reject rate, the split into proposed inclusions and proposed exclusions, and `passed`, true only when rejects × 5 ≤ total. The site builds `resources.html` only when it says `passed: true`. If it fails, nothing is published and the reasons go to the founder; the prompt is not patched more than twice.
+
+**Weekly upkeep.** `/ukentlig` runs `uv run python -m me_atlas.resources links`: it requests every `url` and `access_url` in `registry/resources.yaml` (robots respected, same client) and prints the ones that do not answer HTTP 200. It changes no file and exits 0; an address that does not answer is for the founder to look at, and no entry changes.
+
+**Re-reading on request (about quarterly).** `resources fetch`, `resources plan --changed` (context only for a lead whose stored text differs, by hash, from the text its published entry was drafted from; an entry whose page did not change is not redrafted), the drafter, the reviewer, then `resources record-review`.
+
 ## Agents and models
 
 Every subagent in `.claude/agents/` and the model its frontmatter names:
@@ -284,7 +301,8 @@ Every subagent in `.claude/agents/` and the model its frontmatter names:
 | `paper-classifier` | haiku | Read, Write | classifies new papers |
 | `card-drafter` | sonnet | Read, Write | drafts operations for one pair; the redraft after `accept_lower`; the correction of a held-back draft; the correction of a published card |
 | `trial-mapper` | sonnet | Read, Write | names the cards each registered ongoing study bears on (registry step) |
-| `card-reviewer` | opus | Read, Glob, Grep, Bash, WebFetch, Write | reviews a draft; also translation, map and registry modes, the fix check of the safety valve, the one-time classification of existing audit records and the review of a published card before its correction |
+| `resource-drafter` | sonnet | Read, Write | drafts one data-resource entry, or an exclusion, from the stored pages (resource step) |
+| `card-reviewer` | opus | Read, Glob, Grep, Bash, WebFetch, Write | reviews a draft; also translation, map, registry and resource modes, the fix check of the safety valve, the one-time classification of existing audit records and the review of a published card before its correction |
 | `auditor` | opus | Read, Write | decides tier 2 and tier 3 changes, including a tier 2 correction of a published card |
 | `card-translator` | sonnet | Read, Write | translates card text to Norwegian |
 | `link-drafter` | sonnet | Read, Write | proposes a card's layer and links |

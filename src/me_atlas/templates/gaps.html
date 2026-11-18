@@ -4,6 +4,9 @@
 {% macro card_link(name, href) %}<a href="{{ lroot }}{{ href }}">{{ mt(name) }}</a>{% endmacro %}
 <h1>{{ txt("gaps.h1") }}</h1>
 <p>{{ t("gaps.intro") }}</p>
+{% if resources_on %}
+<p class="resources-line small">{{ t("resources.link", href=lroot ~ "resources.html") }}</p>
+{% endif %}
 
 <section id="gaps-summary" class="gaps-summary">
 <h2>{{ txt("gaps.summary.h2") }}</h2>

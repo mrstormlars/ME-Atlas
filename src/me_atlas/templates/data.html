@@ -3,6 +3,9 @@
 {% set data = root ~ "data/" %}
 <h1>{{ txt("data.h1") }}</h1>
 <p>{{ txt("data.intro") }}</p>
+{% if resources_on %}
+<p class="resources-line small">{{ t("resources.link", href=lroot ~ "resources.html") }}</p>
+{% endif %}
 {% if drafts %}
 <p class="note">{{ txt("data.draft") }}</p>
 {% endif %}

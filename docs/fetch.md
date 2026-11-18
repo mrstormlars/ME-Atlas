@@ -217,6 +217,18 @@ Both searches are fetched in full each week (about three requests). A study retu
 
 First fetch, 2026-11-18: 222 studies for `me_cfs` (53 ongoing), 734 for `long_covid` (211 ongoing), 917 in the union (247 ongoing).
 
+## Resource fetch (data resources)
+
+`uv run python -m me_atlas.resources fetch [--offline] [--date YYYY-MM-DD]` fetches the pages of the leads in `registry/resource-leads.yaml` (per lead `id`, `url`, optional `access_url`; nothing else). Code: `me_atlas.resources`; the plan is `docs/plan-data-catalogue.md`.
+
+- **Client.** Through `me_atlas.http.get_with_retries`, with the generic User-Agent `me-atlas-research-client` (`trials.USER_AGENT`): no name, address or `.env` value, no cookies, no other headers tried. At most one request a second per host. Redirects are followed by hand, and every hop is checked against the robots file of its own host.
+- **robots.txt.** The host's `robots.txt` is read (standard library `urllib.robotparser`) for that User-Agent before any page. Disallowed: the page is not fetched, status `robots_disallowed`. `robots.txt` redirects are followed (up to 5 hops, a loop or more hops is `robots_unavailable`); `robots.txt` answering 4xx counts as no rules (allowed); 5xx, a network error or an unreadable answer: not fetched, status `robots_unavailable`.
+- **Statuses of a page** (`fetch-report.json`): `ok` only for HTTP 200, a content type with `html` and at least 200 characters of extracted text. Otherwise `http_<code>` (the code after the retries), `not_html`, `no_text`, `blocked` (HTTP 401, 403 or 429, or a page of under 1000 characters of visible text that says one of the phrases in `BLOCK_PHRASES` ("just a moment", "verify you are human", "checking your browser", "enable javascript and cookies to continue") or has a real `<input type=password>` element; CSS, scripts, attribute values and JSON in the source never count), `network_error`, `robots_disallowed`, `robots_unavailable`, and in `--offline` mode `not_cached`. A bot check or a login is never worked around: no retry with other headers, no browser, no cookies.
+- **Cache.** `data/cache/resources/<fetch date>/<lead id>/` holds, per page (`main`, and `access` when the lead has an `access_url`), the raw body (`main.html`, `access.html`), `<page>.meta.json` (requested and final URL, HTTP status, content type, fetch date, status) and `<page>.txt`, the visible text extracted by code (standard library `html.parser`; script, style and head dropped, whitespace collapsed). Everything is written before anything reads it. `--offline` reads that folder and makes no request. The cache is local only and gitignored.
+- **Report.** `data/pipeline/<date>/resources/fetch-report.json`: lead id to the status of each page, and the list of fetchable leads (every page `ok`). A lead with a page that is not `ok` gets no context file and cannot be published; the report names it.
+
+The drafting, review and data-file steps are in `docs/pipeline.md` ("Data resources").
+
 ## Where the output goes
 
 Both are under `data/cache/`, which is gitignored and reproducible.

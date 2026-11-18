@@ -1282,6 +1282,7 @@ def test_build_result_lists_every_written_file(proj):
         "studies.csv",
         "links.csv",
         "trials.csv",
+        "resources.csv",
         "card-format.md",
         "README.txt",
         "listed.bib",

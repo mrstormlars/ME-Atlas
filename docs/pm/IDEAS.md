@@ -33,7 +33,7 @@ Ideas for how AI can help ME/CFS research, inside or outside what ME Atlas is to
 | --- | --- | --- | --- | --- | --- | --- |
 | I-01 | **Replication list.** Findings at level 2 that lack one independent replication to reach level 3, as a list for researchers and funders. | 4 | 4 | 16 | done | Built from the cards and the gaps page. Ranking by cost of the replication is the hard part and can come later. Wave 1 (DECISIONS 2026-11-17): done together with a rebuild of the "What is missing" page, after a `/brainstorm` plan. |
 | I-03 | **Trial registry tracking.** Ongoing studies per hypothesis, and finished studies with no published result. | 4 | 4 | 16 | in progress | Ongoing studies built, waiting for the founder's merge (branch `feat/trial-registry`, plan `docs/plan-trial-registry.md`): ClinicalTrials.gov API v2, `registry/trials.yaml`, the page `trials.html` (English and Norwegian), a count line per card, `trials.csv` in the dataset, a weekly step in `/ukentlig`. New agent `trial-mapper` (sonnet), checked by `card-reviewer` in registry mode. Reliability test 2026-11-18: 2 of 103 mappings rejected (1.9%). First full run: 247 ongoing studies, 40 matched to a card, 199 to none, 8 mappings rejected. Finished studies with no published result stay out of scope (their own round with their own reliability test). |
-| I-14 | **Data catalogue.** Which ME/CFS datasets, registries and biobanks exist, what they hold, and how a researcher gets access; linked from the hypotheses they bear on. | 4 | 4 | 16 | idea | The data banks exist but are scattered (see "Existing data banks"). We describe and link; we hold no patient data. |
+| I-14 | **Data catalogue.** Which ME/CFS datasets, registries and biobanks exist, what they hold, and how a researcher gets access. | 4 | 4 | 16 | in progress | Built on `feat/data-catalogue` (plan `docs/plan-data-catalogue.md`): the page `resources.html`, the data file `registry/resources.yaml`, `resources.csv` in the dataset. 4 resources published from 8 fetched leads; reliability test passed on the third reading (0 of 4 rejected), after 1 of 4 in each of the first two. No link to hypotheses in this round (founder ruling). |
 | I-05 | **Open data and citation export.** Cards and links as a downloadable dataset with a DOI; BibTeX/RIS per card. | 3 | 5 | 15 | done | Built in pull request 89 (plan `docs/plan-open-data-export.md`): `data/` with JSON and CSV, BibTeX and RIS per card, the data page. Zenodo concept DOI 10.5281/zenodo.24333249 (release `v2026.11.18`, 2026-11-18). Since 2026-11-18 every study carries authors, journal and DOI, copied by code from the fetched PubMed record (founder ruling in chat; check C13). |
 | I-02 | **Funding map.** Who funds which hypothesis, set against its evidence level. | 4 | 3 | 12 | idea | Several grant databases, each with its own format; grants must be sorted by hypothesis. In the long-term vision of the v1 plan; no donations involved. |
 | I-08 | **Funder briefs.** One page per gap: what is missing and which design would move the level. | 4 | 3 | 12 | idea | Depends on I-01. Sending them is the founder's work; no expert has reviewed the content, which limits the weight they carry. |
@@ -54,18 +54,6 @@ Ideas for how AI can help ME/CFS research, inside or outside what ME Atlas is to
 | I-20 | **Drug candidates in silico** (gene → target → existing drug). | 4 | 1 | 4 | parked | Too close to treatment advice (credibility rule 3). |
 | I-22 | **Collecting patient data or money ourselves** (wearables, crowdfunding). | 4 | 1 | 4 | parked | Against "no accounts, no database, no money handling". Point to those who already do it. |
 
-## Existing data banks (web search, 2026-11-17)
+## Existing data banks
 
-Found by web search, not fetched through the pipeline. Each entry must be checked against its own source before it appears on the site (I-14).
-
-- **mapMECFS** (NIH-funded, hosted by RTI International): portal for sharing and downloading molecular datasets from ME/CFS studies; open to researchers after registration. <https://mapmecfs.org/about>
-- **searchMECFS** (same centre): finding and requesting biospecimens and de-identified clinical data. <https://www.nih.gov/advancing-mecfs-research/announcements/research-tools-mecfs-related-data-biospecimens-now-available>
-- **DecodeME**: genotype and questionnaire data and DNA samples, on application to a data access committee. <https://www.decodeme.org.uk/researcher-access>
-- **UK ME/CFS Biobank**: samples and data from patients, a multiple sclerosis comparison group and healthy controls. <https://www.frontiersin.org/articles/10.3389/fneur.2018.01026/full>
-- **German registry and biobank (MECFS-R, MECFS-Bio)**: clinical and laboratory data from the centres in Berlin and Munich. <https://pubmed.ncbi.nlm.nih.gov/38892879/>
-- **OMF ME/CFS Data Center** (Open Medicine Foundation). <https://www.omf.ngo/data-sharing-in-the-omf-me-cfs-data-center/>
-- **Solve Together** (started by Solve M.E.): patient-reported, wearable and health record data from US adults. <https://solvecfs.org/research/solve-together/>
-- **Norwegian thematic research register and biobank** at Oslo University Hospital: named in published studies; current status and access not found. TODO: verify.
-- **ME/CFS Research Register** (ME/CFS Research Foundation, Hamburg): a register of research projects, groups and publications, not of raw data; covers Germany, Austria, Switzerland, the Netherlands, Norway and Iceland. <https://mrr.mecfs-research.org/en>
-
-No new data bank announced in 2026 was found.
+The leads are in `registry/resource-leads.yaml` (URLs only, never a source); the published entries, each value with its quote from the resource's own stored page, are in `registry/resources.yaml`. Leads not in the data file, with the reason, are listed in the description of the pull request that built I-14.
