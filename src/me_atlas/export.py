@@ -76,9 +76,13 @@ STUDIES_COLUMNS = (
 LINKS_COLUMNS = ("source", "target", "target_kind", "target_name", "support", "text", "sources")
 
 
+DATASET_DOI = "10.5281/zenodo.24333249"  # the Zenodo concept DOI: it points to every archived version
+DATASET_DOI_URL = f"https://doi.org/{DATASET_DOI}"
+
+
 def citation_text(built: str) -> str:
-    """How to cite the dataset. No DOI: the dataset has none (P4)."""
-    return f"ME Atlas contributors ({built[:4]}). {TITLE}. Version {built}. {SITE_URL}"
+    """How to cite the dataset: ends with the concept DOI as a link."""
+    return f"ME Atlas contributors ({built[:4]}). {TITLE}. Version {built}. {SITE_URL} {DATASET_DOI_URL}"
 
 
 # ---------------------------------------------------------------------------
@@ -123,6 +127,8 @@ def dataset_json(
             "version": built,
             "site_url": SITE_URL,
             "repository_url": REPO_URL,
+            "doi": DATASET_DOI,
+            "doi_url": DATASET_DOI_URL,
             "licence": LICENCE_ID,
             "licence_url": LICENCE_URL,
             "rights_note": RIGHTS_NOTE,
@@ -286,6 +292,7 @@ def readme(*, built: str, draft_preview: bool) -> str:
         f"Version (build date): {built}",
         f"Site: {SITE_URL}",
         f"Repository: {REPO_URL}",
+        f"DOI: {DATASET_DOI_URL}",
         f"Licence: {LICENCE_ID} ({LICENCE_URL})",
         RIGHTS_NOTE,
         "",

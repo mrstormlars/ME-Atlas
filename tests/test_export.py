@@ -419,23 +419,36 @@ def test_a_public_build_is_not_a_draft_preview_and_a_drafts_build_is_marked_in_j
     assert "draft preview" in norm(page(proj.out, "data.html").find("main").text())
 
 
-def test_the_data_files_and_the_data_pages_have_no_doi_and_no_zenodo(data_site):
+def test_the_concept_doi_is_in_the_data_pages_readme_json_and_cff_and_no_other_zenodo_doi_is(data_site):
     out = data_site.out
+    doi = "10.5281/zenodo.24333249"
+    assert doi == export.DATASET_DOI and f"https://doi.org/{doi}" == export.DATASET_DOI_URL
+    for name in ("data.html", "nb/data.html"):
+        html = (out / name).read_text(encoding="utf-8")
+        assert f'href="https://doi.org/{doi}"' in html, name
+    readme = (out / "data" / "README.txt").read_text(encoding="utf-8")
+    assert f"DOI: https://doi.org/{doi}" in readme
+    assert export.citation_text(TODAY.isoformat()).endswith(f" https://doi.org/{doi}")
+    meta = json.loads((out / "data" / "me-atlas.json").read_text(encoding="utf-8"))["dataset"]
+    assert meta["doi"] == doi and meta["doi_url"] == f"https://doi.org/{doi}"
+    assert meta["citation"].endswith(f"https://doi.org/{doi}")
     texts = [
-        p.read_bytes().decode("utf-8") for p in sorted((out / "data").rglob("*")) if p.is_file() and p.suffix != ".md"
+        (out / "data.html").read_text(encoding="utf-8"),
+        (out / "nb" / "data.html").read_text(encoding="utf-8"),
+        readme,
+        (out / "data" / "me-atlas.json").read_text(encoding="utf-8"),
+        (REPO_ROOT / "CITATION.cff").read_text(encoding="utf-8"),
     ]
-    texts += [(out / "data.html").read_text(encoding="utf-8"), (out / "nb" / "data.html").read_text(encoding="utf-8")]
-    texts.append((REPO_ROOT / "CITATION.cff").read_text(encoding="utf-8"))
-    assert len(texts) > 6
     for text in texts:
-        assert "10.5281" not in text
-        assert "zenodo" not in text.lower()
+        assert doi in text
+        assert "24333250" not in text  # the version DOI is not shown
+        assert set(re.findall(r"10\.5281/zenodo\.\d+", text)) == {doi}
 
 
 # --- CITATION.cff -----
 
 
-def test_citation_cff_is_valid_yaml_with_the_required_keys_and_no_doi():
+def test_citation_cff_is_valid_yaml_with_the_required_keys_and_the_concept_doi():
     cff = yaml.safe_load((REPO_ROOT / "CITATION.cff").read_text(encoding="utf-8"))
     for key in ("cff-version", "message", "title", "authors"):
         assert key in cff, key
@@ -443,7 +456,7 @@ def test_citation_cff_is_valid_yaml_with_the_required_keys_and_no_doi():
     assert cff["authors"] == [{"name": "ME Atlas contributors"}]
     assert cff["repository-code"] == export.REPO_URL and cff["url"] == export.SITE_URL
     assert cff["license"] == "CC-BY-4.0"
-    assert "doi" not in cff and "identifiers" not in cff
+    assert cff["doi"] == export.DATASET_DOI and "identifiers" not in cff
     en = yaml.safe_load((REPO_ROOT / "content" / "i18n" / "en.yaml").read_text(encoding="utf-8"))
     lead = re.sub(r"\[\[(?:[^|\]]*\|)?([^\]]*)\]\]", lambda m: m.group(1) or "", en["index.lead"])
     assert cff["abstract"] == lead
