@@ -1089,8 +1089,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT02444091
   title: Cyclophosphamide in Myalgic Encephalopathy/ Chronic Fatigue Syndrome (ME/CFS)
   study_type: INTERVENTIONAL
@@ -1520,8 +1520,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT03691987
   title: The Comeback Study
   study_type: INTERVENTIONAL
@@ -1551,9 +1551,10 @@ studies:
   last_update: '2026-06-02'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - neuroinflammation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT03807973
   title: Tracking Peripheral Immune Cell Infiltration of the Brain in Central Inflammatory Disorders Using [Zr-89]Oxinate-4-labeled
     Leukocytes.
@@ -1695,9 +1696,10 @@ studies:
   last_update: '2024-04-03'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autoimmunity-autoantibodies-b-cells
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04158427
   title: Intestinal Microbiota and Chronic Fatigue Syndrome
   study_type: INTERVENTIONAL
@@ -1777,8 +1779,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04363606
   title: 'Chronic Fatigue Etiology and Recovery in Covid-19 Patients: the Role of Fatigability'
   study_type: INTERVENTIONAL
@@ -1904,8 +1906,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04482595
   title: BIO 300 Oral Suspension in Previously Hospitalized Long COVID Patients
   study_type: INTERVENTIONAL
@@ -1967,9 +1969,10 @@ studies:
   last_update: '2026-06-22'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - oxidative-nitrosative-stress
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04561141
   title: 'Post Covid Syndrome: Clinical Pattern and Functional Assessment'
   study_type: OBSERVATIONAL
@@ -1999,8 +2002,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04593225
   title: Effectiveness of VIRTUAL SFCAMINA STUDY
   study_type: INTERVENTIONAL
@@ -2079,8 +2082,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04652518
   title: LYT-100 in Post-acute COVID-19 Respiratory Disease
   study_type: INTERVENTIONAL
@@ -2215,8 +2218,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04740736
   title: Cardiovascular Analysis of PEM
   study_type: INTERVENTIONAL
@@ -2328,8 +2331,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04795557
   title: Efficacy of Adaptogens in Patients With Long COVID-19
   study_type: INTERVENTIONAL
@@ -2375,8 +2378,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04809974
   title: Clinical Trial of Niagen to Examine Recovery in People With Persistent Cognitive and Physical Symptoms After COVID-19
   study_type: INTERVENTIONAL
@@ -2711,8 +2714,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04905888
   title: Hyperbaric Oxygen for Long COVID-19 Pulmonary Sequela
   study_type: INTERVENTIONAL
@@ -2871,8 +2874,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04949386
   title: Safety, Tolerability and Efficacy of S-1226 in Post-COVID-19 Subjects With Persistent Respiratory Symptoms.
   study_type: INTERVENTIONAL
@@ -2934,8 +2937,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT04956445
   title: Collection of SARS CoV-2 (COVID-19) Virus Secretions and Serum for Countermeasure Development
   study_type: OBSERVATIONAL
@@ -2950,8 +2953,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04958889
   title: 'COVID-19 Recovery Study: Symptoms and Biomarkers of Long COVID-19 in People Living With and Without HIV'
   study_type: OBSERVATIONAL
@@ -3015,8 +3018,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04978259
   title: SOLIDARITY Finland Long-COVID (Remdesivir Long-term Follow-up Study of COVID Patients)
   study_type: INTERVENTIONAL
@@ -3047,8 +3050,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT04983394
   title: The Effect of Virtual Reality Exercises on Patients With Post-COVID-19 Condition
   study_type: INTERVENTIONAL
@@ -3304,8 +3307,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05040893
   title: A Pilot Study of a PhysiOthErapy-based Tailored Intervention for Long COVID (COVID-19)
   study_type: INTERVENTIONAL
@@ -3384,8 +3387,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05059080
   title: A Six-Month Follow-Up Study of Participants With Coronavirus Disease 2019 (COVID-19) Previously Enrolled in a RO7496998
     (AT-527) Study
@@ -3539,8 +3542,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05094622
   title: Physical Training in Patients With POTS After Covid-19
   study_type: INTERVENTIONAL
@@ -3555,8 +3558,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05096884
   title: Post-Acute Sequelae of Coronavirus-19 (COVID-19) With Dyspnea on Exertion And Associated TaChycardia TrEatment Study
   study_type: INTERVENTIONAL
@@ -3697,9 +3700,10 @@ studies:
   last_update: '2025-02-25'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - infection-trigger
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05128292
   title: Effect of CoQ10 Plus Selenium Supplementation on Clinical Outcomes and Biochemical Markers in ME/CFS (CoSeME Study)
   study_type: INTERVENTIONAL
@@ -3844,8 +3848,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05167266
   title: 'Long-Covid: Treatment of Cognitive Difficulties'
   study_type: INTERVENTIONAL
@@ -3877,8 +3881,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05172011
   title: Understanding the Long-term Impact of COVID on Children and Families
   study_type: OBSERVATIONAL
@@ -3893,8 +3897,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05172024
   title: Understanding the Long-term Impact of COVID-19 in Adults (RECOVER)
   study_type: OBSERVATIONAL
@@ -3974,8 +3978,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05196451
   title: 'Short-time Intervention in Post-Covid Syndrome Syndrome (SIPCOV): A Pragmatic Randomised Controlled Trial'
   study_type: INTERVENTIONAL
@@ -4363,8 +4367,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05234294
   title: Long Covid After COVID-19 Infection With Omicron Variant
   study_type: OBSERVATIONAL
@@ -4412,8 +4416,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05238415
   title: ASAP - Assisted Immediate Augmented Post-/Long-COVID Plan for Patients Infected With COVID-19
   study_type: INTERVENTIONAL
@@ -4444,8 +4448,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05240742
   title: 'CORona (COVID-19) Follow Up Study: Epidemiology, Pathophysiology, Prediction, and Communication'
   study_type: OBSERVATIONAL
@@ -4635,8 +4639,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05293366
   title: 'LOng COvid COmorbidities: Endocrine,Metabolic,Neuropsychiatric,Muscle,Cardiovascular,Pulmonary,Dermatologic Dysfunctions'
   study_type: OBSERVATIONAL
@@ -4651,8 +4655,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05298878
   title: Virtual Physical Rehabilitation for Patients Living with Long COVID
   study_type: INTERVENTIONAL
@@ -4746,9 +4750,10 @@ studies:
   last_update: '2026-11-10'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - neuroinflammation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05356936
   title: Pilot Study of Vitamin K2 (MK-7) and Vitamin D3 Supplementation and the Effects on PASC Symptomatology and Inflammatory
     Biomarkers
@@ -4859,9 +4864,11 @@ studies:
   last_update: '2026-07-30'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - endothelial-dysfunction
+  - oxidative-nitrosative-stress
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05379556
   title: 'LOng COvid COmorbidities: Andrological, Reproductive, Sexual Dysfunctions in Patients Recovered From COVID-19'
   study_type: OBSERVATIONAL
@@ -4876,8 +4883,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05381675
   title: Short Term Results of Tele-Rehabilitation
   study_type: INTERVENTIONAL
@@ -4987,9 +4994,10 @@ studies:
   last_update: '2026-07-15'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-1.json
 - nct_id: NCT05422924
   title: A Web-based Platform to Improve Physical Function, Nutrition, and Mindfulness in Patients With Long COVID
   study_type: INTERVENTIONAL
@@ -5245,8 +5253,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05472090
   title: A Phase 2 Study to Evaluate the Efficacy and Safety of TNX-102 SL in Patients With Multi-Site Pain Associated With
     Post-Acute Sequelae of SARS-CoV-2 Infection
@@ -5391,8 +5399,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05497089
   title: Temelimab as a Disease Modifying Therapy in Patients With Neuropsychiatric Symptoms in Post-COVID 19 or PASC Syndrome
   study_type: INTERVENTIONAL
@@ -5570,8 +5578,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05530317
   title: CArdiac REhabilitation for Building Exertional heArt Rate for Chronotropic Incompetence in Long COVID-19
   study_type: INTERVENTIONAL
@@ -5623,8 +5631,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05532904
   title: Multidisciplinary Day-hospital Versus Waiting List Management of Post-COVID-19 Persistent Symptoms (ECHAP-COVID)
   study_type: INTERVENTIONAL
@@ -5816,9 +5824,11 @@ studies:
   last_update: '2024-08-06'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - brain-and-brainstem-mri-changes
+  - gut-microbiome
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05566483
   title: Physiology of Long COVID-19 and the Impact of Cardiopulmonary Rehabilitation on Quality-of-Life and Functional Capacity
   study_type: INTERVENTIONAL
@@ -5832,9 +5842,10 @@ studies:
   last_update: '2025-12-04'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-1.json
 - nct_id: NCT05571852
   title: Personalized Computerized Training Program for Cognitive Dysfunction After COVID-19
   study_type: INTERVENTIONAL
@@ -5914,8 +5925,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05582603
   title: Safety and Dosage of a Computerized Cognitive Training Program for Cognitive Dysfunction After COVID-19
   study_type: INTERVENTIONAL
@@ -5946,8 +5957,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05587868
   title: COVID-19 Vaccination Status and The Clinical Outcomes of Long COVID-19 Patients
   study_type: OBSERVATIONAL
@@ -6059,8 +6070,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05599906
   title: Effects of Inpatient Rehabilitation Measures in Long-COVID-19 Syndrome
   study_type: OBSERVATIONAL
@@ -6108,8 +6119,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05608629
   title: Vagus Nerve Stimulation as Treatment for Long Covid
   study_type: INTERVENTIONAL
@@ -6188,8 +6199,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05616806
   title: Long COVID-19 Intervention Using Digital Health & Technology
   study_type: INTERVENTIONAL
@@ -6253,8 +6264,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05622669
   title: Understanding Patterns of Fatigue in Health and Disease
   study_type: OBSERVATIONAL
@@ -6511,8 +6522,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05642923
   title: Post-COVID-19 Chronic Fatigue Syndrome
   study_type: INTERVENTIONAL
@@ -6609,8 +6620,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05652634
   title: Chronic Stress as a Risk Factor for Long COVID
   study_type: OBSERVATIONAL
@@ -6800,8 +6811,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05676047
   title: Cognitive Rehabilitation for Long COVID
   study_type: INTERVENTIONAL
@@ -6913,8 +6924,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05693064
   title: The Impact of Chiropractic on Long COVID-19
   study_type: INTERVENTIONAL
@@ -6963,8 +6974,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05699512
   title: Functional Ability, Symptoms and Quality of Life in Patients With Post Covid-19 Condition
   study_type: OBSERVATIONAL
@@ -7059,8 +7070,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05706454
   title: Phase 2/Phase 3 Study To Evaluate The Efficacy And Safety Of Ramatroban Along With The Standard Of Care In Subjects
     Hospitalized For COVID Pneumonia
@@ -7158,8 +7169,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05721066
   title: Hemostatic Profile of Post COVID-19/Long COVID-19 Patients
   study_type: OBSERVATIONAL
@@ -7352,8 +7363,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05745805
   title: Cohort Follow-up of Epidemic and Neuroimaging for Patients During the 1st Wave of the COVID-19 in China
   study_type: OBSERVATIONAL
@@ -7558,8 +7569,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05765591
   title: Balneotherapy for Patients With Post-acute Coronavirus Disease (COVID) Syndrome
   study_type: INTERVENTIONAL
@@ -7607,8 +7618,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05780450
   title: Effectiveness of Transcranial Direct Current in Patients With Persistent COVID-19 With Headaches and Chronic Pain.
   study_type: INTERVENTIONAL
@@ -7623,8 +7634,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05781893
   title: Basel Long COVID-19 Cohort Study and Digital Long COVID Substudy
   study_type: OBSERVATIONAL
@@ -7671,8 +7682,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05791812
   title: Application of Direct Current Transcranial stImulation, Remotely superVised in Chronic fATiguE
   study_type: INTERVENTIONAL
@@ -7687,8 +7698,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05793736
   title: Prevention of Long Covid Syndrome
   study_type: INTERVENTIONAL
@@ -7768,8 +7779,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05808400
   title: Safety and Efficacy of Umbilical Cord Mesenchymal Stem Cell Exosomes in Treating Chronic Cough After COVID-19
   study_type: INTERVENTIONAL
@@ -7864,8 +7875,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05813899
   title: Efficacy of Lactobacillus Paracasei PS23 for Patients With Post-COVID-19 Syndrome
   study_type: INTERVENTIONAL
@@ -7960,8 +7971,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05823896
   title: ImPROving Quality of LIFe in the Long COVID Patient
   study_type: INTERVENTIONAL
@@ -7992,8 +8003,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05827939
   title: Association of Phenotypic Age and Antibody Titers Among SARS-Co-V2 Infected Patients and Vaccinated Groups
   study_type: OBSERVATIONAL
@@ -8024,8 +8035,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05833243
   title: Effectiveness of Modified Diaphragmatic Training for Gastroesophageal Reflux Disease Post Covid-19
   study_type: INTERVENTIONAL
@@ -8183,9 +8194,10 @@ studies:
   last_update: '2026-09-14'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05852873
   title: PAxlovid loNg cOvid-19 pRevention triAl With recruitMent In the Community in Norway
   study_type: INTERVENTIONAL
@@ -8200,8 +8212,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05855356
   title: Post Covid-19 Dysautonomia Rehabilitation Randomized Controlled Trial
   study_type: INTERVENTIONAL
@@ -8232,8 +8244,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05855382
   title: Prevalence of Persistent COVID-19 in Punta Arenas, Magallanes and Chilean Antarctic Region
   study_type: OBSERVATIONAL
@@ -8327,8 +8339,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05874037
   title: Fluvoxamine for Long COVID-19
   study_type: INTERVENTIONAL
@@ -8391,8 +8403,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05877534
   title: Effects of Individual Tailored Physical Exercise in Patients With POTS After COVID-19 - a Randomized Controlled Study
   study_type: INTERVENTIONAL
@@ -8407,8 +8419,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05880108
   title: Modifying Adiposity Through Behavioral Strategies to Improve COVID-19 Rehabilitation
   study_type: INTERVENTIONAL
@@ -8423,8 +8435,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05886842
   title: Reliability (Test-retest) of 30 Seconds Sit-to-stand and Timed Up and Go in Adults With Long Covid
   study_type: OBSERVATIONAL
@@ -8487,8 +8499,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05894616
   title: Home Monitoring and Molecular Phenotyping of Patients With Post-COVID With Focus on Lung Involvement
   study_type: OBSERVATIONAL
@@ -8503,8 +8515,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05894629
   title: Effects of an Active Coping Program in Patients With Persistent Post-Covid Pain.
   study_type: INTERVENTIONAL
@@ -8619,8 +8631,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05918965
   title: Vagus Stimulation in Female Long COVID Patients.
   study_type: INTERVENTIONAL
@@ -8702,8 +8714,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05931497
   title: Sauna for Long Covid
   study_type: INTERVENTIONAL
@@ -8718,8 +8730,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT05932797
   title: Multimodal Long Covid19
   study_type: INTERVENTIONAL
@@ -8766,8 +8778,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-2.json
 - nct_id: NCT05946512
   title: MR-spectroscopy in Post-covid Condition Prior to and Following a Yoga Breathing Intervention
   study_type: INTERVENTIONAL
@@ -8782,8 +8794,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT05946551
   title: Treatment of Long CoronaVirus Disease (COVID) (TLC) Feasibility Trial
   study_type: INTERVENTIONAL
@@ -9040,8 +9052,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT05981872
   title: EFFECT OF COGNITIVE BEHAVIORAL THERAPY ON DEPRESSION AND QUALITY OF LIFE IN PATIENTS WITH POST COVID-19
   study_type: INTERVENTIONAL
@@ -9153,8 +9165,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-2.json
 - nct_id: NCT06006715
   title: Psychiatric Disorders and Functional Somatic Disorders
   study_type: OBSERVATIONAL
@@ -9184,8 +9196,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06011135
   title: Exploring Worry in CFS/ME
   study_type: OBSERVATIONAL
@@ -9295,8 +9307,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06027255
   title: Long COVID Immune Profiling
   study_type: OBSERVATIONAL
@@ -9310,9 +9322,10 @@ studies:
   last_update: '2026-09-25'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06042530
   title: Cognitive Impairment and Fatigue After Mild to Moderate COVID-19
   study_type: OBSERVATIONAL
@@ -9374,8 +9387,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06052527
   title: Covid-19, Post-Acute Sequelae of SARS-CoV-2 Infection (PASC) and Influenza Treatment System With Machine Learning
   study_type: OBSERVATIONAL
@@ -9534,8 +9547,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06074848
   title: tDCS in the Management of Post-COVID Disorders
   study_type: INTERVENTIONAL
@@ -9582,8 +9595,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06085911
   title: RCT Long COVID-19 Rehabilitation
   study_type: INTERVENTIONAL
@@ -9614,8 +9627,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06086379
   title: Cognitive Rehabilitation Therapy for COVID-19
   study_type: INTERVENTIONAL
@@ -9630,8 +9643,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06091280
   title: Home-Based Respiratory Muscle Strength Training Program for Individuals With Post-COVID-19 Persistent Dyspnea
   study_type: INTERVENTIONAL
@@ -9725,8 +9738,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06097442
   title: Effect of Apollo Wearable on Long COVID-19 Symptoms.
   study_type: OBSERVATIONAL
@@ -9919,8 +9932,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06145867
   title: 'A Feasibility Study: Assessing Photobiomodulation in Myalgic Encephalomyelitis'
   study_type: INTERVENTIONAL
@@ -9969,8 +9982,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06156202
   title: 'Evaluating a Comprehensive Multimodal Outpatient Rehabilitation Program for PASC Program to Improve Functioning
     of Persons Suffering From Post-COVID-19 Syndrome: A Randomized Controlled Trial'
@@ -10066,8 +10079,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06163690
   title: Symptom Tracking in Long COVID Patients Using Formula C™ Sublingual Drops
   study_type: OBSERVATIONAL
@@ -10146,8 +10159,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06170307
   title: Left Atrial Function of COVID-19-recovered Patients During the Surge of Omicron Variants
   study_type: OBSERVATIONAL
@@ -10178,8 +10191,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06171152
   title: Study of Liraglutide (A Weight Loss Drug) in High Risk Obese Participants With Cognitive and Memory Issues
   study_type: INTERVENTIONAL
@@ -10242,8 +10255,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06189066
   title: Long COVID Ultrasound Trial
   study_type: INTERVENTIONAL
@@ -10290,8 +10303,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06204458
   title: Mild Water-filtered Infrared-A Whole-body Hyperthermia in Patients With Post-COVID Syndrome (HyPoCo)
   study_type: INTERVENTIONAL
@@ -10369,9 +10382,10 @@ studies:
   last_update: '2025-03-04'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - gut-microbiome
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06211686
   title: The Effectiveness of a Health Promotion Program for Older People With Post-Covid-19 Sarcopenia
   study_type: INTERVENTIONAL
@@ -10511,8 +10525,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06234462
   title: A Study of Amantadine for Cognitive Dysfunction in Patients With Long-Covid
   study_type: INTERVENTIONAL
@@ -10591,8 +10605,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06251011
   title: Effects of Physiotherapy Via Telerehabilitation in Patients With COVID-19
   study_type: INTERVENTIONAL
@@ -10672,8 +10686,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06267300
   title: 'Treatment of Post-COVID-19 With Hyperbaric Oxygen Therapy: a Randomized, Controlled Trial'
   study_type: INTERVENTIONAL
@@ -10736,8 +10750,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06294756
   title: Sulfureous Water Therapy in Viral Respiratory Diseases
   study_type: INTERVENTIONAL
@@ -10911,8 +10925,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06374420
   title: Small Airway Disease And Bronchial Hyperreactivity In Patients With Post Acute Covid-19 Syndrome
   study_type: OBSERVATIONAL
@@ -11007,8 +11021,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06391970
   title: Digital Cognition Study During Long-COVID
   study_type: INTERVENTIONAL
@@ -11265,8 +11279,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06452082
   title: Risk in Devel Long-COVID in Contracting SARS-CoV-2 Infection After COVID-19 Vaccination in Relation to Vitamin D3
     Suppl
@@ -11299,8 +11313,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06456502
   title: Effectiveness of Non-invasive Neuromodulation in Patients With Long-COVID
   study_type: INTERVENTIONAL
@@ -11508,8 +11522,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-3.json
 - nct_id: NCT06511050
   title: Lumbrokinase for Adults With Long Covid, Post-treatment Lyme Disease Syndrome, and Myalgic Encephalomyelitis/Chronic
     Fatigue Syndrome
@@ -11526,8 +11540,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06511063
   title: Antiviral Clinical Trial for Long Covid-19
   study_type: INTERVENTIONAL
@@ -11542,8 +11556,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06522750
   title: 'Periodic Fasting for Treatment of Long Covid in Adults: a Pilot Study'
   study_type: INTERVENTIONAL
@@ -11558,8 +11572,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06528145
   title: Long Covid (Individuals with Ongoing COVID-19 Symptoms) Ongoing Effects
   study_type: OBSERVATIONAL
@@ -11589,9 +11603,10 @@ studies:
   last_update: '2026-06-22'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - brain-and-brainstem-mri-changes
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06534164
   title: Telerehabilitation of Balance Clinical and Economic Decision Support System
   study_type: INTERVENTIONAL
@@ -11610,8 +11625,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06535165
   title: Effect of Red Beetroot Juice Intake in Adults With Long COVID-19
   study_type: INTERVENTIONAL
@@ -11657,9 +11672,10 @@ studies:
   last_update: '2026-06-03'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - gut-microbiome
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06568393
   title: Effectiveness of Calisthenic Exercises in Post-Covid Syndrome
   study_type: INTERVENTIONAL
@@ -11722,8 +11738,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06583395
   title: Quest to Analyze One Thousand Humans Meditating
   study_type: OBSERVATIONAL
@@ -11755,8 +11771,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06586398
   title: A Pilot rTMS Trial for Neuropsychiatric Symptoms of Long-COVID
   study_type: INTERVENTIONAL
@@ -11789,8 +11805,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06597396
   title: Study to Investigate the Efficacy of Abrocitinib in Adult Participants With Severe Fatigue From Post COVID Condition/Long
     COVID
@@ -11806,8 +11822,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06597682
   title: Evaluating Immunomodulatory Interventions in Post-Acute Sequelae of SARS-CoV-2 InfEction
   study_type: INTERVENTIONAL
@@ -11822,8 +11838,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06601920
   title: A Study of Activity Leader to Forest Therapy Campaign in Different Environments Targets on the Participants Which
     Had Been Infected by SARS-COV-2
@@ -11855,8 +11871,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06620406
   title: Synbiotic Therapy for NP-PASC
   study_type: INTERVENTIONAL
@@ -11888,8 +11904,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06633666
   title: Acupuncture for Post COVID-19 Condition (Long COVID) Neuropsychiatric Symptoms
   study_type: INTERVENTIONAL
@@ -11904,8 +11920,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06635928
   title: Bright Light Therapy in ME/CFS Patients
   study_type: INTERVENTIONAL
@@ -11984,8 +12000,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06689345
   title: Effect of Non-Invasive Neuromodulation on Primary Chronic Pain, Including Post-COVID-19
   study_type: INTERVENTIONAL
@@ -12016,8 +12032,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06726772
   title: Group Psychotherapy in Long COVID
   study_type: INTERVENTIONAL
@@ -12050,8 +12066,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06739668
   title: Humanity Neurotech Device Clinical Trial in Adults With Long COVID Cognitive Dysfunction
   study_type: INTERVENTIONAL
@@ -12082,8 +12098,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06765421
   title: Optimising General Practice Long COVID Care - an Educational Intervention.
   study_type: INTERVENTIONAL
@@ -12097,8 +12113,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06766825
   title: Study to Evaluate the Efficacy and Safety of Plitidepsin in Adults With Post-COVID-19 Condition (PCC)
   study_type: INTERVENTIONAL
@@ -12129,8 +12145,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06784713
   title: DIFFERENT SARS-COV-2 VARIANTS' EFFECT ON THE COURSE OF COVID-19 IN ESTONIAN CHILDREN
   study_type: OBSERVATIONAL
@@ -12178,8 +12194,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06806696
   title: SARS-COV-2 VARIANTS' EFFECT ON PREGNANCY AND LONG-TERM OUTCOMES AMONG PREGNANT WOMEN AND THEIR NEWBORNS IN ESTONIA
   study_type: OBSERVATIONAL
@@ -12257,9 +12273,10 @@ studies:
   last_update: '2026-03-02'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - gut-microbiome
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06840873
   title: Tele-Rehabilitative Exercise Training Program in Nurses With Long COVID
   study_type: INTERVENTIONAL
@@ -12306,8 +12323,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06864156
   title: Evaluation of MicroRNAs and Vitamin B12 Expression in Subjects with Neurologic Symptoms of Depression, Anxiety and
     Fatigue in Long COVID-19
@@ -12323,8 +12340,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06865222
   title: Post COVID-19 Syndrome Treatment With Variable Pulse Transcranial Magnetic Stimulation
   study_type: INTERVENTIONAL
@@ -12339,8 +12356,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06871293
   title: Evaluating the Impact of a Functional and Cognitive Strategy in Patients With Long Covid-19
   study_type: INTERVENTIONAL
@@ -12355,8 +12372,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06876948
   title: NENCA Study on Neurological Complications of Long COVID-19 in Children and Adolescents; Neurophysiological, Electroencephalographic
     and Neuroradiological Investigation
@@ -12372,8 +12389,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06879535
   title: Long-term Symptomatic Follow-up of Patients with Long COVID Syndrome
   study_type: OBSERVATIONAL
@@ -12388,8 +12405,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-3.json
 - nct_id: NCT06879925
   title: Physiological and QoL Benefits of Qi-Gong in Post-acute Sequelae of Covid-19
   study_type: INTERVENTIONAL
@@ -12404,8 +12421,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT06883500
   title: Energy Level Diary for Patients With Post-COVID Syndrome
   study_type: OBSERVATIONAL
@@ -12437,8 +12454,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06907251
   title: Dapagliflozin for Long COVID Syndrome
   study_type: INTERVENTIONAL
@@ -12453,8 +12470,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06907953
   title: 'CZI Rare As One: Co-designing an App and Wearable Based Compass for Rare Diseases'
   study_type: OBSERVATIONAL
@@ -12484,8 +12501,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06920628
   title: PET Imaging of Cyclooxygenase-1 in Participants With Neurological Manifestations of Post-Acute Sequelae of SARS-CoV-2
     Infection (PASC)
@@ -12500,9 +12517,10 @@ studies:
   last_update: '2026-08-18'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - neuroinflammation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-4.json
 - nct_id: NCT06928116
   title: Heat thErapy And mobiLity in COVID-19 Survivors
   study_type: INTERVENTIONAL
@@ -12517,8 +12535,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06928272
   title: Long Covid (LC)-REVITALIZE - A Long Covid Repurposed Drug Study
   study_type: INTERVENTIONAL
@@ -12539,8 +12557,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06928480
   title: Effectiveness and Acceptability of the Unified Protocol for the Transdiagnostic Treatment of Emotional Disorders
     in People With Long COVID-19.
@@ -12556,8 +12574,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06928506
   title: Effect of Hi-OxSR for the Treatment of Post COVID Condition
   study_type: INTERVENTIONAL
@@ -12572,8 +12590,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06932237
   title: Immune-mediated Pathogenic Mechanisms of Neuro-PASC in Veterans
   study_type: OBSERVATIONAL
@@ -12588,8 +12606,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06933017
   title: Feasibility of an Augmented Two-Day Step Test and Causal Modeling for Post-Exertional Symptom Exacerbation in Post
     Covid-19 Syndrome
@@ -12622,8 +12640,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT06940609
   title: Magnetic Resonance Analysis of Neural Inflammatory Factors and External Stimulation
   study_type: INTERVENTIONAL
@@ -12637,9 +12655,10 @@ studies:
   last_update: '2026-07-15'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - neuroinflammation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT06952127
   title: Feasibility and Preliminary Efficacy of a Group-based Telerehabilitation Program in People With Post-COVID-19 Sequelae
     (TEPCO).
@@ -12670,9 +12689,10 @@ studies:
   last_update: '2026-11-12'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autoimmunity-autoantibodies-b-cells
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT06960928
   title: Low Dose Sirolimus in People With Post-Acute Sequelae of COVID-19 (PASC) Long COVID-19
   study_type: INTERVENTIONAL
@@ -12687,8 +12707,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06968104
   title: Vagus Nerve Stimulation to the Ear to Improve Symptoms in Post-COVID-19 and ME/CFS
   study_type: INTERVENTIONAL
@@ -12702,9 +12722,10 @@ studies:
   last_update: '2025-08-08'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06973018
   title: Internet Delivered Cognitive Rehabilitation for Mild Cognitive Impairments
   study_type: INTERVENTIONAL
@@ -12719,8 +12740,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06974058
   title: Study to Investigate the Health Benefits of a Quercetin/Curcumin-Based Supplement for Mild to Moderate Long COVID-19
     Symptoms
@@ -12753,8 +12774,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06978582
   title: Effectiveness and Safety of a Tele-Rehabilitation Program on Fatigue and Related Variables in Chronic Fatigue Syndrome
     and Post COVID Syndrome
@@ -12770,9 +12791,10 @@ studies:
   searches:
   - me_cfs
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT06980636
   title: A Trial of Shengmai Liquid for Long COVID Fatigue.
   study_type: INTERVENTIONAL
@@ -12787,8 +12809,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06992401
   title: Observational Study of Intranasal IVIG in Severe Acute Respiratory Syndrome Coronavirus 2 (SARS-CoV-2) Patients Undergoing
     Medical Tourism
@@ -12803,8 +12825,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT06992414
   title: Exploring the Therapeutic Effects of Creatine Supplementation for Long COVID-19
   study_type: INTERVENTIONAL
@@ -12818,8 +12840,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT06996314
   title: Effects of Auricular Vagus Nerve Stimulation Combined With Slow-paced Breathing on Individuals With Postural Orthostatic
     Tachycardia Syndrome.
@@ -12834,8 +12856,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07005921
   title: QEEG-NEUROFEEDBACK FOR COGNITIVE REHABILITATION IN LONG COVID-19 SURVIVORS WITH BRAIN FOG
   study_type: INTERVENTIONAL
@@ -12881,9 +12903,10 @@ studies:
   last_update: '2025-06-08'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07013903
   title: Effects of Hydrotherapy During Post-COVID-19 Rehabilitation
   study_type: INTERVENTIONAL
@@ -12898,8 +12921,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07021794
   title: SARS-CoV-2 Specific Monoclonal Antibody for Post-COVID-19 Conditions (Long COVID)
   study_type: INTERVENTIONAL
@@ -12914,8 +12937,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07046208
   title: Effects os Physiotherapeutic Rehabilitation on Function Autonomic and Inflammatory in Patients With Long Covid
   study_type: INTERVENTIONAL
@@ -12928,9 +12951,10 @@ studies:
   last_update: '2025-07-01'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07046442
   title: Effect of Pulmonary Rehabilitation and Physical Activity on COVID-19 Long-Term Symptoms (PuReCOVID)
   study_type: OBSERVATIONAL
@@ -12961,8 +12985,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07074158
   title: Microbial and Cytokine Signatures in Long COVID Patients
   study_type: OBSERVATIONAL
@@ -12977,8 +13001,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07076862
   title: Multiparametric [18F]F-AraG Imaging in Post-Acute Sequelae of COVID-19 (PASC)
   study_type: INTERVENTIONAL
@@ -12993,8 +13017,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07079787
   title: 'Telerehabilitation Decision Support System: Pilot Testing Protocol'
   study_type: INTERVENTIONAL
@@ -13013,8 +13037,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07089719
   title: 'Bevacizumab in Post-acute Sequelae of COVID-19 : Efficacy and Safety (Pilot Study)'
   study_type: INTERVENTIONAL
@@ -13029,8 +13053,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07090486
   title: A Study to Understand How the Use of Paxlovid Affected Healthcare Use in People With Pre-existing Conditions.
   study_type: OBSERVATIONAL
@@ -13077,8 +13101,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-5.json
 - nct_id: NCT07110714
   title: Effects of Kneipp Hydrotherapy in Post-COVID-19 Patients
   study_type: INTERVENTIONAL
@@ -13093,8 +13117,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07123727
   title: A Study to Examine Anktiva for the Treatment of COVID-19.
   study_type: INTERVENTIONAL
@@ -13109,8 +13133,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07128082
   title: The Long COVID Treatment Trial
   study_type: INTERVENTIONAL
@@ -13125,8 +13149,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07134673
   title: Mitochondrial Function in Peripheral Blood Mononuclear Cells, Muscle, and Skin of Long COVID Patients
   study_type: OBSERVATIONAL
@@ -13141,8 +13165,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07140094
   title: Long-Covid-19 Alleviation Through Learning Mindfulness Study
   study_type: INTERVENTIONAL
@@ -13157,8 +13181,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07154199
   title: Transcranial Ultrasound Stimulation for Cognitive Function Modulation in Patients With Post COVID-19 Brain Fog
   study_type: INTERVENTIONAL
@@ -13173,8 +13197,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07156994
   title: Development of Voice Biomarkers of Frequent COVID-19 and Long Covid-related Symptoms Based on Data From Users of
     the Long COVID Companion App
@@ -13190,8 +13214,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07184385
   title: A Study of Human Umbilical Cord Blood (REGENECYTE) Infusion in Patients With Post-COVID Condition
   study_type: INTERVENTIONAL
@@ -13205,8 +13229,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07189936
   title: Effect of 2-HOBA in Persistent Immune Activation in Long COVID POTS
   study_type: INTERVENTIONAL
@@ -13221,8 +13245,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07190105
   title: Vagal Approaches on Long COVID-19
   study_type: INTERVENTIONAL
@@ -13254,8 +13278,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07216040
   title: Harnessing Optimism and Perseverance in the Face of Long COVID-Español
   study_type: INTERVENTIONAL
@@ -13270,8 +13294,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07224490
   title: Kisspeptin to Quantify GnRH Neuronal Function in Health and Disease
   study_type: INTERVENTIONAL
@@ -13286,8 +13310,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07227441
   title: 'Chronic Infections and Inflammation in ME/CFS: An Observational Study'
   study_type: OBSERVATIONAL
@@ -13302,8 +13326,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07240649
   title: Emerging Indications for Hyperbaric Oxygen Treatment
   study_type: INTERVENTIONAL
@@ -13317,8 +13341,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07242573
   title: Effect of Physical Exercise and Neuromodulation on Pain, Sleep and Fatigue in Patients With Fibromyalgia
   study_type: INTERVENTIONAL
@@ -13333,8 +13357,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07254377
   title: Design and Validation of Innovative Strategies Based on Dual-Task Approach
   study_type: INTERVENTIONAL
@@ -13349,8 +13373,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07256795
   title: Blood-Brain Barrier Integrity and Immune Dynamics in Neuropsychiatric Sequelae of Post-SARS-CoV-2 Onset ME/CFS Versus
     Pre-Pandemic ME/CFS Patients
@@ -13365,9 +13389,10 @@ studies:
   last_update: '2026-06-11'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - neuroinflammation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07278206
   title: Brain Stimulation in Long COVID
   study_type: INTERVENTIONAL
@@ -13382,8 +13407,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07278388
   title: Neural Mechanisms of Fatigue in Post-Acute Sequela of SARS-CoV-2
   study_type: INTERVENTIONAL
@@ -13398,8 +13423,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07279272
   title: The Effect of the Human Regenerator Jet Device on the Quality of Life of Adult Individuals [HR-QoL]
   study_type: INTERVENTIONAL
@@ -13430,8 +13455,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07285473
   title: 'Low-Dose Naltrexone For ME/CFS: Dose-Finding'
   study_type: INTERVENTIONAL
@@ -13446,8 +13471,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07285707
   title: Acupuncture and Chinese Herbal Medicine for Long COVID
   study_type: INTERVENTIONAL
@@ -13462,8 +13487,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07295483
   title: Predictors of Long-Term Evolution in Long COVID; 4-Year Follow-Up. (BioICOPER Follow-up Study)
   study_type: OBSERVATIONAL
@@ -13478,8 +13503,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07298005
   title: Sonlicromanol in Post-COVID
   study_type: INTERVENTIONAL
@@ -13494,8 +13519,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07312357
   title: Whole-Body Electrostimulation for Functional Recovery in Post-COVID Syndrome
   study_type: INTERVENTIONAL
@@ -13509,8 +13534,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07312409
   title: Does Taurine Supplementation Improve Vascular Function and Orthostatic Responses in Long COVID?
   study_type: OBSERVATIONAL
@@ -13525,8 +13550,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07316127
   title: Immunoadsorption in Autoimmune Long COVID
   study_type: INTERVENTIONAL
@@ -13540,9 +13565,10 @@ studies:
   last_update: '2026-11-10'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autoimmunity-autoantibodies-b-cells
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07317401
   title: Investigating the Effects of Intermittent Hypoxia-Hyperoxia Treatment (IHHT) in People With Myalgic Encephalomyelitis/Chronic
     Fatigue Syndrome (ME/CFS) to Improve Fatigue, Pain, and Quality of Life by Targeting Mitochondrial Dysfunction and Autonomic
@@ -13558,9 +13584,10 @@ studies:
   last_update: '2026-05-22'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07320937
   title: 'Effects of Yiqi Fuyuan Paste Formula in Chronic Fatigue Syndrome: A Randomized Double-Blind Controlled Clinical
     Trial.'
@@ -13576,8 +13603,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07332338
   title: Expanded Access Use of Human Umbilical Cord Blood (REGENECYTE) Infusion in Patients With Chronic Fatigue of Post-COVID
     Condition
@@ -13607,8 +13634,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-6.json
 - nct_id: NCT07352254
   title: OutreAch MediCal Care for HousEbound Patients With Post-COVID-19 Syndrome or ME/CFS of Any Cause (ACCESS)
   study_type: INTERVENTIONAL
@@ -13623,8 +13650,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07355751
   title: The Effect of Acupuncture Treatment on Cognitive Functions and Brain Networks for Long COVID
   study_type: INTERVENTIONAL
@@ -13638,9 +13665,10 @@ studies:
   last_update: '2026-01-21'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - brain-and-brainstem-mri-changes
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07356570
   title: Second Prospective Cohort of Patients Entering the Multidisciplinary Care Pathway for Post-Covid Syndromes - SyPoCo2
     Cohort
@@ -13656,8 +13684,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07357688
   title: The Effect of Acupuncture Therapy on Cognitive Function in Post-COVID-19 Myalgic Encephalomyelitis/Chronic Fatigue
     Syndrome
@@ -13672,9 +13700,10 @@ studies:
   last_update: '2026-01-22'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - brain-and-brainstem-mri-changes
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07359482
   title: sElective Serotonin reuPtake inhibitoRs In posT-covid After COVID-19
   study_type: INTERVENTIONAL
@@ -13688,9 +13717,11 @@ studies:
   last_update: '2026-06-09'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - hpa-axis-cortisol
+  - tryptophan-kynurenine-metabolism
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07363655
   title: Effects of a Rehabilitation Programme Focused on Energy Management in People With Myalgic Encephalomyelitis / Chronic
     Fatigue Syndrome
@@ -13722,8 +13753,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07388550
   title: Phase I Open-Label Safety Trial of Pembrolizumab for Neurological Post- Acute Sequelae of SARS-CoV-2 (PD1-PASC I)
   study_type: INTERVENTIONAL
@@ -13738,8 +13769,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07397130
   title: 'Inspiratory Muscle Pressure and Diaphragmatic Strength in Women With Long COVID-19: A Pressure Biofeedback-Guided
     Training Study'
@@ -13771,8 +13802,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-4.json
 - nct_id: NCT07400848
   title: Clinical Laboratory Evaluation, Assessment of Symptoms and Recovery in Patients With Post-COVID-19-Vaccination Syndrome
   study_type: OBSERVATIONAL
@@ -13786,9 +13817,10 @@ studies:
   last_update: '2026-05-05'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - endothelial-dysfunction
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07417176
   title: Persistent COVID-19 Registry in Navarre.
   study_type: OBSERVATIONAL
@@ -13803,8 +13835,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07418567
   title: A Fasting Pilot Study for Long COVID
   study_type: INTERVENTIONAL
@@ -13885,8 +13917,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: rejected
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07491315
   title: Is Post-exertional Symptom Exacerbation Specific to Patients With Myalgic Encephalomyelitis / Chronic Fatigue Syndrome?
     A Study Comparing Patients With Myalgic Encephalomyelitis / Chronic Fatigue Syndrome and Patients With Cardiac Diseases
@@ -13903,8 +13935,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07492953
   title: Using Enhanced External Counterpulsation to Recover Cardiovascular Function for Patient of Chronic Diseases
   study_type: INTERVENTIONAL
@@ -13935,8 +13967,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07523113
   title: 'ME/CFS Brain Fog: Cognitive Rehabilitation Trial'
   study_type: INTERVENTIONAL
@@ -13951,8 +13983,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07527130
   title: C11 ER176 PET in Evaluating Neuroinflammation in Patients With Post-COVID Syndrome
   study_type: OBSERVATIONAL
@@ -13966,9 +13998,10 @@ studies:
   last_update: '2026-07-20'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - neuroinflammation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07529197
   title: Observational Study on Immunoadsorption (IA) in Patients With Autoantibody-Positive Post-Infectious ME/CFS
   study_type: OBSERVATIONAL
@@ -13983,9 +14016,10 @@ studies:
   searches:
   - me_cfs
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autoimmunity-autoantibodies-b-cells
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07530757
   title: SuperCAP Program to Improve Cognition and Daily Functioning in Post-COVID-19 Condition
   study_type: INTERVENTIONAL
@@ -14000,8 +14034,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07544186
   title: Effect of a Non-pharmacological Intervention on Endothelial Function, Body Composition, and Physical Functionality
     in Recovered COVID-19 Patients.
@@ -14032,9 +14066,10 @@ studies:
   last_update: '2026-04-22'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - circadian-rhythm-disruption
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07546539
   title: Photobiomodulation in Chronic Fatigue Syndrome
   study_type: INTERVENTIONAL
@@ -14049,8 +14084,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07551999
   title: A Study Of Remote Voice Analysis Tool For Diagnosing And Monitoring ME/CFS
   study_type: OBSERVATIONAL
@@ -14065,8 +14100,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07553897
   title: Tele-exercise Training Program for Long COVID
   study_type: INTERVENTIONAL
@@ -14098,8 +14133,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07560059
   title: Acute Metabolic Outcomes in Diabetic Patients Hospitalized for COVID-19 (DMD-COV)
   study_type: OBSERVATIONAL
@@ -14130,8 +14165,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07573709
   title: Functional and Affective Effects of a Brief tDCS Intervention in Fibromyalgia and Chronic Fatigue Syndrome
   study_type: INTERVENTIONAL
@@ -14161,9 +14196,10 @@ studies:
   last_update: '2026-10-28'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - herpesvirus-reactivation
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07600320
   title: Fareon Open Label Device Clinical Trial
   study_type: INTERVENTIONAL
@@ -14179,8 +14215,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07621068
   title: Hyperbaric Oxygen Therapy for Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS)
   study_type: INTERVENTIONAL
@@ -14195,8 +14231,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07621588
   title: Diaphragmatic Breathing Exercises With KOTS Currents in Patients With Long COVID
   study_type: INTERVENTIONAL
@@ -14227,8 +14263,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07651371
   title: Effects of a Physical Rehabilitation Program on Long COVID
   study_type: INTERVENTIONAL
@@ -14259,8 +14295,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07682402
   title: Taurine Supplementation in Adolescents With Post-COVID Condition
   study_type: INTERVENTIONAL
@@ -14274,8 +14310,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07694232
   title: A Pilot Randomized Controlled Trial of Homeopathic Treatment for Long COVID
   study_type: INTERVENTIONAL
@@ -14290,8 +14326,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07697261
   title: Fatigue in Long COVID
   study_type: INTERVENTIONAL
@@ -14305,8 +14341,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07709234
   title: Transcranial Direct Current Stimulation for Long COVID Brain Fog and Fatigue
   study_type: INTERVENTIONAL
@@ -14319,9 +14355,10 @@ studies:
   last_update: '2026-07-22'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07711444
   title: The Efficacy of Long-Chain Fatty Acids, Eicosapentaenoic Acid (EPA) and Specialized Pro-Resolving Mediators (SPMs),
     in Treating Long COVID Neuropsychiatric Symptoms
@@ -14353,8 +14390,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07714889
   title: Development of an Accessible Cognitive Behavioral Therapy Digital Therapeutic for Individuals With Long COVID
   study_type: INTERVENTIONAL
@@ -14384,8 +14421,8 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07722000
   title: Different Treatment Options Used for Post Covid-19 Syndrome
   study_type: INTERVENTIONAL
@@ -14416,9 +14453,10 @@ studies:
   searches:
   - me_cfs
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autoimmunity-autoantibodies-b-cells
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07726082
   title: Micro-choice-based Intervention for Multicausal Fatigue
   study_type: INTERVENTIONAL
@@ -14434,8 +14472,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07744451
   title: Kinesiotaping Versus Physiotherapy for Post-Covid-19 Back Pain
   study_type: INTERVENTIONAL
@@ -14481,9 +14519,10 @@ studies:
   last_update: '2026-08-07'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07757620
   title: Epigenetic Changes in Long COVID Patients
   study_type: OBSERVATIONAL
@@ -14497,9 +14536,10 @@ studies:
   last_update: '2026-11-04'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - gut-microbiome
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-5.json
 - nct_id: NCT07766512
   title: 'Five-year Follow-up After Sars-CoV-2 Infection: Prevalence and Evolution of Post-acute Sequalae of COVID-19 (PASC)'
   study_type: OBSERVATIONAL
@@ -14513,8 +14553,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07770022
   title: Validation of Biomarkers for Long COVID in the LIINC Viral Immunopathogenesis and Persistence Repeat Donor Cohort
     (VIPER)
@@ -14530,8 +14570,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07781501
   title: Long-Term Study of COVID-19 Infection and Long COVID
   study_type: OBSERVATIONAL
@@ -14546,8 +14586,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07783074
   title: Fatigue Investigation Using Digital Outcomes
   study_type: OBSERVATIONAL
@@ -14561,9 +14601,11 @@ studies:
   last_update: '2026-08-24'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  - gut-microbiome
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07798570
   title: Observational Study With CICR-NAM as a Food for Special Medicinal Purposes in Post-COVID Syndrome (PCS)
   study_type: INTERVENTIONAL
@@ -14577,9 +14619,10 @@ studies:
   last_update: '2026-11-10'
   searches:
   - long_covid
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - tryptophan-kynurenine-metabolism
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-7.json
 - nct_id: NCT07821385
   title: Interprofessional Rehabilitation for Patients With Post-COVID Condition
   study_type: OBSERVATIONAL
@@ -14611,8 +14654,8 @@ studies:
   - me_cfs
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-6.json
 - nct_id: NCT07871578
   title: Experiences and Care Pathways Shared on Social Media Regarding 5 Conditions Causing Chronic Pain
   study_type: OBSERVATIONAL
@@ -14643,8 +14686,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-8.json
 - nct_id: NCT07880171
   title: Intensive Home-based Transcranial Direct Current Stimulation for Long COVID
   study_type: INTERVENTIONAL
@@ -14707,8 +14750,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-8.json
 - nct_id: NCT07909551
   title: 'Long Covid: Study of Quality of Life, Clinical Evolution and Use of Care. Cohort in General Practice and General
     Population in Metropolitan France COVILEV Study'
@@ -14740,8 +14783,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-8.json
 - nct_id: NCT07925944
   title: 'Subgrouping Patients With Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS): Linking the Powerhouses of
     Cells to the Autonomic Nervous System'
@@ -14756,9 +14799,10 @@ studies:
   last_update: '2026-11-09'
   searches:
   - me_cfs
-  hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  hypotheses:
+  - autonomic-imbalance
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-6.json
 - nct_id: NCT07930637
   title: Rimonabant for Cognitive Impairment in People With Post-COVID-19 Syndrome
   study_type: INTERVENTIONAL
@@ -14773,8 +14817,8 @@ studies:
   searches:
   - long_covid
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials-rest/review-8.json
 - nct_id: NCT07932002
   title: Exploring the Extended Efficacy and Initial Use of RUCONEST® in Managing Neurological Symptoms Linked to Infectious
     Pathogens
@@ -14790,5 +14834,5 @@ studies:
   searches:
   - me_cfs
   hypotheses: []
-  mapping: not_mapped
-  mapping_source: null
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-18/trials/review-6.json
