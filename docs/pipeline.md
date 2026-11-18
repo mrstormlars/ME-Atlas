@@ -260,6 +260,19 @@ A card in `cards/` is corrected (reworded, or a claim removed) only through a co
 
 An audit record that `record-audit` rejects (a pair record, a whole-card record, a round L or a round C record alike) is moved to `<name>.invalid-1.yaml` beside it, `<name>.retry.md` is written (the validation errors and the paths of the context file and the invalid record) and the command exits 1. One retry follows: a fresh `auditor` reads the context file, the invalid record and the errors and writes `<name>.yaml` again, and `record-audit --retry` (implied when `<name>.invalid-1.yaml` exists) validates it. It also refuses the retry when its `decision` or `accepted_level` differ from the invalid record's: a format retry cannot change the answer. A second failure is final: the record is kept as `<name>.invalid-2.yaml` and no further retry is accepted. `publish-card` and `pr` copy valid records only (one exception: `publish-card` keeps a first whole-card record that failed twice, when no second audit was run, as `...-invalid.yaml`, see "First publication"), and their reports name a record that failed twice ("the record <name>.yaml failed validation twice ...").
 
+## Registered ongoing studies (registry step)
+
+A step of `/ukentlig` that never touches `cards/`, `drafts/` or `translations/`. Code: `me_atlas.trials`; the agents are `trial-mapper` (sonnet; Read, Write) and `card-reviewer` in registry mode. The plan is `docs/plan-trial-registry.md`; the fetch is described in `docs/fetch.md`; the page in `docs/site.md`.
+
+1. `uv run python -m me_atlas.trials fetch` writes `registry/trials.yaml`. Zero new studies is a normal outcome.
+2. `uv run python -m me_atlas.trials map-plan` writes `data/pipeline/<date>/trials/cards.json` (slug, name, core claim) and `batch-<n>.json` (at most 20 studies each: registry number, brief and official title, conditions, keywords, brief summary, study type, intervention names and types or observational model, copied by code) for the ongoing studies of the latest fetch that have `mapping: not_mapped`. `--ids` or `--ids-file` names the studies instead.
+3. The `trial-mapper` agent reads one batch and `cards.json` and writes `map-<n>.json` (per study `nct_id`, `cards`, `reason`). `trials record-mapping --run <dir>` validates all of them (unknown slug, missing, repeated or extra registry number, extra keys) and writes nothing.
+4. The `card-reviewer` agent in registry mode reads the batch, `cards.json` and `map-<n>.json` only and writes `review-<n>.json` (per study `accept`, or `reject` with a finding). It rejects when a card is named that the record does not bear on or a card the record plainly bears on is left out.
+5. `trials record-review --run <dir>` validates the review files and the mapping files again and only then writes `hypotheses`, `mapping` (`accepted` or `rejected`) and `mapping_source` to `registry/trials.yaml`. A rejected mapping is published with `hypotheses: []` and is not listed. A reject without a finding, or any invalid file, changes nothing.
+6. `trials check --cache` compares every copied field with the cached records. The report states the counts: studies fetched, new, ongoing, mapped, rejected, listed.
+
+**Reliability test (before first publication, repeat when the mapping prompt changes).** `trials sample --seed S --n 50 --out FILE` writes the registry numbers of all ongoing `me_cfs` studies plus 50 ongoing `long_covid`-only studies; `trials map-plan --ids-file FILE` plans them; after the mapper and the reviewer, `trials record-review` and `trials reliability --run <dir> --seed S` write `registry/reliability.yaml` (total mappings, rejects, reject rate, split per search, date, seed, `passed`). `passed` is true only when rejects × 5 ≤ total. The site builds `trials.html` only when that file says `passed: true`. If it fails, the page is not published and the reject reasons go to the founder; the prompt is not patched more than twice.
+
 ## Agents and models
 
 Every subagent in `.claude/agents/` and the model its frontmatter names:
@@ -268,7 +281,8 @@ Every subagent in `.claude/agents/` and the model its frontmatter names:
 | --- | --- | --- | --- |
 | `paper-classifier` | haiku | Read, Write | classifies new papers |
 | `card-drafter` | sonnet | Read, Write | drafts operations for one pair; the redraft after `accept_lower`; the correction of a held-back draft; the correction of a published card |
-| `card-reviewer` | opus | Read, Glob, Grep, Bash, WebFetch, Write | reviews a draft; also translation and map modes, the fix check of the safety valve, the one-time classification of existing audit records and the review of a published card before its correction |
+| `trial-mapper` | sonnet | Read, Write | names the cards each registered ongoing study bears on (registry step) |
+| `card-reviewer` | opus | Read, Glob, Grep, Bash, WebFetch, Write | reviews a draft; also translation, map and registry modes, the fix check of the safety valve, the one-time classification of existing audit records and the review of a published card before its correction |
 | `auditor` | opus | Read, Write | decides tier 2 and tier 3 changes, including a tier 2 correction of a published card |
 | `card-translator` | sonnet | Read, Write | translates card text to Norwegian |
 | `link-drafter` | sonnet | Read, Write | proposes a card's layer and links |

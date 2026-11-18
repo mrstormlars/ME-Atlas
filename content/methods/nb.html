@@ -122,6 +122,16 @@
   <li><strong>Lenker som legges til på et publisert kort.</strong> Hver lenke avgjøres for seg og trenger to revisjoner som er enige. En lenkerunde legger ikke til noen studie og endrer ikke plasseringen til kortet.</li>
 </ul>
 
+<h2 id="registered-studies">Registrerte pågående studier</h2>
+<p>Siden med registrerte pågående studier følger sin egen kilderegel, fordi en registerpost ikke er en artikkel og ikke er evidens.</p>
+<ul>
+  <li>Det eneste registeret er ClinicalTrials.gov, lest gjennom det offentlige programmeringsgrensesnittet. De rå svarene lagres, og grensene for hvor ofte vi kan spørre, overholdes.</li>
+  <li>Hver verdi om en studie, på siden eller i de nedlastbare dataene (registernummer, tittel, studietype, status, land, planlagt antall deltakere i studien, startdato og datoen posten sist ble oppdatert), kopieres av et program fra den hentede posten. Ingenting om en studie skrives av en modell eller fra hukommelsen.</li>
+  <li>En registrert studie er ikke evidens. Den er aldri en studie på et kort, og den er aldri kilde til et nivå, et merke, et merke for omstridt, en plassering eller en lenke. Den endrer ingen kort.</li>
+  <li>Den eneste KI-vurderingen er hvilke kort en studie gjelder: en studie knyttes bare til et kort når den måler, tester eller griper inn i det som kortets hovedpåstand handler om. En annen KI-agent kontrollerer hver tilknytning før den vises. En tilknytning som ikke består kontrollen, vises ikke. Før siden ble publisert første gang, ble kontrollen kjørt på alle pågående ME/CFS-studier og på et utvalg pågående langvarig covid-studier, og siden vises bare fordi høyst én av fem tilknytninger ble avvist.</li>
+  <li>Listen oppgir fakta. Den anbefaler ikke at noen tar del i en studie, den oppgir ingen kontaktperson, og den sier ingenting om hvorvidt et tiltak virker.</li>
+</ul>
+
 <h2>Rollen til KI, og hvem som avgjør</h2>
 <p>KI skriver utkast, kontrollerer og reviderer. Hvert evidensnivå, hvert merke, hvert merke for omstridt og hver lenke på dette nettstedet avgjøres av KI-verktøy, og ingen medisinsk eller forskningsfaglig ekspert har gjennomgått innholdet. Grunnleggeren fastsetter vurderingsreglene, omfanget og retningen, og kan overstyre en avgjørelse fra revisoren som en loggført rettelse.</p>
 <p>Revisoren er en KI-agent av samme slag som agentene den reviderer, og den kan ha de samme blinde flekkene. Det som gjør den uavhengig, er hva den får se, ikke modellen den kjører på. Den andre revisjonen av et utvalg av ukentlige avgjørelser måler hvor ofte to kjøringer er uenige.</p>

@@ -1,4 +1,4 @@
-"""Open data and citation export: the cards as one JSON file, three CSV files and per-card BibTeX and RIS files.
+"""Open data and citation export: the cards as one JSON file, four CSV files and per-card BibTeX and RIS files.
 
 Pure functions: cards and map content in, text out. Nothing is looked up, nothing is read from ``data/cache/`` and no
 text is written about any card; the files hold what the cards hold (credibility rule 1). The site build writes the
@@ -11,7 +11,7 @@ import csv
 import io
 import json
 import re
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from typing import Any
 
 from me_atlas import map as maplib
@@ -35,7 +35,15 @@ REVIEW_STATEMENT = (
 DESCRIBES_NOTE = "The data describes the state of the evidence. It gives no treatment advice."
 
 # File names under data/, in the order the README and the data page list them.
-DATA_FILES = ("me-atlas.json", "hypotheses.csv", "studies.csv", "links.csv", "card-format.md", "README.txt")
+DATA_FILES = (
+    "me-atlas.json",
+    "hypotheses.csv",
+    "studies.csv",
+    "links.csv",
+    "trials.csv",
+    "card-format.md",
+    "README.txt",
+)
 CITATIONS_DIR = "citations"
 
 HYPOTHESES_COLUMNS = (
@@ -77,6 +85,21 @@ STUDIES_COLUMNS = (
     "corrects",
 )
 LINKS_COLUMNS = ("source", "target", "target_kind", "target_name", "support", "text", "sources")
+TRIALS_COLUMNS = (
+    "nct_id",
+    "title",
+    "study_type",
+    "status",
+    "countries",
+    "enrollment_count",
+    "enrollment_type",
+    "start_date",
+    "last_update",
+    "searches",
+    "hypotheses",
+    "mapping",
+    "mapping_source",
+)
 
 
 DATASET_DOI = "10.5281/zenodo.24333249"  # the Zenodo concept DOI: it points to every archived version
@@ -118,9 +141,16 @@ def counts(cards: Sequence[Card], graph: maplib.Graph) -> dict[str, int]:
 
 
 def dataset_json(
-    cards: Sequence[Card], content: maplib.MapContent, *, built: str, draft_preview: bool
+    cards: Sequence[Card],
+    content: maplib.MapContent,
+    *,
+    built: str,
+    draft_preview: bool,
+    trials: Sequence[Mapping[str, Any]] = (),
+    trials_fetched: str | None = None,
 ) -> tuple[str, dict[str, int]]:
-    """The text of ``me-atlas.json`` and its counts."""
+    """The text of ``me-atlas.json`` and its counts. ``trials`` are the entries of ``registry/trials.yaml``, all of
+    them (matched or not, ongoing or not), as the registry file holds them; ``trials_fetched`` is the fetch date."""
     ordered = sorted(cards, key=lambda c: c.slug)
     graph = maplib.build_graph(ordered, content)
     numbers = counts(ordered, graph)
@@ -140,10 +170,12 @@ def dataset_json(
             "review_statement": REVIEW_STATEMENT,
             "draft_preview": draft_preview,
             "counts": numbers,
+            "trials_fetched": trials_fetched,
         },
         "cards": [c.model_dump(mode="json") for c in ordered],
         "symptoms": [{"id": s.id, "name": s.name} for s in content.symptoms],
         "questions": [{"id": q.id, "text": q.text} for q in content.questions],
+        "trials": [dict(t) for t in trials],
     }
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n", numbers
 
@@ -215,6 +247,31 @@ def links_csv(cards: Sequence[Card], content: maplib.MapContent) -> str:
                 (e.source, e.target, _target_kind(e.target), graph.nodes[e.target].name, e.support, e.text, e.sources)
             )
     return _csv(LINKS_COLUMNS, rows)
+
+
+def trials_csv(entries: Sequence[Mapping[str, Any]]) -> str:
+    """One row per registered study of ``registry/trials.yaml``: every entry, matched or not, ongoing or not."""
+    rows = []
+    for e in entries:
+        enrol = e["enrollment"] or {}
+        rows.append(
+            (
+                e["nct_id"],
+                e["title"],
+                e["study_type"],
+                e["status"],
+                e["countries"],
+                enrol.get("count"),
+                enrol.get("type"),
+                e["start_date"],
+                e["last_update"],
+                e["searches"],
+                e["hypotheses"],
+                e["mapping"],
+                e["mapping_source"],
+            )
+        )
+    return _csv(TRIALS_COLUMNS, rows)
 
 
 # ---------------------------------------------------------------------------
@@ -340,6 +397,8 @@ def readme(*, built: str, draft_preview: bool) -> str:
         "hypotheses.csv   One row per card: level, layer, contested rungs, badges, study and link counts.",
         "studies.csv      One row per study per card, with every study field.",
         "links.csv        One row per link between cards, symptoms and open questions.",
+        "trials.csv       One row per registered study (ClinicalTrials.gov): status and the cards it bears on.",
+        "                 A registered study is not evidence and is on no card; fields are copied from the registry.",
         "card-format.md   The meaning of every field. This is the only field definition.",
         "README.txt       This file.",
         "citations/       One BibTeX file (.bib) and one RIS file (.ris) per card, one entry per study.",

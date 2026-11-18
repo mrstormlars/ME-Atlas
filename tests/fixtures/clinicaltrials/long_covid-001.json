@@ -1,0 +1,143 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000004",
+          "briefTitle": "Fictional long COVID and ME/CFS registry"
+        },
+        "statusModule": {
+          "overallStatus": "ACTIVE_NOT_RECRUITING",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2025-03"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Long COVID",
+            "ME/CFS"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "enrollmentInfo": {
+            "count": 500,
+            "type": "ACTUAL"
+          },
+          "designInfo": {
+            "observationalModel": "Case-Control"
+          }
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "Norway"
+            },
+            {
+              "facility": "Fictional site",
+              "country": "Sweden"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000005",
+          "briefTitle": "Fictional long COVID breathing study"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Post-COVID syndrome"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL"
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {
+              "type": "DEVICE",
+              "name": "Fictional breathing trainer"
+            },
+            {
+              "type": "OTHER",
+              "name": "Usual care"
+            }
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": []
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT90000006",
+          "briefTitle": "Fictional long COVID cohort"
+        },
+        "statusModule": {
+          "overallStatus": "ENROLLING_BY_INVITATION",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-10-01",
+            "type": "ACTUAL"
+          },
+          "startDateStruct": {
+            "date": "2025-03"
+          }
+        },
+        "descriptionModule": {
+          "briefSummary": "A fictional summary."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Fictional condition"
+          ]
+        },
+        "designModule": {
+          "studyType": "OBSERVATIONAL",
+          "enrollmentInfo": {
+            "count": 300,
+            "type": "ESTIMATED"
+          },
+          "designInfo": {
+            "observationalModel": "Cohort"
+          }
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Fictional site",
+              "country": "France"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    }
+  ],
+  "nextPageToken": "FICTIONAL-TOKEN-2",
+  "totalCount": 5
+}

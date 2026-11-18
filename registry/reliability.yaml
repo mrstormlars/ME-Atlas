@@ -1,0 +1,16 @@
+date: '2026-11-18'
+sample_seed: 20261118
+run: data/pipeline/2026-11-18/trials
+total: 103
+rejects: 2
+reject_rate: 0.0194
+per_search:
+  me_cfs:
+    total: 53
+    rejects: 1
+    reject_rate: 0.0189
+  long_covid:
+    total: 67
+    rejects: 2
+    reject_rate: 0.0299
+passed: true

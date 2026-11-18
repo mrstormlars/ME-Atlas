@@ -49,6 +49,9 @@
   </div>
 </div>
 
+{% if trials_count %}
+<p class="trials-line small">{{ t("card.trials", n=trials_count, href=lroot ~ "trials.html#trials-" ~ card.slug) }}</p>
+{% endif %}
 <h2>{{ txt("card.core_claim") }}</h2>
 <p>{{ page.sourced(card.core_claim) }}</p>
 

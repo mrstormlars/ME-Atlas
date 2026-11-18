@@ -122,6 +122,16 @@
   <li><strong>Links added to a published card.</strong> Each link is decided on its own and needs two agreeing audits. A link round adds no study and does not change the card's layer.</li>
 </ul>
 
+<h2 id="registered-studies">Registered ongoing studies</h2>
+<p>The page of registered ongoing studies follows its own source rule, because a registry record is not a paper and is not evidence.</p>
+<ul>
+  <li>The only registry is ClinicalTrials.gov, read through its public programming interface. The raw responses are kept, and the rate limits are respected.</li>
+  <li>Every value about a study, on the page or in the downloadable data (registry number, title, study type, status, countries, planned enrolment, start date and the date the record was last updated), is copied by a program from the fetched record. Nothing about a study is written by a model or from memory.</li>
+  <li>A registered study is not evidence. It is never a study on a card, and it is never a source of a level, a badge, a contested mark, a layer or a link. It changes no card.</li>
+  <li>The only AI judgement is which card or cards a study bears on: a study is matched to a card only when it measures, tests or intervenes on what the card's core claim says. A second AI agent checks every match before it is shown. A match that fails the check is not shown. Before the page was first published, the checking step was run on all ongoing ME/CFS studies and on a sample of ongoing long COVID studies, and the page is shown only because at most one match in five was rejected.</li>
+  <li>The list states facts. It does not recommend that anyone take part, it names no contact person, and it says nothing about whether an intervention works.</li>
+</ul>
+
 <h2>The role of AI, and who decides</h2>
 <p>AI drafts, checks and audits. Every evidence level, badge, contested mark and link on this site is decided by AI tools, and no medical or research expert has reviewed the content. The founder sets the rubric, the scope and the direction, and may overrule an auditor decision as a logged correction.</p>
 <p>The auditor is an AI agent of the same kind as the agents it audits and may share their blind spots. What makes it independent is what it is shown, not the model it runs on. The second audit of a sample of weekly decisions measures how often two runs disagree.</p>
