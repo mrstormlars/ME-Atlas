@@ -164,3 +164,38 @@ entries:
         quote: searchMECFS is an interactive query tool that allows researchers to locate and request biospecimens from ME/CFS
           studies
         page: main
+- id: uk-me-cfs-biobank
+  name: UK ME/CFS Biobank
+  url: https://cureme.lshtm.ac.uk/index.php/biobank/
+  access_url: https://cureme.lshtm.ac.uk/index.php/biobank/apply/
+  checked: '2026-11-18'
+  category: data
+  holds:
+  - biospecimens
+  access: application
+  covers: me_cfs
+  language: en
+  source:
+  - https://cureme.lshtm.ac.uk/index.php/biobank/
+  - https://cureme.lshtm.ac.uk/index.php/biobank/apply/
+  text_hash:
+    main: cd6a599ba3f1de37e8081c55a569be4da9efe738ee2b30d388bff23e71f97cb4
+    access: e9f7ddb67f09670bd39410127b04af78fc0824cc7e3d24db2324117f037bce95
+  quotes:
+    name:
+      quote: The UK ME/CFS Biobank (UKMEB) is an open resource for clinical and biomedical research into ME/CFS.
+      page: main
+    access:
+      quote: Once this has been approved, you will be asked to submit the application form (full).
+      page: access
+    covers:
+      quote: The UK ME/CFS Biobank (UKMEB) is an open resource for clinical and biomedical research into ME/CFS.
+      page: main
+    holds:
+      biospecimens:
+        quote: Over 30,000 aliquots of blood (collected over multiple time-points) have been processed and are currently held
+          at the UCL/RFH Biobank in London.
+        page: main
+  hand_saved:
+  - main
+  - access

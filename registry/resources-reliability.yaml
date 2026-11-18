@@ -12,3 +12,23 @@ exclusions:
   total: 2
   rejects: 0
 passed: true
+corrections:
+- date: '2026-11-18'
+  run: data/pipeline/biobank-correction/2026-11-18/resources
+  correction_of: data/pipeline/hand-saved-3/2026-11-18/resources
+  leads:
+  - uk-me-cfs-biobank
+  findings:
+    uk-me-cfs-biobank:
+      access: The access quote says only that an application process starts with an
+        outline form; it does not by itself state that requests are assessed (that
+        is in the following sentence, 'Once this has been approved', which the quote
+        leaves out).
+  values:
+    total: 5
+    rejects: 0
+    reject_rate: 0.0
+  entries:
+    drafts: 1
+    written: 1
+    left_out: 0
