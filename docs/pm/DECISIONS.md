@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-18 — Data catalogue: the page goes in the main menu, and a rejected value may be drafted again once (founder rulings)
+
+- After merging pull requests 97, 98 and 99 the founder said the page `resources.html` looked linked from nowhere and should be put in place. It had one small line on the gaps page and one on the data page; the orchestrator's contract for pull request 95 had kept it out of the main navigation. It now goes in the main menu after the registered studies, in both languages (pull request 100).
+- The run under the per-value rule (pull request 99) added DecodeME (1 of 13 values rejected) and left the UK ME/CFS Biobank out, because its access value was rejected. The founder asked whether there was a good reason for that. The project manager read the stored access page and the review: the value "application" was right, but the quote stopped before the sentence about approval. Asked whether to draft the entry again once with the reviewer's finding, the founder answered: "Ja, prøv igjen".
+- The rule, for the data catalogue: a rejected value may be drafted again once, with the reviewer's finding and an unchanged drafter prompt, and is judged by a fresh reviewer who is not shown the earlier review. A second reject is final. The reliability numbers of the run are not rewritten; the correction round is recorded as its own item (`registry/resources-reliability.yaml`).
+- Outcome (pull request 101): the biobank entry was accepted on 5 of 5 values and is in the data file, marked as saved by hand. OMF ME/CFS Data Center and Solve Together stay out, because their saved pages do not say how a researcher gets access.
+- Why: the same reasoning as the correction round for the cards. A named, checkable fault in a draft is fixed and checked once, without tuning the instruction to pass.
+
 ## 2026-11-18 — Data catalogue: a rejected value becomes "not stated", operator and countries go, reliability is counted per value (founder ruling)
 
 - The founder saved by hand the pages of the four resources whose hosts refuse an automated request (pull request 97 builds the way in). The run published nothing: the drafter proposed DecodeME and the UK ME/CFS Biobank, and the reviewer rejected both entries on one field each, the operator, taken from a footer; OMF ME/CFS Data Center and Solve Together were excluded because the saved pages do not say how a researcher gets access. Two of four entries rejected is above one in five.
