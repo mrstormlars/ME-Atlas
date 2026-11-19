@@ -117,6 +117,19 @@ def test_a_rejected_name_keeps_the_published_name(tmp_path):
     assert entry["quotes"]["name"]["quote"] == "The Fictional Biobank holds"
 
 
+def test_language_follows_an_accepted_name_and_stays_when_the_name_is_rejected(tmp_path):
+    data = published_file(tmp_path)  # the published entry is "en"
+    draft = entry_draft("a-res", name="The Fictional Biobank Network")
+    draft["language"] = "nb"
+    assert record(data, new_run(tmp_path, draft), request_file(tmp_path, {"a-res": "x"})) == 0
+    assert entry_of(data)["language"] == "nb"
+    (tmp_path / "second").mkdir()
+    data2 = published_file(tmp_path / "second")
+    rejected = make_run(tmp_path / "second", "new", {"a-res": draft}, {"a-res": review_of(draft, "name")})
+    assert record(data2, rejected, request_file(tmp_path / "second", {"a-res": "x"})) == 0
+    assert entry_of(data2)["language"] == "en"
+
+
 def test_an_accepted_new_holds_value_is_added(tmp_path):
     data = published_file(tmp_path)
     draft = entry_draft("a-res", holds=(("genotypes", "Genotype data are also held"),))
