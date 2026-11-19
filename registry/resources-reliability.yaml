@@ -32,3 +32,32 @@ corrections:
     drafts: 1
     written: 1
     left_out: 0
+- date: '2026-11-19'
+  run: data/pipeline/founder-round/2026-11-18/resources
+  kind: founder_request
+  leads:
+  - decodeme
+  - mapmecfs
+  - uk-me-cfs-biobank
+  request:
+    decodeme: 'The name value is the page title with the resource''s own slogan (''DecodeME
+      : The world''s largest ME/CFS study''). The name value should be the name of
+      the resource alone, supported by a quote from the stored page in which that
+      name occurs.'
+    mapmecfs: 'Only ''clinical'' is listed under holds. Check whether the stored page
+      supports further content types for the resource as a whole: it says it ''Currently
+      includes >90 datasets from a wide range of biological and clinical studies''
+      and names places its data come from. Add a holds value only where a quote from
+      the stored page supports it for the resource as a whole.'
+    uk-me-cfs-biobank: 'Only ''biospecimens'' is listed under holds. Check whether
+      the stored pages support further content types for the resource as a whole:
+      the main page says ''All data and samples provided by people with ME/CFS are
+      de-identified''. Add a holds value only where a quote from the stored pages
+      supports it for the resource as a whole.'
+  values:
+    total: 16
+    rejects: 0
+    reject_rate: 0.0
+  entries:
+    drafts: 3
+    written: 3
