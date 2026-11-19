@@ -273,6 +273,9 @@ class Page:
 # ---------------------------------------------------------------------------
 
 
+GOATCOUNTER_CODE = re.compile(r"[a-z0-9-]{1,63}")
+
+
 @dataclass
 class BuildResult:
     written: list[Path] = field(default_factory=list)
@@ -437,6 +440,9 @@ class _Shared:
     resources: dict | None = None  # registry/resources.yaml, validated; None when the project has no such file
     resources_on: bool = False  # reliability file says passed: true and the data file has an entry (contract S1)
     last_run: dict | None = None  # content/last-run.yaml, validated; None when missing or invalid (no line is shown)
+    counter_endpoint: str | None = (
+        None  # GoatCounter endpoint; None means no counter tag (always None in a draft build)
+    )
 
 
 @dataclass
@@ -896,6 +902,7 @@ def _render_language(code: str, shared: _Shared) -> _Rendered:
             trials_on=shared.trials_on,
             resources_on=shared.resources_on,
             last_run=shared.last_run,
+            counter_endpoint=shared.counter_endpoint,
             rung_names=rung_names,
             rung_meanings=rung_meanings,
             solid_to=solid_to,
@@ -1050,6 +1057,7 @@ def build(
     translations_dir: Path | None = None,
     card_format: Path | None = None,
     registry_dir: Path | None = None,
+    goatcounter: str | None = None,
 ) -> BuildResult:
     """Build the site in every language that has a file in ``i18n_dir``. If any input fails validation nothing is
     written and ``errors`` says why.
@@ -1057,6 +1065,8 @@ def build(
     The Norwegian glossary is looked for next to the English one (``glossary.nb.yaml``), card translations in
     ``translations_dir/<lang>/`` (default: ``translations/`` next to ``cards/``) and the methods text in
     ``content_dir/methods/<lang>.html``. Whatever is missing falls back to English, with a note on the page.
+    ``goatcounter`` is a GoatCounter site code (1-63 of ``a-z 0-9 -``); with it every page gets the counter script,
+    except in a draft build, which never counts. A bad code fails the build before anything is written.
     ``data/card-format.md`` is a copy of ``card_format`` (default: ``docs/card-format.md`` of the package's repository).
     """
     today = today or dt.date.today()
@@ -1068,6 +1078,10 @@ def build(
     card_format = Path(card_format) if card_format is not None else DEFAULT_CARD_FORMAT
     registry_dir = Path(registry_dir) if registry_dir is not None else cards_dir.parent / "registry"
     result = BuildResult()
+
+    if goatcounter is not None and not GOATCOUNTER_CODE.fullmatch(goatcounter):
+        result.errors = [f"--goatcounter {goatcounter!r}: a GoatCounter code is 1-63 characters of a-z, 0-9 and -"]
+        return result
 
     unpublished = _unpublished_cards(cards_dir, drafts_dir)
     if not card_format.is_file():
@@ -1165,6 +1179,9 @@ def build(
         resources=resources_data,
         resources_on=resources_on,
         last_run=last_run_record,
+        counter_endpoint=(
+            f"https://{goatcounter}.goatcounter.com/count" if goatcounter is not None and drafts_dir is None else None
+        ),
     )
     pages: dict[str, str] = {}
     try:
@@ -1263,6 +1280,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     b.add_argument("--translations-dir", type=Path, default=None, help=argparse.SUPPRESS)
     b.add_argument("--card-format", type=Path, default=None, help=argparse.SUPPRESS)
     b.add_argument("--registry-dir", type=Path, default=None, help=argparse.SUPPRESS)
+    b.add_argument(
+        "--goatcounter",
+        metavar="CODE",
+        default=None,
+        help="count visits with GoatCounter site CODE (never in a draft build)",
+    )
     args = parser.parse_args(argv)
 
     result = build(
@@ -1275,6 +1298,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         translations_dir=args.translations_dir,
         card_format=args.card_format,
         registry_dir=args.registry_dir,
+        goatcounter=args.goatcounter,
     )
     for error in result.errors:
         print(error, file=sys.stderr)

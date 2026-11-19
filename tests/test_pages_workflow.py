@@ -42,7 +42,7 @@ def problems(text: str) -> list[str]:
     if wf["concurrency"].get("cancel-in-progress") is not False or not wf["concurrency"].get("group"):
         found.append("concurrency")
     builds = [c for c in run_commands(wf) if "me_atlas.site" in c]
-    if builds != ["uv run python -m me_atlas.site build"]:
+    if builds != ["uv run python -m me_atlas.site build --goatcounter me-atlas"]:
         found.append("build command")
     uses = re.findall(r"(?m)^\s*(?:-\s*)?uses:\s*(\S+)", text)
     if not uses or not all(re.fullmatch(r"[\w./-]+@[0-9a-f]{40}", u) for u in uses):
@@ -67,8 +67,9 @@ def test_the_workflow_has_a_build_job_and_a_deploy_job_that_needs_it():
 @pytest.mark.parametrize(
     ("old", "new", "expected"),
     [
-        ("site build\n", "site build --drafts\n", "build command"),
-        ("site build\n", "site build --out public\n", "build command"),
+        ("site build --goatcounter me-atlas\n", "site build --goatcounter me-atlas --drafts\n", "build command"),
+        ("site build --goatcounter me-atlas\n", "site build --goatcounter me-atlas --out public\n", "build command"),
+        ("site build --goatcounter me-atlas\n", "site build\n", "build command"),
         ("branches: [main]", "branches: [main, dev]", "trigger"),
         ("  id-token: write", "  id-token: write\n  issues: write", "permissions"),
         ("cancel-in-progress: false", "cancel-in-progress: true", "concurrency"),
