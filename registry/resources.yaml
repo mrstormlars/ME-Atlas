@@ -1,4 +1,4 @@
-checked: '2026-11-18'
+checked: '2026-11-19'
 entries:
 - id: ausme
   name: Australian ME/CFS and long COVID (AusME) Registry and Biobank
@@ -42,7 +42,7 @@ entries:
         quote: access high-quality clinical data and biospecimens
         page: access
 - id: decodeme
-  name: 'DecodeME : The world''s largest ME/CFS study'
+  name: DecodeME
   url: https://institute-genetics-cancer.ed.ac.uk/decodeme-the-worlds-largest-mecfs-study/researcher-access
   access_url: null
   checked: '2026-11-18'
@@ -59,7 +59,7 @@ entries:
     main: 05de521fb992d37fb653b72def82dae94893a49cbfc748e96e7fd9ae0b5148f8
   quotes:
     name:
-      quote: 'DecodeME : The world''s largest ME/CFS study'
+      quote: DecodeME has built the world’s largest data set on ME/CFS, as a managed access resource for future research projects.
       page: main
     access:
       quote: All applications for data access will be reviewed by our Data Access Committee
@@ -94,14 +94,14 @@ entries:
   quotes:
     name:
       quote: The mapMECFS website serves as the largest data sharing portal for Myalgic Encephalomyelitis/Chronic Fatigue
-        Syndrome (ME/CFS) research
+        Syndrome (ME/CFS) research and is endorsed as an approved NIH repository.
       page: main
     access:
-      quote: Requires additional application and approval process by the mapMECFS DAC
+      quote: Requires approval of the DUA by the mapMECFS Data Access Committee (DAC)
       page: main
     covers:
       quote: The mapMECFS website serves as the largest data sharing portal for Myalgic Encephalomyelitis/Chronic Fatigue
-        Syndrome (ME/CFS) research
+        Syndrome (ME/CFS) research and is endorsed as an approved NIH repository.
       page: main
     holds:
       clinical:
@@ -193,8 +193,8 @@ entries:
       page: main
     holds:
       biospecimens:
-        quote: Over 30,000 aliquots of blood (collected over multiple time-points) have been processed and are currently held
-          at the UCL/RFH Biobank in London.
+        quote: The UK ME/CFS Biobank currently stores samples from over 600 donors including people with ME/CFS, people with
+          MS, and healthy control donors.
         page: main
   hand_saved:
   - main

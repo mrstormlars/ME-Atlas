@@ -1134,6 +1134,127 @@ def correction(run: Path, old: Path, record: Any, today: str) -> tuple[dict[str,
     }, []
 
 
+def load_founder_request(path: Path, data: Mapping[str, Any] | None) -> tuple[dict[str, str], list[str]]:
+    """A founder request: a JSON object ``{lead id: finding text}`` of non-empty strings, each lead with an entry in
+    the data file. Returns the request and the problems; nothing is written."""
+    path = Path(path)
+    if not path.is_file():
+        return {}, [f"{path.as_posix()}: no founder request file"]
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return {}, [f"{path.as_posix()}: cannot read the founder request: {exc}"]
+    if not isinstance(doc, dict) or not doc:
+        return {}, [f"{path.as_posix()}: a founder request is a non-empty object {{lead id: finding}}"]
+    problems = [f"{k}: the finding must be a non-empty string" for k, v in doc.items() if not _is_nonempty_str(v)]
+    published = {e["id"] for e in (data or {}).get("entries", []) if isinstance(e, Mapping)}
+    problems += [f"{k}: the request names a lead with no published entry" for k in doc if k not in published]
+    return ({} if problems else dict(doc)), problems
+
+
+def merge_founder_entry(
+    published: Mapping[str, Any], context: Mapping[str, Any], draft: Mapping[str, Any], review: Mapping[str, Any]
+) -> tuple[dict[str, Any] | None, list[str]]:
+    """The entry of a founder-requested round: the published entry, with each value the reviewer accepted replaced
+    (``name``, ``category``, ``access``, ``covers``) or added (``holds``). Nothing the round does not accept replaces a
+    published value; a value is never removed. Refused when the draft is an exclusion or the stored pages changed."""
+    lid = published.get("id")
+    if draft.get("include") is not True:
+        return None, [f"{lid}: an exclusion draft; a founder request redrafts an entry"]
+    hashes = {k: text_hash(t) for k, t in context["pages"].items()}
+    if hashes != published.get("text_hash"):
+        return None, [
+            f"{lid}: the stored pages differ from the published entry's text_hash; kept quotes are not trusted"
+        ]
+    fresh = build_entry(context, draft)
+    verdicts = review["values"]
+
+    def accepted(key: str) -> bool:
+        return verdicts.get(key, {}).get("verdict") == "accept"
+
+    merged = copy.deepcopy(dict(published))
+    quotes = merged["quotes"]
+    if accepted("name"):
+        merged["name"] = fresh["name"]
+        merged["language"] = fresh["language"]
+        quotes["name"] = fresh["quotes"]["name"]
+    if accepted("category"):
+        merged["category"] = fresh["category"]
+    for field in ("access", "covers"):
+        if accepted(field):
+            merged[field] = fresh[field]
+            quotes[field] = fresh["quotes"][field]
+    for value, quote in fresh["quotes"]["holds"].items():
+        if accepted(f"holds.{value}"):
+            quotes["holds"][value] = quote
+    merged["holds"] = sorted(quotes["holds"])
+    return merged, []
+
+
+def founder_round(
+    data: Mapping[str, Any] | None, run: Path, request: Mapping[str, str]
+) -> tuple[dict[str, dict[str, Any]], list[str]]:
+    """The merged entry of every lead of ``run``, ``{lead: entry}``, or the refusals. Needs valid drafts and reviews."""
+    rows, problems = _decisions(run)
+    if problems:
+        return {}, problems
+    leads = [lid for lid, _, _, _ in rows]
+    refusals = [f"{lid}: not in the founder request" for lid in leads if lid not in request]
+    refusals += [f"{lid}: in the founder request but not in the run" for lid in request if lid not in leads]
+    published = {e["id"]: e for e in (data or {}).get("entries", [])}
+    merged: dict[str, dict[str, Any]] = {}
+    for lid, context, draft, review in rows:
+        if lid not in published:
+            refusals.append(f"{lid}: no published entry")
+            continue
+        entry, found = merge_founder_entry(published[lid], context, draft, review)
+        refusals += found
+        if entry is not None:
+            merged[lid] = entry
+    return ({} if refusals else merged), refusals
+
+
+def record_founder_review(
+    data: Mapping[str, Any] | None, run: Path, request: Mapping[str, str], today: str
+) -> tuple[dict[str, Any], list[str]]:
+    """The data file after a founder-requested round, or the refusals (then nothing is to be written)."""
+    merged, problems = founder_round(data, run, request)
+    if problems:
+        return dict(data or {}), problems
+    entries = {e["id"]: e for e in (data or {}).get("entries", [])}
+    entries.update(merged)
+    return {"checked": today, "entries": [entries[i] for i in sorted(entries)]}, []
+
+
+def founder_item(
+    data: Mapping[str, Any] | None, run: Path, record: Any, request: Mapping[str, str], today: str
+) -> tuple[dict[str, Any], list[str]]:
+    """The item to append to ``corrections`` for a founder-requested round (``kind: founder_request``). ``written``
+    counts the leads whose published entry the merge changes, so run it before ``record-review`` applies the round.
+    The top-level record is not touched, and the item has no ``passed``."""
+    if not isinstance(record, dict) or not isinstance(record.get("run"), str) or "values" not in record:
+        return {}, ["the reliability file has no top-level record of a run to correct"]
+    result, problems = reliability(run, today)
+    if problems:
+        return {}, problems
+    merged, problems = founder_round(data, run, request)
+    if problems:
+        return {}, problems
+    published = {e["id"]: e for e in (data or {}).get("entries", [])}
+    return {
+        "date": today,
+        "run": run.as_posix(),
+        "kind": "founder_request",
+        "leads": sorted(merged),
+        "request": {lid: request[lid] for lid in sorted(merged)},
+        "values": result["values"],
+        "entries": {
+            "drafts": result["entries"]["drafts"],
+            "written": sum(merged[lid] != published[lid] for lid in merged),
+        },
+    }, []
+
+
 # ---------------------------------------------------------------------------
 # Data file: load, dump, validator (D1-D3)
 # ---------------------------------------------------------------------------
@@ -1438,6 +1559,15 @@ def _build_parser() -> argparse.ArgumentParser:
                 help="record --run as the one correction round of the rejected values of run OLD (the run of the "
                 "existing record), appended under 'corrections'; the record's own numbers and pass stay unchanged",
             )
+        if name in ("record-review", "reliability"):
+            p.add_argument(
+                "--founder-request",
+                type=Path,
+                default=None,
+                metavar="FILE",
+                help="a founder-requested round: FILE is {lead id: finding}. record-review keeps every published "
+                "value the reviewer did not replace; reliability (run it first) appends a kind: founder_request item",
+            )
 
     check = sub.add_parser("check", help="validate registry/resources.yaml")
     check.add_argument("--cache", action="store_true", help="also find every quote in the stored text of its page")
@@ -1508,11 +1638,41 @@ def _run(args: argparse.Namespace, today: str) -> int:
         return 0
     if cmd == "record-review":
         old = load_data(args.data_file) if args.data_file.is_file() else None
-        new, problems = record_review(old, args.run, today)
+        if args.founder_request is not None:
+            request, problems = load_founder_request(args.founder_request, old)
+            if _report(problems, f"{args.data_file.as_posix()} is unchanged"):
+                return 1
+            new, problems = record_founder_review(old, args.run, request, today)
+        else:
+            new, problems = record_review(old, args.run, today)
         if _report(problems, f"{args.data_file.as_posix()} is unchanged"):
             return 1
         _atomic_write(args.data_file, dump_data(new))
         print(f"OK: {len(new['entries'])} entries in {args.data_file.as_posix()}")
+        return 0
+    if cmd == "reliability" and args.founder_request is not None:
+        if args.correction_of is not None:
+            raise ResourcesError("--founder-request and --correction-of cannot be used together")
+        if not args.reliability_file.is_file():
+            raise ResourcesError(f"{args.reliability_file}: no reliability file to append to")
+        try:
+            record = yaml.safe_load(args.reliability_file.read_text(encoding="utf-8"))
+        except (OSError, yaml.YAMLError) as exc:
+            raise ResourcesError(f"{args.reliability_file}: cannot read the reliability file: {exc}") from exc
+        old = load_data(args.data_file) if args.data_file.is_file() else None
+        request, problems = load_founder_request(args.founder_request, old)
+        if not problems:
+            item, problems = founder_item(old, args.run, record, request, today)
+        if _report(problems, "the reliability file is unchanged"):
+            return 1
+        record["corrections"] = [*(record.get("corrections") or []), item]
+        _atomic_write(args.reliability_file, yaml.safe_dump(record, sort_keys=False))
+        v = item["values"]
+        print(
+            f"FOUNDER REQUEST: {v['rejects']} reject(s) of {v['total']} value(s) ({v['reject_rate']}); "
+            f"{item['entries']['written']} of {item['entries']['drafts']} entry(ies) changed; "
+            f"appended to {args.reliability_file.as_posix()}"
+        )
         return 0
     if cmd == "reliability" and args.correction_of is not None:
         if not args.reliability_file.is_file():
