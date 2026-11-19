@@ -1,6 +1,6 @@
 # Idea bank
 
-Last updated: 2026-11-17
+Last updated: 2026-11-19
 
 Ideas for how AI can help ME/CFS research, inside or outside what ME Atlas is today. An idea here is not a commitment: work starts only when the founder picks an idea and `/brainstorm` writes a plan for it in `docs/`. Current priorities stay in `STATUS.md`.
 
@@ -37,7 +37,6 @@ Ideas for how AI can help ME/CFS research, inside or outside what ME Atlas is to
 | I-05 | **Open data and citation export.** Cards and links as a downloadable dataset with a DOI; BibTeX/RIS per card. | 3 | 5 | 15 | done | Built in pull request 89 (plan `docs/plan-open-data-export.md`): `data/` with JSON and CSV, BibTeX and RIS per card, the data page. Zenodo concept DOI 10.5281/zenodo.24333249 (release `v2026.11.18`, 2026-11-18). Since 2026-11-18 every study carries authors, journal and DOI, copied by code from the fetched PubMed record (founder ruling in chat; check C13). |
 | I-02 | **Funding map.** Who funds which hypothesis, set against its evidence level. | 4 | 3 | 12 | idea | Several grant databases, each with its own format; grants must be sorted by hypothesis. In the long-term vision of the v1 plan; no donations involved. |
 | I-08 | **Funder briefs.** One page per gap: what is missing and which design would move the level. | 4 | 3 | 12 | idea | Depends on I-01. Sending them is the founder's work; no expert has reviewed the content, which limits the weight they carry. |
-| I-09 | **Burden against funding.** Research funding per DALY for ME/CFS compared with other diseases, from published figures. | 3 | 4 | 12 | idea | Such comparisons have been published before (to verify), so the new value is keeping it current and visible. |
 | I-11 | **Researchers from neighbouring fields.** Find groups whose method fits an untested gap and send them a concrete brief. | 4 | 3 | 12 | idea | Finding them is cheap (PubMed). The contact is the founder's work and the response is uncertain. |
 | I-15 | **Studies that are recruiting**, per country. | 3 | 4 | 12 | in progress | Covered by I-03 as far as the plan goes: the page shows recruitment status and countries as copied registry facts, with no list of its own per country, no filters and no contact details (plan `docs/plan-trial-registry.md`, out of scope). |
 | I-13 | **Reanalysis of open datasets.** Preregistered secondary analyses of data that are already open. | 5 | 2 | 10 | idea | The largest possible effect, but a result nobody qualified has checked is worth little and can do harm. Needs a research partner; the site makes no claim of discovery, so this is a separate project. |
@@ -49,6 +48,7 @@ Ideas for how AI can help ME/CFS research, inside or outside what ME Atlas is to
 | I-06 | **Falsification table.** Per card: which observation would weaken the hypothesis, and has it been tested? | 3 | 2 | 6 | idea | Only what a source states can be cited, and reading relations across papers failed the bridge pilot twice. |
 | I-10 | **Call monitor.** Watch open funding calls and match them to gaps. | 2 | 3 | 6 | idea | Researchers already follow their calls; many sources have no API. |
 | I-16 | **Protocol template for ME/CFS studies.** Recommended case definition, PEM measure, common outcome set. | 3 | 2 | 6 | idea | Carries weight only with expert authority behind it; common data elements may already exist (to verify). |
+| I-09 | **Burden against funding.** Research funding per DALY for ME/CFS compared with other diseases, from published figures. | 3 | 4 | 12 | parked | Put on hold by the founder on 2026-11-19, after the brainstorm was opened and before a plan was written (DECISIONS 2026-11-19). Such comparisons have been published before (two PubMed records fetched on 2026-11-19: pmid:32568148, pmid:41917225), so the new value is keeping it current and visible. |
 | I-19 | **Our own bank of pooled raw data.** | 5 | 1 | 5 | parked | Patient-level data need consent, ethics approval, an access committee and secure storage. Existing banks do this already; I-14 and I-13 are our part of it. |
 | I-21 | **AI-generated new hypotheses.** | 2 | 3 | 6 | parked | The site makes no claim of discovery, and nothing untested can be graded. |
 | I-20 | **Drug candidates in silico** (gene → target → existing drug). | 4 | 1 | 4 | parked | Too close to treatment advice (credibility rule 3). |
