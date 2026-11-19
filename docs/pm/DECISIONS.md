@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-19 — Idea I-09 is put on hold, and the site gets a visit counter (founder rulings)
+
+- The project manager opened the brainstorm for idea I-09 (burden against funding) with two fetched PubMed records and four questions. The founder answered: "Jeg ønsker å legge I-09 på vent inntil videre", and asked, before any further idea is weighed, for statistics on the traffic to the site: hits, unique hits and, if possible, per page, preferably at no cost.
+- I-09 is `parked` in `docs/pm/IDEAS.md`. No plan was written and nothing was built.
+- The project manager compared three free ways (GoatCounter, Cloudflare Web Analytics, Google Search Console) from the services' own pages, read on 2026-11-19, and recommended GoatCounter. The founder answered: "Ja, GoatCounter".
+- The terms: the founder creates the account; one small script goes on the published site only, not on local builds; the methods text says in one sentence, in English and Norwegian, that visits are counted without cookies; the site still works without JavaScript. The counter is a tool for the project and is no part of the content: it changes no card and is shown nowhere on the site.
+- Known limits: visitors who block the script are not counted, so the numbers are low rather than exact; where the hosted service stores its data, and for how long, was not stated on the pages read.
+- Why: GitHub Pages gives no server logs, and GitHub's own traffic view covers the repository for 14 days, not the site. GoatCounter gives hits, unique visits and numbers per page without cookies, is free for reasonable public use by its own terms, is open source, and lets all data be exported. Knowing which pages are read is a better guide to the next idea than the proposed scores alone.
+
 ## 2026-11-19 — Data catalogue: a founder-requested correction round, and content types stay as the stored pages support them (founder ruling)
 
 - After pull requests 100 to 102 the project manager read the published page and named two weaknesses: DecodeME's name was the page title with the resource's own slogan ("The world's largest ME/CFS study"), and mapMECFS and the UK ME/CFS Biobank list fewer content types than a reader would expect. The founder answered: "Vennligst rett opp de to feilene du observerte før vi går videre med neste ide".
