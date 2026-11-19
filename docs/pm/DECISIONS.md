@@ -2,6 +2,14 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-19 — Data catalogue: a founder-requested correction round, and content types stay as the stored pages support them (founder ruling)
+
+- After pull requests 100 to 102 the project manager read the published page and named two weaknesses: DecodeME's name was the page title with the resource's own slogan ("The world's largest ME/CFS study"), and mapMECFS and the UK ME/CFS Biobank list fewer content types than a reader would expect. The founder answered: "Vennligst rett opp de to feilene du observerte før vi går videre med neste ide".
+- A founder-requested round is a path of its own (pull request 103, merged on the founder's "Ja, flett 103"): the finding goes to a fresh drafter with an unchanged prompt, a fresh reviewer who sees neither earlier reviews nor the request judges each value, an accepted value replaces the published one, a rejected value keeps the published one, and nothing published is lost. It is recorded as its own item with its own numbers (`registry/resources-reliability.yaml`).
+- Outcome: 16 of 16 values accepted. The name is now "DecodeME". The content types did not change: the stored pages of mapMECFS and the biobank support no further type for the resource as a whole, so the entries keep "clinical" and "biospecimens".
+- Left open on the project manager's recommendation: a further stored page per entry (for example the biobank's "Our samples" or "Dataset") needs a format change, since an entry has room for a main and an access page only. It is to be weighed at the first quarterly re-read of the catalogue.
+- Why: what the page shows is right though thin, the link leads to the detail, and stretching a quote to fill a table would break the source rule.
+
 ## 2026-11-18 — Data catalogue: the page goes in the main menu, and a rejected value may be drafted again once (founder rulings)
 
 - After merging pull requests 97, 98 and 99 the founder said the page `resources.html` looked linked from nowhere and should be put in place. It had one small line on the gaps page and one on the data page; the orchestrator's contract for pull request 95 had kept it out of the main navigation. It now goes in the main menu after the registered studies, in both languages (pull request 100).
