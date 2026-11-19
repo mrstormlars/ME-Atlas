@@ -78,6 +78,13 @@ def hrefs(doc) -> list[str]:
     return [a.get("href") for a in doc.find_all("a")]
 
 
+def nav_hrefs(doc) -> list[str]:
+    return [a.get("href") for a in doc.find("nav").find_all("a")]
+
+
+NAV_PAGES = ("index.html", "hypotheses/first-idea.html", "resources.html", "gaps.html", "data.html")
+
+
 def rows_of(doc, table_id: str) -> list[list[str]]:
     table = doc.find("table", id=table_id)
     if table is None:
@@ -97,6 +104,7 @@ def test_without_a_passed_reliability_file_there_is_no_page_no_link_and_no_publi
     for rel in ("index.html", "gaps.html", "data.html", "nb/index.html", "nb/gaps.html", "nb/data.html"):
         doc = page(out, rel)
         assert not any("resources.html" in h for h in hrefs(doc)), rel
+        assert not any(h.endswith("resources.html") for h in nav_hrefs(doc)), rel
         assert doc.find(cls="resources-line") is None, rel
     assert read_csv(out) == []
     data = json.loads((out / "data" / "me-atlas.json").read_text(encoding="utf-8"))
@@ -118,7 +126,7 @@ def test_a_project_without_a_resources_file_builds_without_the_page_and_with_an_
     assert (out / "data" / "resources.csv").read_text(encoding="utf-8").startswith("id,name,url,")
 
 
-def test_a_passed_file_builds_the_page_in_both_languages_linked_from_gaps_and_data_but_not_the_navigation(tmp_path):
+def test_a_passed_file_builds_the_page_in_both_languages_linked_from_gaps_and_data_and_the_navigation(tmp_path):
     out = build(resources_site(tmp_path, passed=True))
     for prefix in ("", "nb/"):
         assert (out / f"{prefix}resources.html").is_file()
@@ -126,9 +134,20 @@ def test_a_passed_file_builds_the_page_in_both_languages_linked_from_gaps_and_da
             doc = page(out, prefix + rel)
             assert hrefs(doc.find("main")).count("resources.html") == 1, (prefix, rel)
             assert doc.find(cls="resources-line") is not None
-        for rel in ("index.html", "gaps.html", "resources.html", "hypotheses/first-idea.html"):
-            nav = page(out, prefix + rel).find("nav")
-            assert not any("resources.html" in h for h in hrefs(nav)), (prefix, rel)
+        for rel in NAV_PAGES:
+            doc = page(out, prefix + rel)
+            up = "../" if "/" in rel else ""
+            links = nav_hrefs(doc)
+            assert links.count(up + "resources.html") == 1, (prefix, rel)
+            assert sum(h.endswith("resources.html") for h in links) == 1, (prefix, rel)
+            # directly after "What is missing" (no registered-studies page in this build)
+            assert links.index(up + "resources.html") == links.index(up + "gaps.html") + 1, (prefix, rel)
+            here = [a for a in doc.find("nav").find_all("a") if a.get("aria-current") == "page"]
+            expected = [up + rel] if rel == "resources.html" else None
+            if expected:
+                assert [a.get("href") for a in here] == expected, (prefix, rel)
+            else:
+                assert not any(a.get("href").endswith("resources.html") for a in here), (prefix, rel)
         assert hrefs(page(out, prefix + "index.html").find("main")).count("resources.html") == 0
 
 
@@ -387,3 +406,20 @@ def test_the_csv_column_and_the_json_key_carry_hand_saved_only_where_it_is_set(t
     data = json.loads((out / "data" / "me-atlas.json").read_text(encoding="utf-8"))
     by_id = {r["id"]: r for r in data["resources"]}
     assert by_id["saved-bank"]["hand_saved"] == ["main"] and "hand_saved" not in by_id["plain-bank"]
+
+
+def test_with_registered_studies_built_too_the_resources_link_follows_the_studies_link(tmp_path):
+    from me_atlas import trials
+
+    proj = resources_site(tmp_path, passed=True)
+    registry = tmp_path / "registry"
+    data = {"fetched": DAY, "searches": dict(trials.SEARCHES), "studies": []}
+    (registry / "trials.yaml").write_text(trials.dump_data(data), encoding="utf-8")
+    (registry / "reliability.yaml").write_text(yaml.safe_dump({"passed": True}), encoding="utf-8")
+    out = build(proj)
+    for prefix in ("", "nb/"):
+        for rel in ("index.html", "resources.html"):
+            links = nav_hrefs(page(out, prefix + rel))
+            assert links.count("trials.html") == 1 and links.count("resources.html") == 1, (prefix, rel)
+            assert links.index("resources.html") == links.index("trials.html") + 1, (prefix, rel)
+            assert links.index("trials.html") == links.index("gaps.html") + 1, (prefix, rel)
