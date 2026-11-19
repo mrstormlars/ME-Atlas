@@ -28,6 +28,12 @@ A draft build was hosted as an Azure Storage static website from 2026-11-03. The
 
 `.github/workflows/pages.yml` builds the site with `uv run python -m me_atlas.site build` (approved cards only, never `--drafts`) on every push to `main` and on manual start, uploads `build/` and deploys it. Every `uses:` is pinned to a commit SHA; `tests/test_pages_workflow.py` checks the trigger, the permissions, the pinning and that the build command has no `--drafts`. The workflow needs the repository to be public and Pages enabled with source "GitHub Actions" (a setting on GitHub, not in the repository); both were done on 2026-11-16, and the first run deployed the site. The address is <https://mrstormlars.github.io/ME-Atlas/> (Norwegian: `nb/`). Founder ruling 2026-11-16 in DECISIONS.
 
+### Visit counter
+
+`build --goatcounter CODE` adds a GoatCounter script tag to every page, in both languages. CODE is the GoatCounter site code, 1-63 characters of `a-z`, `0-9` and `-`; any other value fails the build before anything is written. Only the Pages workflow sets the option (`--goatcounter me-atlas`). A local build, a draft build (`--drafts`, even with the option) and the tests emit no counter, and no file other than a page contains it. The tag is the only markup it adds; nothing on the page shows visit numbers, there is no `<noscript>` pixel and no consent banner, and the page works the same with JavaScript off. The methods text says in one sentence that visits are counted without cookies.
+
+The tag loads `https://gc.zgo.at/count.v5.js`, the stable version 5 of GoatCounter's script, with a Subresource Integrity hash (`sha384-atnOLvQb9t+jTSipvd75X2yginT4PjVbqDdlJAmxMm+wYElFmeR6EmLP5bYeoRVQ`), so the browser refuses to run a changed file. The snippet and the hash come from <https://www.goatcounter.com/help/countjs-versions> (fetched 2026-11-19); the hash was also recomputed from the downloaded file. No copy of the script is kept in the repository. To turn the counter off, remove `--goatcounter me-atlas` from the build command in `pages.yml` (and from the command allowed in `tests/test_pages_workflow.py`).
+
 ## Pages
 
 | File | Content |

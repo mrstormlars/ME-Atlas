@@ -13,6 +13,9 @@
 {% endfor %}
 <script>{{ persistence_js }}</script>
 <script src="{{ root }}static/site.js"></script>
+{% if counter_endpoint %}
+<script data-goatcounter="{{ counter_endpoint }}" async src="https://gc.zgo.at/count.v5.js" crossorigin="anonymous" integrity="sha384-atnOLvQb9t+jTSipvd75X2yginT4PjVbqDdlJAmxMm+wYElFmeR6EmLP5bYeoRVQ"></script>
+{% endif %}
 </head>
 <body>
 {% if drafts %}
