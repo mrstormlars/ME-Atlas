@@ -1,4 +1,4 @@
-fetched: '2026-11-18'
+fetched: '2026-11-20'
 searches:
   me_cfs: '"chronic fatigue syndrome" OR "myalgic encephalomyelitis"'
   long_covid: '"long COVID" OR "post COVID-19 condition" OR "post-COVID syndrome" OR "post-COVID-19 syndrome" OR "post-COVID
@@ -4861,7 +4861,7 @@ studies:
     count: 300
     type: ESTIMATED
   start_date: '2022-11-01'
-  last_update: '2026-07-30'
+  last_update: '2026-11-18'
   searches:
   - long_covid
   hypotheses:
@@ -11964,7 +11964,7 @@ studies:
     count: 194
     type: ACTUAL
   start_date: '2025-05-13'
-  last_update: '2026-08-07'
+  last_update: '2026-11-19'
   searches:
   - long_covid
   hypotheses: []
@@ -12134,14 +12134,14 @@ studies:
 - nct_id: NCT06776263
   title: Dysfunctional Breathing in Post COVID-19 Condition.
   study_type: OBSERVATIONAL
-  status: RECRUITING
+  status: COMPLETED
   countries:
   - Sweden
   enrollment:
-    count: 200
-    type: ESTIMATED
+    count: 101
+    type: ACTUAL
   start_date: '2025-01-15'
-  last_update: '2025-02-14'
+  last_update: '2026-11-19'
   searches:
   - long_covid
   hypotheses: []
@@ -13764,8 +13764,8 @@ studies:
   enrollment:
     count: 15
     type: ESTIMATED
-  start_date: '2026-11-22'
-  last_update: '2026-11-17'
+  start_date: '2026-11-24'
+  last_update: '2026-11-19'
   searches:
   - long_covid
   hypotheses: []
@@ -14836,3 +14836,19 @@ studies:
   hypotheses: []
   mapping: accepted
   mapping_source: data/pipeline/2026-11-18/trials/review-6.json
+- nct_id: NCT07947901
+  title: Block-LC SGB Treatment Trial
+  study_type: INTERVENTIONAL
+  status: NOT_YET_RECRUITING
+  countries:
+  - United States
+  enrollment:
+    count: 272
+    type: ESTIMATED
+  start_date: '2026-12-09'
+  last_update: '2026-11-19'
+  searches:
+  - long_covid
+  hypotheses: []
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-20/trials/review-1.json
