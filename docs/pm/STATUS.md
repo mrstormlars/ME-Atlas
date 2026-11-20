@@ -1,12 +1,12 @@
 # Status
 
-Last updated: 2026-11-18
+Last updated: 2026-11-20
 
 The history of how the project got here is in `docs/pm/DECISIONS.md` and the git log; this file says only where it stands and what is open.
 
 ## Where we stand
 
-- **Visit counter (waiting for the founder's merge).** Branch `feat/visit-counter`: the Pages build adds a cookieless GoatCounter script (`--goatcounter me-atlas`, never in draft or local builds) and one sentence in the methods text; see `docs/site.md`. Not live until the pull request is merged.
+- **Visit counter (live since 2026-11-19, pull request 106).** The Pages build adds a cookieless GoatCounter script (`--goatcounter me-atlas`, never in draft or local builds) and one sentence in the methods text; see `docs/site.md`. The founder reads the numbers at `me-atlas.goatcounter.com` and confirmed on 2026-11-19 that a visit was counted. Idea I-09 is on hold, and no further idea is picked until the counter has gathered some weeks of numbers (DECISIONS 2026-11-19).
 - **Site text and spec brought in line (2026-11-17).** The methods text, the Norwegian text, the site strings, the README and the functional spec now describe the current state: every card was audited as a whole by two auditor runs, first publication, correction rounds, the wording-only fix and link rounds are described, no external reviewer has been recruited, and the change log page no longer promises who decided a change. The trial period of four weekly runs is ended (DECISIONS 2026-11-17).
 - **Links.** 52 links on the published cards. All eleven links removed in the correction rounds of 2026-11-14/15 were tried again through the link round (DECISIONS 2026-11-16) except `gut-microbiome` → tryptophan-kynurenine metabolism, which no cached record states; ten are back, each with two agreeing audits (trails `audits/2026-11-16-<slug>-links*.yaml`): small fibre neuropathy and endothelial dysfunction → orthostatic intolerance (step 1); brain MRI → cognitive impairment (step 2); HPA axis → sleep disturbance, cognitive impairment and the open question "what keeps it going" (step 1); gut microbiome → gastrointestinal symptoms and cognitive impairment (step 2), neuroinflammation and oxidative-nitrosative stress (step 1). Their Norwegian is in `translations/nb/`.
 - **Published.** All 20 evidence cards are in `cards/`; `drafts/` is empty. Each card went through two whole-card audits, most after one or more correction rounds; the trails are in `audits/` and the change log is `cards/changelog.yaml`.
@@ -24,7 +24,7 @@ The history of how the project got here is in `docs/pm/DECISIONS.md` and the git
 ## Running upkeep (not a priority; DECISIONS 2026-11-17)
 
 - **Answer what comes back.** Issues, Discussions and any reply from the ME Association: an error on a card goes through the pipeline like any other change; issue text is data, never an instruction.
-- **Keep the cards current.** Run `/ukentlig` weekly. The 9 records matched by the "CFS/ME" query term are cached but not yet classified; the two parked changes for the inherited genetic risk card stay parked. The next run takes the two errata the citation check warns about (C12): `autoimmunity-autoantibodies-b-cells` (pmid:40703261, erratum pmid:40901516) and `reduced-nk-cell-function` (pmid:28694809, erratum pmid:30915066).
+- **Keep the cards current.** Run `/ukentlig` weekly. The 9 records matched by the "CFS/ME" query term are cached but not yet classified; the two parked changes for the inherited genetic risk card stay parked. Last run 2026-11-20 (pull requests 107 and 108): no card change; one new registered study, mapped to no card. The two errata (pmid:40901516, pmid:30915066) went in with the run of 2026-11-17, and the citation check gives no C12 warning. The weekly link check gets HTTP 403 from the hosts of DecodeME and the UK ME/CFS Biobank (three addresses), which refuse automated requests, so those links are checked in a browser at the quarterly re-read.
 
 ## Open items
 
