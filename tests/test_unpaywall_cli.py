@@ -327,3 +327,35 @@ def test_confirm_refuses_another_source_and_a_missing_cached_pdf(tmp_path, root,
     pdf_card = write_card(tmp_path / "b", [make_study()])
     assert run_cli(World(), "confirm", "--card", str(pdf_card), PMID, *where) == 1  # nothing cached
     assert "no cached PDF text" in capsys.readouterr().err and not confirmations.exists()
+
+
+def _cached_text(cache_root: Path, pages: list[str]) -> None:
+    text, _ = unpaywall.clean_pages(pages)
+    (cache_root / "unpaywall" / "pdf" / f"{unpaywall.cache_key(DOI)}.txt").write_text(text, encoding="utf-8")
+
+
+def test_casedef_survives_a_console_that_cannot_encode_the_text(tmp_path, cached, monkeypatch):
+    import io
+    import sys
+
+    _cached_text(cached, ["Cases met the Fukuda criteria with a score ≥ 5 in the made-up clinic."])
+    card = write_card(tmp_path / "drafts", [make_study()])
+    raw = io.BytesIO()
+    console = io.TextIOWrapper(raw, encoding="cp1252", errors="strict")
+    monkeypatch.setattr(sys, "stdout", console)
+    code = run_cli(World(), "casedef", "--card", str(card), "--cache-dir", str(cached))
+    console.flush()
+    assert code == 0
+    assert b"score ? 5" in raw.getvalue()
+
+
+def test_casedef_notes_a_missing_reference_cut_only_when_not_cut(tmp_path, cached, capsys):
+    card = write_card(tmp_path / "drafts", [make_study()])
+    meta_path = UnpaywallCache(cached).meta_path(DOI)
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    for cut, expected in ((True, False), (False, True)):
+        meta["reference_list_cut"] = cut
+        meta_path.write_text(json.dumps(meta), encoding="utf-8")
+        assert run_cli(World(), "casedef", "--card", str(card), "--cache-dir", str(cached)) == 0
+        out = capsys.readouterr().out
+        assert ("note: no reference-list heading was found" in out) is expected

@@ -658,6 +658,11 @@ def _fetch_main(args, env, transport, clock, sleep, now) -> int:
                 exit_code = max(exit_code, 1)
             if args.command == "casedef" and result.ok and result.text is not None:
                 found = pdf_candidates(result.text)
+                if result.meta and result.meta.get("reference_list_cut") is False:
+                    print(
+                        "  note: no reference-list heading was found; the whole text was searched, "
+                        "so a candidate may come from the reference list"
+                    )
                 print(f"  {len(found)} candidate sentence(s)")
                 for page, c in found:
                     mark = " [exclusion]" if c.kind == "exclusion" else ""
@@ -772,6 +777,9 @@ def main(
     sleep: Callable[[float], None] = time.sleep,
     now: Callable[[], float] = time.time,
 ) -> int:
+    for stream in (sys.stdout, sys.stderr):  # a console that cannot encode a character must not stop the run
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
     args = _build_parser().parse_args(argv)
     if args.command in ("fetch", "casedef"):
         return _fetch_main(args, env, transport, clock, sleep, now)
