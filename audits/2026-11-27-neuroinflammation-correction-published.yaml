@@ -1,0 +1,42 @@
+card: neuroinflammation
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:30617782 changed from unverified to Fukuda, read from the study's own full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:30617782
+        quote: "met Fukuda case definition criteria for ME/CFS (Fukuda et al., 1994), without the Reeves et al. (2005) modifications but with additional criteria proposed by Jason et al. (2010)"
+      - source: pmid:30617782
+        quote: "Fifteen women with ME/CFS and 15 age- and gender-matched healthy controls completed fatigue and mood symptom questionnaires and whole-brain echo-planar spectroscopic imaging (EPSI)."
+  - decision_part: "The reworded level_reason[1] and the study finding of pmid:30617782: only the choline/creatine result survived correction for multiple comparisons, the brain temperature differences did not, and the authors caution against over-interpretation until confirmed in an independent sample."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:30617782
+        quote: "The only result to survive corrections for multiple comparisons was elevated CHO/CR in the left anterior cingulate of participants with ME/CFS (Figure 2)."
+      - source: pmid:30617782
+        quote: "These findings did not survive corrections for multiple comparisons."
+      - source: pmid:30617782
+        quote: "we caution against over-interpretation until results can be confirmed in an independent sample, preferably with a larger sample size"
+      - source: pmid:24665088
+        quote: "The BP(ND) values of (11)C-(R)-PK11195 in the cingulate cortex, hippocampus, amygdala, thalamus, midbrain, and pons were 45%-199% higher in CFS/ME patients than in healthy controls."
+  - decision_part: "Level 2 stays: it rests on the controlled CCC-consistent diffusion MRI study; the now Fukuda-defined MR spectroscopy study measures a different thing (brain metabolites, not diffusion indices) and does not reproduce that finding, so level 3 is not reached."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:41834684
+        quote: "Diffusion MRI data from 67 ME/CFS patients (median age, 38; and 54 women) and 67 rigorously matched healthy controls (HCs) (median age 38; and 52 women) were analysed."
+      - source: pmid:30617782
+        quote: "Choline (CHO), myo-inositol (MI), lactate (LAC), and N-acetylaspartate (NAA) were quantified in 47 regions, expressed as ratios over creatine (CR), and compared between ME/CFS patients and controls using independent-samples t-tests."
+  - decision_part: "The diagnostic_marker badge stays false with pmid:30617782 added as a fourth open full text: it reports no marker tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:30617782
+        quote: "they are not specific markers of neuroinflammation and cannot likely provide a unique diagnostic test for ME/CFS"
+      - source: pmid:30617782
+        quote: "These results should be replicated in future studies with larger samples"
+  - decision_part: "The explains_pem badge stays false with pmid:30617782 moved to the studies with an open full text: its measures are fatigue, anxiety and depression questionnaires, not a direct measure of post-exertional malaise."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:30617782
+        quote: "the Fatigue Severity Scale; FSS (Krupp, LaRocca, Muir-Nash, & Steinberg, 1989), and the Hospital Anxiety and Depression Scale; HADS (Zigmond & Snaith, 1983) were administered."
+reasons_summary: "The correction records the MR spectroscopy study as Fukuda-defined from its full text and states that only its choline/creatine result survived multiple-comparison correction; level 2 and both false badges stay supported."
+would_change: "A study by an independent group that reproduces the diffusion MRI finding in a separate cohort with a recognised case definition (towards level 3), a contradicting study of comparable quality (contested mark), or a source showing the Fukuda reading of pmid:30617782 is wrong would change this decision. pmid:24665088 and pmid:12598734 have no cached full text, so their statements beyond the abstract remain unverifiable; the change does not rest on them."

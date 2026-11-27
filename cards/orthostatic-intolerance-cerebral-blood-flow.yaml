@@ -80,16 +80,20 @@ core_claim:
 level: 2
 level_reason:
   - text: >-
-      A controlled study from a Dutch clinic (Stichting CardioZorg) measured blood flow to the brain with
-      ultrasound of the neck arteries during a 30-minute head-up tilt in 429 patients and 44 healthy
-      controls. All patients met the Fukuda definition, which does not require post-exertional
-      malaise, and 70% also met the International Consensus Criteria. At the end of the tilt,
-      blood flow to the brain had fallen by 26% in patients and 7% in controls; the fall was larger
-      than in controls in patients with POTS, with delayed orthostatic hypotension and with a
-      normal heart rate and blood pressure response. At mid-tilt, patients who reported more
-      orthostatic symptoms had a larger fall. No independent group has yet repeated this finding.
-      The card is at level 2 because of this study.
-    sources: [pmid:32140630]
+      A controlled study from a Dutch clinic (Stichting CardioZorg) measured blood flow to the
+      brain with ultrasound of the neck arteries during a 30-minute head-up tilt in 429 patients
+      and 44 healthy controls. All patients met the Fukuda definition, which does not require
+      post-exertional malaise, and 70% also met the International Consensus Criteria. At the end
+      of the tilt, blood flow to the brain had fallen by 26% in patients and 7% in controls; the
+      fall was larger than in controls in patients with POTS, with delayed orthostatic
+      hypotension and with a normal heart rate and blood pressure response. At mid-tilt,
+      patients who reported more orthostatic symptoms had a larger fall. The card is at level 2
+      because of this study. One small study from New York Medical College (15 patients, 11
+      controls) found a larger fall in blood flow velocity on tilt, measured by transcranial
+      Doppler, but it is a selected cohort and a study from the same laboratory did not find the
+      same difference; the card does not count it as a repeat (see below). The finding with the
+      neck-artery method is unreplicated.
+    sources: ['pmid:32140630', 'pmid:25277740', 'pmid:22180650']
   - text: >-
       A later study from the same clinic found a similar fall while sitting in 100 severely ill
       patients (24.5%, against 0.4% in 15 healthy controls). Being from the same group, it does
@@ -120,16 +124,22 @@ level_reason:
       blood flow to the brain.
     sources: [pmid:16378795, pmid:7674527]
   - text: >-
-      The card does not reach level 3: no independent group with a verified case definition has
-      repeated the fall in blood flow to the brain. Two studies from New York Medical College
-      found lower blood flow velocity in the brain on tilt (in one, a fall of 22.5% in 15
-      patients against 8.7% in 11 controls), and a study from Osaka Medical College of 28 young
-      patients and 20 controls found slower recovery of brain oxygen on standing. A study from
-      Johns Hopkins Medical Institutions of 26 patients and 23 controls found no difference in
-      blood flow velocity at any of the measured time points (supine, 1 and 5 minutes after
-      tilt, 5 and 1 minutes before the end, and at termination). The case definitions of all
-      four are not yet verified, so none of them can support or contradict the card.
-    sources: ['pmid:22180650', 'pmid:25277740', 'pmid:12006954', 'pmid:12593133']
+      The card does not reach level 3. A study from New York Medical College of 15 patients
+      meeting the CDC criteria and 11 controls found that blood flow velocity in the brain fell
+      22.5% on tilt in patients and 8.7% in controls. Its patients were aged 15 to 29 and were
+      recruited for reported neurocognitive impairment and hyperventilation or hypocapnia likely
+      due to POTS, and it measured blood flow velocity by transcranial Doppler, not blood flow
+      by neck-artery ultrasound. A study from the same laboratory, of 25 patients meeting the
+      Fukuda definition, all with POTS, and 20 controls, found absolute mean blood flow velocity
+      slightly lower in patients at each tilt angle but no difference between the groups in the
+      changes of blood flow velocity at any angle. The card therefore does not count the first
+      study as a replication, and it is unreplicated. Two further studies have case definitions
+      that are not yet verified, so neither can support or contradict the card: a study from
+      Osaka Medical College of 28 young patients and 20 controls found slower recovery of brain
+      oxygen on standing, and a study from Johns Hopkins Medical Institutions of 26 patients and
+      23 controls found no difference in blood flow velocity at any of the measured time points
+      (supine, 1 and 5 minutes after tilt, 5 and 1 minutes before the end, and at termination).
+    sources: ['pmid:25277740', 'pmid:22180650', 'pmid:12006954', 'pmid:12593133']
   - text: >-
       The card does not reach level 4. In a placebo-controlled trial of 100 patients meeting the CDC
       criteria who had a fall in blood pressure on tilt, 7 of 50 given fludrocortisone and 5 of 50 given placebo improved by at least 15 points on a wellness
@@ -144,10 +154,12 @@ level_reason:
       study of 16 patients from the Dutch clinic, compression stockings reduced the fall in
       blood flow to the brain during tilt (14% with stockings, 25% without); symptoms were not
       an outcome and the paper does not name the case definition. In the New York Medical
-      College study of 15 patients, phenylephrine, which raises blood pressure, reduced the fall
-      in blood flow velocity on tilt (8.1% against 22.5% untreated) and the slowing on a
-      working-memory task; its case definition is not yet verified. Neither can count towards
-      level 4.
+      College study of 15 patients meeting the CDC criteria, who were recruited for
+      neurocognitive impairment and hyperventilation or hypocapnia, phenylephrine, which raises
+      blood pressure, reduced the fall in blood flow velocity on tilt (8.1% against 22.5%
+      untreated) and the slowing on a working-memory task. The comparison was with an untreated
+      tilt in the same patients, the paper describes no placebo group, and the outcome was a
+      working-memory task rather than symptoms. Neither can count towards level 4.
     sources: ['pmid:35056360', 'pmid:25277740']
 # Contested: null (proposal). See header: no contradicting study of comparable quality to 32140630 (needs >= 214.5
 # patients, Fukuda or stricter, controls). 16378795 contradicts 7674527, which the card does not need for rung 2.
@@ -384,21 +396,23 @@ studies:
     journal: American journal of physiology. Heart and circulatory physiology
     doi: 10.1152/ajpheart.00994.2011
     cohort: me_cfs
-    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text (PMC3311460)
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: We enrolled 25 subjects diagnosed with CFS using the Fukuda criteria (22), which included some subjects from a prior investigation (40).
     design: controlled
     n_patients: 25
     n_controls: 20
     measures_pem: false
     preregistered: null
     role: context
-    direction: lower
+    direction: mixed
     group: Stewart JM and Ocon AJ, New York Medical College, Valhalla, USA (same laboratory as 25277740)
     finding: >-
-      A study of n=25 patients and 20 controls found slightly lower mean blood flow velocity in the
-      brain in patients at each tilt angle, no rise in blood flow velocity with mental tasks, and
-      memory-task performance that worsened as the tilt angle increased.
+      A study of n=25 patients meeting the Fukuda definition, all of whom had POTS, and 20
+      controls found that absolute mean blood flow velocity in the brain was slightly lower in
+      patients at each tilt angle, but that the changes in blood flow velocity with tilt did not
+      differ between the groups; patients had no rise in blood flow velocity with mental tasks,
+      and memory-task performance worsened as the tilt angle increased.
   - id: pmid:25277740
     title: "Phenylephrine alteration of cerebral blood flow during orthostasis: effect on n-back performance in chronic fatigue syndrome."
     year: 2014
@@ -406,9 +420,9 @@ studies:
     journal: 'Journal of applied physiology (Bethesda, Md. : 1985)'
     doi: 10.1152/japplphysiol.00527.2014
     cohort: me_cfs
-    case_definition: unverified  # TODO: verify — abstract names no case definition; no open full text (PMC4233252)
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: CFS subjects were between 15 and 29 yr old and fulfilled CDC criteria for CFS (16).
     design: controlled  # patients and controls; phenylephrine compared with untreated tilt in the same patients
     n_patients: 15
     n_controls: 11
@@ -576,5 +590,5 @@ links:
       In a controlled study of 429 patients meeting the Fukuda definition and 44 healthy controls, patients who answered a symptom questionnaire during head-up tilt (the questionnaire was added partway through the study, and the paper does not report how many patients answered it) and reported more orthostatic symptoms had a larger fall in blood flow to the brain at mid-tilt. A later study from the same clinic, of 278 patients, found no relation between the fall in blood flow to the brain and pain, fatigue or concentration scores after the tilt. The first finding has not been repeated by an independent group.
     sources: [pmid:32140630, pmid:33585505]
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-27
   by: ai_audit

@@ -1,0 +1,431 @@
+card: infection-trigger
+card_sha256: 704d30203cf6dd8b9c561536735b66cb2ef85d1f329fe5a2a54c59feba5178ea
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: level_reason[3]
+  problem: 'The full-text scan found that the full text differs from the card: The full text describes
+    matched control participants who recovered promptly from the same infection, assessed at six months,
+    while the level reason says the study had no comparison group. Quote from the full text: We invited
+    these cases, and control participants matched by age and sex who had recovered promptly from the same
+    infection, at six months for a medical interview, examination by a physician (AL), and laboratory
+    investigation'
+- target: studies[pmid:33367564].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    names Fukuda, Canadian and IOM criteria, with a medical and psychiatric exam; the card lists the case
+    definition as unverified with no quote. Quote from the full text: were evaluated to determine whether
+    they met 1 or more of the 3 case definitions of ME/CFS'
+- target: studies[pmid:33367564].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    reports 67 matched recovered controls; the card has n_controls null. Quote from the full text: Sixty-seven
+    of the 157 asymptomatic students were recruited as matched, recovered controls.'
+- target: level_reason[3]
+  problem: 'The full-text scan found that the full text states something the card lacks: level_reason[3]
+    says the case definitions are not verified and that there was no comparison group; the full text names
+    the three definitions used and also describes 67 matched recovered controls for the group comparisons.
+    Quote from the full text: were evaluated to determine whether they met 1 or more of the 3 case definitions
+    of ME/CFS'
+- target: level_reason[0]
+  problem: 'The full-text scan found that the full text states something the card lacks: The authors also
+    list factors that could lead to underestimation (hospitalized participants excluded, waxing/waning
+    symptoms, severely affected people lost to follow-up) and say the overestimation issues are mitigated
+    by enrolling within 30 days of infection; the level reason names only the overestimation limits. Quote
+    from the full text: Conversely, there are also factors that might have contributed to an underestimation
+    of participants with post-COVID-19 ME/CFS.'
+- target: studies[pmid:41598987].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives the share of the infected group with ME/CFS (35 of 100) and prior syncope (59%); the card gives
+    no such proportion. Quote from the full text: This female predominance may reflect the high prevalence
+    of ME/CFS (35%) and a history of syncope (59%) in the Coxiella group'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[0] says the authors list recall bias, selection bias, missed earlier symptoms
+      and unassessed PEM severity ''and say these limits could have led to overestimation''. The cached
+      full text (PMC11968624) goes on: ''These issues are mitigated by the enrollment of participants
+      within 30 days of infection. Conversely, there are also factors that might have contributed to an
+      underestimation of participants with post-COVID-19 ME/CFS'', naming hospitalized participants excluded,
+      the waxing/waning nature of symptoms, IOM 2015 criteria not ideal for short-duration ME/CFS, participants
+      unfamiliar with PEM, and the most severely affected unable to enrol or lost to follow-up. The level
+      rests on this study, and giving only the overestimation side misstates the authors'' account of
+      its limits.'
+    fix: Either state both sides as the full text does (the authors say the overestimation issues are
+      mitigated by enrolment within 30 days of infection, and list factors that could have led to underestimation,
+      such as the exclusion of hospitalized participants and the loss of the most severely affected),
+      or drop the direction and say only that the authors list limits that could have led to over- or
+      underestimation.
+    targets:
+    - level_reason[0]
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[3] says ''Two studies had no comparison group'' (Hickie 2006, pmid:16950834;
+      Jason 2021, pmid:33367564). Both cached full texts describe a comparison group: Hickie: ''We invited
+      these cases, and control participants matched by age and sex who had recovered promptly from the
+      same infection, at six months for a medical interview...''; Jason: ''Sixty-seven of the 157 asymptomatic
+      students were recruited as matched, recovered controls.'' What both lack is an uninfected comparison
+      group, which is why they give a frequency after infection rather than a higher risk; the sentence
+      as written is contradicted by the sources.'
+    fix: Say the two studies had no uninfected comparison group (their controls had recovered from the
+      same infection), so they give a frequency after infection rather than a higher risk.
+    targets:
+    - level_reason[3]
+  - class: decisive
+    severity: must_fix
+    problem: 'pmid:33367564 is labelled case_definition ''unverified'' with no quote, but the cached full
+      text (PMC8664491) states the definitions used: participants ''were evaluated to determine whether
+      they met 1 or more of the 3 case definitions of ME/CFS'' (Fukuda et al [20], Canadian Clinical [21],
+      IOM [22]), and ''Note that in most cases the ME/CFS group only met the Fukuda criteria [20], while
+      the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM [22]
+      criteria.'' The 55 cases (23%) were defined by meeting at least one of the three, mostly Fukuda
+      only. level_reason[3] (''their case definitions are not yet verified'') and links[0] (''neither
+      study''s case definition is verified yet'') rest on the unverified label.'
+    fix: Record the definition from the full text (Fukuda as the definition all cases meet, flagged 'does
+      not require PEM', with the sentence above as case_definition_quote and case_definition_source fulltext),
+      and reword level_reason[3] and links[0] so they no longer say this study's case definition is unverified.
+      The study still has no uninfected comparison group, so it does not count towards the level.
+    targets:
+    - studies[pmid:33367564].case_definition
+    - studies[pmid:33367564].case_definition_quote
+    - studies[pmid:33367564].case_definition_source
+    - level_reason[3]
+    - links[0]
+  - class: decisive
+    severity: must_fix
+    problem: 'Not among the request''s items, but found in the cached full text it names (PMC1569956):
+      pmid:16950834 is labelled ''unverified'', yet its own text states ''AL and IH diagnosed the chronic
+      fatigue syndrome (termed here confirmed post-infective fatigue syndrome) by consensus at six months
+      after the onset of symptoms, according to the international diagnostic criteria. 1'', and reference
+      1 is ''Fukuda K, Straus SE, Hickie I, Sharpe MC, Dobbins JG, Komaroff A. The chronic fatigue syndrome:
+      a comprehensive approach to its definition and study. Ann Intern Med 1994''. level_reason[3] and
+      links[0] say this study''s case definition is not verified.'
+    fix: Record Fukuda (flagged 'does not require PEM') with that sentence and its reference as the quote,
+      source fulltext, and reword level_reason[3] and links[0] accordingly; only White 1998 and Wildman
+      2002 then remain unverified in that paragraph.
+    targets:
+    - studies[pmid:16950834].case_definition
+    - studies[pmid:16950834].case_definition_quote
+    - studies[pmid:16950834].case_definition_source
+    - level_reason[3]
+    - links[0]
+  - class: decisive
+    severity: advisory
+    problem: 'Request item 3: the full text of pmid:33367564 reports 67 matched, recovered controls, and
+      the card has n_controls null; pmid:16950834 also had matched recovered controls (number not checked
+      here). These controls had the same infection, so they are not a comparison for the risk of ME/CFS
+      after infection; with design ''uncontrolled'' for the card''s question, null is defensible and is
+      not an error against the rubric.'
+    fix: If n_controls is filled in, record 67 for pmid:33367564 and say in the finding that the controls
+      recovered from the same infection, so that the number is not read as an uninfected comparison group.
+    targets:
+    - studies[pmid:33367564].n_controls
+    - studies[pmid:16950834].n_controls
+rounds:
+- round: 1
+  operations:
+  - op: replace_paragraph
+    field: level_reason
+    index: 0
+    text: 'A US study (RECOVER-Adult) followed 4515 adults enrolled within 30 days of SARS-CoV-2 infection,
+      or who became infected during the study, and compared them with adults who had no infection. ME/CFS
+      was classified with the 2015 IOM criteria applied to self-reported symptoms, and people with an
+      earlier ME/CFS diagnosis were excluded. The rate of new ME/CFS was 2.66 per 100 person-years after
+      infection and 0.93 in matched uninfected participants (hazard ratio 4.93, 95% CI 3.62-6.71); 847
+      of the 1439 uninfected participants had no match, so the comparison used the other 592 (calculated
+      from the reported counts). Across all infected participants, 531 of 11,785 (4.5%) met the criteria,
+      against 9 of 1439 (0.6%) uninfected participants. The authors list possible recall bias and selection
+      bias, earlier symptoms missed in people never diagnosed, and the severity of post-exertional malaise
+      not being assessed as limits that could have led to overestimation, and say these issues are mitigated
+      by enrolment within 30 days of infection. They also list factors that might have led to underestimation:
+      hospitalized participants were excluded, symptoms wax and wane, the 2015 IOM criteria may not be
+      ideal for short-duration ME/CFS, participants may not have been familiar with post-exertional malaise,
+      and the most severely affected may have been unable to enrol or lost to follow-up. The card is at
+      level 2 because of this study. No independent group has repeated it with a verified case definition,
+      so it is unreplicated.'
+    sources:
+    - pmid:39804551
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: 'Earlier studies that followed people from a documented infection point the same way but cannot
+      count towards the level. For the first two, the case definitions are not yet verified: in a study
+      of primary care patients, chronic fatigue syndrome was found in 9-22% six months after glandular
+      fever and 0-6% after an ordinary upper respiratory tract infection; ten years after a Q fever outbreak,
+      it was found in 14 (19.4%) exposed people and 3 (4.2%) matched unexposed people among those examined
+      in hospital. Two studies had no uninfected comparison group (their controls had recovered from the
+      same infection), so they give a frequency after infection rather than a higher risk. In Australia,
+      28 of 253 people (11%) met the criteria six months after Epstein-Barr virus, Q fever or Ross River
+      virus infection, at a similar rate after each; the full text says the diagnosis followed "the international
+      diagnostic criteria" without naming them in the text available here. In a US college cohort, 55
+      of 238 students (23%) met the criteria six months after infectious mononucleosis; the full text
+      says participants were assessed against 1 or more of 3 definitions (Fukuda, Canadian Clinical and
+      IOM), and that in most cases the ME/CFS group met only the Fukuda criteria.'
+    sources:
+    - pmid:9926075
+    - pmid:12145392
+    - pmid:16950834
+    - pmid:33367564
+  - op: set_link_text
+    to: question:who-is-vulnerable
+    text: Two prospective studies compared people who did and did not develop ME/CFS after the same infection.
+      One found that the severity of the acute illness predicted it more than demographic, psychological
+      or microbiological factors; the other found more physical symptoms and immune differences, but not
+      more psychological symptoms, before the infection in those who later had severe ME/CFS. Each finding
+      comes from a single study. The full text of the first says its cases met "the international diagnostic
+      criteria" without naming them in the text available; the second assessed students against 1 or more
+      of 3 definitions (Fukuda, Canadian Clinical and IOM), in most cases Fukuda only.
+  - op: update_study
+    id: pmid:33367564
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Note that in most cases the ME/CFS group only met the Fukuda criteria [20],
+        while the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM
+        [22] criteria.
+  - op: update_study
+    id: pmid:16950834
+    set:
+      case_definition: other
+      case_definition_source: fulltext
+      case_definition_quote: Where appropriate, AL and IH diagnosed the chronic fatigue syndrome (termed
+        here confirmed post-infective fatigue syndrome) by consensus at six months after the onset of
+        symptoms, according to the international diagnostic criteria.
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: reject
+    findings:
+    - class: decisive
+      operation: 4
+      severity: must_fix
+      problem: 'Operation 4 answers finding 3, but it reads the case definition wrongly. It records pmid:16950834
+        as case_definition ''other'', with a quote cut off before its reference marker. The cached full
+        text (data/cache/europepmc/PMC1569956.html) reads ''according to the international diagnostic
+        criteria. 1'', and its reference 1 is ''Fukuda K, Straus SE, Hickie I, Sharpe MC, Dobbins JG,
+        Komaroff A. The chronic fatigue syndrome: a comprehensive approach to its definition and study.
+        Ann Intern Med 1994;121: 953-9.'' So the record names Fukuda 1994, which is not a definition outside
+        the table.'
+      fix: Set case_definition to Fukuda (shown with the rubric's 'does not require PEM' flag), with case_definition_source
+        fulltext. Use a case_definition_quote that keeps the reference marker ('... according to the international
+        diagnostic criteria. 1') and gives reference 1 as the full text states it.
+      targets:
+      - studies[pmid:16950834].case_definition
+      - studies[pmid:16950834].case_definition_quote
+    - class: decisive
+      operation: 1
+      severity: must_fix
+      problem: 'level_reason[3] says of the Australian study that ''the full text says the diagnosis followed
+        "the international diagnostic criteria" without naming them in the text available here''. The
+        cached full text (PMC1569956) does name them: the sentence cites reference 1, Fukuda et al., Ann
+        Intern Med 1994. The clause contradicts the record and states the case definition wrongly. ''here''
+        is also internal phrasing a reader cannot act on.'
+      fix: Say that the full text gives the criteria as the international diagnostic criteria and cites
+        Fukuda et al. 1994 for them. Alternatively, drop the clause and let the study's recorded case
+        definition carry it.
+      targets:
+      - level_reason[3]
+    - class: decisive
+      operation: 1
+      severity: must_fix
+      problem: 'level_reason[3] says, after ''55 of 238 students (23%) met the criteria'', that ''in most
+        cases the ME/CFS group met only the Fukuda criteria''. In the cached full text (PMC8664491) the
+        ''ME/CFS group'' is the group that met one definition, kept apart from the S-ME/CFS group. The
+        full text says: ''55 students (23%) met criteria for ME/CFS, 20 of whom (8%) met more than 1 case
+        definition of ME/CFS and were termed S-ME/CFS''. It also says the S-ME/CFS group ''always met
+        the Fukuda criteria [20] and either the Canadian [21] or IOM [22] criteria''. Placed next to the
+        55, the sentence reads as most of the 55 meeting Fukuda only, which the record does not state.'
+      fix: Say that of the 55, 20 met more than one definition (always Fukuda plus the Canadian or IOM
+        criteria), and that most of the others met only the Fukuda criteria.
+      targets:
+      - level_reason[3]
+    - class: decisive
+      operation: 2
+      severity: must_fix
+      problem: The new link text has two errors. First, it says the first study's cases met 'the international
+        diagnostic criteria' 'without naming them in the text available'. The cached full text of pmid:16950834
+        cites Fukuda et al. 1994 (reference 1) for those criteria. Second, it says the second study assessed
+        students 'in most cases Fukuda only'. The link's finding for pmid:33367564 concerns 'those who
+        later had severe ME/CFS'. The full text says that group 'always met the Fukuda criteria [20] and
+        either the Canadian [21] or IOM [22] criteria'. So 'Fukuda only' misstates the case definition
+        of the group the finding is about.
+      fix: Say the first study's cases met the international diagnostic criteria (Fukuda et al. 1994,
+        cited in its full text). Say the severe group in the second study met the Fukuda criteria and
+        also the Canadian or IOM criteria.
+      targets:
+      - links[0]
+    - operation: 3
+      severity: advisory
+      problem: 'Operation 3 answers finding 2. The Fukuda label is the least strict of the three definitions
+        the study used, so it does not overstate. But the quote does not show that every one of the 55
+        met Fukuda: it says only that ''in most cases'' the one-definition group met Fukuda only. Some
+        cases may have met only the Canadian or IOM criteria.'
+      fix: Keep Fukuda as the conservative label, and add a comment in the study block saying the cases
+        met at least one of Fukuda, Canadian and IOM, most of them Fukuda.
+      targets:
+      - studies[pmid:33367564].case_definition
+    - severity: advisory
+      problem: 'Both study blocks still carry the comment ''PMC... exists but Europe PMC returned no open
+        full text ... TODO: verify''. With case_definition_source now fulltext, these comments contradict
+        the record. They are not reader-facing.'
+      fix: Remove the two stale comments with remove_comment.
+      targets:
+      - studies[pmid:16950834]
+      - studies[pmid:33367564]
+- round: 2
+  operations:
+  - op: replace_paragraph
+    field: level_reason
+    index: 0
+    text: 'A US study (RECOVER-Adult) followed 4515 adults enrolled within 30 days of SARS-CoV-2 infection,
+      or who became infected during the study, and compared them with adults who had no infection. ME/CFS
+      was classified with the 2015 IOM criteria applied to self-reported symptoms, and people with an
+      earlier ME/CFS diagnosis were excluded. The rate of new ME/CFS was 2.66 per 100 person-years after
+      infection and 0.93 in matched uninfected participants (hazard ratio 4.93, 95% CI 3.62-6.71); 847
+      of the 1439 uninfected participants had no match, so the comparison used the other 592 (calculated
+      from the reported counts). Across all infected participants, 531 of 11,785 (4.5%) met the criteria,
+      against 9 of 1439 (0.6%) uninfected participants. The authors list possible recall bias and selection
+      bias, earlier symptoms missed in people never diagnosed, and the severity of post-exertional malaise
+      not being assessed as limits that could have led to overestimation, and say these issues are mitigated
+      by enrolment within 30 days of infection. They also list factors that might have led to underestimation:
+      hospitalized participants were excluded, symptoms wax and wane, the 2015 IOM criteria may not be
+      ideal for short-duration ME/CFS, participants may not have been familiar with post-exertional malaise,
+      and the most severely affected may have been unable to enrol or lost to follow-up. The card is at
+      level 2 because of this study. No independent group has repeated it with a verified case definition,
+      so it is unreplicated.'
+    sources:
+    - pmid:39804551
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: 'Earlier studies that followed people from a documented infection point the same way but cannot
+      count towards the level. For the first two, the case definitions are not yet verified: in a study
+      of primary care patients, chronic fatigue syndrome was found in 9-22% six months after glandular
+      fever and 0-6% after an ordinary upper respiratory tract infection; ten years after a Q fever outbreak,
+      it was found in 14 (19.4%) exposed people and 3 (4.2%) matched unexposed people among those examined
+      in hospital. Two studies had no uninfected comparison group (their controls had recovered from the
+      same infection), so they give a frequency after infection rather than a higher risk. In Australia,
+      28 of 253 people (11%) met the criteria six months after Epstein-Barr virus, Q fever or Ross River
+      virus infection, at a similar rate after each; the full text says the diagnosis followed "the international
+      diagnostic criteria" and cites Fukuda et al. 1994 for them. In a US college cohort, 55 of 238 students
+      (23%) met the criteria six months after infectious mononucleosis; the full text says participants
+      were assessed against 1 or more of 3 definitions (Fukuda, Canadian Clinical and IOM). Of the 55,
+      20 met more than 1 definition (always Fukuda plus the Canadian or IOM criteria), and in most cases
+      the rest met only the Fukuda criteria.'
+    sources:
+    - pmid:9926075
+    - pmid:12145392
+    - pmid:16950834
+    - pmid:33367564
+  - op: set_link_text
+    to: question:who-is-vulnerable
+    text: Two prospective studies compared people who did and did not develop ME/CFS after the same infection.
+      One found that the severity of the acute illness predicted it more than demographic, psychological
+      or microbiological factors; the other found more physical symptoms and immune differences, but not
+      more psychological symptoms, before the infection in those who later had severe ME/CFS. Each finding
+      comes from a single study. The full text of the first says its cases met "the international diagnostic
+      criteria" and cites Fukuda et al. 1994 for them; in the second, the students with severe ME/CFS
+      met the Fukuda criteria and also either the Canadian or the IOM criteria.
+  - op: update_study
+    id: pmid:33367564
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Note that in most cases the ME/CFS group only met the Fukuda criteria [20],
+        while the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM
+        [22] criteria.
+  - op: update_study
+    id: pmid:16950834
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Where appropriate, AL and IH diagnosed the chronic fatigue syndrome (termed
+        here confirmed post-infective fatigue syndrome) by consensus at six months after the onset of
+        symptoms, according to the international diagnostic criteria.1
+  - op: remove_comment
+    text: PMC1569956 exists but Europe PMC returned no open full text; the abstract says "diagnostic criteria
+      for chronic
+  - op: remove_comment
+    text: 'fatigue syndrome" without naming them. TODO: verify.'
+  - op: remove_comment
+    text: PMC8664491 exists but Europe PMC returned no open full text; the abstract says "met criteria
+      for ME/CFS" and
+  - op: remove_comment
+    text: '"meeting >1 set of criteria" without naming them. TODO: verify.'
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: wording
+      target: level_reason[3]
+      operation: 1
+      severity: advisory
+      problem: 'level_reason[3] says of pmid:33367564 that ''participants were assessed against 1 or more
+        of 3 definitions''. The cached full text (PMC8664491) says their results ''were evaluated to determine
+        whether they met 1 or more of the 3 case definitions of ME/CFS'': everyone was checked against
+        all three, and cases met one or more. The rest of the sentence and the label are correct, and
+        the case_definition label does not change.'
+      fix: Say 'participants were assessed against 3 definitions (Fukuda, Canadian Clinical and IOM),
+        and cases met 1 or more of them'.
+      targets:
+      - level_reason[3]
+    - class: wording
+      target: studies[pmid:33367564].finding
+      operation: 3
+      severity: advisory
+      problem: 'Carried over from round 1: the Fukuda label for pmid:33367564 is the conservative reading.
+        The quote says only that ''in most cases'' the one-definition group met Fukuda alone, so a few
+        cases may have met only the Canadian or IOM criteria. level_reason[3] now states this, so a reader
+        is not misled.'
+      fix: None needed in this correction. A later round could note in the study block that cases met
+        at least one of three definitions, most of them Fukuda.
+      targets:
+      - studies[pmid:33367564].finding
+      - studies[pmid:33367564].case_definition
+    - class: wording
+      target: links[0]
+      severity: advisory
+      problem: Comments in the file that are not reader-facing are now stale. The comment above the links
+        says both sources of the question:who-is-vulnerable link have unverified case definitions, 'which
+        allows step 1 and never step 2', and the header comment (LEVEL, rung 3) calls 16950834 and 33367564
+        unverified with no open full text. Both now carry Fukuda from the full text. The link stays at
+        step 1 (proposed), which is not higher than the sources support. Whether the link could rise is
+        a question for a link round, not for this correction.
+      fix: Update or remove those comments in a later round.
+      targets:
+      - links[0]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:16950834].case_definition differs
+  - studies[pmid:16950834].case_definition_source differs
+  - studies[pmid:16950834].case_definition_quote differs
+  - studies[pmid:33367564].case_definition differs
+  - studies[pmid:33367564].case_definition_source differs
+  - studies[pmid:33367564].case_definition_quote differs
+  - 'level_reason[3]: the numeral(s) 1, 20 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[1] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 3, which is classed decisive, not wording
+  - operations[2] answers finding 2, which is classed decisive, not wording
+  - operations[2] answers finding 3, which is classed decisive, not wording
+  - operations[3] answers finding 2, which is classed decisive, not wording
+  - operations[3] answers finding 4, which is classed decisive, not wording
+  - operations[4] answers finding 3, which is classed decisive, not wording
+  - operations[4] answers finding 4, which is classed decisive, not wording
+  - operations[5] answers finding 3, which is classed decisive, not wording
+  - operations[5] answers finding 4, which is classed decisive, not wording
+  - operations[6] answers finding 3, which is classed decisive, not wording
+  - operations[6] answers finding 4, which is classed decisive, not wording
+  - operations[7] answers finding 2, which is classed decisive, not wording
+  - operations[7] answers finding 4, which is classed decisive, not wording
+  - operations[8] answers finding 2, which is classed decisive, not wording
+  - operations[8] answers finding 4, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-infection-trigger-correction-published.yaml
+outcome: the first audit decided reject; no second audit was run (sequential audits)

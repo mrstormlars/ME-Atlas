@@ -534,3 +534,115 @@
   - pmid:40901516
   tier: 1
   decided_by: ai_pair
+- date: 2026-11-27
+  card: immune-cell-gene-expression
+  change: 'Correction: level_reason[2] reworded; the finding of pmid:16049284 reworded; case_definition,
+    case_definition_source, case_definition_quote of pmid:16049284 changed'
+  reason: The full text of the 2005 UK study names the Fukuda criteria and a PCR confirmation in 17 patients
+    and 21 different controls; the corrected card matches it, and the level and contested mark are unchanged.
+  sources:
+  - pmid:30791746
+  - pmid:16049284
+  - pmid:18462164
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: gut-microbiome
+  change: 'Correction: level_reason[5] reworded; the finding of pmid:36758521 reworded; case_definition,
+    case_definition_source, case_definition_quote, n_patients of pmid:36758521 changed'
+  reason: The correction of pmid:36758521 (149 patients, Fukuda recorded as the lower-ranked of the paper's
+    two stated definitions, plasma isobutyrate in the short-term group) matches the full text; the card's
+    level and marks are unchanged.
+  sources:
+  - pmid:23791918
+  - pmid:41387992
+  - pmid:36758521
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: neuroinflammation
+  change: 'Correction: level_reason[1] reworded; badge_reasons.diagnostic_marker[0] reworded; badge_reasons.explains_pem[0,
+    1] reworded; the finding of pmid:30617782 reworded; case_definition, case_definition_source, case_definition_quote
+    of pmid:30617782 changed'
+  reason: The correction records the MR spectroscopy study as Fukuda-defined from its full text and states
+    that only its choline/creatine result survived multiple-comparison correction; level 2 and both false
+    badges stay supported.
+  sources:
+  - pmid:24665088
+  - pmid:30617782
+  - pmid:41834684
+  - pmid:34815320
+  - pmid:34609538
+  - pmid:12598734
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: impaired-energy-production-after-exertion
+  change: 'Correction: level_reason[6] reworded'
+  reason: The added sentence on how the 84-patient study handled maximal-effort exclusions for controls
+    versus patients matches the study's own full text word for word in substance; no level, badge or contested
+    mark moves.
+  sources:
+  - pmid:38965566
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: tryptophan-kynurenine-metabolism
+  change: 'Correction: level_reason[5] reworded; the finding of pmid:20384451 reworded; case_definition,
+    case_definition_source, case_definition_quote, n_patients, n_controls of pmid:20384451 changed'
+  reason: The full text of the New Jersey study (pmid:20384451) states the 1994 Fukuda definition and
+    gives 33 patients and 16 controls; it ranks below CCC and did not measure the kynurenic acid to kynurenine
+    ratio, so the level, contested mark and its context role stand.
+  sources:
+  - pmid:38015302
+  - pmid:34090138
+  - pmid:15982993
+  - pmid:11352361
+  - pmid:20384451
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: orthostatic-intolerance-cerebral-blood-flow
+  change: 'Correction: level_reason[0, 5, 7] reworded; the finding of pmid:22180650 reworded; case_definition,
+    case_definition_source, case_definition_quote, direction of pmid:22180650 changed; case_definition,
+    case_definition_source, case_definition_quote of pmid:25277740 changed'
+  reason: 'Accept: the two New York Medical College case definitions (Fukuda, CDC unspecified) and the
+    mixed direction of the 2012 study match their full texts, and level 2 with no contested mark still
+    follows the rubric.'
+  sources:
+  - pmid:32140630
+  - pmid:25277740
+  - pmid:22180650
+  - pmid:12006954
+  - pmid:12593133
+  - pmid:35056360
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: small-fibre-neuropathy
+  change: 'Correction: level_reason[2] reworded; badge_reasons.diagnostic_marker[0] reworded; badge_reasons.explains_pem[0]
+    reworded; case_definition, case_definition_source, case_definition_quote of pmid:39888240 changed;
+    case_definition, case_definition_source, case_definition_quote of pmid:37968647 changed; case_definition,
+    case_definition_source, case_definition_quote of pmid:33577778 changed'
+  reason: Case definitions read correctly from the full texts (IOM 2015 for the 2021 Chest study, other
+    for two Cruces studies); level 1 and both badges stay supported.
+  sources:
+  - pmid:41576003
+  - pmid:37968647
+  - pmid:39888240
+  - pmid:33577778
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: autoimmunity-autoantibodies-b-cells
+  change: 'Correction: the contested mark changed; level_reason[8] reworded; a paragraph added to contested_reason;
+    the finding of pmid:40141440 reworded; case_definition, case_definition_source, case_definition_quote,
+    n_patients, n_controls, role of pmid:40141440 changed'
+  reason: 'Accept: the full text gives pmid:40141440 a CCC cohort with controls and 59 to 95 patients
+    (Swedish study: 48), no receptor antibody difference, so it contradicts level 2 at comparable quality
+    and rung 2 is contested; the method limits are written out.'
+  sources:
+  - pmid:40141440
+  - pmid:34589868
+  tier: 2
+  decided_by: ai_audit

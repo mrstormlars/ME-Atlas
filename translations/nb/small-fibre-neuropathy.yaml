@@ -40,14 +40,18 @@ items:
       peker mot skade, rapporterer testene sine på tvers av fire grupper uten test av ME/CFS mot kontroller, og bruker historiske
       kontroller og et henvist utvalg. To kontrollerte studier fra gruppen ved Cruces University Hospital omfattet pasienter
       med en tidligere ME/CFS-diagnose eller som oppfylte Fukuda-definisjonen; fordi en tidligere diagnose ikke navngir en
-      definisjon, kan disse ikke telle mot nivået. En studie av 160 pasienter fra en gruppe i Boston, der 31% av hudbiopsiene
-      var forenlige med småfibernevropati, kan heller ikke telle fordi diagnosekriteriene ikke er bekreftet ennå.
+      definisjon, kan disse ikke telle mot nivået. En studie av 160 pasienter fra en gruppe i Boston, hvis pasienter oppfylte
+      kriteriene til National Academy of Medicine (IOM 2015) ved gjennomgang av journaler, fant at 31% av hudbiopsiene var
+      forenlige med småfibernevropati. Biopsiene ble vurdert mot laboratorienormer, ikke mot de 36 kontrollene, som ikke hadde
+      hudbiopsier, så det er ikke en sammenligning med kontroller målt samtidig. Forfatterne nevner mulig henvisningsskjevhet
+      som kan blåse opp prevalensen. Studien har felles forfattere med Boston-studien fra 2026, så den er ikke en uavhengig
+      replikasjon, og funnet er ikke replikert av en uavhengig gruppe.
     sources:
     - pmid:41576003
     - pmid:37968647
     - pmid:39888240
     - pmid:33577778
-    source_hash: 406025517c4b683b313491276ee4bf0f17cb7d7057e8543b10d9f0f2696c8d11
+    source_hash: e888412b88a0127dd6bcbc839709eeccea2d83753b7a118d93b87c39b109d583
   level_reason[3]:
     text: I studiene fra Cruces University Hospital hadde 30 pasienter og 30 matchede friske kontroller mer buktede (slyngete)
       nervefibre i hornhinnen hos pasientene, et funn som ikke er gjentatt av en uavhengig gruppe, mens tettheten av nervefibre
@@ -65,17 +69,19 @@ items:
     source_hash: b98576e14784b2e625ec6d3c3da4eaaac0101a9feac5a4306ca88ad5d0f9bd8b
   badge_reasons.diagnostic_marker[0]:
     text: Ingen markør for skade på små fibre er testet i en andre, uavhengig pasientgruppe med bekreftede diagnosekriterier.
-      I én studie der diagnosekriteriene ikke er bekreftet, hadde buktede nervefibre i hornhinnen et areal under kurven på
-      0,690 (p = 0,032), moderat nøyaktighet, for å skille 30 pasienter fra 30 friske kontroller.
+      I én studie der pasientene hadde en tidligere ME/CFS-diagnose eller oppfylte Fukuda-definisjonen, hadde buktede nervefibre
+      i hornhinnen et areal under kurven på 0,690 (p = 0,032), moderat nøyaktighet, for å skille 30 pasienter fra 30 friske
+      kontroller.
     sources:
     - pmid:39888240
-    source_hash: ef2ba24c2e2b2bdb5bc45b62e5eab06035dfe694d1c4c2e39beca8753f6badb1
+    source_hash: a044600db2e1cd4744bbb3de1d0e1d5a1d05f172591d7b104c8ac290dcb1deb2
   badge_reasons.explains_pem[0]:
-    text: Ingen studie på dette kortet måler PEM direkte og knytter det til skade på små fibre. I én studie, der diagnosekriteriene
-      ikke er bekreftet ennå, korrelerte ikke alvorlighetsgraden av tap av nervefibre i hudbiopsier med mål fra en treningstest.
+    text: Ingen studie på dette kortet måler PEM direkte og knytter det til skade på små fibre. I én studie, der pasientene
+      oppfylte kriteriene til National Academy of Medicine (IOM 2015) ved gjennomgang av journaler, korrelerte ikke alvorlighetsgraden
+      av tap av nervefibre i hudbiopsier med mål fra en treningstest.
     sources:
     - pmid:33577778
-    source_hash: 5f15368ac8da688e2ba1b2c989b14f96affbbb6c179f62f939333ad99ce3f267
+    source_hash: c59fa89c6c833043d7911ba0292fa1b1d41a36e6f7c3fff5df3d71a9912d7743
   links[0]:
     text: En oversiktsartikkel fra 2023 oppgir at skade på små nervefibre kan svekke sammentrekningen av vener. Det sees ved
       unormal opphopning av blod i bena ved stående stilling ved posturalt ortostatisk takykardisyndrom (POTS). Observasjonen

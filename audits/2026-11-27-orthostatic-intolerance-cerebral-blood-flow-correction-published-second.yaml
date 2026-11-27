@@ -1,0 +1,57 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:25277740 changed from unverified to CDC criteria, version not stated, read from its full text, with the quoted sentence."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as \"does not require PEM\", ranked equal to Fukuda. The card quotes the sentence that names the CDC criteria."
+    evidence:
+      - source: pmid:25277740
+        quote: "CFS subjects were between 15 and 29 yr old and fulfilled CDC criteria for CFS (16)."
+    class: none
+  - decision_part: "The case definition of pmid:22180650 changed from unverified to Fukuda, read from its full text; its finding and the direction mixed (absolute velocity slightly lower, changes with tilt not different, all patients with POTS)."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:22180650
+        quote: "We enrolled 25 subjects diagnosed with CFS using the Fukuda criteria (22), which included some subjects from a prior investigation (40)."
+      - source: pmid:22180650
+        quote: "All CFS subjects were found to have POTS during a 70° head-up tilt table test performed on another day."
+      - source: pmid:22180650
+        quote: "Absolute mean CBFV was slightly less than in control subjects in CFS subject at each angle."
+      - source: pmid:22180650
+        quote: "There were, however, no differences in changes of CBFV at any angle."
+      - source: pmid:22180650
+        quote: "Thus, on average, there was no overall net increase in blood flow during a cognitive task in CFS/POTS subjects."
+    class: none
+  - decision_part: "The level stays at 2: the 15-patient New York Medical College study is not counted as an independent repeat, because it used a selected cohort, measured velocity by transcranial Doppler rather than flow, and a larger study from the same laboratory found no difference in the changes with tilt."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group; no preregistration; results that conflict with equally strong studies"
+    evidence:
+      - source: pmid:25277740
+        quote: "HUT caused CBFv to decrease 8.7% in control subjects but fell 22.5% in CFS."
+      - source: pmid:25277740
+        quote: "We recruited CFS subjects with reported neurocognitive impairment and hyperventilation/hypocapnea (n = 15) likely due to their POTS and healthy control subjects (n = 11)."
+      - source: pmid:25277740
+        quote: "Changes in CBFv with phenylephrine may not represent changes in flow, as TCD measures CBFv rather than cerebral blood flow."
+      - source: pmid:22180650
+        quote: "Also, we found no differences in the changes of CBFV between groups during tilt"
+      - source: pmid:32140630
+        quote: "Indirect CBF measurements (transcranial Doppler flow velocities), provide inconsistent support of this hypothesis."
+      - source: pmid:32140630
+        quote: "Finally, the use of extracranial Doppler flow to measure cerebral blood flow has to be replicated by others and in different patient groups."
+    class: none
+  - decision_part: "Level 2 itself rests on the 429-patient Dutch study and is not contested by the 25-patient same-laboratory null finding on changes in velocity, which has well under half its sample size."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:32140630
+        quote: "429 ME/CFS patients were studied"
+      - source: pmid:22180650
+        quote: "Twenty-five CFS subjects and twenty control subjects underwent incremental upright tilt"
+    class: none
+  - decision_part: "The phenylephrine study still does not count towards level 4: the comparison was an untreated tilt in the same patients with no placebo group, and the outcome was a working-memory task."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25277740
+        quote: "In CFS, phenylephrine prevented the HUT-induced hyperventilation/hypocapnia and the significant drop in CBFv with HUT"
+      - source: pmid:25277740
+        quote: "Phenylephrine significantly reduced the HUT-induced increase in nRT in CFS to levels similar to supine"
+    class: none
+reasons_summary: "The correction records the case definitions read from the full texts (CDC for the phenylephrine study, Fukuda for the incremental-tilt study), matches both texts, and keeps level 2 on grounds the records state."
+would_change: "An independent, controlled study with an accepted case definition that measures total cerebral blood flow (not velocity alone) on tilt and finds a larger fall than in controls would bring level 3 into question. A comparable-quality study of at least half the Dutch sample finding no excess fall would raise a contested mark. Unverifiable, not relied on: the statements on pmid:12006954 and pmid:12593133 rest on abstracts only (no cached full text), and their case definitions stay unverified."

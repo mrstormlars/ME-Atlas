@@ -1,0 +1,313 @@
+card: autoimmunity-autoantibodies-b-cells
+card_sha256: 1c64c144e3d97612b0b5ba555b22c69c786a7f191adb1b0cbf566f8ab6574ae6
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:40141440].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    names the Canadian consensus criteria; the card has the case definition as unverified. Quote from
+    the full text: The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis
+    [31].'
+- target: studies[pmid:40141440].n_patients
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives 95 ME/CFS patients in the REAP cohort (59 in the Oncimmune/Augmenta cohort); the card has null.
+    Quote from the full text: We detected reactivity against 54 different viral proteins (Figure S2A)
+    amongst our cohort of 95 ME/CFS patients and 69 controls.'
+- target: studies[pmid:40141440].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives 69 controls in the REAP cohort (44 in the Oncimmune/Augmenta cohort); the card has null. Quote
+    from the full text: We detected reactivity against 54 different viral proteins (Figure S2A) amongst
+    our cohort of 95 ME/CFS patients and 69 controls.'
+- target: studies[pmid:40141440].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    also reports higher REAP reactivity in patients against EBV gp42 and HSV1 gL (viral antigens), which
+    the card finding does not mention. Quote from the full text: Interestingly, ME/CFS patients displayed
+    higher REAP reactivity against EBV gp42, a component of the EBV fusion receptor (Figure 4A)'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 1 is an error. The card records pmid:40141440 with case_definition ''unverified''
+      (source and quote null), and level_reason[8] says ''a study of 172 participants, whose case definition
+      is not yet verified''. The cached full text (data/cache/europepmc/PMC11943395.html, section 2.1)
+      states: ''The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis [31].''
+      The quote is in the record and supports the label CCC.'
+    fix: Set case_definition to CCC, case_definition_source to fulltext and case_definition_quote to 'The
+      ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis [31].'; in level_reason[8]
+      replace 'whose case definition is not yet verified' with a statement that the patients met the Canadian
+      Consensus Criteria.
+    targets:
+    - studies[pmid:40141440].case_definition
+    - studies[pmid:40141440].case_definition_source
+    - studies[pmid:40141440].case_definition_quote
+    - level_reason[8]
+  - class: decisive
+    severity: must_fix
+    problem: 'Request items 2 and 3 are errors. n_patients and n_controls are null, but the cached full
+      text gives them. Table 1 (''Study demographics''): Oncimmune/Augmenta cohort 59 ME/CFS and 44 controls;
+      REAP cohort 95 ME/CFS and 69 controls. Section 2.1: ''Our study included a total of 172 unique participants,
+      divided into two cohorts with approximately 92% overlap.'' Section 2.5 also says ''our cohort of
+      95 ME/CFS patients and 69 controls''. The full text does not give a patient/control split of the
+      172 unique participants. The REAP cohort is the larger one and the one whose library covered ADRB1,
+      ADRB2, CHRM3 and CHRM4 (section 2.6), so it is the measurement that bears on the card''s finding.
+      The sample size also matters for the contested-mark test (next finding).'
+    fix: 'Set n_patients 95 and n_controls 69 (the REAP cohort). In the study finding and in level_reason[8],
+      state both cohorts as the record gives them (REAP: 95 patients and 69 controls; Oncimmune/Augmenta
+      Luminex panel: 59 patients and 44 controls; 172 unique participants in all).'
+    targets:
+    - studies[pmid:40141440].n_patients
+    - studies[pmid:40141440].n_controls
+    - studies[pmid:40141440].finding
+    - level_reason[8]
+  - class: decisive
+    severity: must_fix
+    problem: 'With the case definition corrected to CCC, pmid:40141440 now meets all three parts of the
+      rubric''s ''comparable quality'' test against the study level 2 rests on (pmid:34589868: CCC/ICC/IOM,
+      48 patients in two cohorts of 24, controlled). It has the same case definition (CCC), a control
+      group, and 95 patients (REAP) or 59 (Luminex), both at least half of 48. It contradicts the level-2
+      finding. Section 2.6 says that for ADRB2, ADRA1A and ADRBK1 the ''p-values and q-values indicate
+      no significant difference between patients and controls, contrasting with previous studies that
+      reported elevated levels of ADRB2 in ME/CFS [18, 19]'' (ref 19 is the Swedish study). The REAP library
+      ''included a broad range of adrenergic and muscarinic receptor AAb (... ADRB1, ADRB2, ADRB3, CHRM1,
+      CHRM2, CHRM3, and CHRM4). Despite being part of our analysis, we did not detect AAb reactivity against
+      these proteins, apart from one female ME/CFS subject with REAP reactivity against the fourth ECD
+      of ADRA2B.'' Under the rubric this supports a contested mark at level 2. The card has contested:
+      null, and the study has role ''context'', not ''contradicts''. One caveat must be written out with
+      any mark, because the record states it: the methods differ (Luminex bead panel and REAP yeast display
+      here, CellTrend ELISA in the Swedish and Spanish studies), and REAP detected reactivity against
+      these receptors in no participant at all, patients or controls. The rubric has no assay criterion.
+      The auditor decides the mark.'
+    fix: 'Propose to the auditor a contested mark on level 2 citing pmid:40141440 against pmid:34589868,
+      with the reason in plain sentences: same case definition, a control group, at least half the sample
+      size, and no difference for β-adrenergic and muscarinic receptor antibodies. Set the study''s role
+      to contradicts. In level_reason[8], state the two assay methods and that REAP detected no reactivity
+      against the adrenergic and muscarinic receptors in any participant, quoting only what the full text
+      says.'
+    targets:
+    - contested
+    - studies[pmid:40141440].role
+    - level_reason[8]
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:40141440
+    set:
+      case_definition: CCC
+      case_definition_source: fulltext
+      case_definition_quote: The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS
+        diagnosis [31].
+      n_patients: 95
+      n_controls: 69
+      role: contradicts
+      finding: 'A study of 172 unique participants in two cohorts (REAP cohort: 95 patients and 69 controls;
+        Oncimmune/Augmenta Luminex panel: 59 patients and 44 controls) measuring antibodies against 6,183
+        extracellular human proteins and a 1,134-antibody panel found no significant differences between
+        patients and controls, including against β-adrenergic receptors. The patients met the Canadian
+        Consensus Criteria. The n given for the study is the REAP cohort, whose library covered the adrenergic
+        and muscarinic receptors.'
+  - op: replace_paragraph
+    field: level_reason
+    index: 8
+    text: Against the antibody findings, a study of 172 unique participants in two cohorts, whose patients
+      met the Canadian Consensus Criteria, measured antibodies against a large panel of human proteins
+      and found no significant differences between patients and controls, including against β-adrenergic
+      receptors. The REAP cohort had 95 patients and 69 controls, and the Oncimmune/Augmenta Luminex panel
+      cohort had 59 patients and 44 controls. The study used a Luminex bead panel and REAP yeast display,
+      not the ELISA used in the Swedish and Spanish studies. Its REAP library included adrenergic and
+      muscarinic receptors; the authors report that they did not detect antibody reactivity against these
+      proteins, apart from one female ME/CFS subject with reactivity against the fourth extracellular
+      domain of ADRA2B.
+    sources:
+    - pmid:40141440
+  - op: propose
+    target: contested
+    value:
+    - 2
+    reason:
+    - text: A study of 172 unique participants, whose patients met the Canadian Consensus Criteria, the
+        same case definition as the Swedish study that level 2 rests on, included a control group and
+        a REAP cohort of 95 patients and 69 controls, and a Luminex panel cohort of 59 patients and 44
+        controls. Both cohorts have more patients than the 48 patients of the Swedish study. It found
+        no significant difference between patients and controls for antibodies against β-adrenergic receptors;
+        the authors write that this contrasts with previous studies that reported elevated levels of ADRB2
+        in ME/CFS.
+      sources:
+      - pmid:40141440
+      - pmid:34589868
+    - text: 'The methods differ: the Swedish study used the CellTrend ELISA, while this study used a Luminex
+        bead panel and REAP yeast display. Its REAP library included adrenergic and muscarinic receptors,
+        and the authors report no antibody reactivity against these proteins apart from one female ME/CFS
+        subject with reactivity against the fourth extracellular domain of ADRA2B. The contest of level
+        2 rests on a single null study and has not been repeated.'
+      sources:
+      - pmid:40141440
+      - pmid:34589868
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: reject
+    findings:
+    - class: decisive
+      operation: 2
+      severity: must_fix
+      problem: 'The contested reason (and level_reason[8], operation 1) presents the REAP null for the
+        adrenergic and muscarinic receptors as a contradiction of the Swedish M3/M4 and beta2 results,
+        but leaves out the limit the authors themselves state for exactly this measurement. The cached
+        full text of pmid:40141440 (Discussion) says: ''Indeed, the REAP library displays GPCR extracellular
+        domains (ECDs) separately, and therefore, we are not able to detect certain GPCR autoantibodies;
+        for example, we were not able to detect those that require contact with multiple epitopes on separate
+        ECDs for binding.'' With REAP detecting reactivity against these receptors in only one participant,
+        this is a missing limit that changes how a reader (and the auditor) reads the contest: the null
+        may reflect what the method can detect. Saying only ''The methods differ'' does not convey it.
+        (This answers finding 2 of the review, but its caveat is not fully written out.)'
+      fix: 'In contested reason[1] and in level_reason[8], add the authors'' statement, citing pmid:40141440
+        and quoting or closely paraphrasing only the full text: the REAP library displays the receptors''
+        extracellular domains separately, so the authors were not able to detect certain GPCR autoantibodies,
+        for example those that need contact with several extracellular domains to bind. Optionally also
+        note that the beta2 no-difference result comes from the Oncimmune/Augmenta Luminex panel (59 patients,
+        44 controls), which is the measurement that bears on the beta2 finding.'
+      targets:
+      - contested
+      - level_reason[8]
+    - class: wording
+      target: level_reason[8]
+      operation: 1
+      severity: must_fix
+      problem: 'level_reason[8] now says the study used ''a Luminex bead panel and REAP yeast display,
+        not the ELISA used in the Swedish and Spanish studies'', but the paragraph cites only pmid:40141440,
+        whose full text does not state that the Swedish and Spanish studies used ELISA (it mentions ELISA
+        only in general: ''assessing autoantibody binding in a standard assay, such as ELISA, is challenging'').
+        The claim is true of pmid:34589868 and pmid:42082542 (both records state a CellTrend ELISA), but
+        those are not cited in this paragraph, so the sentence is unsourced where it stands.'
+      fix: Either remove the clause 'not the ELISA used in the Swedish and Spanish studies', or add pmid:34589868
+        and pmid:42082542 (both on the card) to the paragraph's sources.
+      targets:
+      - level_reason[8]
+    - severity: advisory
+      problem: 'Comments on the applied card are now stale: the comment above `contested` still says ''Contested:
+        null (founder ruling 2026-11-01) ... 40141440 unverified, V9'', and the comment in the pmid:40141440
+        study block still says the patient/control split is not available ''so n is null'' and that the
+        CCC sentence is ''not used until cached''. Comments are not reader-facing, but they now contradict
+        the card''s fields.'
+      fix: Remove the stale comment line in the pmid:40141440 block with remove_comment; the header and
+        contested comments can be updated when the auditor has decided.
+    - operation: 0
+      severity: advisory
+      problem: The study finding's last sentence 'The n given for the study is the REAP cohort, whose
+        library covered the adrenergic and muscarinic receptors.' reads as an editorial note. It is supported
+        (Table 1 and section 2.6), but the beta2 no-difference result in section 2.6 comes from the Oncimmune/Augmenta
+        panel, not REAP, which the sentence could lead a reader to misplace.
+      fix: 'Consider: ''The n given is the REAP cohort, whose library included the adrenergic and muscarinic
+        receptors; the β2 result comes from the Luminex panel.'''
+- round: 2
+  operations:
+  - op: update_study
+    id: pmid:40141440
+    set:
+      case_definition: CCC
+      case_definition_source: fulltext
+      case_definition_quote: The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS
+        diagnosis [31].
+      n_patients: 95
+      n_controls: 69
+      role: contradicts
+      finding: 'A study of 172 unique participants in two cohorts (REAP cohort: 95 patients and 69 controls;
+        Oncimmune/Augmenta Luminex panel: 59 patients and 44 controls) measuring antibodies against 6,183
+        extracellular human proteins and a 1,134-antibody panel found no significant differences between
+        patients and controls, including against β-adrenergic receptors. The patients met the Canadian
+        Consensus Criteria. The n given is the REAP cohort, whose library included the adrenergic and
+        muscarinic receptors; the β-adrenergic result comes from the Luminex panel.'
+  - op: replace_paragraph
+    field: level_reason
+    index: 8
+    text: 'Against the antibody findings, a study of 172 unique participants in two cohorts, whose patients
+      met the Canadian Consensus Criteria, measured antibodies against a large panel of human proteins
+      and found no significant differences between patients and controls, including against β-adrenergic
+      receptors. The REAP cohort had 95 patients and 69 controls, and the Oncimmune/Augmenta Luminex panel
+      cohort had 59 patients and 44 controls. Its REAP library included adrenergic and muscarinic receptors;
+      the authors report that they did not detect antibody reactivity against these proteins, apart from
+      one female ME/CFS subject with reactivity against the fourth extracellular domain of ADRA2B. The
+      authors also state a limit of the method: the REAP library displays the extracellular domains of
+      these receptors separately, so they were not able to detect certain GPCR autoantibodies, for example
+      those that require contact with multiple epitopes on separate extracellular domains for binding.'
+    sources:
+    - pmid:40141440
+  - op: propose
+    target: contested
+    value:
+    - 2
+    reason:
+    - text: A study of 172 unique participants, whose patients met the Canadian Consensus Criteria, the
+        same case definition as the Swedish study that level 2 rests on, included a control group and
+        a REAP cohort of 95 patients and 69 controls, and a Luminex panel cohort of 59 patients and 44
+        controls. Both cohorts have more patients than the 48 patients of the Swedish study. It found
+        no significant difference between patients and controls for antibodies against β-adrenergic receptors;
+        the authors write that this contrasts with previous studies that reported elevated levels of ADRB2
+        in ME/CFS.
+      sources:
+      - pmid:40141440
+      - pmid:34589868
+    - text: 'The methods differ: the Swedish study used the CellTrend ELISA, while this study used a Luminex
+        bead panel and REAP yeast display. Its REAP library included adrenergic and muscarinic receptors,
+        and the authors report no antibody reactivity against these proteins apart from one female ME/CFS
+        subject with reactivity against the fourth extracellular domain of ADRA2B. The authors state that
+        the REAP library displays the extracellular domains separately, so they were not able to detect
+        certain GPCR autoantibodies, for example those that require contact with multiple epitopes on
+        separate extracellular domains for binding; the null result may therefore reflect what the method
+        can detect. The β-adrenergic no-difference result comes from the Luminex panel cohort. The contest
+        of level 2 rests on a single null study and has not been repeated.'
+      sources:
+      - pmid:40141440
+      - pmid:34589868
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - severity: advisory
+      problem: 'Round 1''s advisory still stands and was not addressed: code comments on the applied card
+        now contradict its fields. The header comments (lines 2, 6-10, 16, 24-26: ''level 3, not contested'',
+        ''40141440 ... stays `unverified`'', ''TODO: verify its case definition and patient n''), the
+        comment above `contested` (''Contested: null ... 40141440 unverified, V9'') and the comment in
+        the pmid:40141440 study block (''TODO: verify ... so n is null ... not used until cached'') are
+        not reader-facing, but they are stale.'
+      fix: Remove the stale comment in the pmid:40141440 block with remove_comment; update the header
+        and contested comments after the auditor decides the mark.
+    - operation: 2
+      severity: advisory
+      problem: In contested reason[1], the sentence 'the null result may therefore reflect what the method
+        can detect' follows the authors' REAP limit, and the next sentence says the β-adrenergic no-difference
+        result comes from the Luminex panel. The REAP limit applies to the REAP receptor null (including
+        M3/M4), not to the Luminex ADRB2 result. A reader could apply the REAP limit to the Luminex result.
+        The full text supports the general point ('differences in technology or protocols utilized to
+        assess binding could generate disparate results'), so the meaning is not wrong.
+      fix: 'Consider: ''the REAP null for these receptors may therefore reflect what the method can detect.'''
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - contested differs beyond free text
+  - studies[pmid:40141440].case_definition differs
+  - studies[pmid:40141440].case_definition_source differs
+  - studies[pmid:40141440].case_definition_quote differs
+  - studies[pmid:40141440].n_patients differs
+  - studies[pmid:40141440].n_controls differs
+  - studies[pmid:40141440].role differs
+  - studies[pmid:40141440].group differs
+  - 'level_reason[8]: the numeral(s) 95, 69, 59, 44 are new'
+  - contested_reason has 0 paragraph(s) before and 2 after
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 1, which is classed decisive, not wording
+  - operations[0] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[1] answers finding 2, which is classed decisive, not wording
+  - operations[2] answers finding 2, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-autoimmunity-autoantibodies-b-cells-correction-published.yaml
+- 2026-11-27-autoimmunity-autoantibodies-b-cells-correction-published-second.yaml
+outcome: published

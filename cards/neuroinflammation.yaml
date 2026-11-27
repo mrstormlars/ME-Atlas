@@ -23,11 +23,14 @@ level_reason:
       hindered water ratio as cytotoxic-like rather than vasogenic edema.
     sources: ['pmid:41834684', 'pmid:42227214']
   - text: >-
-      Smaller imaging studies whose case definition is not yet verified point the same way: a PET study of 9
-      patients found higher binding of a marker of activated microglia or astrocytes, and an MR spectroscopy
-      study of 15 patients found higher brain temperature in several regions and a higher choline/creatine
-      ratio in the left anterior cingulate.
-    sources: [pmid:24665088, pmid:30617782]
+      Two smaller imaging studies point the same way. A PET study of 9 patients, whose case
+      definition is not yet verified, found higher binding of a marker of activated microglia or
+      astrocytes. A whole-brain MR spectroscopy study of 15 Fukuda-defined women and 15 matched
+      controls found a higher choline/creatine ratio in the left anterior cingulate, the only
+      result that survived correction for multiple comparisons; its higher brain temperature in
+      several regions did not survive that correction, and the authors caution against
+      over-interpretation until the results are confirmed in an independent sample.
+    sources: ['pmid:24665088', 'pmid:30617782']
   - text: >-
       A PET study of 9 patients diagnosed by the Fukuda criteria, using the same tracer as the earlier PET
       study of 9 patients, found no statistically significant difference from 9 healthy controls.
@@ -55,21 +58,21 @@ badges:
     value: false
     reason:
       text: >-
-        One study proposed diffusion imaging indices as possible markers of neuroinflammation, but none of
-        the abstracts or the three open full texts reports such a marker tested in a second, independent
-        patient group.
-      sources: [pmid:41834684]
+        One study proposed diffusion imaging indices as possible markers of neuroinflammation,
+        but none of the abstracts or the four open full texts reports such a marker tested in a
+        second, independent patient group.
+      sources: ['pmid:41834684', 'pmid:30617782']
   explains_pem:
     value: false
     reason:
       - text: >-
-          The three studies with an open full text report no direct measure of post-exertional
+          The four studies with an open full text report no direct measure of post-exertional
           malaise, in their abstracts or in the full texts checked.
-        sources: [pmid:34815320, pmid:41834684, pmid:34609538]
+        sources: ['pmid:34815320', 'pmid:41834684', 'pmid:34609538', 'pmid:30617782']
       - text: >-
-          The other three studies report no direct measure of post-exertional malaise in their
+          The other two studies report no direct measure of post-exertional malaise in their
           abstracts; no open full text was available.
-        sources: [pmid:24665088, pmid:30617782, pmid:12598734]
+        sources: ['pmid:24665088', 'pmid:12598734']
 subgroups: []
 working_on_it: []
 # Empty by founder ruling (2026-11-01): early signals come only from studies with a confirmed recognised case
@@ -128,9 +131,9 @@ studies:
     journal: Brain imaging and behavior
     doi: 10.1007/s11682-018-0029-4
     cohort: me_cfs
-    case_definition: unverified  # TODO: verify — abstract names no case definition; Europe PMC lists PMC6612467 but not as open access
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: met Fukuda case definition criteria for ME/CFS (Fukuda et al., 1994), without the Reeves et al. (2005) modifications but with additional criteria proposed by Jason et al. (2010)
     design: controlled
     n_patients: 15
     n_controls: 15
@@ -140,10 +143,14 @@ studies:
     direction: higher
     group: null
     finding: >-
-      A study of n=15 women with ME/CFS and 15 age- and gender-matched healthy controls using whole-brain MR
-      spectroscopy found metabolite differences in several regions, most notably a higher choline/creatine
-      ratio in the left anterior cingulate, and higher brain temperature in the right insula, putamen, frontal
-      cortex, thalamus and cerebellum; the authors write that the findings may indicate neuroinflammation.
+      A study of n=15 women with ME/CFS and 15 age- and gender-matched healthy controls using
+      whole-brain MR spectroscopy found metabolite differences in several regions, most notably
+      a higher choline/creatine ratio in the left anterior cingulate, and higher brain
+      temperature in the right insula, putamen, frontal cortex, thalamus and cerebellum. Only
+      the higher choline/creatine ratio in the left anterior cingulate survived correction for
+      multiple comparisons; the brain temperature differences did not. The authors write that
+      the findings may indicate neuroinflammation, and caution against over-interpretation until
+      results can be confirmed in an independent sample.
   - id: pmid:41834684
     # Correction pmid:42227214 (PMC13239124, read): reinterprets lower NII-RF from "cellular infiltration" to
     # "cell shape change or a chronic depletion of microglia", adds a reading of lower NII-HR as cytotoxic-like
@@ -291,5 +298,5 @@ links:
       as one of three example disorders and was not a patient study of this link.
     sources: [pmid:29759891]
 last_checked:
-  date: 2026-11-13
+  date: 2026-11-27
   by: ai_audit

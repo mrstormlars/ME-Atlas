@@ -1,0 +1,45 @@
+card: gut-microbiome
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:36758521 changed from unverified to Fukuda, read from the full text, with the conflicting Participants sentence written out on the card."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:36758521
+        quote: "All subjects were recruited at Bateman Horne Center, Salt Lake City, UT, based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria for ME/CFS (Carruthers, 2007)."
+      - source: pmid:36758521
+        quote: "Enrolled ME/CFS participants were required to fulfill the International Chronic Fatigue Syndrome Study Group research criteria 79, the Canadian Consensus Criteria 80, and the IOM clinical diagnostic criteria 81."
+    class: none
+  - decision_part: "Recording the lower-ranked Fukuda where the paper's own two sentences disagree, and writing the uncertainty out on the card, is the conservative reading."
+    rubric: "Comparability is judged by the recorded definition, and the uncertainty is written out on the card."
+    evidence:
+      - source: pmid:36758521
+        quote: "All subjects were recruited at Bateman Horne Center, Salt Lake City, UT, based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria for ME/CFS (Carruthers, 2007)."
+    class: none
+  - decision_part: "The patient count changed from 154 to 149 (74 short-term, 75 long-term), 79 controls, with the abstract's 75 and 79 noted."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:36758521
+        quote: "We enrolled a total of 149 ME/CFS patients (of which 74 had been diagnosed with ME/CFS <4 years before recruitment and 75 had been diagnosed with ME/CFS >10 years before recruitment) and 79 healthy controls."
+      - source: pmid:36758521
+        quote: "two ME/CFS cohorts with short-term (<4 years, n = 75) or long-term disease (>10 years, n = 79) compared with healthy controls (n = 79)."
+    class: none
+  - decision_part: "The finding in level_reason[5] and the study entry: dysbiosis mainly in the shorter-ill group, less bacterial butyrate production and lower plasma isobutyrate in the shorter-ill group (replacing 'lower butyrate in blood')."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:36758521
+        quote: "Short-term patients showed significant microbial dysbiosis, while long-term patients had largely resolved microbial dysbiosis but had metabolic and clinical aberrations."
+      - source: pmid:36758521
+        quote: "Strikingly, we found a depletion in plasma isobutyrate in the short-term group (Figure 6A, p = 0.03, Wilcoxon rank-sum test with Bonferroni correction with over N=1278 metabolites) 66."
+      - source: pmid:36758521
+        quote: "indicated a significant decrease in butyrate biosynthetic capacity in the early stages of ME/CFS."
+    class: none
+  - decision_part: "The study keeps its context role and the card's level 3, badges, contested mark, layer and links are unchanged; the level rests on lower stool butyrate in two other cohorts, not on this study."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:41387992
+        quote: "After FDR adjustment, fecal levels of acetate, butyrate, isobutyrate, and isovalerate remained significantly lower in the CFS group (all q < 0.05)."
+      - source: pmid:36758522
+        quote: "Functional metagenomics, qPCR, and metabolomics of fecal short-chain fatty acids confirmed a deficient microbial capacity for butyrate synthesis."
+    class: none
+reasons_summary: "The correction of pmid:36758521 (149 patients, Fukuda recorded as the lower-ranked of the paper's two stated definitions, plasma isobutyrate in the short-term group) matches the full text; the card's level and marks are unchanged."
+would_change: "A correction or erratum to pmid:36758521 giving a different patient count or a single case definition (for example confirming that all patients met CCC and IOM 2015) would change the recorded definition; nothing in the cited records contradicts the corrected text."

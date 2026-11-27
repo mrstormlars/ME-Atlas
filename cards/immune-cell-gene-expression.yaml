@@ -147,11 +147,13 @@ level_reason:
   - text: >-
       A New Zealand study of 10 patients meeting the Canadian Consensus Criteria and 10 controls
       found 27 transcripts higher and 6 lower in patients, with the top ones related to
-      inflammation. Two UK studies using CDC criteria (version not named), which do not require
-      post-exertional malaise, found genes expressed differently: a microarray study of 25
-      patients and 25 controls, with 16 genes confirmed by PCR in fresh samples, and a study
-      that screened 25 patients and 50 blood donors by microarray and confirmed 88 genes by PCR
-      in 55 patients and 75 controls. The first read its pattern as T-cell activation.
+      inflammation. Two UK studies found genes expressed differently. The first used the Fukuda
+      criteria and the second used CDC criteria with the version not named; neither requires
+      post-exertional malaise. The first was a microarray study of 25 patients and 25 controls,
+      with 16 genes confirmed by PCR in a second sample from 17 of the patients and a different
+      group of 21 controls. The second screened 25 patients and 50 blood donors by microarray
+      and confirmed 88 genes by PCR in 55 patients and 75 controls. The first read its pattern
+      as T-cell activation.
     sources: ['pmid:30791746', 'pmid:16049284', 'pmid:18462164']
   - text: >-
       The card is at level 2. Each group found some genes expressed differently, but the genes
@@ -336,13 +338,9 @@ studies:
     journal: Journal of clinical pathology
     doi: 10.1136/jcp.2005.025718
     cohort: me_cfs
-    case_definition: CDC_unspecified
-    case_definition_source: abstract
-    case_definition_quote: >-
-      To gain further insight into the pathogenesis of this disease, gene expression was analysed in peripheral
-      blood mononuclear cells from 25 patients with CFS diagnosed according to the Centers for Disease Control
-      criteria and 25 normal blood donors matched for age, sex, and geographical location, using a single colour
-      microarray representing 9522 human genes.
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: All 25 patients with CFS were diagnosed according to the Centers for Disease Control criteria of Fukuda et al.
     design: controlled
     n_patients: 25
     n_controls: 25
@@ -351,9 +349,10 @@ studies:
     role: supports
     direction: mixed
     finding: >-
-      A study of n=25 patients and 25 matched blood donors found 35 PBMC genes expressed differently by
-      microarray, 16 confirmed by real-time PCR in fresh samples whose number the abstract does not give (15 up,
-      1 down), which the authors read as suggesting T cell activation.
+      A study of n=25 patients and 25 matched blood donors found 35 PBMC genes expressed
+      differently by microarray, 16 confirmed by real-time PCR in a second sample from 17 of the
+      patients and a different group of 21 controls (15 up, 1 down), which the authors read as
+      suggesting T cell activation.
     group: Kerr JR, London (first author at Imperial College London)
   - id: pmid:28172519
     title: RNA-Seq Analysis of Gene Expression, Viral Pathogen, and B-Cell/T-Cell Receptor Signatures in Complex Chronic Disease.
@@ -520,7 +519,7 @@ studies:
       enhanced innate antiviral responses.
     group: Wyller VB, Akershus University Hospital / University of Oslo
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-27
   by: ai_audit
 layer: dysfunction
 links:

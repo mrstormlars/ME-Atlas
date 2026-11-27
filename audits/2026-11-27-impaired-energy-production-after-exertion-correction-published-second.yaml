@@ -1,0 +1,31 @@
+card: impaired-energy-production-after-exertion
+decision: accept
+parts:
+  - decision_part: "The corrected level_reason[6]: the added sentences that the 84-patient study excluded participants who did not satisfy the maximum effort criteria for either test (4 controls), while ME/CFS participants who met the criteria on test 1 but not on test 2 because of heart rate and/or RER were not excluded. Both sentences match the study's full text, and the retained clause on perceived maximal effort matches the condition the authors set for keeping those patients."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:38965566
+        quote: "Data excluded from the final statistical analyses included participants who; 1) did not satisfy the maximum effort criteria explained previously for CPET-1 or CPET-2 (4 CTL)"
+      - source: pmid:38965566
+        quote: "ME/CFS participants who met maximum effort criteria during test 1 but did not meet criteria during test 2 due to failure to achieve heart rate and/or RER criteria were not excluded from analysis."
+      - source: pmid:38965566
+        quote: "we included ME/CFS participants who met maximum criteria for CPET-1, but not CPET-2, only if perception of effort also indicated a very strong/maximum effort (RPE = ≥ 17)."
+      - source: pmid:38965566
+        quote: "ME/CFS who did not meet heart rate or RER criteria during test 2 but did meet RPE criteria (perception of maximum effort) are emblematic of post-exertion symptom exacerbation that contributes to exertion intolerance."
+    class: none
+  - decision_part: "The unchanged rest of level_reason[6]: the fall in heart-rate reserve on the second test, the authors' reading that maximum effort was not given, and the similar fall in matched controls are all stated in the record."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:38965566
+        quote: "that fell below the threshold of 80%, suggesting that maximum effort was not given during CPET-2"
+      - source: pmid:38965566
+        quote: "Interestingly, a similar decline in %HRRadjusted during CPET-2 was observed in the matched-pairs CTL as well (p ≤ 0.05)."
+    class: none
+  - decision_part: "The correction changes only the text of one level_reason item. It changes no level, badge, contested mark, layer, link, study role, case definition or number, so level 3 and the contested mark on rung 3 stay as they are on the published card. The carrier of rung 2 is a controlled CCC study."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:38965566
+        quote: "Participants with ME/CFS (Canadian Criteria; n = 84) and sedentary controls (CTL; n = 71) completed two CPETs on a cycle ergometer separated by 24 h."
+    class: none
+reasons_summary: "The added sentence on how the 84-patient study handled maximal-effort exclusions in controls and patients matches the study's full text word for word in substance, and no level, badge, mark or link changes."
+would_change: "This decision would change if a correction, erratum or retraction of pmid:38965566 changed its exclusion counts or its rule for keeping ME/CFS participants who failed heart rate or RER criteria on test 2. It would also change if the card text came to leave out that those patients were kept only if they reported RPE of 17 or more. No drafting reasoning, review finding or earlier audit was handed to me."

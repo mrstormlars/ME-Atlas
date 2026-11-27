@@ -1,0 +1,67 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:22180650 changed from unverified to Fukuda, read from the full text, with the study's patients all having POTS."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:22180650
+        quote: "We enrolled 25 subjects diagnosed with CFS using the Fukuda criteria (22), which included some subjects from a prior investigation (40)."
+      - source: pmid:22180650
+        quote: "All CFS subjects were found to have POTS during a 70° head-up tilt table test performed on another day."
+    class: none
+  - decision_part: "The case definition of pmid:25277740 changed from unverified to CDC criteria, version not stated, read from the full text, and the description of its selected cohort (aged 15 to 29, recruited for neurocognitive impairment and hyperventilation or hypocapnia likely due to POTS)."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:25277740
+        quote: "CFS subjects were between 15 and 29 yr old and fulfilled CDC criteria for CFS (16)."
+      - source: pmid:25277740
+        quote: "We recruited CFS subjects with reported neurocognitive impairment and hyperventilation/hypocapnea (n = 15) likely due to their POTS and healthy control subjects (n = 11)."
+    class: none
+  - decision_part: "The direction of pmid:22180650 changed from lower to mixed, and its finding now says absolute blood flow velocity was slightly lower in patients but the changes with tilt did not differ between groups."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:22180650
+        quote: "Absolute mean CBFV was slightly less than in control subjects in CFS subject at each angle."
+      - source: pmid:22180650
+        quote: "There were, however, no differences in changes of CBFV at any angle."
+    class: none
+  - decision_part: "The level stays 2: the controlled Dutch study with a Fukuda-defined cohort supports the rung."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32140630
+        quote: "All patients met the Fukuda criteria for CFS, and 70% met the criteria for ME."
+      - source: pmid:32140630
+        quote: "End-tilt CBF reduction was 7% in HC versus 26% in the overall ME/CFS group"
+    class: none
+  - decision_part: "Level 3 is not reached: the 15-patient New York Medical College study is not counted as a replication, because it is very small, measured velocity rather than flow, and a larger study from the same laboratory with an equally ranked definition found no group difference in the change with tilt."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group; no preregistration; results that conflict with equally strong studies"
+    evidence:
+      - source: pmid:25277740
+        quote: "HUT caused CBFv to decrease 8.7% in control subjects but fell 22.5% in CFS."
+      - source: pmid:25277740
+        quote: "Changes in CBFv with phenylephrine may not represent changes in flow, as TCD measures CBFv rather than cerebral blood flow."
+      - source: pmid:22180650
+        quote: "Also, we found no differences in the changes of CBFV between groups during tilt"
+      - source: pmid:22180650
+        quote: "This is inconsistent with our earlier work in POTS subjects"
+      - source: pmid:32140630
+        quote: "Indirect CBF measurements (transcranial Doppler flow velocities), provide inconsistent support of this hypothesis."
+    class: none
+  - decision_part: "Level 4 is not reached: the phenylephrine comparison in pmid:25277740 is against an untreated tilt in the same patients, with a working-memory task as the outcome, and the rewording of this sentence is supported."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25277740
+        quote: "In CFS, phenylephrine prevented the HUT-induced hyperventilation/hypocapnia and the significant drop in CBFv with HUT (-8.1% vs. -22.5% untreated)."
+      - source: pmid:25277740
+        quote: "Phenylephrine significantly reduced the HUT-induced increase in nRT in CFS to levels similar to supine"
+    class: none
+  - decision_part: "The contested mark stays null: pmid:22180650 is now a verified, controlled, equally ranked study with no difference in the change with tilt, but its 25 patients are fewer than half of the 429 in the study that carries the level."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:22180650
+        quote: "Twenty-five CFS subjects and twenty control subjects underwent incremental upright tilt at 0, 15, 30, 45, 60, and 75° with continuous measurement of arterial blood pressure and cerebral blood flow velocity (CBFV)."
+      - source: pmid:32140630
+        quote: "429 ME/CFS patients were studied"
+    class: none
+reasons_summary: "Accept: the two New York Medical College case definitions (Fukuda, CDC unspecified) and the mixed direction of the 2012 study match their full texts, and level 2 with no contested mark still follows the rubric."
+would_change: "An independent controlled study with an accepted case definition that measures cerebral blood flow (not only velocity) on tilt and reproduces the larger fall would move the card towards level 3; a larger or equally sized comparable study that finds no larger fall in the change with tilt would raise the contested question. A different reading in which the 15-patient velocity study counts as a replication, contradicted by the 25-patient study from the same laboratory, would put level 3 with a contested mark in question; the records do not settle that against the held-back reading, so the conservative level stands. Statements resting on abstract-only carriers (pmid:12006954, pmid:12593133, pmid:7674527, pmid:16378795, pmid:11150109, pmid:19912315) were not changed by this correction and were not rechecked against full text."

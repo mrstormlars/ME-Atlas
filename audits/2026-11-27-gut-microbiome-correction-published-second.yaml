@@ -1,0 +1,37 @@
+card: gut-microbiome
+decision: accept
+parts:
+  - decision_part: "The corrected sample sizes of pmid:36758521 (n_patients 149, 74 short-term and 75 long-term, 79 controls) and the note that the abstract gives 75 and 79 for the patient groups, in level_reason[5] and the study finding."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:36758521
+        quote: "We enrolled a total of 149 ME/CFS patients (of which 74 had been diagnosed with ME/CFS <4 years before recruitment and 75 had been diagnosed with ME/CFS >10 years before recruitment) and 79 healthy controls."
+      - source: pmid:36758521
+        quote: "two ME/CFS cohorts with short-term (<4 years, n = 75) or long-term disease (>10 years, n = 79) compared with healthy controls (n = 79)."
+    class: none
+  - decision_part: "The corrected findings of pmid:36758521: gut bacterial differences mainly in the short-term group, less bacterial butyrate production, and lower plasma isobutyrate in the short-term group (replacing 'lower butyrate in blood')."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:36758521
+        quote: "Short-term patients showed significant microbial dysbiosis, while long-term patients had largely resolved microbial dysbiosis but had metabolic and clinical aberrations."
+      - source: pmid:36758521
+        quote: "including reduced microbial butyrate biosynthesis and a reduction in plasma butyrate, bile acids, and benzoate"
+      - source: pmid:36758521
+        quote: "Strikingly, we found a depletion in plasma isobutyrate in the short-term group"
+    class: none
+  - decision_part: "The case definition of pmid:36758521 changed from unverified to Fukuda (source fulltext, quoting the recruitment sentence), with the conflicting Participants sentence written out on the card and the lower-ranked definition recorded."
+    rubric: "A study is recorded with the definition its own text states. Another article's description is carried over only when a source says the patient group is the same. Comparability is judged by the recorded definition, and the uncertainty is written out on the card."
+    evidence:
+      - source: pmid:36758521
+        quote: "All subjects were recruited at Bateman Horne Center, Salt Lake City, UT, based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria for ME/CFS (Carruthers, 2007)."
+      - source: pmid:36758521
+        quote: "Enrolled ME/CFS participants were required to fulfill the International Chronic Fatigue Syndrome Study Group research criteria 79, the Canadian Consensus Criteria 80, and the IOM clinical diagnostic criteria 81."
+    class: none
+  - decision_part: "Recording Fukuda rather than CCC or IOM 2015 is the conservative reading of an and/or recruitment sentence, since Fukuda ranks below CCC and IOM 2015; the study keeps role context and the level, badges, contested mark, layer and links are unchanged."
+    rubric: "CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford"
+    evidence:
+      - source: pmid:36758521
+        quote: "All subjects were recruited at Bateman Horne Center, Salt Lake City, UT, based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria for ME/CFS (Carruthers, 2007)."
+    class: none
+reasons_summary: "The correction of the Xiong 2023 study (149 patients, 74 and 75, 79 controls; lower plasma isobutyrate in short-term patients; case definition Fukuda with the conflicting Participants sentence written out) matches its full text; nothing else on the card changes."
+would_change: "A source (for example a correction notice or supplementary table from the authors) showing that every patient met CCC or IOM 2015, or a different enrolled count, would change the recorded case definition or numbers; the study's role is context, so neither would move the level."

@@ -129,10 +129,18 @@ level_reason:
       antibody-producing plasma cells, 6 improved markedly and 4 had no significant change.
     sources: ['pmid:29543914', 'pmid:39759581', 'pmid:40703261']
   - text: >-
-      Against the antibody findings, a study of 172 participants, whose case definition is not
-      yet verified, measured antibodies against a large panel of human proteins and found no
-      significant differences between patients and controls, including against β-adrenergic
-      receptors.
+      Against the antibody findings, a study of 172 unique participants in two cohorts, whose
+      patients met the Canadian Consensus Criteria, measured antibodies against a large panel of
+      human proteins and found no significant differences between patients and controls,
+      including against β-adrenergic receptors. The REAP cohort had 95 patients and 69 controls,
+      and the Oncimmune/Augmenta Luminex panel cohort had 59 patients and 44 controls. Its REAP
+      library included adrenergic and muscarinic receptors; the authors report that they did not
+      detect antibody reactivity against these proteins, apart from one female ME/CFS subject
+      with reactivity against the fourth extracellular domain of ADRA2B. The authors also state
+      a limit of the method: the REAP library displays the extracellular domains of these
+      receptors separately, so they were not able to detect certain GPCR autoantibodies, for
+      example those that require contact with multiple epitopes on separate extracellular
+      domains for binding.
     sources: ['pmid:40141440']
   - text: >-
       Studies of B cells themselves are mixed. One study of 33 patients and 24 healthy controls
@@ -144,7 +152,31 @@ level_reason:
 # Contested: null (founder ruling 2026-11-01). Rung 4 settled by 30934066, so not reached. Rungs 2 and 3: no
 # contradicting study of comparable quality (42082542's null M3/M4 result is Fukuda, below 34589868's CCC; the
 # Stockholm cohort's null beta2 result is part of the rung-2 study, 24 patients < 29.5; 40141440 unverified, V9).
-contested: null
+contested:
+  rungs: [2]
+  reason:
+    - text: >-
+        A study of 172 unique participants, whose patients met the Canadian Consensus Criteria,
+        the same case definition as the Swedish study that level 2 rests on, included a control
+        group and a REAP cohort of 95 patients and 69 controls, and a Luminex panel cohort of 59
+        patients and 44 controls. Both cohorts have more patients than the 48 patients of the
+        Swedish study. It found no significant difference between patients and controls for
+        antibodies against β-adrenergic receptors; the authors write that this contrasts with
+        previous studies that reported elevated levels of ADRB2 in ME/CFS.
+      sources: ['pmid:40141440', 'pmid:34589868']
+    - text: >-
+        The methods differ: the Swedish study used the CellTrend ELISA, while this study used a
+        Luminex bead panel and REAP yeast display. Its REAP library included adrenergic and
+        muscarinic receptors, and the authors report no antibody reactivity against these
+        proteins apart from one female ME/CFS subject with reactivity against the fourth
+        extracellular domain of ADRA2B. The authors state that the REAP library displays the
+        extracellular domains separately, so they were not able to detect certain GPCR
+        autoantibodies, for example those that require contact with multiple epitopes on
+        separate extracellular domains for binding; the null result may therefore reflect what
+        the method can detect. The β-adrenergic no-difference result comes from the Luminex
+        panel cohort. The contest of level 2 rests on a single null study and has not been
+        repeated.
+      sources: ['pmid:40141440', 'pmid:34589868']
 badges:
   diagnostic_marker:
     value: false
@@ -423,21 +455,25 @@ studies:
     # HTTP 500. Patient/control split of the 172 participants not in the abstract, so n is null. Card-reviewer found a
     # CCC case-definition sentence in a non-cached copy; not used until cached. Founder told it may contest rungs 2
     # and 3 once cached and verified.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: CCC
+    case_definition_source: fulltext
+    case_definition_quote: The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis [31].
     design: controlled
-    n_patients: null
-    n_controls: null
+    n_patients: 95
+    n_controls: 69
     measures_pem: false
     preregistered: null
-    role: context  # would be `contradicts` once the case definition is verified (see header, decision 3)
+    role: contradicts
     direction: no_difference
     group: Hanson MR
     finding: >-
-      A study of 172 participants measuring antibodies against 6,183 extracellular human proteins and
-      a 1,134-antibody panel found no significant differences between patients and controls,
-      including against β-adrenergic receptors.
+      A study of 172 unique participants in two cohorts (REAP cohort: 95 patients and 69
+      controls; Oncimmune/Augmenta Luminex panel: 59 patients and 44 controls) measuring
+      antibodies against 6,183 extracellular human proteins and a 1,134-antibody panel found no
+      significant differences between patients and controls, including against β-adrenergic
+      receptors. The patients met the Canadian Consensus Criteria. The n given is the REAP
+      cohort, whose library included the adrenergic and muscarinic receptors; the β-adrenergic
+      result comes from the Luminex panel.
   - id: pmid:23480187
     title: Altered functional B cell subset populations in patients with chronic fatigue syndrome compared to healthy controls.
     year: 2013
@@ -636,5 +672,5 @@ links:
       in time is shown; it has not been repeated.
     sources: [pmid:42082542]
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-27
   by: ai_audit

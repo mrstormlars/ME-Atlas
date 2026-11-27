@@ -1,0 +1,144 @@
+card: tryptophan-kynurenine-metabolism
+card_sha256: 9084c55a7c41606e60134748942284bc46b8dbaed1ea257ddb90522f68d36baa
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:20384451].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states patients met the 1994 case definition for CFS; the card has the case definition as unverified.
+    Quote from the full text: Patients were eligible for study if they fulfilled the 1994 case definition
+    for CFS.2'
+- target: studies[pmid:20384451].n_patients
+  problem: 'The full-text scan found that the full text states something the card lacks: Table 1 gives
+    15 women and 7 men with CFS only and 8 women and 3 men with CFS+FM (33 patients); the card has null.
+    Quote from the full text: Female Male Female Male Female Male n 15 7 8 3 10 6'
+- target: studies[pmid:20384451].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: Table 1 gives
+    10 female and 6 male controls (16 controls); the card has null. Quote from the full text: Female Male
+    Female Male Female Male n 15 7 8 3 10 6'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 1 is an error on the card. The study is recorded with case_definition ''unverified''
+      and no quote, but the cached full text (data/cache/europepmc/PMC2875960.html, Methods, Subjects)
+      states: ''Patients were eligible for study if they fulfilled the 1994 case definition for CFS. 2'',
+      and its reference 2 is ''Fukuda K. Straus SE. Hickie I, et al. The chronic fatigue syndrome: A comprehensive
+      approach to its definition and study. Ann Intern Med. 1994;121:953-959.'' The study''s own text
+      therefore names the Fukuda 1994 definition.'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext and case_definition_quote to
+      'Patients were eligible for study if they fulfilled the 1994 case definition for CFS.' (the full
+      text cites Fukuda et al. 1994 as reference 2 for it); flag it on the card as 'does not require PEM'
+      as the rubric requires for Fukuda.
+    targets:
+    - studies[pmid:20384451].case_definition
+    - studies[pmid:20384451].case_definition_source
+    - studies[pmid:20384451].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 2 is an error on the card. n_patients is null, but Table 1 of the cached full
+      text (''Clinical Characteristics of Sample'', columns CFS only, CFS + FM, Controls, each Female/Male)
+      gives ''n 15 7 8 3 10 6'': 15 + 7 CFS only and 8 + 3 CFS + FM, 33 patients. The plasma tryptophan
+      and kynurenine analyses are run on these groups (''Plasma prolactin, tryptophan, and kynurenine
+      concentrations ... were each evaluated as a function of time, diagnostic group, and sex''); the
+      text reports no smaller subset for those measures.'
+    fix: Set n_patients to 33.
+    targets:
+    - studies[pmid:20384451].n_patients
+  - class: decisive
+    severity: must_fix
+    problem: Request item 3 is an error on the card. n_controls is null, but the same Table 1 row gives
+      10 female and 6 male controls, 16 controls.
+    fix: Set n_controls to 16.
+    targets:
+    - studies[pmid:20384451].n_controls
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[5] says the New Jersey study (pmid:20384451) is one of the studies that ''cannot
+      count towards the level because their case definition is not yet verified''. With the Fukuda definition
+      stated in its full text this is no longer true for that study. The paragraph now misstates why the
+      study is set aside. The full text reports ''no significant differences in the plasma concentrations
+      of tryptophan or its principal metabolite, kynurenine, between any group either at baseline or in
+      response to tryptophan infusion after groups were stratified by sex'', and baseline tryptophan ''did
+      not differ among study groups''. Against the rubric: Fukuda ranks below CCC, so this study (33 patients,
+      Fukuda) is not of comparable quality to the CCC studies the level rests on (Padova found lower kynurenine).
+      It does not set a contested mark, and it does not measure the kynurenic acid to kynurenine ratio
+      that the level 3 repeat rests on. The card should say this rather than call the definition unverified.'
+    fix: 'Remove pmid:20384451 and its clause from level_reason[5]. State it in its own sentence: a study
+      from New Jersey of 33 patients meeting the 1994 (Fukuda) definition, which does not require PEM,
+      and 16 healthy controls found no difference in plasma tryptophan or kynurenine at baseline or after
+      a tryptophan infusion. Its definition ranks below the Canadian criteria of the studies the level
+      rests on, and it did not report the kynurenic acid to kynurenine ratio, so it does not contest rung
+      3. Leave the level and contested mark unchanged.'
+    targets:
+    - level_reason[5]
+  - class: decisive
+    severity: must_fix
+    problem: 'The study''s finding says ''(numbers not stated in the abstract)''. The cached full text
+      gives the numbers (Table 1: 22 with CFS alone, 11 with CFS and fibromyalgia, 16 controls), so a
+      reader is told the size is unknown when the source states it. Correcting this adds numbers, so it
+      is decisive.'
+    fix: 'Replace the parenthesis with the full-text numbers: a study of n=33 patients (22 with CFS alone,
+      11 with CFS and fibromyalgia) and 16 healthy controls, keeping the quoted result ''Plasma tryptophan
+      and kynurenine concentrations did not differ among groups.'''
+    targets:
+    - studies[pmid:20384451].finding
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:20384451
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Patients were eligible for study if they fulfilled the 1994 case definition
+        for CFS.
+      n_patients: 33
+      n_controls: 16
+      finding: A study of n=33 patients (22 (= 15 + 7) with CFS alone, 11 (= 8 + 3) with CFS and fibromyalgia)
+        and 16 healthy controls found that "Plasma tryptophan and kynurenine concentrations did not differ
+        among groups."
+  - op: replace_paragraph
+    field: level_reason
+    index: 5
+    text: 'Several studies cannot count towards the level because their case definition is not yet verified.
+      They point in different directions: higher kynurenine with lower downstream products; a lower ratio
+      of kynurenic acid to quinolinic acid in 49 patients compared with 54 controls; higher free tryptophan
+      in 23 patients compared with 42 controls; and lower free tryptophan in patients in a study at the
+      University of Oxford (case definition not stated in the abstract). A study from New Jersey of 33
+      patients meeting the 1994 (Fukuda) definition, which does not require post-exertional malaise, and
+      16 healthy controls found no difference in plasma tryptophan or kynurenine. Its definition ranks
+      below the Canadian criteria of the studies the level rests on, and it did not report the ratio of
+      kynurenic acid to kynurenine, so it does not contest rung 3.'
+    sources:
+    - pmid:38015302
+    - pmid:34090138
+    - pmid:15982993
+    - pmid:11352361
+    - pmid:20384451
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings: []
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:20384451].case_definition differs
+  - studies[pmid:20384451].case_definition_source differs
+  - studies[pmid:20384451].case_definition_quote differs
+  - studies[pmid:20384451].n_patients differs
+  - studies[pmid:20384451].n_controls differs
+  - 'level_reason[5]: the numeral(s) 33, 1994, 16 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 1, which is classed decisive, not wording
+  - operations[0] answers finding 2, which is classed decisive, not wording
+  - operations[0] answers finding 4, which is classed decisive, not wording
+  - operations[1] answers finding 3, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-tryptophan-kynurenine-metabolism-correction-published.yaml
+- 2026-11-27-tryptophan-kynurenine-metabolism-correction-published-second.yaml
+outcome: published

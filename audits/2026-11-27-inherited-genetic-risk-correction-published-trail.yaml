@@ -1,0 +1,169 @@
+card: inherited-genetic-risk
+card_sha256: ebd9d68cfe7a84edc6abc4a9ae30508de9528bff7990ad1dc2e785f508846362
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:16049290].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: The card records the case
+    definition as unverified; the full text states the patients were diagnosed according to the CDC criteria.
+    Quote from the full text: Forty nine patients were diagnosed according to the CDC criteria for chronic
+    fatigue syndrome'
+- target: studies[pmid:16049290].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states the HLA-DQA1*01 association was not significant after correction for all 22 comparisons (p
+    = 0.04 with a less conservative per-locus correction); the card gives only the uncorrected p = 0.008.
+    Quote from the full text: If corrected for all 22 possible comparisons then significance was lost.'
+- target: level_reason[7]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[7] says this
+    study has no verified case definition; the full text states the CDC criteria were used. Quote from
+    the full text: Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue
+    syndrome'
+- target: studies[pmid:32210306].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: Full text says
+    four of the 426 patients were diagnosed with the 2010 International Consensus Criteria instead of
+    the Canadian criteria; the card names only CCC. Quote from the full text: All had been diagnosed in
+    Norway according to the 2003 Canadian Consensus Criteria2, except for four patients where the similarly
+    strict 2010 International Consensus Criteria3 were applied.'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:16049290 (Smith et al. 2005) as case_definition ''unverified'' with
+      no quote. The cached full text (data/cache/europepmc/PMC1770867.html, Materials and methods) states:
+      ''Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome.4'',
+      and its reference 4 is Fukuda K et al., ''The chronic fatigue syndrome: a comprehensive approach
+      to its definition and study'', Ann Intern Med 1994. The introduction also says ''Diagnosis is made
+      according to the symptom based CFS case definition of the Centers for Disease Control (CDC).4''.
+      A definition is stated, so ''unverified'' is wrong.'
+    fix: Set case_definition to Fukuda (the text cites the 1994 Fukuda definition for the CDC criteria;
+      CDC_unspecified would rank the same), case_definition_source to fulltext, and case_definition_quote
+      to 'Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome.'
+      Flag it as not requiring PEM. The role stays context, because the HLA-DQA1*01 finding has not been
+      repeated by an independent group, so the level is not affected.
+    targets:
+    - studies[pmid:16049290].case_definition
+    - studies[pmid:16049290].case_definition_source
+    - studies[pmid:16049290].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'The study finding gives only the uncorrected result for HLA-DQA1*01 (''51.0% against 35%,
+      OR 1.93, p = 0.008''), and level_reason[7] says the study ''found the HLA-DQA1*01 variant more often
+      in patients'' with no limit. The cached full text (PMC1770867.html, Discussion) states: ''The HLA-DRB1,
+      HLA-DQA1, and HLA-DQB1 associations need to be treated with caution because they have not been corrected
+      for multiple comparisons. If corrected for all 22 possible comparisons then significance was lost.
+      However, a less conservative approach of correcting for multiple comparisons at each multiallelic
+      locus ... suggests a possible association of HLA-DQA1*01 (p = 0.04) with CFS.'' This missing limit
+      changes how a reader reads the result.'
+    fix: In the finding and in level_reason[7], add that the p = 0.008 is uncorrected; that significance
+      was lost after correction for all 22 comparisons; and that with correction at each locus the authors
+      report a possible association (p = 0.04). Source it to the full text.
+    targets:
+    - studies[pmid:16049290].finding
+    - level_reason[7]
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[7] says of the two London HLA studies (pmid:16049290 and pmid:11422420): ''Neither
+      has a verified case definition.'' For pmid:16049290 this is wrong: its cached full text states ''Forty
+      nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome'' and cites
+      Fukuda 1994. For pmid:11422420 it still holds, because its cached abstract says only ''a well-characterized
+      patient group'' and no full text is cached.'
+    fix: Say that the first London study (49 patients) used the CDC criteria (Fukuda 1994, which does
+      not require post-exertional malaise), and that the second (58 patients) has no verified case definition.
+    targets:
+    - level_reason[7]
+  - class: decisive
+    severity: advisory
+    problem: 'level_reason[0] and links[0] describe pmid:32210306 as ''426 patients meeting the Canadian
+      Consensus Criteria'', which matches the abstract quote. The cached full text (PMC7093502.xml, Methods
+      and Results) is more exact: ''All had been diagnosed in Norway according to the 2003 Canadian Consensus
+      Criteria, except for four patients where the similarly strict 2010 International Consensus Criteria
+      were applied.'' The case_definition label CCC need not change: the card schema has no mixed label,
+      422 of 426 patients are CCC, and the rubric accepts ICC at every rung on the same footing as CCC.
+      So the level, the contested test and the independent-group test are unaffected. The sentences are
+      slightly imprecise. Correcting them would add a fact from the full text, so the class is decisive.'
+    fix: Optionally write '426 patients diagnosed with the Canadian Consensus Criteria (four of them with
+      the International Consensus Criteria)' in level_reason[0] and links[0], sourced to the full text,
+      and keep the CCC label.
+    targets:
+    - level_reason[0]
+    - links[0]
+    - studies[pmid:32210306].case_definition_quote
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:16049290
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Forty nine patients were diagnosed according to the CDC criteria for chronic
+        fatigue syndrome.
+      finding: A study of n=49 patients and 102 controls found HLA-DQA1*01 more often in patients (51.0%
+        against 35%, OR 1.93, p = 0.008, not corrected for multiple comparisons); the authors write that
+        significance was lost when correcting for all 22 possible comparisons, while correcting at each
+        locus suggested a possible association (p = 0.04).
+  - op: remove_comment
+    text: 'Criteria not named in the abstract; no open full text. TODO: verify.'
+  - op: replace_paragraph
+    field: level_reason
+    index: 7
+    text: Smaller studies of single candidate genes point in different directions. A London study of 49
+      patients and 102 controls found the HLA-DQA1*01 variant more often in patients (p = 0.008, not corrected
+      for multiple comparisons); the authors write that significance was lost when correcting for all
+      22 possible comparisons, while correcting at each locus suggested a possible association (p = 0.04).
+      Its patients were diagnosed with the CDC criteria (the 1994 Fukuda definition, which does not require
+      post-exertional malaise). The Oslo study could not test this variant because its controls were not
+      typed for it. Another London study of 58 patients and 134 controls found no HLA differences; it
+      has no verified case definition. A Brisbane study of 248 patients meeting CDC criteria and 248 controls
+      found only a trend (P = 0.07) for a cortisol-binding protein gene variant, and an Australian study
+      of 95 patients meeting the Fukuda definition and 77 controls found no variant that remained significant
+      after correction for testing many variants (lowest P = 0.059). These studies are small for genetic
+      association studies.
+    sources:
+    - pmid:16049290
+    - pmid:32210306
+    - pmid:11422420
+    - pmid:15554358
+    - pmid:27835969
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - severity: advisory
+      problem: 'The card header comment still says that `me_atlas.europepmc casedef` found no open full
+        text for 16049290, and the London overlap note is unchanged; after this correction the study''s
+        case definition is read from the cached full text (data/cache/europepmc/PMC1770867.html). Header
+        comments are not reader-facing content and a correction cannot remove them, so this changes nothing
+        a reader sees. For the record, per operation: operation 0 answers findings 0 and 1 (Fukuda label,
+        source fulltext, quote verbatim from Materials and methods with its footnote 4, which the cached
+        reference list gives as Fukuda K et al., Ann Intern Med 1994; the added limits quote the Discussion:
+        uncorrected, ''If corrected for all 22 possible comparisons then significance was lost'', per-locus
+        correction ''suggests a possible association of HLA-DQA1*01 (p = 0.04)''); operation 1 answers
+        finding 0 (removes the now-false ''no open full text'' TODO in the study block); operation 2 answers
+        findings 1 and 2 (adds the same limits to level_reason[7], states the CDC criteria with the rubric''s
+        ''does not require PEM'' flag for Fukuda, and keeps ''no verified case definition'' for 11422420
+        only). No new source is added, the level, contested mark, badges and the study''s context role
+        are unchanged, and the advisory finding 3 (ICC for four of the 426 Oslo patients) is left unanswered,
+        which is allowed. I was handed no drafter explanation.'
+      fix: When the card is next redrafted, update the header comment to say that 16049290's case definition
+        comes from the cached full text PMC1770867.
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:16049290].case_definition differs
+  - studies[pmid:16049290].case_definition_source differs
+  - studies[pmid:16049290].case_definition_quote differs
+  - 'level_reason[7]: the numeral(s) 0.008, 22, 0.04 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 1, which is classed decisive, not wording
+  - operations[1] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[2] answers finding 1, which is classed decisive, not wording
+  - operations[2] answers finding 2, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-inherited-genetic-risk-correction-published.yaml
+outcome: the first audit decided reject; no second audit was run (sequential audits)

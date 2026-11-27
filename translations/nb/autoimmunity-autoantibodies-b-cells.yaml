@@ -94,12 +94,18 @@ items:
     - pmid:40703261
     source_hash: 397bd7d4ec0871c8fb21b91999b17a45a7595bd5b219036ee3fc4a08ddfa5a8e
   level_reason[8]:
-    text: Mot antistofffunnene målte en studie med 172 deltakere, hvis diagnosekriterier ennå ikke er kontrollert, antistoffer
-      mot et stort panel av humane proteiner og fant ingen signifikante forskjeller mellom pasienter og kontroller, heller
-      ikke mot β-adrenerge reseptorer.
+    text: 'Mot antistofffunnene målte en studie med 172 unike deltakere i to kohorter, hvis pasienter oppfylte Canadian Consensus
+      Criteria, antistoffer mot et stort panel av humane proteiner og fant ingen signifikante forskjeller mellom pasienter
+      og kontroller, heller ikke mot β-adrenerge reseptorer. REAP-kohorten hadde 95 pasienter og 69 kontroller, og Oncimmune/Augmenta
+      Luminex-panelkohorten hadde 59 pasienter og 44 kontroller. REAP-biblioteket inneholdt adrenerge og muskarine reseptorer.
+      Forfatterne skriver at de ikke påviste antistoffreaktivitet mot disse proteinene, bortsett fra én kvinnelig ME/CFS-deltaker
+      med reaktivitet mot det fjerde ekstracellulære domenet til ADRA2B. Forfatterne oppgir også en begrensning ved metoden:
+      REAP-biblioteket viser de ekstracellulære domenene til disse reseptorene hver for seg, så de kunne ikke påvise enkelte
+      GPCR-autoantistoffer, for eksempel de som må ha kontakt med flere epitoper på separate ekstracellulære domener for å
+      binde.'
     sources:
     - pmid:40141440
-    source_hash: d4d8d88d118cc2e6ea79cb5f989a84b83f968b6192c754c1dfe22238c781ee1f
+    source_hash: da95124dcecaa6fd02102a7a5f72532e870bad8d99e9ea87291d62b93e89963b
   level_reason[9]:
     text: Studier av selve B-cellene gir blandede resultater. Én studie med 33 pasienter og 24 friske kontroller fant flere
       naive og transitional B-celler og færre plasmablaster hos pasientene; en annen, med en felles forfatter, fant ingen
@@ -109,6 +115,30 @@ items:
     - pmid:23480187
     - pmid:26646713
     source_hash: 58b01d77e819c2dc1c718e27e68112916587674a2261be6a3a408a1843dc7e96
+  contested_reason[0]:
+    text: En studie med 172 unike deltakere, hvis pasienter oppfylte Canadian Consensus Criteria, de samme diagnosekriteriene
+      som den svenske studien som nivå 2 bygger på, hadde en kontrollgruppe, en REAP-kohort med 95 pasienter og 69 kontroller
+      og en Luminex-panelkohort med 59 pasienter og 44 kontroller. Begge kohortene har flere pasienter enn de 48 pasientene
+      i den svenske studien. Den fant ingen signifikant forskjell mellom pasienter og kontroller for antistoffer mot β-adrenerge
+      reseptorer; forfatterne skriver at dette står i kontrast til tidligere studier som rapporterte forhøyede nivåer av ADRB2
+      ved ME/CFS.
+    sources:
+    - pmid:40141440
+    - pmid:34589868
+    source_hash: fb24e8a9e17cae57593c2034391f94650f594290a97f1f70aaa1d50edc3d2f56
+  contested_reason[1]:
+    text: 'Metodene er ulike: den svenske studien brukte CellTrend ELISA, mens denne studien brukte et Luminex-panel med kuler
+      og REAP yeast display. REAP-biblioteket inneholdt adrenerge og muskarine reseptorer, og forfatterne rapporterer ingen
+      antistoffreaktivitet mot disse proteinene, bortsett fra én kvinnelig ME/CFS-deltaker med reaktivitet mot det fjerde
+      ekstracellulære domenet til ADRA2B. Forfatterne oppgir at REAP-biblioteket viser de ekstracellulære domenene hver for
+      seg, så de kunne ikke påvise enkelte GPCR-autoantistoffer, for eksempel de som må ha kontakt med flere epitoper på separate
+      ekstracellulære domener for å binde; nullresultatet kan derfor gjenspeile hva metoden kan påvise. Resultatet uten forskjell
+      for β-adrenerge reseptorer kommer fra Luminex-panelkohorten. Det at nivå 2 er omstridt, hviler på én enkelt studie uten
+      funn, og er ikke gjentatt.'
+    sources:
+    - pmid:40141440
+    - pmid:34589868
+    source_hash: a1bcbcaf0e129d631eec1d83c971faedabbf8d7471f4d20c1a4f53d5e2af5e68
   badge_reasons.diagnostic_marker[0]:
     text: 'Nivåer av reseptorantistoffer er sammenlignet med kontroller i separate kohorter, med blandede resultater, og ingen
       studie på dette kortet har validert en grenseverdi i en andre, uavhengig pasientgruppe. I den svenske studien hadde
@@ -226,9 +256,12 @@ items:
       % av pasientene, med en radioligandtest.
     source_hash: 6ac592248ad87e16308be628fede29f19e10ee5aa732203e1b05d2864105dd59
   studies[pmid:40141440].finding:
-    text: En studie med 172 deltakere som målte antistoffer mot 6 183 ekstracellulære humane proteiner og et panel med 1 134
-      antistoffer fant ingen signifikante forskjeller mellom pasienter og kontroller, heller ikke mot β-adrenerge reseptorer.
-    source_hash: 10531066c57e522e152d88841588254c2124ed15bf666e3aafda9f672a252e07
+    text: 'En studie med 172 unike deltakere i to kohorter (REAP-kohort: 95 pasienter og 69 kontroller; Oncimmune/Augmenta
+      Luminex-panel: 59 pasienter og 44 kontroller) som målte antistoffer mot 6 183 ekstracellulære humane proteiner og et
+      panel med 1 134 antistoffer, fant ingen signifikante forskjeller mellom pasienter og kontroller, heller ikke mot β-adrenerge
+      reseptorer. Pasientene oppfylte Canadian Consensus Criteria. Det oppgitte n er REAP-kohorten, hvis bibliotek inneholdt
+      de adrenerge og muskarine reseptorene; resultatet for β-adrenerge reseptorer kommer fra Luminex-panelet.'
+    source_hash: 77c0c07dea4c47b427f05a440cdae3eb22b546fc6588b7a4e14f308ac9ef587b
   studies[pmid:23480187].finding:
     text: En studie med n=33 pasienter og 24 friske kontroller fant flere naive og transitional B-celler og færre plasmablaster
       hos pasientene.

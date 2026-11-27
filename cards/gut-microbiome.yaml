@@ -89,13 +89,18 @@ level_reason:
     sources: ['pmid:27338587', 'pmid:41387992', 'pmid:41006438', 'pmid:36758522', 'pmid:42351611']
   - text: >-
       Other studies report different bacteria. A study of Norwegian and Belgian patients (case
-      definition not yet verified) found more Alistipes in Norwegian patients, while the Chinese study
-      found Alistipes lower; its text says the fall did not survive correction for multiple testing,
-      while its Fig. 4 lists Alistipes among taxa that differed after correction. A study of 75 patients ill for under
-      4 years and 79 ill for over 10 years (case definition not yet verified) found clear differences
-      in gut bacteria mainly in the shorter-ill group, and reported less bacterial butyrate production
-      and lower butyrate in blood.
-    sources: [pmid:23791918, pmid:41387992, pmid:36758521]
+      definition not yet verified) found more Alistipes in Norwegian patients, while the Chinese
+      study found Alistipes lower; its text says the fall did not survive correction for
+      multiple testing, while its Fig. 4 lists Alistipes among taxa that differed after
+      correction. A study of 149 patients, 74 ill for under 4 years and 75 ill for over 10 years
+      (the abstract gives 75 and 79), and 79 healthy controls found clear differences in gut
+      bacteria mainly in the shorter-ill group, and reported less bacterial butyrate production
+      and lower plasma isobutyrate in the shorter-ill group. Its recruitment sentence names the
+      Fukuda and/or Canadian criteria, while its Participants section says patients had to meet
+      the International Chronic Fatigue Syndrome Study Group research criteria, the Canadian
+      Consensus Criteria and the IOM clinical diagnostic criteria; the card records Fukuda, the
+      lower-ranked definition.
+    sources: ['pmid:23791918', 'pmid:41387992', 'pmid:36758521']
   - text: >-
       Blood markers of bacterial products crossing the gut wall give mixed results. The Cornell
       study found higher LPS (a bacterial toxin), LPS-binding protein and soluble CD14 in
@@ -431,11 +436,11 @@ studies:
     journal: Cell host & microbe
     doi: 10.1016/j.chom.2023.01.001
     cohort: me_cfs
-    case_definition: unverified  # TODO: verify — abstract names no case definition; PMC copy is not open access
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: All subjects were recruited at Bateman Horne Center, Salt Lake City, UT, based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria for ME/CFS (Carruthers, 2007).
     design: controlled
-    n_patients: 154  # derived: 75 short-term + 79 long-term (abstract)
+    n_patients: 149
     n_controls: 79
     measures_pem: false
     preregistered: null
@@ -443,9 +448,14 @@ studies:
     direction: mixed  # dysbiosis in short-term patients, largely resolved in long-term patients
     group: Oh J, The Jackson Laboratory, Farmington, USA (Bateman L and Vernon SD also on 36758522)
     finding: >-
-      A study of 75 patients ill for under 4 years, 79 ill for over 10 years and 79 healthy controls
-      found clear differences in gut bacteria mainly in the shorter-ill patients, and reported less
-      bacterial butyrate production and lower blood butyrate.
+      A study of 149 patients (74 ill for under 4 years and 75 ill for over 10 years; the
+      abstract gives 75 and 79 for the two patient groups) and 79 healthy controls found clear
+      differences in gut bacteria mainly in the shorter-ill patients, and reported less
+      bacterial butyrate production and lower plasma isobutyrate in the shorter-ill group. The
+      paper's recruitment sentence says patients met the Fukuda and/or Canadian criteria, while
+      its Participants section says they were required to fulfil the International Chronic
+      Fatigue Syndrome Study Group research criteria, the Canadian Consensus Criteria and the
+      IOM clinical diagnostic criteria; the card records the lower-ranked Fukuda.
   - id: pmid:23791918
     title: High-throughput 16S rRNA gene sequencing reveals alterations of intestinal microbiota in myalgic encephalomyelitis/chronic fatigue syndrome patients.
     year: 2013
@@ -656,5 +666,5 @@ links:
       review is a study in patients.
     sources: ['pmid:41516296', 'pmid:31330791']
 last_checked:
-  date: 2026-11-16
+  date: 2026-11-27
   by: ai_audit

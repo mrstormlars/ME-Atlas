@@ -1,0 +1,89 @@
+card: impaired-energy-production-after-exertion
+card_sha256: 5320ff89af583269e2ad2579a6f5f98a085928c3e0827a41f74ef4098a7036c5
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:30871578].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: Patients met any one of
+    Fukuda, CCC or ICC; the full text does not say which criteria each patient met, while the card records
+    Fukuda alone. Quote from the full text: ME/CFS patients had to have been previously diagnosed with
+    ME/CFS based on one of three widely accepted diagnostic criteria: (1) 1994 Centers For Disease Control
+    and Prevention (CDC 1994—also known as the ‘Fukuda’ criteria [1]), (2) 2003 ‘Canadian’ Consensus Criteria
+    (CCC) [3], or (3) 2011 International Consensus Criteria (ICC) [7].'
+- target: level_reason[6]
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    says 4 controls were excluded for not meeting maximum-effort criteria on either test, while patients
+    who failed them on test 2 were kept; the card paragraph does not mention the control exclusion. Quote
+    from the full text: did not satisfy the maximum effort criteria explained previously for CPET-1 or
+    CPET-2 (4 CTL)'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[6] says the 84-patient study (pmid:38965566) kept patients who met maximal-effort
+      criteria on the first test but not on the second, and it treats that as the study''s handling of
+      effort. It leaves out that the same study handled controls differently. The cached full text (PMC11229500,
+      Results, Participants) excludes participants who ''did not satisfy the maximum effort criteria explained
+      previously for CPET-1 or CPET-2 (4 CTL)''. It then states: ''ME/CFS participants who met maximum
+      effort criteria during test 1 but did not meet criteria during test 2 due to failure to achieve
+      heart rate and/or RER criteria were not excluded from analysis.'' So controls who failed effort
+      criteria on either test were removed, while patients who failed them on test 2 were kept. This paragraph
+      is about whether the day-2 fall reflects lower effort, the point the New York study raises (level_reason[5]).
+      Rung 2 rests on this study alone. Without the uneven handling, a reader cannot judge that limit.'
+    fix: Add to level_reason[6], sourced to pmid:38965566, that the study excluded 4 controls who did
+      not meet maximum-effort criteria on either test, while patients who met the criteria on the first
+      test but not the second were kept. Use the full text's own numbers and wording. Change nothing else
+      in the paragraph.
+    targets:
+    - level_reason[6]
+rounds:
+- round: 1
+  operations:
+  - op: replace_paragraph
+    field: level_reason
+    index: 6
+    text: 'The 84-patient study kept patients who met maximal-effort criteria on the first test but not
+      on the second, and its authors read those who still reached perceived maximal effort on the second
+      test as emblematic of post-exertion symptom exacerbation. It handled controls differently: it excluded
+      participants who did not satisfy the maximum effort criteria for CPET-1 or CPET-2 (4 controls),
+      while ME/CFS participants who met the criteria on test 1 but not on test 2 because of failure to
+      reach the heart rate and/or RER criteria were not excluded from analysis. Its own results show a
+      fall in heart-rate reserve on the second test, which its authors write suggests that maximum effort
+      was not given; they report a similar fall in the matched controls.'
+    sources:
+    - pmid:38965566
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: wording
+      target: level_reason[6]
+      operation: 0
+      severity: advisory
+      problem: 'Operation 0 answers finding 0 of the review of the published card (targets level_reason[6]).
+        The added sentence matches the cached full text of pmid:38965566 (PMC11229500, Results, Participants):
+        exclusion 1 ''did not satisfy the maximum effort criteria explained previously for CPET-1 or CPET-2
+        (4 CTL)'' and ''ME/CFS participants who met maximum effort criteria during test 1 but did not
+        meet criteria during test 2 due to failure to achieve heart rate and/or RER criteria were not
+        excluded from analysis.'' The number 4 and the wording come from the full text of a flagged study,
+        as this full-text-scan request allows. But the paragraph''s first sentence already says patients
+        who met the criteria on the first test but not the second were kept, so the second half of the
+        new sentence says it again. The sentence also uses the paper''s labels (CPET-1, CPET-2, RER),
+        which the card does not explain; elsewhere the card says ''first test'' and ''second test''.'
+      fix: 'Optionally shorten it to: ''It handled controls differently: the 4 controls who did not meet
+        maximum-effort criteria on either test were excluded.'' Keep the source as pmid:38965566.'
+      targets:
+      - level_reason[6]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - 'level_reason[6]: the numeral(s) 4, 1, 2 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-impaired-energy-production-after-exertion-correction-published.yaml
+- 2026-11-27-impaired-energy-production-after-exertion-correction-published-second.yaml
+outcome: published

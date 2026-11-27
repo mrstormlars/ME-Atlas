@@ -1,0 +1,31 @@
+card: inherited-genetic-risk
+decision: reject
+parts:
+  - decision_part: "The case definition of pmid:16049290 changed from unverified to Fukuda, and the sentence in level_reason[7] 'Its patients were diagnosed with the CDC criteria (the 1994 Fukuda definition, which does not require post-exertional malaise)': the study's own text names the CDC criteria without a version or year (the reference it cites is not in the record), so the 1994 Fukuda version cannot be read from the record; the rubric's row for CDC criteria with no stated version applies (CDC_unspecified, as the card records for the other CDC-criteria studies), not Fukuda."
+    rubric: "A study is recorded with the definition its own text states. Another article's description is carried over only when a source says the patient group is the same."
+    evidence:
+      - source: pmid:16049290
+        quote: "Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome."
+      - source: pmid:16049290
+        quote: "Diagnosis is made according to the symptom based CFS case definition of the Centers for Disease Control (CDC)."
+      - source: pmid:16049290
+        quote: "We HLA typed patients who fulfilled the CDC criteria for CFS and compared the results with those for healthy controls."
+    class: decisive
+  - decision_part: "The rubric row that governs a study naming the CDC criteria without a version: it is accepted and flagged as not requiring PEM, but recorded as CDC criteria with the version not stated, so the Fukuda coding and the '1994 Fukuda definition' wording overstate what the record shows."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:16049290
+        quote: "Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome."
+    class: decisive
+  - decision_part: "The added statistics for the London HLA-DQA1*01 finding (p = 0.008 not corrected for multiple comparisons; significance lost when correcting for all 22 comparisons; p = 0.04 when correcting at each locus) in level_reason[7] and studies[pmid:16049290].finding match the full text."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:16049290
+        quote: "Analysis by 2 × 2 contingency tables revealed an increased frequency of HLA-DQA1*01 in patients with CFS (51.0% v 35%; OR, 1.93; 95% CI, 1.2 to 3.3; p = 0.008)."
+      - source: pmid:16049290
+        quote: "The HLA-DRB1, HLA-DQA1, and HLA-DQB1 associations need to be treated with caution because they have not been corrected for multiple comparisons. If corrected for all 22 possible comparisons then significance was lost."
+      - source: pmid:16049290
+        quote: "suggests a possible association of HLA-DQA1*01 (p = 0.04) with CFS."
+    class: none
+reasons_summary: "Rejected: the London HLA study (pmid:16049290) names only 'the CDC criteria' with no version, so recording it as Fukuda and calling it the 1994 Fukuda definition goes beyond the record; the added p-values are correct."
+would_change: "A correction that records pmid:16049290 as CDC criteria, version not stated (quoting the sentence that names the CDC criteria, flagged as not requiring PEM) and drops the '1994 Fukuda definition' wording would be supported by the record; alternatively, a record in which the study's own text names the 1994 Fukuda definition. The cited reference 4 of the paper is not in the record, so its identity cannot be used."

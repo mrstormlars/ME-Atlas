@@ -32,17 +32,18 @@ items:
     - pmid:39621903
     source_hash: c0d05a5a5aa52e6527ba1193f28f189565e1fc676cd4f0a6403d77e522207982
   level_reason[2]:
-    text: 'En newzealandsk studie av 10 pasienter som oppfylte Canadian Consensus Criteria og 10 kontroller fant 27 transkripter
-      høyere og 6 lavere hos pasientene, og de fremste var knyttet til betennelse. To britiske studier som brukte CDC-kriteriene
-      (versjon ikke oppgitt), som ikke krever PEM, fant gener med ulikt uttrykk: en mikroarray-studie av 25 pasienter og 25
-      kontroller, der 16 gener ble bekreftet med PCR i ferske prøver, og en studie som screenet 25 pasienter og 50 blodgivere
-      med mikroarray og bekreftet 88 gener med PCR hos 55 pasienter og 75 kontroller. Den første tolket mønsteret sitt som
-      T-celleaktivering.'
+    text: En newzealandsk studie av 10 pasienter som oppfylte Canadian Consensus Criteria og 10 kontroller fant 27 transkripter
+      høyere og 6 lavere hos pasientene, og de fremste var knyttet til betennelse. To britiske studier fant gener med ulikt
+      uttrykk. Den første brukte Fukuda-kriteriene, og den andre brukte CDC-kriteriene, uten at versjonen er oppgitt. Ingen
+      av dem krever PEM. Den første var en mikroarray-studie av 25 pasienter og 25 kontroller, der 16 gener ble bekreftet
+      med PCR i en andre prøve fra 17 av pasientene og en annen gruppe på 21 kontroller. Den andre screenet 25 pasienter og
+      50 blodgivere med mikroarray og bekreftet 88 gener med PCR hos 55 pasienter og 75 kontroller. Den første tolket mønsteret
+      sitt som T-celleaktivering.
     sources:
     - pmid:30791746
     - pmid:16049284
     - pmid:18462164
-    source_hash: ebf33ccb1299d90ff2ec9e565e217da8e9ed9bb57cbca932514baaad634a7217
+    source_hash: 8cd52c8d2dffe82ee4c6edc05cadaea6d9f1b195eb828541e26d5bc9e81f960b
   level_reason[3]:
     text: 'Kortet er på nivå 2. Hver gruppe fant noen gener med ulikt uttrykk, men genene og signalveiene er forskjellige
       fra studie til studie: T-celleaktivering, betennelse, lavere interferon- og immunglobulingener, og T-celleutmattelse.
@@ -157,10 +158,10 @@ items:
       med kvantitativ PCR, bekreftet ulikt uttrykk av 88 gener (85 opp, 3 ned) og fant 7 undertyper av pasienter.
     source_hash: 6e9db510cc6b9b56e06955120faacba4aa6fdb17694060d93c23ecf31d5fce56
   studies[pmid:16049284].finding:
-    text: En studie av n=25 pasienter og 25 matchede blodgivere fant 35 PBMC-gener med ulikt uttrykk ved microarray, og 16
-      ble bekreftet med sanntids-PCR i et antall ferske prøver som sammendraget ikke oppgir (15 opp, 1 ned); forfatterne tolket
-      dette som at det tyder på T-celleaktivering.
-    source_hash: 43d746ca56bed451262f553f71d38a500168ce26af01575b3ef9b73508b59c44
+    text: En studie av n=25 pasienter og 25 matchede blodgivere fant 35 PBMC-gener med ulikt uttrykk ved mikroarray. 16 ble
+      bekreftet med sanntids-PCR i en andre prøve fra 17 av pasientene og en annen gruppe på 21 kontroller (15 opp, 1 ned).
+      Forfatterne tolket dette som at det tyder på T-celleaktivering.
+    source_hash: 8cd60c377e5e00c244be20f3c4d45397f79d48379535bb2a6b93dc6c52dbd6b2
   studies[pmid:28172519].finding:
     text: En blindet RNA-seq-studie av fullblod fra n=25 CFS-pasienter og 25 matchede kontroller, tatt utenfor oppbluss av
       symptomer, fant ingen gener med signifikant ulikt uttrykk og ingen forskjell i repertoarene av B-cellereseptorer eller

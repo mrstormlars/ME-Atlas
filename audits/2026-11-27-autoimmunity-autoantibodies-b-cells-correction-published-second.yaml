@@ -1,0 +1,62 @@
+card: autoimmunity-autoantibodies-b-cells
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:40141440 changed from unverified to CCC, read from the study's own full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:40141440
+        quote: "The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis [31]."
+    class: none
+  - decision_part: "The counts of pmid:40141440 (172 unique participants; REAP cohort 95 patients and 69 controls; Luminex panel cohort 59 patients and 44 controls) and its design as a controlled study."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:40141440
+        quote: "Our study included a total of 172 unique participants, divided into two cohorts with approximately 92% overlap."
+      - source: pmid:40141440
+        quote: "Cohort (n) 59 44 NA 95 69 NA"
+      - source: pmid:40141440
+        quote: "covering both ME/CFS patients and age- and sex-matched healthy controls"
+  - decision_part: "The finding that level 2 rests on: the Swedish controlled study of 48 patients meeting CCC, ICC and IOM, with higher M3 and M4 antibodies in both cohorts and beta1 and beta2 in one, measured by the CellTrend ELISA."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "All patients at both Stora Skondal and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM criteria"
+      - source: pmid:34589868
+        quote: "In total, 48 patients were included, 24 from each clinic respectively, making up two independent cohorts."
+      - source: pmid:34589868
+        quote: "Significant increases in autoantibody levels in ME patients compared to controls were found for M3 and M4 -receptors in both cohorts and β1, β2, M3 and M4-receptors in one cohort."
+      - source: pmid:34589868
+        quote: "Method visualization of the CellTrend ELISA technique used to quantify sample autoantibody levels."
+    class: none
+  - decision_part: "The contested mark on rung 2 and the role of pmid:40141440 changed from context to contradicts: the study contradicts the receptor antibody finding and meets all three comparable-quality conditions (CCC, the same rank as the Swedish study's definition; a control group; 59 and 95 patients in the measurements against 48, or 24 per cohort, in the Swedish study)."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:40141440
+        quote: "The Oncimmune/Augmenta technique included ADRB2 (β2-adrenergic receptor)"
+      - source: pmid:40141440
+        quote: "The corresponding p-values and q-values indicate no significant difference between patients and controls, contrasting with previous studies that reported elevated levels of ADRB2 in ME/CFS [18,19]."
+      - source: pmid:40141440
+        quote: "Despite being part of our analysis, we did not detect AAb reactivity against these proteins, apart from one female ME/CFS subject with REAP reactivity against the fourth ECD of ADRA2B."
+      - source: pmid:40141440
+        quote: "Nevertheless, although we were not able to replicate previously published findings showing elevated GPCR AAb in ME/CFS patients"
+    class: none
+  - decision_part: "The contested reason and the level_reason paragraph on the methods: Luminex bead panel and REAP yeast display against the CellTrend ELISA, and the authors' stated limit of REAP for antibodies that need several extracellular domains."
+    rubric: "with the contradicting study linked on the card and the reason written in plain sentences"
+    evidence:
+      - source: pmid:40141440
+        quote: "a 1134 autoantibody Luminex panel from Oncimmune and Augmenta Bioworks"
+      - source: pmid:40141440
+        quote: "is a yeast display library platform"
+      - source: pmid:40141440
+        quote: "Indeed, the REAP library displays GPCR extracellular domains (ECDs) separately, and therefore, we are not able to detect certain GPCR autoantibodies; for example, we were not able to detect those that require contact with multiple epitopes on separate ECDs for binding."
+    class: none
+  - decision_part: "The level stays 2, with rung 2 contested rather than lowered."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "Significant increases in autoantibody levels in ME patients compared to controls were found for M3 and M4 -receptors in both cohorts and β1, β2, M3 and M4-receptors in one cohort."
+      - source: pmid:40141440
+        quote: "Unlike earlier reports, our analysis of 172 participants revealed no significant differences in autoantibody reactivities between ME/CFS patients and controls, including against GPCRs such as β-adrenergic receptors."
+    class: none
+reasons_summary: "Correction accepted: the full text of pmid:40141440 shows CCC patients, a control group and 59 and 95 patients, so it meets the comparable-quality bar and supports contesting level 2."
+would_change: "A record showing that the patients of pmid:40141440 did not meet CCC, or that the beta2 comparison involved fewer than 24 patients, would remove the contested mark. A further controlled study in a CCC, ICC or IOM cohort that settles the receptor antibody finding would end it. One clause is supported only by the card's own set of studies: the closing sentence of contested.reason[1] says the contest 'has not been repeated', but pmid:40141440 cites other studies (refs 19 and 47) that found no significant differences. No other null study is on the card, so this does not change the decision; a reviewer may still want to reword the clause."

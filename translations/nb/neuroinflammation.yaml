@@ -22,14 +22,16 @@ items:
     - pmid:42227214
     source_hash: 54052f3b3536d9eabb2243d2c6c99be5646b2595ab075260f92722270bd41bd3
   level_reason[1]:
-    text: 'Mindre bildestudier med diagnosekriterier som ikke er kontrollert ennå, peker i samme retning: en PET-studie av
-      9 pasienter fant høyere binding av en markør for aktiverte mikroglia eller astrocytter, og en MR-spektroskopistudie
-      av 15 pasienter fant høyere temperatur i hjernen i flere områder og et høyere kolin/kreatin-forhold i venstre fremre
-      cingulære cortex.'
+    text: To mindre bildestudier peker i samme retning. En PET-studie av 9 pasienter, med diagnosekriterier som ikke er kontrollert
+      ennå, fant høyere binding av en markør for aktiverte mikroglia eller astrocytter. En MR-spektroskopistudie av hele hjernen
+      med 15 kvinner som oppfylte Fukuda-kriteriene og 15 matchede kontroller fant et høyere kolin/kreatin-forhold i venstre
+      fremre cingulære cortex. Det var det eneste resultatet som holdt seg etter korreksjon for flere sammenligninger. Den
+      høyere temperaturen i hjernen i flere områder holdt seg ikke etter denne korreksjonen, og forfatterne advarer mot å
+      tolke resultatene for langt før de er bekreftet i et uavhengig utvalg.
     sources:
     - pmid:24665088
     - pmid:30617782
-    source_hash: 98eed7b3ca29be2baeaa33507f740a0bc4537a991a5a88580c3740183b725a6c
+    source_hash: b60ec00b30e9889b2ff6251f40cb1f1e5e32a67de93c9eb6ebb0794258f3e323
   level_reason[2]:
     text: En PET-studie av 9 pasienter diagnostisert etter Fukuda-kriteriene, med det samme sporstoffet som den tidligere
       PET-studien av 9 pasienter, fant ingen statistisk signifikant forskjell fra 9 friske kontroller.
@@ -56,25 +58,26 @@ items:
     source_hash: d2388c5161fcd861bdc60d2fb73980763bc640bf6031558be5f2609d4badf463
   badge_reasons.diagnostic_marker[0]:
     text: Én studie foreslo diffusjonsindekser som mulige markører for nevroinflammasjon, men verken sammendragene eller de
-      tre åpne fulltekstene rapporterer at en slik markør er testet i en andre, uavhengig pasientgruppe.
+      fire åpne fulltekstene rapporterer at en slik markør er testet i en andre, uavhengig pasientgruppe.
     sources:
     - pmid:41834684
-    source_hash: f6aa779cc415723c38096c3c3d8cade3c932c53cc6ccce1f194626caaa2e1648
+    - pmid:30617782
+    source_hash: 913de1e4cece2aab06493fd8898635e5c1aa20a17152c04e26fabef085c2678b
   badge_reasons.explains_pem[0]:
-    text: De tre studiene med åpen fulltekst rapporterer ikke noe direkte mål på PEM, verken i sammendragene eller i fulltekstene
+    text: De fire studiene med åpen fulltekst rapporterer ikke noe direkte mål på PEM, verken i sammendragene eller i fulltekstene
       som er kontrollert.
     sources:
     - pmid:34815320
     - pmid:41834684
     - pmid:34609538
-    source_hash: c2b807bc0091825bdafee464e3cdc1ca7cc302317f866dac91fb3bd2711cb107
+    - pmid:30617782
+    source_hash: bd78ce736f46eaf5f1d375d7ea1d27e4cf544856a696690f5acef8a61a97899b
   badge_reasons.explains_pem[1]:
-    text: De tre andre studiene rapporterer ikke noe direkte mål på PEM i sammendragene; ingen åpen fulltekst var tilgjengelig.
+    text: De to andre studiene rapporterer ikke noe direkte mål på PEM i sammendragene. Ingen åpen fulltekst var tilgjengelig.
     sources:
     - pmid:24665088
-    - pmid:30617782
     - pmid:12598734
-    source_hash: 0f8390efaf77cfa08fd778542745626f2051bea2cb71dffa5f356c8af5a85af3
+    source_hash: 413388b2be5d4ba4a705acf2dea0193454b73fb0aad110907cb3c19660b950be
   links[0]:
     text: En PET-studie med n=9 pasienter og 10 friske kontroller, der diagnosekriteriene ikke er verifisert, fant at bindingen
       av en markør for aktiverte mikroglia eller astrocytter i noen hjerneområder samvarierte med skårer for kognitiv svikt.
@@ -112,9 +115,11 @@ items:
   studies[pmid:30617782].finding:
     text: En studie av n=15 kvinner med ME/CFS og 15 friske kontroller matchet på alder og kjønn, med MR-spektroskopi av hele
       hjernen, fant forskjeller i stoffskiftestoffer i flere områder, mest tydelig et høyere kolin/kreatin-forhold i venstre
-      fremre cingulære cortex, og høyere temperatur i hjernen i høyre insula, putamen, frontal cortex, thalamus og lillehjernen;
-      forfatterne skriver at funnene kan tyde på nevroinflammasjon.
-    source_hash: c9451c642369765107a58db53e513cc4ba5d1e158cb90c879c26a613ab676531
+      fremre cingulære cortex, og høyere temperatur i hjernen i høyre insula, putamen, frontal cortex, thalamus og lillehjernen.
+      Bare det høyere kolin/kreatin-forholdet i venstre fremre cingulære cortex holdt seg etter korreksjon for flere sammenligninger.
+      Forskjellene i temperatur i hjernen holdt seg ikke. Forfatterne skriver at funnene kan tyde på nevroinflammasjon, og
+      advarer mot å tolke resultatene for langt før de kan bekreftes i et uavhengig utvalg.
+    source_hash: 739c019f00d5a5bd12c71d774e105ac0038c858ffb6aa683362e584b96f3da0a
   studies[pmid:41834684].finding:
     text: En studie av n=67 pasienter og 67 matchede friske kontroller med en diffusjons-MR-modell for avbildning av nevroinflammasjon
       fant utbredte forskjeller i hvit substans, blant annet et lavere forhold for hindret vann og lavere begrenset fraksjon

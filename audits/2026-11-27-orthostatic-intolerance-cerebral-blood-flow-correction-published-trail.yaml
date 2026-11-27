@@ -1,0 +1,277 @@
+card: orthostatic-intolerance-cerebral-blood-flow
+card_sha256: d370d59a590d46897dbe59654d79cdf505167b2c09fa91a967dcaca4f954420b
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:22180650].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    names the Fukuda criteria; the card lists the case definition as unverified with no quote. Quote from
+    the full text: We enrolled 25 subjects diagnosed with CFS using the Fukuda criteria (22), which included
+    some subjects from a prior investigation (40).'
+- target: studies[pmid:22180650].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states that changes in blood flow velocity with tilt did not differ between groups, and reports higher
+    critical closing pressure in patients; the card''s finding does not say this. Quote from the full
+    text: There were, however, no differences in changes of CBFV at any angle.'
+- target: level_reason[5]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[5] says the
+    case definition of this study is not yet verified; the full text states the Fukuda criteria were used.
+    Quote from the full text: We enrolled 25 subjects diagnosed with CFS using the Fukuda criteria (22),
+    which included some subjects from a prior investigation (40).'
+- target: studies[pmid:25277740].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The card has
+    the case definition as unverified with no quote; the full text states the patients fulfilled CDC criteria
+    for CFS, aged 15 to 29 yr. Quote from the full text: CFS subjects were between 15 and 29 yr old and
+    fulfilled CDC criteria for CFS (16).'
+- target: level_reason[5]
+  problem: 'The full-text scan found that the full text states something the card lacks: Both level reasons
+    say this study''s case definition is not yet verified; the full text names CDC criteria for the patients.
+    Quote from the full text: CFS subjects were between 15 and 29 yr old and fulfilled CDC criteria for
+    CFS (16).'
+- target: level_reason[7]
+  problem: 'The full-text scan found that the full text states something the card lacks: Both level reasons
+    say this study''s case definition is not yet verified; the full text names CDC criteria for the patients.
+    Quote from the full text: CFS subjects were between 15 and 29 yr old and fulfilled CDC criteria for
+    CFS (16).'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:22180650 as case_definition unverified with no source and no quote.
+      The cached full text (data/cache/europepmc/PMC3311460.html, Methods, Subjects) states: "We enrolled
+      25 subjects diagnosed with CFS using the Fukuda criteria (22), which included some subjects from
+      a prior investigation (40)." Reference 22 is Fukuda et al., Ann Intern Med 1994. The same paragraph
+      states: "All CFS subjects were found to have POTS during a 70° head-up tilt table test performed
+      on another day."'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext and case_definition_quote to
+      the sentence above. The card must then flag the cohort as Fukuda (does not require post-exertional
+      malaise) and say that every patient had POTS.
+    targets:
+    - studies[pmid:22180650].case_definition
+    - studies[pmid:22180650].case_definition_source
+    - studies[pmid:22180650].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:25277740 as case_definition unverified with no quote. The cached full
+      text (data/cache/europepmc/PMC4233252.html, Study design and methodology) states: "CFS subjects
+      were between 15 and 29 yr old and fulfilled CDC criteria for CFS (16)." Reference 16 is Fukuda et
+      al., Ann Intern Med 1994, and the next sentence lists the Fukuda criteria (fatigue of new or definite
+      onset with four or more of the listed symptoms for 6 consecutive months). The same paragraph says
+      patients were recruited for "reported neurocognitive impairment and hyperventilation/hypocapnea
+      (n = 15) likely due to their POTS".'
+    fix: Set case_definition to Fukuda, since the sentence cites the 1994 Fukuda paper and lists its criteria;
+      CDC_unspecified is the minimum the quote supports, and both rank equal. Set case_definition_source
+      to fulltext and case_definition_quote to the sentence above. Record that patients were selected
+      for hyperventilation/hypocapnia and were 15 to 29 years old.
+    targets:
+    - studies[pmid:25277740].case_definition
+    - studies[pmid:25277740].case_definition_source
+    - studies[pmid:25277740].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[5] says "Two studies from New York Medical College found lower blood flow velocity
+      in the brain on tilt". That reads as a larger fall on tilt in both studies. For pmid:22180650 the
+      cached full text says the opposite of a larger fall: "CFS/POTS patients had significantly decreased
+      CBFV by repeated-measures ANOVA. There were, however, no differences in changes of CBFV at any angle."
+      The abstract says absolute mean CBFV was "slightly less than in control subjects in CFS subject
+      at each angle", and the angles include 0° (supine). The study''s finding text and its direction
+      `lower` leave out that the change with tilt did not differ. For a card whose claim is a larger fall
+      on standing, that changes how a reader reads the study.'
+    fix: In the finding of pmid:22180650 and in level_reason[5], state that absolute blood flow velocity
+      was slightly lower in patients at every angle, supine included, and that the change in blood flow
+      velocity with tilt did not differ between groups (quote above). Reconsider the direction field.
+      Only pmid:25277740 reports a larger fall on tilt.
+    targets:
+    - level_reason[5]
+    - studies[pmid:22180650].finding
+    - studies[pmid:22180650].direction
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[0] ("No independent group has yet repeated this finding") and level_reason[5]
+      ("no independent group with a verified case definition has repeated the fall in blood flow to the
+      brain ... The case definitions of all four are not yet verified, so none of them can support or
+      contradict the card") rest on the two New York Medical College studies having unverified case definitions.
+      Both now have Fukuda in their full texts (findings above). pmid:25277740 is a controlled study:
+      15 Fukuda patients and 11 controls. It shares no author with pmid:32140630 (section 5 lists no such
+      pair). Its abstract states "HUT caused CBFv to decrease 8.7% in control subjects but fell 22.5%
+      in CFS." So as written, the reason for not reaching level 3 no longer follows from the records.
+      Against counting it as a repeat: it is small (n=15), its patients were selected for hyperventilation/hypocapnia
+      and POTS, and it measured blood flow velocity by transcranial Doppler, not blood flow by neck-artery
+      ultrasound. pmid:22180650 comes from the same laboratory: Fukuda, 25 patients (all with POTS), 20
+      controls. It found no difference in the change of blood flow velocity with tilt. It has a control
+      group, the same case definition and more than half the patients of pmid:25277740. So if pmid:25277740
+      were counted towards level 3, pmid:22180650 would meet the rubric''s test for a contradiction of
+      comparable quality. Neither study reaches half of pmid:32140630''s 429 patients, so neither contests
+      level 2.'
+    fix: Rewrite level_reason[0] and level_reason[5] from the records. Name pmid:25277740 (Fukuda, 15
+      patients selected for hypocapnia and POTS, 11 controls, a fall of 22.5% against 8.7% in blood flow
+      velocity) as a possible independent repeat, with its limits. Name pmid:22180650 (Fukuda, 25 patients
+      with POTS, 20 controls, no difference in the change with tilt) as the same laboratory's contrary
+      result. Keep the statement that the other two studies (pmid:12006954, pmid:12593133) have unverified
+      case definitions. On this evidence level 2 is supported. A rise to level 3 would rest on one 15-patient
+      selected cohort that a comparable study from the same laboratory does not repeat, and would then
+      need a contested mark. The auditor decides the level and the mark.
+    targets:
+    - level_reason[0]
+    - level_reason[5]
+    - level
+    - contested
+  - class: decisive
+    severity: must_fix
+    problem: level_reason[7] says of the phenylephrine study pmid:25277740 "its case definition is not
+      yet verified. Neither can count towards level 4." The case definition is now verified (Fukuda, finding
+      above), so for this study the sentence gives a reason the record does not support. The cached full
+      text describes phenylephrine against an untreated tilt in the same 15 patients. In the cached text
+      I found no randomisation, placebo or blinding of the treatment; the only use of 'random' is for
+      the letter sequence of the n-back task. The outcome is n-back response time, not symptoms.
+    fix: 'Remove ''its case definition is not yet verified'' for pmid:25277740. State from the record
+      why it does not count towards level 4, or let the auditor judge it: an uncontrolled, unrandomised
+      within-patient comparison in 15 patients selected for hypocapnia, with a working-memory task as
+      the outcome. The level decision stays with the auditor.'
+    targets:
+    - level_reason[7]
+    - level
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:22180650
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: We enrolled 25 subjects diagnosed with CFS using the Fukuda criteria (22),
+        which included some subjects from a prior investigation (40).
+      direction: mixed
+      finding: A study of n=25 patients meeting the Fukuda definition, all of whom had POTS, and 20 controls
+        found that absolute mean blood flow velocity in the brain was slightly lower in patients at each
+        tilt angle, but that the changes in blood flow velocity with tilt did not differ between the groups;
+        patients had no rise in blood flow velocity with mental tasks, and memory-task performance worsened
+        as the tilt angle increased.
+  - op: update_study
+    id: pmid:25277740
+    set:
+      case_definition: CDC_unspecified
+      case_definition_source: fulltext
+      case_definition_quote: CFS subjects were between 15 and 29 yr old and fulfilled CDC criteria for
+        CFS (16).
+  - op: replace_paragraph
+    field: level_reason
+    index: 0
+    text: A controlled study from a Dutch clinic (Stichting CardioZorg) measured blood flow to the brain
+      with ultrasound of the neck arteries during a 30-minute head-up tilt in 429 patients and 44 healthy
+      controls. All patients met the Fukuda definition, which does not require post-exertional malaise,
+      and 70% also met the International Consensus Criteria. At the end of the tilt, blood flow to the
+      brain had fallen by 26% in patients and 7% in controls; the fall was larger than in controls in
+      patients with POTS, with delayed orthostatic hypotension and with a normal heart rate and blood
+      pressure response. At mid-tilt, patients who reported more orthostatic symptoms had a larger fall.
+      The card is at level 2 because of this study. One small study from New York Medical College (15
+      patients, 11 controls) found a larger fall in blood flow velocity on tilt, measured by transcranial
+      Doppler, but it is a selected cohort and a study from the same laboratory did not find the same
+      difference; the card does not count it as a repeat (see below). The finding with the neck-artery
+      method is unreplicated.
+    sources:
+    - pmid:32140630
+    - pmid:25277740
+    - pmid:22180650
+  - op: replace_paragraph
+    field: level_reason
+    index: 5
+    text: 'The card does not reach level 3. A study from New York Medical College of 15 patients meeting
+      the CDC criteria and 11 controls found that blood flow velocity in the brain fell 22.5% on tilt
+      in patients and 8.7% in controls. Its patients were aged 15 to 29 and were recruited for reported
+      neurocognitive impairment and hyperventilation or hypocapnia likely due to POTS, and it measured
+      blood flow velocity by transcranial Doppler, not blood flow by neck-artery ultrasound. A study from
+      the same laboratory, of 25 patients meeting the Fukuda definition, all with POTS, and 20 controls,
+      found absolute mean blood flow velocity slightly lower in patients at each tilt angle but no difference
+      between the groups in the changes of blood flow velocity at any angle. The card therefore does not
+      count the first study as a replication, and it is unreplicated. Two further studies have case definitions
+      that are not yet verified, so neither can support or contradict the card: a study from Osaka Medical
+      College of 28 young patients and 20 controls found slower recovery of brain oxygen on standing,
+      and a study from Johns Hopkins Medical Institutions of 26 patients and 23 controls found no difference
+      in blood flow velocity at any of the measured time points (supine, 1 and 5 minutes after tilt, 5
+      and 1 minutes before the end, and at termination).'
+    sources:
+    - pmid:25277740
+    - pmid:22180650
+    - pmid:12006954
+    - pmid:12593133
+  - op: replace_paragraph
+    field: level_reason
+    index: 7
+    text: Two small studies changed blood flow to the brain directly. In a randomised crossover study
+      of 16 patients from the Dutch clinic, compression stockings reduced the fall in blood flow to the
+      brain during tilt (14% with stockings, 25% without); symptoms were not an outcome and the paper
+      does not name the case definition. In the New York Medical College study of 15 patients meeting
+      the CDC criteria, who were recruited for neurocognitive impairment and hyperventilation or hypocapnia,
+      phenylephrine, which raises blood pressure, reduced the fall in blood flow velocity on tilt (8.1%
+      against 22.5% untreated) and the slowing on a working-memory task. The comparison was with an untreated
+      tilt in the same patients, the paper describes no placebo group, and the outcome was a working-memory
+      task rather than symptoms. Neither can count towards level 4.
+    sources:
+    - pmid:35056360
+    - pmid:25277740
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: decisive
+      operation: 3
+      severity: advisory
+      problem: 'Operations 0-4 answer findings 0-4 of the review of the published card, and every sentence,
+        number and quote checks against the cached full texts (PMC3311460: ''We enrolled 25 subjects diagnosed
+        with CFS using the Fukuda criteria (22)...'', ''All CFS subjects were found to have POTS...'',
+        ''There were, however, no differences in changes of CBFV at any angle.''; PMC4233252: ''fulfilled
+        CDC criteria for CFS (16)'', recruited for ''reported neurocognitive impairment and hyperventilation/hypocapnea
+        (n = 15) likely due to their POTS'', 22.5% vs 8.7%, -8.1% vs -22.5%, ''Transcranial Doppler data
+        should be interpreted cautiously'', no placebo, sham or blinding in the text). One point for the
+        auditor: level_reason[5] partly grounds ''does not count the first study as a replication'' on
+        the method (transcranial Doppler blood flow velocity rather than neck-artery blood flow) and on
+        patient selection, which the ladder does not list as criteria. The ladder''s own grounds for holding
+        the level back are present (a very small sample, n=15, and a conflicting study of comparable quality,
+        pmid:22180650: Fukuda, controls, 25 patients, at least half of 15). Level 2 is supported. The
+        alternative reading, rung 3 reached on pmid:25277740 and contested by pmid:22180650, would also
+        follow the rubric and would show the same filled bar to rung 2; the auditor decides.'
+      fix: Optionally make the sentence say that the card holds the level back because of the very small
+        sample and the contrary result from the same laboratory, keeping the method difference as a described
+        limit rather than a reason.
+      targets:
+      - level_reason[5]
+      - level_reason[0]
+      - level
+    - class: decisive
+      severity: advisory
+      problem: The card's header comments (the rung 3 and rung 4 notes, and 'the phenylephrine study (25277740)
+        is unverified') still say that pmid:22180650 and pmid:25277740 have no open full text and an unverified
+        case definition. They are not reader-facing content and a correction cannot remove header comments,
+        but they now contradict the study entries.
+      fix: Update the header comments outside this correction (founder or the next drafting round).
+      targets:
+      - studies[pmid:22180650]
+      - studies[pmid:25277740]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:22180650].case_definition differs
+  - studies[pmid:22180650].case_definition_source differs
+  - studies[pmid:22180650].case_definition_quote differs
+  - studies[pmid:22180650].direction differs
+  - studies[pmid:25277740].case_definition differs
+  - studies[pmid:25277740].case_definition_source differs
+  - studies[pmid:25277740].case_definition_quote differs
+  - 'level_reason[0]: the sources differ'
+  - 'level_reason[5]: the sources differ'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[2] answers finding 3, which is classed decisive, not wording
+  - operations[3] answers finding 2, which is classed decisive, not wording
+  - operations[3] answers finding 3, which is classed decisive, not wording
+  - operations[4] answers finding 4, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-orthostatic-intolerance-cerebral-blood-flow-correction-published.yaml
+- 2026-11-27-orthostatic-intolerance-cerebral-blood-flow-correction-published-second.yaml
+outcome: published

@@ -1,0 +1,121 @@
+card: immune-cell-gene-expression
+card_sha256: 45b58d73e9acb27d3f50dc01671e9366567308b603b95e6fc581702a52de243e
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:16049284].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: The full text names the
+    Fukuda version of the CDC criteria; the card records CDC_unspecified from the abstract. Quote from
+    the full text: These cases were diagnosed according to the criteria of Fukuda and colleagues.2'
+- target: studies[pmid:16049284].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives the real-time PCR sample numbers (17 patients, 21 controls) that the card says the abstract
+    does not give. Quote from the full text: in the same group of CFS cases (n = 17) and a different group
+    of normal controls (n = 21)'
+- target: level_reason[2]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[2] says the
+    CDC criteria version is not named; the full text names Fukuda. Quote from the full text: All 25 patients
+    with CFS were diagnosed according to the Centers for Disease Control criteria of Fukuda et al.2'
+- target: studies[pmid:39435656].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    says one of the ME/CFS participants met the Fukuda criteria rather than the CCC; the card''s case_definition
+    field is CCC alone. Quote from the full text: All participants with ME/CFS met the Canadian Consensus
+    Criteria (CCC), excluding 1 participant who reported an improvement in cognitive disturbances since
+    a prior appointment with the Neuroimmunology and Emerging Diseases (NCNED) and fulfilled Fukuda criteria,
+    thus demonstrating the fluctuating nature of the illness.'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:16049284 as CDC_unspecified from the abstract ("diagnosed according
+      to the Centers for Disease Control criteria"), but the cached full text (data/cache/europepmc/PMC1770875.html)
+      names the version twice: Methods, "These cases were diagnosed according to the criteria of Fukuda
+      and colleagues.2", and Results, "All 25 patients with CFS were diagnosed according to the Centers
+      for Disease Control criteria of Fukuda et al.2" (reference 2 is Fukuda K et al., Ann Intern Med
+      1994). The label is wrong against the study''s own text.'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext, and case_definition_quote
+      to "All 25 patients with CFS were diagnosed according to the Centers for Disease Control criteria
+      of Fukuda et al." The Fukuda flag (does not require PEM) still applies; its rank is equal to CDC_unspecified,
+      so no comparability judgement on the card changes.
+    targets:
+    - studies[pmid:16049284].case_definition
+    - studies[pmid:16049284].case_definition_source
+    - studies[pmid:16049284].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[2] says "Two UK studies using CDC criteria (version not named)". For pmid:16049284
+      the cached full text names the version ("the Centers for Disease Control criteria of Fukuda et al.");
+      only pmid:18462164 (abstract only cached: "diagnosed according to the Centers for Disease Control
+      and Prevention diagnostic criteria") leaves the version unnamed. The sentence misstates one study''s
+      case definition.'
+    fix: Say that the first UK study used the Fukuda criteria and the second used CDC criteria with the
+      version not named, both of which do not require post-exertional malaise.
+    targets:
+    - level_reason[2]
+  - class: decisive
+    severity: must_fix
+    problem: 'The finding says the 16 genes were "confirmed by real-time PCR in fresh samples whose number
+      the abstract does not give". The cached full text gives the numbers: real-time PCR was run "in the
+      same group of CFS cases (n = 17) and a different group of normal controls (n = 21)", and "21 normal
+      blood donors (age and sex matched as a group) were used as a comparison group for the real time
+      PCR part of the study". A reader is told the size is unknown when the study states it, and is not
+      told the confirmation used a subset of 17 patients and a different control group.'
+    fix: 'Replace "whose number the abstract does not give" with the full text''s numbers: confirmed by
+      real-time PCR in a second sample from 17 of the patients and a different group of 21 controls.'
+    targets:
+    - studies[pmid:16049284].finding
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:16049284
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: All 25 patients with CFS were diagnosed according to the Centers for Disease
+        Control criteria of Fukuda et al.
+  - op: update_study
+    id: pmid:16049284
+    set:
+      finding: A study of n=25 patients and 25 matched blood donors found 35 PBMC genes expressed differently
+        by microarray, 16 confirmed by real-time PCR in a second sample from 17 of the patients and a
+        different group of 21 controls (15 up, 1 down), which the authors read as suggesting T cell activation.
+  - op: replace_paragraph
+    field: level_reason
+    index: 2
+    text: A New Zealand study of 10 patients meeting the Canadian Consensus Criteria and 10 controls found
+      27 transcripts higher and 6 lower in patients, with the top ones related to inflammation. Two UK
+      studies found genes expressed differently. The first used the Fukuda criteria and the second used
+      CDC criteria with the version not named; neither requires post-exertional malaise. The first was
+      a microarray study of 25 patients and 25 controls, with 16 genes confirmed by PCR in a second sample
+      from 17 of the patients and a different group of 21 controls. The second screened 25 patients and
+      50 blood donors by microarray and confirmed 88 genes by PCR in 55 patients and 75 controls. The
+      first read its pattern as T-cell activation.
+    sources:
+    - pmid:30791746
+    - pmid:16049284
+    - pmid:18462164
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings: []
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:16049284].case_definition differs
+  - studies[pmid:16049284].case_definition_source differs
+  - studies[pmid:16049284].case_definition_quote differs
+  - 'level_reason[2]: the numeral(s) 17, 21 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 2, which is classed decisive, not wording
+  - operations[2] answers finding 1, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-immune-cell-gene-expression-correction-published.yaml
+- 2026-11-27-immune-cell-gene-expression-correction-published-second.yaml
+outcome: published

@@ -97,8 +97,13 @@ level_reason:
       referral sample. Two controlled studies from the Cruces University Hospital group included
       patients with a prior ME/CFS diagnosis or meeting the Fukuda definition; because a prior
       diagnosis does not name a definition, these cannot count towards the level. A study of 160
-      patients by a Boston-based group, in which 31% of skin biopsies were consistent with small
-      fibre neuropathy, cannot count either because its case definition is not yet verified.
+      patients by a Boston-based group, whose patients met the National Academy of Medicine (IOM
+      2015) criteria on medical record review, found that 31% of skin biopsies were consistent
+      with small fibre neuropathy. Its biopsies were judged against laboratory norms, not
+      against its 36 controls, who did not have skin biopsies, so it is not a comparison with
+      concurrently measured controls. The authors name possible referral bias that might inflate
+      the prevalence. It shares authors with the 2026 Boston study, so it is not an independent
+      replication, and the finding is unreplicated by an independent group.
     sources: ['pmid:41576003', 'pmid:37968647', 'pmid:39888240', 'pmid:33577778']
   - text: >-
       In the Cruces University Hospital studies, 30 patients and 30 matched healthy controls had
@@ -120,9 +125,10 @@ badges:
     reason:
       text: >-
         No marker of small fibre damage has been tested in a second, independent patient group
-        with a verified case definition. In one study whose case definition is not verified,
-        corneal nerve tortuosity had an area under the curve of 0.690 (p = 0.032), modest
-        accuracy, for telling 30 patients from 30 healthy controls.
+        with a verified case definition. In one study in which patients had a prior ME/CFS
+        diagnosis or met the Fukuda definition, corneal nerve tortuosity had an area under the
+        curve of 0.690 (p = 0.032), modest accuracy, for telling 30 patients from 30 healthy
+        controls.
       sources: ['pmid:39888240']
   explains_pem:
     # Checked: every abstract on the card and the five open full texts. No study tracks symptoms after an exertion
@@ -131,10 +137,11 @@ badges:
     value: false
     reason:
       text: >-
-        No study on this card measures post-exertional malaise directly and links it to small fibre
-        damage. In one study, whose case definition is not yet verified, the severity of nerve fibre
-        loss in skin biopsies did not correlate with measures from an exercise test.
-      sources: [pmid:33577778]
+        No study on this card measures post-exertional malaise directly and links it to small
+        fibre damage. In one study, whose patients met the National Academy of Medicine (IOM
+        2015) criteria on medical record review, the severity of nerve fibre loss in skin
+        biopsies did not correlate with measures from an exercise test.
+      sources: ['pmid:33577778']
 subgroups: []
 working_on_it: []
 early_signals: []
@@ -184,9 +191,9 @@ studies:
     # "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the
     # Fukuda et al. criteria [3] at the time of evaluation." Also: "all ME/CFS patients included in the study
     # reported post-exertional malaise." 30 post-COVID condition patients (NICE guideline) not used.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation.
     design: controlled
     # Table 2 (ANCOVA, age and sex covariates): tortuosity PCC 1.12 (0.02), ME/CFS 1.13 (0.01), HC 1.11 (0.01),
     # F = 6.80, Bonferroni ME/CFS vs HC p = 0.003. CNFD 30.73 vs 32.37, CNFL 17.28 vs 18.11, F not significant.
@@ -215,9 +222,9 @@ studies:
     # Unverified by founder ruling 2026-11-02. Full-text sentence: "Patients diagnosed of ME/CFS should be
     # previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time." 87 post-COVID patients
     # (NICE guideline) not used.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: Patients diagnosed of ME/CFS should be previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time.
     design: controlled
     # Table 3 (n = 50 per group in the header; the number tested per measure is not stated): heat N latency
     # HC 0.5 (0.1) s, ME/CFS 0.7 (0.1) s, H = 23.6, Bonferroni ME/CFS vs HC < 0.001; text "686 ± 16" vs "552 ± 13"
@@ -292,9 +299,9 @@ studies:
     doi: 10.1016/j.chest.2021.01.082
     cohort: me_cfs
     # Abstract: "160 patients meeting ME/CFS criteria"; the definition is not named. No open full text. TODO: verify.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: All then underwent additional medical record review to confirm presence of ME/CFS, using the National Academy of Medicine requirement of documentation of three major criteria (ie, chronic fatigue for ≥6 months, post-exertional malaise, unrefreshing sleep) plus one minor criteria (ie, either cognitive impairment, orthostatic intolerance).
     design: controlled  # 36 controls for the exercise test; the abstract does not say whether controls had biopsies
     n_patients: 160
     n_controls: 36
@@ -343,5 +350,5 @@ links:
       study of ME/CFS patients.
     sources: ['pmid:37054777']
 last_checked:
-  date: 2026-11-16
+  date: 2026-11-27
   by: ai_audit
