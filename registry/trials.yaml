@@ -1,4 +1,4 @@
-fetched: '2026-11-20'
+fetched: '2026-11-27'
 searches:
   me_cfs: '"chronic fatigue syndrome" OR "myalgic encephalomyelitis"'
   long_covid: '"long COVID" OR "post COVID-19 condition" OR "post-COVID syndrome" OR "post-COVID-19 syndrome" OR "post-COVID
@@ -4747,7 +4747,7 @@ studies:
     count: 45
     type: ESTIMATED
   start_date: '2023-07-10'
-  last_update: '2026-11-10'
+  last_update: '2026-11-24'
   searches:
   - long_covid
   hypotheses:
@@ -7669,7 +7669,7 @@ studies:
   mapping: not_mapped
   mapping_source: null
 - nct_id: NCT05787379
-  title: Care for Veterans Post-COVID-19
+  title: Clinical Trial of a Provider Training to Improve Care for Veterans Experiencing Long-COVID
   study_type: INTERVENTIONAL
   status: RECRUITING
   countries:
@@ -7678,7 +7678,7 @@ studies:
     count: 348
     type: ESTIMATED
   start_date: '2025-01-01'
-  last_update: '2025-12-24'
+  last_update: '2026-11-25'
   searches:
   - long_covid
   hypotheses: []
@@ -8719,14 +8719,14 @@ studies:
 - nct_id: NCT05931497
   title: Sauna for Long Covid
   study_type: INTERVENTIONAL
-  status: RECRUITING
+  status: ACTIVE_NOT_RECRUITING
   countries:
   - United States
   enrollment:
     count: 21
     type: ESTIMATED
-  start_date: '2026-08-01'
-  last_update: '2025-11-13'
+  start_date: '2024-10-09'
+  last_update: '2026-11-23'
   searches:
   - long_covid
   hypotheses: []
@@ -9639,7 +9639,7 @@ studies:
     count: 70
     type: ESTIMATED
   start_date: '2024-07-01'
-  last_update: '2026-07-15'
+  last_update: '2026-11-25'
   searches:
   - long_covid
   hypotheses: []
@@ -9928,7 +9928,7 @@ studies:
     count: 50
     type: ESTIMATED
   start_date: '2024-12-01'
-  last_update: '2026-06-18'
+  last_update: '2026-11-23'
   searches:
   - long_covid
   hypotheses: []
@@ -10148,14 +10148,14 @@ studies:
 - nct_id: NCT06168006
   title: Exercise Training Using an App on Physical Cardiovascular Function Individuals With Post-covid-19 Syndrome
   study_type: INTERVENTIONAL
-  status: RECRUITING
+  status: COMPLETED
   countries:
   - Brazil
   enrollment:
-    count: 60
-    type: ESTIMATED
+    count: 34
+    type: ACTUAL
   start_date: '2024-03-01'
-  last_update: '2026-02-17'
+  last_update: '2026-11-25'
   searches:
   - long_covid
   hypotheses: []
@@ -10356,14 +10356,14 @@ studies:
 - nct_id: NCT06208943
   title: Neural and Cognitive Consequences of COVID-19 Survival
   study_type: OBSERVATIONAL
-  status: UNKNOWN
+  status: COMPLETED
   countries:
   - United States
   enrollment:
-    count: 150
-    type: ESTIMATED
+    count: 104
+    type: ACTUAL
   start_date: '2021-10-01'
-  last_update: '2024-04-12'
+  last_update: '2026-11-23'
   searches:
   - long_covid
   hypotheses: []
@@ -10810,7 +10810,7 @@ studies:
     count: 181
     type: ACTUAL
   start_date: '2024-03-11'
-  last_update: '2026-02-20'
+  last_update: '2026-11-25'
   searches:
   - long_covid
   hypotheses: []
@@ -12602,7 +12602,7 @@ studies:
     count: 200
     type: ESTIMATED
   start_date: '2025-02-20'
-  last_update: '2026-03-31'
+  last_update: '2026-11-24'
   searches:
   - long_covid
   hypotheses: []
@@ -13764,8 +13764,8 @@ studies:
   enrollment:
     count: 15
     type: ESTIMATED
-  start_date: '2026-11-24'
-  last_update: '2026-11-19'
+  start_date: '2026-11-30'
+  last_update: '2026-11-25'
   searches:
   - long_covid
   hypotheses: []
@@ -13863,7 +13863,7 @@ studies:
     count: 31
     type: ACTUAL
   start_date: '2023-09-21'
-  last_update: '2026-02-24'
+  last_update: '2026-11-25'
   searches:
   - long_covid
   hypotheses: []
@@ -14337,7 +14337,7 @@ studies:
     count: 100
     type: ESTIMATED
   start_date: 2026-11
-  last_update: '2026-07-13'
+  last_update: '2026-11-23'
   searches:
   - long_covid
   hypotheses: []
@@ -14581,8 +14581,8 @@ studies:
   enrollment:
     count: 500
     type: ESTIMATED
-  start_date: '2024-09-04'
-  last_update: '2026-09-28'
+  start_date: '2026-11-20'
+  last_update: '2026-11-20'
   searches:
   - long_covid
   hypotheses: []
@@ -14755,7 +14755,7 @@ studies:
 - nct_id: NCT07909551
   title: 'Long Covid: Study of Quality of Life, Clinical Evolution and Use of Care. Cohort in General Practice and General
     Population in Metropolitan France COVILEV Study'
-  study_type: INTERVENTIONAL
+  study_type: OBSERVATIONAL
   status: COMPLETED
   countries:
   - France
@@ -14763,7 +14763,7 @@ studies:
     count: 618
     type: ACTUAL
   start_date: '2023-06-06'
-  last_update: '2026-11-02'
+  last_update: '2026-11-20'
   searches:
   - long_covid
   hypotheses: []
@@ -14779,7 +14779,7 @@ studies:
     count: 1300
     type: ESTIMATED
   start_date: '2026-11-16'
-  last_update: '2026-11-04'
+  last_update: '2026-11-20'
   searches:
   - long_covid
   hypotheses: []
@@ -14846,9 +14846,41 @@ studies:
     count: 272
     type: ESTIMATED
   start_date: '2026-12-09'
-  last_update: '2026-11-19'
+  last_update: '2026-11-20'
   searches:
   - long_covid
   hypotheses: []
   mapping: accepted
   mapping_source: data/pipeline/2026-11-20/trials/review-1.json
+- nct_id: NCT07956104
+  title: cMR for Patients With CIED
+  study_type: INTERVENTIONAL
+  status: WITHDRAWN
+  countries:
+  - United States
+  enrollment:
+    count: 0
+    type: ACTUAL
+  start_date: '2020-12-10'
+  last_update: '2026-11-24'
+  searches:
+  - long_covid
+  hypotheses: []
+  mapping: not_mapped
+  mapping_source: null
+- nct_id: NCT07958028
+  title: RECOVER-TLC Semaglutide Treatment Trial
+  study_type: INTERVENTIONAL
+  status: NOT_YET_RECRUITING
+  countries:
+  - United States
+  enrollment:
+    count: 774
+    type: ESTIMATED
+  start_date: '2026-12-28'
+  last_update: '2026-11-25'
+  searches:
+  - long_covid
+  hypotheses: []
+  mapping: accepted
+  mapping_source: data/pipeline/2026-11-27/trials/review-1.json
