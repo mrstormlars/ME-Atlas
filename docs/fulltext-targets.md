@@ -41,6 +41,10 @@ The statuses `pdf_only` and `pmc_no_xml` that `europepmc fulltext` can report ar
 
 Grouped by card (slug order, studies in card order). Per study: the card, the study id, the role, the case definition and its source, the category and reason, what full text would settle (the case-definition sentence when unverified or read from the abstract; `n_patients` or `n_controls` when null; for `contradicts`, the patient count in the contradicting measurement; the PEM measurement when `measures_pem`), the status, the next step, and the addresses (the PMC article when a PMC id is known, the PubMed record for a `pmid:` study, `https://doi.org/<doi>` when the study has a `doi`). Then a summary: the count per category, the count per status among the listed studies, and "Not listed". `--markdown` prints the same as a table per card and a summary table.
 
+## Reading the listed full texts
+
+`scan-plan` and `scan-record` read the listed studies that have a cached full text (`fulltext_xml` or `pmc_page`) against their cards, offline, and write a result and draft correction requests into a run folder: `docs/pipeline.md`, "Full-text scan".
+
 ## Storing a page saved by hand
 
 `import-saved --card <card.yaml> --pmid <digits> [--cache-dir data/cache] [--saved-dir data/hand-saved/fulltext]`: see `docs/fetch.md`, "Full texts saved by hand".

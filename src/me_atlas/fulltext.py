@@ -6,11 +6,15 @@ Command line::
                                              [--cache-dir data/cache]
     uv run python -m me_atlas.fulltext import-saved --card <card.yaml> --pmid <digits>
                                              [--cache-dir data/cache] [--saved-dir data/hand-saved/fulltext]
+    uv run python -m me_atlas.fulltext scan-plan --out RUN [--cache-dir DIR] [--cards-dir DIR] [--carrying-only]
+                                             [--study ID ...] [--config FILE]
+    uv run python -m me_atlas.fulltext scan-record --out RUN
 
 ``needs`` is offline: it reads the cards, the config file and the cache, and lists the studies whose case
 definition or numbers a reader of the full text could settle. ``import-saved`` copies a PMC article page saved by
 hand into the cache, where ``citations check`` and ``europepmc casedef`` read it. Neither makes a request.
-The reference is ``docs/fulltext-targets.md``.
+``scan-plan`` and ``scan-record`` are the full-text scan (``me_atlas.fulltext_scan``, ``docs/pipeline.md``): offline,
+they write only into the run folder ``RUN``. The reference is ``docs/fulltext-targets.md``.
 """
 
 from __future__ import annotations
@@ -481,12 +485,65 @@ def _build_parser() -> argparse.ArgumentParser:
     imp.add_argument("--pmid", required=True, help="digits only")
     imp.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
     imp.add_argument("--saved-dir", type=Path, default=DEFAULT_SAVED_DIR, help="default: %(default)s")
+    plan = sub.add_parser("scan-plan", help="full-text scan, step 0 and the scan contexts (offline; writes into --out)")
+    plan.add_argument("--out", type=Path, required=True, help="the run folder")
+    plan.add_argument("--cards-dir", type=Path, default=DEFAULT_CARDS_DIR, help="default: %(default)s")
+    plan.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
+    plan.add_argument("--carrying-only", action="store_true", help="only the `carrying` category of `needs`")
+    plan.add_argument("--study", nargs="+", action="extend", default=[], help="only these study ids")
+    plan.add_argument("--config", type=Path, default=None, help="a `needs` config file; its named studies are added")
+    rec = sub.add_parser("scan-record", help="validate the scan files and write the result, report and requests")
+    rec.add_argument("--out", type=Path, required=True, help="the run folder of `scan-plan`")
     return parser
+
+
+def run_scan_plan(args: argparse.Namespace) -> int:
+    from me_atlas import fulltext_scan
+
+    try:
+        named = load_named(args.config) if args.config else []
+        result = fulltext_scan.scan_plan(
+            args.out,
+            args.cache_dir,
+            args.cards_dir,
+            carrying_only=args.carrying_only,
+            study_ids=args.study,
+            named=named,
+        )
+    except (ValueError, CardValidationError, OSError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    counts = Counter(s["step0"] for s in result.studies)
+    print(f"scan-plan: {len(result.studies)} stud(ies) in {args.out}")
+    print("  step 0: " + ", ".join(f"{label} {counts[label]}" for label in fulltext_scan.LABELS))
+    for error in result.errors:
+        print(f"error: {error}", file=sys.stderr)
+    return 1 if result.errors else 0
+
+
+def run_scan_record(args: argparse.Namespace) -> int:
+    from me_atlas import fulltext_scan
+
+    try:
+        record = fulltext_scan.record_scan(args.out)
+        path = fulltext_scan.write_record(args.out, record)
+    except (fulltext_scan.ScanError, OSError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    print(record.report.rstrip())
+    print(f"scan-record: wrote {path}")
+    return 0
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
-    return run_needs(args) if args.command == "needs" else run_import_saved(args)
+    if args.command == "needs":
+        return run_needs(args)
+    if args.command == "scan-plan":
+        return run_scan_plan(args)
+    if args.command == "scan-record":
+        return run_scan_record(args)
+    return run_import_saved(args)
 
 
 if __name__ == "__main__":
