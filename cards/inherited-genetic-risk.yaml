@@ -164,16 +164,21 @@ level_reason:
       fatigue syndrome case definition).
     sources: [pmid:35318112, pmid:21619629, pmid:11719632]
   - text: >-
-      Smaller studies of single candidate genes point in different directions. A London study of 49
-      patients and 102 controls found the HLA-DQA1*01 variant more often in patients; the Oslo study
-      could not test this variant because its controls were not typed for it. Another London study of
-      58 patients and 134 controls found no HLA differences. Neither has a verified case definition.
-      A Brisbane study of 248 patients meeting CDC criteria and 248 controls found only a trend
-      (P = 0.07) for a cortisol-binding protein gene variant, and an Australian study of 95 patients
-      meeting the Fukuda definition and 77 controls found no variant that remained significant after
-      correction for testing many variants (lowest P = 0.059). These studies are small for genetic
-      association studies.
-    sources: [pmid:16049290, pmid:32210306, pmid:11422420, pmid:15554358, pmid:27835969]
+      Smaller studies of single candidate genes point in different directions. A London study of
+      49 patients, diagnosed according to the CDC criteria (version not stated in the text read,
+      so the definition does not require post-exertional malaise), and 102 controls found the
+      HLA-DQA1*01 variant more often in patients (p = 0.008). The authors write that this p
+      value was not corrected for multiple comparisons, that significance was lost when
+      corrected for all 22 possible comparisons, and that a less conservative correction at each
+      locus separately gave p = 0.04, which they call a possible association. The Oslo study
+      could not test this variant because its controls were not typed for it. Another London
+      study of 58 patients and 134 controls found no HLA differences; it has no verified case
+      definition. A Brisbane study of 248 patients meeting CDC criteria and 248 controls found
+      only a trend (P = 0.07) for a cortisol-binding protein gene variant, and an Australian
+      study of 95 patients meeting the Fukuda definition and 77 controls found no variant that
+      remained significant after correction for testing many variants (lowest P = 0.059). These
+      studies are small for genetic association studies.
+    sources: ['pmid:16049290', 'pmid:32210306', 'pmid:11422420', 'pmid:15554358', 'pmid:27835969']
 contested: null  # proposal; see header (rung 2 rests on 32210306, which no comparable study contradicts)
 badges:
   diagnostic_marker:
@@ -519,10 +524,9 @@ studies:
     journal: Journal of clinical pathology
     doi: 10.1136/jcp.2004.022681
     cohort: me_cfs
-    # Criteria not named in the abstract; no open full text. TODO: verify.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome.
     design: controlled
     n_patients: 49  # "Forty nine"; C6 warning expected
     n_controls: 102
@@ -532,8 +536,12 @@ studies:
     direction: higher
     group: Mattey DL, with Cleare AJ and Wessely S; Tissue Typing Laboratory, Harefield Hospital, UK
     finding: >-
-      A study of n=49 patients and 102 controls found HLA-DQA1*01 more often in patients (51.0% against
-      35%, OR 1.93, p = 0.008).
+      A study of n=49 patients and 102 controls found HLA-DQA1*01 more often in patients (51.0%
+      against 35%, OR 1.93, p = 0.008). The authors write that the associations need to be
+      treated with caution because they were not corrected for multiple comparisons:
+      significance was lost when corrected for all 22 possible comparisons, and a less
+      conservative correction at each locus separately gave p = 0.04, which they call a possible
+      association.
   - id: pmid:11422420
     title: Lack of association between HLA genotype and chronic fatigue syndrome.
     year: 2001
@@ -658,5 +666,5 @@ links:
       inherited variants to immune cell gene expression.
     sources: [pmid:42196410]
 last_checked:
-  date: 2026-11-13
+  date: 2026-11-27
   by: ai_audit

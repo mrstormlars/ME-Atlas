@@ -42,17 +42,18 @@ items:
     source_hash: db0808107f426bec02c3b4a031b59c34e1f47f94ea74ed1a8c4c644c57e3a410
   level_reason[3]:
     text: 'Andre kontrollerte studier fra samme gruppe som studien på nivå 2, med andre mål, rapporterer også forskjeller
-      i hjernestammen: svakere forbindelser mellom hjernestammeregioner under en oppgave (45 pasienter som oppfylte Fukuda-kriteriene,
-      som ikke krever PEM, og 27 kontroller), et lavere T1-vektet MR-signal i en region i hjernestammen (43 pasienter som
-      oppfylte Fukuda-kriteriene og 27 kontroller), svakere forbindelser mellom pons og lillehjernen under en oppgave (31
-      pasienter som oppfylte kriteriene Canadian eller International og 15 kontroller), og en større pons og hel hjernestamme
-      ved 7 tesla (10 pasienter og 10 kontroller). Ingen av disse resultatene er gjentatt av en uavhengig gruppe.'
+      i hjernestammen: svakere forbindelser mellom hjernestammeregioner under en oppgave (44 av 45 skannede pasienter som
+      oppfylte Fukuda-kriteriene, som ikke krever PEM, og 26 av 27 skannede kontroller, etter at én pasient og én kontroll
+      ble utelatt), et lavere T1-vektet MR-signal i en region i hjernestammen (43 pasienter som oppfylte Fukuda-kriteriene
+      og 27 kontroller), svakere forbindelser mellom pons og lillehjernen under en oppgave (31 pasienter som oppfylte kriteriene
+      Canadian eller International og 15 kontroller), og en større pons og hel hjernestamme ved 7 tesla (10 pasienter og 10
+      kontroller). Ingen av disse resultatene er gjentatt av en uavhengig gruppe.'
     sources:
     - pmid:31671321
     - pmid:30497131
     - pmid:38347875
     - pmid:36937672
-    source_hash: dd164d6f6505354950562efd4187270dbc7f97303683dd08be6e1c6ae3c875ed
+    source_hash: bc983505368604a398e644e201ae6c17d89a281d256fac1a4ee6f00001a4cec6
   level_reason[4]:
     text: 'Kortet står ikke på nivå 3 fordi ingen uavhengig gruppe har funnet det samme resultatet i en egen kohort. En studie
       fra Newcastle i Storbritannia, uten felles forfattere, med 42 pasienter som oppfylte Fukuda-definisjonen (som ikke krever
@@ -217,10 +218,11 @@ items:
       25 pasientene i Fukuda-gruppen viste ingen signifikante klynger.
     source_hash: 6e8a8a453357ee519882e78340ba6fd41e4f12a0e727cbc2f541c7ee40ec19d4
   studies[pmid:31671321].finding:
-    text: En studie med n=45 pasienter og 27 friske kontroller fant svakere konnektivitet under en oppgave mellom medulla
+    text: 'En studie av 45 skannede pasienter og 27 friske kontroller fant svakere konnektivitet under en oppgave mellom medulla
       og cuneiform-kjernen i mellomhjernen, og mellom hjernestammen og hippocampus og thalamus, hos pasientene; ingen slik
-      forskjell ble funnet i hvile.
-    source_hash: 603eb18d598fb1fec9c3f581acc36e6d1bb0f32cca2bd924c220e7e6c291d482
+      forskjell ble funnet i hvile. Analysen av oppgaven brukte 44 (= 45 - 1) pasienter og 26 (= 27 - 1) kontroller: én pasient
+      og én kontroll ble utelatt på grunn av uakseptabelt signaltap eller utilstrekkelig romlig normalisering.'
+    source_hash: 56bf7c3322356acceed2b5d1cbf9c752c1fcdc9d086051d13c1642949b80cdb8
   studies[pmid:30497131].finding:
     text: En studie med n=43 pasienter og 27 friske kontroller fant et lavere T1-vektet spinnekko-signal i en region i hjernestammen
       og et høyere signal i sensorimotorisk hvit substans hos pasientene; voksel-basert morfometri fant ingen gruppeforskjell

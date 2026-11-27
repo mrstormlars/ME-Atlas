@@ -91,20 +91,24 @@ items:
     - pmid:11719632
     source_hash: 299ea9b86ffc0899d3d6d5fbdbfc9c4bd4fd7cf29e2363ec6900db1cd47264f0
   level_reason[7]:
-    text: Mindre studier av enkeltkandidatgener peker i ulike retninger. En studie fra London med 49 pasienter og 102 kontroller
-      fant varianten HLA-DQA1*01 oftere hos pasientene; studien fra Oslo kunne ikke teste denne varianten fordi kontrollene
-      ikke var typet for den. En annen studie fra London med 58 pasienter og 134 kontroller fant ingen HLA-forskjeller. Ingen
-      av dem har kontrollerte diagnosekriterier. En studie fra Brisbane med 248 pasienter som oppfylte CDC-kriteriene og 248
-      kontroller fant bare en tendens (P = 0,07) for en variant i et gen for et kortisolbindende protein, og en australsk
-      studie med 95 pasienter som oppfylte Fukuda-kriteriene og 77 kontroller fant ingen variant som forble signifikant etter
-      korreksjon for testing av mange varianter (laveste P = 0,059). Disse studiene er små for genetiske assosiasjonsstudier.
+    text: Mindre studier av enkeltkandidatgener peker i ulike retninger. En studie fra London med 49 pasienter, diagnostisert
+      etter CDC-kriteriene (versjon ikke oppgitt i teksten som ble lest, så definisjonen krever ikke PEM), og 102 kontroller
+      fant varianten HLA-DQA1*01 oftere hos pasientene (p = 0,008). Forfatterne skriver at denne p-verdien ikke var korrigert
+      for flere sammenligninger, at signifikansen forsvant da den ble korrigert for alle 22 mulige sammenligninger, og at
+      en mindre konservativ korreksjon for hvert locus for seg ga p = 0,04, noe de kaller en mulig assosiasjon. Studien fra
+      Oslo kunne ikke teste denne varianten fordi kontrollene ikke var typet for den. En annen studie fra London med 58 pasienter
+      og 134 kontroller fant ingen HLA-forskjeller; den har ingen kontrollerte diagnosekriterier. En studie fra Brisbane med
+      248 pasienter som oppfylte CDC-kriteriene og 248 kontroller fant bare en tendens (P = 0,07) for en variant i et gen
+      for et kortisolbindende protein, og en australsk studie med 95 pasienter som oppfylte Fukuda-kriteriene og 77 kontroller
+      fant ingen variant som forble signifikant etter korreksjon for testing av mange varianter (laveste P = 0,059). Disse
+      studiene er små for genetiske assosiasjonsstudier.
     sources:
     - pmid:16049290
     - pmid:32210306
     - pmid:11422420
     - pmid:15554358
     - pmid:27835969
-    source_hash: 3bbbcb2410271ebed81b19266aed62be44332add5321b624bcd51eefc95cebcb
+    source_hash: 94e9ae68accfb3d6f653940e67c709ee3de375a1cf5c6d2152f261d9372e044f
   badge_reasons.diagnostic_marker[0]:
     text: Ingen genetisk variant på dette kortet er testet som diagnostisk markør i en annen, uavhengig pasientgruppe. I studien
       fra Oslo bar 19,2% av pasientene og 12,2% av kontrollene én av eller begge de to HLA-variantene; ingen annen gruppe
@@ -236,9 +240,11 @@ items:
       tvillinger (p = 0,042), med en estimert arvelighet på 51% (95% KI 7-96).
     source_hash: eb3f378b3e5c49c0da1b97d35af8faed1b11ecc140f8e02574d6376bd77dd21a
   studies[pmid:16049290].finding:
-    text: En studie med n=49 pasienter og 102 kontroller fant HLA-DQA1*01 oftere hos pasientene (51,0% mot 35%, OR 1,93, p
-      = 0,008).
-    source_hash: 93ba7bee729aa69bebb2b14a7ad03fe750de2ac71fa6e44761cf63b3440680f6
+    text: 'En studie med n=49 pasienter og 102 kontroller fant HLA-DQA1*01 oftere hos pasientene (51,0 % mot 35 %, OR 1,93,
+      p = 0,008). Forfatterne skriver at assosiasjonene må behandles med forsiktighet fordi de ikke var korrigert for flere
+      sammenligninger: signifikansen forsvant da det ble korrigert for alle 22 mulige sammenligninger, og en mindre konservativ
+      korreksjon for hvert locus for seg ga p = 0,04, noe de kaller en mulig assosiasjon.'
+    source_hash: 10c9e3655d6714cdf2e17bc3c4b68eb406f57f185fd5667ba474de4b5c659632
   studies[pmid:11422420].finding:
     text: En studie med n=58 pasienter og 134 kontroller fant ingen signifikante forskjeller i HLA-frekvenser.
     source_hash: b32eaab4fca00898824195eb0843d75c74e50e8400388c60a73ecda5c753110b

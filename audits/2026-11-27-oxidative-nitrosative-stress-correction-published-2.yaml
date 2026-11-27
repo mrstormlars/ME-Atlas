@@ -1,0 +1,83 @@
+card: oxidative-nitrosative-stress
+decision: accept
+parts:
+  - decision_part: "The level stays at 2: the Dundee isoprostane and Antwerp plasma peroxide studies are controlled studies with a CDC definition, and the corrected card does not change that basis."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:16085177
+        quote: "who fulfilled the Centres for Disease Control classification for CFS"
+      - source: pmid:16085177
+        quote: "Patients had significantly increased levels of isoprostanes"
+      - source: pmid:21455120
+        quote: "Plasma peroxide concentrations were significantly higher in patients with ME/CFS than in normal controls."
+    class: none
+  - decision_part: "The 2026 study (pmid:43027675) now has case definition IOM2015, role supports and direction higher, and its numbers (125 and 80 enrolled, MDA shown in 104 and 75, significant after age and BMI adjustment, Elabscience kit) match the full text."
+    rubric: "CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988"
+    evidence:
+      - source: pmid:43027675
+        quote: "ME/CFS patients were included in the study according to the diagnostic criteria proposed by the Institute of Medicine (IOM) in 2015"
+      - source: pmid:43027675
+        quote: "Serum levels of MDA (A), NOS3 (B), GPX1 (C) and IgG-LPS (D) in participants with LC (n = 69), ME/CFS (n = 104) and HC (n = 75)"
+      - source: pmid:43027675
+        quote: "MDA, GPX1 and NOS3 remained significantly associated with diagnostic groups after adjustment for age and BMI"
+      - source: pmid:43027675
+        quote: "Elabscience/Wuhan, Hubei, China, cat# E-EL-0060"
+    class: none
+  - decision_part: "Level 3 is not reached through malondialdehyde. The Novi Sad study measured MDA bound to proteins and the 2026 study measured serum MDA with a different kit, so the second is not a clear reproduction of the same finding. Even if it were, a rung 3 resting on the 24-patient study would be contradicted by the larger Novi Sad Fukuda study (no overall difference), so no uncontested level 3 follows."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:23185200
+        quote: "Levels of MDA were measured using the OxiSelect MDA Adduct ELISA kit"
+      - source: pmid:23185200
+        quote: "The MDA protein adducts content in an unknown sample was determined by comparing with a standard curve"
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345)"
+    class: none
+  - decision_part: "No contested mark: the MDA conflict concerns studies that the level 2 rung does not need."
+    rubric: "A rung that rests on more than one study (for example an original finding and its independent replication at level 3) is contested when a study of comparable quality contradicts any study the rung needs."
+    evidence:
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345)"
+    class: none
+  - decision_part: "The CoQ10 plus NADH trial (pmid:25386668) is now recorded as Fukuda with 39 treated and 34 on placebo, with lower fatigue impact and lipid peroxidation than placebo. Level 4 is still not reached: the intervention is not oxidative stress alone, and the larger trial of the same combination found that fatigue scores changed in parallel in the two groups and did not measure oxidative stress."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25386668
+        quote: "with a diagnosis of CFS according to the 1994 CDC Fukuda"
+      - source: pmid:25386668
+        quote: "Thirty-nine CFS subjects received oral Coenzyme Q10 (200 mg/day) plus NADH (20 mg/day) supplementation"
+      - source: pmid:25386668
+        quote: "thirty-four CFS subjects received a matching placebo"
+      - source: pmid:25386668
+        quote: "CFS patients treated with CoQ10 plus NADH showed significantly lower levels of lipid peroxidation versus placebo"
+      - source: pmid:25386668
+        quote: "First, CoQ10 and NADH are bioenergetic cofactors with the potential to boost mitochondrial function."
+      - source: pmid:25386668
+        quote: "Second, CoQ10 plus NADH are powerful free radical scavengers"
+      - source: pmid:34444817
+        quote: "FIS-40 domain scores evolved in parallel between groups over the course of the study."
+    class: none
+  - decision_part: "Holding level 4 back is also supported by the failed between-group replication in the larger trial."
+    rubric: "Down or held back: failed replications"
+    evidence:
+      - source: pmid:34444817
+        quote: "FIS-40 domain scores evolved in parallel between groups over the course of the study."
+    class: none
+  - decision_part: "The brain glutathione study (pmid:22281935) is now recorded as CDC, version not stated, from its full text. Moving it to the paragraph on studies with a recognised definition is correct."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:22281935
+        quote: "using modified US Centers for Disease Control and Prevention (CDC) guidelines (1)"
+      - source: pmid:22281935
+        quote: "Fifteen patients with CFS, 15 with MDD and 13 HVs were studied"
+      - source: pmid:22281935
+        quote: "We found elevated ventricular lactate and decreased GSH in patients with CFS and MDD relative to HVs."
+    class: none
+  - decision_part: "The diagnostic-marker badge stays false: the 2026 study's classification models were not validated in an independent cohort."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second patient group, separate from the first, by an independent research group"
+    evidence:
+      - source: pmid:43027675
+        quote: "the above-described prediction models are entirely exploratory and require external validation in an independent cohort"
+    class: none
+reasons_summary: "The full-text corrections (2026 study now IOM 2015 and supporting, CoQ10 plus NADH trial now Fukuda with 39 and 34, brain glutathione study now CDC) match the records, and level 2 with no contested mark still follows."
+would_change: "Level 3 would be at issue if serum malondialdehyde and malondialdehyde bound to proteins were ruled to be the same finding (it would then be contested by pmid:21119582), or if an independent group reproduced the isoprostane or plasma peroxide result with a recognised definition. The assay of pmid:21119582 cannot be checked, because its full text is not cached (abstract only). Statements on the card from pmid:16085177 beyond its abstract are also unverifiable, since its full text is not cached. Level 4 would need a controlled trial in which an oxidative-stress-specific intervention lowers the marker and improves the illness, and that is not contradicted by a comparable trial."

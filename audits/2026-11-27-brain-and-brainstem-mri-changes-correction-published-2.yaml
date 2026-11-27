@@ -1,0 +1,29 @@
+card: brain-and-brainstem-mri-changes
+decision: accept
+parts:
+  - decision_part: "The corrected sample size of pmid:31671321 (n_patients 44, n_controls 26) and the matching wording in level_reason[3] and in the study finding: one patient and one control were excluded from the task analysis, out of 45 patients and 27 controls scanned."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:31671321
+        quote: "We scanned 27 healthy control (HC) and 45 ME/CFS subjects who met Fukuda criteria (Fukuda et al., 1994)."
+      - source: pmid:31671321
+        quote: "Visual inspection found unacceptable signal dropout or inadequate spatial normalization in the resting fMRI in 3 ME/CFS and 2 HC, and in the task fMRI in one ME/CFS and one HC. These subjects were excluded from the analysis."
+      - source: pmid:31671321
+        quote: "Comparison between ME/CFS and HC of the number of connections with p-FDR < 0.05 was confounded by the different number of subjects N (44 vs 26 for task)"
+    class: none
+  - decision_part: "The finding the corrected numbers belong to (weaker task connectivity between medulla and cuneiform nucleus and from brainstem to hippocampus and thalamus, none at rest) is unchanged and still matches the record."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:31671321
+        quote: "For the resting fMRI, no connectivity differences between the groups were found for any of the ROI pairs. For the task fMRI, four pairs of ROIs were found to demonstrate reduced connectivity in ME/CFS as seen in Fig 4 and Table 3."
+    class: none
+  - decision_part: "Level 2, the case definition (Fukuda, flagged as not requiring PEM), the study's role, the contested mark, badges, layer and links are not touched by the correction; level 2 still rests on the ICC diffusion study."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:31671321
+        quote: "Resting and task functional MRI (fMRI) were acquired for 45 ME/CFS (Fukuda criteria) and 27 healthy controls (HC)."
+      - source: pmid:34355438
+        quote: "Group comparisons between ME/CFSICC and HC detected significant clusters (a) with decreased axial diffusivity (p = .001) and mean diffusivity (p = .01) in the descending cortico-cerebellar tract in the midbrain and pons"
+    class: none
+reasons_summary: "The corrected task-analysis counts for pmid:31671321 (44 of 45 patients, 26 of 27 controls) match the full text; nothing else on the card changes."
+would_change: "A record showing that a different number of patients or controls entered the task connectivity comparison, or an erratum to pmid:31671321 changing the exclusions, would change this decision."

@@ -1,0 +1,45 @@
+card: oxidative-nitrosative-stress
+decision: reject
+parts:
+  - decision_part: "studies[pmid:43027675] changed to role supports, direction higher, case_definition IOM2015, with the numbers 104 patients and 75 controls, the age and BMI adjustment and the Elabscience assay, repeated in level_reason[1], level_reason[2] and level_reason[3]: none of these could be matched to a sentence the auditor could read. The abstract gives no case definition and no direction for MDA, and the full text could not be read in this audit, so the new role, definition and numbers are not verified."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:43027675
+        quote: "MDA was an independent predictor for three-class classification, ME/CFS vs. HC, and LC vs. HC pairwise comparisons, while GPX1 discriminated between ME/CFS and LC."
+      - source: pmid:43027675
+        quote: "were measured in serum by ELISA"
+    class: decisive
+  - decision_part: "level_reason[2] holds level 2 against a possible level 3 for malondialdehyde by treating the 2026 serum MDA result as a different measure from the Novi Sad MDA adduct result. Whether an independent group has reproduced the higher-MDA finding in a separate cohort, and whether that rung would then be contested by the 40-patient Fukuda study, depends on the 2026 study's direction, definition and assay, which could not be checked here."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:23185200
+        quote: "Levels of MDA were measured using the OxiSelect MDA Adduct ELISA kit, one of the first commercial ELISA tests for research use only."
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345), when subdivided according to the level of MDA, a difference was found in the subgroup of high-level MDA (P=.034)."
+    class: decisive
+  - decision_part: "studies[pmid:25386668] changed to Fukuda with 39 treated and 34 placebo, and the lower fatigue score and lipid peroxidation against placebo: supported by the full text."
+    rubric: "Fukuda | Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:25386668
+        quote: "Seventy-three women with CFS who fulfilled the 1994 CDC Fukuda's criteria were evaluated and enrolled in the study"
+      - source: pmid:25386668
+        quote: "Thirty-nine CFS subjects received oral Coenzyme Q10 (200 mg/day) plus NADH (20 mg/day) supplementation"
+      - source: pmid:25386668
+        quote: "CFS patients treated with CoQ10 plus NADH showed significantly lower levels of lipid peroxidation versus placebo"
+    class: none
+  - decision_part: "Holding level 4 in the reworded trial paragraph: a single trial of a combination the authors call both bioenergetic cofactors and free radical scavengers, and the larger trial of the same combination found no between-group difference."
+    rubric: "Changing the proposed factor changes the outcome in a controlled experiment, so the link goes beyond association."
+    evidence:
+      - source: pmid:25386668
+        quote: "First, CoQ10 and NADH are bioenergetic cofactors with the potential to boost mitochondrial function."
+      - source: pmid:34444817
+        quote: "FIS-40 domain scores evolved in parallel between groups over the course of the study."
+    class: none
+  - decision_part: "studies[pmid:22281935] changed to CDC_unspecified: the quote is in the full text."
+    rubric: "CDC criteria, version not stated | Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:22281935
+        quote: "Patients with CFS were recruited via clinician referrals and media advertisements and were diagnosed by a board-certified neurologist with extensive CFS research experience (BHN), using modified US Centers for Disease Control and Prevention (CDC) guidelines (1)."
+    class: none
+reasons_summary: "Rejected: the 2026 study's new role, IOM 2015 definition, MDA direction and numbers could not be checked against a readable sentence, and the level-3 question for malondialdehyde depends on them."
+would_change: "The full text of pmid:43027675 was given in the context but was too long for this auditor's read tool, so this record does not say that the card's statements about it are false. They are unverified: the IOM 2015 quote, higher serum MDA in ME/CFS, 104 patients and 75 controls, significance after age and BMI adjustment, and the Elabscience kit. An audit that can read that full text, or a record that shows these sentences, would settle the role and definition changes. If they hold, the same audit still has to decide whether the 2026 serum MDA result is an independent repeat of the Novi Sad MDA finding (rung 3), contested by the 40-patient Fukuda study, or a different measure. The changes to pmid:25386668 and pmid:22281935 are supported. No drafting reasoning, review finding or earlier audit was shown to this auditor."

@@ -646,3 +646,51 @@
   - pmid:34589868
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-27
+  card: brain-and-brainstem-mri-changes
+  change: 'Correction: level_reason[3] reworded; the finding of pmid:31671321 reworded; n_patients, n_controls
+    of pmid:31671321 changed'
+  reason: The corrected task-analysis counts for pmid:31671321 (44 of 45 patients, 26 of 27 controls)
+    match the full text; nothing else on the card changes.
+  sources:
+  - pmid:31671321
+  - pmid:30497131
+  - pmid:38347875
+  - pmid:36937672
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: inherited-genetic-risk
+  change: 'Correction: level_reason[7] reworded; the finding of pmid:16049290 reworded; case_definition,
+    case_definition_source, case_definition_quote of pmid:16049290 changed; 1 comment line(s) removed'
+  reason: The correction records the London HLA study's own CDC criteria sentence (version not stated,
+    flagged as not requiring PEM) and the authors' multiple-comparison caveat, all verbatim in its full
+    text; level, role and marks are unchanged.
+  sources:
+  - pmid:16049290
+  - pmid:32210306
+  - pmid:11422420
+  - pmid:15554358
+  - pmid:27835969
+  tier: 2
+  decided_by: ai_audit
+- date: 2026-11-27
+  card: herpesvirus-reactivation
+  change: 'Correction: level_reason[7] reworded; badge_reasons.diagnostic_marker[0] reworded; the finding
+    of pmid:37526404 reworded; case_definition, case_definition_source, case_definition_quote, n_patients,
+    n_controls of pmid:37526404 changed; case_definition, case_definition_source, case_definition_quote,
+    n_patients, n_controls of pmid:28303641 changed; case_definition, case_definition_source, case_definition_quote
+    of pmid:41451845 changed'
+  reason: The corrected case definitions and numbers for the multicentre virome study and the two Ohio
+    dUTPase studies match their full texts; level 2, no contested mark and a false diagnostic-marker badge
+    still follow.
+  sources:
+  - pmid:10913395
+  - pmid:37526404
+  - pmid:34422848
+  - pmid:32129496
+  - pmid:36653846
+  - pmid:28303641
+  - pmid:41451845
+  tier: 2
+  decided_by: ai_audit
