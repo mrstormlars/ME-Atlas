@@ -248,6 +248,15 @@ Some hosts refuse an automated request (status `blocked`). Code never works arou
 
 For `decodeme`, save exactly the `institute-genetics-cancer.ed.ac.uk` address above; `decodeme.org.uk` must not be used (`import-saved` refuses it, because `--url` must be the lead's own address).
 
+### Full texts saved by hand
+
+A study that is free to read on PubMed Central but has no open-access XML (status `free_on_pmc` in `fulltext needs`, see `docs/fulltext-targets.md`) can be read from a PMC article page saved by hand. The shared rules are those of "Pages saved by hand" above: code never works around a bot check, the folder is gitignored, and the copy is not ours to redistribute.
+
+1. Open `https://pmc.ncbi.nlm.nih.gov/articles/<pmcid>/` (the address `needs` prints) and use "Save page as" ("Webpage, HTML only" or "complete"; either works).
+2. Put the file at `data/hand-saved/fulltext/<pmid>.html` (or `.htm`). Only one of the two may exist.
+3. `uv run python -m me_atlas.fulltext import-saved --card <card.yaml> --pmid <pmid>`. It copies the file unchanged to `data/cache/europepmc/<pmcid>.html`, where `citations check` and `europepmc casedef` already read it, and prints the case-definition candidates. It makes no request. It refuses, and writes nothing, when the PMID is not a `pmid:` study on the card, the file is missing or both `.html` and `.htm` exist, no PMC id is known from the cached lookup or PubMed record, full-text XML or a page is already cached for that PMC id, or the page is not the article page of that PMID with a main article body.
+4. Back up `data/` as described under "Backup of the local data".
+
 ## Open PDF copies (Unpaywall)
 
 Many papers have a legal open copy outside PubMed Central, usually a PDF on the publisher's site or in a repository. `uv run python -m me_atlas.unpaywall fetch --card <card or draft> [PMID...] [--refresh]` finds and caches that copy for the `pmid:` studies cited on the card or draft it is given (never for any other paper); `casedef --card ... [PMID...]` does the same and then prints the sentences that may name a case definition or exclude people with the illness (`[exclusion]`), each with its page number. When the cached meta says no reference list was cut, one `note:` line under the study line warns that a candidate may come from the reference list. Output that the console cannot encode is printed with replacement characters instead of stopping the run. Code: `me_atlas.unpaywall`; design: `docs/plan-unpaywall-pdf.md`; the founder's ruling of 2026-11-27 is in `docs/pm/DECISIONS.md`.
