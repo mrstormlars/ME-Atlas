@@ -1275,7 +1275,7 @@ def _pdf_full_text_parts(copy: unpaywall.CopyResult, budget: int) -> list[str]:
     """Sections 5 and 6 of the context file when the text is an open PDF copy found through Unpaywall."""
     assert copy.text is not None and copy.meta is not None
     meta = copy.meta
-    pages = [p.replace(unpaywall.LINE_BREAK_HYPHEN, "") for p in copy.text.split(unpaywall.PAGE_BREAK)]
+    pages = [unpaywall.join_markers(p) for p in copy.text.split(unpaywall.PAGE_BREAK)]
     text = "\n\n".join(f"[page {n}] {p}" for n, p in enumerate(pages, start=1))
     total = len(text)
     cut = (
@@ -1286,7 +1286,8 @@ def _pdf_full_text_parts(copy: unpaywall.CopyResult, budget: int) -> list[str]:
     parts = [
         "Source: an open PDF copy found through Unpaywall (version: "
         f"{meta.get('version')}; host type: {meta.get('host_type')}; PDF: {meta.get('pdf_url')}). {cut} "
-        "A line-break hyphen is shown joined; page markers `[page N]` are not part of the paper's text.",
+        "A line-break hyphen, or a line break after a slash, is shown joined; page markers `[page N]` are not part "
+        "of the paper's text.",
         "A quote from this text takes `case_definition_source: fulltext_pdf`. It must lie on one page, word for word, "
         "and it passes the citation check (C14) only after the founder has confirmed it by hand "
         "(`uv run python -m me_atlas.unpaywall confirm`). No agent runs that command.",

@@ -64,11 +64,13 @@ EXTRACTOR = "pdfminer.six"
 REJECTED_HOSTS = ("ncbi.nlm.nih.gov", "europepmc.org", "ebi.ac.uk")
 ACCEPTED_VERSIONS = ("publishedVersion", "acceptedVersion")  # in this order; submittedVersion is never used
 
-LINE_BREAK_HYPHEN = ""  # marks a hyphen at the end of a line between letters (private-use character)
+LINE_BREAK_HYPHEN = "\ue000"  # marks a hyphen at the end of a line between letters (private-use character)
+SLASH_BREAK = "\ue001"  # a line break right after a slash: read as nothing or as a space
 PAGE_BREAK = "\f"
 _REFERENCE_HEADINGS = frozenset({"references", "bibliography", "literature cited"})
-_LINE_BREAK_HYPHEN_RE = re.compile(r"(?<=[^\W\d_])[-‐][ \t]*\n[ \t]*(?=[^\W\d_])")
-_SOFT_HYPHEN_BREAK_RE = re.compile(r"­[ \t]*\n[ \t]*")
+_LINE_BREAK_HYPHEN_RE = re.compile(r"(?<=[^\W\d_])[-\u2010][ \t]*\n[ \t]*(?=[^\W\d_])")
+_SLASH_BREAK_RE = re.compile(r"/[ \t]*\n[ \t]*(?=\S)")
+_SOFT_HYPHEN_BREAK_RE = re.compile(r"\u00ad[ \t]*\n[ \t]*")
 _KEY_SAFE = frozenset("abcdefghijklmnopqrstuvwxyz0123456789._-")
 
 
@@ -238,7 +240,8 @@ def clean_pages(raw_pages: Sequence[str]) -> tuple[str, bool]:
         pages[pi] = "\n".join(pages[pi].split("\n")[:li])
     cleaned = []
     for page in pages:
-        marked = _LINE_BREAK_HYPHEN_RE.sub(LINE_BREAK_HYPHEN, page)
+        marked = _SLASH_BREAK_RE.sub("/" + SLASH_BREAK, page)
+        marked = _LINE_BREAK_HYPHEN_RE.sub(LINE_BREAK_HYPHEN, marked)
         cleaned.append(" ".join(marked.split()))
     return PAGE_BREAK.join(cleaned), cut_applied
 
@@ -255,14 +258,21 @@ def _reduce(text: str) -> str:
 def title_in_first_pages(title: str, text: str) -> bool:
     """Whether the PubMed title is in the text of the first two pages (both reduced to lowercase letters and digits)."""
     wanted = _reduce(title)
-    head = "".join(text.split(PAGE_BREAK)[:TITLE_PAGES]).replace(LINE_BREAK_HYPHEN, "")
+    head = join_markers("".join(text.split(PAGE_BREAK)[:TITLE_PAGES]))
     return bool(wanted) and wanted in _reduce(head)
 
 
+def join_markers(page: str) -> str:
+    """The page with every line-break marker read as nothing (what candidate sentences and the context show)."""
+    return page.replace(LINE_BREAK_HYPHEN, "").replace(SLASH_BREAK, "")
+
+
 def _variants(page: str) -> tuple[str, ...]:
-    if LINE_BREAK_HYPHEN not in page:
-        return (page,)
-    return (page.replace(LINE_BREAK_HYPHEN, ""), page.replace(LINE_BREAK_HYPHEN, "-"))
+    """Every reading of a page: each line-break hyphen as nothing or "-", each slash line break as nothing or a
+    space. No other whitespace becomes flexible."""
+    hyphens = ("", "-") if LINE_BREAK_HYPHEN in page else ("",)
+    slashes = ("", " ") if SLASH_BREAK in page else ("",)
+    return tuple(page.replace(LINE_BREAK_HYPHEN, h).replace(SLASH_BREAK, sl) for h in hyphens for sl in slashes)
 
 
 def quote_page(quote: str, text: str) -> int | None:
@@ -287,7 +297,7 @@ def pdf_candidates(text: str) -> list[tuple[int, CaseDefinitionCandidate]]:
     from the text with line-break hyphens removed, so a copied sentence matches."""
     found: list[tuple[int, CaseDefinitionCandidate]] = []
     for number, page in enumerate(text.split(PAGE_BREAK), start=1):
-        found += [(number, c) for c in _candidates("body", "body", [page.replace(LINE_BREAK_HYPHEN, "")])]
+        found += [(number, c) for c in _candidates("body", "body", [join_markers(page)])]
     return found
 
 

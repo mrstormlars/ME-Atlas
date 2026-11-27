@@ -568,3 +568,25 @@ def test_candidates_carry_page_numbers_and_their_sentences_match():
     assert any("Fukuda" in c.sentence and n == 1 for n, c in unpaywall.pdf_candidates(main))
     assert all(unpaywall.quote_in_pdf_text(c.sentence, main) for _, c in unpaywall.pdf_candidates(main))
     assert unpaywall.pdf_candidates("Nothing relevant on this page.") == []
+
+
+def test_a_line_break_after_a_slash_matches_joined_and_with_a_space():
+    text, _ = unpaywall.clean_pages(["Cases met the 1994 CDC/\nFukuda definition in a made-up clinic."])
+    assert unpaywall.SLASH_BREAK in text
+    assert unpaywall.quote_in_pdf_text("the 1994 CDC/Fukuda definition", text)
+    assert unpaywall.quote_in_pdf_text("the 1994 CDC/ Fukuda definition", text)
+    assert not unpaywall.quote_in_pdf_text("the 1994 CDC  Fukuda definition", text)  # nothing else is flexible
+    assert [c.sentence for _, c in unpaywall.pdf_candidates(text)][0].count("CDC/Fukuda") == 1  # shown joined
+
+
+def test_a_slash_followed_by_a_space_inside_a_line_does_not_match_without_the_space():
+    text, _ = unpaywall.clean_pages(["Cases met the 1994 CDC/ Fukuda definition in a made-up clinic."])
+    assert unpaywall.SLASH_BREAK not in text
+    assert unpaywall.quote_in_pdf_text("the 1994 CDC/ Fukuda definition", text)
+    assert not unpaywall.quote_in_pdf_text("the 1994 CDC/Fukuda definition", text)
+
+
+def test_hyphen_and_slash_breaks_can_both_be_read_in_one_page():
+    text, _ = unpaywall.clean_pages(["The CDC/\nFukuda follow-\nup was done in a made-up clinic."])
+    assert unpaywall.quote_in_pdf_text("The CDC/Fukuda followup was done", text)
+    assert unpaywall.quote_in_pdf_text("The CDC/ Fukuda follow-up was done", text)
