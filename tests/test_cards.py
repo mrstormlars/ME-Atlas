@@ -800,6 +800,24 @@ def test_v13_every_recognised_definition_needs_a_quote(tmp_path, definition):
     assert rules(check(tmp_path, data)) == {"V13"}
 
 
+def test_v13_fulltext_pdf_is_a_source_like_fulltext_and_needs_the_quote(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition"] = "Fukuda"
+    study(data, "pmid:00000001")["case_definition_source"] = "fulltext_pdf"
+    study(data, "pmid:00000001")["case_definition_quote"] = None
+    issues = check(tmp_path, data)
+    assert rules(issues) == {"V13"}
+    assert paths(issues) == {"studies[0].case_definition_quote"}
+    study(data, "pmid:00000001")["case_definition_quote"] = "A fictional sentence naming the Fukuda criteria."
+    assert check(tmp_path, data) == []
+
+
+def test_v13_an_unknown_source_is_still_refused(tmp_path):
+    data = base()
+    study(data, "pmid:00000001")["case_definition_source"] = "pdf"
+    assert check(tmp_path, data) != []
+
+
 def test_v13_none_without_source(tmp_path):
     data = base()
     study(data, "pmid:00000004")["case_definition"] = "none"

@@ -167,7 +167,7 @@ class Study(_Model):
     case_definition: Literal[
         "CCC", "ICC", "IOM2015", "Fukuda", "Holmes1988", "CDC_unspecified", "Oxford", "other", "none", "unverified"
     ]
-    case_definition_source: Literal["abstract", "fulltext"] | None
+    case_definition_source: Literal["abstract", "fulltext", "fulltext_pdf"] | None
     case_definition_quote: NonEmptyStr | None
     design: Literal["controlled", "uncontrolled", "intervention_controlled", "other"]
     n_patients: Annotated[int, Field(ge=0)] | None
@@ -434,7 +434,7 @@ def check_card(card: Card, file_stem: str, *, published: bool = False) -> list[t
                 (
                     "V13",
                     f"{base_path}.case_definition_source",
-                    f"case_definition '{s.case_definition}' needs a source (abstract or fulltext)",
+                    f"case_definition '{s.case_definition}' needs a source (abstract, fulltext or fulltext_pdf)",
                 )
             )
         if s.case_definition in RECOGNISED_CASE_DEFINITIONS and s.case_definition_quote is None:
