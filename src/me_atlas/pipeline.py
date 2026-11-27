@@ -43,7 +43,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Collection, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Annotated, Any, Literal
@@ -1592,7 +1592,9 @@ def _finish_checks(cfg: Config, result: dict[str, Any], ops_errors: list[str], p
     )
 
 
-def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool = False) -> list[str]:
+def correction_ops_problems(
+    ops: OpsFile, draft_level: int, *, published: bool = False, upgrade: bool = False
+) -> list[str]:
     """A2: what the operations file of a correction round may hold. Empty when it holds nothing else.
 
     No paper; at least one operation; only ``replace_paragraph``, ``remove_paragraph``, ``update_study``,
@@ -1603,6 +1605,10 @@ def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool =
     With ``published`` (the correction of a published card, ``me_atlas.card_correction``) the list is
     ``replace_paragraph``, ``remove_paragraph``, ``update_study``, ``remove_link``, ``propose``, ``set_link_text`` and
     ``remove_comment``: no ``add_sentence`` either. Without it ``remove_comment`` is refused.
+
+    With ``upgrade`` (the correction of a published card whose request comes from the full-text scan, verified by
+    ``me_atlas.card_correction``) a ``propose`` on ``level`` may also raise the level and one on a badge may set it to
+    true. Nothing else changes here; which studies the reason must cite is checked by ``card_correction.ops_problems``.
     """
     found: list[str] = []
     if ops.paper is not None:
@@ -1627,6 +1633,10 @@ def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool =
                 "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
             )
         elif isinstance(op, Propose):
+            if op.target == "level" and upgrade and isinstance(op.value, int) and op.value > draft_level:
+                continue
+            if op.target in ("diagnostic_marker", "explains_pem") and upgrade and isinstance(op.value, bool):
+                continue
             if op.target == "level" and not (isinstance(op.value, int) and op.value < draft_level):
                 found.append(
                     f"operations[{i}] proposes level {op.value}: a correction may only lower the level "
@@ -2573,6 +2583,7 @@ def build_audit_context(
     round_links: Sequence[str] | None = None,
     second: bool = False,
     what: str | None = None,
+    extra_fulltext: Collection[str] = (),
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -2591,7 +2602,9 @@ def build_audit_context(
     (the ``to`` of the links the audit decides) makes the context say that it is a link round and name those links
     only, ``second`` that it is the second audit of the round. ``what`` (with ``applied_round``) names the change in the
     heading instead of "the links added to the published card" (the correction of a published card says "the correction
-    of the published card").
+    of the published card"). ``extra_fulltext`` (with ``applied_round``; empty by default) names studies whose full text
+    is given uncut besides the carriers of the applied card: the correction of a published card whose request comes
+    from the full-text scan gives it for every study the correction changes.
     """
     base = _base_card(cfg, slug)
     source = card_text_from if card_text_from is not None and key is None and not redraft else base
@@ -2624,7 +2637,7 @@ def build_audit_context(
         )
         applied_card = _load_card(applied_path)
         study_ids += [s.id for s in applied_card.studies]
-        carriers = carrier_ids(applied_card)  # E1: the carriers of the card once the change is in
+        carriers = carrier_ids(applied_card) | set(extra_fulltext)  # E1: the carriers of the card once the change is in
         what = what or (
             f"the change from paper `{paper_id}`"
             if paper_id
