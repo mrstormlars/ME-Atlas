@@ -1,0 +1,49 @@
+card: small-fibre-neuropathy
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:33577778 changed from unverified to IOM2015, read from the full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:33577778
+        quote: "All then underwent additional medical record review to confirm presence of ME/CFS, using the National Academy of Medicine requirement of documentation of three major criteria (ie, chronic fatigue for ≥6 months, post-exertional malaise, unrefreshing sleep) plus one minor criteria (ie, either cognitive impairment, orthostatic intolerance)."
+      - source: pmid:33577778
+        quote: "For those with uncertain documentation on medical record review, a short telephone questionnaire was used to finalize inclusion or exclusion."
+  - decision_part: "The case definitions of pmid:39888240 and pmid:37968647 changed from unverified to other: the text admits a prior diagnosis with no named definition as an alternative to Fukuda, so neither study can be recorded as Fukuda or count towards the level."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:39888240
+        quote: "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation."
+      - source: pmid:37968647
+        quote: "Patients diagnosed of ME/CFS should be previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time."
+  - decision_part: "The level stays at 1: the reworded level_reason[2] says pmid:33577778, now IOM 2015, judged its biopsies against laboratory norms and not against its 36 controls, who had no biopsies, and names possible referral bias; so it is not a controlled comparison of the small fibre measure and does not lift the card to level 2."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:33577778
+        quote: "Among the 160 ME/CFS patient biopsies, 31% were consistent with SFN (epidermal innervation ≤5.0% of predicted; P < .0001)."
+      - source: pmid:33577778
+        quote: "A control cohort assembled for comparison purposes comprised 36 patients who had undergone iCPET for exertional intolerance but who had normal results."
+      - source: pmid:33577778
+        quote: "We viewed it as unnecessary for our iCPET control subjects to have skin biopsies because our laboratory has far more comprehensive age-, sex-, and race-adjusted same-laboratory norms from more than 450 healthy control subjects."
+      - source: pmid:33577778
+        quote: "The standard diagnostic cutoff (≤5% of the laboratory’s sex-, age-, and race-adjusted normal distribution) was applied to interpret biopsy normality."
+      - source: pmid:33577778
+        quote: "Although referral bias of ME/CFS patients referred for skin biopsy might skew our sample to inflate prevalence of SFN, the 32% to 50% prevalence widely reported in fibromyalgia corroborate our data."
+  - decision_part: "Level 1 remains the rung the records support: studies point towards small fibre damage, but none is a controlled comparison of the small fibre measure in a recognised case definition with a test against controls."
+    rubric: "One or more small or uncontrolled studies point towards it."
+    evidence:
+      - source: pmid:33577778
+        quote: "Thirty one percent (49/160) had skin biopsies that pathologically confirmed SFN (Table 1)."
+  - decision_part: "The explains_pem badge stays false; its reason now names the IOM 2015 definition of pmid:33577778, and that study found no correlation of denervation with exercise measures and measured no PEM."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33577778
+        quote: "Denervation severity did not correlate with exertional measures."
+  - decision_part: "The diagnostic_marker badge stays false; its reason now describes pmid:39888240 as a prior ME/CFS diagnosis or Fukuda, matching its text, and the AUC is from one patient group only."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:39888240
+        quote: "In ME/CFS patients, the variable that best discriminated between them and HC was also fiber tortuosity (AUC = 0.690; p = 0.032)."
+      - source: pmid:39888240
+        quote: "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation."
+reasons_summary: "Case definitions read correctly from the full texts (IOM 2015 for the 2021 Chest study, other for two Cruces studies); level 1 and both badges stay supported."
+would_change: "A study with a recognised case definition that compares small fibre measures in ME/CFS patients with concurrently measured controls and tests the difference would bear on level 2. The statement that pmid:33577778 shares authors with pmid:41576003 rests on the author lists in the records, not on a quotable sentence; it does not change the level."

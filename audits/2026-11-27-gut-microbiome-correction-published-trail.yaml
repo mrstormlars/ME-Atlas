@@ -1,0 +1,173 @@
+card: gut-microbiome
+card_sha256: 1eb7e25d09e526f7c761c81ddb91261aeae8594fc757b0616204927a859cd85e
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:19338686].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: Table 2 gives
+    16 placebo-group patients with stool results (19 in the treatment group); the card has n_controls
+    null. Quote from the full text: Placebo 16 - - 6 37.5 10 62.5 16 - - 7 43.8 9 56.2'
+- target: studies[pmid:36758521].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The card has
+    the case definition as unverified; the full text names Fukuda and/or Canadian consensus criteria.
+    Quote from the full text: All subjects were recruited at Bateman Horne Center, Salt Lake City, UT,
+    based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria for
+    ME/CFS (Carruthers, 2007).'
+- target: studies[pmid:36758521].n_patients
+  problem: 'The full-text scan found that the full text differs from the card: The card gives 154 patients;
+    the methods text gives 149 (74 short-term, 75 long-term), while the abstract gives 75 and 79. Quote
+    from the full text: We enrolled a total of 149 ME/CFS patients (of which 74 had been diagnosed with
+    ME/CFS <4 years before recruitment and 75 had been diagnosed with ME/CFS >10 years before recruitment)
+    and 79 healthy controls.'
+- target: studies[pmid:36758521].finding
+  problem: 'The full-text scan found that the full text differs from the card: The blood result is stated
+    as plasma isobutyrate, reduced in the short-term group; the card says lower blood butyrate and gives
+    79 long-term patients where the methods text gives 75. Quote from the full text: Strikingly, we found
+    a depletion in plasma isobutyrate in the short-term group'
+- target: level_reason[5]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[5] gives 75
+    patients ill under 4 years and 79 ill over 10 years; the methods text gives 74 and 75, and names Fukuda
+    and/or Canadian consensus criteria. Quote from the full text: We enrolled a total of 149 ME/CFS patients
+    (of which 74 had been diagnosed with ME/CFS <4 years before recruitment and 75 had been diagnosed
+    with ME/CFS >10 years before recruitment) and 79 healthy controls.'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 2 is an error. pmid:36758521 is recorded with case_definition ''unverified''
+      (no source, no quote), and level_reason[5] says ''(case definition not yet verified)'' for it. Its
+      cached full text (data/cache/europepmc/PMC10353054.html) states the case definition: ''All subjects
+      were recruited at Bateman Horne Center, Salt Lake City, UT, based on who met the 1994 CDC Fukuda
+      (Fukuda et al., 1994) and/or Canadian consensus criteria for ME/CFS (Carruthers, 2007).'' The same
+      full text also says, in its Participants section, ''Enrolled ME/CFS participants were required to
+      fulfill the International Chronic Fatigue Syndrome Study Group research criteria, the Canadian Consensus
+      Criteria, and the IOM clinical diagnostic criteria'', which conflicts with ''and/or''.'
+    fix: Set case_definition to Fukuda (the 'and/or' sentence guarantees only Fukuda), case_definition_source
+      to fulltext, and case_definition_quote to the 'and/or' sentence verbatim; write out that the paper
+      elsewhere says patients had to meet Fukuda, the Canadian criteria and the IOM criteria. In level_reason[5],
+      replace '(case definition not yet verified)' for this study with the stated definition and the conflict.
+      Leave the Norwegian and Belgian study (pmid:23791918) as not yet verified; no full text of it is
+      cached.
+    targets:
+    - studies[pmid:36758521].case_definition
+    - studies[pmid:36758521].case_definition_source
+    - studies[pmid:36758521].case_definition_quote
+    - level_reason[5]
+  - class: decisive
+    severity: must_fix
+    problem: 'Request items 3 and 5 (and the number part of item 4) are errors. The card gives pmid:36758521
+      n_patients 154, and level_reason[5] and the study''s finding say ''75 patients ill for under 4 years
+      and 79 ill for over 10 years''. These numbers come from the abstract (''short-term (<4 years, n
+      = 75) or long-term disease (>10 years, n = 79)''), but the cached full text gives 149 patients three
+      times: Methods ''We enrolled a total of 149 ME/CFS patients (of which 74 had been diagnosed with
+      ME/CFS <4 years before recruitment and 75 had been diagnosed with ME/CFS >10 years before recruitment)
+      and 79 healthy controls'', Results ''We enrolled 228 participants; 149 with ME/CFS (74 short-term
+      and 75 long-term)'', and its statistics use ''ME/CFS N=149''. The card states the abstract''s numbers
+      as fact without the discrepancy.'
+    fix: Set n_patients to 149 and say 74 ill for under 4 years and 75 ill for over 10 years (79 controls)
+      in level_reason[5] and the finding, adding that the abstract gives 75 and 79.
+    targets:
+    - studies[pmid:36758521].n_patients
+    - studies[pmid:36758521].finding
+    - level_reason[5]
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 4 (the blood result) is an error. level_reason[5] says the study ''reported
+      ... lower butyrate in blood'' and the finding says ''lower blood butyrate''. The abstract says ''a
+      reduction in plasma butyrate'', but the full text shows the measured plasma metabolite was isobutyrate,
+      and only in the short-term group: ''Strikingly, we found a depletion in plasma isobutyrate in the
+      short-term group (Figure 6A, p = 0.03, Wilcoxon rank-sum test with Bonferroni correction ...)''.
+      Stating lower blood butyrate across patients says more than the measurement. The fix states a fact
+      from the full text of a flagged study, so it is decisive.'
+    fix: Replace 'lower butyrate in blood' / 'lower blood butyrate' with 'lower plasma isobutyrate in
+      the shorter-ill group', citing pmid:36758521, or remove the blood result.
+    targets:
+    - studies[pmid:36758521].finding
+    - level_reason[5]
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:36758521
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: All subjects were recruited at Bateman Horne Center, Salt Lake City, UT,
+        based on who met the 1994 CDC Fukuda (Fukuda et al., 1994) and/or Canadian consensus criteria
+        for ME/CFS (Carruthers, 2007).
+      n_patients: 149
+      finding: A study of 149 patients (74 ill for under 4 years and 75 ill for over 10 years; the abstract
+        gives 75 and 79 for the two patient groups) and 79 healthy controls found clear differences in
+        gut bacteria mainly in the shorter-ill patients, and reported less bacterial butyrate production
+        and lower plasma isobutyrate in the shorter-ill group. The paper's recruitment sentence says patients
+        met the Fukuda and/or Canadian criteria, while its Participants section says they were required
+        to fulfil the International Chronic Fatigue Syndrome Study Group research criteria, the Canadian
+        Consensus Criteria and the IOM clinical diagnostic criteria; the card records the lower-ranked
+        Fukuda.
+  - op: replace_paragraph
+    field: level_reason
+    index: 5
+    text: Other studies report different bacteria. A study of Norwegian and Belgian patients (case definition
+      not yet verified) found more Alistipes in Norwegian patients, while the Chinese study found Alistipes
+      lower; its text says the fall did not survive correction for multiple testing, while its Fig. 4
+      lists Alistipes among taxa that differed after correction. A study of 149 patients, 74 ill for under
+      4 years and 75 ill for over 10 years (the abstract gives 75 and 79), and 79 healthy controls found
+      clear differences in gut bacteria mainly in the shorter-ill group, and reported less bacterial butyrate
+      production and lower plasma isobutyrate in the shorter-ill group. Its recruitment sentence names
+      the Fukuda and/or Canadian criteria, while its Participants section says patients had to meet the
+      International Chronic Fatigue Syndrome Study Group research criteria, the Canadian Consensus Criteria
+      and the IOM clinical diagnostic criteria; the card records Fukuda, the lower-ranked definition.
+    sources:
+    - pmid:23791918
+    - pmid:41387992
+    - pmid:36758521
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: wording
+      target: level_reason[5]
+      severity: advisory
+      problem: 'Not reader-facing, but the header comments of the applied card (lines 7 and 18-19: ''Studies
+        without an open full text and with no case definition in the abstract (23791918, 36758521, 42351611)
+        stay unverified'' and ''TODO: verify - case definitions of 36758521 ... no open full text in Europe
+        PMC'') now contradict the corrected study entry, which records Fukuda from the cached full text
+        PMC10353054. This correction may not edit header comments, so it is not a fault of the operations.'
+      fix: In a later maintenance step, update the header comments to say 36758521's case definition comes
+        from the cached full text PMC10353054.
+      targets:
+      - level_reason[5]
+    - class: wording
+      target: level_reason[5]
+      operation: 1
+      severity: advisory
+      problem: '''the card records Fukuda, the lower-ranked definition'' is accurate and follows the reviewer''s
+        fix, but it reads as an editorial note. Strictly, the ''and/or'' sentence only guarantees that
+        each patient met Fukuda or the Canadian criteria; Fukuda is recorded as the broader of the two
+        named definitions. The meaning is not wrong as it stands.'
+      fix: If reworded later, something like 'the card records the broader Fukuda definition' would make
+        the reason plainer.
+      targets:
+      - level_reason[5]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:36758521].case_definition differs
+  - studies[pmid:36758521].case_definition_source differs
+  - studies[pmid:36758521].case_definition_quote differs
+  - studies[pmid:36758521].n_patients differs
+  - 'level_reason[5]: the numeral(s) 149, 74 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 1, which is classed decisive, not wording
+  - operations[0] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[1] answers finding 2, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-gut-microbiome-correction-published.yaml
+- 2026-11-27-gut-microbiome-correction-published-second.yaml
+outcome: published

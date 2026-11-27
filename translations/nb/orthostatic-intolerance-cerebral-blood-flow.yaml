@@ -14,14 +14,19 @@ items:
   level_reason[0]:
     text: En kontrollert studie fra en nederlandsk klinikk (Stichting CardioZorg) målte blodstrømmen til hjernen med ultralyd
       av halspulsårene under en tilt-test med hodet opp på 30 minutter hos 429 pasienter og 44 friske kontroller. Alle pasientene
-      oppfylte Fukuda-definisjonen, som ikke krever PEM, og 70% oppfylte også International Consensus Criteria. Ved slutten
-      av tilt-testen hadde blodstrømmen til hjernen falt med 26% hos pasientene og 7% hos kontrollene; fallet var større enn
+      oppfylte Fukuda-kriteriene, som ikke krever PEM, og 70% oppfylte også International Consensus Criteria. Ved slutten
+      av tilt-testen hadde blodstrømmen til hjernen falt med 26% hos pasientene og 7% hos kontrollene. Fallet var større enn
       hos kontrollene hos pasienter med POTS, med forsinket ortostatisk hypotensjon og med normal hjertefrekvens og blodtrykksrespons.
-      Midt i tilt-testen hadde pasienter som oppga flere ortostatiske symptomer et større fall. Ingen uavhengig gruppe har
-      gjentatt dette funnet ennå. Kortet er på nivå 2 på grunn av denne studien.
+      Midt i tilt-testen hadde pasienter som oppga flere ortostatiske symptomer et større fall. Kortet er på nivå 2 på grunn
+      av denne studien. En liten studie fra New York Medical College (15 pasienter, 11 kontroller) fant et større fall i blodstrømshastighet
+      ved tilt, målt med transkraniell doppler, men den er en utvalgt kohort, og en studie fra samme laboratorium fant ikke
+      den samme forskjellen. Kortet teller den ikke som en replikasjon (se under). Funnet med halspulsåre-metoden er ikke
+      replikert.
     sources:
     - pmid:32140630
-    source_hash: 2782d4c3f8ebb9b018c1687d3e9979eb5aafb78fef7841a72e86fc16f83eb680
+    - pmid:25277740
+    - pmid:22180650
+    source_hash: 7d2cdeac03f79a14a74582fa8f2db3a0ee471e7a10992a5da92bd0e52727b1da
   level_reason[1]:
     text: En senere studie fra den samme klinikken fant et lignende fall under sitting hos 100 alvorlig syke pasienter (24,5%,
       mot 0,4% hos 15 friske kontroller). Fordi den kommer fra den samme gruppen, teller den ikke som en gjentakelse fra andre.
@@ -60,19 +65,24 @@ items:
     - pmid:7674527
     source_hash: 094f695c14c5a405ab51b4f26e35f03ed7f02b8e347f4cd9747a555373178f82
   level_reason[5]:
-    text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe med kontrollerte diagnosekriterier har gjentatt fallet i blodstrømmen
-      til hjernen. To studier fra New York Medical College fant lavere blodstrømshastighet i hjernen ved tilt (i den ene et
-      fall på 22,5% hos 15 pasienter mot 8,7% hos 11 kontroller), og en studie fra Osaka Medical College av 28 unge pasienter
-      og 20 kontroller fant tregere gjenoppretting av oksygen i hjernen ved stående stilling. En studie fra Johns Hopkins
-      Medical Institutions av 26 pasienter og 23 kontroller fant ingen forskjell i blodstrømshastighet på noe av de målte
-      tidspunktene (liggende, 1 og 5 minutter etter tilt, 5 og 1 minutter før slutten, og ved avbrudd). Diagnosekriteriene
-      i alle fire er ikke kontrollert ennå, så ingen av dem kan støtte eller motsi kortet.'
+    text: Kortet når ikke nivå 3. En studie fra New York Medical College av 15 pasienter som oppfylte CDC-kriteriene og 11
+      kontroller fant at blodstrømshastigheten i hjernen falt 22,5% ved tilt hos pasientene og 8,7% hos kontrollene. Pasientene
+      var 15 til 29 år gamle og ble rekruttert for rapportert nevrokognitiv svikt og hyperventilering eller hypokapni som
+      trolig skyldtes POTS. Studien målte blodstrømshastighet med transkraniell doppler, ikke blodstrøm med ultralyd av halspulsårene.
+      En studie fra samme laboratorium av 25 pasienter som oppfylte Fukuda-kriteriene, alle med POTS, og 20 kontroller fant
+      at absolutt gjennomsnittlig blodstrømshastighet var litt lavere hos pasientene ved hver tilt-vinkel, men ingen forskjell
+      mellom gruppene i endringene i blodstrømshastighet ved noen vinkel. Kortet teller derfor ikke den første studien som
+      en replikasjon, og funnet er ikke replikert. To studier til har diagnosekriterier som ikke er kontrollert ennå, så ingen
+      av dem kan støtte eller motsi kortet. En studie fra Osaka Medical College av 28 unge pasienter og 20 kontroller fant
+      tregere gjenoppretting av oksygen i hjernen ved stående stilling, og en studie fra Johns Hopkins Medical Institutions
+      av 26 pasienter og 23 kontroller fant ingen forskjell i blodstrømshastighet på noe av de målte tidspunktene (liggende,
+      1 og 5 minutter etter tilt, 5 og 1 minutter før slutten, og ved avbrudd).
     sources:
-    - pmid:22180650
     - pmid:25277740
+    - pmid:22180650
     - pmid:12006954
     - pmid:12593133
-    source_hash: 3c70117142cdbfa8cd47e37fc351f7e4c4acac56955352e619d5fc14c261bc92
+    source_hash: 8f91d7d1450398564846a4c32eb6d87d22b8d1470474d5ff475a5579f48fec2c
   level_reason[6]:
     text: Kortet når ikke nivå 4. I en placebokontrollert studie av 100 pasienter som oppfylte CDC-kriteriene og hadde et
       fall i blodtrykket ved tilt, ble 7 av 50 som fikk fludrokortison og 5 av 50 som fikk placebo bedre med minst 15 poeng
@@ -87,14 +97,16 @@ items:
   level_reason[7]:
     text: To små studier endret blodstrømmen til hjernen direkte. I en randomisert crossover-studie av 16 pasienter fra den
       nederlandske klinikken reduserte kompresjonsstrømper fallet i blodstrømmen til hjernen under tilt (14% med strømper,
-      25% uten); symptomer var ikke et utfallsmål, og artikkelen oppgir ikke diagnosekriteriene. I studien fra New York Medical
-      College av 15 pasienter reduserte fenylefrin, som hever blodtrykket, fallet i blodstrømshastighet ved tilt (8,1% mot
-      22,5% ubehandlet) og den tregere prestasjonen på en oppgave for arbeidsminne; diagnosekriteriene er ikke kontrollert
-      ennå. Ingen av dem kan telle med for nivå 4.
+      25% uten). Symptomer var ikke et utfallsmål, og artikkelen oppgir ikke diagnosekriteriene. I studien fra New York Medical
+      College av 15 pasienter som oppfylte CDC-kriteriene, og som ble rekruttert for nevrokognitiv svikt og hyperventilering
+      eller hypokapni, reduserte fenylefrin, som hever blodtrykket, fallet i blodstrømshastighet ved tilt (8,1% mot 22,5%
+      ubehandlet) og den tregere prestasjonen på en oppgave for arbeidsminne. Sammenligningen var med en ubehandlet tilt hos
+      de samme pasientene, artikkelen beskriver ingen placebogruppe, og utfallet var en oppgave for arbeidsminne, ikke symptomer.
+      Ingen av dem kan telle med for nivå 4.
     sources:
     - pmid:35056360
     - pmid:25277740
-    source_hash: 41f7d6c69a97e83bd0320f2593a44683d20fbc730557f4b08c319c2951337c5d
+    source_hash: 04fba5fb0f6b12897d3ef9219e5841f08a21e541117471ef4dbe77379136f225
   badge_reasons.diagnostic_marker[0]:
     text: Den nederlandske studien satte en nedre grense for normalt ved et fall på 13% i blodstrømmen til hjernen, fra de
       44 friske kontrollene, og fant et større fall hos 82% til 100% av pasientene, avhengig av hjertefrekvens og blodtrykksrespons.
@@ -179,10 +191,11 @@ items:
       2,7%, ikke signifikant forskjellig fra kontrollene.
     source_hash: f4f7288f83e6a9dd0d21eb7952b06f67312f8eb3c84793547489c605dd488ba1
   studies[pmid:22180650].finding:
-    text: En studie av n=25 pasienter og 20 kontroller fant litt lavere gjennomsnittlig blodstrømshastighet i hjernen hos
-      pasientene ved hver tilt-vinkel, ingen økning i blodstrømshastighet ved mentale oppgaver, og prestasjon på en minneoppgave
-      som ble dårligere når tilt-vinkelen økte.
-    source_hash: 0e8281e048c630a1720c663955eebd902a94545f6e1bf8f066a301a9ccbddf25
+    text: En studie av n=25 pasienter som oppfylte Fukuda-kriteriene, alle med POTS, og 20 kontroller fant at absolutt gjennomsnittlig
+      blodstrømshastighet i hjernen var litt lavere hos pasientene ved hver tilt-vinkel, men at endringene i blodstrømshastighet
+      ved tilt ikke var forskjellige mellom gruppene. Pasientene hadde ingen økning i blodstrømshastighet ved mentale oppgaver,
+      og prestasjonen på en minneoppgave ble dårligere når tilt-vinkelen økte.
+    source_hash: c1ce4d8aa6eefcd8484f37555c4ce38801d08f5c634ed1500bed6ead1265eeb6
   studies[pmid:25277740].finding:
     text: En studie av n=15 pasienter og 11 kontroller fant at blodstrømshastigheten i hjernen falt 22,5% ved tilt hos pasientene
       og 8,7% hos kontrollene; hos pasientene reduserte fenylefrin fallet til 8,1% og reduserte den tilt-utløste forverringen

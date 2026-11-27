@@ -1,0 +1,35 @@
+card: tryptophan-kynurenine-metabolism
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:20384451 changed from unverified to Fukuda, read from the full text, with the card flagging that it does not require post-exertional malaise."
+    rubric: "Fukuda | Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:20384451
+        quote: "Patients were eligible for study if they fulfilled the 1994 case definition for CFS."
+    class: none
+  - decision_part: "The numbers of pmid:20384451: 33 patients (22 with CFS alone, 11 with CFS and fibromyalgia) and 16 healthy controls."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:20384451
+        quote: "Table 1. Clinical Characteristics of Sample CFS only CFS+FM Controls Female Male Female Male Female Male n 15 7 8 3 10 6"
+    class: none
+  - decision_part: "The finding of pmid:20384451, unchanged in substance: no difference in plasma tryptophan or kynurenine among groups."
+    rubric: "A study that measured both ends and found no relation is recorded as a `context` study and the link text says so."
+    evidence:
+      - source: pmid:20384451
+        quote: "Plasma tryptophan and kynurenine concentrations did not differ among groups."
+      - source: pmid:20384451
+        quote: "There were no significant differences in the plasma concentrations of tryptophan or its principal metabolite, kynurenine, between any group either at baseline or in response to tryptophan infusion after groups were stratified by sex."
+    class: none
+  - decision_part: "The statement in level_reason[5] that pmid:20384451 does not contest rung 3: its definition ranks below the Canadian criteria of the studies rung 3 rests on, and it did not measure kynurenic acid, so it did not report the kynurenic acid to kynurenine ratio. Role context and level 3 with its contested mark stay as they are."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:20384451
+        quote: "Plasma kynurenine and total tryptophan were measured using reverse-phase HPLC with 3-nitro-l-tyrosine as the internal standard"
+      - source: pmid:34829952
+        quote: "Our patients fulfilled the criteria of the Canadian Consensus Criteria for the diagnosis of ME/CFS"
+      - source: pmid:34829952
+        quote: "patients with ME/CFS had higher 3-hydroxykynurenine/kynurenine (F1,75 = 6.025, p = 0.016, ηp2 = 0.074) and kynurenic acid/kynurenine (F1,75 = 6.072, p = 0.016, ηp2 = 0.075) ratios"
+    class: none
+reasons_summary: "The full text of the New Jersey study (pmid:20384451) gives the 1994 Fukuda definition, 33 patients and 16 controls, and no difference in plasma tryptophan or kynurenine. It did not measure kynurenic acid, so it leaves level 3 and its contested mark as they are."
+would_change: "A record showing that pmid:20384451 measured kynurenic acid or the kynurenic acid to kynurenine ratio, or patient numbers other than those in its Table 1, would change this decision. A whole-card concern was not decided here: level_reason[5] still opens by saying its studies' case definitions are not yet verified, and this paragraph now also covers the verified Fukuda study. The text separates that study into its own sentences."

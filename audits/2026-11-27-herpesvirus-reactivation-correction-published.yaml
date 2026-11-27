@@ -1,0 +1,51 @@
+card: herpesvirus-reactivation
+decision: reject
+parts:
+  - decision_part: "The corrected diagnostic_marker badge reason, sentence 'No marker on this card has been found again in a second patient group by an independent research group' and the closing grounds (same research group, small second study, no separation statistics): with both Ohio studies now carrying stated case definitions, the badge stays no on a criterion (an independent research group, discrimination of individuals) that the badge rule does not contain. The badge rule asks for a second, independent patient group with a stated case definition, and the records show the anti-EBV dUTPase antibody tested and found higher in a second, separate patient group (Fukuda, University of Alabama at Birmingham) after a first group (CCC and Fukuda, NOVA Southeastern). The badge value and its reason must be decided on the rule as written; this reason does not do so."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:28303641
+        quote: "The patients in this study met the Canadian Clinical Case Definition (CCC) [Carruthers et al., 2003] and the Fukuda criteria [Fukuda et al., 1994]"
+      - source: pmid:28303641
+        quote: "while the ME/CFS cohort had higher anti-EBV-dUTPase antibodies than in both GWI patients (P = 0.0008) and controls (P < 0.0001)"
+      - source: pmid:28303641
+        quote: "All study subjects provided written informed consent and the protocol was approved by the Institutional Review Board for Human Subjects at NOVA Southeastern University."
+      - source: pmid:41451845
+        quote: "The study subjects were female individuals between ages 19–65 in the College of Community Health (CCHA) patient database who were pre-screened for ME/CFS using the Fukuda case definition without Reeves modification [2]."
+      - source: pmid:41451845
+        quote: "Serum samples and demographics information were obtained from Dr. Jarred Younger, University of Alabama at Birmingham (UAB)."
+      - source: pmid:41451845
+        quote: "using a different ME/CFS cohort of longitudinal sera samples collected over a 3-month timeline compared to age and gender-matched healthy controls"
+      - source: pmid:41451845
+        quote: "The results of this study demonstrate a significant increase in dUTPase IgG antibodies to the herpesviruses Epstein-Barr virus (EBV), human herpesvirus-6 (HHV-6) and varicella zoster virus (VZV) in ME/CFS compared to healthy-controls (p < 0.001)."
+    class: decisive
+  - decision_part: "The badge reason rests the 'no' on grounds outside the published badge rule (an independent research group; how well antibodies separate individuals), which the rubric forbids editors to add."
+    rubric: "Grading follows only this published ladder; editors do not add criteria."
+    evidence:
+      - source: pmid:41451845
+        quote: "The purpose of this study was to expand on and validate our previous findings showing heightened levels of IgG antibodies against the dUTPase protein of multiple herpesviruses [21]"
+    class: decisive
+  - decision_part: "The case definitions newly recorded for pmid:37526404 (Fukuda, plasma cohort of 285 patients and 201 controls), pmid:28303641 (CCC, 55 and 151) and pmid:41451845 (Fukuda) match sentences in their own full texts."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:37526404
+        quote: "ME/CFS cases were enrolled, if they met the 1994 CDC CFS case definition (5)"
+      - source: pmid:37526404
+        quote: "Cohort 1 samples included plasma from 285 ME/CFS cases and 201 healthy control individuals older than fourteen years of age and residing in northern California."
+      - source: pmid:37526404
+        quote: "The study included 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS (6), and 91 healthy control individuals."
+    class: none
+  - decision_part: "Level 2 not contested by the virome study: its plasma screen did not measure HHV-7 and only patients' plasma was sequenced, so it does not test the patient-only double HHV-6 and HHV-7 plasma result on which level 2 rests."
+    rubric: "at least one study of comparable or higher quality contradicts the finding that supports it"
+    evidence:
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively)"
+      - source: pmid:37526404
+        quote: "MassTag PCR identified six samples positive for HHV-6 (4 cases and 2 controls)."
+      - source: pmid:37526404
+        quote: "We next used unbiased high-throughput sequencing on the Ion Torrent Proton platform to screen the ME/CFS case plasma samples of cohort 1 for additional agents than those targeted by the MassTag PCR."
+      - source: pmid:37526404
+        quote: "HHV-7 66/57 [62.3%/62.6%, p=1]"
+    class: none
+reasons_summary: "Virome and Ohio case definitions are correctly read, but the diagnostic-marker badge is kept at no on criteria the badge rule does not contain, now that two separate patient groups with stated definitions show higher EBV dUTPase antibodies."
+would_change: "A badge reason that decides the diagnostic_marker badge on the rule as written (a second, independent patient group with a stated case definition), either setting it to yes on pmid:28303641 and pmid:41451845 or naming a rubric ground, from the records, on which the second UAB group does not count as independent. A founder ruling that 'independent' in the badge rule means an independent research group would also change this decision. The rest of the correction (virome text, case definitions, contested not set) would be accepted as it stands."

@@ -63,15 +63,18 @@ items:
     text: 'Flere studier kan ikke telle mot nivået fordi diagnosekriteriene deres ikke er bekreftet ennå. De peker i ulike
       retninger: høyere kynurenin med lavere produkter lenger nede i kjeden; et lavere forhold mellom kynurensyre og kinolinsyre
       hos 49 pasienter sammenlignet med 54 kontroller; høyere fritt tryptofan hos 23 pasienter sammenlignet med 42 kontroller;
-      lavere fritt tryptofan hos pasienter i en studie ved University of Oxford (diagnosekriterier ikke oppgitt i sammendraget);
-      og ingen forskjell i plasmatryptofan eller kynurenin i en studie fra New Jersey.'
+      og lavere fritt tryptofan hos pasienter i en studie ved University of Oxford (diagnosekriterier ikke oppgitt i sammendraget).
+      En studie fra New Jersey med 33 pasienter som oppfylte Fukuda-kriteriene fra 1994, som ikke krever forverring etter
+      anstrengelse, og 16 friske kontroller fant ingen forskjell i plasmatryptofan eller kynurenin. Diagnosekriteriene i den
+      rangeres under Canada-kriteriene i studiene som nivået bygger på, og den rapporterte ikke forholdet mellom kynurensyre
+      og kynurenin, så den gjør ikke trinn 3 omstridt.'
     sources:
     - pmid:38015302
     - pmid:34090138
     - pmid:15982993
     - pmid:11352361
     - pmid:20384451
-    source_hash: 5465560b009833644193e81091734c55921212e61dda4ab63b2271f2ff91bd68
+    source_hash: 6cf531bcef70c6909379d49f58716e3b3e8873ace0dfebc2440da8d99d0fb69f
   level_reason[6]:
     text: Nivå 4 er ikke nådd. I en placebokontrollert crossover-pilotstudie av 5 kvinner som oppfylte CDC-kriteriene (versjon
       ikke oppgitt, så definisjonen krever ikke PEM), senket akutt tryptofanuttømming plasmaforholdet mellom tryptofan og
@@ -206,9 +209,9 @@ items:
       tryptofan i plasma hos pasienter enn hos friske kontroller.
     source_hash: 00f98ea55351e472c542628d91dcd041193684e9c12caf3489eb28661f734801
   studies[pmid:20384451].finding:
-    text: En studie av pasienter med bare CFS, CFS med fibromyalgi og friske kontroller (antall er ikke oppgitt i sammendraget)
+    text: En studie av n=33 pasienter (22 (= 15 + 7) med bare CFS, 11 (= 8 + 3) med CFS og fibromyalgi) og 16 friske kontroller
       fant at "Plasma tryptophan and kynurenine concentrations did not differ among groups."
-    source_hash: b22893ad7402b4c67943239aea86fe68d286245d2c4255601c993492fb702e00
+    source_hash: 38ad0217ca33660e580e595baa20026f600279f7280054ed2c0f7aefc9ac8c9f
   studies[pmid:35821534].finding:
     text: En oversiktsartikkel om kynureninveien ved ME/CFS. Den sier at veien er vist å formidle immunrespons og nevroinflammasjon
       gjennom stoffene den danner. Sitert på kartet som kilde til en foreslått lenke, ikke som evidens for nivået.

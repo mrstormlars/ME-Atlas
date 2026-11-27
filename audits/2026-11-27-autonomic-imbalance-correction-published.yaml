@@ -1,0 +1,43 @@
+card: autonomic-imbalance
+decision: reject
+parts:
+  - decision_part: "studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4] and the clause in links[0] that say its patients met the Fukuda definition according to the full text: the full text names only 'international diagnostic criteria for CFS' with a reference whose entry is not in the record, so Fukuda is an inference, not a definition the study's text states."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:31957647
+        quote: "Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited after clinician assessment at an academic tertiary referral clinic"
+      - source: pmid:31957647
+        quote: "Twenty-four patients with medically diagnosed CFS, and 24 matched healthy control individuals participated."
+    class: decisive
+  - decision_part: "The case definition of pmid:31957647 cannot be read as a named definition from the record, so it stays not yet checked (unverified) on the card."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:31957647
+        quote: "Chronic fatigue syndrome (CFS) is a debilitating condition characterized by 6 or more consecutive months of medically unexplained fatigue that is not relieved by rest, accompanied by a range of constitutional and neuropsychiatric symptoms.1"
+    class: decisive
+  - decision_part: "studies[pmid:29855991].case_definition set to Fukuda from the full text: supported, the study's own text names the CDC criteria with the Fukuda 1994 citation."
+    rubric: "Fukuda | Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:29855991
+        quote: "CFS participants met Centers for Disease Control criteria for chronic fatigue syndrome (Fukuda et al. 1994)"
+    class: none
+  - decision_part: "The added clause in level_reason[4] that pmid:31957647 found no group differences in autonomic or heart rate variability measures during laboratory-based resting wakefulness: supported by the full text."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:31957647
+        quote: "No significant differences in autonomic or HRV parameters between groups were found for assessment during wakeful rest."
+      - source: pmid:31957647
+        quote: "autonomic parameters obtained during laboratory-based resting wakefulness"
+    class: none
+  - decision_part: "The revised studies[pmid:29855991].finding (total power r = -.70 only after removing one outlier, r = -.32 with it; LF, HF and VHF not associated with fatigue): supported by the full text."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:29855991
+        quote: "after outlier removal, denoted by *; r = −.70, p = .02; with outlier, r = −.32, p = .32"
+      - source: pmid:29855991
+        quote: "Significant correlations were not detected between fatigue and low frequency (LF) (r = −.34, p = .28), high frequency (HF) (r = −.16, p = .62), or very high frequency (VHF) (r = −.35, p = .26)."
+      - source: pmid:29855991
+        quote: "None differed significantly between HC and CFS participants (all p > .05)."
+    class: none
+reasons_summary: "Rejected: the correction records pmid:31957647 as Fukuda, but its full text names only 'international diagnostic criteria for CFS' with an unseen reference; the other changes (pmid:29855991 Fukuda, resting-wake no-difference, the revised fatigue correlation) are supported."
+would_change: "A record of pmid:31957647 (its own text, or its reference 1 shown in the record) that names the Fukuda 1994 definition would support the Fukuda entry; alternatively, a correction that keeps pmid:31957647 as unverified and keeps its 'not yet verified' wording in level_reason[4] and links[0], while making the other changes, could be accepted. I was handed no drafting reasoning, review finding or earlier audit."

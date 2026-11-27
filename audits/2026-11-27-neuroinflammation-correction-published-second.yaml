@@ -1,0 +1,43 @@
+card: neuroinflammation
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:30617782 changed from unverified to Fukuda, read from the study's own full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:30617782
+        quote: "met Fukuda case definition criteria for ME/CFS (Fukuda et al., 1994), without the Reeves et al. (2005) modifications but with additional criteria proposed by Jason et al. (2010)"
+      - source: pmid:30617782
+        quote: "Fifteen women with ME/CFS and 15 age- and gender-matched healthy controls"
+    class: none
+  - decision_part: "level_reason[1] and the finding of pmid:30617782: only the choline/creatine result in the left anterior cingulate survived correction for multiple comparisons, the brain temperature differences did not, and the authors caution against over-interpretation."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:30617782
+        quote: "The only result to survive corrections for multiple comparisons was elevated CHO/CR in the left anterior cingulate of participants with ME/CFS"
+      - source: pmid:30617782
+        quote: "These findings did not survive corrections for multiple comparisons."
+      - source: pmid:30617782
+        quote: "we caution against over-interpretation until results can be confirmed in an independent sample, preferably with a larger sample size"
+    class: none
+  - decision_part: "Level 2 is unchanged and still rests on the 67-patient controlled diffusion MRI study; the correction makes the MR spectroscopy study better defined but does not move the level, the contested mark, the layer or the links."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:41834684
+        quote: "Diffusion MRI data from 67 ME/CFS patients (median age, 38; and 54 women) and 67 rigorously matched healthy controls (HCs) (median age 38; and 52 women) were analysed."
+    class: none
+  - decision_part: "The diagnostic_marker badge stays false, now citing pmid:30617782 as a fourth open full text; that study reports no marker tested in a second, independent patient group."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:30617782
+        quote: "they are not specific markers of neuroinflammation and cannot likely provide a unique diagnostic test for ME/CFS"
+      - source: pmid:30617782
+        quote: "we caution against over-interpretation until results can be confirmed in an independent sample, preferably with a larger sample size"
+    class: none
+  - decision_part: "The explains_pem badge stays false; pmid:30617782 moves from the abstract-only paragraph to the open full-text paragraph, and its full text shows symptom questionnaires but no direct measure of post-exertional malaise."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:30617782
+        quote: "the Fatigue Severity Scale; FSS (Krupp, LaRocca, Muir-Nash, & Steinberg, 1989), and the Hospital Anxiety and Depression Scale; HADS (Zigmond & Snaith, 1983) were administered"
+    class: none
+reasons_summary: "The correction records the Fukuda definition of the 15-patient MR spectroscopy study from its full text and adds its multiple-comparison caveats; level 2 and both false badges stand on the cited records."
+would_change: "A source showing that the MR spectroscopy cohort was not Fukuda-defined, or that the brain temperature results did survive correction, would change this decision; a study that tests an imaging marker in a second, independent cohort or measures PEM directly would call for re-assessing the badges."

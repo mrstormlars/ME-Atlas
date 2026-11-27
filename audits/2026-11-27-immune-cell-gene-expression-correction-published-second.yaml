@@ -1,0 +1,33 @@
+card: immune-cell-gene-expression
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:16049284 changed from CDC_unspecified (abstract) to Fukuda (fulltext), with the quoted sentence."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:16049284
+        quote: "All 25 patients with CFS were diagnosed according to the Centers for Disease Control criteria of Fukuda et al."
+      - source: pmid:16049284
+        quote: "These cases were diagnosed according to the criteria of Fukuda and colleagues."
+  - decision_part: "The level_reason[2] statement that the first UK study used Fukuda and the second CDC criteria with the version not named, and that neither requires post-exertional malaise."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM"
+    evidence:
+      - source: pmid:16049284
+        quote: "All 25 patients with CFS were diagnosed according to the Centers for Disease Control criteria of Fukuda et al."
+  - decision_part: "The numbers in level_reason[2] and in the finding of pmid:16049284: 16 genes confirmed by PCR in a second sample from 17 of the patients and a different group of 21 controls, 15 up and 1 down."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:16049284
+        quote: "Patients were sampled at two time points, six months apart, between which their symptoms did not vary significantly; the first sample from each patient was used for microarray analysis whereas the second was used for real time PCR."
+      - source: pmid:16049284
+        quote: "Taqman real time PCR (Applied Biosystems, Foster City, California, USA) was used to confirm the importance of genes identified by array experiments in the same group of CFS cases (n = 17) and a different group of normal controls (n = 21); the controls were age and sex matched."
+      - source: pmid:16049284
+        quote: "Significantly different expression, with the same profile as in gene arrays, was confirmed for 16 of 33 genes in the 17 patients tested. This method revealed upregulation of 15 genes and downregulation of one gene (table 2)."
+  - decision_part: "Level 2 and the contested mark on rung 2 are unaffected: Fukuda ranks equal to CDC criteria with the version not stated, so the comparisons in contested.reason still hold, and level 2 still rests on controlled studies in a recognised case definition."
+    rubric: "CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford"
+    evidence:
+      - source: pmid:39435656
+        quote: "Participants with ME/CFS were included according to Canadian Consensus Criteria."
+      - source: pmid:16049284
+        quote: "All 25 patients with CFS were diagnosed according to the Centers for Disease Control criteria of Fukuda et al."
+reasons_summary: "The full text of the 2005 UK study names Fukuda and gives the PCR sample as 17 patients and 21 other controls; the corrected text matches it, and level, contested mark and badges are unaffected."
+would_change: "A source showing that the PCR patients or controls differ from 17 and 21, or that the cohort was diagnosed by a definition other than Fukuda, would change this decision. No drafting reasoning, review finding or earlier audit was given to me."

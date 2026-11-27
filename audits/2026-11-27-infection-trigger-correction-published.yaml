@@ -1,0 +1,51 @@
+card: infection-trigger
+decision: reject
+parts:
+  - decision_part: "studies[pmid:16950834] case_definition set to Fukuda: the study's own text, as given, says only 'the international diagnostic criteria' with a reference number; it does not name Fukuda, and the reference list is not in the record, so Fukuda cannot be read from the record. The entry should stay unverified unless a source naming the definition is given."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:16950834
+        quote: "Where appropriate, AL and IH diagnosed the chronic fatigue syndrome (termed here confirmed post-infective fatigue syndrome) by consensus at six months after the onset of symptoms, according to the international diagnostic criteria.1"
+      - source: pmid:16950834
+        quote: "Chronic fatigue syndrome is defined as persistent or relapsing fatigue that cannot be explained by other medical or psychiatric conditions, which has been present for at least six months, is not alleviated by rest, and causes substantial reduction in daily activities.1"
+    class: decisive
+  - decision_part: "level_reason[3], the clause 'the full text says the diagnosis followed \"the international diagnostic criteria\" and cites Fukuda et al. 1994 for them': the record shows a reference number only; that it is Fukuda et al. 1994 cannot be matched to any sentence in the record. It carries the case definition of a study, so it is not wording only."
+    rubric: "A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:16950834
+        quote: "Where appropriate, AL and IH diagnosed the chronic fatigue syndrome (termed here confirmed post-infective fatigue syndrome) by consensus at six months after the onset of symptoms, according to the international diagnostic criteria.1"
+    class: decisive
+  - decision_part: "links[0] (question:who-is-vulnerable), the clause 'The full text of the first says its cases met \"the international diagnostic criteria\" and cites Fukuda et al. 1994 for them': same unverifiable attribution of Fukuda to the Dubbo study; it replaces the earlier statement that the case definition is not verified, so it changes how the link's source is characterised."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:16950834
+        quote: "according to the international diagnostic criteria.1"
+    class: decisive
+  - decision_part: "studies[pmid:33367564] case_definition Fukuda and the new text on the college cohort (20 of 55 met more than one definition; most of the rest met only Fukuda): supported by the study's own text, which names Fukuda et al."
+    rubric: "Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:33367564
+        quote: "Note that in most cases the ME/CFS group only met the Fukuda criteria [20], while the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM [22] criteria."
+      - source: pmid:33367564
+        quote: "At time 3, 55 students (23%) met criteria for ME/CFS, 20 of whom (8%) met more than 1 case definition of ME/CFS and were termed S-ME/CFS."
+    class: none
+  - decision_part: "level_reason[3], 'their controls had recovered from the same infection': supported for both studies."
+    rubric: "Up: a new study meeting the criteria of the next rung; an independent replication; a better-defined cohort; a larger sample; a controlled design with a comparison group; a preregistered protocol."
+    evidence:
+      - source: pmid:16950834
+        quote: "We invited these cases, and control participants matched by age and sex who had recovered promptly from the same infection, at six months for a medical interview, examination by a physician (AL), and laboratory investigation to exclude alternative medical explanations for ongoing symptoms, such as hypothyroidism or primary sleep disorder."
+      - source: pmid:33367564
+        quote: "Sixty-seven of the 157 asymptomatic students were recruited as matched, recovered controls."
+    class: none
+  - decision_part: "level_reason[0], the added limits (mitigation by enrolment within 30 days; factors that might have led to underestimation): supported by the RECOVER-Adult full text; level 2 itself is unchanged."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39804551
+        quote: "These issues are mitigated by the enrollment of participants within 30 days of infection."
+      - source: pmid:39804551
+        quote: "Conversely, there are also factors that might have contributed to an underestimation of participants with post-COVID-19 ME/CFS."
+      - source: pmid:39804551
+        quote: "The 2015 IOM ME/CFS diagnostic criteria mostly reflect severely ill ME/CFS of many years duration and may not be ideal for identifying short duration ME/CFS."
+    class: none
+reasons_summary: "Rejected: the Dubbo study (pmid:16950834) is recorded as Fukuda, but its text says only 'the international diagnostic criteria' with a reference number, and the record cannot show that reference is Fukuda; the other changes are supported."
+would_change: "A record that names the definition for pmid:16950834 (the article's reference 1 shown in the cached record, or a sentence in a source naming Fukuda for this cohort) would let the Fukuda entry, the level_reason[3] clause and the links[0] clause stand; or the correction could keep pmid:16950834 as unverified and keep only the pmid:33367564 and pmid:39804551 changes. The 'cites Fukuda et al. 1994' statement is unverifiable because the record leaves out the reference list. No drafter reasoning, review findings or earlier audit was given to me."

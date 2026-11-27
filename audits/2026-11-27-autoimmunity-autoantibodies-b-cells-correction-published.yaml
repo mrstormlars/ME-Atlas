@@ -1,0 +1,63 @@
+card: autoimmunity-autoantibodies-b-cells
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:40141440 changed from unverified to CCC, read from the study's own full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:40141440
+        quote: "The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis [31]."
+    class: none
+  - decision_part: "The sample sizes now recorded for pmid:40141440: 172 unique participants in two cohorts, REAP 95 patients and 69 controls, Oncimmune/Augmenta Luminex 59 patients and 44 controls."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:40141440
+        quote: "Our study included a total of 172 unique participants, divided into two cohorts with approximately 92% overlap."
+      - source: pmid:40141440
+        quote: "Cohort (n) 59 44 NA 95 69 NA"
+      - source: pmid:40141440
+        quote: "In total, we measured AAb in plasma samples from 103 participants—including 59 ME/CFS and 44 controls with 80% and 66% females, respectively—resulting in a dataset of 1134 quantified AAb (Supplementary File S1)."
+    class: none
+  - decision_part: "The role of pmid:40141440 changed from context to contradicts: it measured the receptor antibodies that level 2 rests on and found no difference, and the authors say this contrasts with earlier reports."
+    rubric: "when at least one study of comparable or higher quality contradicts the finding that supports it."
+    evidence:
+      - source: pmid:40141440
+        quote: "The Oncimmune/Augmenta technique included ADRB2 (β2-adrenergic receptor), ADRA1A (α1A-adrenergic receptor), two adrenergic members of the GPCR family"
+      - source: pmid:40141440
+        quote: "The corresponding p-values and q-values indicate no significant difference between patients and controls, contrasting with previous studies that reported elevated levels of ADRB2 in ME/CFS [18,19]."
+      - source: pmid:40141440
+        quote: "The REAP library also included a broad range of adrenergic and muscarinic receptor AAb (ADRA1A, ADRA1B, ADRA2A, ADRA2B, ADRA2C, ADRB1, ADRB2, ADRB3, CHRM1, CHRM2, CHRM3, and CHRM4)."
+      - source: pmid:40141440
+        quote: "Despite being part of our analysis, we did not detect AAb reactivity against these proteins, apart from one female ME/CFS subject with REAP reactivity against the fourth ECD of ADRA2B."
+      - source: pmid:34589868
+        quote: "We found significantly increased autoantibody levels for M3 and M4-receptors within the SK-patients compared to controls and significantly increased autoantibody levels for β1, β2, M3 and M4 receptors in GC-patients compared to controls."
+    class: none
+  - decision_part: "The contested mark on rung 2: pmid:40141440 meets all three parts of comparable quality against the Swedish study (pmid:34589868) that level 2 rests on: the same case definition (CCC), a control group, and at least half the patients (59 in the Luminex cohort that gave the beta-2 null, 95 in REAP, against 48 in the Swedish study and 24 in its cohort with raised beta-1 and beta-2)."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:34589868
+        quote: "All patients at both Stora Skondal and Gottfries clinics fulfilled the Canadian Concensus Criteria, the International Concensus Criteria and the IOM criteria"
+      - source: pmid:34589868
+        quote: "In total, 48 patients were included, 24 from each clinic respectively, making up two independent cohorts."
+      - source: pmid:40141440
+        quote: "The ME/CFS subjects fulfilled the Canadian consensus criteria for ME/CFS diagnosis [31]."
+      - source: pmid:40141440
+        quote: "Cohort (n) 59 44 NA 95 69 NA"
+    class: none
+  - decision_part: "The contested reason's account of method differences and the method's own limit (CellTrend ELISA in the Swedish study, Luminex beads and REAP yeast display here, REAP showing receptor extracellular domains separately), and the point that the contest rests on one null study."
+    rubric: "with the contradicting study linked on the card and the reason written in plain sentences, split into short paragraphs with their own sources when it needs more than two."
+    evidence:
+      - source: pmid:34589868
+        quote: "Method visualization of the CellTrend ELISA technique used to quantify sample autoantibody levels."
+      - source: pmid:40141440
+        quote: "The second method, Rapid Extracellular Antigen Profiling (REAP), is a yeast display library platform"
+      - source: pmid:40141440
+        quote: "Indeed, the REAP library displays GPCR extracellular domains (ECDs) separately, and therefore, we are not able to detect certain GPCR autoantibodies; for example, we were not able to detect those that require contact with multiple epitopes on separate ECDs for binding."
+    class: none
+  - decision_part: "The level stays at 2, with rung 2 contested and not lowered: the supporting controlled CCC study still stands, and the contest is shown as a hatched rung rather than removing the rung."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:34589868
+        quote: "These findings confirm previous findings of increased adrenergic and muscarinic autoantibodies in a German cohort of ME patients."
+    class: none
+reasons_summary: "Accept: the full text gives pmid:40141440 a CCC cohort with controls and 59 to 95 patients (Swedish study: 48), no receptor antibody difference, so it contradicts level 2 at comparable quality and rung 2 is contested; the method limits are written out."
+would_change: "A record showing that the cohorts of pmid:40141440 did not all meet CCC, or that its receptor measurements covered fewer than 24 patients, would remove comparable quality and the contested mark. A larger CCC study that settles the receptor antibody question either way would end or change the contest. No earlier audit, finding or review was handed to me."

@@ -67,15 +67,18 @@ items:
   level_reason[5]:
     text: Andre studier rapporterer andre bakterier. En studie av norske og belgiske pasienter (diagnosekriterier ennå ikke
       kontrollert) fant mer Alistipes hos norske pasienter, mens den kinesiske studien fant lavere Alistipes; teksten sier
-      at fallet ikke holdt seg etter korreksjon for multippel testing, mens Fig. 4 oppfører Alistipes blant taxa som skilte
-      seg etter korreksjon. En studie med 75 pasienter som hadde vært syke i under 4 år og 79 som hadde vært syke i over 10
-      år (diagnosekriterier ennå ikke kontrollert) fant tydelige forskjeller i tarmbakterier hovedsakelig i gruppen som hadde
-      vært kortere syk, og rapporterte mindre bakteriell butyratproduksjon og lavere butyrat i blodet.
+      at nedgangen ikke holdt seg etter korreksjon for multippel testing, mens Fig. 4 oppfører Alistipes blant taxa som skilte
+      seg etter korreksjon. En studie med 149 pasienter, 74 som hadde vært syke i under 4 år og 75 som hadde vært syke i over
+      10 år (sammendraget oppgir 75 og 79), og 79 friske kontroller fant tydelige forskjeller i tarmbakterier hovedsakelig
+      i gruppen som hadde vært kortere syk, og rapporterte mindre bakteriell butyratproduksjon og lavere isobutyrat i blodplasma
+      i gruppen som hadde vært kortere syk. Setningen om rekruttering nevner Fukuda- og/eller Canadian-kriteriene, mens avsnittet
+      Participants sier at pasientene måtte oppfylle International Chronic Fatigue Syndrome Study Group research criteria,
+      Canadian Consensus Criteria og IOM clinical diagnostic criteria; kortet registrerer Fukuda, den lavere rangerte definisjonen.
     sources:
     - pmid:23791918
     - pmid:41387992
     - pmid:36758521
-    source_hash: 2e2521c9a0a6b4e5ff41d52a02d8c0cab6dc0255620de90c03237065e2ad090e
+    source_hash: 2f076ab0e10f5babbf8b009ca00c9b304ab9479094d389137ba0c6b1f1dd111d
   level_reason[6]:
     text: Blodmarkører for bakterieprodukter som krysser tarmveggen gir blandede resultater. Cornell-studien fant høyere LPS
       (et bakterietoksin), LPS-bindende protein og løselig CD14 hos pasientene, og en spansk studie med 30 pasienter som oppfylte
@@ -253,10 +256,14 @@ items:
       i pasientenes blod enn i kontrollenes.
     source_hash: 71ba9da7e01144bc687dc64177f7012a20e125febf4f0f45bf1013ad7af3ba2b
   studies[pmid:36758521].finding:
-    text: En studie med 75 pasienter som hadde vært syke i under 4 år, 79 som hadde vært syke i over 10 år og 79 friske kontroller
-      fant tydelige forskjeller i tarmbakterier hovedsakelig hos pasientene som hadde vært kortere syke, og rapporterte mindre
-      bakteriell butyratproduksjon og lavere butyrat i blodet.
-    source_hash: 0de7cf050f22350ca0ed7314ce2c20c82edc9366554a8ce4bf2d6ad56a4e2014
+    text: En studie med 149 pasienter (74 som hadde vært syke i under 4 år og 75 som hadde vært syke i over 10 år; sammendraget
+      oppgir 75 og 79 for de to pasientgruppene) og 79 friske kontroller fant tydelige forskjeller i tarmbakterier hovedsakelig
+      hos pasientene som hadde vært kortere syke, og rapporterte mindre bakteriell butyratproduksjon og lavere isobutyrat
+      i blodplasma i gruppen som hadde vært kortere syk. Artikkelens setning om rekruttering sier at pasientene oppfylte Fukuda-
+      og/eller Canadian-kriteriene, mens avsnittet Participants sier at de måtte oppfylle International Chronic Fatigue Syndrome
+      Study Group research criteria, Canadian Consensus Criteria og IOM clinical diagnostic criteria; kortet registrerer den
+      lavere rangerte Fukuda.
+    source_hash: bd01097b2c295e568a8f3b29b6a51afa74a5e277cb3128e05d093d064f8b6a85
   studies[pmid:23791918].finding:
     text: En studie med n=43 pasienter og 36 friske kontroller fra Belgia og Norge fant mer Lactonifactor og Alistipes og
       mindre av flere Firmicutes hos norske pasienter enn hos norske kontroller, med et mindre tydelig skille hos de belgiske

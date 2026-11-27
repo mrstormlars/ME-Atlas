@@ -1,0 +1,38 @@
+card: small-fibre-neuropathy
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:33577778 changed from unverified to IOM2015, read from its full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:33577778
+        quote: "All then underwent additional medical record review to confirm presence of ME/CFS, using the National Academy of Medicine requirement of documentation of three major criteria (ie, chronic fatigue for ≥6 months, post-exertional malaise, unrefreshing sleep) plus one minor criteria (ie, either cognitive impairment, orthostatic intolerance)."
+  - decision_part: "The case definitions of pmid:39888240 and pmid:37968647 changed from unverified to other (a prior diagnosis or the Fukuda criteria), so they still cannot carry the level."
+    rubric: "Not accepted (see the inclusion rule). A card records which of the two applies"
+    evidence:
+      - source: pmid:39888240
+        quote: "Specifically, patients diagnosed with ME/CFS were required to either have a prior diagnosis or meet the Fukuda et al. criteria [3] at the time of evaluation."
+      - source: pmid:37968647
+        quote: "Patients diagnosed of ME/CFS should be previously diagnosed or meet the Fukuda et al. [3] criteria at the evaluation time."
+  - decision_part: "Level 1 is kept: the IOM 2015 study of 160 patients judged its biopsies against laboratory norms, its controls had no biopsies, and it names referral bias, so its 31% figure is not a controlled comparison that would carry level 2."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:33577778
+        quote: "Among the 160 ME/CFS patient biopsies, 31% were consistent with SFN"
+      - source: pmid:33577778
+        quote: "We viewed it as unnecessary for our iCPET control subjects to have skin biopsies because our laboratory has far more comprehensive age-, sex-, and race-adjusted same-laboratory norms from more than 450 healthy control subjects."
+      - source: pmid:33577778
+        quote: "Although referral bias of ME/CFS patients referred for skin biopsy might skew our sample to inflate prevalence of SFN"
+      - source: pmid:41576003
+        quote: "A total of 143 Long COVID and 170 ME/CFS patients were analyzed and compared to 73 healthy controls and 290 patients with hypermobile Ehlers-Danlos syndrome (hEDS)."
+  - decision_part: "The diagnostic_marker badge stays false; its reason now names the case definition of pmid:39888240 correctly and the AUC is as reported."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition."
+    evidence:
+      - source: pmid:39888240
+        quote: "In ME/CFS patients, the variable that best discriminated between them and HC was also fiber tortuosity (AUC = 0.690; p = 0.032)."
+  - decision_part: "The explains_pem badge stays false; its reason now names the IOM 2015 definition of pmid:33577778, and the study links nerve fibre loss to no exercise measure."
+    rubric: "Yes only when at least one study at level 2 or above measures PEM directly"
+    evidence:
+      - source: pmid:33577778
+        quote: "Denervation severity did not correlate with exertional measures."
+reasons_summary: "The full-text case definitions (IOM 2015 for the 160-patient Boston study, prior diagnosis or Fukuda for two Cruces studies) are read correctly and leave level 1 and both badges unchanged."
+would_change: "A controlled study with a recognised case definition that compares skin biopsy nerve fibre density or SFN prevalence between ME/CFS patients and concurrently biopsied controls with a direct test would bear on level 2. The sentence that pmid:33577778 shares authors with pmid:41576003 was checked against the record author lists only, not quoted as evidence here."

@@ -1,0 +1,41 @@
+card: immune-cell-gene-expression
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:16049284 changed from CDC_unspecified (abstract) to Fukuda (full text), with the new case_definition_quote."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:16049284
+        quote: "These cases were diagnosed according to the criteria of Fukuda and colleagues."
+      - source: pmid:16049284
+        quote: "All 25 patients with CFS were diagnosed according to the Centers for Disease Control criteria of Fukuda et al."
+    class: none
+  - decision_part: "level_reason[2]: the first UK study used the Fukuda criteria, the second CDC criteria with the version not named, and neither requires post-exertional malaise."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as \"does not require PEM\", ranked equal to Fukuda."
+    evidence:
+      - source: pmid:16049284
+        quote: "These cases were diagnosed according to the criteria of Fukuda and colleagues."
+      - source: pmid:18462164
+        quote: "We analyzed gene expression in peripheral blood from 25 patients with CFS/ME diagnosed according to the Centers for Disease Control and Prevention diagnostic criteria and 50 healthy blood donors"
+    class: none
+  - decision_part: "level_reason[2] and studies[pmid:16049284].finding: 16 genes confirmed by PCR in a second sample from 17 of the patients and a different group of 21 controls (15 up, 1 down)."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:16049284
+        quote: "the first sample from each patient was used for microarray analysis whereas the second was used for real time PCR"
+      - source: pmid:16049284
+        quote: "in the same group of CFS cases (n = 17) and a different group of normal controls (n = 21)"
+      - source: pmid:16049284
+        quote: "Significantly different expression, with the same profile as in gene arrays, was confirmed for 16 of 33 genes in the 17 patients tested."
+      - source: pmid:16049284
+        quote: "This method revealed upregulation of 15 genes and downregulation of one gene (table 2)."
+    class: none
+  - decision_part: "Level 2 and the contested mark are unaffected: Fukuda ranks equal to the unnamed CDC version, so no comparison of case definitions on the card changes, and level 2 still rests on controlled studies with the Canadian Consensus Criteria."
+    rubric: "the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford)"
+    evidence:
+      - source: pmid:30791746
+        quote: "A total of 10 ME/CFS patients, diagnosed according to the canadian consensus criteria (CCC) guidelines3 by an experienced ME/CFS clinician, were recruited along with matched controls."
+      - source: pmid:39435656
+        quote: "Participants with ME/CFS were included according to Canadian Consensus Criteria."
+    class: none
+reasons_summary: "The full text of the 2005 UK study names the Fukuda criteria and a PCR confirmation in 17 patients and 21 different controls; the corrected card matches it, and the level and contested mark are unchanged."
+would_change: "A record showing that the PCR step of pmid:16049284 used a different number of patients or controls, or that its cohort was not diagnosed by the Fukuda criteria, would change this decision. The second UK study (pmid:18462164) has no cached full text, so its CDC version stays unverifiable; this correction does not depend on it."

@@ -69,13 +69,16 @@ items:
     - pmid:38965566
     source_hash: de0509857c98d0ac30af7899c1601e4b3f0020d6f2f1d8667a0cfe8dfce3959d
   level_reason[6]:
-    text: Studien med 84 pasienter beholdt pasienter som oppfylte kriteriene for maksimal innsats på første test, men ikke
+    text: 'Studien med 84 pasienter beholdt pasienter som oppfylte kriteriene for maksimal innsats på første test, men ikke
       på andre. Forfatterne leser de av dem som likevel nådde opplevd maksimal innsats på andre test, som kjennetegnende for
-      forverring av symptomer etter anstrengelse. Studiens egne resultater viser et fall i pulsreserve på andre test, som
-      forfatterne skriver tyder på at maksimal innsats ikke ble gitt. De rapporterer et lignende fall hos de matchede kontrollene.
+      forverring av symptomer etter anstrengelse. Kontrollene ble behandlet annerledes: studien ekskluderte deltakere som
+      ikke oppfylte kriteriene for maksimal innsats på CPET-1 eller CPET-2 (4 kontroller), mens ME/CFS-deltakere som oppfylte
+      kriteriene på test 1, men ikke på test 2 fordi de ikke nådde kriteriene for puls og/eller RER, ikke ble ekskludert fra
+      analysen. Studiens egne resultater viser et fall i pulsreserve på andre test, som forfatterne skriver tyder på at maksimal
+      innsats ikke ble gitt. De rapporterer et lignende fall hos de matchede kontrollene.'
     sources:
     - pmid:38965566
-    source_hash: 05a8af6f9e4ae9c0431ab9f2cc34f84a333d47709f3ca33ea24cccae7b17e96c
+    source_hash: 537e3a1ecdb5eba6e32d7836e189440aa5729924656e2a30654b3f6c8c19f10e
   level_reason[7]:
     text: En studie av 16 pasienter og 10 kontroller fra Adelaide fant at arbeidsraten ved ventilasjonsterskelen sank mer
       hos pasientene på andre dag, men fant ingen forskjell mellom gruppene i hvordan oksygenbruket endret seg. To andre toddagersstudier,

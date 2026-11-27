@@ -163,12 +163,15 @@ level_reason:
   - text: >-
       Several studies cannot count towards the level because their case definition is not yet
       verified. They point in different directions: higher kynurenine with lower downstream
-      products; a lower ratio of kynurenic acid to quinolinic acid in 49 patients compared with 54
-      controls; higher free tryptophan in 23 patients compared with 42 controls; lower free
-      tryptophan in patients in a study at the University of Oxford (case definition not stated in
-      the abstract); and no difference in plasma tryptophan or kynurenine in a study from New
-      Jersey.
-    sources: [pmid:38015302, pmid:34090138, pmid:15982993, pmid:11352361, pmid:20384451]
+      products; a lower ratio of kynurenic acid to quinolinic acid in 49 patients compared with
+      54 controls; higher free tryptophan in 23 patients compared with 42 controls; and lower
+      free tryptophan in patients in a study at the University of Oxford (case definition not
+      stated in the abstract). A study from New Jersey of 33 patients meeting the 1994 (Fukuda)
+      definition, which does not require post-exertional malaise, and 16 healthy controls found
+      no difference in plasma tryptophan or kynurenine. Its definition ranks below the Canadian
+      criteria of the studies the level rests on, and it did not report the ratio of kynurenic
+      acid to kynurenine, so it does not contest rung 3.
+    sources: ['pmid:38015302', 'pmid:34090138', 'pmid:15982993', 'pmid:11352361', 'pmid:20384451']
   - text: >-
       Level 4 is not reached. In a placebo-controlled crossover pilot of 5 women meeting CDC criteria
       (version not stated, so the definition does not require post-exertional malaise), acute
@@ -483,21 +486,21 @@ studies:
     journal: Journal of women's health (2002)
     doi: 10.1089/jwh.2009.1697
     cohort: me_cfs
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: Patients were eligible for study if they fulfilled the 1994 case definition for CFS.
     design: controlled
-    n_patients: null  # not in the abstract
-    n_controls: null
+    n_patients: 33
+    n_controls: 16
     measures_pem: false
     preregistered: null
     role: context
     direction: no_difference  # plasma tryptophan and kynurenine
     group: Natelson BH, UMDNJ-New Jersey Medical School, Newark, USA
     finding: >-
-      A study of patients with CFS alone, CFS with fibromyalgia and healthy controls (numbers not
-      stated in the abstract) found that "Plasma tryptophan and kynurenine concentrations did not
-      differ among groups."
+      A study of n=33 patients (22 (= 15 + 7) with CFS alone, 11 (= 8 + 3) with CFS and
+      fibromyalgia) and 16 healthy controls found that "Plasma tryptophan and kynurenine
+      concentrations did not differ among groups."
   # Added 2026-11-08 (founder ruling, survey links): a record cited by a link on the map, kept as context.
   - id: pmid:35821534
     title: "Could the kynurenine pathway be the key missing piece of Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) complex puzzle?"
@@ -563,5 +566,5 @@ links:
       upregulate the catabolite pathway. The abstract reports no patient study measuring both.
     sources: [pmid:26667000]
 last_checked:
-  date: 2026-11-13
+  date: 2026-11-27
   by: ai_audit

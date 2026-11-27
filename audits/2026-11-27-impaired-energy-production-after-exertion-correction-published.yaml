@@ -1,0 +1,23 @@
+card: impaired-energy-production-after-exertion
+decision: accept
+parts:
+  - decision_part: "The corrected level_reason[6]: the added sentence that the 84-patient study excluded participants, all controls (4), who did not meet maximal-effort criteria on either test, while ME/CFS participants who met the criteria on test 1 but missed the heart-rate and/or RER criteria on test 2 were kept in the analysis."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:38965566
+        quote: "Data excluded from the final statistical analyses included participants who; 1) did not satisfy the maximum effort criteria explained previously for CPET-1 or CPET-2 (4 CTL)"
+      - source: pmid:38965566
+        quote: "ME/CFS participants who met maximum effort criteria during test 1 but did not meet criteria during test 2 due to failure to achieve heart rate and/or RER criteria were not excluded from analysis."
+      - source: pmid:38965566
+        quote: "we included ME/CFS participants who met maximum criteria for CPET-1, but not CPET-2, only if perception of effort also indicated a very strong/maximum effort (RPE = ≥ 17)"
+    class: none
+  - decision_part: "The unchanged rest of level_reason[6] (the heart-rate reserve fall and the similar fall in matched controls), and the fact that the correction moves no level, badge, contested mark, layer, link or study role: level 3 and the contested rung 3 stand as before."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group"
+    evidence:
+      - source: pmid:38965566
+        quote: "However, for CPET-2, there was a significant decline in %HRRadjusted for ME/CFS in the total sample (p ≤ 0.01) and matched-pairs (p ≤ 0.05) that fell below the threshold of 80%, suggesting that maximum effort was not given during CPET-2."
+      - source: pmid:38965566
+        quote: "Interestingly, a similar decline in %HRRadjusted during CPET-2 was observed in the matched-pairs CTL as well (p ≤ 0.05)."
+    class: none
+reasons_summary: "The added sentence on how the 84-patient study handled maximal-effort exclusions for controls versus patients matches the study's own full text word for word in substance; no level, badge or contested mark moves."
+would_change: "A reading of the 84-patient study's full text showing that patients failing effort criteria on test 1 were also excluded or that the 4 excluded controls were not excluded for effort criteria would change this; so would a change that used this sentence to alter the level or the contested mark, which this correction does not do."

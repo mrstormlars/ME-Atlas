@@ -1,0 +1,676 @@
+card: oxidative-nitrosative-stress
+card_sha256: 3ad488a9b99512c2aea413bcd948610f721bcd23ce578eeae572848f2df07fb9
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:22281935].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states patients were diagnosed using modified US CDC guidelines; the card has the case definition
+    as unverified with no quote. Quote from the full text: using modified US Centers for Disease Control
+    and Prevention (CDC) guidelines (1)'
+- target: level_reason[4]
+  problem: 'The full-text scan found that the full text states something the card lacks: level_reason[4]
+    lists this study among those with a case definition not yet verified; the full text names modified
+    US CDC guidelines. Quote from the full text: using modified US Centers for Disease Control and Prevention
+    (CDC) guidelines (1)'
+- target: studies[pmid:25386668].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: The full text states the
+    patients met the 1994 CDC Fukuda criteria; the card lists the case definition as unverified. Quote
+    from the full text: 73 eligible CFS patients who fulfilled the 1994 CDC Fukuda''s criteria'
+- target: studies[pmid:25386668].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives 39 patients in the treated arm and 34 in the placebo arm; the card has n_controls null. Quote
+    from the full text: Thirty-nine CFS subjects received oral Coenzyme Q10 (200 mg/day) plus NADH (20
+    mg/day) supplementation (VITAE NATURAL NUTRITION, S.L.) in soft gel capsules and thirty-four CFS subjects
+    received a matching placebo'
+- target: studies[pmid:25386668].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    reports the lipid peroxide comparison as treated versus placebo after 8 weeks, which the card says
+    the abstract does not specify. Quote from the full text: CFS patients treated with CoQ10 plus NADH
+    showed significantly lower levels of lipid peroxidation versus placebo (7.9±2.7 vs. 14.9±3.9 nmol/106
+    cells, p<0.05, respectively)'
+- target: level_reason[5]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[5] says the
+    case definition is not yet verified and that the lipid peroxide comparison is unclear; the full text
+    states Fukuda criteria and a comparison versus placebo. Quote from the full text: 73 eligible CFS
+    patients who fulfilled the 1994 CDC Fukuda''s criteria'
+- target: studies[pmid:43027675].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: The card has the case definition
+    as unverified; the full text states the ME/CFS patients met the IOM 2015 criteria. Quote from the
+    full text: ME/CFS patients were included in the study according to the diagnostic criteria proposed
+    by the Institute of Medicine (IOM) in 2015'
+- target: studies[pmid:43027675].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The card says
+    the direction of the marker differences is not given; the full text reports MDA and GPX1 higher in
+    ME/CFS than in long COVID and healthy controls. Quote from the full text: MDA (median [Q1–Q3]: 233.60
+    [96.23–419.08]) and GPX1 (38.15 [24.38–59.71]) were significantly increased in ME/CFS compared to
+    both LC'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: Request item 1 is an error. The card records pmid:22281935 (Shungu 2012) as case_definition
+      unverified with no quote. The cached full text (data/cache/europepmc/PMC3896084.html, Methods) says
+      the patients 'were diagnosed by a board-certified neurologist with extensive CFS research experience
+      (BHN), using modified US Centers for Disease Control and Prevention (CDC) guidelines (1)', and its
+      reference 1 is Fukuda K et al., Ann Intern Med 1994;121:953-959. The 15 patients and 13 healthy
+      volunteers on the card match the full text ('Fifteen patients with CFS, 15 with MDD and 13 HVs').
+    fix: Set case_definition from the full text, with case_definition_source fulltext and the quote above.
+      The study cites Fukuda 1994 as reference 1, but the text says 'modified' CDC guidelines without
+      saying what was modified. Either label it Fukuda and say on the card that the authors call the guidelines
+      modified, or label it CDC_unspecified. Both are accepted like Fukuda and flagged as not requiring
+      PEM. The auditor decides.
+    targets:
+    - studies[pmid:22281935].case_definition
+    - studies[pmid:22281935].case_definition_source
+    - studies[pmid:22281935].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: Request item 2 is an error. level_reason[4] lists 'glutathione in the brain was lower in
+      15 patients than in 13 healthy volunteers' (pmid:22281935) under 'studies whose case definition
+      is not yet verified'. The cached full text names modified US CDC guidelines and cites Fukuda 1994
+      for them, so this is no longer a study without a stated definition.
+    fix: Move the Shungu brain-glutathione result into the sentence about studies with a recognised definition.
+      Name the definition as in the corrected study record and flag it as not requiring PEM. Keep the
+      Puri study (pmid:19906518, no difference, 26 people) among the unverified ones.
+    targets:
+    - level_reason[4]
+  - class: decisive
+    severity: must_fix
+    problem: Request item 3 is an error. The card records pmid:25386668 (Castro-Marrero 2015) as case_definition
+      unverified. The cached full text (data/cache/europepmc/PMC4346380.html) states '73 eligible CFS
+      patients who fulfilled the 1994 CDC Fukuda's criteria' and, in Methods, 'Seventy-three women with
+      CFS who fulfilled the 1994 CDC Fukuda's criteria were evaluated and enrolled in the study'.
+    fix: Set case_definition Fukuda, case_definition_source fulltext, and quote one of the two sentences
+      above.
+    targets:
+    - studies[pmid:25386668].case_definition
+    - studies[pmid:25386668].case_definition_source
+    - studies[pmid:25386668].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 4 is an error. The card has n_patients 73 and n_controls null for pmid:25386668.
+      The cached full text says ''Thirty-nine CFS subjects received oral Coenzyme Q10 (200 mg/day) plus
+      NADH (20 mg/day) ... and thirty-four CFS subjects received a matching placebo'', and Table 1 gives
+      arms n=39 and n=34. The card''s other placebo-controlled trials record their arms this way: pmid:34444817
+      has 72/72 and pmid:27125909 has 17/14.'
+    fix: Set n_patients 39 and n_controls 34, as on the card's other trials. The total of 73 can stay
+      in the finding text.
+    targets:
+    - studies[pmid:25386668].n_patients
+    - studies[pmid:25386668].n_controls
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 5 is an error. The finding says ''reported lower lipid peroxides in blood cells
+      of the treated group (the abstract does not say whether against placebo or against baseline)''.
+      The cached full text settles this: ''CFS patients treated with CoQ10 plus NADH showed significantly
+      lower levels of lipid peroxidation versus placebo (7.9±2.7 vs. 14.9±3.9 nmol/10^6 cells, p<0.05,
+      respectively)''. The measure was TBARS in blood mononuclear cells. The fatigue result is also versus
+      placebo: ''a reduction in the fatigue impact scale total score (p<0.05) was reported in treated
+      group versus placebo''.'
+    fix: 'Replace the parenthetical with what the full text states: lipid peroxidation (TBARS) in blood
+      mononuclear cells was lower than with placebo after 8 weeks, and fatigue impact scale scores were
+      lower than with placebo. Cite the full text as the source of these statements.'
+    targets:
+    - studies[pmid:25386668].finding
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 6 is an error. level_reason[5] says ''no controlled trial in patients with
+      a confirmed recognised case definition has lowered an oxidative-stress measure and improved the
+      illness'' and that pmid:25386668''s ''case definition is not yet verified''. Both statements are
+      contradicted by the cached full text: 73 women meeting Fukuda 1994, randomised and placebo-controlled,
+      with lower lipid peroxidation than placebo and a lower fatigue impact score than placebo after 8
+      weeks. The paragraph''s reason for not reaching level 4 therefore no longer holds as written. For
+      the auditor''s assessment of the level, the sources on the card give the following. (a) Level 3
+      is not met on any one measure (see the next finding), and the ladder''s rungs build on each other.
+      (b) The larger placebo-controlled trial of the same combination from the same research unit (pmid:34444817:
+      207 women meeting Fukuda, 144 completed, 72 per group) reports ''FIS-40 domain scores evolved in
+      parallel between groups''. It has the same definition, a placebo arm and more than half the sample,
+      so on the fatigue outcome it is a contradicting study of comparable quality. It did not measure
+      oxidative stress. (c) The spec says a treatment result does not on its own confirm the cause. (d)
+      The supplement is described by its authors as bioenergetic cofactors as well as antioxidants, so
+      whether it ''changes the proposed factor'' alone is an open question. The level and any contested
+      mark are for the auditor.'
+    fix: Rewrite level_reason[5] from the records. Say that pmid:25386668 (73 women, Fukuda, placebo-controlled)
+      reported lower lipid peroxidation and lower fatigue scores than with placebo. Say that the larger
+      Fukuda trial from the same unit (pmid:34444817) found fatigue scores changed in parallel in the
+      two groups and did not measure oxidative stress. Say that the single positive trial is unreplicated.
+      Then state the level reason the auditor accepts, rather than 'no controlled trial ... has lowered
+      an oxidative-stress measure and improved the illness'.
+    targets:
+    - level_reason[5]
+    - level
+    - contested
+    - studies[pmid:25386668]
+  - class: decisive
+    severity: must_fix
+    problem: Request item 7 is an error. The card records pmid:43027675 (Todorova 2026) as case_definition
+      unverified, role context, direction not_applicable. The cached full text (data/cache/europepmc/PMC13763008.html,
+      4.1.1 Inclusion Criteria) states 'ME/CFS patients were included in the study according to the diagnostic
+      criteria proposed by the Institute of Medicine (IOM) in 2015', and lists post-exertional malaise
+      among the required symptoms. With 125 IOM 2015 patients against 80 healthy controls and a reported
+      direction, it is a controlled study with an accepted definition that bears on the card's malondialdehyde
+      finding, so role context and direction not_applicable no longer fit what the record shows.
+    fix: 'Set case_definition IOM_2015, case_definition_source fulltext, and quote the sentence above.
+      Reassess role and direction from the full text: MDA higher in ME/CFS than in healthy controls. That
+      points to supports and higher for the MDA measure. The auditor decides the role.'
+    targets:
+    - studies[pmid:43027675].case_definition
+    - studies[pmid:43027675].case_definition_source
+    - studies[pmid:43027675].case_definition_quote
+    - studies[pmid:43027675].role
+    - studies[pmid:43027675].direction
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 8 is an error. The finding says the source ''does not give the direction of
+      the marker differences''. The cached full text states, after age, BMI and sex adjustment: ''MDA
+      (median [Q1-Q3]: 233.60 [96.23-419.08]) and GPX1 (38.15 [24.38-59.71]) were significantly increased
+      in ME/CFS compared to both LC (15.62 [15.62-141.60], 8.97 [8.97-29.54]) and HC (15.62 [15.62-26.22],
+      8.97 [8.97-13.25])''. The serum markers were measured by ELISA (section 4.4). The sentence ''The
+      abstract does not state the case definition, so it is unverified'' is also wrong now (see the previous
+      finding).'
+    fix: 'State the direction from the full text: serum MDA and GPX1 were higher in ME/CFS than in long
+      COVID and healthy controls after adjustment. Remove the sentences about the unstated case definition
+      and direction. Keep ''Not yet repeated'' only if it is still true after the card-level reassessment
+      in the next finding.'
+    targets:
+    - studies[pmid:43027675].finding
+  - class: decisive
+    severity: must_fix
+    problem: 'Not in the request, but it follows from the corrected record of pmid:43027675. (1) level_reason[2]
+      says ''no independent group has found the same result on the same measure in a separate cohort with
+      a confirmed recognised case definition''. The Sofia study (125 IOM 2015 patients, 80 healthy controls)
+      found higher serum MDA, the measure on which the Novi Sad study pmid:23185200 (24 women, Fukuda)
+      found higher levels. Section 5 shows no shared author between pmid:43027675 and either Novi Sad
+      study (pmid:23185200, pmid:21119582); it shares Maes M with the Antwerp studies. Both used an ELISA,
+      but the full text does not name the MDA kit as the OxiSelect adduct ELISA, so whether the methods
+      match is not shown. (2) level_reason[3] says the 40-patient Novi Sad study (pmid:21119582, Fukuda,
+      no overall difference) means ''the malondialdehyde finding cannot carry a level''. Measured against
+      the 125-patient IOM 2015 study, pmid:21119582 does not meet the comparable-quality test: Fukuda
+      is less strict than IOM 2015, and 40 patients is less than half of 125. It still contradicts the
+      24-patient study, which a level-3 rung for MDA would need, so the contested-mark question has to
+      be restated. (3) level_reason[4] does not mention that serum GPX1 was higher in ME/CFS in an IOM
+      2015 cohort. This is a different measure from the whole-blood GPX activity, which showed no difference
+      in pmid:21552194 (definition unverified). The level, the contested mark and the level-3 paragraph
+      currently rest on statements the full text changes. The diagnostic-marker badge reason still holds:
+      the Sofia classification used cross-validation within one cohort, not a second independent group.'
+    fix: Restate level_reason[2] and level_reason[3] with the IOM 2015 MDA result. Say whether MDA was
+      measured the same way (not stated), the author overlap from section 5, and whether pmid:21119582
+      contradicts the rung under the comparable-quality rule. Add the serum GPX1 result to level_reason[4]
+      as a separate measure. The evidence may bear on level 3 for MDA with a possible contested mark from
+      pmid:21119582 against pmid:23185200. The auditor decides the level and the contested mark.
+    targets:
+    - level_reason[2]
+    - level_reason[3]
+    - level_reason[4]
+    - level
+    - contested
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:22281935
+    set:
+      case_definition: CDC_unspecified
+      case_definition_source: fulltext
+      case_definition_quote: were diagnosed by a board-certified neurologist with extensive CFS research
+        experience (BHN), using modified US Centers for Disease Control and Prevention (CDC) guidelines
+        (1)
+  - op: update_study
+    id: pmid:25386668
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Seventy-three women with CFS who fulfilled the 1994 CDC Fukuda's criteria
+        were evaluated and enrolled in the study
+      n_patients: 39
+      n_controls: 34
+      finding: A placebo-controlled trial of n=73 women (39 given coenzyme Q10 plus NADH, 34 given placebo)
+        found lower lipid peroxidation in blood mononuclear cells than with placebo after eight weeks
+        (7.9±2.7 vs 14.9±3.9 nmol per million cells, p<0.05) and a lower fatigue impact scale total score
+        than with placebo (p<0.05). A single trial, not yet repeated; the larger trial of the same combination
+        from the same unit, also on this card, found fatigue scores changed in parallel in the two groups.
+  - op: update_study
+    id: pmid:43027675
+    set:
+      case_definition: IOM2015
+      case_definition_source: fulltext
+      case_definition_quote: ME/CFS patients were included in the study according to the diagnostic criteria
+        proposed by the Institute of Medicine (IOM) in 2015
+      role: supports
+      direction: higher
+      finding: A study of n=125 patients with ME/CFS, 89 with long COVID and 80 healthy controls measured
+        T-cell subsets and serum markers of oxidative and nitrosative stress by ELISA (including catalase,
+        SOD1, GPX1, MDA, NOS1 and NOS3). After adjustment for age, BMI and sex, serum malondialdehyde
+        (MDA) and GPX1 were higher in ME/CFS than in long COVID and in healthy controls. The authors report
+        that MDA was an independent predictor in the ME/CFS versus healthy control comparison and that
+        GPX1 discriminated between ME/CFS and long COVID. The MDA direction matches the Novi Sad study
+        on this card; whether the MDA assay was the same is not stated. The GPX1 result has not been repeated.
+  - op: replace_paragraph
+    field: level_reason
+    index: 2
+    text: 'The card does not reach level 3. For malondialdehyde (MDA), a 2026 study of 125 patients meeting
+      the IOM 2015 criteria and 80 healthy controls from Sofia found higher serum MDA, in the same direction
+      as the 24-patient Novi Sad study. The Sofia study has no author in common with either Novi Sad study,
+      so it comes from a different group. Whether the two measured MDA the same way is not shown: the
+      Novi Sad study used an ELISA test for malondialdehyde bound to proteins (OxiSelect MDA Adduct ELISA),
+      and it is not shown that the Sofia study used that assay. The MDA results also conflict (see the
+      next paragraph). For isoprostanes, the only other study, of 6 patients and 6 controls in Glasgow,
+      also found higher levels at rest, but its case definition is not yet verified. It shares three authors
+      with the Dundee study, so it would not count as an independent repeat even with a verified definition.'
+    sources:
+    - pmid:23185200
+    - pmid:43027675
+    - pmid:19422646
+    - pmid:16085177
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: 'Malondialdehyde results conflict. An earlier study from the same Novi Sad clinic, of 40 women
+      meeting the Fukuda definition and 40 healthy women, found no overall difference between the groups;
+      the authors report a difference only after dividing patients by malondialdehyde level, and title
+      the paper as showing elevated lipid peroxidation. It is larger than the 24-patient study that found
+      higher levels and uses the same definition, so it contradicts that study at comparable quality.
+      Set against the 125-patient Sofia study, which used the IOM 2015 criteria, the 40-patient study
+      used a different definition and had fewer patients. The two Novi Sad studies share authors, and
+      the overlap between their patients is not stated. They may also have used different methods: the
+      24-patient study used an ELISA test for malondialdehyde bound to proteins (OxiSelect MDA Adduct
+      ELISA), and the abstract of the earlier study does not give its method. The card''s level does not
+      rest on the malondialdehyde finding.'
+    sources:
+    - pmid:21119582
+    - pmid:23185200
+    - pmid:43027675
+  - op: replace_paragraph
+    field: level_reason
+    index: 4
+    text: Measures of antioxidant defences are mixed. In studies with a recognised definition, antioxidant
+      potential in serum was lower in the Osaka study; glutathione in lymphocytes was higher in both sexes
+      in the Stanford study (in men, in two of the three cell types tested); glutathione in the brain
+      cortex was lower in 15 patients than in 13 healthy volunteers in the New York study, whose patients
+      were diagnosed using modified US CDC guidelines (the CDC criteria do not require post-exertional
+      malaise; what was modified is not stated); and serum glutathione peroxidase 1 (GPX1) was higher
+      in the Sofia study of patients meeting the IOM 2015 criteria than in long COVID and in healthy controls.
+      GPX1 is a different measure from whole-blood glutathione peroxidase activity, which did not differ
+      between 40 patients and 24 controls in a study whose case definition is not yet verified. In other
+      studies whose case definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients
+      than in 22 controls, and glutathione in the brain did not differ in a study of 26 people in all.
+    sources:
+    - pmid:27224647
+    - pmid:40627396
+    - pmid:22281935
+    - pmid:43027675
+    - pmid:20010505
+    - pmid:21552194
+    - pmid:19906518
+  - op: replace_paragraph
+    field: level_reason
+    index: 5
+    text: The card does not reach level 4. A placebo-controlled trial of coenzyme Q10 plus NADH in 73
+      women meeting the Fukuda 1994 criteria (39 treated, 34 given placebo) reported lower lipid peroxidation
+      in blood mononuclear cells than with placebo after eight weeks, and a lower fatigue impact scale
+      total score than with placebo (both p<0.05). It is a single trial and has not been repeated. A larger
+      placebo-controlled trial of the same combination from the same Vall d'Hebron research institute,
+      in 207 women meeting the Fukuda definition (144 completed), did not measure oxidative stress and
+      reported that fatigue scores changed in parallel in the two groups. The card has not reached level
+      3, which level 4 builds on. A crossover trial of NADH alone in 26 patients meeting the CDC criteria
+      reports no oxidative-stress measure in its abstract.
+    sources:
+    - pmid:25386668
+    - pmid:34444817
+    - pmid:10071523
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: reject
+    findings:
+    - class: decisive
+      operation: 3
+      severity: must_fix
+      problem: 'Answers findings 6 and 8. The new level_reason[2] opens ''The card does not reach level
+        3'' and then shows that the rubric''s level-3 test is met for malondialdehyde. The Sofia study
+        (pmid:43027675, IOM 2015, 125 v 80, serum MDA higher after age/BMI/sex adjustment) shares no author
+        with pmid:23185200 (Fukuda, 24 v 19, MDA higher), so the finding was reproduced by an independent
+        group in a separate cohort (''An independent group has reproduced the finding in a separate cohort'').
+        The two reasons the paragraph gives for holding the level do not come from the rubric. (a) ''Whether
+        the two measured MDA the same way is not shown'' is a same-assay requirement the ladder does not
+        contain (''editors do not add criteria''). The two studies did use different assays: the OxiSelect
+        MDA adduct ELISA versus a serum ELISA whose kit is not named in the Sofia full text. That is a
+        fact the card should state, but on its own it is not a reason for the level. (b) ''The MDA results
+        also conflict'' points, under the rubric, to a contested mark (''A rung that rests on more than
+        one study ... is contested when a study of comparable quality contradicts any study the rung needs''),
+        not to an unreached rung. The correction''s own level_reason[3] says pmid:21119582 ''contradicts
+        that study at comparable quality''. Yet the card keeps contested null and says ''The card''s level
+        does not rest on the malondialdehyde finding'', which is circular once the MDA finding would carry
+        rung 3. On the records, the evidence supports level 3 on MDA (pmid:23185200 plus pmid:43027675),
+        contested by pmid:21119582 (Fukuda, 40 v 40, controlled, 40 is at least half of 24, no overall
+        difference). The auditor decides; this correction may propose a raise (section 3).'
+      fix: Either add a propose on level (3) and on contested, with reason paragraphs that cite pmid:23185200,
+        pmid:43027675 and pmid:21119582 and keep the assay difference as a stated limit, or give a reason
+        for staying at level 2 that comes from the published ladder. Drop the assay sentence as a reason
+        for the level (it may stay as a limit), and drop 'The card's level does not rest on the malondialdehyde
+        finding' unless it is true under the chosen level.
+      targets:
+      - level_reason[2]
+      - level_reason[3]
+      - level
+      - contested
+    - class: decisive
+      operation: 6
+      severity: must_fix
+      problem: 'Answers finding 5. The new level_reason[5] gives two reasons for ''The card does not reach
+        level 4'': ''It is a single trial and has not been repeated'', and ''The card has not reached
+        level 3, which level 4 builds on''. Level 4 in the ladder (''Changing the proposed factor changes
+        the outcome in a controlled experiment'') does not require repetition, so the first is not a rubric
+        reason. The second depends on level 3, which the records now appear to support (previous finding).
+        On the records, pmid:25386668 (Fukuda, 39 v 34, placebo-controlled) lowered lipid peroxidation
+        (TBARS in blood mononuclear cells) and the FIS total score against placebo. pmid:34444817 (Fukuda,
+        placebo-controlled, 72 per group analysed, at least half of 39) reports ''FIS-40 domain scores
+        evolved in parallel between groups'' for the same combination. That is a contradiction of comparable
+        quality on the outcome, which bears on a contested mark. The spec also says a treatment result
+        does not on its own confirm the cause. The paragraph does not state these rubric points, so the
+        level-4 reason a reader sees does not follow from the rubric.'
+      fix: State the level-4 reason from the ladder. If level 3 is proposed, say whether pmid:25386668
+        meets the level-4 description and that pmid:34444817 contradicts its fatigue result at comparable
+        quality (same definition, placebo arm, at least half the sample). Then propose the level and contested
+        mark that follows, for the auditor. Keep 'not repeated' as a description, not as the level reason.
+      targets:
+      - level_reason[5]
+      - level
+      - contested
+    - class: wording
+      target: level_reason[4]
+      operation: 5
+      severity: must_fix
+      problem: The new level_reason[4] calls pmid:22281935 'the New York study'. The cached record (abstract
+        and full text) names Mount Sinai School of Medicine, Beth Israel Medical Center and Weill Cornell
+        Medical College, but no city. 'New York' is a place name the record does not state.
+      fix: Remove 'New York' (for example 'in the Shungu study' or 'in a brain-imaging study').
+      targets:
+      - level_reason[4]
+    - class: wording
+      target: studies[pmid:43027675].finding
+      operation: 2
+      severity: advisory
+      problem: 'Three points in the finding. (1) ''The MDA direction matches the Novi Sad study on this
+        card'' is ambiguous: two Novi Sad studies are on the card, and pmid:21119582 found no overall
+        difference. (2) ''measured T-cell subsets and serum markers ... by ELISA'' reads as if the T-cells
+        were measured by ELISA; the record says flow cytometry for T-cell subsets and ELISA for the serum
+        markers. (3) The abstract says GPX1 ''discriminated between ME/CFS and LC'', and the sentence
+        is attributed to the authors. But the full text''s ME/CFS vs LC logistic model reports ''MDA was
+        the only significant independent predictor ... whereas GPX1 ... was not significant''.'
+      fix: Say 'matches the 24-patient Novi Sad study'. Put 'by ELISA' after the serum markers. Consider
+        adding that GPX1 was not an independent predictor in the ME/CFS versus long COVID model.
+      targets:
+      - studies[pmid:43027675].finding
+    - class: wording
+      target: level_reason[2]
+      operation: 3
+      severity: advisory
+      problem: '''from Sofia'' and ''the Sofia study'': the full text says participants were recruited
+        at the National Centre of Infectious and Parasitic Diseases, Sofia, and at the Medical University
+        Plovdiv.'
+      fix: Say 'from Sofia and Plovdiv', or name the study by its first author.
+      targets:
+      - level_reason[2]
+      - level_reason[3]
+    - operation: 1
+      severity: advisory
+      problem: 'The study block keeps the comment ''# 73 patients; arm sizes not in the abstract. TODO:
+        verify.'', now settled by the full text (39 and 34). The card header still says PMC4346380 and
+        PMC3896084 are not open access. Comments are not reader-facing, but they are now stale.'
+      fix: Remove or reword the stale comment with remove_comment.
+      targets:
+      - studies[pmid:25386668]
+    - operation: 2
+      severity: advisory
+      problem: pmid:43027675 is now a supports study, and its group field bears on the independent-group
+        test. Unlike the card's other supports studies, the field names no institution or place (the record
+        gives NCIPD, Sofia, and the Medical University of Plovdiv). The group field is not among this
+        round's targets.
+      targets:
+      - studies[pmid:43027675]
+- round: 2
+  operations:
+  - op: update_study
+    id: pmid:22281935
+    set:
+      case_definition: CDC_unspecified
+      case_definition_source: fulltext
+      case_definition_quote: were diagnosed by a board-certified neurologist with extensive CFS research
+        experience (BHN), using modified US Centers for Disease Control and Prevention (CDC) guidelines
+        (1)
+  - op: update_study
+    id: pmid:25386668
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Seventy-three women with CFS who fulfilled the 1994 CDC Fukuda's criteria
+        were evaluated and enrolled in the study
+      n_patients: 39
+      n_controls: 34
+      finding: A placebo-controlled trial of n=73 women (39 given coenzyme Q10 plus NADH, 34 given placebo)
+        found lower lipid peroxidation in blood mononuclear cells than with placebo after eight weeks
+        (7.9±2.7 vs 14.9±3.9 nmol per million cells, p<0.05) and a lower fatigue impact scale total score
+        than with placebo (p<0.05). A single trial, not yet repeated; the larger trial of the same combination
+        from the same unit, also on this card, found fatigue scores changed in parallel in the two groups.
+  - op: update_study
+    id: pmid:43027675
+    set:
+      case_definition: IOM2015
+      case_definition_source: fulltext
+      case_definition_quote: ME/CFS patients were included in the study according to the diagnostic criteria
+        proposed by the Institute of Medicine (IOM) in 2015
+      role: supports
+      direction: higher
+      finding: A study of n=125 patients with ME/CFS, 89 with long COVID and 80 healthy controls measured
+        T-cell subsets and, by ELISA, serum markers of oxidative and nitrosative stress (including catalase,
+        SOD1, GPX1, MDA, NOS1 and NOS3). After adjustment for age, BMI and sex, serum malondialdehyde
+        (MDA) and GPX1 were higher in ME/CFS than in long COVID and in healthy controls. The MDA direction
+        matches the 24-patient Novi Sad study on this card; whether the MDA assay was the same is not
+        stated. The abstract reports that GPX1 discriminated between ME/CFS and long COVID, but in the
+        full text's ME/CFS versus long COVID model MDA was the only significant independent predictor
+        and GPX1 was not significant. The GPX1 result has not been repeated.
+  - op: propose
+    target: level
+    value: 3
+    reason:
+    - text: A study from Dundee, Scotland, with 47 patients meeting the CDC criteria (version not named)
+        and 34 healthy volunteers enrolled (the number measured is not stated) found higher blood levels
+        of isoprostanes, a marker of oxidative damage to fats, in patients, both in those with and in
+        those without cardiovascular risk factors. A study of 56 patients meeting the CDC criteria (version
+        not named) and 37 healthy controls, outpatients of the Maes Clinics in Antwerp, Belgium, found
+        higher plasma peroxides in patients. Neither version of the CDC criteria requires post-exertional
+        malaise. These two controlled studies, which used different measures, carry level 2.
+      sources:
+      - pmid:16085177
+      - pmid:21455120
+    - text: 'Other controlled studies found higher oxidative-stress markers, each on a different measure:
+        malondialdehyde and protein carbonyls in 24 women meeting the 1994 CDC definition against 19 healthy
+        women in Novi Sad, Serbia; reactive oxygen metabolites in a study from Osaka of patients diagnosed
+        by the Fukuda 1994 criteria, whose abstract does not give the numbers; and reactive oxygen species
+        inside lymphocytes in 15 patients against 16 controls at Stanford, where the difference was found
+        in women but not in men. The Stanford patients were diagnosed using the National Academy of Medicine,
+        Fukuda and Canadian Consensus criteria; which definition each patient met is not stated. Because
+        the measures differ, none of these three is a repeat of another, and each is unreplicated.'
+      sources:
+      - pmid:23185200
+      - pmid:27224647
+      - pmid:40627396
+    - text: 'The card is at level 3 on malondialdehyde (MDA). The 24-patient Novi Sad study (Fukuda 1994
+        criteria, 19 healthy women) found higher MDA. A 2026 study of 125 patients meeting the IOM 2015
+        criteria and 80 healthy controls, with participants recruited in Sofia and Plovdiv, found higher
+        serum MDA after adjustment for age, BMI and sex. It has no author in common with either Novi Sad
+        study, so it comes from a different group and a separate cohort. A limit: whether the two measured
+        MDA the same way is not shown. The Novi Sad study used an ELISA test for malondialdehyde bound
+        to proteins (OxiSelect MDA Adduct ELISA), and it is not shown that the Sofia study used that assay.
+        The MDA result is contested (see the contested reason). For isoprostanes, the only other study,
+        of 6 patients and 6 controls in Glasgow, also found higher levels at rest, but its case definition
+        is not yet verified. It shares three authors with the Dundee study, so it would not count as an
+        independent repeat even with a verified definition.'
+      sources:
+      - pmid:23185200
+      - pmid:43027675
+      - pmid:19422646
+      - pmid:16085177
+    - text: 'Malondialdehyde results conflict. An earlier study from the same Novi Sad clinic, of 40 women
+        meeting the Fukuda definition and 40 healthy women, found no overall difference between the groups;
+        the authors report a difference only after dividing patients by malondialdehyde level, and title
+        the paper as showing elevated lipid peroxidation. It is larger than the 24-patient study that
+        found higher levels and uses the same definition, so it contradicts that study at comparable quality,
+        and the level 3 rung that rests on it is marked contested. Set against the 125-patient study,
+        which used the IOM 2015 criteria, the 40-patient study used a different definition and had fewer
+        patients. The two Novi Sad studies share authors, and the overlap between their patients is not
+        stated. They may also have used different methods: the 24-patient study used an ELISA test for
+        malondialdehyde bound to proteins (OxiSelect MDA Adduct ELISA), and the abstract of the earlier
+        study does not give its method.'
+      sources:
+      - pmid:21119582
+      - pmid:23185200
+      - pmid:43027675
+    - text: Measures of antioxidant defences are mixed. In studies with a recognised definition, antioxidant
+        potential in serum was lower in the Osaka study; glutathione in lymphocytes was higher in both
+        sexes in the Stanford study (in men, in two of the three cell types tested); glutathione in the
+        brain cortex was lower in 15 patients than in 13 healthy volunteers in the Shungu study, whose
+        patients were diagnosed using modified US CDC guidelines (the CDC criteria do not require post-exertional
+        malaise; what was modified is not stated); and serum glutathione peroxidase 1 (GPX1) was higher
+        in the 125-patient IOM 2015 study than in long COVID and in healthy controls. GPX1 is a different
+        measure from whole-blood glutathione peroxidase activity, which did not differ between 40 patients
+        and 24 controls in a study whose case definition is not yet verified. In other studies whose case
+        definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients than in 22 controls,
+        and glutathione in the brain did not differ in a study of 26 people in all.
+      sources:
+      - pmid:27224647
+      - pmid:40627396
+      - pmid:22281935
+      - pmid:43027675
+      - pmid:20010505
+      - pmid:21552194
+      - pmid:19906518
+    - text: Level 4 is not proposed. A placebo-controlled trial of coenzyme Q10 plus NADH in 73 women
+        meeting the Fukuda 1994 criteria (39 treated, 34 given placebo) reported lower lipid peroxidation
+        in blood mononuclear cells than with placebo after eight weeks, and a lower fatigue impact scale
+        total score than with placebo (both p<0.05). It is the only such trial and has not been repeated.
+        A larger placebo-controlled trial of the same combination from the same Vall d'Hebron research
+        institute, in 207 women meeting the Fukuda definition (144 completed), did not measure oxidative
+        stress and reported that fatigue scores changed in parallel in the two groups. It has the same
+        definition, a placebo arm and more than half the sample, so on the fatigue outcome it contradicts
+        the first trial at comparable quality. The supplement combines two compounds, so a treatment result
+        alone does not show that lowering oxidative stress changed the illness. A crossover trial of NADH
+        alone in 26 patients meeting the CDC criteria reports no oxidative-stress measure in its abstract.
+      sources:
+      - pmid:25386668
+      - pmid:34444817
+      - pmid:10071523
+    - text: A placebo-controlled trial of ubiquinol, the reduced form of coenzyme Q10, in 43 patients
+        (31 completed) reported improvement in several symptoms; its case definition is not yet verified.
+      sources:
+      - pmid:27125909
+  - op: propose
+    target: contested
+    value:
+    - 3
+    reason:
+    - text: The level 3 rung rests on the malondialdehyde result of the 24-patient Novi Sad study (Fukuda
+        1994 criteria, 19 healthy women), repeated by the 125-patient IOM 2015 study. An earlier study
+        from the same Novi Sad clinic, of 40 women meeting the Fukuda definition and 40 healthy women,
+        found no overall difference in malondialdehyde between the groups. It uses the same definition,
+        has controls, and is larger than the 24-patient study, so it contradicts that study at comparable
+        quality. It does not meet the comparable-quality test against the 125-patient study, which used
+        the IOM 2015 criteria and had more patients.
+      sources:
+      - pmid:21119582
+      - pmid:23185200
+      - pmid:43027675
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: reject
+    findings:
+    - class: decisive
+      operation: 3
+      severity: must_fix
+      problem: 'Answers findings 6 and 8 and round-1 finding 0. The level-3 rung now rests on MDA in pmid:23185200
+        and pmid:43027675, and the only limit on whether this is the same finding is stated wrongly. level_reason[2]
+        says ''whether the two measured MDA the same way is not shown ... it is not shown that the Sofia
+        study used that assay'', and the pmid:43027675 finding says ''whether the MDA assay was the same
+        is not stated''. The cached full text of pmid:43027675 (4.4) names its kit: ''malondialdehyde
+        (31.25-2000 ng/mL, Elabscience/Wuhan, Hubei, China, cat# E-EL-0060)''. The full text of pmid:23185200
+        says ''Levels of MDA were measured using the OxiSelect MDA Adduct ELISA kit'' (MDA-protein adducts,
+        Cell Biolabs). So the records do show different assays. Round 1 also said wrongly that the kit
+        was not named. A reader judging whether the independent study ''reproduced the finding'' (rung
+        3) would read the result differently. The rubric does not require the same assay, and the auditor
+        decides the level, but the limit has to say what the records show.'
+      fix: 'In level_reason[2] and in the pmid:43027675 finding, say that the two studies used different
+        MDA tests: the Novi Sad study used the OxiSelect MDA Adduct ELISA (MDA bound to proteins), and
+        the 2026 study used a different serum MDA ELISA kit (Elabscience, cat. E-EL-0060). Cite pmid:23185200
+        and pmid:43027675. Drop ''is not shown'' and ''is not stated''. On the records, level 3 contested
+        on rung 3 (pmid:23185200 plus pmid:43027675, contradicted by pmid:21119582) is what the ladder
+        supports, with this limit written out.'
+      targets:
+      - level_reason[2]
+      - studies[pmid:43027675].finding
+    - class: wording
+      target: studies[pmid:43027675].finding
+      operation: 2
+      severity: must_fix
+      problem: '''After adjustment for age, BMI and sex, serum malondialdehyde (MDA) and GPX1 were higher
+        in ME/CFS than in long COVID and in healthy controls.'' The full text''s ''significantly increased
+        in ME/CFS compared to both LC ... and HC'' is cited to Supplementary Table S1, the unadjusted
+        comparisons. Table 3, the pairwise age/BMI-adjusted ANCOVA, gives LC vs ME/CFS adjusted p 0.52
+        (age) and 0.40 (BMI) for MDA and 1.00 for GPX1, which is not significant. ME/CFS vs HC is significant
+        (MDA 0.02/0.01, GPX1 0.04/0.02). The adjustment clause holds for the comparison with healthy controls,
+        not for the comparison with long COVID. Also, ''in the full text''s ME/CFS versus long COVID model
+        MDA was the only significant independent predictor'' is true of the logistic regression only.
+        In the Random Forest, the full text says ''GPX1 became the leading discriminator of ME/CFS versus
+        LC''.'
+      fix: 'Say that after adjustment MDA and GPX1 were higher in ME/CFS than in healthy controls, and
+        that they were higher than in long COVID in the unadjusted comparison. Name the model: ''in the
+        logistic regression model of ME/CFS versus long COVID''.'
+      targets:
+      - studies[pmid:43027675].finding
+    - class: wording
+      target: level_reason[5]
+      operation: 3
+      severity: must_fix
+      problem: level_reason[5] opens 'Level 4 is not proposed.' This is pipeline language (a proposal
+        to the auditor) in reader-facing text on a published card. It also does not tell the reader where
+        the card stands on level 4.
+      fix: 'Say ''The card does not reach level 4.'' and keep the reasons the paragraph already gives:
+        the larger Fukuda trial contradicts the fatigue result at comparable quality, and the supplement
+        combines two compounds.'
+      targets:
+      - level_reason[5]
+    - class: wording
+      target: level_reason[2]
+      operation: 3
+      severity: advisory
+      problem: '''A 2026 study of 125 patients ... found higher serum MDA'' and the contested reason''s
+        ''had more patients''. The full text says MDA and GPX1 were missing for 45 of the 294 participants
+        (15.3%), and the split by group is not stated. So the number of ME/CFS patients in the MDA measurement
+        is not exactly 125. The comparable-quality conclusion against pmid:21119582 still holds on the
+        case definition alone (Fukuda ranks below IOM 2015).'
+      fix: Consider adding that MDA was missing for 15.3% of participants, or resting the comparison with
+        pmid:21119582 on the definition.
+      targets:
+      - level_reason[2]
+      - contested_reason[0]
+    - operation: 1
+      severity: advisory
+      problem: 'The study block still carries the comment ''73 patients; arm sizes not in the abstract.
+        TODO: verify.'', which is now settled (39 and 34 from the full text). This repeats round-1 advisory
+        finding 5.'
+      targets:
+      - studies[pmid:25386668]
+    - operation: 2
+      severity: advisory
+      problem: pmid:43027675 now carries rung 3 as a supports study, but its group field still names no
+        institution or place (the record gives NCIPD, Sofia, and the Medical University of Plovdiv). The
+        group field is not a target of this round. This repeats round-1 advisory finding 6.
+      targets:
+      - studies[pmid:43027675]
+tier: null
+audits_run: []
+outcome: the review rejected round 2

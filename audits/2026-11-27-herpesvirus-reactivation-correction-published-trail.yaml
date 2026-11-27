@@ -1,0 +1,489 @@
+card: herpesvirus-reactivation
+card_sha256: 0da2da8337d3cf204dd8fbe835be104d378143fed3a083d49264e768fb406014
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md)
+request:
+- target: studies[pmid:28303641].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: The full text names the
+    CCC and Fukuda criteria for the ME/CFS patients; the card has the case definition as unverified. Quote
+    from the full text: The patients in this study met the Canadian Clinical Case Definition (CCC) [Carruthers
+    et al., 2003] and the Fukuda criteria [Fukuda et al., 1994]'
+- target: studies[pmid:28303641].n_patients
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives 55 ME/CFS patients in the single-sample comparison with controls (a separate longitudinal group
+    of 74 is also described); the card has null. Quote from the full text: A single baseline serum sample
+    from 55 ME/CFS subjects in our biobank was selected for testing.'
+- target: studies[pmid:28303641].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives 151 healthy controls; the card has null. Quote from the full text: healthy controls (n = 151)'
+- target: badge_reasons.diagnostic_marker[0]
+  problem: 'The full-text scan found that the full text differs from the card: The cited badge reason
+    says the case definition is not yet verified; the full text states the patients met the CCC and Fukuda
+    criteria. Quote from the full text: The patients in this study met the Canadian Clinical Case Definition
+    (CCC) [Carruthers et al., 2003] and the Fukuda criteria [Fukuda et al., 1994]'
+- target: studies[pmid:37526404].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: Card says unverified; the
+    full text states cohort 1 met the 1994 CDC definition (cohort 2 met both 1994 CDC and 2003 Canadian
+    Consensus). Quote from the full text: ME/CFS cases were enrolled, if they met the 1994 CDC CFS case
+    definition (5)'
+- target: studies[pmid:37526404].n_patients
+  problem: 'The full-text scan found that the full text states something the card lacks: Card has null;
+    full text gives 106 cases in cohort 2 and 285 in cohort 1 (plasma). Quote from the full text: The
+    study included 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria
+    for ME/CFS (6), and 91 healthy control individuals.'
+- target: studies[pmid:37526404].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: Card has null;
+    full text gives 201 controls in cohort 1 and 91 in cohort 2. Quote from the full text: Cohort 1 samples
+    included plasma from 285 ME/CFS cases and 201 healthy control individuals older than fourteen years
+    of age and residing in northern California.'
+- target: studies[pmid:41451845].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The card has
+    case definition unverified with no quote; the full text names Fukuda without Reeves modification.
+    Quote from the full text: The study subjects were female individuals between ages 19–65 in the College
+    of Community Health (CCHA) patient database who were pre-screened for ME/CFS using the Fukuda case
+    definition without Reeves modification [2].'
+- target: studies[pmid:41451845].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    also reports associations of EBV and HHV-6 dUTPase antibodies with pain severity, and no significant
+    HERV-K difference; the card finding mentions fatigue only. Quote from the full text: Pain also differed
+    significantly in EBV (p = 0.011) and HHV-6 (p = 0.008) dUTPase IgG Ab positive individuals.'
+- target: badge_reasons.diagnostic_marker[0]
+  problem: 'The full-text scan found that the full text differs from the card: The badge reason says the
+    case definitions are not yet verified; the full text states Fukuda without Reeves modification for
+    this study. Quote from the full text: The study subjects were female individuals between ages 19–65
+    in the College of Community Health (CCHA) patient database who were pre-screened for ME/CFS using
+    the Fukuda case definition without Reeves modification [2].'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:28303641 with case_definition unverified and no quote. The cached
+      full text (PMC5513753.html, section ''ME/CFS patients'') states: ''The patients in this study met
+      the Canadian Clinical Case Definition (CCC) [ Carruthers et al., 2003 ] and the Fukuda criteria
+      [ Fukuda et al., 1994 ]''. The text is about the study''s ME/CFS patients as a whole (the 74-patient
+      longitudinal group and the 55-patient single-sample group).'
+    fix: Set case_definition to CCC, case_definition_source to fulltext, and case_definition_quote to
+      the sentence above, word for word.
+    targets:
+    - studies[pmid:28303641].case_definition
+    - studies[pmid:28303641].case_definition_source
+    - studies[pmid:28303641].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'The card has n_patients and n_controls null for pmid:28303641. The cached full text gives
+      the numbers: ''A single baseline serum sample from 55 ME/CFS subjects in our biobank was selected
+      for testing. There was no overlap between these single sample ME/CFS patients and those in the ME/CFS
+      Good Day Bad Day group''; ''In 74 subjects with ME/CFS, baseline and 18 month blood samples ...
+      were collected''; and the comparison is with ''healthy controls (n = 151)''. The abstract''s range
+      of 30.91-52.7% of ME/CFS patients covers the two patient groups.'
+    fix: Record n_controls 151. For n_patients, record the number for the measurement compared with controls
+      (55 single-sample patients; the separate longitudinal group had 74), and say in the finding which
+      group each number belongs to.
+    targets:
+    - studies[pmid:28303641].n_patients
+    - studies[pmid:28303641].n_controls
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:37526404 with case_definition unverified. The cached full text (PMC11912808.html)
+      states for cohort 1 (plasma): ''ME/CFS cases were enrolled, if they met the 1994 CDC CFS case definition
+      ( 5 )'', and for cohort 2 (PBMC, feces, saliva): ''The study included 106 ME/CFS cases who met both
+      the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS ( 6 ), and 91 healthy control individuals.''
+      The 1994 CDC definition is Fukuda.'
+    fix: Set case_definition to Fukuda (the definition that covers both cohorts, flagged as not requiring
+      PEM), case_definition_source to fulltext, quote the cohort 1 sentence word for word, and write out
+      on the card that cohort 2 also met the Canadian Consensus Criteria.
+    targets:
+    - studies[pmid:37526404].case_definition
+    - studies[pmid:37526404].case_definition_source
+    - studies[pmid:37526404].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: The card has n_patients and n_controls null for pmid:37526404. The cached full text gives
+      'plasma from 285 ME/CFS cases and 201 healthy control individuals' (cohort 1) and '106 ME/CFS cases
+      ... and 91 healthy control individuals' (cohort 2). The anellovirus PCR was run on a subset of 200
+      cases and 194 controls with results (Table 3).
+    fix: 'Record the patient and control counts from the full text and state per measurement which cohort
+      they come from (plasma: 285 and 201; PBMC, feces and saliva: 106 and 91).'
+    targets:
+    - studies[pmid:37526404].n_patients
+    - studies[pmid:37526404].n_controls
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records pmid:41451845 with case_definition unverified. The cached full text (PMC13051489.html,
+      section 2.1) states: ''The study subjects were female individuals between ages 19–65 in the College
+      of Community Health (CCHA) patient database who were pre-screened for ME/CFS using the Fukuda case
+      definition without Reeves modification [ 2 ].'''
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext, and quote that sentence word
+      for word. The sentence says the patients were 'pre-screened' with Fukuda, and the card may say so.
+    targets:
+    - studies[pmid:41451845].case_definition
+    - studies[pmid:41451845].case_definition_source
+    - studies[pmid:41451845].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'The badge reason says ''No marker on this card has been tested in a second, independent
+      patient group with a verified case definition'' and ''Both studies have case definitions not yet
+      verified.'' The cached full texts now give both case definitions: pmid:28303641 used CCC and Fukuda
+      (55 patients from the NOVA Southeastern biobank against 151 controls, higher anti-EBV dUTPase antibodies
+      than controls, P < 0.0001 in the abstract), and pmid:41451845 used Fukuda (40 patients against 16
+      controls, serum and demographics ''obtained from Dr. Jarred Younger, University of Alabama at Birmingham'',
+      higher EBV, HHV-6 and VZV dUTPase IgG, p < 0.001). These are two separate patient groups with stated
+      case definitions in which the same marker (EBV dUTPase IgG) was higher. The research group is the
+      same (the authors Williams MV and Ariza ME are on both, section 5), which also means the pair cannot
+      count as an independent replication for level 3. Read literally, the rubric''s badge rule (''tested
+      in a second, independent patient group, with a stated case definition'') does not say the research
+      group must differ. The second study is small (16 controls) and neither cached record reports diagnostic
+      accuracy. The reason as written is false, and the badge value has to be judged again. The auditor
+      decides it.'
+    fix: Rewrite the badge reason from the two full texts (case definitions, patient sources, sample sizes,
+      same research group) and have the auditor decide whether the badge stays false or becomes true under
+      the rubric's wording, stating the reason.
+    targets:
+    - badge_reasons.diagnostic_marker[0]
+    - badges.diagnostic_marker
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[7] groups pmid:37526404 under ''Some studies whose case definitions are not
+      yet verified found no difference.'' Its case definition is now verified (Fukuda for cohort 1, Fukuda
+      and CCC for cohort 2), so this sentence is wrong for it, and the contested test has to be applied.
+      The level rests on cell-free plasma DNA in 200 Fukuda patients (pmid:36653846). pmid:37526404 meets
+      the comparable-quality test against that study: the same case definition, a control group, and 285
+      patients, more than half of 200. In cohort 1 it tested plasma by MassTag PCR: ''MassTag PCR identified
+      six samples positive for HHV-6 (4 cases and 2 controls)''. Its Table 2 panel lists HHV-6 but not
+      HHV-7, and the stated MassTag detection threshold is 100–1000 copies. In cohort 2 (106 patients
+      meeting CCC and Fukuda, 91 controls) saliva HHV-6 was 41.5% vs 52.7% (p=0.12) and HHV-7 62.3% vs
+      62.6% (p=1), and PBMC HHV-6B was in 1 case. The text concludes: ''No significant differences in
+      the prevalence of viral sequences were found between cases and controls.'' It contradicts the HHV-6
+      plasma part of the Riga finding. It does not test the double HHV-6 and HHV-7 result the card says
+      the level rests on, because HHV-7 was not in the plasma panel. Its saliva result also bears on the
+      London saliva study (pmid:34422848, 30 patients). The card does not write out any of this.'
+    fix: Move pmid:37526404 out of the 'case definitions not yet verified' sentence. Write out what it
+      measured in plasma and saliva, with its numbers, cohorts and the HHV-7 gap in the plasma panel.
+      Have the auditor decide whether this contradicts the finding that level 2 rests on (contested mark),
+      and give the reason either way.
+    targets:
+    - level_reason[7]
+    - contested
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:28303641
+    set:
+      case_definition: CCC
+      case_definition_source: fulltext
+      case_definition_quote: The patients in this study met the Canadian Clinical Case Definition (CCC)
+        [Carruthers et al., 2003] and the Fukuda criteria [Fukuda et al., 1994]
+      n_patients: 55
+      n_controls: 151
+  - op: update_study
+    id: pmid:37526404
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: ME/CFS cases were enrolled, if they met the 1994 CDC CFS case definition
+        (5)
+      n_patients: 285
+      n_controls: 201
+  - op: update_study
+    id: pmid:41451845
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: The study subjects were female individuals between ages 19–65 in the College
+        of Community Health (CCHA) patient database who were pre-screened for ME/CFS using the Fukuda
+        case definition without Reeves modification [2].
+  - op: replace_paragraph
+    field: badges.diagnostic_marker.reason
+    index: 0
+    text: No marker on this card has been tested in a second patient group by an independent research
+      group. Antibodies against the Epstein-Barr virus dUTPase were higher in patients than in controls
+      in two studies from the same Ohio group (Williams MV and Ariza ME are authors of both). The earlier
+      study compared 55 patients with a single serum sample each, who met the Canadian Clinical Case Definition
+      and the Fukuda criteria, with 151 controls, and reported higher anti-Epstein-Barr virus dUTPase
+      antibodies in patients (P < 0.0001 in its abstract). The later study compared 40 patients, pre-screened
+      for ME/CFS with the Fukuda definition without the Reeves modification and with serum and demographic
+      information obtained from a University of Alabama at Birmingham source, with 16 controls, and reported
+      higher Epstein-Barr virus, HHV-6 and varicella zoster virus dUTPase IgG in patients (p < 0.001).
+      These are two separate patient groups with stated case definitions, but the research group is the
+      same and the second study is small. Both measure antibodies against a viral enzyme, not viral DNA,
+      and the records report group differences rather than how well the antibodies separate individual
+      patients from controls. The badge stays no.
+    sources:
+    - pmid:28303641
+    - pmid:41451845
+  - op: replace_paragraph
+    field: level_reason
+    index: 7
+    text: 'One study whose case definition is not yet verified found no difference. A study of 26 patients
+      and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone''s blood
+      cells and found no difference in HHV-6 or HHV-7 DNA in blood cells, which this card treats as a
+      marker of latent rather than active infection. A multicentre virome study from the USA, whose plasma
+      cohort met the 1994 CDC (Fukuda) definition and whose second cohort met both the 1994 CDC and the
+      2003 Canadian Consensus criteria, searched two separate cohorts for viral nucleic acid. In cohort
+      1, plasma from 285 patients and 201 healthy controls was screened by MassTag PCR, with a stated
+      detection threshold of 100-1000 copies; its panel lists HHV-6 but not HHV-7. It found HHV-6 in six
+      samples (4 patients and 2 controls). In cohort 2 (106 patients and 91 healthy controls), saliva,
+      feces and blood mononuclear cells were analysed by sequencing: HHV-6 sequences were found in saliva
+      in 41.5% of patients and 52.7% of controls (p = 0.12) and HHV-7 sequences in 62.3% and 62.6% (p
+      = 1), and HHV-6B was found in blood mononuclear cells of one patient. The authors report no significant
+      differences in the prevalence of viral sequences between patients and controls, other than a lower
+      prevalence of anelloviruses (a family of viruses that are not herpesviruses) in plasma, in 30.5%
+      of 200 patients and 54.1% of 194 controls. Because HHV-7 was not in its plasma panel, this study
+      did not test the double HHV-6 and HHV-7 plasma result on which level 2 rests, and its saliva measure
+      is the prevalence of viral sequences, not the DNA load measured in the London saliva study; the
+      card therefore does not record it as contradicting that result and stays not contested. On the direction
+      of cause, the London study says herpesvirus reactivation might be a cause or consequence of the
+      dysregulated immune function seen in ME/CFS, and the Bulgarian study raises the possibility that
+      patients with ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction.'
+    sources:
+    - pmid:10913395
+    - pmid:37526404
+    - pmid:34422848
+    - pmid:32129496
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: reject
+    findings:
+    - class: decisive
+      operation: 3
+      severity: must_fix
+      problem: 'The new badge reason (answers pre-review finding 5) opens: ''No marker on this card has
+        been tested in a second patient group by an independent research group.'' Now that the correction
+        verifies pmid:37526404 (operation 1: Fukuda, 285 patients, 201 controls), that sentence is false
+        for the card. The cached full text of 37526404 (Lipkin group, no author shared with the Riga studies)
+        tested HHV-6 DNA in plasma, the Riga marker: ''MassTag PCR identified six samples positive for
+        HHV-6 (4 cases and 2 controls)''. The London saliva study (pmid:34422848, independent of Riga,
+        CCC and/or Fukuda) also tested herpesvirus DNA. So markers on the card were tested by independent
+        groups. They were not found again, and the reason must say that, not that they were never tested.
+        The badge is false whatever the wording, but the reason given for it is wrong.'
+      fix: 'Reword the first sentence to say what the records support, for example: ''No marker on this
+        card has been found again in a second patient group by an independent research group.'' Or name
+        the independent tests and say they did not find the marker higher (37526404: HHV-6 in plasma in
+        4 patients and 2 controls), citing pmid:37526404 in the sources.'
+      targets:
+      - badge_reasons.diagnostic_marker[0]
+    - class: decisive
+      operation: 4
+      severity: must_fix
+      problem: 'The new level_reason[7] (answers pre-review finding 6) gives its reason for staying not
+        contested as: ''Because HHV-7 was not in its plasma panel, this study did not test the double
+        HHV-6 and HHV-7 plasma result on which level 2 rests''. The cached full text of pmid:37526404
+        shows a second plasma measurement that the paragraph leaves out: ''We next used unbiased high-throughput
+        sequencing on the Ion Torrent Proton platform to screen the ME/CFS case plasma samples of cohort
+        1 for additional agents than those targeted by the MassTag PCR. Unbiased sequencing detected pegiviruses,
+        HHV-6, and at high prevalence anelloviruses.'' The stated threshold is ''unbiased high-throughput
+        sequencing, 1000-10,000 copies''. So patients'' plasma was screened by a method that could pick
+        up HHV-7, and none is reported, but only case plasma was sequenced, with no controls. The contested
+        mark rests on this sentence. Saying that the only plasma test was a panel without HHV-7 overstates
+        the gap, and the auditor would decide the contested mark on an incomplete account.'
+      fix: 'Add that the patients'' cohort 1 plasma was also screened by unbiased sequencing (stated threshold
+        1000-10,000 copies; control plasma not sequenced), which the paper reports detected pegiviruses,
+        HHV-6 and anelloviruses. Then rephrase the reason: the study did not compare HHV-7 in plasma between
+        patients and controls (the MassTag panel lists HHV-6 but not HHV-7, and only patients'' plasma
+        was sequenced). The auditor decides the contested mark from that.'
+      targets:
+      - level_reason[7]
+      - contested
+    - class: wording
+      target: level_reason[7]
+      operation: 4
+      severity: advisory
+      problem: The card flags the Riga and Bulgarian Fukuda cohorts as following a definition that does
+        not require post-exertional malaise. The new text says 37526404's plasma cohort met the 1994 CDC
+        (Fukuda) definition without that flag (pre-review finding 2 asked for it).
+      fix: Add ', which does not require post-exertional malaise,' after the Fukuda mention, as level_reason[0]
+        does.
+      targets:
+      - level_reason[7]
+    - class: wording
+      target: level_reason[7]
+      operation: 4
+      severity: advisory
+      problem: The paragraph gives the HHV-6 plasma numbers (4 patients and 2 controls) but does not say
+        that they bear on the HHV-6 part of the Riga plasma finding, as pre-review finding 6 noted. A
+        reader has to work this out.
+      fix: Say plainly that this plasma HHV-6 result did not show more HHV-6 in patients than in controls,
+        the opposite of the HHV-6 part of the Riga result.
+      targets:
+      - level_reason[7]
+    - class: wording
+      target: studies[pmid:37526404].finding
+      severity: advisory
+      problem: 'These are not reader-facing, but they are now stale. The file header comment still lists
+        28303641, 41451845 and 37526404 as unverified studies with no open full text. The section comment
+        above them still reads ''# --- context: observational, case definition not verified ---''. The
+        finding of 37526404 still gives no cohort or numbers, and n_patients 285 is the plasma cohort
+        only (cohort 2 had 106).'
+      fix: In a later round, update the comments, and note in the 37526404 finding which cohort each count
+        belongs to.
+      targets:
+      - studies[pmid:37526404].finding
+      - studies[pmid:37526404]
+      - studies[pmid:28303641]
+      - studies[pmid:41451845]
+- round: 2
+  operations:
+  - op: update_study
+    id: pmid:28303641
+    set:
+      case_definition: CCC
+      case_definition_source: fulltext
+      case_definition_quote: The patients in this study met the Canadian Clinical Case Definition (CCC)
+        [Carruthers et al., 2003] and the Fukuda criteria [Fukuda et al., 1994]
+      n_patients: 55
+      n_controls: 151
+  - op: update_study
+    id: pmid:37526404
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: ME/CFS cases were enrolled, if they met the 1994 CDC CFS case definition
+        (5)
+      n_patients: 285
+      n_controls: 201
+  - op: update_study
+    id: pmid:41451845
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: The study subjects were female individuals between ages 19–65 in the College
+        of Community Health (CCHA) patient database who were pre-screened for ME/CFS using the Fukuda
+        case definition without Reeves modification [2].
+  - op: replace_paragraph
+    field: badges.diagnostic_marker.reason
+    index: 0
+    text: No marker on this card has been found again in a second patient group by an independent research
+      group. Antibodies against the Epstein-Barr virus dUTPase were higher in patients than in controls
+      in two studies from the same Ohio group (Williams MV and Ariza ME are authors of both). The earlier
+      study compared 55 patients with a single serum sample each, who met the Canadian Clinical Case Definition
+      and the Fukuda criteria, with 151 controls, and reported higher anti-Epstein-Barr virus dUTPase
+      antibodies in patients (P < 0.0001 in its abstract). The later study compared 40 patients, pre-screened
+      for ME/CFS with the Fukuda definition without the Reeves modification and with serum and demographic
+      information obtained from a University of Alabama at Birmingham source, with 16 controls, and reported
+      higher Epstein-Barr virus, HHV-6 and varicella zoster virus dUTPase IgG in patients (p < 0.001).
+      These are two separate patient groups with stated case definitions, but the research group is the
+      same and the second study is small. Both measure antibodies against a viral enzyme, not viral DNA,
+      and the records report group differences rather than how well the antibodies separate individual
+      patients from controls. The badge stays no.
+    sources:
+    - pmid:28303641
+    - pmid:41451845
+  - op: replace_paragraph
+    field: level_reason
+    index: 7
+    text: 'One study whose case definition is not yet verified found no difference. A study of 26 patients
+      and 50 matched controls in Atlanta (52 recruited) isolated no HHV-6 or HHV-7 from anyone''s blood
+      cells and found no difference in HHV-6 or HHV-7 DNA in blood cells, which this card treats as a
+      marker of latent rather than active infection. A multicentre virome study from the USA, whose plasma
+      cohort met the 1994 CDC (Fukuda) definition, which does not require post-exertional malaise, and
+      whose second cohort met both the 1994 CDC and the 2003 Canadian Consensus criteria, searched two
+      separate cohorts for viral nucleic acid. In cohort 1, plasma from 285 patients and 201 healthy controls
+      was screened by MassTag PCR, with a stated detection threshold of 100-1000 copies; its panel lists
+      HHV-6 but not HHV-7. It found HHV-6 in six samples (4 patients and 2 controls), so this plasma result
+      did not show more HHV-6 in patients than in controls, unlike the HHV-6 part of the Riga plasma finding.
+      The patients'' cohort 1 plasma was also screened by unbiased high-throughput sequencing (stated
+      threshold 1000-10,000 copies), which the paper reports detected pegiviruses, HHV-6 and anelloviruses;
+      control plasma was not sequenced. In cohort 2 (106 patients and 91 healthy controls), saliva, feces
+      and blood mononuclear cells were analysed by sequencing: HHV-6 sequences were found in saliva in
+      41.5% of patients and 52.7% of controls (p = 0.12) and HHV-7 sequences in 62.3% and 62.6% (p = 1),
+      and HHV-6B was found in blood mononuclear cells of one patient. The authors report no significant
+      differences in the prevalence of viral sequences between patients and controls, other than a lower
+      prevalence of anelloviruses (a family of viruses that are not herpesviruses) in plasma, in 30.5%
+      of 200 patients and 54.1% of 194 controls. This study did not compare HHV-7 in plasma between patients
+      and controls: the MassTag panel lists HHV-6 but not HHV-7, and only patients'' plasma was sequenced.
+      It therefore did not test the double HHV-6 and HHV-7 plasma result on which level 2 rests, and its
+      saliva measure is the prevalence of viral sequences, not the DNA load measured in the London saliva
+      study; the card therefore does not record it as contradicting that result and stays not contested.
+      On the direction of cause, the London study says herpesvirus reactivation might be a cause or consequence
+      of the dysregulated immune function seen in ME/CFS, and the Bulgarian study raises the possibility
+      that patients with ME/CFS are susceptible to acute viral infections as a consequence of immune dysfunction.'
+    sources:
+    - pmid:10913395
+    - pmid:37526404
+    - pmid:34422848
+    - pmid:32129496
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: wording
+      target: level_reason[7]
+      operation: 4
+      severity: advisory
+      problem: The sentence 'so this plasma result did not show more HHV-6 in patients than in controls,
+        unlike the HHV-6 part of the Riga plasma finding' is supported by the cached full text of pmid:37526404
+        ('MassTag PCR identified six samples positive for HHV-6 (4 cases and 2 controls)'). The same full
+        text gives the thresholds 'MassTag PCR, 100-1000 copies' and 'nested PCR, 5-10 copies', and the
+        Riga abstract (pmid:36653846) names nested and quantitative PCR. A reader is not told that the
+        Riga test was the more sensitive kind, which matters when the two plasma results are set side
+        by side. The paragraph states the MassTag threshold, so nothing is wrong, but the comparison is
+        easier to read with this said.
+      fix: In a later round, consider saying that the Riga study used nested and real-time PCR, which
+        the virome paper lists as more sensitive (5-10 copies) than MassTag PCR.
+      targets:
+      - level_reason[7]
+    - class: wording
+      target: badge_reasons.diagnostic_marker[0]
+      operation: 3
+      severity: advisory
+      problem: The badge reason says the later Ohio study's patients were pre-screened with the Fukuda
+        definition without the Reeves modification, but does not add the flag the card uses elsewhere
+        ('which does not require post-exertional malaise'). The earlier study's quote names CCC as well
+        as Fukuda, so the flag applies only to the later study.
+      fix: Optionally add ', which does not require post-exertional malaise,' after the Fukuda mention
+        for pmid:41451845.
+      targets:
+      - badge_reasons.diagnostic_marker[0]
+    - class: wording
+      target: studies[pmid:28303641].finding
+      severity: advisory
+      problem: This is still open from round 1 and was outside the targets this round. The finding of
+        pmid:28303641 gives '30.91-52.7% of ME/CFS patients', a range the full text spreads over the 55-patient
+        single-sample group and the 74-patient longitudinal group, while n_patients is now 55. The finding
+        of pmid:37526404 names no cohort or counts. The file header comment still lists 28303641, 41451845
+        and 37526404 as unverified with no open full text, and the section comment above them still reads
+        'case definition not verified'. The comments are not shown to readers.
+      fix: In a later round, say in each finding which patient group each count belongs to, and update
+        the stale comments.
+      targets:
+      - studies[pmid:28303641].finding
+      - studies[pmid:37526404].finding
+      - studies[pmid:37526404]
+      - studies[pmid:28303641]
+      - studies[pmid:41451845]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:37526404].case_definition differs
+  - studies[pmid:37526404].case_definition_source differs
+  - studies[pmid:37526404].case_definition_quote differs
+  - studies[pmid:37526404].n_patients differs
+  - studies[pmid:37526404].n_controls differs
+  - studies[pmid:28303641].case_definition differs
+  - studies[pmid:28303641].case_definition_source differs
+  - studies[pmid:28303641].case_definition_quote differs
+  - studies[pmid:28303641].n_patients differs
+  - studies[pmid:28303641].n_controls differs
+  - studies[pmid:41451845].case_definition differs
+  - studies[pmid:41451845].case_definition_source differs
+  - studies[pmid:41451845].case_definition_quote differs
+  - 'level_reason[7]: the numeral(s) 1, 285, 201, 100, 1000, 4, 2, 10000, 106, 91, 41.5, 52.7, 0.12, 62.3,
+    62.6, 30.5, 200, 54.1, 194 are new'
+  - 'badge_reasons.diagnostic_marker[0]: the numeral(s) 55, 151, 0.0001, 40, 16, 0.001 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 1, which is classed decisive, not wording
+  - operations[1] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 3, which is classed decisive, not wording
+  - operations[2] answers finding 4, which is classed decisive, not wording
+  - operations[3] answers finding 5, which is classed decisive, not wording
+  - operations[4] answers finding 6, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-herpesvirus-reactivation-correction-published.yaml
+outcome: the first audit decided reject; no second audit was run (sequential audits)
