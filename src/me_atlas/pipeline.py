@@ -43,7 +43,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Collection, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Annotated, Any, Literal
@@ -1592,7 +1592,9 @@ def _finish_checks(cfg: Config, result: dict[str, Any], ops_errors: list[str], p
     )
 
 
-def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool = False) -> list[str]:
+def correction_ops_problems(
+    ops: OpsFile, draft_level: int, *, published: bool = False, upgrade: bool = False
+) -> list[str]:
     """A2: what the operations file of a correction round may hold. Empty when it holds nothing else.
 
     No paper; at least one operation; only ``replace_paragraph``, ``remove_paragraph``, ``update_study``,
@@ -1603,6 +1605,10 @@ def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool =
     With ``published`` (the correction of a published card, ``me_atlas.card_correction``) the list is
     ``replace_paragraph``, ``remove_paragraph``, ``update_study``, ``remove_link``, ``propose``, ``set_link_text`` and
     ``remove_comment``: no ``add_sentence`` either. Without it ``remove_comment`` is refused.
+
+    With ``upgrade`` (the correction of a published card whose request comes from the full-text scan, verified by
+    ``me_atlas.card_correction``) a ``propose`` on ``level`` may also raise the level and one on a badge may set it to
+    true. Nothing else changes here; which studies the reason must cite is checked by ``card_correction.ops_problems``.
     """
     found: list[str] = []
     if ops.paper is not None:
@@ -1627,6 +1633,10 @@ def correction_ops_problems(ops: OpsFile, draft_level: int, *, published: bool =
                 "update_study, remove_link, propose and add_sentence only (it adds no study and no paragraph)"
             )
         elif isinstance(op, Propose):
+            if op.target == "level" and upgrade and isinstance(op.value, int) and op.value > draft_level:
+                continue
+            if op.target in ("diagnostic_marker", "explains_pem") and upgrade and isinstance(op.value, bool):
+                continue
             if op.target == "level" and not (isinstance(op.value, int) and op.value < draft_level):
                 found.append(
                     f"operations[{i}] proposes level {op.value}: a correction may only lower the level "
@@ -2478,6 +2488,18 @@ FULLTEXT_NOT_CACHED_NOTE = (
 )
 
 
+PAGE_SOURCE_NOTE = "Full text from the cached PMC article page"
+
+
+def _cached_lookup_pmcid(cfg: Config, pmid: str) -> str | None:
+    """The PMC id of the cached Europe PMC lookup of ``pmid``, or None (no lookup, or one that cannot be read)."""
+    try:
+        lookup = europepmc.read_cached_lookup(europepmc.EuropePmcCache(cfg.cache_dir), pmid)
+    except (europepmc.EuropePmcError, OSError, ValueError):
+        return None
+    return lookup.pmcid if lookup else None
+
+
 def carrier_ids(card: cards.Card) -> set[str]:
     """E1: the study ids cited in ``level_reason``, ``contested.reason``, the reason of each badge and the sources of
     each link (DECISIONS 2026-11-16).
@@ -2494,17 +2516,31 @@ def carrier_ids(card: cards.Card) -> set[str]:
     return set(found)
 
 
+def _cached_page_text(cfg: Config, pmcid: str | None) -> str | None:
+    """The text of the cached PMC article page of ``pmcid`` (``europepmc.pmc_page_text``), or None when there is none.
+    Cache only: nothing is fetched. A page that cannot be read gives None."""
+    if not pmcid:
+        return None
+    try:
+        page = europepmc.EuropePmcCache(cfg.cache_dir).page_path(pmcid)
+        return europepmc.pmc_page_text(page.read_bytes()) if page.is_file() else None
+    except (europepmc.EuropePmcError, OSError, ValueError):
+        return None
+
+
 def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carrier: bool) -> list[str]:
     """One cited record for the audit context: its fields and abstract; for a carrier (E1) also its full text, uncut.
 
     A study that is not a carrier gets the abstract only (the full text is not even loaded). A carrier with no cached
-    full text gets the abstract and the statement ``FULLTEXT_NOT_CACHED_NOTE`` (E2).
+    full-text XML gets the text of its cached PMC article page when there is one (``PAGE_SOURCE_NOTE``; XML first, as
+    ``citations.CacheReader``), else the abstract and the statement ``FULLTEXT_NOT_CACHED_NOTE`` (E2).
     """
     lines = [f"### Record: {study_id}", ""]
     if study_id.startswith("pmid:"):
         pmid = study_id.removeprefix("pmid:")
         record = _record(cfg, pmid)
         full = loader(pmid, record.pmcid) if carrier else None
+        page_pmcid = (_cached_lookup_pmcid(cfg, pmid) or record.pmcid) if carrier else None  # as CacheReader
         lines += [
             f"- title: {record.title}",
             f"- authors: {', '.join(record.authors) or 'not stated'}",
@@ -2521,6 +2557,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
     else:
         pre = _cached_preprint(cfg, study_id.removeprefix("doi:"))
         full = loader(pre.ppr_id, pre.pmcid, preprint=pre) if carrier else None
+        page_pmcid = pre.pmcid
         abstract = " ".join(_TAG_RE.sub(" ", pre.abstract).split()) if pre.abstract else None
         lines += [
             f"- title: {pre.title}",
@@ -2536,6 +2573,10 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
     lines += ["", "Full text:", ""]
     if not carrier:
         lines.append(ABSTRACT_ONLY_NOTE)
+    elif (full is None or full.xml is None) and (page := _cached_page_text(cfg, page_pmcid)) is not None:
+        lines.append(f"Source: {PAGE_SOURCE_NOTE} ({page_pmcid}). The reference list is left out.")
+        lines.append(f"Not truncated ({len(page)} characters).")
+        lines += ["", page]
     elif full is None or full.xml is None:
         lines.append(FULLTEXT_NOT_CACHED_NOTE)
         if full is not None:
@@ -2573,6 +2614,7 @@ def build_audit_context(
     round_links: Sequence[str] | None = None,
     second: bool = False,
     what: str | None = None,
+    extra_fulltext: Collection[str] = (),
 ) -> str:
     """The one file the auditor reads: the diff, the card, the cited cached records, the rubric and the card format.
 
@@ -2591,7 +2633,9 @@ def build_audit_context(
     (the ``to`` of the links the audit decides) makes the context say that it is a link round and name those links
     only, ``second`` that it is the second audit of the round. ``what`` (with ``applied_round``) names the change in the
     heading instead of "the links added to the published card" (the correction of a published card says "the correction
-    of the published card").
+    of the published card"). ``extra_fulltext`` (with ``applied_round``; empty by default) names studies whose full text
+    is given uncut besides the carriers of the applied card: the correction of a published card whose request comes
+    from the full-text scan gives it for every study the correction changes.
     """
     base = _base_card(cfg, slug)
     source = card_text_from if card_text_from is not None and key is None and not redraft else base
@@ -2624,7 +2668,7 @@ def build_audit_context(
         )
         applied_card = _load_card(applied_path)
         study_ids += [s.id for s in applied_card.studies]
-        carriers = carrier_ids(applied_card)  # E1: the carriers of the card once the change is in
+        carriers = carrier_ids(applied_card) | set(extra_fulltext)  # E1: the carriers of the card once the change is in
         what = what or (
             f"the change from paper `{paper_id}`"
             if paper_id
