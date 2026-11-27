@@ -130,13 +130,13 @@ level_reason:
   - text: >-
       Other controlled studies from the same group as the level 2 study, using different
       measures, also report brainstem differences: weaker connections between brainstem regions
-      during a task (45 patients meeting the Fukuda definition, which does not require
-      post-exertional malaise, and 27 controls), a lower T1-weighted MRI signal in a brainstem
-      region (43 patients meeting the Fukuda definition and 27 controls), weaker connections
-      between the pons and the cerebellum during a task (31 patients meeting the Canadian or
-      International criteria and 15 controls), and a larger pons and whole brainstem at 7 Tesla
-      (10 patients and 10 controls). None of these results has been repeated by an independent
-      group.
+      during a task (44 of 45 scanned patients meeting the Fukuda definition, which does not
+      require post-exertional malaise, and 26 of 27 scanned controls, after one patient and one
+      control were excluded), a lower T1-weighted MRI signal in a brainstem region (43 patients
+      meeting the Fukuda definition and 27 controls), weaker connections between the pons and
+      the cerebellum during a task (31 patients meeting the Canadian or International criteria
+      and 15 controls), and a larger pons and whole brainstem at 7 Tesla (10 patients and 10
+      controls). None of these results has been repeated by an independent group.
     sources: ['pmid:31671321', 'pmid:30497131', 'pmid:38347875', 'pmid:36937672']
   - text: >-
       The card is not at level 3 because no independent group has found the same result in a separate
@@ -259,17 +259,19 @@ studies:
     case_definition_source: abstract
     case_definition_quote: Resting and task functional MRI (fMRI) were acquired for 45 ME/CFS (Fukuda criteria) and 27 healthy controls (HC).
     design: controlled
-    n_patients: 45
-    n_controls: 27
+    n_patients: 44
+    n_controls: 26
     measures_pem: false
     preregistered: null
     role: supports
     direction: lower
     group: Bhuta S / Barnden LR, Griffith University and Gold Coast University Hospital, Australia (same group as 34355438)
     finding: >-
-      A study of n=45 patients and 27 healthy controls found weaker connectivity during a task between
-      the medulla and the midbrain cuneiform nucleus, and between the brainstem and the hippocampus and
-      thalamus, in patients; no such difference was found at rest.
+      A study of 45 patients and 27 healthy controls scanned found weaker connectivity during a
+      task between the medulla and the midbrain cuneiform nucleus, and between the brainstem and
+      the hippocampus and thalamus, in patients; no such difference was found at rest. The task
+      analysis used 44 (= 45 - 1) patients and 26 (= 27 - 1) controls: one patient and one
+      control were excluded for unacceptable signal dropout or inadequate spatial normalization.
   - id: pmid:30497131
     title: Hyperintense sensorimotor T1 spin echo MRI is associated with brainstem abnormality in chronic fatigue syndrome.
     year: 2018
@@ -703,5 +705,5 @@ links:
       the same measure.
     sources: ['pmid:29021956', 'pmid:34355438', 'pmid:35355311', 'pmid:39804864', 'pmid:38347875', 'pmid:42539798']
 last_checked:
-  date: 2026-11-16
+  date: 2026-11-27
   by: ai_audit

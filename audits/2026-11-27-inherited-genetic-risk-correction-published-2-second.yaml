@@ -1,0 +1,31 @@
+card: inherited-genetic-risk
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:16049290 changed from unverified to CDC_unspecified, with the quoted sentence read from the full text."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as \"does not require PEM\", ranked equal to Fukuda. The card quotes the sentence that names the CDC criteria."
+    evidence:
+      - source: pmid:16049290
+        quote: "Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome."
+      - source: pmid:16049290
+        quote: "We HLA typed patients who fulfilled the CDC criteria for CFS and compared the results with those for healthy controls."
+    class: none
+  - decision_part: "The added sentences in level_reason[7] and the finding of pmid:16049290 on the lack of correction for multiple comparisons, the loss of significance over 22 comparisons and p = 0.04 with locus-wise correction."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:16049290
+        quote: "The HLA-DRB1, HLA-DQA1, and HLA-DQB1 associations need to be treated with caution because they have not been corrected for multiple comparisons. If corrected for all 22 possible comparisons then significance was lost."
+      - source: pmid:16049290
+        quote: "However, a less conservative approach of correcting for multiple comparisons at each multiallelic locus (at HLA-DRB1, HLA-DQA1, and HLA-DQB1 separately), suggests a possible association of HLA-DQA1*01 (p = 0.04) with CFS."
+      - source: pmid:16049290
+        quote: "Analysis by 2 x 2 contingency tables revealed an increased frequency of HLA-DQA1*01 alleles in patients with CFS (51.0% v 35%; odds ratio (OR), 1.93; p = 0.008)."
+    class: none
+  - decision_part: "The retained statement that the Oslo study could not test HLA-DQA1*01, and the level 2, its reasons, the study's context role and the uncontested state, which the correction leaves unchanged."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:32210306
+        quote: "The often cited association with DQA1*01 reported by Smith et al.25 cannot be evaluated in our material since the HLA-DQA1 locus was not genotyped in the control group."
+      - source: pmid:32210306
+        quote: "We performed high resolution HLA -A, -B, -C, -DRB1, -DQB1 and -DPB1 genotyping by next generation sequencing in 426 adult, Norwegian ME/CFS patients, diagnosed according to the Canadian Consensus Criteria."
+    class: none
+reasons_summary: "The full text of the London HLA study names the CDC criteria and states the multiple-comparison caveats the correction adds; level, badges and roles are unchanged."
+would_change: "A source stating which CDC version the London HLA study used, or a record showing that the multiple-comparison statements or the p values differ from the full text read, would change this decision."

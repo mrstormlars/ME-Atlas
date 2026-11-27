@@ -1,0 +1,145 @@
+card: brain-and-brainstem-mri-changes
+card_sha256: c2b1777569c612811b517cc196bf9c3fc64998477b15a031786da4af1e9d49a9
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md); second attempt, items
+  added verbatim from data/pipeline/corrections/published/2026-11-27-brain-and-brainstem-mri-changes/review/brain-and-brainstem-mri-changes-r2.json
+  (must_fix findings 1-2)
+request:
+- target: studies[pmid:30497131].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    reports a third main result, a negative correlation between brainstem and sensorimotor T1wSE signal
+    in both patients and controls, which the card''s finding does not mention. Quote from the full text:
+    A strong negative correlation was detected between signal levels from the brainstem and sensorimotor
+    WM for both CFS and healthy controls (Fig. 4, Table 2).'
+- target: studies[pmid:31671321].n_patients
+  problem: 'The full-text scan found that the full text differs from the card: The task analysis, which
+    the finding is about, used 44 patients (one excluded); the card gives 45 scanned. Quote from the full
+    text: Visual inspection found unacceptable signal dropout or inadequate spatial normalization in the
+    resting fMRI in 3 ME/CFS and 2 HC, and in the task fMRI in one ME/CFS and one HC. These subjects were
+    excluded from the analysis.'
+- target: studies[pmid:31671321].n_controls
+  problem: 'The full-text scan found that the full text differs from the card: The task analysis used
+    26 controls (one excluded); the card gives 27 scanned. Quote from the full text: Visual inspection
+    found unacceptable signal dropout or inadequate spatial normalization in the resting fMRI in 3 ME/CFS
+    and 2 HC, and in the task fMRI in one ME/CFS and one HC. These subjects were excluded from the analysis.'
+- target: studies[pmid:31671321].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    also reports associations of connectivity with symptom severity scores during task, which the card
+    finding lacks. Quote from the full text: Regressions of individual subject brainstem connectivity
+    with ME/CFS severity yielded 3 significant associations for the ME/CFS group during task fMRI but
+    none for rest.'
+- target: level_reason[3]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[3] gives 45
+    patients and 27 controls for the task result; the full text analysed 44 and 26 for task. Quote from
+    the full text: Visual inspection found unacceptable signal dropout or inadequate spatial normalization
+    in the resting fMRI in 3 ME/CFS and 2 HC, and in the task fMRI in one ME/CFS and one HC. These subjects
+    were excluded from the analysis.'
+- target: studies[pmid:31671321].finding
+  problem: 'Operation 0 answers finding 0 of the published-card review and round-1 finding 0 (n_patients
+    44, n_controls 26 and the finding''s task-analysis numbers now agree with the cached full text PMC6835065).
+    But the finding says ''one of each was excluded for signal dropout''. The full text gives two possible
+    reasons and does not say which applied to the task exclusions: ''Visual inspection found unacceptable
+    signal dropout or inadequate spatial normalization in the resting fMRI in 3 ME/CFS and 2 HC, and in
+    the task fMRI in one ME/CFS and one HC. These subjects were excluded from the analysis.'' The words
+    ''for signal dropout'' say more than the source.'
+- target: level_reason[3]
+  problem: Operation 1 answers finding 0 of the published-card review and fixes round-1's advisory (the
+    arithmetic notation is gone), but the new text says 'one patient and one control were excluded from
+    the task analysis for signal dropout'. The cached full text PMC6835065 gives the reason as 'unacceptable
+    signal dropout or inadequate spatial normalization' and does not say which applied to these two subjects.
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'The card records n_patients 45 and n_controls 27, and the finding says ''A study of n=45
+      patients and 27 healthy controls found weaker connectivity during a task''. The cached full text
+      (PMC6835065) states: ''Visual inspection found unacceptable signal dropout or inadequate spatial
+      normalization in the resting fMRI in 3 ME/CFS and 2 HC, and in the task fMRI in one ME/CFS and one
+      HC. These subjects were excluded from the analysis.'' and ''although the ME/CFS count fell to 18
+      after repeating its analysis with the same N = 26 as HC''. The task comparison the finding describes
+      therefore used 44 patients and 26 controls; 45 and 27 are the numbers scanned (abstract).'
+    fix: 'Set n_patients to 44 and n_controls to 26 and state in the finding that the task analysis used
+      44 of 45 patients and 26 of 27 controls after exclusions. Do not give ''signal dropout'' alone as
+      the reason: the full text names ''unacceptable signal dropout or inadequate spatial normalization''
+      and does not say which applied to the two task exclusions; either quote both or give no reason.
+      Keep the case_definition_quote (it is the abstract''s sentence about the 45 scanned, which is correct
+      as a quote).'
+    targets:
+    - studies[pmid:31671321].n_patients
+    - studies[pmid:31671321].n_controls
+    - studies[pmid:31671321].finding
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[3] says ''weaker connections between brainstem regions during a task (45 patients
+      meeting the Fukuda definition, which does not require post-exertional malaise, and 27 controls)''.
+      The task result in pmid:31671321 rests on 44 patients and 26 controls (full text PMC6835065: ''in
+      the task fMRI in one ME/CFS and one HC. These subjects were excluded from the analysis.''; ''the
+      same N = 26 as HC'').'
+    fix: Give 44 patients and 26 controls for the task result (or '44 of 45 patients and 26 of 27 controls').
+      If a reason for the exclusions is given, it must be the source's own 'unacceptable signal dropout
+      or inadequate spatial normalization', not 'signal dropout' alone.
+    targets:
+    - level_reason[3]
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:31671321
+    set:
+      n_patients: 44
+      n_controls: 26
+      finding: 'A study of 45 patients and 27 healthy controls scanned found weaker connectivity during
+        a task between the medulla and the midbrain cuneiform nucleus, and between the brainstem and the
+        hippocampus and thalamus, in patients; no such difference was found at rest. The task analysis
+        used 44 (= 45 - 1) patients and 26 (= 27 - 1) controls: one patient and one control were excluded
+        for unacceptable signal dropout or inadequate spatial normalization.'
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: 'Other controlled studies from the same group as the level 2 study, using different measures,
+      also report brainstem differences: weaker connections between brainstem regions during a task (44
+      of 45 scanned patients meeting the Fukuda definition, which does not require post-exertional malaise,
+      and 26 of 27 scanned controls, after one patient and one control were excluded), a lower T1-weighted
+      MRI signal in a brainstem region (43 patients meeting the Fukuda definition and 27 controls), weaker
+      connections between the pons and the cerebellum during a task (31 patients meeting the Canadian
+      or International criteria and 15 controls), and a larger pons and whole brainstem at 7 Tesla (10
+      patients and 10 controls). None of these results has been repeated by an independent group.'
+    sources:
+    - pmid:31671321
+    - pmid:30497131
+    - pmid:38347875
+    - pmid:36937672
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: wording
+      target: studies[pmid:31671321].finding
+      operation: 0
+      severity: advisory
+      problem: 'Operation 0 answers finding 0 and is correct against the full text PMC6835065 (''in the
+        task fMRI in one ME/CFS and one HC. These subjects were excluded from the analysis.''; ''the same
+        N = 26 as HC''), and the reason it gives is the source''s own ''unacceptable signal dropout or
+        inadequate spatial normalization''. Only the wording is awkward for a reader: ''45 patients and
+        27 healthy controls scanned'' and the arithmetic ''44 (= 45 - 1)'' and ''26 (= 27 - 1)''.'
+      fix: 'For example: ''A study that scanned 45 patients and 27 healthy controls found ... The task
+        analysis used 44 patients and 26 controls: one patient and one control were excluded for unacceptable
+        signal dropout or inadequate spatial normalization.'''
+      targets:
+      - studies[pmid:31671321].finding
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:31671321].n_patients differs
+  - studies[pmid:31671321].n_controls differs
+  - 'level_reason[3]: the numeral(s) 44, 26 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-brain-and-brainstem-mri-changes-correction-published-2.yaml
+- 2026-11-27-brain-and-brainstem-mri-changes-correction-published-2-second.yaml
+outcome: published

@@ -1,0 +1,69 @@
+card: herpesvirus-reactivation
+decision: accept
+parts:
+  - decision_part: "Level 2 is unchanged by the correction: it still rests on the 200-patient Riga plasma study, a controlled study with the Fukuda definition, whose double HHV-6 and HHV-7 active-infection result is found only in patients."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:36653846
+        quote: "Nested PCR (nPCR) was used to amplify HHV-6A/B, HHV-7, and B19V-specific genomic sequences in the DNA isolated from the peripheral blood (a marker of persistent infection) and cell-free blood plasma (a marker of an active infection)."
+      - source: pmid:36653846
+        quote: "Moreover, active double HHV-6A/B + HHV-7 and active triple co-infection is found only in patients with ME/CFS (p < 0.0001 and p < 0.0001, respectively), distinctly indicating the involvement of the active co-infection in the development of ME/CFS."
+    class: none
+  - decision_part: "The multicentre virome study (pmid:37526404) is now recorded as Fukuda with 285 patients and 201 controls (cohort 1), and its cohort 2 is described as meeting both the 1994 CDC and the 2003 Canadian criteria; these are the definitions and numbers its own text states."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:37526404
+        quote: "Cohort 1 samples included plasma from 285 ME/CFS cases and 201 healthy control individuals older than fourteen years of age and residing in northern California."
+      - source: pmid:37526404
+        quote: "ME/CFS cases were enrolled, if they met the 1994 CDC CFS case definition (5), and had not received antibiotics within the three-month period prior to enrollment."
+      - source: pmid:37526404
+        quote: "The study included 106 ME/CFS cases who met both the 1994 CDC and the 2003 Canadian Consensus criteria for ME/CFS (6), and 91 healthy control individuals."
+    class: none
+  - decision_part: "The added numbers for the virome study (plasma HHV-6 by MassTag PCR in 4 cases and 2 controls, HHV-7 absent from the MassTag panel, unbiased sequencing of case plasma only, saliva HHV-6, HHV-7 and Epstein-Barr virus percentages and p values, HHV-6 in blood cells of 1 patient) match the record."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:37526404
+        quote: "MassTag PCR identified six samples positive for HHV-6 (4 cases and 2 controls)."
+      - source: pmid:37526404
+        quote: "Plasma samples were initially screened by a multiplex MassTag PCR (9), applying two primer panels for detection of agents that had been previously associated with ME/CFS by other investigators (Table 2)."
+      - source: pmid:37526404
+        quote: "We next used unbiased high-throughput sequencing on the Ion Torrent Proton platform to screen the ME/CFS case plasma samples of cohort 1 for additional agents than those targeted by the MassTag PCR."
+      - source: pmid:37526404
+        quote: "Unbiased sequencing detected pegiviruses, HHV-6, and at high prevalence anelloviruses."
+      - source: pmid:37526404
+        quote: "Roseolovirus HHV-6 44#/48 [41.5%/52.7%, p=0.12&]"
+      - source: pmid:37526404
+        quote: "HHV-7 66/57 [62.3%/62.6%, p=1]"
+      - source: pmid:37526404
+        quote: "Lymphocryptovirus HHV-4 30/30 [28.3%/33.0%, p=0.54]"
+      - source: pmid:37526404
+        quote: "Other human viruses detected included HHV-6B (1 case) and anelloviruses (5 cases, 5 controls) without significant group-specific differences (Table 4)."
+    class: none
+  - decision_part: "No contested mark: the virome study has a Fukuda cohort of more than half the Riga sample, but it did not measure HHV-7 in plasma against controls, so it does not test the double HHV-6 and HHV-7 plasma result on which level 2 rests; its saliva HHV-7 result is a different sample type and cohort, as the card now writes out."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:37526404
+        quote: "We next used unbiased high-throughput sequencing on the Ion Torrent Proton platform to screen the ME/CFS case plasma samples of cohort 1 for additional agents than those targeted by the MassTag PCR."
+      - source: pmid:37526404
+        quote: "Matching PBMC, stool and saliva samples from 106 ME/CFS subjects and 91 healthy controls were analyzed by VirCapSeq, a highly sensitive, positive-selection high-throughput sequencing approach (12)."
+    class: none
+  - decision_part: "The diagnostic-marker badge stays false: both dUTPase antibody studies come from the same Ohio group (Ariza ME), the later one says it set out to validate the earlier one, and no independent group has tested the marker. The case definitions and sample sizes now given (CCC and Fukuda, 55 patients and 151 controls; Fukuda, 40 patients and 16 controls) match the records."
+    rubric: "Yes only when a measurable marker linked to the hypothesis has been tested in a second patient group, separate from the first, by an independent research group (independent in the same sense as rung 3), with a stated case definition."
+    evidence:
+      - source: pmid:28303641
+        quote: "The patients in this study met the Canadian Clinical Case Definition (CCC) [Carruthers et al., 2003] and the Fukuda criteria [Fukuda et al., 1994]"
+      - source: pmid:28303641
+        quote: "compared to the antibody profiles obtained in patients diagnosed with ME/CFS (n = 55) or healthy controls (n = 151)"
+      - source: pmid:28303641
+        quote: "while the ME/CFS cohort had higher anti-EBV-dUTPase antibodies than in both GWI patients (P = 0.0008) and controls (P < 0.0001)"
+      - source: pmid:41451845
+        quote: "pre-screened for ME/CFS using the Fukuda case definition without Reeves modification [2]"
+      - source: pmid:41451845
+        quote: "We examined 873 longitudinal serum samples from ME/CFS patients (n = 40) and 378 from healthy control individuals (n = 16)"
+      - source: pmid:41451845
+        quote: "The results of this study demonstrate a significant increase in dUTPase IgG antibodies to the herpesviruses Epstein-Barr virus (EBV), human herpesvirus-6 (HHV-6) and varicella zoster virus (VZV) in ME/CFS compared to healthy-controls (p < 0.001)."
+      - source: pmid:41451845
+        quote: "The purpose of this study was to expand on and validate our previous findings showing heightened levels of IgG antibodies against the dUTPase protein of multiple herpesviruses [21]"
+    class: none
+reasons_summary: "The corrected case definitions, sample sizes and virome numbers match the full texts; level 2, no contested mark and the false diagnostic-marker badge still stand."
+would_change: "A controlled study with Fukuda or stricter patients and at least 100 patients that measured HHV-6 and HHV-7 together in cell-free plasma and found no difference would contest level 2. A dUTPase antibody result repeated by an independent group with a stated case definition would change the diagnostic-marker badge. The 2026 Ohio paper describes the earlier study's patients as Fukuda plus Reeves modification, while the earlier paper's own text states CCC and Fukuda; the card follows the paper's own text, and a source showing the earlier text is wrong would change that field. The Atlanta study (pmid:10913395) has no cached full text, so its case definition stays unverified."

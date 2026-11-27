@@ -1,0 +1,27 @@
+card: brain-and-brainstem-mri-changes
+decision: accept
+parts:
+  - decision_part: "The corrected counts for pmid:31671321 (n_patients 44, n_controls 26) and the corrected sentence in level_reason[3] and the study finding: 45 patients and 27 controls scanned, one of each excluded from the task analysis."
+    rubric: "Sample size here means the number of patients in the measurement that bears on the finding, not the whole study when only part of it was measured."
+    evidence:
+      - source: pmid:31671321
+        quote: "We scanned 27 healthy control (HC) and 45 ME/CFS subjects who met Fukuda criteria (Fukuda et al., 1994)."
+      - source: pmid:31671321
+        quote: "Visual inspection found unacceptable signal dropout or inadequate spatial normalization in the resting fMRI in 3 ME/CFS and 2 HC, and in the task fMRI in one ME/CFS and one HC. These subjects were excluded from the analysis."
+      - source: pmid:31671321
+        quote: "Comparison between ME/CFS and HC of the number of connections with p-FDR < 0.05 was confounded by the different number of subjects N (44 vs 26 for task)"
+    class: none
+  - decision_part: "The finding the corrected counts bear on is the task connectivity deficit; the corrected text keeps the absence of a difference at rest, which the record states."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:31671321
+        quote: "For the resting fMRI, no connectivity differences between the groups were found for any of the ROI pairs. For the task fMRI, four pairs of ROIs were found to demonstrate reduced connectivity in ME/CFS as seen in Fig 4 and Table 3."
+    class: none
+  - decision_part: "The case definition of pmid:31671321 stays Fukuda and stays flagged as not requiring post-exertional malaise; level, badges, contested mark, layer, links and the study's role are unchanged by the correction."
+    rubric: "Fukuda | Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:31671321
+        quote: "Resting and task functional MRI (fMRI) were acquired for 45 ME/CFS (Fukuda criteria) and 27 healthy controls (HC)."
+    class: none
+reasons_summary: "The corrected task-analysis counts (44 of 45 patients, 26 of 27 controls) for the Griffith brainstem connectivity study match its full text; nothing else on the card changes."
+would_change: "A corrected version of pmid:31671321 that reports different exclusions or analysis counts for the task fMRI, or a change in the diff that touches the level, a badge, the contested mark, a link or the case definition."

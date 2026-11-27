@@ -1,0 +1,193 @@
+card: inherited-genetic-risk
+card_sha256: ebd9d68cfe7a84edc6abc4a9ae30508de9528bff7990ad1dc2e785f508846362
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md); second attempt, items
+  added verbatim from audits/2026-11-27-inherited-genetic-risk-correction-published.yaml (objecting decision
+  parts 1-2)
+request:
+- target: studies[pmid:16049290].case_definition
+  problem: 'The full-text scan found that the full text differs from the card: The card records the case
+    definition as unverified; the full text states the patients were diagnosed according to the CDC criteria.
+    Quote from the full text: Forty nine patients were diagnosed according to the CDC criteria for chronic
+    fatigue syndrome'
+- target: studies[pmid:16049290].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states the HLA-DQA1*01 association was not significant after correction for all 22 comparisons (p
+    = 0.04 with a less conservative per-locus correction); the card gives only the uncorrected p = 0.008.
+    Quote from the full text: If corrected for all 22 possible comparisons then significance was lost.'
+- target: level_reason[7]
+  problem: 'The full-text scan found that the full text differs from the card: level_reason[7] says this
+    study has no verified case definition; the full text states the CDC criteria were used. Quote from
+    the full text: Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue
+    syndrome'
+- target: studies[pmid:32210306].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: Full text says
+    four of the 426 patients were diagnosed with the 2010 International Consensus Criteria instead of
+    the Canadian criteria; the card names only CCC. Quote from the full text: All had been diagnosed in
+    Norway according to the 2003 Canadian Consensus Criteria2, except for four patients where the similarly
+    strict 2010 International Consensus Criteria3 were applied.'
+- target: studies[pmid:16049290].case_definition
+  problem: 'The case definition of pmid:16049290 changed from unverified to Fukuda, and the sentence in
+    level_reason[7] ''Its patients were diagnosed with the CDC criteria (the 1994 Fukuda definition, which
+    does not require post-exertional malaise)'': the study''s own text names the CDC criteria without
+    a version or year (the reference it cites is not in the record), so the 1994 Fukuda version cannot
+    be read from the record; the rubric''s row for CDC criteria with no stated version applies (CDC_unspecified,
+    as the card records for the other CDC-criteria studies), not Fukuda.'
+- target: level_reason[7]
+  problem: 'The case definition of pmid:16049290 changed from unverified to Fukuda, and the sentence in
+    level_reason[7] ''Its patients were diagnosed with the CDC criteria (the 1994 Fukuda definition, which
+    does not require post-exertional malaise)'': the study''s own text names the CDC criteria without
+    a version or year (the reference it cites is not in the record), so the 1994 Fukuda version cannot
+    be read from the record; the rubric''s row for CDC criteria with no stated version applies (CDC_unspecified,
+    as the card records for the other CDC-criteria studies), not Fukuda.'
+- target: studies[pmid:16049290].case_definition
+  problem: 'The rubric row that governs a study naming the CDC criteria without a version: it is accepted
+    and flagged as not requiring PEM, but recorded as CDC criteria with the version not stated, so the
+    Fukuda coding and the ''1994 Fukuda definition'' wording overstate what the record shows.'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'Request items 1, 3, 5, 6 and 7. The card records pmid:16049290 as case_definition ''unverified''
+      (no quote), and level_reason[7] says of it and pmid:11422420 ''Neither has a verified case definition.''
+      The cached full text (data/cache/europepmc/PMC1770867.html, Materials and methods) states: ''Forty
+      nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome.'' followed
+      by reference 4, and the reference list in the same cached file resolves reference 4 as ''Fukuda
+      K, Straus S, Hickie I, and The International Chronic Fatigue Syndrome Study Group, et al. The chronic
+      fatigue syndrome: a comprehensive approach to its definition and study. Ann Intern Med 1994;121:953-9.''
+      The case definition is therefore stated, and ''unverified'' is wrong. On items 5-7: their premise
+      that the cited reference is not in the record does not hold for the cached full text, which contains
+      the reference list; the CDC criteria named are resolved to the 1994 Fukuda definition by that reference.'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext, and case_definition_quote
+      to 'Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome.'
+      (verbatim from the cached full text), with the card saying the version is read from the paper's
+      reference 4 (Fukuda et al. 1994). If the auditor does not accept a reference-list resolution, the
+      fallback is CDC_unspecified with the same quote; both are ranked equal to Fukuda and flagged 'does
+      not require PEM', so the level is unaffected either way. In level_reason[7], replace 'Neither has
+      a verified case definition.' with a sentence that the first London study used the CDC criteria (Fukuda
+      1994, which does not require post-exertional malaise) and the second has no verified case definition.
+      The role stays context; n=49 against 426 and a lower-ranked definition give no contested mark.
+    targets:
+    - studies[pmid:16049290].case_definition
+    - studies[pmid:16049290].case_definition_source
+    - studies[pmid:16049290].case_definition_quote
+    - level_reason[7]
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 2. The study finding gives only ''HLA-DQA1*01 more often in patients (51.0%
+      against 35%, OR 1.93, p = 0.008)'', and level_reason[7] says the study ''found the HLA-DQA1*01 variant
+      more often in patients'' with no limit. The cached full text states: ''The HLA-DRB1, HLA-DQA1, and
+      HLA-DQB1 associations need to be treated with caution because they have not been corrected for multiple
+      comparisons. If corrected for all 22 possible comparisons then significance was lost. However, a
+      less conservative approach of correcting for multiple comparisons at each multiallelic locus ...
+      suggests a possible association of HLA-DQA1*01 (p = 0.04) with CFS.'' A reader would read the uncorrected
+      p = 0.008 as a firmer finding than the authors report; this missing limit changes how the result
+      reads.'
+    fix: Add to studies[pmid:16049290].finding and to the London sentence in level_reason[7] that the
+      p = 0.008 is uncorrected, that significance was lost after correction for all 22 comparisons, and
+      that a per-locus correction gave p = 0.04 (the authors call it a possible association).
+    targets:
+    - studies[pmid:16049290].finding
+    - level_reason[7]
+  - class: decisive
+    severity: advisory
+    problem: 'Request item 4. The cached full text of pmid:32210306 (PMC7093502.xml) states: ''All had
+      been diagnosed in Norway according to the 2003 Canadian Consensus Criteria2, except for four patients
+      where the similarly strict 2010 International Consensus Criteria3 were applied.'' level_reason[0]
+      says ''426 patients meeting the Canadian Consensus Criteria''. The CCC label rests on the abstract,
+      which says all 426 were ''diagnosed according to the Canadian Consensus Criteria'', and ICC is accepted
+      and ranked equal to CCC, so the label and the level stand; the sentence is slightly broader than
+      the full text.'
+    fix: Optionally add to level_reason[0] (and the study finding) that four of the 426 patients were
+      diagnosed by the 2010 International Consensus Criteria instead. This adds a number from the full
+      text, so it is a decisive change; leaving the CCC label as it is is acceptable.
+    targets:
+    - level_reason[0]
+    - studies[pmid:32210306].case_definition
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:16049290
+    set:
+      case_definition: CDC_unspecified
+      case_definition_source: fulltext
+      case_definition_quote: Forty nine patients were diagnosed according to the CDC criteria for chronic
+        fatigue syndrome.
+      finding: 'A study of n=49 patients and 102 controls found HLA-DQA1*01 more often in patients (51.0%
+        against 35%, OR 1.93, p = 0.008). The authors write that the associations need to be treated with
+        caution because they were not corrected for multiple comparisons: significance was lost when corrected
+        for all 22 possible comparisons, and a less conservative correction at each locus separately gave
+        p = 0.04, which they call a possible association.'
+  - op: remove_comment
+    text: 'Criteria not named in the abstract; no open full text. TODO: verify.'
+  - op: replace_paragraph
+    field: level_reason
+    index: 7
+    text: Smaller studies of single candidate genes point in different directions. A London study of 49
+      patients, diagnosed according to the CDC criteria (version not stated in the text read, so the definition
+      does not require post-exertional malaise), and 102 controls found the HLA-DQA1*01 variant more often
+      in patients (p = 0.008). The authors write that this p value was not corrected for multiple comparisons,
+      that significance was lost when corrected for all 22 possible comparisons, and that a less conservative
+      correction at each locus separately gave p = 0.04, which they call a possible association. The Oslo
+      study could not test this variant because its controls were not typed for it. Another London study
+      of 58 patients and 134 controls found no HLA differences; it has no verified case definition. A
+      Brisbane study of 248 patients meeting CDC criteria and 248 controls found only a trend (P = 0.07)
+      for a cortisol-binding protein gene variant, and an Australian study of 95 patients meeting the
+      Fukuda definition and 77 controls found no variant that remained significant after correction for
+      testing many variants (lowest P = 0.059). These studies are small for genetic association studies.
+    sources:
+    - pmid:16049290
+    - pmid:32210306
+    - pmid:11422420
+    - pmid:15554358
+    - pmid:27835969
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: wording
+      target: level_reason[7]
+      operation: 2
+      severity: advisory
+      problem: Operation 2 (answers findings 0 and 1 of the review) writes 'diagnosed according to the
+        CDC criteria (version not stated in the text read, ...)'. 'The text read' is an internal phrase
+        a reader cannot place, and the paper's methods sentence cites reference 4, which the cached file
+        PMC1770867.html resolves as Fukuda et al. 1994 (the reference list was left out of the context
+        text). The CDC_unspecified label is the fallback the review allowed and is ranked and flagged
+        the same as Fukuda, so level, role and contested mark are unaffected.
+      fix: Write 'diagnosed according to the CDC criteria (version not named in the methods, so the definition
+        does not require post-exertional malaise)', or drop the parenthetical's first clause.
+      targets:
+      - level_reason[7]
+    - class: wording
+      target: level_reason[7]
+      operation: 2
+      severity: advisory
+      problem: 'Carried over from the earlier text: ''A London study of 49 patients''. The record says
+        the patients were referrals to the King''s College Hospital CFS Service from the South East of
+        England; it does not say London.'
+      fix: Write 'A study of 49 patients from the South East of England' or keep as is.
+      targets:
+      - level_reason[7]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:16049290].case_definition differs
+  - studies[pmid:16049290].case_definition_source differs
+  - studies[pmid:16049290].case_definition_quote differs
+  - 'level_reason[7]: the numeral(s) 0.008, 22, 0.04 are new'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 1, which is classed decisive, not wording
+  - operations[1] answers finding 0, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[2] answers finding 0, which is classed decisive, not wording
+  - operations[2] answers finding 1, which is classed decisive, not wording
+audits_run:
+- 2026-11-27-inherited-genetic-risk-correction-published-2.yaml
+- 2026-11-27-inherited-genetic-risk-correction-published-2-second.yaml
+outcome: published

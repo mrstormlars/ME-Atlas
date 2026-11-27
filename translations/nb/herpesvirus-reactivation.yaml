@@ -89,29 +89,39 @@ items:
     - pmid:28604802
     source_hash: 11d0a8ae0e10e032dfddf3fe6be7cda2683ef9c9dbf376ccef5d319f55b757d8
   level_reason[7]:
-    text: Noen studier med diagnosekriterier som ennå ikke er kontrollert, fant ingen forskjell. En av dem, med 26 pasienter
-      og 50 matchede kontroller i Atlanta (52 rekruttert), isolerte verken HHV-6 eller HHV-7 fra noens blodceller og fant
-      ingen forskjell i HHV-6- eller HHV-7-DNA i blodceller, som dette kortet regner som en markør på latent, ikke aktiv,
-      infeksjon. Et flersentersøk etter virusets arvemateriale i blod, avføring og spytt fant ingen konsekvente forskjeller
-      mellom pasienter og kontroller, bortsett fra færre anellovirus (en familie av virus som ikke er herpesvirus) hos pasientene.
-      Når det gjelder årsaksretningen, sier studien fra London at reaktivering av herpesvirus kan være en årsak til eller
-      en følge av den forstyrrede immunfunksjonen som sees ved ME/CFS, og den bulgarske studien tar opp muligheten for at
-      pasienter med ME/CFS er mottakelige for akutte virusinfeksjoner som følge av immundysfunksjon.
+    text: En studie med diagnosekriterier som ennå ikke er kontrollert, fant ingen forskjell. Én, med 26 pasienter og 50 matchede
+      kontroller i Atlanta (52 rekruttert), isolerte verken HHV-6 eller HHV-7 fra noens blodceller og fant ingen forskjell
+      i HHV-6- eller HHV-7-DNA i blodceller, som dette kortet regner som en markør på latent, ikke aktiv, infeksjon. En flersenterstudie
+      med to kasus-kontroll-kohorter, den første med 285 pasienter som oppfylte CDC-kriteriene fra 1994 og 201 friske kontroller
+      (plasma), og den andre med 106 pasienter som oppfylte både CDC-kriteriene fra 1994 og Canadian Consensus-kriteriene
+      fra 2003 og 91 friske kontroller, fant ingen konsekvente forskjeller mellom pasienter og kontroller, bortsett fra færre
+      anellovirus (en familie av virus som ikke er herpesvirus) hos pasientene. I plasma fra den første kohorten fant MassTag
+      PCR seks prøver som var positive for HHV-6 (4 pasienter og 2 kontroller); HHV-7 var ikke med i MassTag-panelet. Ikke-målrettet
+      høykapasitets sekvensering av pasientenes plasma fra den første kohorten, uten at kontroller ble sekvensert, påviste
+      pegivirus, HHV-6 og anellovirus, og rapporterte ikke HHV-7. I spytt fra den andre kohorten ble HHV-6 funnet hos 41,5
+      % av pasientene og 52,7 % av kontrollene (p=0,12), HHV-7 hos 62,3 % og 62,6 % (p=1) og Epstein-Barr-virus hos 28,3 %
+      og 33,0 % (p=0,54). Disse spyttresultatene for både HHV-6 og HHV-7 kommer fra en annen prøvetype og kohort enn plasmaet
+      som nivå 2 bygger på. Når det gjelder årsaksretningen, sier studien fra London at reaktivering av herpesvirus kan være
+      en årsak til eller en følge av den forstyrrede immunfunksjonen som sees ved ME/CFS, og den bulgarske studien tar opp
+      muligheten for at pasienter med ME/CFS er mottakelige for akutte virusinfeksjoner som følge av immundysfunksjon.
     sources:
     - pmid:10913395
     - pmid:37526404
     - pmid:34422848
     - pmid:32129496
-    source_hash: 2168ae5bef03871219e40bb1d1c61511117e24b45a7c7389ffcd3d34561f59dc
+    - pmid:36653846
+    source_hash: bd03da8c7e4ab45ce38a46c34bca8cd6da48da83c160ebb1755be97f4d387ccf
   badge_reasons.diagnostic_marker[0]:
-    text: Ingen markør på dette kortet er testet i en annen, uavhengig pasientgruppe med kontrollerte diagnosekriterier. Antistoffer
-      mot dUTPase fra Epstein-Barr-virus var høyere hos pasienter i to studier fra den samme gruppen i Ohio; den siste studien
-      fant også høyere antistoffer mot dUTPase fra HHV-6 og varicella zoster-virus. Begge studiene har diagnosekriterier som
-      ennå ikke er kontrollert.
+    text: Ingen av de to dUTPase-antistoffresultatene på dette kortet er testet av en uavhengig forskergruppe. Antistoffer
+      mot dUTPase fra Epstein-Barr-virus var høyere hos pasienter i to studier fra den samme gruppen i Ohio. Den tidligere
+      studien, med 55 pasienter og 151 friske kontroller, inkluderte pasienter som oppfylte Canadian Clinical Case Definition
+      og Fukuda-kriteriene; den senere studien, med 40 pasienter som oppfylte Fukuda-kriteriene og 16 friske kontroller, fant
+      også høyere antistoffer mot dUTPase fra HHV-6 og varicella zoster-virus. Ingen uavhengig gruppe har gjentatt noen av
+      resultatene.
     sources:
     - pmid:28303641
     - pmid:41451845
-    source_hash: 8e60b6bc252f1e2ef827e5ffdd7aecc5af903de28a4772a6544f2367e52abc6c
+    source_hash: 0c8ae61c39e6eebab8e3463223b3ade242092696500aaf527f28575703585256
   badge_reasons.explains_pem[0]:
     text: Ingen studie på dette kortet måler PEM direkte, for eksempel med en anstrengelsestest. Studien fra Riga med 108
       pasienter rapporterte at uvelhet etter anstrengelse, registrert som symptom, var hyppigere hos pasienter med aktiv infeksjon
@@ -219,9 +229,14 @@ items:
       pasienter og 14 av 50 kontroller og HHV-7-DNA hos 2 pasienter og 12 kontroller, uten signifikante forskjeller.
     source_hash: 2ca3b436e1addfd0cc7a239c594e28977cd8388c1eda2bcaa03063bbafe5af6e
   studies[pmid:37526404].finding:
-    text: En flersenterstudie som lette etter virusets arvemateriale i blod, avføring og spytt, fant ingen konsekvente forskjeller
-      mellom pasienter og friske kontroller, bortsett fra en lavere forekomst av anellovirus hos pasientene.
-    source_hash: 46d98bde3950730aa4c9179b8b146bd2443941aafe65cfc96319a72d2581b196
+    text: En flersenterstudie med to kasus-kontroll-kohorter lette etter virusets arvemateriale i blod, avføring og spytt
+      og fant ingen konsekvente forskjeller mellom pasienter og friske kontroller, bortsett fra en lavere forekomst av anellovirus
+      hos pasientene. I kohort 1 (plasma, 285 pasienter som oppfylte CDC-kriteriene fra 1994 og 201 friske kontroller) fant
+      MassTag PCR seks prøver som var positive for HHV-6 (4 pasienter og 2 kontroller). I kohort 2 (106 pasienter som oppfylte
+      både CDC-kriteriene fra 1994 og Canadian Consensus-kriteriene fra 2003 og 91 friske kontroller) ble HHV-6 funnet i spytt
+      hos 41,5 % av pasientene og 52,7 % av kontrollene (p=0,12), HHV-7 hos 62,3 % og 62,6 % (p=1) og HHV-4 (Epstein-Barr-virus)
+      hos 28,3 % og 33,0 % (p=0,54), og HHV-6 i blodceller hos 1 pasient og ingen kontroll.
+    source_hash: 18a922915306853af7145010a8d0964e8f79107756dfeeb121c155f1d8738684
   studies[pmid:28303641].finding:
     text: En studie som sammenlignet pasienter med ME/CFS, pasienter med Gulf War illness og kontroller fant antistoffer mot
       flere herpesvirus-dUTPase-enzymer eller mot humant dUTPase hos 30,91-52,7% av pasientene med ME/CFS og 17,21% av kontrollene,

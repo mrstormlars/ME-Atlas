@@ -1,0 +1,45 @@
+card: inherited-genetic-risk
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:16049290 changed from unverified to CDC_unspecified, read from the full text, with the quoted sentence."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as \"does not require PEM\", ranked equal to Fukuda. The card quotes the sentence that names the CDC criteria."
+    evidence:
+      - source: pmid:16049290
+        quote: "Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome."
+      - source: pmid:16049290
+        quote: "Diagnosis is made according to the symptom based CFS case definition of the Centers for Disease Control (CDC)."
+      - source: pmid:16049290
+        quote: "We HLA typed patients who fulfilled the CDC criteria for CFS and compared the results with those for healthy controls."
+    class: none
+  - decision_part: "The definition is the study's own text, which names the CDC criteria without a version, so CDC_unspecified with the 'does not require post-exertional malaise' flag in level_reason[7] is the right record."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:16049290
+        quote: "Forty nine patients were diagnosed according to the CDC criteria for chronic fatigue syndrome."
+    class: none
+  - decision_part: "The added numbers and the authors' caveat on multiple comparisons in level_reason[7] and the finding of pmid:16049290 (p = 0.008, 22 comparisons, locus-wise p = 0.04, possible association)."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:16049290
+        quote: "Analysis by 2 × 2 contingency tables revealed an increased frequency of HLA-DQA1*01 in patients with CFS (51.0% v 35%; OR, 1.93; 95% CI, 1.2 to 3.3; p = 0.008)."
+      - source: pmid:16049290
+        quote: "The HLA-DRB1, HLA-DQA1, and HLA-DQB1 associations need to be treated with caution because they have not been corrected for multiple comparisons. If corrected for all 22 possible comparisons then significance was lost."
+      - source: pmid:16049290
+        quote: "However, a less conservative approach of correcting for multiple comparisons at each multiallelic locus (at HLA-DRB1, HLA-DQA1, and HLA-DQB1 separately), suggests a possible association of HLA-DQA1*01 (p = 0.04) with CFS."
+    class: none
+  - decision_part: "The level stays 2 and the study keeps its context role: the London finding is a different variant that the Oslo study could not test, so it is neither an independent repeat (level 3) nor a contradiction (contested)."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:32210306
+        quote: "The often cited association with DQA1*01 reported by Smith et al.25 cannot be evaluated in our material since the HLA-DQA1 locus was not genotyped in the control group."
+      - source: pmid:16049290
+        quote: "Although our results will need independent replication, they do provide possible target HLA alleles to investigate further for association with CFS."
+    class: none
+  - decision_part: "The unchanged statement that the other London study (pmid:11422420) has no verified case definition stays conservative: its abstract does not name a case definition."
+    rubric: "None stated, or not yet checked | Not accepted (see the inclusion rule)."
+    evidence:
+      - source: pmid:11422420
+        quote: "In the present study, we sought to extend previous work using a well-characterized patient group and modern HLA genotyping techniques."
+    class: none
+reasons_summary: "The correction records the London HLA study's own CDC criteria sentence (version not stated, flagged as not requiring PEM) and the authors' multiple-comparison caveat, all verbatim in its full text; level, role and marks are unchanged."
+would_change: "A source naming the CDC version used by pmid:16049290 (for example its reference 4, not in the cached text) would change the recorded definition to Holmes 1988 or Fukuda; a study typing HLA-DQA1 in patients and controls with a recognised case definition would bear on the role of this finding. Full text of pmid:11422420 is not cached, so its case definition stays unverified."

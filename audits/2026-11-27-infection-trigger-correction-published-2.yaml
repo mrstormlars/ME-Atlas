@@ -1,0 +1,42 @@
+card: infection-trigger
+decision: reject
+parts:
+  - decision_part: "level_reason[3], the parenthetical on the US college cohort: '(the cases met one or more of them, most only the Fukuda criteria)'. The record says that most of the ME/CFS group (the cases meeting a single definition) met only the Fukuda criteria, while the 20 S-ME/CFS cases met Fukuda plus Canadian or IOM. Of the 55 cases, 20 met more than one definition, so 'most' of all 55 meeting only Fukuda would need more than 27 of the other 35, which the record does not state. The sentence moves a statement about part of the cases onto all of them and cannot be matched to the record."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:33367564
+        quote: "Note that in most cases the ME/CFS group only met the Fukuda criteria [20], while the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM [22] criteria."
+      - source: pmid:33367564
+        quote: "At time 3, 55 students (23%) met criteria for ME/CFS, 20 of whom (8%) met more than 1 case definition of ME/CFS and were termed S-ME/CFS."
+      - source: pmid:33367564
+        quote: "Participants’ 6-month medical examination and their DSQ and SF-36 results from times 1–3 were evaluated to determine whether they met 1 or more of the 3 case definitions of ME/CFS; participants who met more than 1 case definition were defined as having severe ME/CFS (S-ME/CFS) [7]."
+  - decision_part: "Supporting: the study entry pmid:33367564 recorded as Fukuda from the full text, with 67 recovered controls and design uncontrolled (no comparison group without the infection). Each case met at least one of Fukuda, Canadian or IOM, and the latter two rank above Fukuda, so Fukuda as the recorded definition is the least strict that applies and is flagged as not requiring PEM. The study keeps its context role, and the level does not rest on it."
+    rubric: "Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:33367564
+        quote: "Sixty-seven of the 157 asymptomatic students were recruited as matched, recovered controls."
+      - source: pmid:33367564
+        quote: "Note that in most cases the ME/CFS group only met the Fukuda criteria [20], while the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM [22] criteria."
+  - decision_part: "Supporting: level_reason[3], the statement that the Australian and US college studies had no comparison group without the infection, because their controls had recovered from the same infection."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:16950834
+        quote: "We invited these cases, and control participants matched by age and sex who had recovered promptly from the same infection, at six months for a medical interview, examination by a physician (AL), and laboratory investigation to exclude alternative medical explanations for ongoing symptoms, such as hypothyroidism or primary sleep disorder."
+      - source: pmid:33367564
+        quote: "All students deemed not recovered and an equal number of recovered students (controls) matched by age, sex, and class status when IM developed were invited to participate in a time 3 assessment 6 months following the onset of IM."
+  - decision_part: "Supporting: level_reason[0], the reworded limits of RECOVER-Adult (overestimation factors mitigated by enrolment within 30 days; underestimation factors). The level 2 grounds are unchanged."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39804551
+        quote: "These issues are mitigated by the enrollment of participants within 30 days of infection."
+      - source: pmid:39804551
+        quote: "Conversely, there are also factors that might have contributed to an underestimation of participants with post-COVID-19 ME/CFS."
+      - source: pmid:39804551
+        quote: "The 2015 IOM ME/CFS diagnostic criteria mostly reflect severely ill ME/CFS of many years duration and may not be ideal for identifying short duration ME/CFS."
+  - decision_part: "Supporting: links[0] to question:who-is-vulnerable, reworded to 'those who later developed ME/CFS' and to name the criteria of the second study; support stays proposed."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:33367564
+        quote: "At baseline, those who developed ME/CFS had more physical symptoms and immune irregularities, but not more psychological symptoms, than those who recovered."
+reasons_summary: "Rejected: the correction is supported except one parenthetical in level_reason[3], which says most of the college-cohort cases met only Fukuda, while the record says this only of the cases outside the severe group."
+would_change: "Reword the parenthetical in level_reason[3] to what the record says (for example: 20 of the 55 met more than one definition, and most of the others met only the Fukuda criteria), or remove it. The rest of the correction (the RECOVER-Adult limits, Fukuda and 67 controls for pmid:33367564, the comparison-group statement, links[0]) is supported by the cited full texts."
