@@ -1,0 +1,6 @@
+# Founder confirmations of quotes read from open PDF copies (case_definition_source: fulltext_pdf).
+# Append-only. Entries are added only by the founder, with:
+#   uv run python -m me_atlas.unpaywall confirm --card <card> <pmid>
+# after opening the PDF and checking the sentence on the stated page. Code never edits or removes an entry.
+# Checked by the citation check C14 (docs/citation-check.md).
+[]

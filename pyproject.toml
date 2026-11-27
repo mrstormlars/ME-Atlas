@@ -11,6 +11,7 @@ dependencies = [
     "pyyaml",
     "jinja2",
     "anthropic",
+    "pdfminer-six>=20260107",
 ]
 
 [dependency-groups]

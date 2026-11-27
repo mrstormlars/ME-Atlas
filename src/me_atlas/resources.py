@@ -455,12 +455,14 @@ class Fetcher:
             return parser
         return "robots_unavailable"  # a loop, or more than MAX_REDIRECTS hops (RFC 9309)
 
-    def fetch(self, url: str) -> Page:
+    def _request(self, url: str) -> tuple[httpx.Response, str] | Page:
+        """The response and final URL, or a ``Page`` carrying the refusal or failure status (robots, blocked,
+        ``http_<code>``, ``network_error``). The body is not interpreted."""
         gate = self.robots_status(url)
         if gate != "allowed":
             return Page(status=gate)
         try:
-            response, final_url = self._get(url)
+            return self._get(url)
         except _RobotsRefusalError as refusal:
             return Page(status=refusal.status)
         except ResourcesError as exc:
@@ -468,6 +470,28 @@ class Fetcher:
             if code is None:
                 return Page(status="network_error")
             return Page(status="blocked" if code in BLOCKED_HTTP else f"http_{code}", http_status=code)
+
+    def fetch_raw(self, url: str) -> Page:
+        """GET with the same robots, redirect and rate-limit rules as ``fetch``, for a body that is not a page (a PDF).
+        ``status`` is ``received`` when a response came back (the caller judges its body), else the refusal or failure
+        status of ``fetch``. Nothing is decoded or classified."""
+        got = self._request(url)
+        if isinstance(got, Page):
+            return got
+        response, final_url = got
+        return Page(
+            status="received",
+            http_status=response.status_code,
+            final_url=final_url,
+            content_type=response.headers.get("content-type", ""),
+            body=response.content,
+        )
+
+    def fetch(self, url: str) -> Page:
+        got = self._request(url)
+        if isinstance(got, Page):
+            return got
+        response, final_url = got
         content_type = response.headers.get("content-type", "")
         body = response.content
         decoded = response.text

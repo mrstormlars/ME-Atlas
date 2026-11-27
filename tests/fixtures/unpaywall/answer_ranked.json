@@ -1,0 +1,22 @@
+{
+  "doi": "10.9999/fictional.ranked",
+  "is_oa": true,
+  "oa_status": "hybrid",
+  "title": "Fictional answer with many invented locations",
+  "year": 2021,
+  "updated": "2026-01-01T00:00:00.000000",
+  "best_oa_location": null,
+  "oa_locations": [
+    {"url_for_pdf": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9999991/pdf/fictional.pdf", "url_for_landing_page": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9999991", "host_type": "repository", "version": "acceptedVersion", "license": null, "is_best": false},
+    {"url_for_pdf": "https://europepmc.org/articles/PMC9999991?pdf=render", "url_for_landing_page": "https://europepmc.org/articles/PMC9999991", "host_type": "repository", "version": "publishedVersion", "license": "cc-by", "is_best": false},
+    {"url_for_pdf": "https://repo.example/submitted.pdf", "url_for_landing_page": "https://repo.example/submitted", "host_type": "repository", "version": "submittedVersion", "license": null, "is_best": false},
+    {"url_for_pdf": null, "url_for_landing_page": "https://landing-only.example/paper", "host_type": "publisher", "version": "publishedVersion", "license": null, "is_best": false},
+    {"url_for_pdf": "https://repo.example/accepted.pdf", "url_for_landing_page": "https://repo.example/accepted", "host_type": "repository", "version": "acceptedVersion", "license": null, "is_best": true},
+    {"url_for_pdf": "https://publisher.example/paper.pdf", "url_for_landing_page": "https://publisher.example/paper", "host_type": "publisher", "version": "publishedVersion", "license": "cc-by", "is_best": false},
+    {"url_for_pdf": "https://repo2.example/published.pdf", "url_for_landing_page": "https://repo2.example/published", "host_type": "repository", "version": "publishedVersion", "license": null, "is_best": true},
+    {"url_for_pdf": "https://repo3.example/published.pdf", "url_for_landing_page": "https://repo3.example/published", "host_type": "repository", "version": "publishedVersion", "license": null, "is_best": false}
+  ],
+  "oa_locations_embargoed": [
+    {"url_for_pdf": "https://embargoed.example/paper.pdf", "url_for_landing_page": "https://embargoed.example/paper", "host_type": "publisher", "version": "publishedVersion", "license": null, "is_best": false}
+  ]
+}

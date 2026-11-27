@@ -51,7 +51,7 @@ from typing import Annotated, Any, Literal
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, model_validator
 
-from me_atlas import cards, citations, europepmc, last_run, pubmed, translations
+from me_atlas import cards, citations, europepmc, last_run, pubmed, translations, unpaywall
 from me_atlas.cards import CHANGELOG_NAME, NonEmptyStr, Slug, StudyId
 from me_atlas.http import load_dotenv
 from me_atlas.operations import (
@@ -1118,6 +1118,9 @@ def record_classification(cfg: Config, path: Path | None = None) -> dict[str, An
 class FullTextResult:
     xml: bytes | None
     note: str
+    # An open PDF copy found through Unpaywall, only when Europe PMC gave no full text and the context asked for it
+    # (``live_fulltext_loader(..., with_pdf=True)``). Used by ``build_context`` only.
+    pdf: unpaywall.CopyResult | None = None
 
 
 # Called with the PMID and, when the cached PubMed record has one, its PMC id; for a DOI-only preprint with its PPR
@@ -1136,8 +1139,38 @@ def fulltext_note(status: str, pmcid: str | None) -> str:
     return f"no open full text (Europe PMC: {europepmc.STATUS_TEXT[status]})"
 
 
-def live_fulltext_loader(cache_dir: Path) -> FullTextLoader:
-    """Look the paper up in Europe PMC (cached) and read its open-access full text, if there is one."""
+PdfFinder = Callable[[str], unpaywall.CopyResult]
+# Europe PMC statuses after which an open PDF copy is looked for (the paper has no usable open-access XML).
+PDF_FALLBACK_STATUSES = (
+    europepmc.STATUS_PDF_ONLY,
+    europepmc.STATUS_PMC_NO_XML,
+    europepmc.STATUS_NOT_OPEN_ACCESS,
+    europepmc.STATUS_NOT_FOUND,
+)
+
+
+def _live_pdf_finder(cache_dir: Path) -> PdfFinder:
+    """Unpaywall lookup and download for one PMID; without ``CONTACT_EMAIL`` only the cache is read."""
+
+    def find(pmid: str) -> unpaywall.CopyResult:
+        env = {**load_dotenv(), **os.environ}
+        finder = unpaywall.CopyFinder(cache_dir, env.get("CONTACT_EMAIL"))
+        try:
+            return finder.find(pmid)
+        finally:
+            finder.close()
+
+    return find
+
+
+def live_fulltext_loader(
+    cache_dir: Path, *, with_pdf: bool = False, pdf_finder: PdfFinder | None = None
+) -> FullTextLoader:
+    """Look the paper up in Europe PMC (cached) and read its open-access full text, if there is one.
+
+    With ``with_pdf`` (the ``context`` step), a paper for which Europe PMC has no usable full text and whose PubMed
+    record has a DOI is looked up in Unpaywall for an open PDF copy (``pdf_finder``; the default requests only with
+    ``CONTACT_EMAIL``). Every other step keeps the plain behaviour."""
 
     def load(
         pmid: str | None, pmcid: str | None = None, *, preprint: europepmc.PreprintRecord | None = None
@@ -1161,6 +1194,9 @@ def live_fulltext_loader(cache_dir: Path) -> FullTextLoader:
                 client.close()
         note = fulltext_note(result.status, result.pmcid)
         if result.path is None:
+            if with_pdf and pmid and pmid.isdigit() and preprint is None and result.status in PDF_FALLBACK_STATUSES:
+                found = (pdf_finder or _live_pdf_finder(cache_dir))(pmid)
+                return FullTextResult(None, note, pdf=found if found.ok else None)
             return FullTextResult(None, note)
         return FullTextResult(result.path.read_bytes(), note)
 
@@ -1233,6 +1269,58 @@ def _preprint_record(cfg: Config, key: str) -> europepmc.PreprintRecord:
             f"cache it with `uv run python -m me_atlas.europepmc preprint {doi}`"
         )
     return record
+
+
+def _pdf_full_text_parts(copy: unpaywall.CopyResult, budget: int) -> list[str]:
+    """Sections 5 and 6 of the context file when the text is an open PDF copy found through Unpaywall."""
+    assert copy.text is not None and copy.meta is not None
+    meta = copy.meta
+    pages = [unpaywall.join_markers(p) for p in copy.text.split(unpaywall.PAGE_BREAK)]
+    text = "\n\n".join(f"[page {n}] {p}" for n, p in enumerate(pages, start=1))
+    total = len(text)
+    cut = (
+        "The reference list is left out."
+        if meta.get("reference_list_cut")
+        else "No reference-list heading was found, so the whole text is shown."
+    )
+    parts = [
+        "Source: an open PDF copy found through Unpaywall (version: "
+        f"{meta.get('version')}; host type: {meta.get('host_type')}; PDF: {meta.get('pdf_url')}). {cut} "
+        "A line-break hyphen, or a line break after a slash, is shown joined; page markers `[page N]` are not part "
+        "of the paper's text.",
+        "A quote from this text takes `case_definition_source: fulltext_pdf`. It must lie on one page, word for word, "
+        "and it passes the citation check (C14) only after the founder has confirmed it by hand "
+        "(`uv run python -m me_atlas.unpaywall confirm`). No agent runs that command.",
+    ]
+    if total > budget:
+        parts.append(
+            f"TRUNCATED: the first {budget} of {total} characters follow; the rest of the full text was left out."
+        )
+    else:
+        parts.append(f"Not truncated ({total} characters).")
+    parts += ["", text[:budget], ""]
+    found = unpaywall.pdf_candidates(copy.text)
+    definitions = [(n, c) for n, c in found if c.kind == "definition"]
+    exclusions = [(n, c) for n, c in found if c.kind == "exclusion"]
+    parts += ["## 6. Sentences found in the full text (verbatim)", ""]
+    parts += ["### Sentences that may name a case definition", ""]
+    if definitions:
+        parts += [f"- [page {n}] {c.sentence}" for n, c in definitions]
+        parts += ["", "These only suggest; which definition a sentence means is for the drafter to decide."]
+    else:
+        parts.append("None found.")
+    parts += ["", "### Sentences that may exclude people with the illness", ""]
+    if exclusions:
+        parts += [f"- [page {n}] {c.sentence}" for n, c in exclusions]
+        parts += [
+            "",
+            "Check whether ME/CFS itself was what the study excluded. A cohort that excluded people with "
+            "ME/CFS is not an ME/CFS cohort.",
+        ]
+    else:
+        parts.append("None found.")
+    parts.append("")
+    return parts
 
 
 def build_context(
@@ -1339,7 +1427,9 @@ def build_context(
         "## 5. Full text",
         "",
     ]
-    if full.xml is None:
+    if full.xml is None and full.pdf is not None and full.pdf.ok:
+        parts += _pdf_full_text_parts(full.pdf, budget)
+    elif full.xml is None:
         parts += [
             f"No full text is available: {full.note}. Work from the abstract only; a case definition that "
             "the abstract does not state is `unverified`.",
@@ -7155,7 +7245,7 @@ def _dispatch(
         )
         return 0
     if args.command == "context":
-        loader = fulltext or live_fulltext_loader(cfg.cache_dir)
+        loader = fulltext or live_fulltext_loader(cfg.cache_dir, with_pdf=True)
         key, _paper = resolve_paper(cfg, args.pmid)
         text = build_context(cfg, args.slug, key, loader)
         path = cfg.f("context", f"{args.slug}-{key}.md")

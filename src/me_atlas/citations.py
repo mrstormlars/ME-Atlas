@@ -16,7 +16,8 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
 * C2 the title matches the record
 * C3 the year matches the record
 * C4 the record is not marked retracted
-* C5 the case-definition quote appears verbatim in the stated source (abstract or cached full text)
+* C5 the case-definition quote appears verbatim in the stated source (abstract, cached full text or, for
+  ``fulltext_pdf``, the cached text of the open PDF copy)
 * C6 (warning) ``n_patients`` and ``n_controls`` appear as numbers in the abstract or cached full text
 * C7 a DOI-only study id that is not a preprint cannot be checked yet
 * C8 ``preprint`` on the card agrees with the PubMed record (publication type "Preprint")
@@ -31,6 +32,8 @@ Checks per study (errors unless marked); the reference is ``docs/citation-check.
   on the same card
 * C13 ``authors``, ``journal`` and ``doi`` of a study that has them equal the cached PubMed record; the error names
   the field
+* C14 a study with ``case_definition_source: fulltext_pdf`` has the founder's confirmation of its quote in
+  ``confirmations/pdf-quotes.yaml`` (same study id, same quote, and the same SHA-256 when the PDF is cached)
 
 A ``doi:`` study with ``preprint: true`` is checked against the cached Europe PMC preprint record with that DOI
 (``<cache>/europepmc/preprints/``): C1 (no record), C2, C3, C5 (abstract of the record, or the full text through
@@ -64,6 +67,15 @@ from me_atlas.europepmc import (
 from me_atlas.operations import scalar
 from me_atlas.pubmed import DEFAULT_CACHE_ROOT, ParseError, PubMedRecord, RawCache
 from me_atlas.translations import english_items
+from me_atlas.unpaywall import (
+    DEFAULT_CONFIRMATIONS,
+    CachedPdf,
+    UnpaywallError,
+    is_confirmed,
+    load_confirmations,
+    quote_in_pdf_text,
+    read_cached_pdf,
+)
 
 ERROR = "ERROR"
 WARNING = "WARNING"
@@ -75,7 +87,7 @@ class CitationIssue:
 
     file: str
     study: str
-    code: str  # C1..C12, or LOAD when the file could not be read as a card
+    code: str  # C1..C14, or LOAD when the file could not be read as a card
     level: str  # ERROR or WARNING
     message: str
 
@@ -151,6 +163,10 @@ def fulltext_fetch_hint(pmid: str) -> str:
     return f"uv run python -m me_atlas.europepmc fulltext {pmid}"
 
 
+def pdf_fetch_hint(pmid: str) -> str:
+    return f"uv run python -m me_atlas.unpaywall fetch --card <card> {pmid}"
+
+
 def preprint_fetch_hint(doi: str) -> str:
     return f"uv run python -m me_atlas.europepmc preprint {doi}"
 
@@ -162,7 +178,10 @@ def pmcpage_fetch_hint(pmid: str) -> str:
 class CacheReader:
     """Reads and remembers cached records for one run."""
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, confirmations: Path | None = None):
+        self.root = Path(root)
+        self.confirmations_path = Path(confirmations) if confirmations is not None else DEFAULT_CONFIRMATIONS
+        self._confirmations: list[dict] | str | None = None
         self.pubmed = RawCache(root)
         self.epmc = EuropePmcCache(root)
         self._records: dict[str, PubMedRecord | str] = {}
@@ -201,6 +220,25 @@ class CacheReader:
             return article_text(content)
         except (EuropePmcError, OSError) as exc:
             return (f"cached full text is unreadable ({exc}); refresh it with {hint} --refresh",)
+
+    def pdf(self, record: PubMedRecord) -> CachedPdf | tuple[str]:
+        """The cached text and meta of the open PDF copy of this record's DOI, or a 1-tuple holding the reason."""
+        hint = f"`{pdf_fetch_hint(record.pmid)}`"
+        if not record.doi:
+            return ("no cached PDF text (the PubMed record has no DOI)",)
+        found = read_cached_pdf(self.root, record.doi)
+        if found is None:
+            return (f"no cached PDF text; run {hint}",)
+        return found
+
+    def confirmations(self) -> list[dict] | str:
+        """The entries of the founder's confirmations file, or a string saying why it cannot be read."""
+        if self._confirmations is None:
+            try:
+                self._confirmations = load_confirmations(self.confirmations_path)
+            except UnpaywallError as exc:
+                self._confirmations = str(exc)
+        return self._confirmations
 
     def record(self, pmid: str) -> PubMedRecord | str:
         """The parsed record, or a string saying what is wrong: 'missing' or 'unreadable: <why>'."""
@@ -324,7 +362,8 @@ def check_study(file: str, study: Study, cache: CacheReader) -> list[CitationIss
         return cache.fulltext(record.pmid)
 
     issues += _check_bibliography(study, record, issue)
-    issues += _check_quote(study, record.abstract, full, "PubMed", issue)
+    issues += _check_quote(study, record.abstract, full, "PubMed", issue, pdf=lambda: cache.pdf(record))
+    issues += _check_pdf_confirmation(study, record, cache, issue)
     issues += _check_sample_sizes(study, record.abstract, full, issue)
     issues += _check_group(study, record.authors, "PubMed", issue)
     return issues
@@ -425,7 +464,7 @@ def _check_group(study, authors, record_name, issue) -> list[CitationIssue]:
     ]
 
 
-def _check_quote(study, abstract, full, record_name, issue) -> list[CitationIssue]:
+def _check_quote(study, abstract, full, record_name, issue, pdf=None) -> list[CitationIssue]:
     quote = study.case_definition_quote
     if quote is None:
         return []
@@ -444,11 +483,44 @@ def _check_quote(study, abstract, full, record_name, issue) -> list[CitationIssu
         if wanted not in normalise_quote(text):
             return [issue("C5", ERROR, "case_definition_quote is not verbatim in the cached full text")]
         return []
+    if source == "fulltext_pdf":
+        found = pdf() if pdf is not None else ("a fulltext_pdf quote is checked for studies with a PubMed record only",)
+        if isinstance(found, tuple):
+            return [issue("C5", ERROR, found[0])]
+        if not quote_in_pdf_text(quote, found.text):
+            return [issue("C5", ERROR, "case_definition_quote is not verbatim in the cached PDF text")]
+        return []
     return [
         issue(
             "C5",
             ERROR,
-            "case_definition_quote has no case_definition_source (abstract or fulltext) to check it against",
+            "case_definition_quote has no case_definition_source (abstract, fulltext or fulltext_pdf) "
+            "to check it against",
+        )
+    ]
+
+
+def _check_pdf_confirmation(study, record: PubMedRecord, cache: CacheReader, issue) -> list[CitationIssue]:
+    """C14: a ``fulltext_pdf`` quote needs the founder's confirmation (same study, same quote, same PDF)."""
+    if study.case_definition_source != "fulltext_pdf" or study.case_definition_quote is None:
+        return []
+    entries = cache.confirmations()
+    if isinstance(entries, str):
+        return [issue("C14", ERROR, entries)]
+    cached = read_cached_pdf(cache.root, record.doi) if record.doi else None
+    sha = cached.meta.get("sha256") if cached else None
+    if is_confirmed(entries, study.id, study.case_definition_quote, sha):
+        return []
+    if is_confirmed(entries, study.id, study.case_definition_quote, None):
+        why = "the founder confirmed this quote for a different PDF (the SHA-256 differs)"
+    else:
+        why = "no founder confirmation for this quote"
+    return [
+        issue(
+            "C14",
+            ERROR,
+            f"{why}; the founder checks the sentence in the PDF and runs "
+            f"`uv run python -m me_atlas.unpaywall confirm --card <card> {study.id.removeprefix('pmid:')}`",
         )
     ]
 
@@ -1103,13 +1175,13 @@ def check_file(path: Path, cache: CacheReader, numbers_level: str = WARNING) -> 
 
 
 def check_paths(
-    paths: Sequence[Path], cache_root: Path, numbers_level: str = WARNING
+    paths: Sequence[Path], cache_root: Path, numbers_level: str = WARNING, confirmations: Path | None = None
 ) -> tuple[int, list[CitationIssue]]:
     """Check files and directories. Returns (number of files checked, all issues).
 
     ``numbers_level`` is the level of a C10 issue: WARNING for what is published or drafted already, ERROR for a
     text that has just been applied (a correction round, a valve fix, the weekly pipeline)."""
-    cache = CacheReader(cache_root)
+    cache = CacheReader(cache_root, confirmations)
     files: list[Path] = []
     issues: list[CitationIssue] = []
     for p in map(Path, paths):
@@ -1251,6 +1323,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     chk = sub.add_parser("check", help="check studies on cards and drafts against the cached records (offline)")
     chk.add_argument("paths", nargs="*", type=Path, help="files or directories (default: cards/ and drafts/)")
     chk.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_ROOT, help="default: %(default)s")
+    chk.add_argument("--confirmations", type=Path, default=DEFAULT_CONFIRMATIONS, help="default: %(default)s")
     bib = sub.add_parser(
         "bibliography",
         help="copy authors, journal and doi from the cached PubMed records onto the studies of cards (offline)",
@@ -1263,7 +1336,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "bibliography":
         return _bibliography_command(args)
     paths = args.paths or [p for p in (Path("cards"), Path("drafts")) if p.is_dir()]
-    count, issues = check_paths(paths, args.cache_dir)
+    count, issues = check_paths(paths, args.cache_dir, confirmations=args.confirmations)
     for item in issues:
         print(item)
     errors = sum(i.level == ERROR for i in issues)
