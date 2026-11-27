@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-27 — "Independent" in the diagnostic-marker badge means an independent research group (founder ruling)
+
+- In the full-text correction round of 2026-11-27 (pull request 119) the first auditor rejected the correction of `herpesvirus-reactivation`: the badge reason kept the diagnostic-marker badge at no because no independent research group had found the marker again, a ground the badge rule (functional spec section 3: "tested in a second, independent patient group, with a stated case definition") does not state. The anti-EBV dUTPase antibody was found higher in two separate patient groups, from the same research setting. The auditor named a founder ruling on the meaning of "independent" as a way to settle it.
+- The project manager put three readings: (A) an independent research group and a separate patient group; (B) a separate patient group is enough; (C) no clarification. Recommended A. The founder answered: "Yes, research group".
+- The badge rule now reads that the marker must have been tested in a second patient group, separate from the first, by an independent research group, with a stated case definition. The same reading of "independent" as rung 3 ("an independent group has reproduced the finding in a separate cohort").
+- No published card has the badge set to yes, so the ruling changes no badge value; badge reasons that say no marker was tested in a second, independent patient group stay true. The held-back correction of `herpesvirus-reactivation` can be tried again under the clarified rule.
+- The wording goes into the functional spec section 3, the methods page (English and Norwegian, the Norwegian through the translation review) and any agent prompt that quotes the rule.
+- Why: "validated" is a strong word for patients and researchers; a research group confirming its own finding is a weaker confirmation, and the ladder already treats it so at rung 3.
+
 ## 2026-11-27 — A cheap full-text scan first, and an upgrade path for published cards (founder ruling)
 
 - After options A and B were merged, 39 studies on 17 published cards have a cached full text that nobody has read against the card (16 open-access XML, 23 PMC pages, 11 of those saved by hand on 2026-11-27); 12 of them carry a level, badge, contested mark or link. The founder asked whether the path for correcting a published card is an efficient and adequate way to find out whether a full text changes a card, and suggested a cheap scan first, with the full pipeline only for the cards it flags.
