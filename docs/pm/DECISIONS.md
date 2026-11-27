@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-27 — PDF reading through Unpaywall, with the founder checking every PDF quote (founder ruling)
+
+- The founder ruled that PDF reading is allowed when it gives access to more sources. This replaces the rule "No PDF is ever downloaded or parsed" (`docs/pipeline.md`, `docs/plan-fulltext-and-format-v2.md`). Where a fact read from a PDF is critical for a level, badge, contested mark or case definition, the founder checks that exact fact in the source by hand.
+- Design (`docs/plan-unpaywall-pdf.md`): the DOI comes from the cached PubMed record; Unpaywall (`CONTACT_EMAIL`, at most one request a second, the address never written to any file) names open copies; only a PDF of a published or accepted version, not hosted by PubMed Central or Europe PMC, is downloaded through the generic client of `me_atlas.resources` (robots.txt, no cookies, nothing worked around); the PubMed title must be in the first two pages; the text is read with `pdfminer.six` and kept in the gitignored cache, never redistributed. `submittedVersion` copies and scanned PDFs are not used.
+- A quote from a PDF takes `case_definition_source: fulltext_pdf`. It must be found word for word on one page of the cached text (C5), and it needs the founder's confirmation in `confirmations/pdf-quotes.yaml` (new check C14; the plan called it C13, but C13 is already the bibliographic-fields check). Only the founder runs `uv run python -m me_atlas.unpaywall confirm`; no agent and no pipeline step does. The audit context and `record-audit` do not read PDF text in this change.
+- Why: 38 of the 110 studies that carry a level, badge, contested mark or link have their case definition from the abstract only, and many have a legal open copy outside PubMed Central. The conservative defaults (no `submittedVersion`, a confirmation for every PDF quote) can be loosened later by the founder.
+
 ## 2026-11-19 — Idea I-09 is put on hold, and the site gets a visit counter (founder rulings)
 
 - The project manager opened the brainstorm for idea I-09 (burden against funding) with two fetched PubMed records and four questions. The founder answered: "Jeg ønsker å legge I-09 på vent inntil videre", and asked, before any further idea is weighed, for statistics on the traffic to the site: hits, unique hits and, if possible, per page, preferably at no cost.

@@ -90,7 +90,7 @@ Unknown fields are errors. `level`, the numbers in `contested.rungs` and the cha
 | `authors`, `journal`, `doi` | Optional bibliographic fields, copied by code from the fetched PubMed record and never written by hand or by an AI agent: `authors` is the list of author names in record order (as `PubMedRecord.authors` gives them, for example `Smith J`), `journal` is the journal name, `doi` is the record's DOI (starts `10.`) or `null` when the record has none. Absent means not yet filled. They are not evidence and move no level, badge, contested mark, layer or link. `uv run python -m me_atlas.citations bibliography --write` fills them from `data/cache/pubmed/`; a study the weekly pipeline adds is filled from its record when the operations file is read; check C13 compares them with the cached record. |
 | `cohort` | `me_cfs` or `long_covid` |
 | `case_definition` | `CCC`, `ICC`, `IOM2015`, `Fukuda`, `Holmes1988`, `CDC_unspecified`, `Oxford`, `other`, `none`, `unverified` (see below) |
-| `case_definition_source` | `abstract`, `fulltext`, or `null` (only while `unverified`) |
+| `case_definition_source` | `abstract`, `fulltext`, `fulltext_pdf`, or `null` (only while `unverified`) |
 | `case_definition_quote` | The verbatim sentence from that source that states the case definition, or `null` |
 | `design` | `controlled`, `uncontrolled`, `intervention_controlled`, `other` |
 | `n_patients`, `n_controls` | Whole number, or `null` if not applicable or not stated. |
@@ -113,6 +113,7 @@ All of these are required except `authors`, `journal`, `doi`, `group`, `preprint
 - `Holmes1988` is the 1988 CDC definition. It is accepted like `Fukuda` (counts at every rung), is flagged on the card as "does not require PEM", and ranks equal to `Fukuda` in the comparable-quality rule.
 - `CDC_unspecified` is for a study that cites "CDC criteria" without naming the version. It is treated exactly like `Fukuda` and `Holmes1988`: counts at every rung, flagged "does not require PEM", ranked equal to `Fukuda`. The quote is the sentence that names the CDC criteria.
 - To find the sentence, `uv run python -m me_atlas.europepmc casedef <pmid>...` shows candidate sentences from open-access full text. For a study that is free to read on PubMed Central but not open access, `uv run python -m me_atlas.europepmc pmcpage --card <card.yaml> <pmid>...` does the same from the cached PMC article page (fetched once, only for studies on that card; see `docs/citation-check.md`), and a quote from it has `case_definition_source: fulltext`. It only suggests; the person or agent drafting the card decides which definition a sentence means.
+- `fulltext_pdf` means the quote is from the open PDF copy found through Unpaywall (`docs/fetch.md`, "Open PDF copies (Unpaywall)"). It follows the same rules as `fulltext` (V13), and the quote must be found word for word in the cached PDF text (C5). Every `fulltext_pdf` quote also needs the founder's confirmation in `confirmations/pdf-quotes.yaml` (C14); only the founder runs `unpaywall confirm`. To find the sentence: `uv run python -m me_atlas.unpaywall casedef --card <card.yaml> <pmid>`. `fulltext` keeps its meaning: Europe PMC XML or the cached PMC page. The version of the PDF (published or accepted manuscript) is not a card field; it is in the cached meta and in the confirmation record.
 
 ## Links (causal map)
 
