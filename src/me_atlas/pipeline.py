@@ -2488,6 +2488,18 @@ FULLTEXT_NOT_CACHED_NOTE = (
 )
 
 
+PAGE_SOURCE_NOTE = "Full text from the cached PMC article page"
+
+
+def _cached_lookup_pmcid(cfg: Config, pmid: str) -> str | None:
+    """The PMC id of the cached Europe PMC lookup of ``pmid``, or None (no lookup, or one that cannot be read)."""
+    try:
+        lookup = europepmc.read_cached_lookup(europepmc.EuropePmcCache(cfg.cache_dir), pmid)
+    except (europepmc.EuropePmcError, OSError, ValueError):
+        return None
+    return lookup.pmcid if lookup else None
+
+
 def carrier_ids(card: cards.Card) -> set[str]:
     """E1: the study ids cited in ``level_reason``, ``contested.reason``, the reason of each badge and the sources of
     each link (DECISIONS 2026-11-16).
@@ -2504,17 +2516,31 @@ def carrier_ids(card: cards.Card) -> set[str]:
     return set(found)
 
 
+def _cached_page_text(cfg: Config, pmcid: str | None) -> str | None:
+    """The text of the cached PMC article page of ``pmcid`` (``europepmc.pmc_page_text``), or None when there is none.
+    Cache only: nothing is fetched. A page that cannot be read gives None."""
+    if not pmcid:
+        return None
+    try:
+        page = europepmc.EuropePmcCache(cfg.cache_dir).page_path(pmcid)
+        return europepmc.pmc_page_text(page.read_bytes()) if page.is_file() else None
+    except (europepmc.EuropePmcError, OSError, ValueError):
+        return None
+
+
 def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carrier: bool) -> list[str]:
     """One cited record for the audit context: its fields and abstract; for a carrier (E1) also its full text, uncut.
 
     A study that is not a carrier gets the abstract only (the full text is not even loaded). A carrier with no cached
-    full text gets the abstract and the statement ``FULLTEXT_NOT_CACHED_NOTE`` (E2).
+    full-text XML gets the text of its cached PMC article page when there is one (``PAGE_SOURCE_NOTE``; XML first, as
+    ``citations.CacheReader``), else the abstract and the statement ``FULLTEXT_NOT_CACHED_NOTE`` (E2).
     """
     lines = [f"### Record: {study_id}", ""]
     if study_id.startswith("pmid:"):
         pmid = study_id.removeprefix("pmid:")
         record = _record(cfg, pmid)
         full = loader(pmid, record.pmcid) if carrier else None
+        page_pmcid = (_cached_lookup_pmcid(cfg, pmid) or record.pmcid) if carrier else None  # as CacheReader
         lines += [
             f"- title: {record.title}",
             f"- authors: {', '.join(record.authors) or 'not stated'}",
@@ -2531,6 +2557,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
     else:
         pre = _cached_preprint(cfg, study_id.removeprefix("doi:"))
         full = loader(pre.ppr_id, pre.pmcid, preprint=pre) if carrier else None
+        page_pmcid = pre.pmcid
         abstract = " ".join(_TAG_RE.sub(" ", pre.abstract).split()) if pre.abstract else None
         lines += [
             f"- title: {pre.title}",
@@ -2546,6 +2573,10 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
     lines += ["", "Full text:", ""]
     if not carrier:
         lines.append(ABSTRACT_ONLY_NOTE)
+    elif (full is None or full.xml is None) and (page := _cached_page_text(cfg, page_pmcid)) is not None:
+        lines.append(f"Source: {PAGE_SOURCE_NOTE} ({page_pmcid}). The reference list is left out.")
+        lines.append(f"Not truncated ({len(page)} characters).")
+        lines += ["", page]
     elif full is None or full.xml is None:
         lines.append(FULLTEXT_NOT_CACHED_NOTE)
         if full is not None:

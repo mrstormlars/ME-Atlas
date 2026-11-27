@@ -558,3 +558,50 @@ def test_the_other_agents_gain_a_paragraph_scoped_to_the_scan_and_keep_their_lim
     assert "A wording-only correction (free text only, no number, every answered finding classed `wording`)" in drafter
     assert "`accept_lower` is valid in form but is not applied in this path" in auditor
     assert "classify as strictly as the rule says and when in doubt use `decisive`" in reviewer
+
+
+# --- a carrier whose full text is a cached PMC page --------------------------------------------------------------
+
+PAGE_TEXT = "Participants met the Holmes criteria."
+
+
+def test_a_pmc_page_only_carrier_gets_the_page_text_in_the_audit_record_not_the_not_cached_note(scan: Scan):
+    cfg = pipeline.Config(scan.out, scan.cards, cache_dir=scan.cache)
+    never = lambda *a, **k: pipeline.FullTextResult(None, "no XML")  # noqa: E731
+    text = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{PAGE_ID}", never, True))
+    assert pipeline.FULLTEXT_NOT_CACHED_NOTE not in text
+    assert f"Source: {pipeline.PAGE_SOURCE_NOTE} (PMC9200005)" in text and PAGE_TEXT in text and "Not truncated" in text
+    abstract_only = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{PAGE_ID}", never, False))
+    assert PAGE_TEXT not in abstract_only  # a study that is not a carrier stays abstract only
+    nothing = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{NOTHING_ID}", never, True))
+    assert pipeline.FULLTEXT_NOT_CACHED_NOTE in nothing  # no cached full text at all
+
+
+def test_an_xml_carrier_is_rendered_as_before(scan: Scan):
+    cfg = pipeline.Config(scan.out, scan.cards, cache_dir=scan.cache)
+    text = "\n".join(
+        pipeline._audit_record_lines(cfg, f"pmid:{AGREES_ID}", fulltext_scan.cache_loader(scan.cache), True)
+    )
+    assert "Source: Europe PMC open access, PMC9200001." in text and pipeline.PAGE_SOURCE_NOTE not in text
+
+
+def test_the_audit_quote_check_reads_the_same_page_text(scan: Scan):
+    from me_atlas import citations
+
+    reader = citations.CacheReader(scan.cache)
+    text = pipeline._record_quote_text(reader, f"pmid:{PAGE_ID}")
+    assert text is not None and PAGE_TEXT in text
+
+
+def test_a_page_study_can_be_flagged_with_a_quote_from_the_page_and_a_quote_not_in_it_is_dropped(scan: Scan):
+    scan.plan()
+    assert scan.entry(PAGE_ID)["fulltext_rendered"] is True
+    assert PAGE_TEXT in scan.context(PAGE_ID)
+    scan.write_scan(PAGE_ID, case_definition=differs(PAGE_TEXT), finding=differs("A sentence the page does not have."))
+    assert scan.record() == 0
+    record = scan.record_of(PAGE_ID)
+    assert record["flagged"] is True and [v["field"] for v in record["verdicts"] if v["verdict"] == "differs"] == [
+        "case_definition"
+    ]
+    assert [d["field"] for d in record["dropped"]] == ["finding"]
+    assert "not found word for word" in record["dropped"][0]["reason"]
