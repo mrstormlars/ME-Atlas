@@ -248,6 +248,15 @@ Some hosts refuse an automated request (status `blocked`). Code never works arou
 
 For `decodeme`, save exactly the `institute-genetics-cancer.ed.ac.uk` address above; `decodeme.org.uk` must not be used (`import-saved` refuses it, because `--url` must be the lead's own address).
 
+### Full texts saved by hand
+
+A study that is free to read on PubMed Central but has no open-access XML (status `free_on_pmc` in `fulltext needs`, see `docs/fulltext-targets.md`) can be read from a PMC article page saved by hand. The shared rules are those of "Pages saved by hand" above: code never works around a bot check, the folder is gitignored, and the copy is not ours to redistribute.
+
+1. Open `https://pmc.ncbi.nlm.nih.gov/articles/<pmcid>/` (the address `needs` prints) and use "Save page as" ("Webpage, HTML only" or "complete"; either works).
+2. Put the file at `data/hand-saved/fulltext/<pmid>.html` (or `.htm`). Only one of the two may exist.
+3. `uv run python -m me_atlas.fulltext import-saved --card <card.yaml> --pmid <pmid>`. It copies the file unchanged to `data/cache/europepmc/<pmcid>.html`, where `citations check` and `europepmc casedef` already read it, and prints the case-definition candidates. It makes no request. It refuses, and writes nothing, when the PMID is not a `pmid:` study on the card, the file is missing or both `.html` and `.htm` exist, no PMC id is known from the cached lookup or PubMed record, full-text XML or a page is already cached for that PMC id, or the page is not the article page of that PMID with a main article body.
+4. Back up `data/` as described under "Backup of the local data".
+
 ## Where the output goes
 
 Both are under `data/cache/`, which is gitignored and reproducible.

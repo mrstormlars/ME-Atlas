@@ -1,0 +1,13 @@
+# Studies named in docs/pm/STATUS.md under "Content that could change a card when a source becomes available".
+# `fulltext needs` marks them "named in STATUS.md". `study: null` marks every listed study of the card.
+# Each card and study must exist under cards/ (checked on every run; a missing one is an error).
+named:
+  - card: circadian-rhythm-disruption
+    study: pmid:15451649
+    note: Tryon 2004 has no open full text; a verified definition and the same measure could raise the card to level 3.
+  - card: impaired-energy-production-after-exertion
+    study: pmid:30871578
+    note: The second auditor could not read the full text and names one explains_pem sentence as unchecked by it; it moves no level, badge, mark, layer or link.
+  - card: infection-trigger
+    study: null
+    note: The case definitions of the older post-infection cohorts are unverified; verified, they could raise the card to level 3 or bring Oxford flags.
