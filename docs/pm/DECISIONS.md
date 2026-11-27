@@ -2,6 +2,15 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-27 — A cheap full-text scan first, and an upgrade path for published cards (founder ruling)
+
+- After options A and B were merged, 39 studies on 17 published cards have a cached full text that nobody has read against the card (16 open-access XML, 23 PMC pages, 11 of those saved by hand on 2026-11-27); 12 of them carry a level, badge, contested mark or link. The founder asked whether the path for correcting a published card is an efficient and adequate way to find out whether a full text changes a card, and suggested a cheap scan first, with the full pipeline only for the cards it flags.
+- The project manager's assessment: the correction path fits poorly. It only removes, rewords or lowers (no higher level, no added text, no context study turned into a carrier), and it opens every card with an Opus whole-card review before anyone knows whether the full text adds anything (4 to 6 agent runs per card, 70 to 100 for 17 cards). Proposed: step 0, code compares the case-definition candidates of each full text with the card's fields; step 1, a narrow Sonnet agent per study reads the study's entry, the paragraphs that cite it and the full text, and says per field (case definition, sample size, finding, role) confirmed, differs or adds, each with a quote that code checks word for word against the cached text; step 2, the full pipeline only for the flagged cards. The founder answered: "Yes, both" (the scan and the upgrade path).
+- The scan decides nothing and publishes nothing; it only picks what goes on. A study it misses stays as the card has it now.
+- The correction of a published card gains an upgrade variant, used only when the request comes from the full-text scan: besides what a correction may do, it may raise a level, set a badge to true, change a case definition and its source and quote, and change a study's role, each sourced from the cached full text. It still adds no study and is always tier 2: two agreeing audits, run in sequence. This amends the rule that a correction adds nothing (`docs/ME-Atlas-functional-spec.md` section 6, "Correcting a published card") for this origin only.
+- PDF-only studies (option B) wait until the audit context can read PDF text.
+- Why: the scan aims the expensive steps at the few cards where a full text can change something; without the upgrade variant the scan would find improvements that no path could publish. The variant is as strict as a level change in the weekly run and can be withdrawn.
+
 ## 2026-11-27 — PDF reading through Unpaywall, with the founder checking every PDF quote (founder ruling)
 
 - The founder ruled that PDF reading is allowed when it gives access to more sources. This replaces the rule "No PDF is ever downloaded or parsed" (`docs/pipeline.md`, `docs/plan-fulltext-and-format-v2.md`). Where a fact read from a PDF is critical for a level, badge, contested mark or case definition, the founder checks that exact fact in the source by hand.
