@@ -103,7 +103,7 @@ Quality factors applied at every rung: case definition, sample size, controls, p
 
 Shown on every card, separate from the bar, each yes or no:
 
-1. **Diagnostic marker validated in an independent cohort.** Yes only when a measurable marker linked to the hypothesis has been tested in a second, independent patient group, with a stated case definition.
+1. **Diagnostic marker validated in an independent cohort.** Yes only when a measurable marker linked to the hypothesis has been tested in a second patient group, separate from the first, by an independent research group (independent in the same sense as rung 3), with a stated case definition.
 2. **Explains post-exertional malaise (PEM).** Yes only when at least one study at level 2 or above measures PEM directly (for example a repeated exercise test on two consecutive days, or a controlled exertion challenge with symptoms tracked afterwards) and links it to the hypothesis. The link must connect the proposed mechanism to the symptoms after exertion in the same patients; a measured change that is itself the hypothesised abnormality (for example a fall in oxygen use on the second test) does not on its own explain PEM. A cohort of ME/CFS patients alone is not enough. (PEM is the worsening of symptoms after physical or mental effort.)
 
 Separate tracks for mechanism, diagnosis and treatment were rejected because they are harder to read.
