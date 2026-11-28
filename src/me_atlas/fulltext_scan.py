@@ -36,6 +36,7 @@ from me_atlas.citations import CacheReader, normalise_quote
 from me_atlas.europepmc import CaseDefinitionCandidate, EuropePmcCache, EuropePmcError
 from me_atlas.pipeline import (
     FULLTEXT_NOT_CACHED_NOTE,
+    REFERENCE_LIST_MARKER,
     Config,
     FullTextResult,
     PipelineError,
@@ -543,7 +544,9 @@ def context_fulltext(context: Path) -> str | None:
     if not marker or FULLTEXT_NOT_CACHED_NOTE in body:
         return None
     _before, sep, tail = body.partition(FULL_TEXT_MARKER)
-    return tail if sep else None
+    if not sep:
+        return None
+    return tail.split(f"\n{REFERENCE_LIST_MARKER}", 1)[0]  # the reference list is not the full text
 
 
 def _request_target(field: str, targets: list[str] | None, study_id: str) -> list[str]:

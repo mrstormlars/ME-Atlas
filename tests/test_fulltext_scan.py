@@ -266,7 +266,8 @@ def test_the_context_holds_entry_items_carrier_step0_and_the_audit_rendering(sca
     record = "\n".join(fulltext_scan.render_record(cfg, f"pmid:{AGREES_ID}"))
     assert record in text  # the same text the audit context uses for a carrier, uncut
     assert ONLY_IN_FULLTEXT in text and "Not truncated" in text
-    assert "Fictional reference with 999 patients" not in text  # the reference list is left out, as in the audit
+    assert "Fictional reference with 999 patients" in text.split(pipeline.REFERENCE_LIST_MARKER)[1]  # only after it
+    assert "Fictional reference with 999 patients" not in text.split(pipeline.REFERENCE_LIST_MARKER)[0]
     assert "Carrier of the level, a badge, the contested mark or a link: no." in scan.context(UNVERIFIED_ID)
 
 
@@ -731,3 +732,65 @@ def test_a_result_without_flag_rule_shaped_like_2026_11_27_still_validates(scan:
     path.write_text(json.dumps(data), encoding="utf-8")
     loaded = fulltext_scan.load_scan_result(path)
     assert f"pmid:{AGREES_ID}" in fulltext_scan.flagged_studies(loaded, SLUG)
+
+
+# --- the reference list of a carrier -------------------------------------------------------------------------------
+
+REFERENCE_ENTRY = "Fictional reference with 999 patients."
+
+
+def test_a_carrier_record_ends_with_the_reference_list_and_a_non_carrier_has_none(scan: Scan):
+    cfg = pipeline.Config(scan.out, scan.cards, cache_dir=scan.cache)
+    loader = fulltext_scan.cache_loader(scan.cache)
+    lines = pipeline._audit_record_lines(cfg, f"pmid:{AGREES_ID}", loader, True)
+    at = lines.index(pipeline.REFERENCE_LIST_MARKER)
+    assert lines[at - 1] == "" and lines[at + 1] == "(1 entries)" and lines[at + 2] == REFERENCE_ENTRY
+    assert "The reference list follows the text." in "\n".join(lines) and "is left out" not in "\n".join(lines)
+    plain = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{AGREES_ID}", loader, False))
+    assert pipeline.REFERENCE_LIST_MARKER not in plain
+    never = lambda *a, **k: pipeline.FullTextResult(None, "no XML")  # noqa: E731
+    nothing = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{NOTHING_ID}", never, True))
+    assert pipeline.REFERENCE_LIST_MARKER not in nothing
+
+
+def test_a_page_carrier_gets_the_page_reference_entries_and_an_empty_list_is_said(scan: Scan):
+    cfg = pipeline.Config(scan.out, scan.cards, cache_dir=scan.cache)
+    never = lambda *a, **k: pipeline.FullTextResult(None, "no XML")  # noqa: E731
+    page = scan.cache / "europepmc" / "PMC9200005.html"
+    page.write_text(
+        page.read_text(encoding="utf-8").replace(
+            "</section></body>",
+            '<ul class="ref-list"><li id="b1"><span class="label">1.</span><cite>Fictional A. 2001 Holmes.</cite>'
+            " [<a>DOI</a>] [<a>PubMed</a>]</li></ul></section></body>",
+        ),
+        encoding="utf-8",
+    )
+    text = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{PAGE_ID}", never, True))
+    assert "The reference list follows the text." in text
+    tail = text.split(pipeline.REFERENCE_LIST_MARKER)[1]
+    assert "1. Fictional A. 2001 Holmes." in tail and "PubMed" not in tail
+    page.write_text(page.read_text(encoding="utf-8").replace("ref-list", "other"), encoding="utf-8")
+    empty = "\n".join(pipeline._audit_record_lines(cfg, f"pmid:{PAGE_ID}", never, True))
+    assert "(the cached file has no reference list)" in empty
+
+
+def test_a_scan_quote_taken_only_from_the_reference_list_is_dropped(scan: Scan):
+    scan.plan()
+    assert REFERENCE_ENTRY in scan.context(AGREES_ID)  # the entry is in the context, after the marker
+    full = fulltext_scan.context_fulltext(scan.out / scan.entry(AGREES_ID)["context"])
+    assert full is not None and ONLY_IN_FULLTEXT in full and REFERENCE_ENTRY not in full
+    scan.write_scan(AGREES_ID, finding=differs(REFERENCE_ENTRY))
+    assert scan.record() == 0
+    record = scan.record_of(AGREES_ID)
+    assert [d["field"] for d in record["dropped"]] == ["finding"]
+    assert "not found word for word" in record["dropped"][0]["reason"]
+
+
+def test_the_audit_quote_check_accepts_a_reference_entry_of_a_carrier_but_not_of_an_abstract_only_study(scan: Scan):
+    from me_atlas import citations
+
+    reader = citations.CacheReader(scan.cache)
+    carrier = pipeline._record_quote_text(reader, f"pmid:{AGREES_ID}")
+    assert carrier is not None and REFERENCE_ENTRY in carrier
+    abstract_only = pipeline._record_quote_text(reader, f"pmid:{AGREES_ID}", abstract_only=True)
+    assert abstract_only is not None and REFERENCE_ENTRY not in abstract_only

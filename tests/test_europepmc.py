@@ -975,3 +975,46 @@ def test_a_canada_2003_wording_is_a_case_definition_candidate(wording):
 def test_canada_alone_as_an_affiliation_is_not_a_candidate():
     xml = article(("Methods", "The work was done at the University of Toronto, Canada. Blood was drawn at 9 am."))
     assert find_case_definitions(xml) == []
+
+
+# --- reference entries ---------------------------------------------------------------------------------------------
+
+
+def test_article_references_gives_label_and_citation_text_in_order_and_empty_without_a_list():
+    xml = (
+        "<article><body><p>Body 1.</p></body><back><ref-list>"
+        "<ref id='r1'><label>1</label><mixed-citation>Fictional A, <italic>Journal</italic>  2001; 5:1."
+        "</mixed-citation></ref>"
+        "<ref id='r2'><label>2</label><element-citation><name><surname>Roe</surname>"
+        " <given-names>R</given-names></name>"
+        " 1999</element-citation></ref>"
+        "<ref id='r3'><label>3</label>Bare entry text <b>here</b>.</ref>"
+        "<ref id='r4'><mixed-citation>No label.</mixed-citation></ref>"
+        "</ref-list></back></article>"
+    )
+    assert europepmc.article_references(xml) == [
+        "1 Fictional A, Journal 2001; 5:1.",
+        "2 Roe R 1999",
+        "3 Bare entry text here.",
+        "No label.",
+    ]
+    assert europepmc.article_references("<article><body><p>No list.</p></body></article>") == []
+    assert "Fictional A" not in europepmc.article_text(xml)  # the text reading still leaves the list out
+
+
+def test_pmc_page_references_reads_label_and_cite_without_link_texts_and_empty_without_a_list():
+    html = (
+        "<html><body><section class='main-article-body'><p>Body.</p></section>"
+        "<section class='ref-list'><ul class='ref-list'>"
+        "<li id='b1'><span class='label'>1.</span><cite>Fictional K, et al. 1994 Criteria.</cite>"
+        " [<a>DOI</a>] [<a>PubMed</a>] [<a>Google Scholar</a>]</li>"
+        "<li id='b2'><span class='label'>2.</span>Plain entry [<a>PubMed</a>]</li>"
+        "<li id='b3'>Unlabelled entry</li>"
+        "</ul></section></body></html>"
+    )
+    assert europepmc.pmc_page_references(html) == [
+        "1. Fictional K, et al. 1994 Criteria.",
+        "2. Plain entry []",
+        "Unlabelled entry",
+    ]
+    assert europepmc.pmc_page_references("<html><body><ul><li>Not a reference</li></ul></body></html>") == []
