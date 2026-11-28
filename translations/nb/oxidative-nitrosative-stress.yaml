@@ -39,53 +39,68 @@ items:
     text: 'Kortet når ikke nivå 3: ingen uavhengig gruppe har funnet det samme resultatet på det samme målet i en egen kohort
       med bekreftede anerkjente diagnosekriterier. Den eneste andre isoprostanstudien, av 6 pasienter og 6 kontroller i Glasgow,
       fant også høyere nivåer i hvile, men diagnosekriteriene er ikke kontrollert ennå. Den har tre forfattere felles med
-      studien fra Dundee, så den ville ikke regnes som en uavhengig replikasjon selv med en kontrollert definisjon.'
+      studien fra Dundee, så den ville ikke regnes som en uavhengig replikasjon selv med en kontrollert definisjon. Malondialdehyd
+      (MDA) er det nærmeste tilfellet: en studie i Novi Sad av 24 kvinner som oppfylte CDC-definisjonen fra 1994 og 19 friske
+      kvinner, og en senere studie i Bulgaria av 125 pasienter som oppfylte IOM 2015-kriteriene og 80 friske kontroller, fant
+      begge høyere MDA hos pasientene, og forfatterlistene til de to studiene har ingen felles navn. Det bulgarske resultatet
+      var fortsatt signifikant mot friske kontroller etter justering for alder og BMI, men de friske kontrollene var signifikant
+      yngre enn pasientene, og forfatterne kaller prediksjonsmodellene sine eksplorerende. Analysene er også ulike: studien
+      i Novi Sad brukte OxiSelect MDA Adduct ELISA for malondialdehyd bundet til proteiner, og den bulgarske studien målte
+      MDA i serum med ELISA. Kortet regner ikke de to analysene som det samme målet, så det teller ikke dette som en replikasjon.'
     sources:
     - pmid:19422646
     - pmid:16085177
-    source_hash: 206959343957ad5b1fe21f36b12ff896322e0f2477b21ae7c1bd0b1e1592d2ca
+    - pmid:23185200
+    - pmid:43027675
+    source_hash: 1ac4ddedfddcf61067c1d19d993bcb0d9d97a9c8606eee5a7d49603e49e81605
   level_reason[3]:
     text: 'Resultatene for malondialdehyd er motstridende. En tidligere studie fra den samme klinikken i Novi Sad, av 40 kvinner
       som oppfylte Fukuda-definisjonen og 40 friske kvinner, fant ingen samlet forskjell mellom gruppene; forfatterne rapporterer
       en forskjell først etter å ha delt pasientene etter nivå av malondialdehyd, og gir artikkelen en tittel som sier at
       den viser forhøyet lipidperoksidasjon. Den er større enn studien av 24 pasienter som fant høyere nivåer, og bruker den
-      samme definisjonen, så etter rubrikken kan ikke funnet om malondialdehyd bære et nivå. De to studiene har felles forfattere,
-      og det er ikke oppgitt hvor mye pasientene overlapper. De kan også ha brukt ulike metoder: studien av 24 pasienter brukte
-      en ELISA-test for malondialdehyd bundet til proteiner (OxiSelect MDA Adduct ELISA), og sammendraget til den tidligere
-      studien oppgir ikke metoden sin. Kortets nivå bygger ikke på dette funnet.'
+      samme CDC-definisjonen fra 1994. De to studiene fra Novi Sad har felles forfattere, og det er ikke oppgitt hvor mye
+      pasientene overlapper. De kan også ha brukt ulike metoder: studien av 24 pasienter brukte en ELISA-test for malondialdehyd
+      bundet til proteiner (OxiSelect MDA Adduct ELISA), og sammendraget til den tidligere studien oppgir ikke metoden sin.
+      Den senere bulgarske studien av 125 pasienter fant høyere MDA hos pasientene enn hos friske kontroller. Studien fra
+      Novi Sad med 40 pasienter har under halvparten så mange pasienter som den bulgarske studien og bruker en mindre streng
+      definisjon (Fukuda mot IOM 2015), så den er ikke av sammenlignbar kvalitet med den bulgarske studien. Kortets nivå bygger
+      ikke på funnet om malondialdehyd, og ingen omstridt-markering er satt på det.'
     sources:
     - pmid:21119582
     - pmid:23185200
-    source_hash: 9fadc03585b12ff8212fba7cc50e750e80394f2b7ec944af442ad1bdc3a9f6f0
+    - pmid:43027675
+    source_hash: 55842fb6ba18b1a4a59aed8e7d6877a02b7c3fc139ab1bfc2e1169eaf4ccedb7
   level_reason[4]:
     text: Målene på antioksidantforsvar er blandede. I studier med en anerkjent definisjon var antioksidantpotensialet i serum
-      lavere i studien fra Osaka, mens glutation i lymfocytter var høyere hos begge kjønn i studien fra Stanford (hos menn
-      i to av de tre celletypene som ble testet). I studier der diagnosekriteriene ikke er kontrollert ennå, var koenzym Q10
-      i plasma lavere hos 58 pasienter enn hos 22 kontroller; aktiviteten til glutationperoksidase i fullblod skilte seg ikke
-      mellom 40 pasienter og 24 kontroller; glutation i hjernen var lavere hos 15 pasienter enn hos 13 friske frivillige i
-      én studie og skilte seg ikke i en annen med 26 personer til sammen.
+      lavere i studien fra Osaka, glutation i lymfocytter var høyere hos begge kjønn i studien fra Stanford (hos menn i to
+      av de tre celletypene som ble testet), og glutation i hjernen var lavere hos 15 pasienter enn hos 13 friske frivillige
+      i en studie fra Weill Cornell Medical College der pasientene ble diagnostisert etter modifiserte retningslinjer fra
+      amerikanske CDC (forfatterne sier ikke hvordan retningslinjene ble modifisert); pasienter med alvorlig depresjon viste
+      det samme. I studier der diagnosekriteriene ikke er kontrollert ennå, var koenzym Q10 i plasma lavere hos 58 pasienter
+      enn hos 22 kontroller; aktiviteten til glutationperoksidase i fullblod skilte seg ikke mellom 40 pasienter og 24 kontroller;
+      og glutation i hjernen skilte seg ikke i en annen studie med 26 personer til sammen.
     sources:
     - pmid:27224647
     - pmid:40627396
+    - pmid:22281935
     - pmid:20010505
     - pmid:21552194
-    - pmid:22281935
     - pmid:19906518
-    source_hash: 8de4d463d916eb6f6cbc814ae96547f68ac55aa287780e76e553289dd25369d8
+    source_hash: 3e9a66d41b76f17a84497c71a1644233520f408887804870220243199879fdd0
   level_reason[5]:
-    text: 'Kortet når ikke nivå 4: ingen kontrollert studie hos pasienter med bekreftede anerkjente diagnosekriterier har
-      senket et mål på oksidativt stress og bedret sykdommen. En placebokontrollert studie av koenzym Q10 pluss NADH hos 73
-      pasienter rapporterte mindre utmattelse enn med placebo og lavere lipidperoksider i blodceller i den behandlede gruppen
-      (sammendraget sier ikke om det er mot placebo eller mot utgangsnivået), men diagnosekriteriene er ikke kontrollert ennå.
-      En større placebokontrollert studie av den samme kombinasjonen fra det samme Vall d''Hebron-forskningsinstituttet, hos
-      207 kvinner som oppfylte Fukuda-kriteriene, målte ikke oksidativt stress og rapporterte at skårene for utmattelse endret
-      seg parallelt i de to gruppene. En crossover-studie av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene rapporterer
-      ikke noe mål på oksidativt stress i sammendraget.'
+    text: Kortet når ikke nivå 4. En placebokontrollert studie av koenzym Q10 pluss NADH hos 73 kvinner som oppfylte Fukuda-kriteriene
+      fra CDC 1994 (39 behandlet, 34 fikk placebo) rapporterte mindre utmattelse (samlet skår på fatigue impact scale, p<0,05)
+      og lavere lipidperoksidasjon i mononukleære blodceller (TBARS-analyse) enn med placebo etter åtte uker. En større placebokontrollert
+      studie av den samme kombinasjonen fra det samme Vall d'Hebron-forskningsinstituttet, hos 207 kvinner som oppfylte CDC/Fukuda-definisjonen
+      fra 1994 (144 fullførte, 72 per gruppe), målte ikke oksidativt stress og rapporterte at skårene for utmattelse endret
+      seg parallelt i de to gruppene, uten forskjeller mellom gruppene. De to studiene er uenige om utmattelse, og nivå 3
+      nås ikke. En crossover-studie av bare NADH hos 26 pasienter som oppfylte CDC-kriteriene rapporterer ikke noe mål på
+      oksidativt stress i sammendraget.
     sources:
     - pmid:25386668
     - pmid:34444817
     - pmid:10071523
-    source_hash: 611e4ef8f9f10429a3cb2e9e4ac0b4e82da41ef849f517d0b5a4dea1d1324ddf
+    source_hash: a05922f20f8f53b14d950c6ec9bc4a9bcff19ec5c224f302e50aa07d059a626c
   level_reason[6]:
     text: En placebokontrollert studie av ubikinol, den reduserte formen av koenzym Q10, hos 43 pasienter (31 fullførte) rapporterte
       bedring i flere symptomer; diagnosekriteriene er ikke kontrollert ennå.
@@ -209,10 +224,11 @@ items:
       i hjernen mellom gruppene.
     source_hash: 8beacdadd616413cc629af0d04282d73e658e950b073c246f19fd55006d7078e
   studies[pmid:25386668].finding:
-    text: En studie av n=73 pasienter, placebokontrollert, fant mindre utmattelse etter åtte uker med koenzym Q10 pluss NADH
-      enn med placebo, og rapporterte lavere lipidperoksider i blodceller i den behandlede gruppen (sammendraget sier ikke
-      om det er mot placebo eller mot utgangsnivået).
-    source_hash: 5424cf991130f886b8f49b6757a69c885104cd4572e948cbbcb4450cf582d91b
+    text: En placebokontrollert studie av n=73 kvinner (39 fikk koenzym Q10 pluss NADH, 34 fikk placebo) fant mindre utmattelse
+      etter åtte uker med koenzym Q10 pluss NADH enn med placebo (samlet skår på fatigue impact scale, p<0,05). Fulltekstartikkelen
+      rapporterer lavere lipidperoksidasjon (TBARS-analyse) i mononukleære blodceller enn med placebo etter åtte uker (7,9
+      mot 14,9 nmol per million celler, p<0,05).
+    source_hash: 37921502ac4a70ee8142ab95faae5634a7d338a02c3431423dca328fd4e67a9a
   studies[pmid:34444817].finding:
     text: En placebokontrollert studie av n=207 kvinner (144 fullførte, 72 per gruppe) rapporterte at skårene for utmattelse
       endret seg parallelt i gruppene med koenzym Q10 pluss NADH og placebo over 12 uker; forbedringene den rapporterer i
@@ -250,9 +266,14 @@ items:
       for nivået.
     source_hash: f095603072b3c37806edec5f104355439f5c06949a097e722f2b5c75960f6e7e
   studies[pmid:43027675].finding:
-    text: En studie med n=125 pasienter med ME/CFS, 89 med langvarig covid og 80 friske kontroller målte undergrupper av T-celler
-      og serummarkører for oksidativt og nitrosativt stress (blant annet catalase, SOD1, GPX1, MDA, NOS1 og NOS3). Den rapporterte
-      at malondialdehyd var en uavhengig prediktor i sammenligningen av ME/CFS og friske kontroller, og at GPX1 skilte mellom
-      ME/CFS og langvarig covid. Sammendraget oppgir ikke diagnosekriteriene, så de er ikke kontrollert, og det oppgir ikke
-      retningen på forskjellene i markørene. Ikke gjentatt ennå.
-    source_hash: bcf4d8b436481c5a0e55b46a58e38788f6e81e86ee7e3b25823f88c6c84d11cc
+    text: En studie med n=125 pasienter med ME/CFS (IOM 2015-kriteriene), 89 med langvarig covid og 80 friske kontroller målte
+      undergrupper av T-celler og serummarkører for oksidativt og nitrosativt stress med ELISA. Malondialdehyd (MDA) og GPX1
+      i serum var høyere ved ME/CFS enn hos friske kontroller, og forskjellen var fortsatt signifikant i parvis sammenligning
+      justert for alder og BMI (MDA justert p 0,02 for alder og 0,01 for BMI; GPX1 0,04 og 0,02). De friske kontrollene var
+      signifikant yngre enn pasientene. Mot langvarig covid var MDA og GPX1 høyere ved ME/CFS uten justering. I den parvise
+      sammenligningen justert for alder og BMI i hovedtabellen var forskjellen ikke signifikant (MDA 0,52 og 0,40; GPX1 1,00
+      og 1,00), mens forfatterne i sammenligningene begrenset til deltakere i alderen 30 til 65 år og til en BMI på 18 til
+      30 rapporterer at MDA og GPX1 fortsatt var signifikant forskjellige mellom gruppene. I logistisk regresjon var MDA den
+      eneste signifikante uavhengige prediktoren for ME/CFS mot langvarig covid, og i Random Forest var GPX1 den ledende diskriminatoren
+      mellom ME/CFS og langvarig covid. Forfatterne kaller prediksjonsmodellene eksplorerende. Ikke gjentatt ennå.
+    source_hash: e94b37195a82d11d0169cfa58d040840ab7531371e86d060c24d6b50458c0371

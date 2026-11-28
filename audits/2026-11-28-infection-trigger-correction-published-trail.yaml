@@ -1,0 +1,244 @@
+card: infection-trigger
+card_sha256: 704d30203cf6dd8b9c561536735b66cb2ef85d1f329fe5a2a54c59feba5178ea
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md); second attempt, items
+  added verbatim from audits/2026-11-27-infection-trigger-correction-published.yaml (objecting decision
+  parts 1-3); third attempt (DECISIONS 2026-11-28, Q7), one item added verbatim from audits/2026-11-27-infection-trigger-correction-published-2.yaml
+  (objecting decision part 1)
+request:
+- target: level_reason[3]
+  problem: 'The full-text scan found that the full text differs from the card: The full text describes
+    matched control participants who recovered promptly from the same infection, assessed at six months,
+    while the level reason says the study had no comparison group. Quote from the full text: We invited
+    these cases, and control participants matched by age and sex who had recovered promptly from the same
+    infection, at six months for a medical interview, examination by a physician (AL), and laboratory
+    investigation'
+- target: studies[pmid:33367564].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    names Fukuda, Canadian and IOM criteria, with a medical and psychiatric exam; the card lists the case
+    definition as unverified with no quote. Quote from the full text: were evaluated to determine whether
+    they met 1 or more of the 3 case definitions of ME/CFS'
+- target: studies[pmid:33367564].n_controls
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    reports 67 matched recovered controls; the card has n_controls null. Quote from the full text: Sixty-seven
+    of the 157 asymptomatic students were recruited as matched, recovered controls.'
+- target: level_reason[3]
+  problem: 'The full-text scan found that the full text states something the card lacks: level_reason[3]
+    says the case definitions are not verified and that there was no comparison group; the full text names
+    the three definitions used and also describes 67 matched recovered controls for the group comparisons.
+    Quote from the full text: were evaluated to determine whether they met 1 or more of the 3 case definitions
+    of ME/CFS'
+- target: level_reason[0]
+  problem: 'The full-text scan found that the full text states something the card lacks: The authors also
+    list factors that could lead to underestimation (hospitalized participants excluded, waxing/waning
+    symptoms, severely affected people lost to follow-up) and say the overestimation issues are mitigated
+    by enrolling within 30 days of infection; the level reason names only the overestimation limits. Quote
+    from the full text: Conversely, there are also factors that might have contributed to an underestimation
+    of participants with post-COVID-19 ME/CFS.'
+- target: studies[pmid:41598987].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    gives the share of the infected group with ME/CFS (35 of 100) and prior syncope (59%); the card gives
+    no such proportion. Quote from the full text: This female predominance may reflect the high prevalence
+    of ME/CFS (35%) and a history of syncope (59%) in the Coxiella group'
+- target: studies[pmid:16950834].case_definition
+  problem: 'studies[pmid:16950834] case_definition set to Fukuda: the study''s own text, as given, says
+    only ''the international diagnostic criteria'' with a reference number; it does not name Fukuda, and
+    the reference list is not in the record, so Fukuda cannot be read from the record. The entry should
+    stay unverified unless a source naming the definition is given.'
+- target: level_reason[3]
+  problem: 'level_reason[3], the clause ''the full text says the diagnosis followed "the international
+    diagnostic criteria" and cites Fukuda et al. 1994 for them'': the record shows a reference number
+    only; that it is Fukuda et al. 1994 cannot be matched to any sentence in the record. It carries the
+    case definition of a study, so it is not wording only.'
+- target: links[0]
+  problem: 'links[0] (question:who-is-vulnerable), the clause ''The full text of the first says its cases
+    met "the international diagnostic criteria" and cites Fukuda et al. 1994 for them'': same unverifiable
+    attribution of Fukuda to the Dubbo study; it replaces the earlier statement that the case definition
+    is not verified, so it changes how the link''s source is characterised.'
+- target: level_reason[3]
+  problem: 'level_reason[3], the parenthetical on the US college cohort: ''(the cases met one or more
+    of them, most only the Fukuda criteria)''. The record says that most of the ME/CFS group (the cases
+    meeting a single definition) met only the Fukuda criteria, while the 20 S-ME/CFS cases met Fukuda
+    plus Canadian or IOM. Of the 55 cases, 20 met more than one definition, so ''most'' of all 55 meeting
+    only Fukuda would need more than 27 of the other 35, which the record does not state. The sentence
+    moves a statement about part of the cases onto all of them and cannot be matched to the record.'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'The US college cohort (pmid:33367564) is labelled ''unverified'' (not yet checked), and
+      level_reason[3] (''their case definitions are not yet verified'') and links[0] (''neither study''s
+      case definition is verified yet'') say the same. The cached full text (data/cache/europepmc/PMC8664491.html)
+      states the definitions: the DSQ assesses ''various case definitions of ME/CFS, including Fukuda
+      et al [20], Canadian Clinical [21], and Institute of Medicine (IOM) [22] criteria'', and ''Participants''
+      6-month medical examination and their DSQ and SF-36 results from times 1-3 were evaluated to determine
+      whether they met 1 or more of the 3 case definitions of ME/CFS''. So the study''s own text names
+      its definitions; a case could qualify on any one of the three. The text also says ''in most cases
+      the ME/CFS group only met the Fukuda criteria'', which concerns the 35 single-definition cases only,
+      not all 55.'
+    fix: 'Record the definition the study''s text states (for example ''other'', as a case counted when
+      it met any one of Fukuda, CCC or IOM 2015), with case_definition_source ''fulltext'' and the verbatim
+      quote ''were evaluated to determine whether they met 1 or more of the 3 case definitions of ME/CFS''.
+      In level_reason[3] and links[0], replace the claim that this study''s case definition is not verified
+      with what the text says (any one of Fukuda, Canadian or IOM criteria), without saying most of all
+      55 cases met only Fukuda. The Dubbo study (pmid:16950834) stays ''unverified'': its text says only
+      ''according to the international diagnostic criteria. 1'' and names no definition.'
+    targets:
+    - studies[pmid:33367564].case_definition
+    - studies[pmid:33367564].case_definition_source
+    - studies[pmid:33367564].case_definition_quote
+    - level_reason[3]
+    - links[0]
+  - class: decisive
+    severity: must_fix
+    problem: 'level_reason[0] gives only the authors'' overestimation limits (''and say these limits could
+      have led to overestimation''). This study is the one the level rests on. In the cached full text
+      (data/cache/europepmc/PMC11968624.xml) the same paragraph goes on: ''These issues are mitigated
+      by the enrollment of participants within 30 days of infection. Conversely, there are also factors
+      that might have contributed to an underestimation of participants with post-COVID-19 ME/CFS.'' The
+      factors it names are hospitalised participants excluded, waxing/waning symptoms, IOM criteria that
+      may not suit short-duration ME/CFS, unfamiliarity with PEM, and the most severely affected unable
+      to enrol or lost to follow-up. Giving one side of the authors'' limitations changes how a reader
+      weighs the study behind level 2.'
+    fix: 'Add one sentence sourced to pmid:39804551: the authors write that these issues are mitigated
+      by enrolment within 30 days of infection, and they also list factors that could have led to underestimation
+      (hospitalised participants excluded, symptoms that wax and wane, the most severely affected unable
+      to enrol or lost to follow-up). Use only the record''s wording.'
+    targets:
+    - level_reason[0]
+  - class: decisive
+    severity: advisory
+    problem: n_controls is null, but the cached full text states 'Sixty-seven of the 157 asymptomatic
+      students were recruited as matched, recovered controls.' The card's own finding for this study compares
+      the cases with students asymptomatic after infection, so these controls exist. They are recovered
+      people with the same infection, not uninfected controls, so the design 'uncontrolled' for the question
+      of risk after infection still holds and the level does not change.
+    fix: Optionally set n_controls to 67 (matched recovered controls) and keep the design and role, or
+      leave it null and say in level_reason[3] that the comparison was with recovered students.
+    targets:
+    - studies[pmid:33367564].n_controls
+  - class: wording
+    target: level_reason[3]
+    severity: advisory
+    problem: 'level_reason[3] says ''Two studies had no comparison group, so they give a frequency after
+      infection rather than a higher risk.'' Both studies had a comparison group of recovered people with
+      the same infection. Dubbo (PMC1569956.html): ''control participants matched by age and sex who had
+      recovered promptly from the same infection''. College cohort (PMC8664491.html): ''67 ... matched,
+      recovered controls''. What neither had was an uninfected comparison group, which is the point the
+      sentence makes.'
+    fix: Write 'Two studies had no uninfected comparison group (they compared cases with people who recovered
+      from the same infection), so they give a frequency after infection rather than a higher risk.'
+    targets:
+    - level_reason[3]
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:33367564
+    set:
+      case_definition: other
+      case_definition_source: fulltext
+      case_definition_quote: were evaluated to determine whether they met 1 or more of the 3 case definitions
+        of ME/CFS
+  - op: replace_paragraph
+    field: level_reason
+    index: 0
+    text: 'A US study (RECOVER-Adult) followed 4515 adults enrolled within 30 days of SARS-CoV-2 infection,
+      or who became infected during the study, and compared them with adults who had no infection. ME/CFS
+      was classified with the 2015 IOM criteria applied to self-reported symptoms, and people with an
+      earlier ME/CFS diagnosis were excluded. The rate of new ME/CFS was 2.66 per 100 person-years after
+      infection and 0.93 in matched uninfected participants (hazard ratio 4.93, 95% CI 3.62-6.71); 847
+      of the 1439 uninfected participants had no match, so the comparison used the other 592 (calculated
+      from the reported counts). Across all infected participants, 531 of 11,785 (4.5%) met the criteria,
+      against 9 of 1439 (0.6%) uninfected participants. The authors list possible recall bias and selection
+      bias, earlier symptoms missed in people never diagnosed, and the severity of post-exertional malaise
+      not being assessed, and say these limits could have led to overestimation. They also write that
+      these issues are mitigated by the enrollment of participants within 30 days of infection, and list
+      factors that might have led to underestimation: hospitalized participants were excluded, symptoms
+      wax and wane, and the most severely affected individuals may have been unable to enroll or lost
+      to follow-up. The card is at level 2 because of this study. No independent group has repeated it
+      with a verified case definition, so it is unreplicated.'
+    sources:
+    - pmid:39804551
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: 'Earlier studies that followed people from a documented infection point the same way but cannot
+      count towards the level. The case definitions of the glandular fever, Q fever and Dubbo studies
+      are not yet verified. The US college cohort counted a student as a case when the student met any
+      one of the Fukuda, Canadian or IOM criteria, but it had no uninfected comparison group. In a study
+      of primary care patients, chronic fatigue syndrome was found in 9-22% six months after glandular
+      fever and 0-6% after an ordinary upper respiratory tract infection. Ten years after a Q fever outbreak,
+      it was found in 14 (19.4%) exposed people and 3 (4.2%) matched unexposed people among those examined
+      in hospital. Two studies had no uninfected comparison group (they compared cases with people who
+      recovered from the same infection), so they give a frequency after infection rather than a higher
+      risk: in Australia, 28 of 253 people (11%) met the criteria six months after Epstein-Barr virus,
+      Q fever or Ross River virus infection, at a similar rate after each. In a US college cohort, 55
+      of 238 students (23%) met the criteria six months after infectious mononucleosis.'
+    sources:
+    - pmid:9926075
+    - pmid:12145392
+    - pmid:16950834
+    - pmid:33367564
+  - op: set_link_text
+    to: question:who-is-vulnerable
+    text: Two prospective studies compared people who did and did not develop ME/CFS after the same infection.
+      One found that the severity of the acute illness predicted it more than demographic, psychological
+      or microbiological factors; the other found more physical symptoms and immune differences, but not
+      more psychological symptoms, before the infection in those who later had severe ME/CFS. Each finding
+      comes from a single study. The first study's case definition is not verified; the second counted
+      a case when a student met any one of the Fukuda, Canadian or IOM criteria.
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: decisive
+      operation: 0
+      severity: advisory
+      problem: 'Answers finding 0. The new label ''other'' with case_definition_source ''fulltext'' and
+        the quote ''were evaluated to determine whether they met 1 or more of the 3 case definitions of
+        ME/CFS'' matches the cached full text PMC8664491.html word for word, and the same text names the
+        three as Fukuda, Canadian Clinical and IOM. But the comment directly above the field in the study
+        block still reads ''PMC8664491 exists but Europe PMC returned no open full text ... without naming
+        them. TODO: verify.'' It now contradicts the field. The header comments (the full-text list and
+        Rung 3, which call 33367564 ''unverified'') and the links comment (''their case definitions are
+        unverified'') are stale too. Comments are not reader-facing, so this does not block the change.'
+      fix: In a later round, remove the stale study-block comment with remove_comment, and bring the header
+        and link comments up to date.
+      targets:
+      - studies[pmid:33367564]
+    - class: wording
+      target: level_reason[3]
+      operation: 2
+      severity: advisory
+      problem: 'Answers findings 0 and 3. Every statement checks against the cached records: any one of
+        Fukuda, Canadian or IOM (PMC8664491); no uninfected group; and recovered people with the same
+        infection as the comparison (PMC1569956: ''control participants matched by age and sex who had
+        recovered promptly from the same infection''; PMC8664491: ''matched, recovered controls''). One
+        wording point: ''the glandular fever, Q fever and Dubbo studies'' uses ''Dubbo'' before the paragraph
+        introduces that study, and the paragraph later calls it ''in Australia'', so a reader cannot tell
+        which study is meant. The US college cohort''s missing uninfected group is also said twice in
+        the paragraph.'
+      fix: Write 'the glandular fever, Q fever and Australian studies' and keep only one statement that
+        the college cohort had no uninfected group.
+      targets:
+      - level_reason[3]
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:33367564].case_definition differs
+  - studies[pmid:33367564].case_definition_source differs
+  - studies[pmid:33367564].case_definition_quote differs
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 2, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[2] answers finding 0, which is classed decisive, not wording
+  - operations[3] answers finding 0, which is classed decisive, not wording
+audits_run:
+- 2026-11-28-infection-trigger-correction-published.yaml
+- 2026-11-28-infection-trigger-correction-published-second.yaml
+outcome: published

@@ -1,0 +1,35 @@
+card: autonomic-imbalance
+decision: reject
+parts:
+  - decision_part: "studies[pmid:31957647]: the case definition is changed from unverified to Fukuda, but the study's own text names only 'international diagnostic criteria for CFS' with a numbered reference, and the record (abstract and full text, reference list left out) never names Fukuda, so Fukuda cannot be read from the record."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:31957647
+        quote: "Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited after clinician assessment at an academic tertiary referral clinic"
+      - source: pmid:31957647
+        quote: "Twenty-four patients with medically diagnosed CFS, and 24 matched healthy control individuals participated."
+    class: decisive
+  - decision_part: "level_reason[4] and links[0] (to symptom:sleep-disturbance): the new clause 'the patients fulfilled international diagnostic criteria for CFS, cited to the 1994 Fukuda definition' states a case definition for pmid:31957647 that cannot be matched to a sentence in its record; resolving it touches the case definition and a link, so it is not wording only."
+    rubric: "None stated, or not yet checked | Not accepted (see the inclusion rule). A card records which of the two applies, and for any named definition the sentence it was read from."
+    evidence:
+      - source: pmid:31957647
+        quote: "Chronic fatigue syndrome (CFS) is a debilitating condition characterized by 6 or more consecutive months of medically unexplained fatigue that is not relieved by rest, accompanied by a range of constitutional and neuropsychiatric symptoms.1"
+    class: decisive
+  - decision_part: "studies[pmid:29855991] and level_reason[3]: the Fukuda case definition, the supine resting recording, the null group difference, the outlier-dependent fatigue correlation and the role contradicts are supported by the full text; at 14 patients it is under half the sample of the level 3 studies, so the contested mark is unaffected."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29855991
+        quote: "CFS participants met Centers for Disease Control criteria for chronic fatigue syndrome (Fukuda et al. 1994)"
+      - source: pmid:29855991
+        quote: "we examined variability in cerebral blood flow (CBFV) and heart rate (HRV) in 28 women: 14 with CFS and 14 healthy controls"
+      - source: pmid:29855991
+        quote: "while resting supine [Lifecard system (Space Lab Healthcare, Snoqualmie, WA)] to record ECG signals over 15 min"
+      - source: pmid:29855991
+        quote: "None differed significantly between HC and CFS participants (all p > .05)."
+      - source: pmid:29855991
+        quote: "after outlier removal, denoted by *; r = −.70, p = .02; with outlier, r = −.32, p = .32"
+      - source: pmid:29855991
+        quote: "Significant correlations were not detected between fatigue and low frequency (LF) (r = −.34, p = .28), high frequency (HF) (r = −.16, p = .62), or very high frequency (VHF) (r = −.35, p = .26)."
+    class: none
+reasons_summary: "The Staud study (pmid:29855991) changes are supported, but the Fukuda case definition given to pmid:31957647 cannot be read from its record, which names only international criteria with a cut reference."
+would_change: "A record of pmid:31957647 whose own text (for example its reference list, which is left out of the cached full text) names the Fukuda 1994 definition as the criteria used; otherwise the correction would need to keep pmid:31957647 as unverified and drop the 'cited to the 1994 Fukuda definition' clauses in level_reason[4] and links[0]. The Staud study changes alone would be accepted."
