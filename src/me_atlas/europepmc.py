@@ -832,6 +832,7 @@ CASE_DEFINITION_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
         r"\bCDC\b",
         r"\bCenters? for Disease Control\b",
         r"\bCanadian (?:Consensus|case|criteria|clinical)",
+        r"\bCanada\s+\(?2003\)?",
         r"\bCarruthers\b",
         r"\bCCC\b",
         r"\bInternational Consensus Criteria\b",

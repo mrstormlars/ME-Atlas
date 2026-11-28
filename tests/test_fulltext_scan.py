@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import socket
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import yaml
@@ -605,3 +606,128 @@ def test_a_page_study_can_be_flagged_with_a_quote_from_the_page_and_a_quote_not_
     ]
     assert [d["field"] for d in record["dropped"]] == ["finding"]
     assert "not found word for word" in record["dropped"][0]["reason"]
+
+
+# --- Canada 2003 in step 0 ---------------------------------------------------------------------------------------
+
+
+def methods_xml(sentence: str) -> str:
+    return f"<article><body><sec><title>Methods</title><p>{sentence}</p></sec></body></article>"
+
+
+def test_step0_agrees_when_the_only_candidate_is_canada_2003_and_the_card_says_ccc():
+    xml = methods_xml("Participants fulfilled Canada 2003 (2) criteria.")
+    study = SimpleNamespace(case_definition="CCC", case_definition_quote=None)
+    found = europepmc.find_case_definitions(xml)
+    assert len(found) == 1
+    step = fulltext_scan.label_study(study, found, europepmc.article_text(xml))
+    assert step.label == "agrees" and step.names == ("CCC",)
+
+
+def test_step0_a_canada_2003_sentence_differs_for_a_card_that_says_fukuda():
+    xml = methods_xml("Participants fulfilled Canada 2003 criteria.")
+    study = SimpleNamespace(case_definition="Fukuda", case_definition_quote=None)
+    step = fulltext_scan.label_study(study, europepmc.find_case_definitions(xml), europepmc.article_text(xml))
+    assert step.label == "differs"
+
+
+# --- the flag rule (flag_rule 2) ---------------------------------------------------------------------------------
+
+
+def verdict_of(kind: str, field: str) -> dict:
+    return {"verdict": kind, "field": field, "quote": "q", "note": "n"}
+
+
+@pytest.mark.parametrize("field", fulltext_scan.FIELDS)
+def test_differs_flags_on_every_field(field):
+    assert fulltext_scan.flags(verdict_of("differs", field)) is True
+
+
+@pytest.mark.parametrize("field", ["case_definition", "role", "carrying"])
+def test_adds_flags_on_case_definition_role_and_carrying(field):
+    assert fulltext_scan.flags(verdict_of("adds", field)) is True
+
+
+@pytest.mark.parametrize("field", ["finding", "n_patients", "n_controls"])
+def test_adds_on_finding_or_n_does_not_flag(field):
+    assert fulltext_scan.flags(verdict_of("adds", field)) is False
+
+
+def test_confirmed_and_not_cited_never_flag():
+    assert not fulltext_scan.flags(verdict_of("confirmed", "role"))
+    assert not fulltext_scan.flags(verdict_of("not_cited", "carrying"))
+
+
+def adds(quote: str, note: str = "The full text adds this.") -> dict:
+    return {"verdict": "adds", "quote": quote, "note": note}
+
+
+def test_record_flags_n_patients_differs_case_definition_adds_and_role_adds(scan: Scan):
+    scan.plan()
+    scan.write_scan(UNVERIFIED_ID, n_patients=differs(FUKUDA_TEXT))
+    scan.write_scan(AGREES_ID, case_definition=adds(ONLY_IN_FULLTEXT))
+    scan.write_scan(PAGE_ID, role=adds("Participants met the Holmes criteria."))
+    assert scan.record() == 0
+    result = scan.result()
+    assert result["flag_rule"] == 2
+    assert set(result["flagged"][SLUG]) == {f"pmid:{i}" for i in (UNVERIFIED_ID, AGREES_ID, PAGE_ID)}
+
+
+def test_adds_on_finding_n_patients_n_controls_flags_nothing_and_is_reported(scan: Scan):
+    scan.plan()
+    scan.write_scan(
+        AGREES_ID,
+        finding=adds(ONLY_IN_FULLTEXT, "Finding note."),
+        n_patients=adds(CCC_QUOTE, "Patients note."),
+        n_controls=adds(ONLY_IN_FULLTEXT, "Controls note."),
+    )
+    assert scan.record() == 0
+    result = scan.result()
+    assert result["flagged"] == {} and result["counts"]["cards_flagged"] == 0
+    assert result["counts"]["adds_not_flagging"] == 3 and result["counts"]["verdicts"]["adds"] == 3
+    assert not (scan.out / "requests").exists()
+    record = scan.record_of(AGREES_ID)
+    assert record["flagged"] is False and len(record["verdicts"]) == 6
+    text = scan.report()
+    assert "## Additions that do not flag" in text and "additions that do not flag: 3" in text
+    assert f"{SLUG} pmid:{AGREES_ID} finding: Finding note." in text
+    assert f"quote: {ONLY_IN_FULLTEXT}" in text and "## Flagged" not in text
+
+
+def test_a_non_flagging_adds_on_a_flagged_card_is_reported_but_not_a_request_item(scan: Scan):
+    scan.plan()
+    scan.write_scan(UNVERIFIED_ID, case_definition=differs(FUKUDA_TEXT, "Fukuda named."))
+    scan.write_scan(AGREES_ID, finding=adds(ONLY_IN_FULLTEXT, "Extra finding."))
+    assert scan.record() == 0
+    request = json.loads((scan.out / "requests" / SLUG / "request.json").read_text(encoding="utf-8"))
+    assert [i["target"] for i in request["items"]] == [f"studies[pmid:{UNVERIFIED_ID}].case_definition"]
+    assert scan.result()["flagged"] == {SLUG: [f"pmid:{UNVERIFIED_ID}"]}
+    text = scan.report()
+    assert "## Additions that do not flag" in text and "Extra finding." in text
+    flagged_part = text.split("## Flagged")[1]
+    assert "Extra finding." not in flagged_part
+
+
+def test_a_non_flagging_adds_with_a_quote_not_in_the_full_text_is_still_dropped(scan: Scan):
+    scan.plan()
+    scan.write_scan(AGREES_ID, finding=adds("A sentence the full text does not contain."))
+    assert scan.record() == 0
+    record = scan.record_of(AGREES_ID)
+    assert [d["field"] for d in record["dropped"]] == ["finding"]
+    assert scan.result()["counts"]["adds_not_flagging"] == 0
+
+
+def test_a_result_without_flag_rule_shaped_like_2026_11_27_still_validates(scan: Scan):
+    flag_one(scan)
+    assert scan.record() == 0
+    path = scan.out / "scan-result.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    del data["flag_rule"]
+    del data["counts"]["adds_not_flagging"]
+    # a flagged study whose only verdict is a finding adds, as the first rule allowed
+    rec = data["cards"][SLUG]["studies"][f"pmid:{AGREES_ID}"]
+    rec["verdicts"] = [{"field": "finding", "verdict": "adds", "quote": ONLY_IN_FULLTEXT, "note": "n"}]
+    assert fulltext_scan.validate_scan_result(data) == []
+    path.write_text(json.dumps(data), encoding="utf-8")
+    loaded = fulltext_scan.load_scan_result(path)
+    assert f"pmid:{AGREES_ID}" in fulltext_scan.flagged_studies(loaded, SLUG)
