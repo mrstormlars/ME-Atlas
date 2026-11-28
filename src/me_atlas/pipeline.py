@@ -43,6 +43,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import textwrap
 from collections.abc import Callable, Collection, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -1271,6 +1272,32 @@ def _preprint_record(cfg: Config, key: str) -> europepmc.PreprintRecord:
     return record
 
 
+CONTEXT_LINE_WIDTH = 1000
+
+
+def _wrapped(text: str) -> list[str]:
+    """``text`` broken into lines of at most ``CONTEXT_LINE_WIDTH`` characters at existing spaces, so that an agent can
+    read a long abstract or full text in parts. Line breaks the text already has are kept (each line is wrapped on
+    its own; an empty line stays empty). No character is added or changed; a single token longer than the width
+    stays whole. An empty text gives no line."""
+    if not text:
+        return []
+    out: list[str] = []
+    for line in text.split("\n"):
+        out += textwrap.wrap(line, width=CONTEXT_LINE_WIDTH, break_long_words=False, break_on_hyphens=False) or [""]
+    return out
+
+
+def _wrapped_pages(text: str) -> list[str]:
+    """The joined PDF text (``[page N] ...`` pages separated by a blank line), each wrapped."""
+    out: list[str] = []
+    for i, page in enumerate(text.split("\n\n")):
+        if i:
+            out.append("")
+        out += _wrapped(page) or [page]
+    return out
+
+
 def _pdf_full_text_parts(copy: unpaywall.CopyResult, budget: int) -> list[str]:
     """Sections 5 and 6 of the context file when the text is an open PDF copy found through Unpaywall."""
     assert copy.text is not None and copy.meta is not None
@@ -1298,7 +1325,7 @@ def _pdf_full_text_parts(copy: unpaywall.CopyResult, budget: int) -> list[str]:
         )
     else:
         parts.append(f"Not truncated ({total} characters).")
-    parts += ["", text[:budget], ""]
+    parts += ["", *_wrapped_pages(text[:budget]), ""]
     found = unpaywall.pdf_candidates(copy.text)
     definitions = [(n, c) for n, c in found if c.kind == "definition"]
     exclusions = [(n, c) for n, c in found if c.kind == "exclusion"]
@@ -1370,7 +1397,7 @@ def build_context(
             "",
             "Abstract:",
             "",
-            record.abstract or "(the record has no abstract)",
+            *(_wrapped(record.abstract or "") or ["(the record has no abstract)"]),
         ]
     else:
         pre = _preprint_record(cfg, key)
@@ -1397,7 +1424,7 @@ def build_context(
             "",
             "Abstract:",
             "",
-            abstract or "(the record has no abstract)",
+            *(_wrapped(abstract or "") or ["(the record has no abstract)"]),
         ]
     inclusion = _demote_headings(spec_section(cfg.spec_path, 2))
     rubric = _demote_headings(spec_section(cfg.spec_path, 3))
@@ -1445,7 +1472,7 @@ def build_context(
             )
         else:
             parts.append(f"Not truncated ({total} characters).")
-        parts += ["", text[:budget], ""]
+        parts += ["", *_wrapped(text[:budget]), ""]
         candidates = europepmc.find_case_definitions(full.xml)
         definitions = [c for c in candidates if c.kind == "definition"]
         exclusions = [c for c in candidates if c.kind == "exclusion"]
@@ -2552,7 +2579,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
             "",
             "Abstract:",
             "",
-            record.abstract or "(the record has no abstract)",
+            *(_wrapped(record.abstract or "") or ["(the record has no abstract)"]),
         ]
     else:
         pre = _cached_preprint(cfg, study_id.removeprefix("doi:"))
@@ -2568,7 +2595,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
             "",
             "Abstract:",
             "",
-            abstract or "(the record has no abstract)",
+            *(_wrapped(abstract or "") or ["(the record has no abstract)"]),
         ]
     lines += ["", "Full text:", ""]
     if not carrier:
@@ -2576,7 +2603,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
     elif (full is None or full.xml is None) and (page := _cached_page_text(cfg, page_pmcid)) is not None:
         lines.append(f"Source: {PAGE_SOURCE_NOTE} ({page_pmcid}). The reference list is left out.")
         lines.append(f"Not truncated ({len(page)} characters).")
-        lines += ["", page]
+        lines += ["", *_wrapped(page)]
     elif full is None or full.xml is None:
         lines.append(FULLTEXT_NOT_CACHED_NOTE)
         if full is not None:
@@ -2585,7 +2612,7 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
         text = europepmc.article_text(full.xml)
         lines.append(f"Source: {full.note}. The reference list is left out.")
         lines.append(f"Not truncated ({len(text)} characters).")
-        lines += ["", text]
+        lines += ["", *_wrapped(text)]
     lines.append("")
     return lines
 

@@ -1634,7 +1634,7 @@ COMMANDS = (
 
 def dispatch(args: Any, cfg: Config, fulltext: FullTextLoader | None, date: Any, out: Callable[[str], None]) -> int:
     """Run one of ``COMMANDS`` (called from ``me_atlas.pipeline``)."""
-    from me_atlas.pipeline import live_fulltext_loader
+    from me_atlas.fulltext_scan import cache_loader
 
     if args.command == "correct-review-plan":
         out(str(correct_review_plan(cfg, args.slug)))
@@ -1651,7 +1651,7 @@ def dispatch(args: Any, cfg: Config, fulltext: FullTextLoader | None, date: Any,
         out(f"review of round {args.round} recorded: {review.verdict}, {len(review.findings)} finding(s)")
         return 0
     if args.command == "correct-plan":
-        loader = fulltext or live_fulltext_loader(cfg.cache_dir)
+        loader = fulltext or cache_loader(cfg.cache_dir)
         out(str(correct_plan(cfg, args.slug, loader)))
         return 0
     if args.command == "correct-apply":
@@ -1670,7 +1670,7 @@ def dispatch(args: Any, cfg: Config, fulltext: FullTextLoader | None, date: Any,
         out("FAILED")
         return 1
     if args.command == "correct-audit-plan":
-        loader = fulltext or live_fulltext_loader(cfg.cache_dir)
+        loader = fulltext or cache_loader(cfg.cache_dir)
         out(str(correct_audit_plan(cfg, args.slug, loader, second=args.second)))
         return 0
     if args.command == "correct-record-audit":
