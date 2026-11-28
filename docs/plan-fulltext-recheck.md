@@ -6,6 +6,8 @@ Founder ruling: DECISIONS 2026-11-27, "A cheap full-text scan first, and an upgr
 
 39 studies on 17 published cards have a cached full text (`fulltext_xml` or `pmc_page` in `uv run python -m me_atlas.fulltext needs`) that was never read against their card; 12 of them carry a level, badge, contested mark or link. The correction path for a published card only removes, rewords or lowers, and opens each card with an Opus whole-card review. The scan reads each study once, cheaply, and picks the few cards where the full text may change something; only those go on to the correction path. Without an upgrade variant the scan would find improvements no path could publish.
 
+> Amended 2026-11-28 (`flag_rule` 2, `docs/plan-fulltext-followups.md` item 1): a study is flagged by a kept `differs` on any field or a kept `adds` on `case_definition`, `role` or `carrying`; an `adds` on `finding`, `n_patients` or `n_controls` is reported but does not flag.
+
 ## What does not change
 
 - The scan decides nothing and publishes nothing. It writes only into its own run folder. A study it misses stays as the card has it.
@@ -17,7 +19,7 @@ Founder ruling: DECISIONS 2026-11-27, "A cheap full-text scan first, and an upgr
 
 For each study that `needs` lists with status `fulltext_xml` or `pmc_page`, code runs the existing finder (`find_case_definitions` for the XML, `find_case_definitions_in_page` for a PMC page) on the cached file and labels the study:
 
-- The definition candidates (kind `definition`; exclusion candidates are listed but do not decide the label) are mapped to the card's vocabulary by their matched wording: Fukuda (`Fukuda`, 1994 together with CDC), Holmes1988 (`Holmes`, 1988 together with CDC), CCC (`Canadian ...`, `Carruthers`, `CCC`), ICC (`International Consensus Criteria`, `ICC`), IOM2015 (`Institute of Medicine`, `IOM`, `SEID`, `systemic exertion intolerance`), Oxford (`Oxford`, `Sharpe`). Generic wordings (`CDC` alone, `case definition`, `diagnostic criteria`, `met ... criteria`, `diagnosed according ...`) name no definition. This mapping only sorts; it decides nothing on a card.
+- The definition candidates (kind `definition`; exclusion candidates are listed but do not decide the label) are mapped to the card's vocabulary by their matched wording: Fukuda (`Fukuda`, 1994 together with CDC), Holmes1988 (`Holmes`, 1988 together with CDC), CCC (`Canadian ...`, `Carruthers`, `CCC`, `Canada 2003`), ICC (`International Consensus Criteria`, `ICC`), IOM2015 (`Institute of Medicine`, `IOM`, `SEID`, `systemic exertion intolerance`), Oxford (`Oxford`, `Sharpe`). Generic wordings (`CDC` alone, `case definition`, `diagnostic criteria`, `met ... criteria`, `diagnosed according ...`) name no definition. This mapping only sorts; it decides nothing on a card.
 - `agrees`: the card's `case_definition_quote` is found word for word (`citations.normalise_quote`) in the candidate sentences or the full text, or the named definitions are exactly the card's `case_definition`; and no candidate names a definition other than the card's.
 - `differs`: at least one candidate names a definition that is not the card's (this includes a card at `unverified`, `none` or `other` where the full text names a recognised definition, and a card at `CDC_unspecified` where the full text names Fukuda or Holmes).
 - `no_candidate`: no candidate names a definition and the card's quote is not found.

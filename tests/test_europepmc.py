@@ -957,3 +957,21 @@ def test_a_fetch_still_refuses_without_the_contact_email(tmp_path, no_email):
     search = no_email.live_preprint_search(tmp_path)
     with pytest.raises(EuropePmcError, match="CONTACT_EMAIL is not set"):
         search(dt.date(2026, 1, 1), dt.date(2026, 1, 2))
+
+
+@pytest.mark.parametrize(
+    "wording",
+    [
+        "Fictional participants fulfilled the Canada 2003 criteria for ME/CFS.",
+        "Fictional participants fulfilled Canada 2003 (2) criteria.",
+        "Fictional participants fulfilled the Canada (2003) criteria.",
+    ],
+)
+def test_a_canada_2003_wording_is_a_case_definition_candidate(wording):
+    found = find_case_definitions(article(("Methods", wording)))
+    assert [c.sentence for c in found] == [wording]
+
+
+def test_canada_alone_as_an_affiliation_is_not_a_candidate():
+    xml = article(("Methods", "The work was done at the University of Toronto, Canada. Blood was drawn at 9 am."))
+    assert find_case_definitions(xml) == []

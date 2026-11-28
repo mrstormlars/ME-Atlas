@@ -49,7 +49,9 @@ LABELS = (AGREES, DIFFERS, NO_CANDIDATE)
 FIELDS = ("case_definition", "n_patients", "n_controls", "finding", "role", "carrying")
 CONFIRMED, ADDS, NOT_CITED = "confirmed", "adds", "not_cited"
 VERDICTS = (CONFIRMED, DIFFERS, ADDS)
-FLAGGING = (DIFFERS, ADDS)
+QUOTED = (DIFFERS, ADDS)  # verdicts that must carry a quote found in the full text
+ADDS_FLAGGING_FIELDS = ("case_definition", "role", "carrying")
+FLAG_RULE = 2  # 2026-11-28: differs on any field, or adds on case_definition, role or carrying
 ORIGIN_KIND = "fulltext_scan"
 
 STEP0_FILE = "step0.json"
@@ -65,7 +67,7 @@ _DEFINITION_WORDS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
     for name, pattern in (
         ("Fukuda", r"\bFukuda\b"),
         ("Holmes1988", r"\bHolmes\b"),
-        ("CCC", r"\bCanadian\b|\bCarruthers\b|\bCCC\b"),
+        ("CCC", r"\bCanadian\b|\bCarruthers\b|\bCCC\b|\bCanada\s+\(?2003\)?"),
         ("ICC", r"\bInternational Consensus Criteria\b|\bICC\b"),
         ("IOM2015", r"\bInstitute of Medicine\b|\bIOM\b|\bSEID\b|\bsystemic exertion intolerance\b"),
         ("Oxford", r"\bOxford\b|\bSharpe\b"),
@@ -81,6 +83,13 @@ class ScanError(Exception):
 # ---------------------------------------------------------------------------
 # Step 0
 # ---------------------------------------------------------------------------
+
+
+def flags(verdict: dict[str, Any]) -> bool:
+    """Whether a kept verdict flags its study: ``differs`` on any field, or ``adds`` on ``case_definition``, ``role``
+    or ``carrying``. An ``adds`` on ``finding``, ``n_patients`` or ``n_controls`` is reported but does not flag."""
+    kind = verdict.get("verdict")
+    return kind == DIFFERS or (kind == ADDS and verdict.get("field") in ADDS_FLAGGING_FIELDS)
 
 
 def named_definitions(matched: Sequence[str]) -> frozenset[str]:
@@ -603,7 +612,7 @@ def record_scan(out: Path, *, today: dt.date | None = None) -> RecordResult:
             kept = {"field": field, "verdict": value["verdict"], "quote": value["quote"], "note": value["note"]}
             if "targets" in value:
                 kept["targets"] = list(value["targets"])
-            if value["verdict"] in FLAGGING and not quote_in_fulltext(value["quote"], full_text):
+            if value["verdict"] in QUOTED and not quote_in_fulltext(value["quote"], full_text):
                 why = (
                     "the audit rendering has no full text for this study"
                     if full_text is None
@@ -613,7 +622,7 @@ def record_scan(out: Path, *, today: dt.date | None = None) -> RecordResult:
                 dropped_lines.append(f"{slug} {study_id} {field} ({value['verdict']}): {why}: {_flat(value['quote'])}")
                 continue
             record["verdicts"].append(kept)
-        record["flagged"] = any(v["verdict"] in FLAGGING for v in record["verdicts"])
+        record["flagged"] = any(flags(v) for v in record["verdicts"])
     for stray in sorted((out / "scan").glob("*.json") if (out / "scan").is_dir() else []):
         if stray.resolve() not in planned_files:
             invalid.append(f"scan/{stray.name}: not a file of the plan")
@@ -622,6 +631,13 @@ def record_scan(out: Path, *, today: dt.date | None = None) -> RecordResult:
     }
     flagged = {slug: ids for slug, ids in flagged.items() if ids}
     records = [rec for info in result_cards.values() for rec in info["studies"].values()]
+    not_flagging = [
+        (slug, sid, v)
+        for slug, info in result_cards.items()
+        for sid, rec in info["studies"].items()
+        for v in rec["verdicts"]
+        if v["verdict"] == ADDS and not flags(v)
+    ]
     counts = {
         "step0": {label: sum(1 for r in records if r["step0"] == label) for label in LABELS},
         "verdicts": {
@@ -631,18 +647,20 @@ def record_scan(out: Path, *, today: dt.date | None = None) -> RecordResult:
         "files_invalid": len(invalid),
         "files_missing": len(missing),
         "cards_flagged": len(flagged),
+        "adds_not_flagging": len(not_flagging),
     }
     day = (today or dt.date.today()).isoformat()
     result = {
         "run_id": plan["run_id"],
         "date": day,
         "plan_date": plan["date"],
+        "flag_rule": FLAG_RULE,
         "counts": counts,
         "cards": result_cards,
         "flagged": flagged,
     }
     requests = {slug: _draft_request(slug, result, plan_path) for slug in flagged}
-    report = _report(result, flagged, dropped_lines, invalid, missing)
+    report = _report(result, flagged, dropped_lines, invalid, missing, not_flagging)
     return RecordResult(result, report, requests)
 
 
@@ -650,7 +668,7 @@ def _draft_request(slug: str, result: dict[str, Any], plan_path: Path) -> dict[s
     items: list[dict[str, str]] = []
     for study_id in result["flagged"][slug]:
         for v in result["cards"][slug]["studies"][study_id]["verdicts"]:
-            if v["verdict"] not in FLAGGING:
+            if not flags(v):
                 continue
             for target in _request_target(v["field"], v.get("targets"), study_id):
                 items.append({"target": target, "problem": _problem(v["verdict"], v["note"], v["quote"])})
@@ -664,7 +682,12 @@ def _draft_request(slug: str, result: dict[str, Any], plan_path: Path) -> dict[s
 
 
 def _report(
-    result: dict[str, Any], flagged: dict[str, list[str]], dropped: list[str], invalid: list[str], missing: list[str]
+    result: dict[str, Any],
+    flagged: dict[str, list[str]],
+    dropped: list[str],
+    invalid: list[str],
+    missing: list[str],
+    not_flagging: list[tuple[str, str, dict[str, Any]]],
 ) -> str:
     c = result["counts"]
     lines = [
@@ -682,6 +705,7 @@ def _report(
         f"- quotes dropped: {c['quotes_dropped']}",
         f"- files invalid: {c['files_invalid']} (no scan file: {c['files_missing']})",
         f"- cards flagged: {c['cards_flagged']}",
+        f"- additions that do not flag: {c['adds_not_flagging']}",
         "",
     ]
     for title, rows in (
@@ -691,13 +715,19 @@ def _report(
     ):
         if rows:
             lines += [f"## {title}", "", *[f"- {r}" for r in rows], ""]
+    if not_flagging:
+        lines += ["## Additions that do not flag", ""]
+        for slug, sid, v in not_flagging:
+            lines.append(f"- {slug} {sid} {v['field']}: {_flat(v['note'])}")
+            lines.append(f"  - quote: {_flat(v['quote'])}")
+        lines.append("")
     for slug, ids in flagged.items():
         lines += [f"## Flagged: {slug}", ""]
         for study_id in ids:
             rec = result["cards"][slug]["studies"][study_id]
             lines += [f"### {study_id} (step 0: {rec['step0']}, full text: {rec['status']})", ""]
             for v in rec["verdicts"]:
-                if v["verdict"] in FLAGGING:
+                if flags(v):
                     targets = f" targets {', '.join(v['targets'])};" if v.get("targets") else ""
                     lines.append(f"- {v['field']}: {v['verdict']};{targets} {_flat(v['note'])}")
                     lines.append(f"  - quote: {_flat(v['quote'])}")
@@ -760,7 +790,7 @@ def validate_scan_result(data: Any) -> list[str]:
             elif rec.get("status") not in ft.READ:
                 found.append(f"flagged.{slug}: {study_id} has full text status {rec.get('status')!r}")
             elif not any(
-                isinstance(v, dict) and v.get("verdict") in FLAGGING and v.get("quote") for v in rec.get("verdicts", [])
+                isinstance(v, dict) and v.get("verdict") in QUOTED and v.get("quote") for v in rec.get("verdicts", [])
             ):
                 found.append(f"flagged.{slug}: {study_id} has no kept differs/adds verdict")
     return found
