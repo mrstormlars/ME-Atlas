@@ -182,6 +182,7 @@ def cache_loader(cache_dir: Path):
         pmid: str | None, pmcid: str | None = None, *, preprint: europepmc.PreprintRecord | None = None
     ) -> FullTextResult:
         known = pmcid
+        lookup = None
         if preprint is None and pmid is not None and pmid.isdigit():
             try:
                 lookup = europepmc.read_cached_lookup(epmc, pmid)
@@ -189,6 +190,8 @@ def cache_loader(cache_dir: Path):
                 return FullTextResult(None, f"cached Europe PMC lookup cannot be read: {exc}")
             known = (lookup.pmcid if lookup else None) or pmcid
         if known is None:
+            if lookup is not None:  # a lookup was made and found no PMC id: the note the live loader gives
+                return FullTextResult(None, fulltext_note(lookup.status, None))
             return FullTextResult(None, "no PMC id is known")
         try:
             path = epmc.fulltext_path(known)

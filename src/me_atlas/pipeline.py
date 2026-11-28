@@ -1277,9 +1277,15 @@ CONTEXT_LINE_WIDTH = 1000
 
 def _wrapped(text: str) -> list[str]:
     """``text`` broken into lines of at most ``CONTEXT_LINE_WIDTH`` characters at existing spaces, so that an agent can
-    read a long abstract or full text in parts. No character is added or changed; a single token longer than the
-    width stays whole. An empty text gives no line."""
-    return textwrap.wrap(text, width=CONTEXT_LINE_WIDTH, break_long_words=False, break_on_hyphens=False)
+    read a long abstract or full text in parts. Line breaks the text already has are kept (each line is wrapped on
+    its own; an empty line stays empty). No character is added or changed; a single token longer than the width
+    stays whole. An empty text gives no line."""
+    if not text:
+        return []
+    out: list[str] = []
+    for line in text.split("\n"):
+        out += textwrap.wrap(line, width=CONTEXT_LINE_WIDTH, break_long_words=False, break_on_hyphens=False) or [""]
+    return out
 
 
 def _wrapped_pages(text: str) -> list[str]:

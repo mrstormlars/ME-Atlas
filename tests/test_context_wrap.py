@@ -6,6 +6,7 @@ Fictional records, texts and cards. No network, no LLM: a request of any kind fa
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -69,6 +70,25 @@ def test_wrapped_does_not_split_a_hyphen_or_a_long_token():
     assert pipeline._wrapped(f"before {token} after") == ["before", token, "after"]
     hyphenated = "-".join(["abc"] * 400)
     assert pipeline._wrapped(hyphenated) == [hyphenated]
+
+
+def test_wrapped_keeps_the_line_breaks_the_text_has():
+    first = "BACKGROUND: A short first section."
+    second = "OBJECTIVE: " + long_text(300, "o")
+    lines = pipeline._wrapped(first + "\n" + second)
+    assert lines[0] == first and len(lines) >= 4 and all(len(x) <= CONTEXT_LINE_WIDTH for x in lines)
+    assert " ".join(lines[1:]) == second
+    assert pipeline._wrapped("a\n\nb") == ["a", "", "b"]
+
+
+def test_a_structured_abstract_keeps_its_sections_on_separate_lines(ready: Env):
+    sections = ["BACKGROUND: A short fictional background.", "RESULTS: " + long_text(300, "r")]
+    add_record(ready.cache, "90000197", abstract="\n".join(sections))
+    lines = record_lines(ready, "pmid:90000197", no_xml, carrier=False)
+    start = lines.index("Abstract:") + 2
+    assert lines[start] == sections[0]
+    shown = lines[start + 1 : lines.index("", start)]
+    assert len(shown) >= 2 and " ".join(shown) == sections[1]
 
 
 # --- the audit record -----------------------------------------------------------------------------------------
@@ -314,3 +334,23 @@ def test_an_uncached_carrier_gets_the_not_cached_note_instead_of_a_request(tmp_p
     assert run_without_loader(corr, "correct-plan") == 0
     text = (corr.dir / "correction-context" / f"{SLUG}.md").read_text(encoding="utf-8")
     assert pipeline.FULLTEXT_NOT_CACHED_NOTE in text
+
+
+def test_a_cached_lookup_without_a_pmc_id_gives_the_cache_loader_the_live_loaders_note(
+    ready: Env, no_http, monkeypatch
+):
+    folder = ready.cache / "europepmc"
+    folder.mkdir(parents=True, exist_ok=True)
+    hit = {"id": "90000100", "source": "MED", "pmid": "90000100", "isOpenAccess": "N", "inPMC": "N"}
+    (folder / "90000100.json").write_text(
+        json.dumps({"hitCount": 1, "resultList": {"result": [hit]}}), encoding="utf-8"
+    )
+    cached = record_lines(ready, CITED, fulltext_scan.cache_loader(ready.cache))  # HTTP fails the test
+    monkeypatch.delenv("CONTACT_EMAIL")
+    monkeypatch.setattr(pipeline, "load_dotenv", lambda *a, **k: {})
+    live = record_lines(ready, CITED, pipeline.live_fulltext_loader(ready.cache))
+    assert cached == live
+    assert "(Why: no open full text (Europe PMC: no open full text).)" in cached
+    # no cached lookup and no PMC id: still the plain statement
+    folder.joinpath("90000100.json").unlink()
+    assert "(Why: no PMC id is known.)" in record_lines(ready, CITED, fulltext_scan.cache_loader(ready.cache))
