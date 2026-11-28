@@ -470,7 +470,7 @@ def test_the_audit_context_holds_the_diff_and_the_sources_in_full_and_nothing_of
     assert f"- `links[0]`: `{TARGET}`" in text
     assert f"### Record: {CITED}" in text and CITED_TITLE in text
     assert "FULLTEXT-TAIL-MARKER" in text and "Not truncated" in text  # the link's source is a carrier: full text
-    assert "REFERENCE-LIST-MARKER" not in text
+    assert "REFERENCE-LIST-MARKER" in text.split("Reference list:")[1]  # the reference list follows the full text
     assert "Evidence ladder" in text and "Repeated by others" in text  # spec sections 2 and 3
     assert "# a comment inside a badge" not in text and "# a comment between two paragraphs" not in text
     for forbidden in ("WHY-MARKER", "REVIEW-MARKER", "Lower it."):

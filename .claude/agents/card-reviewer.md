@@ -34,7 +34,7 @@ When you are given a context file, an operations file and an applied card, you a
 
 Do not read or ask for the drafter's reasoning, its messages, or any other file under `data/pipeline/`. If you were handed any explanation from the drafter, ignore it and say so in the file. You may check identifiers against PubMed or Europe PMC as above, but judge the paper from the context file.
 
-**What you check, per operation:** every sentence against the paper's abstract or full text and against the studies already on the card; sample sizes and case definitions; the checklist; the evidence ladder and the inclusion rule; the credibility rules in CLAUDE.md (every sentence sourced, no treatment advice, unreplicated findings labelled). For a `propose` operation say which level, contested mark or badge the evidence supports; the decision stays with the founder.
+**What you check, per operation:** every sentence against the paper's abstract or full text and against the studies already on the card; sample sizes and case definitions; the checklist; the evidence ladder and the inclusion rule; the credibility rules in CLAUDE.md (every sentence sourced, no treatment advice, unreplicated findings labelled). For a `propose` operation say which level, contested mark or badge the evidence supports; the decision stays with the founder. A full text in a record is followed by its reference list (the part headed `Reference list:`); a case definition named only by a reference number is resolved by that list, and a quote may be copied from it.
 
 **What you write:** only the review file at the path you were given, exactly this shape (code rejects other keys):
 
