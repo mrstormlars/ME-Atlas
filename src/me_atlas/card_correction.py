@@ -100,7 +100,8 @@ from me_atlas.pipeline import (
 )
 
 ROUNDS = (1, 2)
-MAX_TRIES = 3  # failed tries of one round (as the correction rounds' check retries)
+MAX_TRIES = 3  # tries of one round: refusals and failed checks together
+REFUSED = "refused"  # DIR/refused/<slug>-r<N>-<i>.json: a content refusal of correct-apply
 REPORT = "correction-report.md"
 SECOND = "second"  # the round tag of the second audit's context: audit-context/<slug>-second.md
 STEM = "correction-published"  # audits/<date>-<slug>-correction-published[-2][-second|-trail].yaml
@@ -779,23 +780,73 @@ def ops_problems(
     return found
 
 
-def _keep_failed_try(cfg: Config, slug: str, n: int) -> None:
-    """Refuse a round that passed its checks or failed ``MAX_TRIES`` times; else clear the failed try's applied text
-    (its ops and checks are kept as ``...-r<N>-attempt<i>.json``)."""
+def _refusal_files(cfg: Config, slug: str, n: int) -> list[Path]:
+    """The refusal records of round ``n``: ``refused/<slug>-r<N>-<digits>.json`` and nothing else."""
+    pattern = re.compile(rf"{re.escape(slug)}-r{n}-(\d+)\.json")
+    folder = cfg.f(REFUSED)
+    if not folder.is_dir():
+        return []
+    return sorted((p for p in folder.glob(f"{slug}-r{n}-*.json") if pattern.fullmatch(p.name)), key=_try_number)
+
+
+def _try_number(path: Path) -> int:
+    return int(path.stem.rsplit("-", 1)[1])
+
+
+def _refusals(cfg: Config, slug: str, n: int) -> list[dict[str, Any]]:
+    """The readable refusal records of round ``n``, in the order of their tries."""
+    found = []
+    for path in _refusal_files(cfg, slug, n):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(data, dict) and isinstance(data.get("problems"), list):
+            found.append(data)
+    return found
+
+
+def _failed_checks(cfg: Config, slug: str, n: int) -> int:
+    return len(list(cfg.checks_path(slug, None, n).parent.glob(f"{slug}-r{n}-attempt*.json")))
+
+
+def _check_tries(cfg: Config, slug: str, n: int) -> int:
+    """Refuse a round that passed its checks or used its ``MAX_TRIES`` tries (refusals and failed checks share them);
+    nothing is written. Returns the number of the try that is starting."""
     checks = _round_checks(cfg, slug, n)
-    if checks is None:
-        return
-    if checks.get("passed"):
+    if checks is not None and checks.get("passed"):
         raise PipelineError(f"round {n} already passed its checks; it is not applied again")
-    path = cfg.checks_path(slug, None, n)
-    if len(list(path.parent.glob(f"{slug}-r{n}-attempt*.json"))) >= MAX_TRIES:
-        raise PipelineError(f"round {n} failed its checks {MAX_TRIES} times; there is no further try")
-    shutil.rmtree(cfg.applied_dir(slug, None, n), ignore_errors=True)
+    refused, failed = len(_refusal_files(cfg, slug, n)), _failed_checks(cfg, slug, n)
+    if refused + failed >= MAX_TRIES:
+        if refused == 0:
+            raise PipelineError(f"round {n} failed its checks {MAX_TRIES} times; there is no further try")
+        raise PipelineError(
+            f"round {n} used its {MAX_TRIES} tries ({refused} refused, {failed} failed checks); there is no further try"
+        )
+    return refused + failed + 1
+
+
+def _refuse_ops(
+    cfg: Config, slug: str, n: int, try_no: int, ops_path: Path, data: bytes, operations: Any, problems: list[str]
+) -> None:
+    """Keep a content refusal of the operations file: the record ``refused/<slug>-r<N>-<i>.json`` and a copy of the file
+    ``ops/<slug>-r<N>-refused<i>.json``. The caller raises."""
+    record = {
+        "round": n,
+        "try": try_no,
+        "ops_file": str(ops_path),
+        "ops_sha256": _sha256(data),
+        "operations": operations,
+        "problems": problems,
+        "date": dt.date.today().isoformat(),
+    }
+    _write_text(cfg.f(REFUSED, f"{slug}-r{n}-{try_no}.json"), json.dumps(record, ensure_ascii=False, indent=2) + "\n")
+    shutil.copyfile(ops_path, ops_path.with_name(f"{slug}-r{n}-refused{try_no}.json"))
 
 
 def _record_failed_try(cfg: Config, slug: str, n: int) -> None:
     checks = cfg.checks_path(slug, None, n)
-    i = len(list(checks.parent.glob(f"{slug}-r{n}-attempt*.json"))) + 1
+    i = _failed_checks(cfg, slug, n) + 1
     ops = cfg.ops_path(slug, None, n)
     if ops.is_file():
         shutil.copyfile(ops, ops.with_name(f"{slug}-r{n}-attempt{i}.json"))
@@ -807,11 +858,17 @@ def correct_apply(cfg: Config, slug: str, n: int) -> dict[str, Any]:
     target guard, run the card validator and the citations check. Writes ``applied/`` and ``checks/`` in the run folder;
     ``cards/`` is never written. Returns the checks record.
 
-    Refusals (PipelineError, nothing written): no card in ``cards/``, a draft beside it, no valid review of the
-    published card with a finding, an ops file that is missing, malformed, for another card, outside the limits (an
-    ``add_study``, ``add_paragraph``, ``add_link``, ...) or with an operation no finding names, one that changes
-    nothing, a round 2 without a rejecting round 1 review, a round that already has a review, passed its checks or
-    failed three times, a round after the audits began."""
+    State refusals (PipelineError, nothing written): no card in ``cards/``, a draft beside it, no valid review of the
+    published card with a finding, a round 2 without a rejecting round 1 review, a round that already has a review or
+    passed its checks, a round whose ``MAX_TRIES`` tries (refusals and failed checks together) are used up, a round
+    after the audits began. These are decided before the ops file is read. An ops file that does not exist or is not
+    readable JSON is also refused with nothing written and does not use a try.
+
+    Content refusals (PipelineError, exit 1): an ops file that does not parse, is for another card, is outside the
+    limits (an ``add_study``, ``add_paragraph``, ``add_link``, ...), has an operation no finding names, or changes
+    nothing. Each uses a try and is kept: ``refused/<slug>-r<N>-<i>.json`` (round, try, ops file and its sha256, the
+    operations, the problems, today's date) and a copy of the file as ``ops/<slug>-r<N>-refused<i>.json``; no
+    ``applied/`` or ``checks/`` file is written."""
     _check_round(n)
     card_path = _card_paths(cfg, slug)
     base_text = card_path.read_text(encoding="utf-8")
@@ -831,12 +888,20 @@ def correct_apply(cfg: Config, slug: str, n: int) -> dict[str, Any]:
         if first is None or first.verdict != "reject":
             found = first.verdict if first is not None else why
             raise PipelineError(f"round 2 needs a valid reject of the review of round 1; found: {found}")
+    try_no = _check_tries(cfg, slug, n)
     ops_path = cfg.ops_path(slug, None, n)
+    raw = _read_json(ops_path)
+    data = ops_path.read_bytes()
     try:
-        ops = parse_ops(_read_json(ops_path), cached_records(cfg.cache_dir))
+        ops = parse_ops(raw, cached_records(cfg.cache_dir))
     except OperationError as exc:
+        why = [line for line in str(exc).splitlines() if line.strip()] or [str(exc)]
+        listed = raw.get("operations") if isinstance(raw, dict) else None
+        _refuse_ops(cfg, slug, n, try_no, ops_path, data, listed, why)
         raise PipelineError(f"{ops_path} is not a valid operations file: {exc}") from exc
+    listed = raw.get("operations") if isinstance(raw, dict) else None
     if problems := ops_problems(card, base_text, ops, review, slug, upgrade):
+        _refuse_ops(cfg, slug, n, try_no, ops_path, data, listed, problems)
         raise PipelineError(f"{ops_path} is refused:\n" + "\n".join(problems))
     new_text: str | None = None
     ops_errors: list[str] = []
@@ -845,8 +910,11 @@ def correct_apply(cfg: Config, slug: str, n: int) -> dict[str, Any]:
     except OperationError as exc:
         ops_errors.append(str(exc))
     if new_text == base_text:
-        raise PipelineError("the correction changes nothing: the applied text equals the card")
-    _keep_failed_try(cfg, slug, n)
+        why = ["the correction changes nothing: the applied text equals the card"]
+        _refuse_ops(cfg, slug, n, try_no, ops_path, data, listed, why)
+        raise PipelineError(why[0])
+    if _round_checks(cfg, slug, n) is not None:
+        shutil.rmtree(cfg.applied_dir(slug, None, n), ignore_errors=True)  # the failed try's applied text
     op_tiers = tiers(ops, yaml.safe_load(base_text))
     result: dict[str, Any] = {
         "card": slug,
@@ -1139,6 +1207,16 @@ def _comment_lines(text: str) -> int:
 # ---------------------------------------------------------------------------
 
 
+def _refusal_reason(records: list[dict[str, Any]], n: int) -> str:
+    """Why a card is held back when the operations file of round ``n`` was refused (its last refusal is named)."""
+    last = records[-1]
+    problems = [str(p) for p in last["problems"]]
+    return (
+        f"the operations file of round {n} was refused at step 3 (try {last.get('try', len(records))} of {MAX_TRIES}): "
+        + (problems[0] if problems else "no problem recorded")
+    )
+
+
 class _State:
     """What the files of a correction say. Nothing is written."""
 
@@ -1155,16 +1233,25 @@ class _State:
             raise PipelineError(f"no valid review of the published card: {why}")
         self.pre = review
         n = last_round(cfg, slug)
+        self.label = "held back"  # "held back" or, when step 1 found no error, "unchanged"
+        self.hold: str | None = None
+        self.named = False  # the trail's outcome starts with the label: a refused round, a review with no finding
         if n is None:
-            raise PipelineError("no round applied; run `correct-apply` first")
+            # no round was applied: step 1 found no error, or every try of round 1 was refused, else nothing to publish
+            if not review.findings:
+                self.label, self.hold = "unchanged", "the review of the published card found no error"
+                self.named = True
+            elif refusals := _refusals(cfg, slug, 1):
+                self.hold, self.named = _refusal_reason(refusals, 1), True
+            else:
+                raise PipelineError("no round applied; run `correct-apply` first")
         self.n = n
-        self.checks = _round_checks(cfg, slug, n)
+        self.checks = _round_checks(cfg, slug, n) if n is not None else None
         self.ops: OpsFile | None = None
         self.review: ReviewFile | None = None
         self.review_why: str | None = None
         self.applied_text: str | None = None
         self.tier: Tier | None = None
-        self.hold: str | None = None
 
     @property
     def passed(self) -> bool:
@@ -1174,6 +1261,8 @@ class _State:
         """The round's checks and review, then (when they allow it) the card unchanged since the round and its tier.
         Sets ``hold`` for a round that cannot publish; PipelineError when the card changed."""
         cfg, slug, n = self.cfg, self.slug, self.n
+        if n is None:  # no round was applied; ``hold`` was set when the state was read
+            return
         if not self.passed:
             self.hold = f"the checks of round {n} failed"
             return
@@ -1193,6 +1282,8 @@ class _State:
             self.hold = f"no valid review of round {n}: {self.review_why}"
         elif self.review.verdict != "accept":
             self.hold = f"the review rejected round {n}" + ("; no round 2 was applied" if n == 1 else "")
+            if n == 1 and (refusals := _refusals(cfg, slug, 2)):
+                self.hold, self.named = _refusal_reason(refusals, 2), True
         else:
             self.tier = decide_tier(
                 self.base_text, self.applied_text, self.ops, self.pre, self.card, upgrade=self.upgrade is not None
@@ -1308,12 +1399,33 @@ def _finding_dicts(review: ReviewFile) -> list[dict[str, Any]]:
     return out
 
 
+def _outcome(state: _State, reason: str | None) -> str:
+    """The trail's outcome. A refused round and a review with no finding say what they are; the other holds are as
+    they always were."""
+    if reason is None:
+        return "published"
+    if state.named:
+        return f"{state.label}: {reason}"
+    return reason
+
+
 def _round_trail(cfg: Config, slug: str, n: int) -> dict[str, Any]:
+    """One round of the trail: its operations, the problems of each refused try (only when there was one), its checks
+    and review. A round whose every try was refused has no checks and no review (both null)."""
+    refusals = _refusals(cfg, slug, n)
     try:
         operations = _read_json(cfg.ops_path(slug, None, n)).get("operations")
     except (PipelineError, AttributeError):
         operations = None
     record = _round_checks(cfg, slug, n)
+    if record is None and refusals:
+        return {
+            "round": n,
+            "operations": refusals[-1].get("operations", operations),
+            "refused": [list(r["problems"]) for r in refusals],
+            "checks": None,
+            "review": None,
+        }
     checks = (
         {"passed": bool(record.get("passed")), "errors": _check_error_lines(record)}
         if record is not None
@@ -1325,7 +1437,10 @@ def _round_trail(cfg: Config, slug: str, n: int) -> dict[str, Any]:
         if review is None
         else {"verdict": review.verdict, "findings": _finding_dicts(review)}
     )
-    return {"round": n, "operations": operations, "checks": checks, "review": summary}
+    trail: dict[str, Any] = {"round": n, "operations": operations}
+    if refusals:
+        trail["refused"] = [list(r["problems"]) for r in refusals]
+    return trail | {"checks": checks, "review": summary}
 
 
 def _report(
@@ -1339,10 +1454,10 @@ def _report(
     lines = [
         f"# Correction of a published card: {slug}",
         "",
-        f"Outcome: {'published' if reason is None else 'held back'}",
+        f"Outcome: {'published' if reason is None else state.label}",
     ]
     if reason is not None:
-        lines.append(f"Held back: {reason}")
+        lines.append(f"{state.label.capitalize()}: {reason}")
     lines += ["", f"Origin: {state.request.origin}", f"Tier: {tier if tier else 'not decided'}"]
     if state.tier and state.tier.reasons:
         lines += [f"- {r}" for r in state.tier.reasons]
@@ -1480,7 +1595,11 @@ def correct_publish(cfg: Config, slug: str, date: str, *, dry_run: bool, out: Ca
         "origin": state.request.origin,
         "request": [{"target": x.target, "problem": x.problem} for x in state.request.items],
         "review": {"verdict": state.pre.verdict, "findings": _finding_dicts(state.pre)},
-        "rounds": [_round_trail(cfg, slug, r) for r in ROUNDS if cfg.checks_path(slug, None, r).is_file()],
+        "rounds": [
+            _round_trail(cfg, slug, r)
+            for r in ROUNDS
+            if cfg.checks_path(slug, None, r).is_file() or _refusal_files(cfg, slug, r)
+        ],
         "tier": (
             None
             if state.tier is None
@@ -1491,7 +1610,7 @@ def correct_publish(cfg: Config, slug: str, date: str, *, dry_run: bool, out: Ca
             }
         ),
         "audits_run": [dest.name for _s, dest in (*copies, *invalid_copies)],
-        "outcome": "published" if reason is None else reason,
+        "outcome": _outcome(state, reason),
     }
     _write_text(trail_path, yaml.safe_dump(trail, sort_keys=False, allow_unicode=True, width=100))
     out(f"The commit must end with the trailer: {pipeline_marker(date)}")
