@@ -842,7 +842,6 @@ def _refuse_ops(
     }
     _write_text(cfg.f(REFUSED, f"{slug}-r{n}-{try_no}.json"), json.dumps(record, ensure_ascii=False, indent=2) + "\n")
     shutil.copyfile(ops_path, ops_path.with_name(f"{slug}-r{n}-refused{try_no}.json"))
-    return PipelineError("\n".join(problems))
 
 
 def _record_failed_try(cfg: Config, slug: str, n: int) -> None:
