@@ -1,0 +1,55 @@
+card: infection-trigger
+decision: accept
+parts:
+  - decision_part: "The level 2 stays, carried by the RECOVER-Adult controlled study with the 2015 IOM criteria; the correction does not move it."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:39804551
+        quote: "Incidence rate and prevalence of post-COVID-19 ME/CFS based on the 2015 Institute of Medicine ME/CFS clinical diagnostic criteria."
+      - source: pmid:39804551
+        quote: "the rate in matched uninfected participants was 0.93 (95% CI 0.91-10.95) per 100 person-years: a hazard ratio of 4.93 (95% CI 3.62-6.71)."
+    class: none
+  - decision_part: "The sentences added to level_reason[0] on the authors' mitigation of the overestimation limits and the factors that may have led to underestimation."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:39804551
+        quote: "These issues are mitigated by the enrollment of participants within 30 days of infection."
+      - source: pmid:39804551
+        quote: "Hospitalized RECOVER participants were excluded and therefore were not included in the prevalence and incidence estimate of post-COVID-19 ME/CFS."
+      - source: pmid:39804551
+        quote: "The waxing/waning nature of symptoms might have caused us to miss cases."
+      - source: pmid:39804551
+        quote: "The most severely affected individuals may have been unable to enroll in RECOVER or to have been differentially lost to follow-up because of study burden."
+    class: none
+  - decision_part: "The case definition of pmid:33367564 changed from unverified to other (fulltext), read as meeting any one of the Fukuda, Canadian or IOM criteria; the study stays context and uncontrolled, so it does not count towards the level."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:33367564
+        quote: "were evaluated to determine whether they met 1 or more of the 3 case definitions of ME/CFS"
+      - source: pmid:33367564
+        quote: "providing a standardized method for assessing various case definitions of ME/CFS, including Fukuda et al [20], Canadian Clinical [21], and Institute of Medicine (IOM) [22] criteria."
+      - source: pmid:33367564
+        quote: "Note that in most cases the ME/CFS group only met the Fukuda criteria [20], while the S-ME/CFS group always met the Fukuda criteria [20] and either the Canadian [21] or IOM [22] criteria."
+    class: none
+  - decision_part: "The level_reason[3] statement that the Dubbo and college studies had no uninfected comparison group and compared cases with people who recovered from the same infection; the Dubbo case definition stays unverified."
+    rubric: "Down or held back: failed replications; a finding that rests only on a broad case definition (Oxford-only cohorts) or a very small sample; no control group"
+    evidence:
+      - source: pmid:16950834
+        quote: "We invited these cases, and control participants matched by age and sex who had recovered promptly from the same infection"
+      - source: pmid:16950834
+        quote: "Where appropriate, AL and IH diagnosed the chronic fatigue syndrome (termed here confirmed post-infective fatigue syndrome) by consensus at six months after the onset of symptoms, according to the international diagnostic criteria"
+      - source: pmid:33367564
+        quote: "67 of the 157 asymptomatic students served as controls."
+      - source: pmid:33367564
+        quote: "Students with severe ME/CFS were compared with students who were asymptomatic at 3 time points."
+    class: none
+  - decision_part: "The link to question:who-is-vulnerable stays proposed; its reworded last sentence on the two studies' case definitions matches the records."
+    rubric: "A peer-reviewed source (a review counts) that states the link. Not studied directly in patients."
+    evidence:
+      - source: pmid:16950834
+        quote: "The syndrome was predicted largely by the severity of the acute illness rather than by demographic, psychological, or microbiological factors."
+      - source: pmid:33367564
+        quote: "At baseline, those who developed ME/CFS had more physical symptoms and immune irregularities, but not more psychological symptoms, than those who recovered."
+    class: none
+reasons_summary: "The correction adds RECOVER-Adult's stated mitigations and underestimation factors, records the college cohort's case definition as any one of Fukuda, Canadian or IOM, and clarifies the comparison groups; all match the full texts and the level 2 is unchanged."
+would_change: "A record showing that the college cohort's cases were defined otherwise than by meeting one or more of the Fukuda, Canadian or IOM criteria, or that the Dubbo or college study had an uninfected comparison group, would change this decision; the case definitions of pmid:9926075 and pmid:12145392 remain unverifiable here because their full texts are not cached, and the correction leaves them unverified."

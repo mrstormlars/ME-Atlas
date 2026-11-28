@@ -94,19 +94,24 @@ core_claim:
 level: 2
 level_reason:
   - text: >-
-      A US study (RECOVER-Adult) followed 4515 adults enrolled within 30 days of SARS-CoV-2 infection,
-      or who became infected during the study, and compared them with adults who had no infection.
-      ME/CFS was classified with the 2015 IOM criteria applied to self-reported symptoms, and people
-      with an earlier ME/CFS diagnosis were excluded. The rate of new ME/CFS was 2.66 per 100
-      person-years after infection and 0.93 in matched uninfected participants (hazard ratio 4.93,
-      95% CI 3.62-6.71); 847 of the 1439 uninfected participants had no match, so the comparison used
-      the other 592 (calculated from the reported counts). Across all infected participants, 531 of
-      11,785 (4.5%) met the criteria, against 9 of 1439 (0.6%) uninfected participants. The authors
-      list possible recall bias and selection bias, earlier symptoms missed in people never
-      diagnosed, and the severity of post-exertional malaise not being assessed, and say these limits
-      could have led to overestimation. The card is at level 2 because of this study. No independent
-      group has repeated it with a verified case definition, so it is unreplicated.
-    sources: [pmid:39804551]
+      A US study (RECOVER-Adult) followed 4515 adults enrolled within 30 days of SARS-CoV-2
+      infection, or who became infected during the study, and compared them with adults who had
+      no infection. ME/CFS was classified with the 2015 IOM criteria applied to self-reported
+      symptoms, and people with an earlier ME/CFS diagnosis were excluded. The rate of new
+      ME/CFS was 2.66 per 100 person-years after infection and 0.93 in matched uninfected
+      participants (hazard ratio 4.93, 95% CI 3.62-6.71); 847 of the 1439 uninfected
+      participants had no match, so the comparison used the other 592 (calculated from the
+      reported counts). Across all infected participants, 531 of 11,785 (4.5%) met the criteria,
+      against 9 of 1439 (0.6%) uninfected participants. The authors list possible recall bias
+      and selection bias, earlier symptoms missed in people never diagnosed, and the severity of
+      post-exertional malaise not being assessed, and say these limits could have led to
+      overestimation. They also write that these issues are mitigated by the enrollment of
+      participants within 30 days of infection, and list factors that might have led to
+      underestimation: hospitalized participants were excluded, symptoms wax and wane, and the
+      most severely affected individuals may have been unable to enroll or lost to follow-up.
+      The card is at level 2 because of this study. No independent group has repeated it with a
+      verified case definition, so it is unreplicated.
+    sources: ['pmid:39804551']
   - text: >-
       A German study of 221 hospital employees who tested positive for SARS-CoV-2 found that at least
       7 (3.2%) met the Canadian Consensus Criteria when assessed in 2022; the authors give 3.2% to
@@ -127,17 +132,20 @@ level_reason:
       infection, and the card does not treat it as contradicting level 2.
     sources: [pmid:39046739]
   - text: >-
-      Earlier studies that followed people from a documented infection point the same way but cannot
-      count towards the level, because their case definitions are not yet verified. In a study of
-      primary care patients, chronic fatigue syndrome was found in 9-22% six months after glandular fever and 0-6% after an ordinary
-      upper respiratory tract infection. Ten years after a Q fever outbreak, it was found in 14
-      (19.4%) exposed people and 3 (4.2%) matched unexposed people among those examined in hospital.
-      Two studies had no comparison group, so they give a frequency after infection rather than a
-      higher risk: in Australia, 28 of 253 people
-      (11%) met the criteria six months after Epstein-Barr virus, Q fever or Ross River virus
-      infection, at a similar rate after each. In a US college cohort, 55 of 238 students (23%) met
-      the criteria six months after infectious mononucleosis.
-    sources: [pmid:9926075, pmid:12145392, pmid:16950834, pmid:33367564]
+      Earlier studies that followed people from a documented infection point the same way but
+      cannot count towards the level. The case definitions of the glandular fever, Q fever and
+      Dubbo studies are not yet verified. The US college cohort counted a student as a case when
+      the student met any one of the Fukuda, Canadian or IOM criteria, but it had no uninfected
+      comparison group. In a study of primary care patients, chronic fatigue syndrome was found
+      in 9-22% six months after glandular fever and 0-6% after an ordinary upper respiratory
+      tract infection. Ten years after a Q fever outbreak, it was found in 14 (19.4%) exposed
+      people and 3 (4.2%) matched unexposed people among those examined in hospital. Two studies
+      had no uninfected comparison group (they compared cases with people who recovered from the
+      same infection), so they give a frequency after infection rather than a higher risk: in
+      Australia, 28 of 253 people (11%) met the criteria six months after Epstein-Barr virus, Q
+      fever or Ross River virus infection, at a similar rate after each. In a US college cohort,
+      55 of 238 students (23%) met the criteria six months after infectious mononucleosis.
+    sources: ['pmid:9926075', 'pmid:12145392', 'pmid:16950834', 'pmid:33367564']
   - text: >-
       Other studies found no difference. In UK primary care, 1199 people seen with an infection and
       1167 seen for other reasons, of whom 84% were followed up at six months, did not differ in the
@@ -344,9 +352,9 @@ studies:
     cohort: me_cfs
     # PMC8664491 exists but Europe PMC returned no open full text; the abstract says "met criteria for ME/CFS" and
     # "meeting >1 set of criteria" without naming them. TODO: verify.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: other
+    case_definition_source: fulltext
+    case_definition_quote: were evaluated to determine whether they met 1 or more of the 3 case definitions of ME/CFS
     design: uncontrolled  # no group without infectious mononucleosis; 67 recovered students as comparison for predictors
     n_patients: 238
     n_controls: null
@@ -559,7 +567,7 @@ studies:
       differ significantly between the groups. Cited on the map as the source of a proposed link, not as evidence
       for the level.
 last_checked:
-  date: 2026-11-13
+  date: 2026-11-28
   by: ai_audit
 # Causal map (founder ruling 2026-11-06): layer `trigger` per the brief; the card's claim is about what starts the
 # illness. The mechanism readings belong to herpesvirus-reactivation and persistent-enterovirus-infection.
@@ -580,11 +588,12 @@ links:
     support: proposed
     text: >-
       Two prospective studies compared people who did and did not develop ME/CFS after the same
-      infection. One found that the severity of the acute illness predicted it more than demographic,
-      psychological or microbiological factors; the other found more physical symptoms and immune
-      differences, but not more psychological symptoms, before the infection in those who later had
-      severe ME/CFS. Each finding comes from a single study, and neither study's case definition is
-      verified yet.
+      infection. One found that the severity of the acute illness predicted it more than
+      demographic, psychological or microbiological factors; the other found more physical
+      symptoms and immune differences, but not more psychological symptoms, before the infection
+      in those who later had severe ME/CFS. Each finding comes from a single study. The first
+      study's case definition is not verified; the second counted a case when a student met any
+      one of the Fukuda, Canadian or IOM criteria.
     sources: [pmid:16950834, pmid:33367564]
   - to: autoimmunity-autoantibodies-b-cells
     support: proposed

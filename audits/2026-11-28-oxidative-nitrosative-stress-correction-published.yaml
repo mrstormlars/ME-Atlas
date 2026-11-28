@@ -1,0 +1,67 @@
+card: oxidative-nitrosative-stress
+decision: accept
+parts:
+  - decision_part: "The level stays at 2, carried by the Dundee isoprostane study and the Antwerp plasma peroxide study, both controlled and with CDC criteria; the correction does not move it."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:16085177
+        quote: "Patients had significantly increased levels of isoprostanes"
+      - source: pmid:21455120
+        quote: "Plasma peroxide concentrations were significantly higher in patients with ME/CFS than in normal controls."
+    class: none
+  - decision_part: "The Bulgarian study (pmid:43027675) is recorded as IOM 2015 from its own full text, with role supports and direction higher; the age difference of its controls and the exploratory prediction models are written out."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:43027675
+        quote: "ME/CFS patients were included in the study according to the diagnostic criteria proposed by the Institute of Medicine (IOM) in 2015"
+      - source: pmid:43027675
+        quote: "were significantly increased in ME/CFS compared to both LC"
+      - source: pmid:43027675
+        quote: "MDA, GPX1 and NOS3 remained significantly associated with diagnostic groups after adjustment for age and BMI"
+      - source: pmid:43027675
+        quote: "healthy controls were significantly younger than both disease groups"
+      - source: pmid:43027675
+        quote: "the above-described prediction models are entirely exploratory"
+    class: none
+  - decision_part: "Level 3 is not reached on malondialdehyde: the Novi Sad and Bulgarian studies used different assays, and the Novi Sad finding is itself contradicted by the larger Novi Sad study with the same definition, so holding at level 2 is the conservative reading."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:23185200
+        quote: "Levels of MDA were measured using the OxiSelect MDA Adduct ELISA kit"
+      - source: pmid:43027675
+        quote: "were measured in serum by ELISA"
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345)"
+    class: none
+  - decision_part: "No contested mark: the level does not rest on malondialdehyde, and the 40-patient Fukuda study is not of comparable quality to the 125-patient IOM 2015 study (less strict definition, under half the patients)."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:21119582
+        quote: "Forty women aged 15-45 years who fulfilled the 1994 Centers for Disease Control's diagnostic criteria for chronic fatigue syndrome (CFS) with no comorbidities were recruited"
+      - source: pmid:43027675
+        quote: "ME/CFS patients (n = 125)"
+    class: none
+  - decision_part: "Level 4 is not reached: the 73-woman Fukuda trial (pmid:25386668) reported lower lipid peroxidation and less fatigue than placebo, but the larger Fukuda trial of the same combination (pmid:34444817) found no between-group difference in fatigue, so the experimental result conflicts with an equally strong study."
+    rubric: "results that conflict with equally strong studies"
+    evidence:
+      - source: pmid:25386668
+        quote: "Seventy-three women with CFS who fulfilled the 1994 CDC Fukuda's criteria were evaluated and enrolled in the study"
+      - source: pmid:25386668
+        quote: "CFS patients treated with CoQ10 plus NADH showed significantly lower levels of lipid peroxidation versus placebo"
+      - source: pmid:25386668
+        quote: "Thirty-nine CFS subjects received oral Coenzyme Q10 (200 mg/day) plus NADH (20 mg/day) supplementation"
+      - source: pmid:34444817
+        quote: "FIS-40 domain scores evolved in parallel between groups over the course of the study."
+      - source: pmid:34444817
+        quote: "although no differences were found in the intergroup analysis"
+    class: none
+  - decision_part: "The brain glutathione study (pmid:22281935) is recorded as CDC criteria, version not stated, from the sentence in its full text; the card writes out that the modification is not described. The study stays context and carries no level."
+    rubric: "The card quotes the sentence that names the CDC criteria."
+    evidence:
+      - source: pmid:22281935
+        quote: "were diagnosed by a board-certified neurologist with extensive CFS research experience (BHN), using modified US Centers for Disease"
+      - source: pmid:22281935
+        quote: "We found elevated ventricular lactate and decreased GSH in patients with CFS and MDD relative to HVs."
+    class: none
+reasons_summary: "The corrected case definitions, study roles and numbers match the full texts; level 2 stands, the malondialdehyde pair is not counted as a repeat, no contested mark applies, and level 4 is held back by the conflicting larger trial."
+would_change: "A study using the same malondialdehyde assay in an independent cohort with a recognised definition, or a reading that the two MDA ELISAs measure the same thing, would raise the question of level 3 (and, with the 40-patient Novi Sad study, of a contested mark on it). A controlled trial with a recognised definition that lowers an oxidative-stress measure and improves the illness against placebo, without a comparable trial in conflict, would raise the question of level 4. The full texts of pmid:16085177, pmid:21119582 and pmid:27224647 are not cached, so statements about them were checked against their abstracts only."

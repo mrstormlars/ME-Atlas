@@ -2,6 +2,13 @@
 
 Append-only, newest first. One entry per ruling: date, decision, why.
 
+## 2026-11-28 — A fourth attempt for `autonomic-imbalance` (founder ruling)
+
+- The founder, in chat on 2026-11-28 after the third attempt (pull request 129): "Do a 4th attempt". Asked how it should run, the founder chose to fix the context first.
+- The new reason that Q7 of the entry below requires: the third attempt's first audit rejected because the Fukuda definition of pmid:31957647 "cannot be read from its record, which names only international criteria with a cut reference". The audit context left out every full text's reference list by design, so the auditor could not see that reference 1 of PMC7053003 is Fukuda 1994. Pull request 130 gives a carrier's reference list in agent contexts and in the `record-audit` quote check.
+- So: one more attempt for `autonomic-imbalance` only, after pull request 130, in a new run folder with fresh agents and the full path (tier 2, two sequential audits). Its request is the third attempt's request plus the first audit's objecting decision part, copied word for word. If it is held back, the card stays as published, and no further attempt is made without a new reason and a new founder ruling.
+- Why: as in Q7, the failure was a gap in what the auditor was shown, not a finding on the content. The step 1 reviewer, who read the cached page, found that reference 1 is Fukuda.
+
 ## 2026-11-28 — The full-text follow-ups: all twelve recommended defaults (founder ruling)
 
 - The brainstorm plan `docs/plan-fulltext-followups.md` (pull request 124) covers five open items from STATUS: the scan's flag rule, long one-line full texts in agent contexts, a trail after a step 3 refusal in the correction path, a new round for the three cards held back on 2026-11-27, and the PDF follow-ups. It put twelve questions (Q1-Q12) to the founder, each with a recommended default. The founder answered: "Ja, alle".

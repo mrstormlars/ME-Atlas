@@ -126,43 +126,62 @@ level_reason:
       none of these is a repeat of another, and each is unreplicated.
     sources: ['pmid:23185200', 'pmid:27224647', 'pmid:40627396']
   - text: >-
-      The card does not reach level 3: no independent group has found the same result on the same measure
-      in a separate cohort with a confirmed recognised case definition. The only other isoprostane study, of
-      6 patients and 6 controls in Glasgow, also found higher levels at rest, but its case definition is not
-      yet verified. It shares three authors with the Dundee study, so it would not count as an independent
-      repeat even with a verified definition.
-    sources: [pmid:19422646, pmid:16085177]
+      The card does not reach level 3: no independent group has found the same result on the
+      same measure in a separate cohort with a confirmed recognised case definition. The only
+      other isoprostane study, of 6 patients and 6 controls in Glasgow, also found higher levels
+      at rest, but its case definition is not yet verified. It shares three authors with the
+      Dundee study, so it would not count as an independent repeat even with a verified
+      definition. Malondialdehyde (MDA) is the closest case: a study in Novi Sad of 24 women
+      meeting the 1994 CDC definition and 19 healthy women, and a later study in Bulgaria of 125
+      patients meeting the Institute of Medicine 2015 criteria and 80 healthy controls, both
+      found higher MDA in patients, and the author lists of the two studies share no names. The
+      Bulgarian result stayed significant against healthy controls after age and BMI adjustment,
+      but its healthy controls were significantly younger than the patients and its authors call
+      their prediction models exploratory. The assays also differ: the Novi Sad study used the
+      OxiSelect MDA Adduct ELISA for malondialdehyde bound to proteins, and the Bulgarian study
+      measured MDA in serum by ELISA. The card does not treat the two assays as the same
+      measure, so it does not count this as a repeat.
+    sources: ['pmid:19422646', 'pmid:16085177', 'pmid:23185200', 'pmid:43027675']
   - text: >-
-      Malondialdehyde results conflict. An earlier study from the same Novi Sad clinic, of 40 women meeting
-      the Fukuda definition and 40 healthy women, found no overall difference between the groups; the
-      authors report a difference only after dividing patients by malondialdehyde level, and title the
-      paper as showing elevated lipid peroxidation. It is larger than the 24-patient study that found
-      higher levels and uses the same definition, so under the rubric the malondialdehyde finding cannot
-      carry a level. The two studies share authors, and the overlap between their patients is not stated.
-      They may also have used different methods: the 24-patient study used an ELISA test for
-      malondialdehyde bound to proteins (OxiSelect MDA Adduct ELISA), and the abstract of the earlier
-      study does not give its method. The card's level does not rest on this finding.
-    sources: [pmid:21119582, pmid:23185200]
+      Malondialdehyde results conflict. An earlier study from the same Novi Sad clinic, of 40
+      women meeting the Fukuda definition and 40 healthy women, found no overall difference
+      between the groups; the authors report a difference only after dividing patients by
+      malondialdehyde level, and title the paper as showing elevated lipid peroxidation. It is
+      larger than the 24-patient study that found higher levels and uses the same 1994 CDC
+      definition. The two Novi Sad studies share authors, and the overlap between their patients
+      is not stated. They may also have used different methods: the 24-patient study used an
+      ELISA test for malondialdehyde bound to proteins (OxiSelect MDA Adduct ELISA), and the
+      abstract of the earlier study does not give its method. The later Bulgarian study of 125
+      patients found higher MDA in patients than in healthy controls. The 40-patient Novi Sad
+      study has fewer than half the Bulgarian study's patients and uses a less strict definition
+      (Fukuda against Institute of Medicine 2015), so it is not of comparable quality to the
+      Bulgarian study. The card's level does not rest on the malondialdehyde finding, and no
+      contested mark is set on it.
+    sources: ['pmid:21119582', 'pmid:23185200', 'pmid:43027675']
   - text: >-
-      Measures of antioxidant defences are mixed. In studies with a recognised definition, antioxidant
-      potential in serum was lower in the Osaka study, while glutathione in lymphocytes was higher in both
-      sexes in the Stanford study (in men, in two of the three cell types tested). In studies whose case
-      definition is not yet verified, plasma coenzyme Q10 was lower in 58 patients than in 22 controls;
-      whole-blood glutathione peroxidase activity did not differ between 40 patients and 24 controls;
-      glutathione in the brain was lower in 15 patients than in 13 healthy volunteers in one study and did
-      not differ in another of 26 people in all.
-    sources: [pmid:27224647, pmid:40627396, pmid:20010505, pmid:21552194, pmid:22281935, pmid:19906518]
+      Measures of antioxidant defences are mixed. In studies with a recognised definition,
+      antioxidant potential in serum was lower in the Osaka study, glutathione in lymphocytes
+      was higher in both sexes in the Stanford study (in men, in two of the three cell types
+      tested), and glutathione in the brain was lower in 15 patients than in 13 healthy
+      volunteers in a Weill Cornell Medical College study whose patients were diagnosed using
+      modified US CDC guidelines (the authors do not say how the guidelines were modified);
+      patients with major depression showed the same. In studies whose case definition is not
+      yet verified, plasma coenzyme Q10 was lower in 58 patients than in 22 controls;
+      whole-blood glutathione peroxidase activity did not differ between 40 patients and 24
+      controls; and glutathione in the brain did not differ in another study of 26 people in
+      all.
+    sources: ['pmid:27224647', 'pmid:40627396', 'pmid:22281935', 'pmid:20010505', 'pmid:21552194', 'pmid:19906518']
   - text: >-
-      The card does not reach level 4: no controlled trial in patients with a confirmed
-      recognised case definition has lowered an oxidative-stress measure and improved the
-      illness. A placebo-controlled trial of coenzyme Q10 plus NADH in 73 patients reported less
-      fatigue than with placebo and lower lipid peroxides in blood cells of the treated group
-      (the abstract does not say whether against placebo or against baseline), but its case
-      definition is not yet verified. A larger placebo-controlled trial of the same combination
-      from the same Vall d'Hebron research institute, in 207 women meeting the Fukuda
-      definition, did not measure oxidative stress and reported that fatigue scores changed in
-      parallel in the two groups. A crossover trial of NADH alone in 26 patients meeting the CDC
-      criteria reports no oxidative-stress measure in its abstract.
+      The card does not reach level 4. A placebo-controlled trial of coenzyme Q10 plus NADH in
+      73 women meeting the 1994 CDC Fukuda criteria (39 treated, 34 given placebo) reported less
+      fatigue (fatigue impact scale total score, p<0.05) and lower lipid peroxidation in blood
+      mononuclear cells (TBARS assay) than with placebo after eight weeks. A larger
+      placebo-controlled trial of the same combination from the same Vall d'Hebron research
+      institute, in 207 women meeting the 1994 CDC/Fukuda definition (144 completed, 72 per
+      group), did not measure oxidative stress and reported that fatigue scores changed in
+      parallel in the two groups, with no differences between the groups. The two trials
+      disagree on fatigue, and level 3 is not reached. A crossover trial of NADH alone in 26
+      patients meeting the CDC criteria reports no oxidative-stress measure in its abstract.
     sources: ['pmid:25386668', 'pmid:34444817', 'pmid:10071523']
   - text: >-
       A placebo-controlled trial of ubiquinol, the reduced form of coenzyme Q10, in 43 patients (31
@@ -421,9 +440,9 @@ studies:
     journal: NMR in biomedicine
     doi: 10.1002/nbm.2772
     cohort: me_cfs
-    case_definition: unverified  # not in the abstract; PMC3896084 not open access
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: CDC_unspecified
+    case_definition_source: fulltext
+    case_definition_quote: Patients with CFS were recruited via clinician referrals and media advertisements and were diagnosed by a board-certified neurologist with extensive CFS research experience (BHN), using modified US Centers for Disease Control and Prevention (CDC) guidelines (1).
     design: controlled
     # 15 CFS, 15 major depression, 13 healthy volunteers; the CFS v healthy comparison is used.
     n_patients: 15
@@ -465,23 +484,25 @@ studies:
     journal: Antioxidants & redox signaling
     doi: 10.1089/ars.2014.6181
     cohort: me_cfs
-    case_definition: unverified  # not in the abstract; PMC4346380 not open access
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: Seventy-three women with CFS who fulfilled the 1994 CDC Fukuda's criteria were evaluated and enrolled in the study from the outpatient CFS Clinical Unit (Vall d'Hebron University Hospital, Barcelona, Spain).
     design: intervention_controlled
     # 73 patients; arm sizes not in the abstract. TODO: verify. Registered NCT02063126 (timing not stated).
     # Same trial as 26212172 (not on the card).
-    n_patients: 73
-    n_controls: null
+    n_patients: 39
+    n_controls: 34
     measures_pem: false
     preregistered: null
     role: context
     direction: not_applicable  # treatment vs placebo
     group: Alegre J, Vall d'Hebron University Hospital, Barcelona, Spain (same unit as 34444817)
     finding: >-
-      A placebo-controlled trial of n=73 patients found less fatigue after eight weeks of coenzyme Q10 plus
-      NADH than with placebo, and reported lower lipid peroxides in blood cells of the treated group (the
-      abstract does not say whether against placebo or against baseline).
+      A placebo-controlled trial of n=73 women (39 given coenzyme Q10 plus NADH, 34 given
+      placebo) found less fatigue after eight weeks of coenzyme Q10 plus NADH than with placebo
+      (fatigue impact scale total score, p<0.05). The full text reports lower lipid peroxidation
+      (TBARS assay) in blood mononuclear cells than with placebo after eight weeks (7.9 vs 14.9
+      nmol per million cells, p<0.05).
   - id: pmid:34444817
     title: "Effect of Dietary Coenzyme Q10 Plus NADH Supplementation on Fatigue Perception and Health-Related Quality of Life in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Prospective, Randomized, Double-Blind, Placebo-Controlled Trial."
     year: 2021
@@ -653,24 +674,31 @@ studies:
     journal: International journal of molecular sciences
     doi: 10.3390/ijms27219422
     cohort: me_cfs
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: IOM2015
+    case_definition_source: fulltext
+    case_definition_quote: 'ME/CFS patients were included in the study according to the diagnostic criteria proposed by the Institute of Medicine (IOM) in 2015, based on the following three symptoms: 1. Significant reduction or limitation in the ability to perform pre-illness levels of daily activities that persists for more than 6 months, accompanied by fatigue that is often profound, of recent or definite (not lifelong) onset, and not substantially relieved by rest. 2. Post-exertional malaise.'
     design: controlled
     n_patients: 125
     n_controls: 80
     measures_pem: false
     preregistered: null
-    role: context
-    direction: not_applicable
+    role: supports
+    direction: higher
     finding: >-
-      A study of n=125 patients with ME/CFS, 89 with long COVID and 80 healthy controls measured
-      T-cell subsets and serum markers of oxidative and nitrosative stress (including catalase,
-      SOD1, GPX1, MDA, NOS1 and NOS3). It reported that malondialdehyde was an independent
-      predictor in the ME/CFS versus healthy control comparison and that GPX1 discriminated
-      between ME/CFS and long COVID. The abstract does not state the case definition, so it is
-      unverified, and it does not give the direction of the marker differences. Not yet
-      repeated.
+      A study of n=125 patients with ME/CFS (Institute of Medicine 2015 criteria), 89 with long
+      COVID and 80 healthy controls measured T-cell subsets and serum markers of oxidative and
+      nitrosative stress by ELISA. Serum malondialdehyde (MDA) and GPX1 were higher in ME/CFS
+      than in healthy controls, and the difference stayed significant in the age- and
+      BMI-adjusted pairwise comparison (MDA adjusted p 0.02 for age and 0.01 for BMI; GPX1 0.04
+      and 0.02). The healthy controls were significantly younger than the patients. Against long
+      COVID, MDA and GPX1 were higher in ME/CFS unadjusted. In the age- and BMI-adjusted
+      pairwise comparison of the main table the difference was not significant (MDA 0.52 and
+      0.40; GPX1 1.00 and 1.00), while in the comparisons restricted to participants aged 30 to
+      65 years and to a BMI of 18 to 30 the authors report that MDA and GPX1 remained
+      significantly different between the groups. In logistic regression MDA was the only
+      significant independent predictor of ME/CFS versus long COVID, and in the Random Forest
+      GPX1 was the leading discriminator of ME/CFS versus long COVID. The authors call the
+      prediction models exploratory. Not yet repeated.
     group: 'Nikolova M (last author); shares authors with other studies on this card: Maes M (21455120, 20010505, 21552194, 27766535) and Dudova D (41516145).'
     corrects: null
 # Causal map (founder ruling 2026-11-06, docs/plan-causal-map.md): layer and links drafted by link-drafter and
@@ -724,5 +752,5 @@ links:
       hpa-axis-cortisol, so the two review sources are not independent.
     sources: [pmid:29759891]
 last_checked:
-  date: 2026-11-15
+  date: 2026-11-28
   by: ai_audit

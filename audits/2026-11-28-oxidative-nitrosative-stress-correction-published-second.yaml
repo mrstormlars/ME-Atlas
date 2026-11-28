@@ -1,0 +1,69 @@
+card: oxidative-nitrosative-stress
+decision: accept
+parts:
+  - decision_part: "The level stays at 2 and level 3 is not reached on malondialdehyde: the Novi Sad and Bulgarian studies measured different analytes (protein-bound MDA adducts against serum MDA), so the card does not count the Bulgarian result as a reproduction of the Novi Sad finding."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:23185200
+        quote: "Levels of MDA were measured using the OxiSelect MDA Adduct ELISA kit, one of the first commercial ELISA tests for research use only."
+      - source: pmid:23185200
+        quote: "The MDA-protein adducts present in the sample or standard were probed with an anti-MDA antibody, followed by an HRP conjugated secondary antibody."
+      - source: pmid:43027675
+        quote: "were measured in serum by ELISA"
+      - source: pmid:43027675
+        quote: "MDA, GPX1 and NOS3 remained significantly associated with diagnostic groups after adjustment for age and BMI"
+    class: none
+  - decision_part: "The malondialdehyde conflict paragraph: the 40-patient Novi Sad study (Fukuda) found no overall difference; it is not of comparable quality to the Bulgarian IOM 2015 study of 125 patients, and since the level does not rest on malondialdehyde no contested mark is set."
+    rubric: "A level is **contested** when at least one study of comparable or higher quality contradicts the finding that supports it. Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:21119582
+        quote: "Forty women aged 15-45 years who fulfilled the 1994 Centers for Disease Control's diagnostic criteria for chronic fatigue syndrome (CFS) with no comorbidities were recruited and were age matched to a control group of 40 healthy women."
+      - source: pmid:21119582
+        quote: "Although initial statistical analyses showed no differences between groups (P=.345), when subdivided according to the level of MDA, a difference was found in the subgroup of high-level MDA (P=.034)."
+      - source: pmid:43027675
+        quote: "ME/CFS patients were included in the study according to the diagnostic criteria proposed by the Institute of Medicine (IOM) in 2015,"
+      - source: pmid:43027675
+        quote: "Peripheral blood mononuclear cells (PMNC) from LC patients (n = 89), ME/CFS patients (n = 125), and healthy controls (HC, n = 80) were analyzed using multiparameter flow cytometry."
+    class: none
+  - decision_part: "Study pmid:43027675: case definition IOM 2015 read from the full text, role supports with direction higher, and the finding's statements on adjustment, younger controls and exploratory prediction models."
+    rubric: "A controlled study in patients with a recognised case definition supports it."
+    evidence:
+      - source: pmid:43027675
+        quote: "MDA (median [Q1–Q3]: 233.60 [96.23–419.08]) and GPX1 (38.15 [24.38–59.71]) were significantly increased in ME/CFS compared to both LC"
+      - source: pmid:43027675
+        quote: "age represented a substantial potential confounder because healthy controls were significantly younger than both disease groups."
+      - source: pmid:43027675
+        quote: "MDA, GPX1, Th17, CD161+Treg and CD15s+CD161−eTreg remained significantly different between the age- and BMI-restricted groups."
+      - source: pmid:43027675
+        quote: "MDA was the only significant independent predictor (OR = 3.074, 95% CI [2.063–4.581]), whereas GPX1 (OR = 1.304, 95% CI [0.900–1.890]) was not significant."
+      - source: pmid:43027675
+        quote: "Conversely, GPX1 became the leading discriminator of ME/CFS versus LC"
+      - source: pmid:43027675
+        quote: "the above-described prediction models are entirely exploratory and require external validation in an independent cohort"
+    class: none
+  - decision_part: "Study pmid:25386668: case definition Fukuda, 39 treated and 34 placebo, lower lipid peroxidation and less fatigue against placebo; level 4 is not reached because the larger trial of the same combination found no between-group difference in fatigue and level 3 is not reached."
+    rubric: "Up: a new study meeting the criteria of the next rung; an independent replication; a better-defined cohort; a larger sample; a controlled design with a comparison group; a preregistered protocol."
+    evidence:
+      - source: pmid:25386668
+        quote: "Seventy-three women with CFS who fulfilled the 1994 CDC Fukuda's criteria were evaluated and enrolled in the study from the outpatient CFS Clinical Unit (Vall d'Hebron University Hospital, Barcelona, Spain)."
+      - source: pmid:25386668
+        quote: "Thirty-nine CFS subjects received oral Coenzyme Q10 (200 mg/day) plus NADH (20 mg/day) supplementation (VITAE NATURAL NUTRITION, S.L.) in soft gel capsules and thirty-four CFS subjects received a matching placebo"
+      - source: pmid:25386668
+        quote: "CFS patients treated with CoQ10 plus NADH showed significantly lower levels of lipid peroxidation versus placebo (7.9±2.7 vs. 14.9±3.9 nmol/106 cells, p<0.05, respectively)"
+      - source: pmid:25386668
+        quote: "Lipid peroxidation levels in BMCs from CFS patients were measured by TBARS assay"
+      - source: pmid:34444817
+        quote: "This was highlighted in the improvement in scores observed in the intragroup analysis, although no differences were found in the intergroup analysis."
+      - source: pmid:34444817
+        quote: "FIS-40 domain scores evolved in parallel between groups over the course of the study."
+    class: none
+  - decision_part: "Study pmid:22281935: case definition recorded as CDC criteria with the version not stated, read from the full text, with the unstated modification written out on the card; the study keeps its context role."
+    rubric: "Accepted like Fukuda and Holmes 1988, since neither CDC version requires PEM: flagged on the card as \"does not require PEM\", ranked equal to Fukuda. The card quotes the sentence that names the CDC criteria."
+    evidence:
+      - source: pmid:22281935
+        quote: "Patients with CFS were recruited via clinician referrals and media advertisements and were diagnosed by a board-certified neurologist with extensive CFS research experience (BHN), using modified US Centers for Disease Control and Prevention (CDC) guidelines (1)."
+      - source: pmid:22281935
+        quote: "We found elevated ventricular lactate and decreased GSH in patients with CFS and MDD relative to HVs."
+    class: none
+reasons_summary: "The corrected card is supported: level 2 stands, the new case definitions and numbers match the full texts, and neither the malondialdehyde pair nor the coenzyme Q10 plus NADH trials meet the next rung without conflict."
+would_change: "A study of comparable quality reproducing the same malondialdehyde measure (same analyte) in a separate cohort, or a ruling that protein-bound MDA adducts and serum MDA count as one finding, would raise the question of a contested level 3. A placebo-controlled trial in a recognised-definition cohort that lowers an oxidative-stress measure and improves the illness, without an equally strong contradicting trial, would bear on level 4. A source stating how the CDC guidelines were modified in pmid:22281935 could change its case definition. The full text of pmid:21119582 is not cached, so its MDA method cannot be checked here."

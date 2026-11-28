@@ -1,0 +1,353 @@
+card: autonomic-imbalance
+card_sha256: 03f3cf0099359b32e69e8b0c4cd0e70fd865a2bf003c70cdf19dd2796b6b20d7
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md); second attempt, items
+  added verbatim from audits/2026-11-27-autonomic-imbalance-correction-published.yaml (objecting decision
+  parts 1-2); third attempt (DECISIONS 2026-11-28, Q7), items added verbatim from data/pipeline/corrections/published/2026-11-27-autonomic-imbalance-2/review/autonomic-imbalance-pre.json
+  (findings 1-6, first target each); attempt 2 was refused at step 3 (audits/2026-11-27-autonomic-imbalance-correction-published-2-trail.yaml);
+  fourth attempt (DECISIONS 2026-11-28, 'A fourth attempt for autonomic-imbalance'), two items added verbatim
+  from audits/2026-11-28-autonomic-imbalance-correction-published.yaml (objecting decision parts 1-2);
+  the audit context now gives the reference list (PR 130)
+request:
+- target: studies[pmid:29855991].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states the patients met the CDC (Fukuda 1994) criteria; the card has the case definition as unverified.
+    Quote from the full text: CFS participants met Centers for Disease Control criteria for chronic fatigue
+    syndrome (Fukuda et al. 1994)'
+- target: studies[pmid:29855991].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The within-patient
+    association is with total HRV power only and holds after removal of one outlier; the card does not
+    name the measure or the outlier removal. Quote from the full text: Among CFS participants, a significant
+    negative association between fatigue ratings and total HRV power (TP) (r = −.70, p = .02) was detected
+    (after removal of one outlier)'
+- target: level_reason[4]
+  problem: 'The full-text scan found that the full text states something the card lacks: The level reason
+    says this study''s case definition is not yet verified; the full text names the CDC (Fukuda 1994)
+    criteria. Quote from the full text: CFS participants met Centers for Disease Control criteria for
+    chronic fatigue syndrome (Fukuda et al. 1994)'
+- target: studies[pmid:31957647].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    says patients met unnamed international diagnostic criteria for CFS after clinician assessment at
+    a tertiary clinic; the card records none of this and no named definition appears. Quote from the full
+    text: Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited
+    after clinician assessment at an academic tertiary referral clinic'
+- target: studies[pmid:31957647].case_definition
+  problem: 'studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4]
+    and the clause in links[0] that say its patients met the Fukuda definition according to the full text:
+    the full text names only ''international diagnostic criteria for CFS'' with a reference whose entry
+    is not in the record, so Fukuda is an inference, not a definition the study''s text states.'
+- target: level_reason[4]
+  problem: 'studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4]
+    and the clause in links[0] that say its patients met the Fukuda definition according to the full text:
+    the full text names only ''international diagnostic criteria for CFS'' with a reference whose entry
+    is not in the record, so Fukuda is an inference, not a definition the study''s text states.'
+- target: links[0]
+  problem: 'studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4]
+    and the clause in links[0] that say its patients met the Fukuda definition according to the full text:
+    the full text names only ''international diagnostic criteria for CFS'' with a reference whose entry
+    is not in the record, so Fukuda is an inference, not a definition the study''s text states.'
+- target: studies[pmid:31957647].case_definition
+  problem: The case definition of pmid:31957647 cannot be read as a named definition from the record,
+    so it stays not yet checked (unverified) on the card.
+- target: studies[pmid:29855991].case_definition
+  problem: 'Request item 1 is an error. pmid:29855991 is recorded with case_definition unverified, but
+    its cached full text (data/cache/europepmc/PMC6274602.html, Methods, Participants) states: ''CFS participants
+    met Centers for Disease Control criteria for chronic fatigue syndrome ( Fukuda et al. 1994 )''. The
+    study''s own text names the 1994 CDC (Fukuda) definition.'
+- target: level_reason[4]
+  problem: Request item 3 is an error. level_reason[4] ends 'The last two studies' case definitions are
+    not yet verified.' The last study, pmid:29855991, names the Fukuda 1994 criteria in its cached full
+    text (see the finding above), and pmid:31957647 names its criteria by reference 1, which resolves
+    to Fukuda 1994 (see the finding below). The sentence is wrong for both.
+- target: studies[pmid:29855991].finding
+  problem: Request item 2 is an error of a missing limit. The finding says 'within patients, more heart
+    rate variability power was associated with less fatigue'. The cached full text says the association
+    was with total HRV power only ('a significant negative association between fatigue ratings and total
+    HRV power (TP) (r = -.70, p = .02) was detected (after removal of one outlier)'), that LF, HF and
+    VHF did not correlate with fatigue, and (Fig. 2 legend) that with the outlier included r = -.32, p
+    = .32. A reader would read the card's sentence as a robust association; it holds only after removing
+    one of 14 patients.
+- target: studies[pmid:31957647].case_definition
+  problem: 'Request item 4 is an error; items 5 to 8 rest on a premise the cached record does not bear
+    out. The cached full text (data/cache/europepmc/PMC7053003.html, Methods, Participants) states ''Twenty-four
+    participants fulfilling international diagnostic criteria for CFS[1] were recruited after clinician
+    assessment at an academic tertiary referral clinic'', and its reference list in the same file has
+    entry 1 as ''Fukuda K, Straus SE, Hickie I, Sharpe MC, Dobbins JG, Komaroff A. The chronic fatigue
+    syndrome: a comprehensive approach to its definition and study. International Chronic Fatigue Syndrome
+    Study Group. Ann Intern Med. 1994''. Items 5 to 7 say the reference entry is not in the record; it
+    is in the cached full text. DECISIONS (founder ruling) says ''A case definition named only by reference
+    number counts when the reference list resolves it'', and the card already labels pmid:23166694 (same
+    research group, same wording ''international diagnostic criteria for CFS [1]'', reference 1 Fukuda
+    1994) as Fukuda. Keeping pmid:31957647 as unverified is inconsistent with that ruling and with the
+    card''s own treatment of pmid:23166694. links[0] also says ''its case definition is not yet verified''
+    for this study.'
+- target: level_reason[4]
+  problem: level_reason[4] opens 'Sleep studies are mixed' and then includes 'In 14 women with chronic
+    fatigue syndrome and 14 controls, heart rate variability did not differ.' pmid:29855991 is an arterial
+    spin labelling MRI study with heart rate variability from three 5-minute ECG segments (cached abstract
+    and full text); it did not measure heart rate variability during sleep. Placed in this paragraph the
+    sentence reads as a sleep result.
+- target: studies[pmid:29855991].role
+  problem: Once pmid:29855991 carries the Fukuda label, it is a controlled study in a recognised case
+    definition that found no group difference in heart rate variability ('no group differences in CBFV
+    or HRV were detected', cached abstract), like pmid:9505867, pmid:9430800 and pmid:34970156, which
+    the card records as contradicts. Its role context was forced by the unverified label. With 14 patients
+    it is below half of the 34 patients in pmid:38251045, so it does not by itself bear on the contested
+    mark.
+- target: studies[pmid:31957647].case_definition
+  problem: 'studies[pmid:31957647]: the case definition is changed from unverified to Fukuda, but the
+    study''s own text names only ''international diagnostic criteria for CFS'' with a numbered reference,
+    and the record (abstract and full text, reference list left out) never names Fukuda, so Fukuda cannot
+    be read from the record.'
+- target: level_reason[4]
+  problem: 'level_reason[4] and links[0] (to symptom:sleep-disturbance): the new clause ''the patients
+    fulfilled international diagnostic criteria for CFS, cited to the 1994 Fukuda definition'' states
+    a case definition for pmid:31957647 that cannot be matched to a sentence in its record; resolving
+    it touches the case definition and a link, so it is not wording only.'
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'pmid:29855991 is recorded as case_definition unverified with no source or quote. Its cached
+      full text (data/cache/europepmc/PMC6274602.html, Methods, Participants) states: ''CFS participants
+      met Centers for Disease Control criteria for chronic fatigue syndrome ( Fukuda et al. 1994 )''.
+      The study''s own text names the 1994 CDC (Fukuda) definition. (Request items 1 and 9.)'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext, and case_definition_quote
+      to the sentence above, copied verbatim from the cached full text.
+    targets:
+    - studies[pmid:29855991].case_definition
+    - studies[pmid:29855991].case_definition_source
+    - studies[pmid:29855991].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: 'pmid:31957647 is recorded as unverified. Its cached full text (data/cache/europepmc/PMC7053003.html,
+      Methods, Participants) states ''Twenty-four participants fulfilling international diagnostic criteria
+      for CFS 1 were recruited after clinician assessment at an academic tertiary referral clinic'', and
+      the reference list in that same cached file gives entry 1 as ''Fukuda K, Straus SE, Hickie I, Sharpe
+      MC, Dobbins JG, Komaroff A. The chronic fatigue syndrome: a comprehensive approach to its definition
+      and study. ... Ann Intern Med. 1994''. The founder ruling in DECISIONS says ''A case definition
+      named only by reference number counts when the reference list resolves it''. The card already labels
+      pmid:23166694 as Fukuda on the same wording (''international diagnostic criteria for CFS [1]'',
+      its reference 1 is Fukuda 1994 in PMC3498107.xml). Items 5 to 8, 15 and 16 say the reference entry
+      is not in the record. They rest on a context that left out the reference list. The cached full text
+      does contain the entry, so those items are not errors. Items 4 and 12 are right.'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext, and case_definition_quote
+      to the Methods sentence quoted above (verbatim from the cached file). Where the card states the
+      definition, say that the study names it through its reference 1 (Fukuda 1994).
+    targets:
+    - studies[pmid:31957647].case_definition
+    - studies[pmid:31957647].case_definition_source
+    - studies[pmid:31957647].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: level_reason[4] ends 'The last two studies' case definitions are not yet verified.' This
+      is wrong for both studies. pmid:29855991 names the CDC (Fukuda 1994) criteria in its cached full
+      text. pmid:31957647 names 'international diagnostic criteria for CFS' and gives reference 1, which
+      its cached reference list resolves to Fukuda 1994. (Request items 3 and 10.)
+    fix: 'Replace the sentence with one stating that both studies used the Fukuda definition: pmid:31957647
+      cites it as its reference 1, and pmid:29855991 names the CDC criteria (Fukuda et al. 1994).'
+    targets:
+    - level_reason[4]
+  - class: decisive
+    severity: must_fix
+    problem: links[0] (to symptom:sleep-disturbance) says of pmid:31957647 'its case definition is not
+      yet verified'. The cached full text names 'international diagnostic criteria for CFS' with reference
+      1, and its reference list resolves that to Fukuda 1994 (see the finding on studies[pmid:31957647].case_definition).
+      The step of the link may need reassessment by the auditor once the label is accepted, because the
+      step rests on the case definition.
+    fix: Replace the clause with one saying that its patients met the Fukuda definition, cited by reference
+      in the study's text. Leave the step to the auditor.
+    targets:
+    - links[0]
+  - class: decisive
+    severity: must_fix
+    problem: 'The finding says ''within patients, more heart rate variability power was associated with
+      less fatigue''. The abstract supports this wording, but the cached full text limits it. The association
+      was with total HRV power only: ''a significant negative association between fatigue ratings and
+      total HRV power (TP) (r = -.70, p = .02) was detected (after removal of one outlier)''. LF, HF and
+      VHF did not correlate with fatigue (r = -.34, -.16, -.35, all non-significant). The Fig. 2 legend
+      gives ''with outlier, r = -.32, p = .32''. A reader would take the card''s sentence as a robust
+      association, but it holds only after one of 14 patients is removed. This is a missing limit that
+      changes how the result reads. (Request items 2 and 11.)'
+    fix: Either remove the within-patient clause, or state that the association was with total HRV power
+      only, held only after removal of one outlier, and was not significant with the outlier included,
+      quoting the full text's numbers.
+    targets:
+    - studies[pmid:29855991].finding
+  - class: decisive
+    severity: must_fix
+    problem: pmid:29855991 has role context, which follows from its unverified label. With the Fukuda
+      label it is a controlled study with a recognised case definition. It found no group difference in
+      heart rate variability ('no group differences in CBFV or HRV were detected', cached abstract; resting
+      supine ECG, cached full text). The card records pmid:9505867, pmid:9430800 and pmid:34970156 as
+      contradicts for the same kind of result. With 14 patients it is below half of the 34 patients in
+      pmid:38251045 and the 68 in pmid:22670061, so it does not bear on the contested mark by itself.
+      (Request item 14.)
+    fix: Set role to contradicts (direction no_difference stays). Leave the contested mark unchanged,
+      because the study is not of comparable sample size.
+    targets:
+    - studies[pmid:29855991].role
+  - class: wording
+    target: level_reason[4]
+    severity: advisory
+    problem: level_reason[4] opens 'Sleep studies are mixed' and then includes 'In 14 women with chronic
+      fatigue syndrome and 14 controls, heart rate variability did not differ.' pmid:29855991 is an arterial
+      spin labelling MRI study. Its heart rate variability came from ECG recorded 'while resting supine'
+      over 15 minutes (three 5-min segments, cached full text). It did not measure sleep. In this paragraph
+      the sentence reads as a sleep result. (Request item 13.)
+    fix: Move the sentence to level_reason[3] ('Other studies did not find lower heart rate variability'),
+      describe it as a resting measurement, and cite pmid:29855991 there.
+    targets:
+    - level_reason[4]
+    - level_reason[3]
+  - class: decisive
+    severity: must_fix
+    problem: The group reads 'Newton JL, Newcastle, UK (with Zalewski P, Bydgoszcz, Poland)'. The cached
+      record for pmid:22670061 has one affiliation, 'UK NIHR Biomedical Research Centre in Ageing, Newcastle,
+      UK.', and no full text is cached. 'Bydgoszcz, Poland' is not in the cached record. The study carries
+      a rung (role supports), so its group bears on the independent-group test of level 3.
+    fix: 'Remove the place name ''Bydgoszcz, Poland'' (for example ''Newton JL, Newcastle, UK (with Zalewski
+      P)''), or mark it TODO: verify until a record states it.'
+    targets:
+    - studies[pmid:22670061].group
+  - class: wording
+    target: studies[pmid:24493300].group
+    severity: must_fix
+    problem: 'The group reads ''Wyller VB, Oslo University Hospital, Norway (NorCAPITAL)''. The cached
+      record names the trial ''Norwegian Study of Chronic Fatigue Syndrome in Adolescents: Pathophysiology
+      and Intervention Trial'' but does not contain the name ''NorCAPITAL'', and no full text is cached.
+      The study''s role is context.'
+    fix: Remove '(NorCAPITAL)'.
+    targets:
+    - studies[pmid:24493300].group
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:29855991
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: CFS participants met Centers for Disease Control criteria for chronic fatigue
+        syndrome (Fukuda et al. 1994)
+      role: contradicts
+      finding: A study of n=14 women with chronic fatigue syndrome and 14 healthy controls found no group
+        difference in heart rate variability, recorded while resting supine. Within patients, total heart
+        rate variability power was associated with less fatigue (r = -.70, p = .02) only after removal
+        of one outlier; with the outlier included the association was not significant (r = -.32, p = .32),
+        and low-, high- and very-high-frequency power did not correlate with fatigue.
+  - op: update_study
+    id: pmid:31957647
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Twenty-four participants fulfilling international diagnostic criteria for
+        CFS1 were recruited after clinician assessment at an academic tertiary referral clinic
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: Other studies did not find lower heart rate variability. A Belgian study of 38 patients meeting
+      the 1988 CDC (Holmes) definition and 38 healthy controls found a consistently higher heart rate
+      but no major changes in RR-interval variability; a US study of 19 patients meeting CDC criteria
+      and 11 controls found similar heart rate variability lying down and on tilt. In 16 patients and
+      10 controls who did exercise tests on two days, resting heart rate variability did not differ, while
+      heart rate fell less in the first minute after maximal exercise in patients. In 14 women meeting
+      the CDC (Fukuda 1994) criteria and 14 healthy controls, heart rate variability recorded while resting
+      supine did not differ.
+    sources:
+    - pmid:9505867
+    - pmid:9430800
+    - pmid:34970156
+    - pmid:29855991
+  - op: replace_paragraph
+    field: level_reason
+    index: 4
+    text: Sleep studies are mixed. Eight patients meeting the 2015 IOM criteria had a higher low-frequency
+      measure in all sleep stages and a lower high-frequency measure in deep sleep than eight tired controls,
+      but a higher high-frequency measure overall and a lower heart rate. In 24 patients and 24 controls
+      the high-frequency measure was lower in deeper sleep but not during wakefulness before sleep. These
+      two groups, in Finland and Australia, thus both found a lower high-frequency measure in deep sleep.
+      The 24-patient study names its patients' definition as international diagnostic criteria for CFS,
+      cited as its reference 1, which its reference list gives as Fukuda 1994.
+    sources:
+    - pmid:29246267
+    - pmid:31957647
+  - op: set_link_text
+    to: symptom:sleep-disturbance
+    text: One study of 24 patients and 24 controls found that lower parasympathetic heart rate variability
+      during deeper sleep was associated with poorer self-reported sleep quality in the same people; its
+      patients met the international diagnostic criteria for CFS, cited in the study as its reference
+      1 (Fukuda 1994). A second study, of 45 patients meeting the Fukuda definition and 25 controls, found
+      that lower daytime resting heart rate variability correlated with poorer self-reported sleep, in
+      an analysis of patients and controls together.
+  - op: update_study
+    id: pmid:22670061
+    set:
+      group: Newton JL, Newcastle, UK (with Zalewski P)
+  - op: update_study
+    id: pmid:24493300
+    set:
+      group: Wyller VB, Oslo University Hospital, Norway
+  checks:
+    passed: true
+    errors: []
+  review:
+    verdict: accept
+    findings:
+    - class: decisive
+      severity: advisory
+      problem: 'The whole-line comments left in the two flagged study blocks now contradict the corrected
+        fields: ''"medically diagnosed CFS" (abstract); PMC7053003 exists but Europe PMC returned no open
+        full text. TODO: verify.'' (pmid:31957647) and ''The abstract names no case definition; PMC6274602
+        exists but Europe PMC returned no open full text. TODO: verify.'' (pmid:29855991). Both studies
+        now carry case_definition Fukuda from the cached full text. The comments are not reader-facing,
+        so this does not block, but they are stale provenance notes. pmid:29855991 also still sits under
+        the ''# --- context ---'' section comment while its role is now contradicts.'
+      fix: Remove the two stale comments with remove_comment in a later round, or let the orchestrator
+        tidy them; the header comment lines that call 31957647 and 29855991 unverified are stale for the
+        same reason.
+      targets:
+      - studies[pmid:31957647]
+      - studies[pmid:29855991]
+    - class: decisive
+      severity: advisory
+      problem: With pmid:31957647 now labelled Fukuda (reference 1 in its cached reference list is Fukuda
+        1994), its within-patient relation between deep-sleep high-frequency HRV and self-reported sleep
+        quality is a measurement of both ends in the same patients in a cohort with a recognised definition,
+        which the rubric places at step 2 (associated); the link stays at proposed, which the correction
+        rightly leaves unchanged (a correction does not raise it). Its 24 patients are also at least half
+        of the 45 in pmid:31906988, and it found no difference in high-frequency HRV during wakefulness
+        before sleep; rung 3 is already marked contested, so no mark lacks its reason. Both are matters
+        for the auditors, not errors in this correction.
+      fix: No change needed in this correction; the auditors may note the possible step 2 for links[0]
+        and the second comparable wake-measure result when they consider the contested reason.
+      targets:
+      - links[0]
+      - contested
+tier:
+  tier: 2
+  why:
+  - 'the request comes from the full-text scan: a correction of the upgrade variant is always tier 2 (DECISIONS
+    2026-11-27)'
+  - studies[pmid:22670061].group differs
+  - studies[pmid:31957647].case_definition differs
+  - studies[pmid:31957647].case_definition_source differs
+  - studies[pmid:31957647].case_definition_quote differs
+  - studies[pmid:29855991].case_definition differs
+  - studies[pmid:29855991].case_definition_source differs
+  - studies[pmid:29855991].case_definition_quote differs
+  - studies[pmid:29855991].role differs
+  - studies[pmid:29855991].group differs
+  - 'level_reason[3]: the sources differ'
+  - 'level_reason[4]: the sources differ'
+  - operations[0] answers finding 0, which is classed decisive, not wording
+  - operations[0] answers finding 4, which is classed decisive, not wording
+  - operations[0] answers finding 5, which is classed decisive, not wording
+  - operations[1] answers finding 1, which is classed decisive, not wording
+  - operations[3] answers finding 2, which is classed decisive, not wording
+  - operations[4] answers finding 3, which is classed decisive, not wording
+  - operations[5] answers finding 7, which is classed decisive, not wording
+audits_run:
+- 2026-11-28-autonomic-imbalance-correction-published-2.yaml
+- 2026-11-28-autonomic-imbalance-correction-published-2-second.yaml
+outcome: published

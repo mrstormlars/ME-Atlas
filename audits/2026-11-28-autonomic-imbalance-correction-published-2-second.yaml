@@ -1,0 +1,58 @@
+card: autonomic-imbalance
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:29855991 changed from unverified to Fukuda, read from its full text."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:29855991
+        quote: "CFS participants met Centers for Disease Control criteria for chronic fatigue syndrome (Fukuda et al. 1994)"
+  - decision_part: "The role of pmid:29855991 changed from context to contradicts, and the new sentence in level_reason[3] that heart rate variability recorded while resting supine did not differ in 14 women and 14 healthy controls."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:29855991
+        quote: "we examined variability in cerebral blood flow (CBFV) and heart rate (HRV) in 28 women: 14 with CFS and 14 healthy controls"
+      - source: pmid:29855991
+        quote: "Subjects were connected to an electrocardiogram (ECG) measuring system while resting supine"
+      - source: pmid:29855991
+        quote: "None differed significantly between HC and CFS participants (all p > .05)."
+  - decision_part: "The rewritten finding of pmid:29855991: the fatigue association with total power holds only after removal of one outlier, is not significant with it, and the other bands did not correlate with fatigue."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:29855991
+        quote: "was detected (after removal of one outlier)"
+      - source: pmid:29855991
+        quote: "with outlier, r = −.32, p = .32"
+      - source: pmid:29855991
+        quote: "Significant correlations were not detected between fatigue and low frequency (LF)"
+  - decision_part: "The contested mark stays as it is: the newly contradicting Fukuda study of 14 patients has fewer than half the patients of each study rung 3 rests on, so it does not add a new contest, and the existing mark on rung 3 is unchanged."
+    rubric: "Comparable quality means all three: the same or a stricter case definition (CCC, ICC and IOM 2015 rank above Fukuda and Holmes 1988, which rank equal and above Oxford), a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29855991
+        quote: "The final sample included 28 participants (14 CFS)."
+      - source: pmid:38251045
+        quote: "in 34 patients diagnosed with ME/CFS, in whom the onset of the disease was not associated with COVID-19, 29 patients meeting the PCC definition and 32 healthy controls"
+      - source: pmid:31906988
+        quote: "45 female patients who met the 1994 CDC/Fukuda definition for CFS/ME and 25 age- and gender-matched healthy controls underwent HRV recording-resting state tests"
+  - decision_part: "Level 3 is unchanged and still rests on an independent replication of lower resting high-frequency heart rate variability."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:22670061
+        quote: "At rest, LF-HRV (sympathetic) was significantly increased in CFS compared to controls, while parasympathetic markers were significantly reduced (P = 0.006)."
+      - source: pmid:38251045
+        quote: "The total power and power of low-frequency and high-frequency of RR interval variability at rest as well as baroreflex sensitivity were significantly lower both in PCC and ME/CFS patients compared to healthy controls."
+  - decision_part: "The case definition of pmid:31957647 changed from unverified to Fukuda, read from its full text and its reference 1, with the matching sentences in level_reason[4] and in the link to symptom:sleep-disturbance (support stays proposed)."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:31957647
+        quote: "Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited after clinician assessment at an academic tertiary referral clinic"
+      - source: pmid:31957647
+        quote: "Fukuda K, Straus SE, Hickie I, Sharpe MC, Dobbins JG, Komaroff A. The chronic fatigue syndrome: a comprehensive approach to its definition and study. International Chronic Fatigue Syndrome Study Group."
+  - decision_part: "The group labels of pmid:22670061 and pmid:24493300 lose details (a city and country, a study acronym) that the given records do not show for those labels; this touches no level, badge, mark, layer or link."
+    rubric: "Quality factors applied at every rung: case definition, sample size, controls, preregistration, conflicting results."
+    evidence:
+      - source: pmid:22670061
+        quote: "Impaired blood pressure variability in chronic fatigue syndrome--a potential biomarker."
+      - source: pmid:24493300
+        quote: "Participants were enrolled from a single referral center recruiting nationwide in Norway."
+reasons_summary: "The correction reads two case definitions as Fukuda from the studies' full texts, moves a 14-patient Fukuda study with no HRV difference to contradicts, and corrects its finding; level 3, the contested mark, badges, layer and links stay supported."
+would_change: "A source showing that the 14-patient or 24-patient study used a different case definition, or a contradicting study of comparable quality (same or stricter definition, controls, at least half the patients) against the Spanish or Russian replication, would change this. pmid:22670061 and pmid:24493300 have no cached full text; nothing in this correction depends on a statement beyond their abstracts, and the clonidine study's case definition stays unverified."

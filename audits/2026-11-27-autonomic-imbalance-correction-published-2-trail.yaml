@@ -1,0 +1,203 @@
+card: autonomic-imbalance
+card_sha256: 03f3cf0099359b32e69e8b0c4cd0e70fd865a2bf003c70cdf19dd2796b6b20d7
+origin: the full-text scan 2026-11-27 of 2026-11-27 (docs/plan-fulltext-recheck.md); second attempt, items
+  added verbatim from audits/2026-11-27-autonomic-imbalance-correction-published.yaml (objecting decision
+  parts 1-2)
+request:
+- target: studies[pmid:29855991].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    states the patients met the CDC (Fukuda 1994) criteria; the card has the case definition as unverified.
+    Quote from the full text: CFS participants met Centers for Disease Control criteria for chronic fatigue
+    syndrome (Fukuda et al. 1994)'
+- target: studies[pmid:29855991].finding
+  problem: 'The full-text scan found that the full text states something the card lacks: The within-patient
+    association is with total HRV power only and holds after removal of one outlier; the card does not
+    name the measure or the outlier removal. Quote from the full text: Among CFS participants, a significant
+    negative association between fatigue ratings and total HRV power (TP) (r = −.70, p = .02) was detected
+    (after removal of one outlier)'
+- target: level_reason[4]
+  problem: 'The full-text scan found that the full text states something the card lacks: The level reason
+    says this study''s case definition is not yet verified; the full text names the CDC (Fukuda 1994)
+    criteria. Quote from the full text: CFS participants met Centers for Disease Control criteria for
+    chronic fatigue syndrome (Fukuda et al. 1994)'
+- target: studies[pmid:31957647].case_definition
+  problem: 'The full-text scan found that the full text states something the card lacks: The full text
+    says patients met unnamed international diagnostic criteria for CFS after clinician assessment at
+    a tertiary clinic; the card records none of this and no named definition appears. Quote from the full
+    text: Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited
+    after clinician assessment at an academic tertiary referral clinic'
+- target: studies[pmid:31957647].case_definition
+  problem: 'studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4]
+    and the clause in links[0] that say its patients met the Fukuda definition according to the full text:
+    the full text names only ''international diagnostic criteria for CFS'' with a reference whose entry
+    is not in the record, so Fukuda is an inference, not a definition the study''s text states.'
+- target: level_reason[4]
+  problem: 'studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4]
+    and the clause in links[0] that say its patients met the Fukuda definition according to the full text:
+    the full text names only ''international diagnostic criteria for CFS'' with a reference whose entry
+    is not in the record, so Fukuda is an inference, not a definition the study''s text states.'
+- target: links[0]
+  problem: 'studies[pmid:31957647].case_definition set to Fukuda, and the sentence in level_reason[4]
+    and the clause in links[0] that say its patients met the Fukuda definition according to the full text:
+    the full text names only ''international diagnostic criteria for CFS'' with a reference whose entry
+    is not in the record, so Fukuda is an inference, not a definition the study''s text states.'
+- target: studies[pmid:31957647].case_definition
+  problem: The case definition of pmid:31957647 cannot be read as a named definition from the record,
+    so it stays not yet checked (unverified) on the card.
+review:
+  verdict: reject
+  findings:
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 1 is an error. pmid:29855991 is recorded with case_definition unverified, but
+      its cached full text (data/cache/europepmc/PMC6274602.html, Methods, Participants) states: ''CFS
+      participants met Centers for Disease Control criteria for chronic fatigue syndrome ( Fukuda et al.
+      1994 )''. The study''s own text names the 1994 CDC (Fukuda) definition.'
+    fix: Set case_definition to Fukuda, case_definition_source to fulltext, and case_definition_quote
+      to the verbatim sentence from the cached full text (copy its spacing exactly as stored, e.g. 'CFS
+      participants met Centers for Disease Control criteria for chronic fatigue syndrome (Fukuda et al.
+      1994)...'). The role stays for the auditor to decide (see the advisory finding on its role).
+    targets:
+    - studies[pmid:29855991].case_definition
+    - studies[pmid:29855991].case_definition_source
+    - studies[pmid:29855991].case_definition_quote
+  - class: decisive
+    severity: must_fix
+    problem: Request item 3 is an error. level_reason[4] ends 'The last two studies' case definitions
+      are not yet verified.' The last study, pmid:29855991, names the Fukuda 1994 criteria in its cached
+      full text (see the finding above), and pmid:31957647 names its criteria by reference 1, which resolves
+      to Fukuda 1994 (see the finding below). The sentence is wrong for both.
+    fix: Replace the sentence with one stating that both studies' patients met the Fukuda definition according
+      to their full texts (and add the 'does not require PEM' flag that Fukuda carries), or, if the auditor
+      keeps pmid:31957647 unverified, state that only that study's case definition is not yet verified.
+    targets:
+    - level_reason[4]
+  - class: decisive
+    severity: must_fix
+    problem: Request item 2 is an error of a missing limit. The finding says 'within patients, more heart
+      rate variability power was associated with less fatigue'. The cached full text says the association
+      was with total HRV power only ('a significant negative association between fatigue ratings and total
+      HRV power (TP) (r = -.70, p = .02) was detected (after removal of one outlier)'), that LF, HF and
+      VHF did not correlate with fatigue, and (Fig. 2 legend) that with the outlier included r = -.32,
+      p = .32. A reader would read the card's sentence as a robust association; it holds only after removing
+      one of 14 patients.
+    fix: Name the measure (total heart rate variability power) and state that the association was significant
+      only after one outlier was removed and not with it included, as the full text reports.
+    targets:
+    - studies[pmid:29855991].finding
+  - class: decisive
+    severity: must_fix
+    problem: 'Request item 4 is an error; items 5 to 8 rest on a premise the cached record does not bear
+      out. The cached full text (data/cache/europepmc/PMC7053003.html, Methods, Participants) states ''Twenty-four
+      participants fulfilling international diagnostic criteria for CFS[1] were recruited after clinician
+      assessment at an academic tertiary referral clinic'', and its reference list in the same file has
+      entry 1 as ''Fukuda K, Straus SE, Hickie I, Sharpe MC, Dobbins JG, Komaroff A. The chronic fatigue
+      syndrome: a comprehensive approach to its definition and study. International Chronic Fatigue Syndrome
+      Study Group. Ann Intern Med. 1994''. Items 5 to 7 say the reference entry is not in the record;
+      it is in the cached full text. DECISIONS (founder ruling) says ''A case definition named only by
+      reference number counts when the reference list resolves it'', and the card already labels pmid:23166694
+      (same research group, same wording ''international diagnostic criteria for CFS [1]'', reference
+      1 Fukuda 1994) as Fukuda. Keeping pmid:31957647 as unverified is inconsistent with that ruling and
+      with the card''s own treatment of pmid:23166694. links[0] also says ''its case definition is not
+      yet verified'' for this study.'
+    fix: Set case_definition to Fukuda with case_definition_source fulltext and the verbatim Participants
+      sentence as the quote, noting in the card that the definition is named by reference 1 (Fukuda 1994);
+      then change the sentence in level_reason[4] and the clause in links[0] that call its case definition
+      not yet verified. Whether the reference-resolved reading is accepted is the auditor's decision;
+      the record supports it under the ruling.
+    targets:
+    - studies[pmid:31957647].case_definition
+    - studies[pmid:31957647].case_definition_source
+    - studies[pmid:31957647].case_definition_quote
+    - level_reason[4]
+    - links[0]
+  - class: wording
+    target: level_reason[4]
+    severity: advisory
+    problem: level_reason[4] opens 'Sleep studies are mixed' and then includes 'In 14 women with chronic
+      fatigue syndrome and 14 controls, heart rate variability did not differ.' pmid:29855991 is an arterial
+      spin labelling MRI study with heart rate variability from three 5-minute ECG segments (cached abstract
+      and full text); it did not measure heart rate variability during sleep. Placed in this paragraph
+      the sentence reads as a sleep result.
+    fix: Move the sentence to the paragraph on studies that did not find lower heart rate variability
+      (level_reason[3]), or say it was a resting measurement in an MRI study.
+    targets:
+    - level_reason[4]
+  - class: decisive
+    severity: advisory
+    problem: Once pmid:29855991 carries the Fukuda label, it is a controlled study in a recognised case
+      definition that found no group difference in heart rate variability ('no group differences in CBFV
+      or HRV were detected', cached abstract), like pmid:9505867, pmid:9430800 and pmid:34970156, which
+      the card records as contradicts. Its role context was forced by the unverified label. With 14 patients
+      it is below half of the 34 patients in pmid:38251045, so it does not by itself bear on the contested
+      mark.
+    fix: Let the auditor decide whether its role becomes contradicts; no change to the contested mark
+      follows from its sample size.
+    targets:
+    - studies[pmid:29855991].role
+rounds:
+- round: 1
+  operations:
+  - op: update_study
+    id: pmid:29855991
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: CFS participants met Centers for Disease Control criteria for chronic fatigue
+        syndrome (Fukuda et al. 1994)
+      role: contradicts
+      finding: A study of n=14 women with chronic fatigue syndrome and 14 healthy controls found no group
+        difference in heart rate variability; within patients, more total heart rate variability power
+        was associated with less fatigue only after one outlier was removed, and not with that patient
+        included.
+  - op: update_study
+    id: pmid:31957647
+    set:
+      case_definition: Fukuda
+      case_definition_source: fulltext
+      case_definition_quote: Twenty-four participants fulfilling international diagnostic criteria for
+        CFS
+  - op: replace_paragraph
+    field: level_reason
+    index: 3
+    text: Other studies did not find lower heart rate variability. A Belgian study of 38 patients meeting
+      the 1988 CDC (Holmes) definition and 38 healthy controls found a consistently higher heart rate
+      but no major changes in RR-interval variability; a US study of 19 patients meeting CDC criteria
+      and 11 controls found similar heart rate variability lying down and on tilt. In 16 patients and
+      10 controls who did exercise tests on two days, resting heart rate variability did not differ, while
+      heart rate fell less in the first minute after maximal exercise in patients. In an MRI study of
+      14 women meeting the Fukuda definition and 14 healthy controls, resting heart rate variability did
+      not differ between the groups.
+    sources:
+    - pmid:9505867
+    - pmid:9430800
+    - pmid:34970156
+    - pmid:29855991
+  - op: replace_paragraph
+    field: level_reason
+    index: 4
+    text: Sleep studies are mixed. Eight patients meeting the 2015 IOM criteria had a higher low-frequency
+      measure in all sleep stages and a lower high-frequency measure in deep sleep than eight tired controls,
+      but a higher high-frequency measure overall and a lower heart rate. In 24 patients and 24 controls
+      the high-frequency measure was lower in deeper sleep but not during wakefulness before sleep; that
+      study names its patients' criteria only by reference, to the 1994 Fukuda definition. These two groups,
+      in Finland and Australia, thus both found a lower high-frequency measure in deep sleep.
+    sources:
+    - pmid:29246267
+    - pmid:31957647
+  - op: set_link_text
+    to: symptom:sleep-disturbance
+    text: One study of 24 patients and 24 controls found that lower parasympathetic heart rate variability
+      during deeper sleep was associated with poorer self-reported sleep quality in the same people; it
+      names its patients' criteria only by reference, to the 1994 Fukuda definition. A second study, of
+      45 patients meeting the Fukuda definition and 25 controls, found that lower daytime resting heart
+      rate variability correlated with poorer self-reported sleep, in an analysis of patients and controls
+      together.
+  refused:
+  - - operations[2] changes level_reason[3], which no finding of the review of the published card names
+  checks: null
+  review: null
+tier: null
+audits_run: []
+outcome: 'held back: the operations file of round 1 was refused at step 3 (try 1 of 3): operations[2]
+  changes level_reason[3], which no finding of the review of the published card names'

@@ -1,0 +1,46 @@
+card: autonomic-imbalance
+decision: accept
+parts:
+  - decision_part: "The case definition of pmid:31957647 changed from unverified to Fukuda, read from the full text and its reference 1, and the sleep paragraph and the sleep link reworded to say so."
+    rubric: "A study is recorded with the definition its own text states."
+    evidence:
+      - source: pmid:31957647
+        quote: "Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited after clinician assessment at an academic tertiary referral clinic"
+      - source: pmid:31957647
+        quote: "Fukuda K, Straus SE, Hickie I, Sharpe MC, Dobbins JG, Komaroff A. The chronic fatigue syndrome: a comprehensive approach to its definition and study."
+  - decision_part: "The sleep link to symptom:sleep-disturbance stays at step proposed; its reworded text matches the record of pmid:31957647."
+    rubric: "A peer-reviewed source (a review counts) that states the link."
+    evidence:
+      - source: pmid:31957647
+        quote: "Poorer self-reported wellbeing and sleep quality was associated with reduced parasympathetic signaling during deeper sleep, but not during wake before sleep, rapid eye movement sleep, or with the proportion of time spent in SWS."
+  - decision_part: "The case definition of pmid:29855991 changed from unverified to Fukuda, read from the full text."
+    rubric: "Accepted, flagged on the card as \"does not require PEM\"."
+    evidence:
+      - source: pmid:29855991
+        quote: "CFS participants met Centers for Disease Control criteria for chronic fatigue syndrome (Fukuda et al. 1994)"
+  - decision_part: "The role of pmid:29855991 changed from context to contradicts, its sentence moved to the paragraph of studies that did not find lower heart rate variability, and its finding reworded with the outlier numbers."
+    rubric: "An independent group has reproduced the finding in a separate cohort."
+    evidence:
+      - source: pmid:29855991
+        quote: "we examined variability in cerebral blood flow (CBFV) and heart rate (HRV) in 28 women: 14 with CFS and 14 healthy controls"
+      - source: pmid:29855991
+        quote: "Subjects were connected to an electrocardiogram (ECG) measuring system while resting supine"
+      - source: pmid:29855991
+        quote: "None differed significantly between HC and CFS participants (all p > .05)."
+      - source: pmid:29855991
+        quote: "after outlier removal, denoted by *; r = −.70, p = .02; with outlier, r = −.32, p = .32"
+      - source: pmid:29855991
+        quote: "Significant correlations were not detected between fatigue and low frequency (LF) (r = −.34, p = .28), high frequency (HF) (r = −.16, p = .62), or very high frequency (VHF) (r = −.35, p = .26)."
+  - decision_part: "Level 3 and the contested mark on rung 3 stay as they are: the newly contradicting study, with 14 patients, has less than half the patients of each study level 3 rests on, so it is not of comparable quality and does not change the mark."
+    rubric: "a control group, and at least half the sample size of the study it contradicts."
+    evidence:
+      - source: pmid:29855991
+        quote: "The final sample included 28 participants (14 CFS)."
+      - source: pmid:22670061
+        quote: "CFS (Fukuda n = 68) and matched controls (n = 68)"
+      - source: pmid:31906988
+        quote: "45 female patients who met the 1994 CDC/Fukuda definition for CFS/ME and 25 age- and gender-matched healthy controls"
+      - source: pmid:38251045
+        quote: "34 patients with ME/CFS that was not related to COVID-19"
+reasons_summary: "The full texts give Fukuda for the 24- and 14-patient studies, the 14-patient study did not find a difference and is rightly a small contradicting study, and level 3, the contested mark and the sleep link are still supported."
+would_change: "A record showing that the 14- or 24-patient study used a different case definition than the one its text states, or a contradicting study of comparable quality (same or stricter definition, controls, at least half the patients of a study level 3 rests on), would change this decision. The removal of the place names from two group labels removes text that the records shown here do not state; nothing in it was taken on trust."

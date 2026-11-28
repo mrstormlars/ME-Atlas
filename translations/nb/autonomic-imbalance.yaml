@@ -54,24 +54,26 @@ items:
       fra 1988 (Holmes) og 38 friske kontroller fant en jevnt over høyere hjertefrekvens, men ingen store endringer i RR-intervallvariabilitet.
       En amerikansk studie av 19 pasienter som oppfylte CDC-kriteriene og 11 kontroller fant lignende hjertefrekvensvariabilitet
       liggende og ved tilt. Hos 16 pasienter og 10 kontroller som gjorde anstrengelsestester på to dager, var hjertefrekvensvariabiliteten
-      i hvile lik, mens hjertefrekvensen falt mindre i første minutt etter maksimal anstrengelse hos pasientene.
+      i hvile lik, mens hjertefrekvensen falt mindre i første minutt etter maksimal anstrengelse hos pasientene. Hos 14 kvinner
+      som oppfylte CDC-kriteriene (Fukuda 1994) og 14 friske kontroller var hjertefrekvensvariabiliteten lik når den ble registrert
+      i hvile liggende på ryggen.
     sources:
     - pmid:9505867
     - pmid:9430800
     - pmid:34970156
-    source_hash: 29b5ab17b0d03adde94e14f30eae9eb31ba294cad9245838bc219215b1d8ba29
+    - pmid:29855991
+    source_hash: 4d7dc1f9b284aafb25645c938924c9901e9afbfbd966b464313c23535e0dffbc
   level_reason[4]:
     text: Søvnstudiene gir blandede resultater. Åtte pasienter som oppfylte IOM 2015-kriteriene hadde et høyere lavfrekvensmål
       i alle søvnstadier og et lavere høyfrekvensmål i dyp søvn enn åtte trette kontroller, men et høyere høyfrekvensmål samlet
       sett og en lavere hjertefrekvens. Hos 24 pasienter og 24 kontroller var høyfrekvensmålet lavere i dypere søvn, men ikke
       i våkenhet før søvn. Disse to gruppene, i Finland og Australia, fant altså begge et lavere høyfrekvensmål i dyp søvn.
-      Hos 14 kvinner med kronisk utmattelsessyndrom og 14 kontroller var hjertefrekvensvariabiliteten lik. Diagnosekriteriene
-      i de to siste studiene er ikke kontrollert ennå.
+      Studien med 24 pasienter oppgir at pasientene oppfylte internasjonale diagnosekriterier for CFS, sitert som referanse
+      1 i studien, som referanselisten oppgir som Fukuda 1994.
     sources:
     - pmid:29246267
     - pmid:31957647
-    - pmid:29855991
-    source_hash: cb1033a81b7b03c67d0ecb36efc2290037726b6572e052c2a201b6292223012f
+    source_hash: 9568996084fff7e046ef4c73eb4c333cd85f32cf85f9491580353f51876735ad
   level_reason[5]:
     text: Ingen kontrollert studie på dette kortet har vist at en endring i autonom balanse endrer sykdommen. I en randomisert
       studie av 120 ungdommer, som også hadde høyere noradrenalin i plasma enn 68 friske ungdommer, senket lavdose klonidin
@@ -122,13 +124,14 @@ items:
     source_hash: edf253f0ee2c98a79bcda3b27967d4ad0ac67a32b1f35cf75a4c722372455970
   links[0]:
     text: En studie av 24 pasienter og 24 kontroller fant at lavere parasympatisk hjertefrekvensvariabilitet i dypere søvn
-      hang sammen med dårligere selvrapportert søvnkvalitet hos de samme personene. Diagnosekriteriene er ikke kontrollert
-      ennå. En annen studie, av 45 pasienter som oppfylte Fukuda-kriteriene og 25 kontroller, fant at lavere hjertefrekvensvariabilitet
-      i hvile på dagtid korrelerte med dårligere selvrapportert søvn, i en analyse av pasienter og kontroller samlet.
+      hang sammen med dårligere selvrapportert søvnkvalitet hos de samme personene. Pasientene oppfylte de internasjonale
+      diagnosekriteriene for CFS, sitert i studien som referanse 1 (Fukuda 1994). En annen studie, av 45 pasienter som oppfylte
+      Fukuda-kriteriene og 25 kontroller, fant at lavere hjertefrekvensvariabilitet i hvile på dagtid korrelerte med dårligere
+      selvrapportert søvn, i en analyse av pasienter og kontroller samlet.
     sources:
     - pmid:31957647
     - pmid:31906988
-    source_hash: 197ce014b5a6eff645daca23c53baef3ac1248cee2e3c619f0a0ed46a4c7b55d
+    source_hash: e22a762976e4af06a9bd5a869242a2ac767e05543e6e7e2719688ff930757848
   links[1]:
     text: En studie av 30 pasienter og 40 kontroller fant at hjertefrekvensvariabiliteten i hvile forutsa hvor raskt folk
       løste kognitive oppgaver. Pasientene var langsommere, men ikke mindre nøyaktige. Analysen omfattet pasienter og kontroller
@@ -198,9 +201,12 @@ items:
       og velvære.
     source_hash: 230bbe25bb9f4b578b6129b85e5df954765e2a239d191d1e775e5c7f96da2ac2
   studies[pmid:29855991].finding:
-    text: En studie av n=14 kvinner med kronisk utmattelsessyndrom og 14 friske kontroller fant ingen gruppeforskjell i hjertefrekvensvariabilitet.
-      Hos pasientene hang mer effekt i hjertefrekvensvariabiliteten sammen med mindre utmattelse.
-    source_hash: 568d71771cd818bc9de30b786cd20d63306142c441ad7fb075683d3ab199746c
+    text: En studie med n=14 kvinner med kronisk utmattelsessyndrom og 14 friske kontroller fant ingen gruppeforskjell i hjertefrekvensvariabilitet,
+      registrert i hvile liggende på ryggen. Hos pasientene var total effekt i hjertefrekvensvariabiliteten forbundet med
+      mindre utmattelse (r = -0,70, p = 0,02) bare etter at én uteligger var fjernet. Når uteliggeren var med, var sammenhengen
+      ikke signifikant (r = -0,32, p = 0,32). Effekt i lavfrekvens-, høyfrekvens- og svært høyfrekvensområdet korrelerte ikke
+      med utmattelse.
+    source_hash: dfc7348023d3a56a4a0199c04918f105ef9f4519d90f757acc20702b6c6afdb0
   studies[pmid:34073494].finding:
     text: En studie av n=101 pasienter, 82 med og 19 uten PEM, fant at en høyere sympatovagal balanse i hvile hang sammen
       med høyere risiko for PEM, men ingen forskjell mellom gruppene var signifikant etter korreksjon for multiple tester.
