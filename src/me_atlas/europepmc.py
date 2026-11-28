@@ -777,6 +777,39 @@ def article_text(xml: bytes | str) -> str:
     return " ".join("".join(out).split())
 
 
+_CITATION_TAGS = ("mixed-citation", "element-citation", "citation")
+
+
+def article_references(xml: bytes | str) -> list[str]:
+    """The reference entries of a JATS article, one string per ``<ref>`` in a ``<ref-list>``, in document order.
+
+    Each entry is the ``<label>`` text (if any), a space and the whitespace-collapsed text of its citation
+    (``mixed-citation``, ``element-citation`` or ``citation``; else the whole ``<ref>`` without its label).
+    An article with no reference list gives an empty list.
+    """
+    root = _parse_article(xml)
+    entries: list[str] = []
+    for ref_list in root.iter("ref-list"):
+        for ref in ref_list.iter("ref"):
+            label = _text(ref.find("label"))
+            citation = next((c for tag in _CITATION_TAGS if (c := ref.find(f".//{tag}")) is not None), None)
+            body = _text(citation) if citation is not None else _ref_text_without_label(ref)
+            entries.append(f"{label} {body}".strip() if label else body)
+    return entries
+
+
+def _ref_text_without_label(ref: ET.Element) -> str:
+    out: list[str] = []
+    if ref.text:
+        out.append(ref.text)
+    for child in ref:
+        if child.tag != "label":
+            out.append("".join(child.itertext()))
+        if child.tail:
+            out.append(child.tail)
+    return " ".join("".join(out).split())
+
+
 _METHODS_TITLE_RE = re.compile(
     r"method|^\W*(?:\d+[.\s]*)?(?:study\s+)?(?:participants|subjects|patients|population|design)\b", re.IGNORECASE
 )
@@ -1045,6 +1078,51 @@ def pmc_page_text(content: bytes | str) -> str:
     ids = _page_pmids(root)
     body, abstracts = _html_article_parts(root, ids[0] if ids else "")
     return " ".join(" ".join(_html_text(n) for n in [*abstracts, body]).split())
+
+
+def _html_plain(node: _Node, *, skip_links: bool = False) -> str:
+    """The whitespace-collapsed text of an HTML node, optionally without the text of its ``<a>`` links."""
+    out: list[str] = []
+
+    def walk(n: _Node) -> None:
+        for child in n.children:
+            if isinstance(child, str):
+                out.append(child)
+            elif not (skip_links and child.tag == "a"):
+                walk(child)
+
+    walk(node)
+    return " ".join("".join(out).split())
+
+
+def pmc_page_references(content: bytes | str) -> list[str]:
+    """The reference entries of a cached PMC article page, one per ``<li>`` inside an element whose classes
+    include ``ref-list``, in document order: the text of its ``span.label`` (if any), a space and the text of its
+    ``<cite>``; an ``<li>`` with no ``<cite>`` gives its own text without the text of its ``<a>`` links. A page with
+    no reference list gives an empty list."""
+    root = _parse_html(content)
+    entries: list[str] = []
+    seen: set[int] = set()
+    for holder in root.iter():
+        if "ref-list" not in holder.classes:
+            continue
+        for li in holder.iter():
+            if li.tag != "li" or id(li) in seen:
+                continue
+            seen.add(id(li))
+            label_node = next((n for n in li.iter() if n.tag == "span" and "label" in n.classes), None)
+            cite = next((n for n in li.iter() if n.tag == "cite"), None)
+            label = _html_plain(label_node) if label_node is not None else ""
+            if cite is not None:
+                body = _html_plain(cite)
+            else:
+                body = _html_plain(li, skip_links=True)
+                if label and body.startswith(label):
+                    body = body[len(label) :].strip()
+            entry = f"{label} {body}".strip() if label else body
+            if entry:
+                entries.append(entry)
+    return entries
 
 
 def _heading(sec: _Node) -> str:

@@ -2516,6 +2516,7 @@ FULLTEXT_NOT_CACHED_NOTE = (
 
 
 PAGE_SOURCE_NOTE = "Full text from the cached PMC article page"
+REFERENCE_LIST_MARKER = "Reference list:"  # in the audit context: the reference entries follow the full text
 
 
 def _cached_lookup_pmcid(cfg: Config, pmid: str) -> str | None:
@@ -2553,6 +2554,27 @@ def _cached_page_text(cfg: Config, pmcid: str | None) -> str | None:
         return europepmc.pmc_page_text(page.read_bytes()) if page.is_file() else None
     except (europepmc.EuropePmcError, OSError, ValueError):
         return None
+
+
+def _cached_page_references(cfg: Config, pmcid: str | None) -> list[str]:
+    """The reference entries of the cached PMC page of ``pmcid``; empty when none or unreadable."""
+    if not pmcid:
+        return []
+    try:
+        page = europepmc.EuropePmcCache(cfg.cache_dir).page_path(pmcid)
+        return europepmc.pmc_page_references(page.read_bytes()) if page.is_file() else []
+    except (europepmc.EuropePmcError, OSError, ValueError):
+        return []
+
+
+def _reference_list_lines(entries: list[str]) -> list[str]:
+    """The reference-list part of a carrier's record: the marker, the entry count, one wrapped entry per line."""
+    if not entries:
+        return ["", REFERENCE_LIST_MARKER, "(the cached file has no reference list)"]
+    lines = ["", REFERENCE_LIST_MARKER, f"({len(entries)} entries)"]
+    for entry in entries:
+        lines += _wrapped(entry)
+    return lines
 
 
 def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carrier: bool) -> list[str]:
@@ -2601,18 +2623,20 @@ def _audit_record_lines(cfg: Config, study_id: str, loader: FullTextLoader, carr
     if not carrier:
         lines.append(ABSTRACT_ONLY_NOTE)
     elif (full is None or full.xml is None) and (page := _cached_page_text(cfg, page_pmcid)) is not None:
-        lines.append(f"Source: {PAGE_SOURCE_NOTE} ({page_pmcid}). The reference list is left out.")
+        lines.append(f"Source: {PAGE_SOURCE_NOTE} ({page_pmcid}). The reference list follows the text.")
         lines.append(f"Not truncated ({len(page)} characters).")
         lines += ["", *_wrapped(page)]
+        lines += _reference_list_lines(_cached_page_references(cfg, page_pmcid))
     elif full is None or full.xml is None:
         lines.append(FULLTEXT_NOT_CACHED_NOTE)
         if full is not None:
             lines.append(f"(Why: {full.note}.)")
     else:
         text = europepmc.article_text(full.xml)
-        lines.append(f"Source: {full.note}. The reference list is left out.")
+        lines.append(f"Source: {full.note}. The reference list follows the text.")
         lines.append(f"Not truncated ({len(text)} characters).")
         lines += ["", *_wrapped(text)]
+        lines += _reference_list_lines(europepmc.article_references(full.xml))
     lines.append("")
     return lines
 
@@ -2837,6 +2861,8 @@ def _record_quote_text(reader: citations.CacheReader, study_id: str, *, abstract
         full = None if abstract_only else reader.preprint_fulltext(pre)
     if isinstance(full, str):
         pieces.append(full)
+        if study_id.startswith("pmid:"):
+            pieces += reader.references(record.pmid)  # the audit context gives a carrier's reference list too
     return "\n".join(pieces)
 
 

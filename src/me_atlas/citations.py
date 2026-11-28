@@ -58,8 +58,10 @@ from me_atlas.europepmc import (
     EuropePmcCache,
     EuropePmcError,
     PreprintRecord,
+    article_references,
     article_text,
     is_placeholder_fulltext,
+    pmc_page_references,
     pmc_page_text,
     read_cached_lookup,
     read_cached_preprints,
@@ -256,6 +258,29 @@ class CacheReader:
         if pmid not in self._fulltexts:
             self._fulltexts[pmid] = self._read_fulltext(pmid)
         return self._fulltexts[pmid]
+
+    def references(self, pmid: str) -> list[str]:
+        """The reference entries of the cached full text (the same file ``fulltext`` reads: XML first, then the PMC
+        page), or an empty list when there is none or it cannot be read."""
+        try:
+            lookup = read_cached_lookup(self.epmc, pmid)
+            record = self.record(pmid)
+            pmcid = lookup.pmcid if lookup else None
+            if pmcid is None and isinstance(record, PubMedRecord) and record.pmcid:
+                pmcid = record.pmcid
+            if pmcid is None:
+                return []
+            path = self.epmc.fulltext_path(pmcid)
+            if path.is_file():
+                content = path.read_bytes()
+                if not is_placeholder_fulltext(content):
+                    return article_references(content)
+            page = self.epmc.page_path(pmcid)
+            if page.is_file():
+                return pmc_page_references(page.read_bytes())
+        except (EuropePmcError, OSError, ValueError):
+            pass
+        return []
 
     def _read_fulltext(self, pmid: str) -> str | tuple[str]:
         hint = f"`{fulltext_fetch_hint(pmid)}`"
