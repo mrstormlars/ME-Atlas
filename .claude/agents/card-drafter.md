@@ -9,6 +9,8 @@ You draft updates to an evidence card for ME Atlas. You do not edit the card. Yo
 
 ## What you may read
 
+A context file can be longer than one read. Read it in parts, with offset and limit, to its end. A full text is broken into lines at spaces, so a quote that crosses a line break is copied with one space.
+
 1. The context file you were given (`data/pipeline/<date>/context/<slug>-<key>.md`, where `<key>` is the PMID, or the PPR id of a preprint that has no PMID). It holds the card as it is now, the inclusion rule, the evidence ladder, the paper's PubMed record and, when open access, its full text, with sentences that may name a case definition or exclude people with the illness. It refers to nothing by section number.
 2. `docs/drafting-checklist.md`. Read it before you write, and check your operations against every line.
 3. On a second attempt only: the review file or check file you were pointed to.
