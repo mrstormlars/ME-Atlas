@@ -6,6 +6,8 @@ touches the network, an AI or git.
 
 from __future__ import annotations
 
+import datetime as dt
+import hashlib
 import json
 from pathlib import Path
 
@@ -442,13 +444,16 @@ def test_apply_refuses_an_operation_whose_target_no_finding_names(corr: Corr, ca
     assert f"changes studies[{CTX}], which no finding" in capsys.readouterr().err
     assert corr.apply([{"op": "set_link_text", "to": SECOND, "text": "Reworded."}]) == 1  # links[1]
     assert "changes links[1], which no finding" in capsys.readouterr().err
-    assert (
-        corr.apply([{"op": "replace_paragraph", "field": "level_reason", "index": 0, "text": "T.", "sources": [STUDY]}])
-        == 1
-    )
+    assert written(corr, "checks", "applied") == []
+    assert corr.apply([OPS_TIER1[1]]) == 0  # links[0] is named; the third try (two were refused)
+
+
+def test_apply_refuses_a_paragraph_no_finding_names(corr: Corr, capsys):
+    corr.planned([LINK_FINDING])
+    para = {"op": "replace_paragraph", "field": "level_reason", "index": 0, "text": "T.", "sources": [STUDY]}
+    assert corr.apply([para]) == 1
     assert "level_reason[0], which no finding" in capsys.readouterr().err
     assert written(corr, "checks", "applied") == []
-    assert corr.apply([OPS_TIER1[1]]) == 0  # links[0] is named
 
 
 def test_apply_refuses_the_limits_of_a_correction(corr: Corr, capsys):
@@ -1136,3 +1141,208 @@ def test_the_draft_path_still_refuses_a_wording_finding_on_a_group(tmp_path: Pat
             card_review=True,
             pre=True,
         )
+
+
+# --- the refusal trail: a refused try is kept, counts as a try, and a round that was only refused is held back ----
+
+UNNAMED = [{"op": "set_link_text", "to": SECOND, "text": "Reworded."}]  # links[1]: the link finding names links[0]
+BROKEN = [{"op": "update_study", "id": STUDY, "set": {"case_definition": "CCC", "case_definition_source": None}}]
+
+
+def refused_files(corr: Corr) -> list[str]:
+    folder = corr.dir / "refused"
+    return sorted(p.name for p in folder.iterdir()) if folder.is_dir() else []
+
+
+def refuse(corr: Corr, n: int = 1) -> int:
+    return corr.apply(UNNAMED, n)
+
+
+def test_a_refused_try_writes_a_record_and_a_copy_and_no_checks(corr: Corr, capsys):
+    corr.planned([LINK_FINDING])
+    path = corr.ops(UNNAMED)
+    assert corr.run("correct-apply", "--round", "1") == 1
+    assert "changes links[1], which no finding" in capsys.readouterr().err
+    assert refused_files(corr) == [f"{SLUG}-r1-1.json"]
+    record = json.loads((corr.dir / "refused" / f"{SLUG}-r1-1.json").read_text(encoding="utf-8"))
+    assert set(record) == {"round", "try", "ops_file", "ops_sha256", "operations", "problems", "date"}
+    assert record["round"] == 1 and record["try"] == 1 and record["operations"] == UNNAMED
+    assert record["ops_sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+    assert len(record["problems"]) == 1 and "links[1]" in record["problems"][0]
+    assert dt.date.fromisoformat(record["date"])
+    assert (corr.dir / "ops" / f"{SLUG}-r1-refused1.json").read_bytes() == path.read_bytes()
+    assert written(corr, "checks", "applied") == [] and corr.card.read_bytes() == corr.card_bytes
+
+
+def test_an_unparsable_ops_file_is_a_refused_try_with_a_null_operations_list(corr: Corr):
+    corr.planned([LINK_FINDING])
+    path = corr.ops()
+    path.write_text(json.dumps({"card": SLUG, "paper": None, "operations": [{"op": "nonsense"}]}), encoding="utf-8")
+    assert corr.run("correct-apply", "--round", "1") == 1
+    record = json.loads((corr.dir / "refused" / f"{SLUG}-r1-1.json").read_text(encoding="utf-8"))
+    assert record["operations"] == [{"op": "nonsense"}] and record["problems"]
+    assert written(corr, "checks", "applied") == []
+
+
+def test_a_second_try_after_a_refusal_passes(corr: Corr):
+    corr.planned([LINK_FINDING])
+    assert refuse(corr) == 1
+    assert corr.apply([OPS_TIER1[1]]) == 0
+    assert (corr.dir / "checks" / f"{SLUG}-r1.json").is_file() and (corr.dir / "applied" / f"{SLUG}-r1").is_dir()
+    assert refused_files(corr) == [f"{SLUG}-r1-1.json"]
+
+
+def test_three_refusals_use_the_tries_and_a_fourth_is_refused_before_the_ops_file_is_read(corr: Corr, capsys):
+    corr.planned([LINK_FINDING])
+    for _ in range(3):
+        assert refuse(corr) == 1
+    capsys.readouterr()
+    before = refused_files(corr)
+    assert before == [f"{SLUG}-r1-{i}.json" for i in (1, 2, 3)]
+    corr.ops([OPS_TIER1[1]])
+    (corr.dir / "ops" / f"{SLUG}-r1.json").write_text("not json", encoding="utf-8")  # never read
+    assert corr.run("correct-apply", "--round", "1") == 1
+    assert "round 1 used its 3 tries (3 refused, 0 failed checks)" in capsys.readouterr().err
+    assert refused_files(corr) == before and written(corr, "checks", "applied") == []
+    assert sorted(p.name for p in (corr.dir / "ops").iterdir()) == sorted(
+        [f"{SLUG}-r1.json", *(f"{SLUG}-r1-refused{i}.json" for i in (1, 2, 3))]
+    )
+
+
+def test_refusals_and_failed_checks_share_the_three_tries(corr: Corr, capsys):
+    corr.planned([LINK_FINDING, finding([f"studies[{STUDY}].finding"])])
+    assert refuse(corr) == 1
+    assert corr.apply(BROKEN) == 1  # a failed check: the second try
+    assert refuse(corr) == 1  # the third
+    capsys.readouterr()
+    before = refused_files(corr)
+    assert before == [f"{SLUG}-r1-1.json", f"{SLUG}-r1-3.json"]
+    assert corr.apply([OPS_TIER1[1]]) == 1
+    assert "round 1 used its 3 tries (2 refused, 1 failed checks)" in capsys.readouterr().err
+    assert refused_files(corr) == before
+    assert [p.name for p in (corr.dir / "checks").glob("*attempt*")] == [f"{SLUG}-r1-attempt1.json"]
+
+
+def test_a_state_refusal_writes_no_refusal_record(corr: Corr, capsys):
+    corr.planned([LINK_FINDING])
+    assert refuse(corr, 2) == 1  # round 2 without a reject of round 1
+    assert "round 2 needs a valid reject" in capsys.readouterr().err
+    assert corr.apply([OPS_TIER1[1]]) == 0
+    assert corr.apply([OPS_TIER1[1]]) == 1  # the round already passed its checks
+    assert "already passed its checks" in capsys.readouterr().err
+    corr.review()
+    assert refuse(corr) == 1  # the round already has a review
+    assert "already has a review" in capsys.readouterr().err
+    assert refused_files(corr) == [] and not (corr.dir / f"ops/{SLUG}-r2-refused1.json").exists()
+    assert not list((corr.dir / "ops").glob("*refused*"))
+
+
+def test_a_state_refusal_after_the_tries_are_used_up_leaves_the_refusals_unchanged(corr: Corr, capsys):
+    corr.planned([LINK_FINDING])
+    for _ in range(3):
+        assert refuse(corr) == 1
+    before = {p.name: p.read_bytes() for p in (corr.dir / "refused").iterdir()}
+    assert refuse(corr) == 1
+    assert {p.name: p.read_bytes() for p in (corr.dir / "refused").iterdir()} == before
+    assert corr.apply([OPS_TIER1[1]]) == 1 and "3 tries" in capsys.readouterr().err.splitlines()[-1]
+
+
+def test_a_refusal_record_name_cannot_be_met_by_another_file(corr: Corr):
+    corr.planned([LINK_FINDING])
+    (corr.dir / "refused").mkdir()
+    for name in (f"{SLUG}-r1-notes.json", f"{SLUG}-r1-2.txt", f"{SLUG}-r1-2-extra.json", f"{SLUG}-r10-1.json"):
+        (corr.dir / "refused" / name).write_text("{}", encoding="utf-8")
+    assert corr.apply([OPS_TIER1[1]]) == 0  # none of them is a try
+
+
+def test_correct_publish_after_a_round_that_was_only_refused_holds_the_card_back(corr: Corr):
+    corr.planned([LINK_FINDING])
+    assert refuse(corr) == 1
+    assert refuse(corr) == 1
+    assert corr.publish() == 0
+    reason = (
+        "the operations file of round 1 was refused at step 3 (try 2 of 3): operations[0] changes links[1], which no "
+        "finding of the review of the published card names"
+    )
+    assert corr.card.read_bytes() == corr.card_bytes and not corr.log.exists()
+    assert "Outcome: held back" in corr.report() and f"Held back: {reason}" in corr.report()
+    trail = corr.trail()
+    assert trail["outcome"] == f"held back: {reason}"
+    assert trail["tier"] is None and trail["audits_run"] == []
+    (entry,) = trail["rounds"]
+    assert (
+        entry["round"] == 1 and entry["operations"] == UNNAMED and entry["checks"] is None and entry["review"] is None
+    )
+    assert len(entry["refused"]) == 2 and all("links[1]" in p[0] for p in entry["refused"])
+    assert corr.audit_names() == [f"{DATE}-{SLUG}-correction-published-trail.yaml"]
+    assert f"ME-Atlas-Pipeline: weekly-run {DATE}" in corr.output()
+
+
+def test_a_dry_run_after_a_refused_round_writes_only_the_report(corr: Corr):
+    corr.planned([LINK_FINDING])
+    assert refuse(corr) == 1
+    assert corr.publish("--dry-run") == 0
+    assert "Outcome: held back" in corr.report() and "Dry run" in corr.output()
+    assert corr.card.read_bytes() == corr.card_bytes and not corr.log.exists() and not corr.audits.exists()
+
+
+def test_a_refused_round_2_after_a_rejected_round_1_names_the_refusal(corr: Corr):
+    corr.planned([LINK_FINDING])
+    assert corr.apply([OPS_TIER1[1]]) == 0
+    corr.review("reject")
+    assert corr.run("correct-record-review", "--round", "1") == 0
+    assert refuse(corr, 2) == 1
+    assert corr.publish() == 0
+    trail = corr.trail()
+    assert trail["outcome"].startswith("held back: the operations file of round 2 was refused at step 3 (try 1 of 3)")
+    assert corr.card.read_bytes() == corr.card_bytes and not corr.log.exists()
+    first, second = trail["rounds"]
+    assert first["round"] == 1 and first["checks"]["passed"] is True and first["review"]["verdict"] == "reject"
+    assert "refused" not in first
+    assert second["round"] == 2 and second["checks"] is None and len(second["refused"]) == 1
+    assert "Held back: the operations file of round 2 was refused" in corr.report()
+
+
+def test_a_refused_try_before_a_passing_try_is_listed_in_the_trail_and_the_card_publishes(corr: Corr):
+    corr.planned([LINK_FINDING])
+    assert refuse(corr) == 1
+    assert corr.apply([OPS_TIER1[1]]) == 0
+    corr.review()
+    assert corr.run("correct-record-review", "--round", "1") == 0
+    assert corr.publish() == 0
+    trail = corr.trail()
+    assert trail["outcome"] == "published"
+    (entry,) = trail["rounds"]
+    assert len(entry["refused"]) == 1 and "links[1]" in entry["refused"][0][0]
+    assert entry["checks"]["passed"] is True and entry["review"]["verdict"] == "accept"
+    assert yaml.safe_load(corr.text())["links"][0]["text"] == LINK_NEW
+
+
+def test_a_round_without_a_refusal_has_the_trail_entry_it_always_had(corr: Corr):
+    corr.accepted()
+    assert corr.publish() == 0
+    (entry,) = corr.trail()["rounds"]
+    assert list(entry) == ["round", "operations", "checks", "review"]
+
+
+def test_a_review_with_no_finding_gives_an_unchanged_trail(corr: Corr):
+    corr.request()
+    assert corr.run("correct-review-plan") == 0
+    corr.pre([])
+    assert corr.run("correct-record-review", "--pre") == 0
+    assert corr.publish("--dry-run") == 0
+    assert "Outcome: unchanged" in corr.report() and not corr.audits.exists()
+    assert corr.publish() == 0
+    trail = corr.trail()
+    assert trail["outcome"] == "unchanged: the review of the published card found no error"
+    assert trail["rounds"] == [] and trail["tier"] is None and trail["audits_run"] == []
+    assert corr.card.read_bytes() == corr.card_bytes and not corr.log.exists()
+    assert "Outcome: unchanged" in corr.report()
+
+
+def test_publish_with_findings_and_no_round_and_no_refusal_is_still_refused(corr: Corr, capsys):
+    corr.planned([LINK_FINDING])
+    assert corr.publish() == 1
+    assert "no round applied; run `correct-apply` first" in capsys.readouterr().err
+    assert not (corr.dir / "correction-report.md").exists() and not corr.audits.exists()
+    assert corr.card.read_bytes() == corr.card_bytes and not corr.log.exists()
