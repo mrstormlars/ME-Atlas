@@ -736,3 +736,24 @@
   - pmid:10071523
   tier: 2
   decided_by: ai_audit
+- date: 2026-11-28
+  card: autonomic-imbalance
+  change: 'Correction: level_reason[3, 4] reworded; the group of pmid:22670061 reworded; case_definition,
+    case_definition_source, case_definition_quote of pmid:31957647 changed; the finding of pmid:29855991
+    reworded; case_definition, case_definition_source, case_definition_quote, role of pmid:29855991 changed;
+    the group of pmid:24493300 reworded; the text of the link to symptom:sleep-disturbance reworded'
+  reason: The full texts give Fukuda for the 24- and 14-patient studies, the 14-patient study did not
+    find a difference and is rightly a small contradicting study, and level 3, the contested mark and
+    the sleep link are still supported.
+  sources:
+  - pmid:9505867
+  - pmid:9430800
+  - pmid:34970156
+  - pmid:29855991
+  - pmid:29246267
+  - pmid:31957647
+  - pmid:22670061
+  - pmid:24493300
+  - pmid:31906988
+  tier: 2
+  decided_by: ai_audit

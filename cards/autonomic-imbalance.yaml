@@ -133,22 +133,26 @@ level_reason:
       finding has been repeated by an independent group.
     sources: [pmid:34640544, pmid:23166694]
   - text: >-
-      Other studies did not find lower heart rate variability. A Belgian study of 38 patients meeting the 1988
-      CDC (Holmes) definition and 38 healthy controls found a consistently higher heart rate but no major
-      changes in RR-interval variability; a US study of 19 patients meeting CDC criteria and 11 controls found
-      similar heart rate variability lying down and on tilt. In 16 patients and 10 controls who did exercise
-      tests on two days, resting heart rate variability did not differ, while heart rate fell less in the
-      first minute after maximal exercise in patients.
-    sources: [pmid:9505867, pmid:9430800, pmid:34970156]
+      Other studies did not find lower heart rate variability. A Belgian study of 38 patients
+      meeting the 1988 CDC (Holmes) definition and 38 healthy controls found a consistently
+      higher heart rate but no major changes in RR-interval variability; a US study of 19
+      patients meeting CDC criteria and 11 controls found similar heart rate variability lying
+      down and on tilt. In 16 patients and 10 controls who did exercise tests on two days,
+      resting heart rate variability did not differ, while heart rate fell less in the first
+      minute after maximal exercise in patients. In 14 women meeting the CDC (Fukuda 1994)
+      criteria and 14 healthy controls, heart rate variability recorded while resting supine did
+      not differ.
+    sources: ['pmid:9505867', 'pmid:9430800', 'pmid:34970156', 'pmid:29855991']
   - text: >-
-      Sleep studies are mixed. Eight patients meeting the 2015 IOM criteria had a higher low-frequency measure
-      in all sleep stages and a lower high-frequency measure in deep sleep than eight tired controls, but a
-      higher high-frequency measure overall and a lower heart rate. In 24 patients and 24 controls the
-      high-frequency measure was lower in deeper sleep but not during wakefulness before sleep. These two
-      groups, in Finland and Australia, thus both found a lower high-frequency measure in deep sleep. In 14 women with
-      chronic fatigue syndrome and 14 controls, heart rate variability did not differ. The last two studies'
-      case definitions are not yet verified.
-    sources: [pmid:29246267, pmid:31957647, pmid:29855991]
+      Sleep studies are mixed. Eight patients meeting the 2015 IOM criteria had a higher
+      low-frequency measure in all sleep stages and a lower high-frequency measure in deep sleep
+      than eight tired controls, but a higher high-frequency measure overall and a lower heart
+      rate. In 24 patients and 24 controls the high-frequency measure was lower in deeper sleep
+      but not during wakefulness before sleep. These two groups, in Finland and Australia, thus
+      both found a lower high-frequency measure in deep sleep. The 24-patient study names its
+      patients' definition as international diagnostic criteria for CFS, cited as its reference
+      1, which its reference list gives as Fukuda 1994.
+    sources: ['pmid:29246267', 'pmid:31957647']
   - text: >-
       No controlled study on this card has shown that changing autonomic balance changes the illness. In a randomised trial in 120
       adolescents, who also had higher plasma norepinephrine than 68 healthy adolescents, low-dose clonidine
@@ -215,7 +219,7 @@ studies:
     preregistered: null
     role: supports  # rung 2 and the original finding for rung 3
     direction: lower
-    group: Newton JL, Newcastle, UK (with Zalewski P, Bydgoszcz, Poland)
+    group: Newton JL, Newcastle, UK (with Zalewski P)
     finding: >-
       A study of n=68 patients and 68 matched controls found lower parasympathetic and higher low-frequency
       heart rate variability at rest, higher diastolic blood pressure variability at rest and a smaller
@@ -443,9 +447,9 @@ studies:
     doi: 10.5664/jcsm.8114
     cohort: me_cfs
     # "medically diagnosed CFS" (abstract); PMC7053003 exists but Europe PMC returned no open full text. TODO: verify.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: Twenty-four participants fulfilling international diagnostic criteria for CFS1 were recruited after clinician assessment at an academic tertiary referral clinic
     design: controlled
     n_patients: 24
     n_controls: 24
@@ -466,21 +470,24 @@ studies:
     doi: 10.1007/s11682-018-9897-x
     cohort: me_cfs
     # The abstract names no case definition; PMC6274602 exists but Europe PMC returned no open full text. TODO: verify.
-    case_definition: unverified
-    case_definition_source: null
-    case_definition_quote: null
+    case_definition: Fukuda
+    case_definition_source: fulltext
+    case_definition_quote: CFS participants met Centers for Disease Control criteria for chronic fatigue syndrome (Fukuda et al. 1994)
     design: controlled
     n_patients: 14
     n_controls: 14
     measures_pem: false
     preregistered: null
-    role: context
+    role: contradicts
     direction: no_difference
     group: Staud R, University of Florida, USA
     finding: >-
-      A study of n=14 women with chronic fatigue syndrome and 14 healthy controls found no group difference in
-      heart rate variability; within patients, more heart rate variability power was associated with less
-      fatigue.
+      A study of n=14 women with chronic fatigue syndrome and 14 healthy controls found no group
+      difference in heart rate variability, recorded while resting supine. Within patients,
+      total heart rate variability power was associated with less fatigue (r = -.70, p = .02)
+      only after removal of one outlier; with the outlier included the association was not
+      significant (r = -.32, p = .32), and low-, high- and very-high-frequency power did not
+      correlate with fatigue.
   - id: pmid:34073494
     title: Post-Exertional Malaise May Be Related to Central Blood Pressure, Sympathetic Activity and Mental Fatigue in Chronic Fatigue Syndrome Patients.
     year: 2021
@@ -525,14 +532,14 @@ studies:
     preregistered: true  # NCT01040429 (abstract)
     role: context
     direction: higher  # plasma norepinephrine at baseline, patients against controls
-    group: Wyller VB, Oslo University Hospital, Norway (NorCAPITAL)
+    group: Wyller VB, Oslo University Hospital, Norway
     finding: >-
       A study of n=120 adolescents and 68 healthy adolescents found higher plasma norepinephrine and heart rate
       responsiveness in patients; in the randomised part, low-dose clonidine lowered norepinephrine but daily
       steps were lower than with placebo (not significant), and the authors concluded it is not clinically
       useful.
 last_checked:
-  date: 2026-11-13
+  date: 2026-11-28
   by: ai_audit
 # Causal map (founder ruling 2026-11-08): layer `dysfunction`, answering "what goes wrong in the body?". The card
 # grades a measured abnormality (heart rate variability, baroreflex, catecholamines), like the orthostatic card.
@@ -555,11 +562,13 @@ links:
   - to: symptom:sleep-disturbance
     support: proposed
     text: >-
-      One study of 24 patients and 24 controls found that lower parasympathetic heart rate variability during
-      deeper sleep was associated with poorer self-reported sleep quality in the same people; its case
-      definition is not yet verified. A second study, of 45 patients meeting the Fukuda definition and 25
-      controls, found that lower daytime resting heart rate variability correlated with poorer self-reported
-      sleep, in an analysis of patients and controls together.
+      One study of 24 patients and 24 controls found that lower parasympathetic heart rate
+      variability during deeper sleep was associated with poorer self-reported sleep quality in
+      the same people; its patients met the international diagnostic criteria for CFS, cited in
+      the study as its reference 1 (Fukuda 1994). A second study, of 45 patients meeting the
+      Fukuda definition and 25 controls, found that lower daytime resting heart rate variability
+      correlated with poorer self-reported sleep, in an analysis of patients and controls
+      together.
     sources: [pmid:31957647, pmid:31906988]
   - to: symptom:cognitive-impairment
     support: proposed
