@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-27
+Last updated: 2026-11-28
 
 The history of how the project got here is in `docs/pm/DECISIONS.md` and the git log; this file says only where it stands and what is open.
 
@@ -41,12 +41,7 @@ To build or fix:
 - The `group` fields of pmid:25386668 and pmid:34444817 (`oxidative-nitrosative-stress`) still say "same unit" where the records give one Vall d'Hebron research institute (an advisory note of the 2026-11-17 correction review).
 - No path adds a link to a held-back draft (an auditor step and an operation are missing). A published card has the link round since 2026-11-16.
 - The local cache: `data/` is backed up to a private repository since 2026-11-17 (`docs/fetch.md`, "Backup of the local data"). Of the 16 full texts code could not fetch after the cache was lost on 2026-11-16 (Europe PMC HTTP 500; PMC answers automated requests with a bot check, which the project does not work around), the founder saved all 16 by hand as PMC pages, among them pmid:21532961, so `citations check` passes again.
-- **PDF full text (option B, pull request 115): three follow-ups, to take up after the full-text scan.** (1) The audit context and `record-audit` do not read PDF text, so a study whose only full text is an open PDF (`fulltext_pdf`) cannot carry a level, badge, contested mark or link through an audit; (2) the finding check C6 and the number check C10 do not read PDF text; (3) the shared case-definition finder (`europepmc.py`) misses the wording "Canada 2003 criteria" (pmid:28694809 gave no candidate). The 5 studies that got a usable PDF in the live check (pmid:28694809, 29874259, 39435656, 32210306, 41901562) wait for (1) and are left out of the scan.
-- **Full-text scan: tune the flag rule.** A "finding adds" verdict alone flags a card, so the first scan flagged 16 of 17 cards. Only `differs` verdicts, or `adds` verdicts that touch a level, badge, case definition or role, should flag a card.
-- **The audit context breaks for a long full text on one line.** The auditor's Read tool cannot read a line of about 85,000 characters and the auditor has no search tool, so it cannot check that study (pmid:43027675, `oxidative-nitrosative-stress`). The context should wrap or excerpt the text.
-- **A step 3 refusal in the correction path leaves no trail.** When `correct-apply` refuses the operations file, `correct-publish` writes no record in `audits/` (`autonomic-imbalance`, 2026-11-27). The docs also do not say whether a refused operations file may be drafted again.
-- `correct-plan` is slow (3 to 15 minutes per card) because its Europe PMC lookups are live.
-- The three cards held back in the full-text corrections (`infection-trigger`, `oxidative-nitrosative-stress`, `autonomic-imbalance`) can be taken up again once the two fixes above are in, as a new founder-requested round.
+- **Full-text follow-ups (plan `docs/plan-fulltext-followups.md`, founder ruling 2026-11-28: all recommended defaults).** In progress as three parallel orchestrator tasks: (A) the scan flag rule and "Canada 2003" in the case-definition finder; (B) wrap long one-line texts in all agent contexts; (C) a trail and a redraft rule after a step 3 refusal in the correction path. After B and C are merged: one third attempt for `infection-trigger`, `oxidative-nitrosative-stress` and `autonomic-imbalance` (item 4). PDF text in the audit context and in C6/C10 is parked until a carrier has only a PDF; the five studies once thought to wait for it all have Europe PMC XML.
 - A proper-noun check (institution and place names against the cached record) is not built; a first count gave too many false hits.
 - Not exercised live: the `pmc_no_xml` and `pdf_only` full-text paths.
 
